@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__lseek__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_lseek_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__lseek__args_1abd7ef624fc7752d6e6b3a3cf91c17f78" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_lseek_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="219" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="219" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a22d7ac2731d375722cb6fcfaa8b35996" compoundref="file_8c" startline="149" endline="184">sys_lseek</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1a3240c8d2d3c9340cf84a86b8b1dd761b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lseek_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="218" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="218" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1afa6fc14278d2c7c35a2538a44a81701c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lseek_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="220" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="220" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1a93b5ee48d6df13a8698a0042ff10f28b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t sys_lseek_args::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="222" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="222" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a22d7ac2731d375722cb6fcfaa8b35996" compoundref="file_8c" startline="149" endline="184">sys_lseek</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1aae280f29978727d951a7149656f7db55" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lseek_args::offset_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>offset_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="221" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1ab4b2a22abb3d33c01efedc8d55c76555" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lseek_args::offset_r_[(sizeof(register_t)&lt;=sizeof(off_t) ? 0 :sizeof(register_t) - sizeof(off_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(off_t) ? 0 :sizeof(register_t) - sizeof(off_t))]</argsstring>
+        <name>offset_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="223" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="223" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1ae5e2cb3ac951cb20efbb68057eedcea2" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_lseek_args::whence</definition>
+        <argsstring></argsstring>
+        <name>whence</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="225" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="225" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a22d7ac2731d375722cb6fcfaa8b35996" compoundref="file_8c" startline="149" endline="184">sys_lseek</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1a2df2c0afdd5c29dd933a77f9742fea15" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lseek_args::whence_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>whence_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="224" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="224" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lseek__args_1ae9973793ba1bd05e12ab525320e0ec32" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lseek_args::whence_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>whence_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="226" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="226" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_lseek_args</label>
+        <link refid="structsys__lseek__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="217" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="217" bodyend="227"/>
+    <listofallmembers>
+      <member refid="structsys__lseek__args_1abd7ef624fc7752d6e6b3a3cf91c17f78" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>fd</name></member>
+      <member refid="structsys__lseek__args_1a3240c8d2d3c9340cf84a86b8b1dd761b" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>fd_l_</name></member>
+      <member refid="structsys__lseek__args_1afa6fc14278d2c7c35a2538a44a81701c" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>fd_r_</name></member>
+      <member refid="structsys__lseek__args_1a93b5ee48d6df13a8698a0042ff10f28b" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>offset</name></member>
+      <member refid="structsys__lseek__args_1aae280f29978727d951a7149656f7db55" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>offset_l_</name></member>
+      <member refid="structsys__lseek__args_1ab4b2a22abb3d33c01efedc8d55c76555" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>offset_r_</name></member>
+      <member refid="structsys__lseek__args_1ae5e2cb3ac951cb20efbb68057eedcea2" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>whence</name></member>
+      <member refid="structsys__lseek__args_1a2df2c0afdd5c29dd933a77f9742fea15" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>whence_l_</name></member>
+      <member refid="structsys__lseek__args_1ae9973793ba1bd05e12ab525320e0ec32" prot="public" virt="non-virtual"><scope>sys_lseek_args</scope><name>whence_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structpacked__struct__test" kind="struct" language="C++" prot="public">
+    <compoundname>packed_struct_test</compoundname>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structpacked__struct__test_1a50b12c50fb386ded21c3306c3b2248c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>packed_struct_test::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t dummy2)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>dummy2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="69" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structpacked__struct__test_1a3e24dcbac86147707ffe8afb7b2b1198" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>packed_struct_test::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t dummy1)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>dummy1</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="68" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>packed_struct_test</label>
+        <link refid="structpacked__struct__test"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="67" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/init.c" bodystart="66" bodyend="70"/>
+    <listofallmembers>
+      <member refid="structpacked__struct__test_1a50b12c50fb386ded21c3306c3b2248c8" prot="public" virt="non-virtual"><scope>packed_struct_test</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structpacked__struct__test_1a3e24dcbac86147707ffe8afb7b2b1198" prot="public" virt="non-virtual"><scope>packed_struct_test</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

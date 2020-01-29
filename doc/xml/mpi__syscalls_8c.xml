@@ -1,0 +1,342 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="mpi__syscalls_8c" kind="file" language="C++">
+    <compoundname>mpi_syscalls.c</compoundname>
+    <includes refid="mpi_8h" local="no">mpi/mpi.h</includes>
+    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
+    <incdepgraph>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c</label>
+        <link refid="mpi__syscalls_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="10">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="mpi__syscalls_8c_1a05dfdcd5cf13ea0da5f17ec2ff50b149" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiCreateMbox</definition>
+        <argsstring>(struct thread *td, struct sys_mpiCreateMbox_args *args)</argsstring>
+        <name>sys_mpiCreateMbox</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiCreateMbox__args" kindref="compound">sys_mpiCreateMbox_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" line="4" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="4" bodyend="7"/>
+        <references refid="mpi_8h_1a454c70b9013b47d4e8fd0e45af331c69" compoundref="system_8c" startline="68" endline="97">mpi_createMbox</references>
+        <references refid="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" compoundref="sysproto_8h" startline="49">sys_mpiCreateMbox_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="mpi__syscalls_8c_1a1d7dceb64a31fd348cab540f8adea714" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiDestroyMbox</definition>
+        <argsstring>(struct thread *td, struct sys_mpiDestroyMbox_args *args)</argsstring>
+        <name>sys_mpiDestroyMbox</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiDestroyMbox__args" kindref="compound">sys_mpiDestroyMbox_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" line="9" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="9" bodyend="12"/>
+        <references refid="mpi_8h_1a9b34d23f75ad6a36e1f9f62814a33547" compoundref="system_8c" startline="231" endline="252">mpi_destroyMbox</references>
+        <references refid="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" compoundref="sysproto_8h" startline="55">sys_mpiDestroyMbox_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiFetchMessage</definition>
+        <argsstring>(struct thread *td, struct sys_mpiFetchMessage_args *args)</argsstring>
+        <name>sys_mpiFetchMessage</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiFetchMessage__args" kindref="compound">sys_mpiFetchMessage_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" line="14" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="14" bodyend="17"/>
+        <references refid="mpi_8h_1a22e0e1e2617b3b69b2088c3fd41b7036" compoundref="system_8c" startline="187" endline="221">mpi_fetchMessage</references>
+        <references refid="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" compoundref="sysproto_8h" startline="64">sys_mpiFetchMessage_args::msg</references>
+        <references refid="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" compoundref="sysproto_8h" startline="61">sys_mpiFetchMessage_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiPostMessage</definition>
+        <argsstring>(struct thread *td, struct sys_mpiPostMessage_args *args)</argsstring>
+        <name>sys_mpiPostMessage</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiPostMessage__args" kindref="compound">sys_mpiPostMessage_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" line="19" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="19" bodyend="23"/>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="mpi_8h_1a1c2c24c44767f282cddb50a9affa3f55">mpi_postMessage</references>
+        <references refid="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" compoundref="sysproto_8h" startline="76">sys_mpiPostMessage_args::msg</references>
+        <references refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" compoundref="sysproto_8h" startline="70">sys_mpiPostMessage_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" compoundref="sysproto_8h" startline="73">sys_mpiPostMessage_args::type</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mpi_8h" kindref="compound">mpi/mpi.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="mpi__syscalls_8c_1a05dfdcd5cf13ea0da5f17ec2ff50b149" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi__syscalls_8c_1a05dfdcd5cf13ea0da5f17ec2ff50b149" kindref="member">sys_mpiCreateMbox</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiCreateMbox__args" kindref="compound">sys_mpiCreateMbox_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="mpi_8h_1a454c70b9013b47d4e8fd0e45af331c69" kindref="member">mpi_createMbox</ref>(args-&gt;<ref refid="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="7"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="mpi__syscalls_8c_1a1d7dceb64a31fd348cab540f8adea714" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi__syscalls_8c_1a1d7dceb64a31fd348cab540f8adea714" kindref="member">sys_mpiDestroyMbox</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiDestroyMbox__args" kindref="compound">sys_mpiDestroyMbox_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="mpi_8h_1a9b34d23f75ad6a36e1f9f62814a33547" kindref="member">mpi_destroyMbox</ref>(args-&gt;<ref refid="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" kindref="member">sys_mpiFetchMessage</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiFetchMessage__args" kindref="compound">sys_mpiFetchMessage_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="mpi_8h_1a22e0e1e2617b3b69b2088c3fd41b7036" kindref="member">mpi_fetchMessage</ref>(args-&gt;<ref refid="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" kindref="member">name</ref>,<sp/>(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*)args-&gt;<ref refid="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" kindref="member">msg</ref>);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" kindref="member">sys_mpiPostMessage</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args" kindref="compound">sys_mpiPostMessage_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;mPM:<sp/>%s&quot;</highlight><highlight class="normal">,<sp/>args-&gt;<ref refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="mpi_8h_1a1c2c24c44767f282cddb50a9affa3f55" kindref="member">mpi_postMessage</ref>(args-&gt;<ref refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" kindref="member">name</ref>,<sp/>args-&gt;<ref refid="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" kindref="member">type</ref>,<sp/>(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*)args-&gt;<ref refid="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" kindref="member">msg</ref>);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c"/>
+  </compounddef>
+</doxygen>

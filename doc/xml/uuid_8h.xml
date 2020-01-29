@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="uuid_8h" kind="file" language="C++">
+    <compoundname>uuid.h</compoundname>
+    <includes refid="cdefs_8h" local="no">sys/cdefs.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="gpt_8h" local="no">C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</includedby>
+    <incdepgraph>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/uuid.h</label>
+        <link refid="uuid_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/uuid.h</label>
+        <link refid="uuid_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</label>
+        <link refid="gpt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structuuid" prot="public">uuid</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="uuid_8h_1a0d3d507714102a757131a9eb9c7a5b85" prot="public" static="no">
+        <name>_UUID_NODE_LEN</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" prot="public" static="no">
+        <type>struct <ref refid="structuuid" kindref="compound">uuid</ref></type>
+        <definition>typedef struct uuid uuid_t</definition>
+        <argsstring></argsstring>
+        <name>uuid_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="176" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="uuid_8h_1aaf3d05f8d0f9d2e22f1044203d38b4f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int uuidgen</definition>
+        <argsstring>(struct uuid *, int)</argsstring>
+        <name>uuidgen</name>
+        <param>
+          <type>struct <ref refid="structuuid" kindref="compound">uuid</ref> *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="81" column="5" declfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" declline="81" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002<sp/>Marcel<sp/>Moolenaar</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>$FreeBSD:<sp/>releng/10.2/sys/sys/uuid.h<sp/>253590<sp/>2013-07-24<sp/>04:24:21Z<sp/>marcel<sp/>$</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_UUID_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_UUID_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="cdefs_8h" kindref="compound">sys/cdefs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Length<sp/>of<sp/>a<sp/>node<sp/>address<sp/>(an<sp/>IEEE<sp/>802<sp/>address).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="uuid_8h_1a0d3d507714102a757131a9eb9c7a5b85" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UUID_NODE_LEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*<sp/>See<sp/>also:</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>http://www.opengroup.org/dce/info/draft-leach-uuids-guids-01.txt</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>http://www.opengroup.org/onlinepubs/009629399/apdxa.htm</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>*<sp/>A<sp/>DCE<sp/>1.1<sp/>compatible<sp/>source<sp/>representation<sp/>of<sp/>UUIDs.</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="structuuid" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuuid" kindref="compound">uuid</ref><sp/>{</highlight></codeline>
+<codeline lineno="46" refid="structuuid_1aeabb39e916355b8a0cdd8912e8c27317" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structuuid_1aeabb39e916355b8a0cdd8912e8c27317" kindref="member">time_low</ref>;</highlight></codeline>
+<codeline lineno="47" refid="structuuid_1a0b92f5d247288e1db17317232ae29694" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structuuid_1a0b92f5d247288e1db17317232ae29694" kindref="member">time_mid</ref>;</highlight></codeline>
+<codeline lineno="48" refid="structuuid_1ac89486073118cbca117c9204aeecb9d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structuuid_1ac89486073118cbca117c9204aeecb9d4" kindref="member">time_hi_and_version</ref>;</highlight></codeline>
+<codeline lineno="49" refid="structuuid_1a417e5c4b6e182d1d25e8aaeb71b8aca4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structuuid_1a417e5c4b6e182d1d25e8aaeb71b8aca4" kindref="member">clock_seq_hi_and_reserved</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structuuid_1a06caaa600c4c03ea30c750b4ffbcf1c2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structuuid_1a06caaa600c4c03ea30c750b4ffbcf1c2" kindref="member">clock_seq_low</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structuuid_1a2d6a632649ae128bc68dc0a7c154b3ba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structuuid_1a2d6a632649ae128bc68dc0a7c154b3ba" kindref="member">node</ref>[<ref refid="uuid_8h_1a0d3d507714102a757131a9eb9c7a5b85" kindref="member">_UUID_NODE_LEN</ref>];</highlight></codeline>
+<codeline lineno="52"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_KERNEL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UUID_NODE_LEN<sp/><sp/><sp/>_UUID_NODE_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sbuf;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*kern_uuidgen(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>uuid_ether_add(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>uuid_ether_del(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>snprintf_uuid(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>printf_uuid(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>sbuf_printf_uuid(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sbuf<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>parse_uuid(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>be_uuid_dec(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>be_uuid_enc(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>le_uuid_dec(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>le_uuid_enc(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>_KERNEL<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>XXX<sp/>namespace<sp/>pollution?<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuuid" kindref="compound">uuid</ref><sp/><ref refid="structuuid" kindref="compound">uuid_t</ref>;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="comment">//__BEGIN_DECLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="uuid_8h_1aaf3d05f8d0f9d2e22f1044203d38b4f3" kindref="member">uuidgen</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="comment">//__END_DECLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">/*<sp/>_KERNEL<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>_SYS_UUID_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h"/>
+  </compounddef>
+</doxygen>

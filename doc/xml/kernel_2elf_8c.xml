@@ -1,0 +1,759 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kernel_2elf_8c" kind="file" language="C++">
+    <compoundname>elf.c</compoundname>
+    <includes refid="sys_2elf_8h" local="no">sys/elf.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="27">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="34">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="31">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="30">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/elf32.h</label>
+        <link refid="elf32_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="21">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="24">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="39">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="10">
+        <label>i386/elf.h</label>
+        <link refid="i386_2elf_8h"/>
+      </node>
+      <node id="32">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="13">
+        <label>sys/elf64.h</label>
+        <link refid="elf64_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/elf_common.h</label>
+        <link refid="elf__common_8h"/>
+      </node>
+      <node id="2">
+        <label>sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="kernel_2elf_8c_1a7e66a9f524b0862ade424f19d5733cd2" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct @26</type>
+        <definition>const struct @26  elfPhType[]</definition>
+        <argsstring>[]</argsstring>
+        <name>elfPhType</name>
+        <initializer>= { { &quot;PT_NULL&quot;, 0 }, { &quot;<ref refid="elf__common_8h_1a84d7768fd6c6ece599d297090900cf92" kindref="member">PT_LOAD</ref>&quot;, 1 }, { &quot;<ref refid="elf__common_8h_1a2121a2f01c51e8462bfd4d47725649d8" kindref="member">PT_DYNAMIC</ref>&quot;, 2 }, { &quot;<ref refid="elf__common_8h_1abcd3aa15bc567949c1ab6b1abc137710" kindref="member">PT_INTERP</ref>&quot;, 3 }, { &quot;<ref refid="elf__common_8h_1a72baf87d62607c7fdccd3b8010d4ce30" kindref="member">PT_NOTE</ref>&quot;, 4 }, { &quot;<ref refid="elf__common_8h_1abff9f38fd394e09e60f5640550a23e46" kindref="member">PT_SHLIB</ref>&quot;, 5 }, { &quot;<ref refid="elf__common_8h_1a58ff00be749ca4000074f9b9066a1056" kindref="member">PT_PHDR</ref>&quot;, 6 }, { &quot;<ref refid="elf__common_8h_1acaa6971207ea507ed02f22ba574b8534" kindref="member">PT_LOPROC</ref>&quot;, 0x70000000 }, { &quot;PT_HIPROC&quot;, 0x7fffffff }, }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="147" column="13"/>
+        <referencedby refid="kernel_2elf_8c_1a10bbb060fe8d138d450bf6c04913fba7" compoundref="kernel_2elf_8c" startline="163" endline="165">elfGetPhType</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1a367978286be6a1ad0a4df5a6f38f7553" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct @28</type>
+        <definition>const struct @28  elfRelType[]</definition>
+        <argsstring>[]</argsstring>
+        <name>elfRelType</name>
+        <initializer>= { { &quot;R_386_NONE&quot;, 0 }, { &quot;<ref refid="elf__common_8h_1af363b787459afd7e272677d7858572c0" kindref="member">R_386_32</ref>&quot;, 1 }, { &quot;<ref refid="elf__common_8h_1ad55eb4ccb6e52c4c03f99b34cc8c690b" kindref="member">R_386_PC32</ref>&quot;, 2 }, { &quot;<ref refid="elf__common_8h_1a42f8dd027e6f2384dba2cfa060240c63" kindref="member">R_386_GOT32</ref>&quot;, 3 }, { &quot;<ref refid="elf__common_8h_1a6ee43218883fb9f2836f425615c2da40" kindref="member">R_386_PLT32</ref>&quot;, 4 }, { &quot;<ref refid="elf__common_8h_1ac08872c616d1b9649dc13780f71833b1" kindref="member">R_386_COPY</ref>&quot;, 5 }, { &quot;<ref refid="elf__common_8h_1a6ab6b058a8dd4e90c49e74415809f867" kindref="member">R_386_GLOB_DAT</ref>&quot;, 6 }, { &quot;<ref refid="elf__common_8h_1a4d36bf95ffa6b0f7a369b23938db5aaf" kindref="member">R_386_JMP_SLOT</ref>&quot;, 7 }, { &quot;<ref refid="elf__common_8h_1aee5190154984e6176e1c6804ac13217d" kindref="member">R_386_RELATIVE</ref>&quot;, 8 }, { &quot;<ref refid="elf__common_8h_1ac2ed0eac08066a8dd368873fcd54ae3c" kindref="member">R_386_GOTOFF</ref>&quot;, 9 }, { &quot;<ref refid="elf__common_8h_1a69665820640b0fb427ea40c8cd2496ce" kindref="member">R_386_GOTPC</ref>&quot;, 10 }, }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="157" column="14"/>
+        <referencedby refid="kernel_2elf_8c_1a5e661c9a431fe068feb9ff1660a570b7" compoundref="kernel_2elf_8c" startline="167" endline="169">elfGetRelType</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1ac8669e586639f5d2a98dc2f095a20d2f" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct @27</type>
+        <definition>const struct @27  elfShType[]</definition>
+        <argsstring>[]</argsstring>
+        <name>elfShType</name>
+        <initializer>= { { &quot;SHT_NULL&quot;, 0 }, { &quot;<ref refid="elf__common_8h_1a4bff22edbae51353ba9b3572d424b91a" kindref="member">SHT_PROGBITS</ref>&quot;, 1 }, { &quot;<ref refid="elf__common_8h_1a4add7784e43ec3d3b9c09d3ffc476a81" kindref="member">SHT_SYMTAB</ref>&quot;, 2 }, { &quot;<ref refid="elf__common_8h_1af4b916dc4ca5016fb5c374068002a532" kindref="member">SHT_STRTAB</ref>&quot;, 3 }, { &quot;<ref refid="elf__common_8h_1abf2fc2781a2869352c2ffa0555f34118" kindref="member">SHT_RELA</ref>&quot;, 4 }, { &quot;<ref refid="elf__common_8h_1a446fd322326bea21373453c80c3f7925" kindref="member">SHT_HASH</ref>&quot;, 5 }, { &quot;<ref refid="elf__common_8h_1a3a9278d12cf2c9e7eaca87688d0a6e37" kindref="member">SHT_DYNAMIC</ref>&quot;, 6 }, { &quot;<ref refid="elf__common_8h_1a65506a79f0e972c851851af7b1008d94" kindref="member">SHT_NOTE</ref>&quot;, 7 }, { &quot;<ref refid="elf__common_8h_1a820ff00317949be2ea1fd634a17dc13e" kindref="member">SHT_NOBITS</ref>&quot;, 8 }, { &quot;<ref refid="elf__common_8h_1a2aea2ed985f81f13a157fe2da02a621a" kindref="member">SHT_REL</ref>&quot;, 9 }, { &quot;<ref refid="elf__common_8h_1ace0ce008ff50406077a9450174fe55a5" kindref="member">SHT_SHLIB</ref>&quot;, 10 }, { &quot;<ref refid="elf__common_8h_1aa9949aedf49107f6a07e618d5d791d40" kindref="member">SHT_DYNSYM</ref>&quot;, 11 }, }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="152" column="13"/>
+        <referencedby refid="kernel_2elf_8c_1a21666b534b5f23248f809a220ec3e0ff" compoundref="kernel_2elf_8c" startline="159" endline="161">elfGetShType</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1a589b211bad1159f7ae6a996832ff9cfb" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct @25</type>
+        <definition>const struct @25  elfType[]</definition>
+        <argsstring>[]</argsstring>
+        <name>elfType</name>
+        <initializer>= { { &quot;ET_NONE&quot;, 0 }, { &quot;<ref refid="elf__common_8h_1a2a91046a80fd753ce3dbfb109212761d" kindref="member">ET_REL</ref>&quot;, 1 }, { &quot;<ref refid="elf__common_8h_1a942478985eb016311380dee473cc8c3e" kindref="member">ET_EXEC</ref>&quot;, 2 }, { &quot;<ref refid="elf__common_8h_1a4373ea3b3d512434ebe2213829b6751b" kindref="member">ET_DYN</ref>&quot;, 3 }, { &quot;<ref refid="elf__common_8h_1a2b9430d26ba60f7a9d65c8d43e54f213" kindref="member">ET_CORE</ref>&quot;, 4 }, { &quot;<ref refid="elf__common_8h_1a929894d9c68a7d9b8c29211b1e1a7469" kindref="member">ET_LOPROC</ref>&quot;, 0xff00 }, { &quot;ET_HIPROC&quot;, 0xffff }, }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="142" column="11"/>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1a93d6f656ee02f4fedc15bbb8d536a6f0" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* elfTypeName</definition>
+        <argsstring></argsstring>
+        <name>elfTypeName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="140" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="141" column="10" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1a2a4a91f3577e2ffd38d4f91011072569" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* phTypeName</definition>
+        <argsstring></argsstring>
+        <name>phTypeName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="145" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="145" bodyend="-1"/>
+        <referencedby refid="kernel_2elf_8c_1a10bbb060fe8d138d450bf6c04913fba7" compoundref="kernel_2elf_8c" startline="163" endline="165">elfGetPhType</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1a3cfab9172cb06ddb64edd058e38f14ec" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* relTypeName</definition>
+        <argsstring></argsstring>
+        <name>relTypeName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="155" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="155" bodyend="-1"/>
+        <referencedby refid="kernel_2elf_8c_1a5e661c9a431fe068feb9ff1660a570b7" compoundref="kernel_2elf_8c" startline="167" endline="169">elfGetRelType</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="kernel_2elf_8c_1a42bdf04c654064843d45e989798039fa" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* shTypeName</definition>
+        <argsstring></argsstring>
+        <name>shTypeName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="150" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="150" bodyend="-1"/>
+        <referencedby refid="kernel_2elf_8c_1a21666b534b5f23248f809a220ec3e0ff" compoundref="kernel_2elf_8c" startline="159" endline="161">elfGetShType</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int elf_load_file</definition>
+        <argsstring>(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)</argsstring>
+        <name>elf_load_file</name>
+        <param>
+          <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> *</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="37" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="37" bodyend="137"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structElf32__Ehdr_1ab8a982696048d807017919b7d0145482" compoundref="elf32_8h" startline="60">Elf32_Ehdr::e_entry</references>
+        <references refid="structElf32__Ehdr_1aba47ac5e0af02d5668782f1fd5a7466c" compoundref="elf32_8h" startline="56">Elf32_Ehdr::e_ident</references>
+        <references refid="structElf32__Ehdr_1a360898812db1655f8cb8258780d9df5b" compoundref="elf32_8h" startline="66">Elf32_Ehdr::e_phnum</references>
+        <references refid="structElf32__Ehdr_1a25c36fc010284a928604aae005b67ad1" compoundref="elf32_8h" startline="61">Elf32_Ehdr::e_phoff</references>
+        <references refid="structElf32__Ehdr_1a49e40a791813c06e3b6ebcb53aef1bb8" compoundref="elf32_8h" startline="57">Elf32_Ehdr::e_type</references>
+        <references refid="elf__common_8h_1a4373ea3b3d512434ebe2213829b6751b" compoundref="elf__common_8h" startline="192">ET_DYN</references>
+        <references refid="elf__common_8h_1a942478985eb016311380dee473cc8c3e" compoundref="elf__common_8h" startline="191">ET_EXEC</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" compoundref="file_8c" startline="388" endline="518">fopen</references>
+        <references refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" compoundref="file_8c" startline="291" endline="309">fread</references>
+        <references refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" compoundref="file_8c" startline="326" endline="329">fseek</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="32">K_PANIC</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="structElf32__Phdr_1ada1cdd3d6ccb79a17bed0e3c21379c84" compoundref="elf32_8h" startline="112">Elf32_Phdr::p_memsz</references>
+        <references refid="structElf32__Phdr_1a01a298ebc899bcf9c23211a7bf1155a6" compoundref="elf32_8h" startline="109">Elf32_Phdr::p_vaddr</references>
+        <references refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="68">PAGE_DEFAULT</references>
+        <references refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="55">PAGE_PRESENT</references>
+        <references refid="paging_8h_1a2d0253527ea5080d6befe0ee3bde473f" compoundref="paging_8h" startline="57">PAGE_USER</references>
+        <references refid="elf__common_8h_1a84d7768fd6c6ece599d297090900cf92" compoundref="elf__common_8h" startline="492">PT_LOAD</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="paging_8h_1adea68f248df43bddee62a09d945304b0" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</references>
+        <references refid="paging_8h_1ab060cb62a6dd6d22f63757d72c27c335" compoundref="setpageattributes_8c" startline="39" endline="66">vmm_setPageAttributes</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2elf_8c_1a10bbb060fe8d138d450bf6c04913fba7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* elfGetPhType</definition>
+        <argsstring>(int phType)</argsstring>
+        <name>elfGetPhType</name>
+        <param>
+          <type>int</type>
+          <declname>phType</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="163" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="163" bodyend="165"/>
+        <references refid="kernel_2elf_8c_1a7e66a9f524b0862ade424f19d5733cd2">elfPhType</references>
+        <references refid="kernel_2elf_8c_1a2a4a91f3577e2ffd38d4f91011072569" compoundref="kernel_2elf_8c" startline="145">phTypeName</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2elf_8c_1a5e661c9a431fe068feb9ff1660a570b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* elfGetRelType</definition>
+        <argsstring>(int relType)</argsstring>
+        <name>elfGetRelType</name>
+        <param>
+          <type>int</type>
+          <declname>relType</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="167" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="167" bodyend="169"/>
+        <references refid="kernel_2elf_8c_1a367978286be6a1ad0a4df5a6f38f7553">elfRelType</references>
+        <references refid="kernel_2elf_8c_1a3cfab9172cb06ddb64edd058e38f14ec" compoundref="kernel_2elf_8c" startline="155">relTypeName</references>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2elf_8c_1a21666b534b5f23248f809a220ec3e0ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* elfGetShType</definition>
+        <argsstring>(int shType)</argsstring>
+        <name>elfGetShType</name>
+        <param>
+          <type>int</type>
+          <declname>shType</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c" line="159" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/elf.c" bodystart="159" bodyend="161"/>
+        <references refid="kernel_2elf_8c_1ac8669e586639f5d2a98dc2f095a20d2f">elfShType</references>
+        <references refid="kernel_2elf_8c_1a42bdf04c654064843d45e989798039fa" compoundref="kernel_2elf_8c" startline="150">shTypeName</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_2elf_8h" kindref="compound">sys/elf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" kindref="member">elf_load_file</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*p,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*addr,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*entry)<sp/>{</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ret<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>numsegs<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>base_addr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>real_base_addr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="structElf32__Ehdr" kindref="compound">Elf32_Ehdr</ref><sp/>*binaryHeader<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="structElf32__Phdr" kindref="compound">Elf32_Phdr</ref><sp/>*programHeader<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*exec_fd<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/>exec_fd<sp/>=<sp/><ref refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" kindref="member">fopen</ref>(<ref refid="structfile" kindref="compound">file</ref>,<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(exec_fd<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Load<sp/>the<sp/>ELF<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((binaryHeader<sp/>=<sp/>(<ref refid="structElf32__Ehdr" kindref="compound">Elf32_Ehdr</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structElf32__Ehdr" kindref="compound">Elf32_Ehdr</ref>)))<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;malloc<sp/>failed!&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(binaryHeader,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structElf32__Ehdr" kindref="compound">Elf32_Ehdr</ref>),<sp/>1,<sp/>exec_fd);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Check<sp/>If<sp/>App<sp/>Is<sp/>A<sp/>Real<sp/>Application<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((binaryHeader-&gt;<ref refid="structElf32__Ehdr_1aba47ac5e0af02d5668782f1fd5a7466c" kindref="member">e_ident</ref>[1]<sp/>!=<sp/></highlight><highlight class="charliteral">&apos;E&apos;</highlight><highlight class="normal">)<sp/>&amp;&amp;<sp/>(binaryHeader-&gt;<ref refid="structElf32__Ehdr_1aba47ac5e0af02d5668782f1fd5a7466c" kindref="member">e_ident</ref>[2]<sp/>!=<sp/></highlight><highlight class="charliteral">&apos;L&apos;</highlight><highlight class="normal">)<sp/>&amp;&amp;<sp/>(binaryHeader-&gt;<ref refid="structElf32__Ehdr_1aba47ac5e0af02d5668782f1fd5a7466c" kindref="member">e_ident</ref>[3]<sp/>!=<sp/></highlight><highlight class="charliteral">&apos;F&apos;</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>ret<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>failed;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(binaryHeader-&gt;<ref refid="structElf32__Ehdr_1a49e40a791813c06e3b6ebcb53aef1bb8" kindref="member">e_type</ref><sp/>==<sp/><ref refid="elf__common_8h_1a4373ea3b3d512434ebe2213829b6751b" kindref="member">ET_DYN</ref>)</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>real_base_addr<sp/>=<sp/>*addr;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(binaryHeader-&gt;<ref refid="structElf32__Ehdr_1a49e40a791813c06e3b6ebcb53aef1bb8" kindref="member">e_type</ref><sp/>==<sp/><ref refid="elf__common_8h_1a942478985eb016311380dee473cc8c3e" kindref="member">ET_EXEC</ref>)</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>real_base_addr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>ret<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>failed;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Load<sp/>The<sp/>Program<sp/>Header(s)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((programHeader<sp/>=<sp/>(<ref refid="structElf32__Phdr" kindref="compound">Elf32_Phdr</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structElf32__Phdr" kindref="compound">Elf32_Phdr</ref>)<sp/>*<sp/>binaryHeader-&gt;<ref refid="structElf32__Ehdr_1a360898812db1655f8cb8258780d9df5b" kindref="member">e_phnum</ref>))<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;malloc<sp/>failed!&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(exec_fd,<sp/>binaryHeader-&gt;<ref refid="structElf32__Ehdr_1a25c36fc010284a928604aae005b67ad1" kindref="member">e_phoff</ref>,<sp/>0);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(programHeader,<sp/>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structElf32__Phdr" kindref="compound">Elf32_Phdr</ref>)<sp/>*<sp/>binaryHeader-&gt;<ref refid="structElf32__Ehdr_1a360898812db1655f8cb8258780d9df5b" kindref="member">e_phnum</ref>),<sp/>1,<sp/>exec_fd);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(numsegs<sp/>=<sp/>0x0,<sp/>i<sp/>=<sp/>0x0;<sp/>i<sp/>&lt;<sp/>binaryHeader-&gt;<ref refid="structElf32__Ehdr_1a360898812db1655f8cb8258780d9df5b" kindref="member">e_phnum</ref>;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(programHeader[i].p_type)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1a84d7768fd6c6ece599d297090900cf92" kindref="member">PT_LOAD</ref>:</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Allocate<sp/>Memory<sp/>Im<sp/>Going<sp/>To<sp/>Have<sp/>To<sp/>Make<sp/>This<sp/>Load<sp/>Memory<sp/>With<sp/>Correct</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Settings<sp/>so<sp/>it<sp/>helps<sp/>us<sp/>in<sp/>the<sp/>future</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0x0;<sp/>x<sp/>&lt;<sp/>(programHeader[i].<ref refid="structElf32__Phdr_1ada1cdd3d6ccb79a17bed0e3c21379c84" kindref="member">p_memsz</ref><sp/>+<sp/>0xFFF);<sp/>x<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Make<sp/>readonly<sp/>and<sp/>read/write<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="paging_8h_1adea68f248df43bddee62a09d945304b0" kindref="member">vmm_remapPage</ref>(<ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>),<sp/>((programHeader[i].<ref refid="structElf32__Phdr_1a01a298ebc899bcf9c23211a7bf1155a6" kindref="member">p_vaddr</ref><sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/>real_base_addr),<sp/><ref refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/>0x0)<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>Remap<sp/>Page<sp/>Failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>((</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<sp/>((programHeader[i].p_vaddr<sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/>real_base_addr),<sp/>0x0,<sp/>0x1000);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>Load<sp/>Section<sp/>To<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(exec_fd,<sp/>programHeader[i].p_offset,<sp/>0);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>((</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<sp/>programHeader[i].p_vaddr<sp/>+<sp/>real_base_addr,<sp/>programHeader[i].p_filesz,<sp/>1,<sp/>exec_fd);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((programHeader[i].p_flags<sp/>&amp;<sp/>0x2)<sp/>!=<sp/>0x2)<sp/>{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0x0;<sp/>x<sp/>&lt;<sp/>(programHeader[i].<ref refid="structElf32__Phdr_1ada1cdd3d6ccb79a17bed0e3c21379c84" kindref="member">p_memsz</ref>);<sp/>x<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="paging_8h_1ab060cb62a6dd6d22f63757d72c27c335" kindref="member">vmm_setPageAttributes</ref>((programHeader[i].p_vaddr<sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/>real_base_addr,<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref><sp/>|<sp/><ref refid="paging_8h_1a2d0253527ea5080d6befe0ee3bde473f" kindref="member">PAGE_USER</ref>))<sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;vmm_setPageAttributes<sp/>failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(numsegs<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base_addr<sp/>=<sp/>programHeader[i].<ref refid="structElf32__Phdr_1a01a298ebc899bcf9c23211a7bf1155a6" kindref="member">p_vaddr</ref><sp/>+<sp/>real_base_addr;<sp/></highlight><highlight class="comment">//(programHeader[i].p_vaddr<sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>real_base_addr;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>numsegs++;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/>*addr<sp/>=<sp/>base_addr;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/>*entry<sp/>=<sp/>binaryHeader-&gt;<ref refid="structElf32__Ehdr_1ab8a982696048d807017919b7d0145482" kindref="member">e_entry</ref><sp/>+<sp/>real_base_addr;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>failed:</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Close<sp/>The<sp/>Open<sp/>File<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" kindref="member">fclose</ref>(exec_fd);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Free<sp/>Binary<sp/>Header<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(binaryHeader<sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(binaryHeader);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Free<sp/>Program<sp/>Header<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(programHeader<sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(programHeader);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(ret);</highlight></codeline>
+<codeline lineno="137"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="140" refid="kernel_2elf_8c_1a93d6f656ee02f4fedc15bbb8d536a6f0" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a93d6f656ee02f4fedc15bbb8d536a6f0" kindref="member">elfTypeName</ref>;</highlight></codeline>
+<codeline lineno="141" refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal">}<sp/><ref refid="kernel_2elf_8c_1a589b211bad1159f7ae6a996832ff9cfb" kindref="member">elfType</ref>[]<sp/>=<sp/>{<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_NONE&quot;</highlight><highlight class="normal">,<sp/>0<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_REL&quot;</highlight><highlight class="normal">,<sp/>1<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_EXEC&quot;</highlight><highlight class="normal">,<sp/>2<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_DYN&quot;</highlight><highlight class="normal">,<sp/>3<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_CORE&quot;</highlight><highlight class="normal">,<sp/>4<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_LOPROC&quot;</highlight><highlight class="normal">,<sp/>0xff00<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;ET_HIPROC&quot;</highlight><highlight class="normal">,<sp/>0xffff<sp/>},<sp/>};</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145" refid="kernel_2elf_8c_1a2a4a91f3577e2ffd38d4f91011072569" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a2a4a91f3577e2ffd38d4f91011072569" kindref="member">phTypeName</ref>;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal">}<sp/><ref refid="kernel_2elf_8c_1a7e66a9f524b0862ade424f19d5733cd2" kindref="member">elfPhType</ref>[]<sp/>=<sp/>{<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_NULL&quot;</highlight><highlight class="normal">,<sp/>0<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_LOAD&quot;</highlight><highlight class="normal">,<sp/>1<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_DYNAMIC&quot;</highlight><highlight class="normal">,<sp/>2<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_INTERP&quot;</highlight><highlight class="normal">,<sp/>3<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_NOTE&quot;</highlight><highlight class="normal">,<sp/>4<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_SHLIB&quot;</highlight><highlight class="normal">,<sp/>5<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_PHDR&quot;</highlight><highlight class="normal">,<sp/>6<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_LOPROC&quot;</highlight><highlight class="normal">,<sp/>0x70000000<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;PT_HIPROC&quot;</highlight><highlight class="normal">,<sp/>0x7fffffff<sp/>},<sp/>};</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="150" refid="kernel_2elf_8c_1a42bdf04c654064843d45e989798039fa" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a42bdf04c654064843d45e989798039fa" kindref="member">shTypeName</ref>;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal">}<sp/><ref refid="kernel_2elf_8c_1ac8669e586639f5d2a98dc2f095a20d2f" kindref="member">elfShType</ref>[]<sp/>=<sp/>{<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_NULL&quot;</highlight><highlight class="normal">,<sp/>0<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_PROGBITS&quot;</highlight><highlight class="normal">,<sp/>1<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_SYMTAB&quot;</highlight><highlight class="normal">,<sp/>2<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_STRTAB&quot;</highlight><highlight class="normal">,<sp/>3<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_RELA&quot;</highlight><highlight class="normal">,<sp/>4<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_HASH&quot;</highlight><highlight class="normal">,<sp/>5<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_DYNAMIC&quot;</highlight><highlight class="normal">,<sp/>6<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_NOTE&quot;</highlight><highlight class="normal">,<sp/>7<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_NOBITS&quot;</highlight><highlight class="normal">,<sp/>8<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_REL&quot;</highlight><highlight class="normal">,<sp/>9<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_SHLIB&quot;</highlight><highlight class="normal">,<sp/>10<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;SHT_DYNSYM&quot;</highlight><highlight class="normal">,<sp/>11<sp/>},<sp/>};</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="155" refid="kernel_2elf_8c_1a3cfab9172cb06ddb64edd058e38f14ec" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a3cfab9172cb06ddb64edd058e38f14ec" kindref="member">relTypeName</ref>;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="157"><highlight class="normal">}<sp/><ref refid="kernel_2elf_8c_1a367978286be6a1ad0a4df5a6f38f7553" kindref="member">elfRelType</ref>[]<sp/>=<sp/>{<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_NONE&quot;</highlight><highlight class="normal">,<sp/>0<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_32&quot;</highlight><highlight class="normal">,<sp/>1<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_PC32&quot;</highlight><highlight class="normal">,<sp/>2<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_GOT32&quot;</highlight><highlight class="normal">,<sp/>3<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_PLT32&quot;</highlight><highlight class="normal">,<sp/>4<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_COPY&quot;</highlight><highlight class="normal">,<sp/>5<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_GLOB_DAT&quot;</highlight><highlight class="normal">,<sp/>6<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_JMP_SLOT&quot;</highlight><highlight class="normal">,<sp/>7<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_RELATIVE&quot;</highlight><highlight class="normal">,<sp/>8<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_GOTOFF&quot;</highlight><highlight class="normal">,<sp/>9<sp/>},<sp/>{<sp/></highlight><highlight class="stringliteral">&quot;R_386_GOTPC&quot;</highlight><highlight class="normal">,<sp/>10<sp/>},<sp/>};</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159" refid="kernel_2elf_8c_1a21666b534b5f23248f809a220ec3e0ff" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a21666b534b5f23248f809a220ec3e0ff" kindref="member">elfGetShType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>shType)<sp/>{</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="kernel_2elf_8c_1ac8669e586639f5d2a98dc2f095a20d2f" kindref="member">elfShType</ref>[shType].<ref refid="kernel_2elf_8c_1a42bdf04c654064843d45e989798039fa" kindref="member">shTypeName</ref>);</highlight></codeline>
+<codeline lineno="161"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163" refid="kernel_2elf_8c_1a10bbb060fe8d138d450bf6c04913fba7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a10bbb060fe8d138d450bf6c04913fba7" kindref="member">elfGetPhType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>phType)<sp/>{</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="kernel_2elf_8c_1a7e66a9f524b0862ade424f19d5733cd2" kindref="member">elfPhType</ref>[phType].<ref refid="kernel_2elf_8c_1a2a4a91f3577e2ffd38d4f91011072569" kindref="member">phTypeName</ref>);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="kernel_2elf_8c_1a5e661c9a431fe068feb9ff1660a570b7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="kernel_2elf_8c_1a5e661c9a431fe068feb9ff1660a570b7" kindref="member">elfGetRelType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>relType)<sp/>{</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="kernel_2elf_8c_1a367978286be6a1ad0a4df5a6f38f7553" kindref="member">elfRelType</ref>[relType].<ref refid="kernel_2elf_8c_1a3cfab9172cb06ddb64edd058e38f14ec" kindref="member">relTypeName</ref>);</highlight></codeline>
+<codeline lineno="169"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="172"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="173"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/elf.c"/>
+  </compounddef>
+</doxygen>

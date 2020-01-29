@@ -1,0 +1,979 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__filelib_8h" kind="file" language="C++">
+    <compoundname>fat_filelib.h</compoundname>
+    <includes refid="fat__opts_8h" local="yes">fat_opts.h</includes>
+    <includes refid="fat__access_8h" local="yes">fat_access.h</includes>
+    <includes refid="fat__list_8h" local="yes">fat_list.h</includes>
+    <includedby refid="example_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/example.c</includedby>
+    <includedby refid="fat_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat.c</includedby>
+    <includedby refid="fat__cache_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</includedby>
+    <includedby refid="fat__filelib_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</includedby>
+    <incdepgraph>
+      <node id="8">
+        <label>fat_list.h</label>
+        <link refid="fat__list_8h"/>
+      </node>
+      <node id="6">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="7">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="5">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>stdio.h</label>
+      </node>
+      <node id="4">
+        <label>fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structcluster__lookup" prot="public">cluster_lookup</innerclass>
+    <innerclass refid="structsFL__FILE" prot="public">sFL_FILE</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__filelib_8h_1a59adc4c82490d23754cd39c2fb99b0da" prot="public" static="no">
+        <name>EOF</name>
+        <initializer>(-1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="24" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1abb57841952be5b0be972b4bef8fd5021" prot="public" static="no">
+        <name>FILE_APPEND</name>
+        <initializer>(1 &lt;&lt; 2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1a9d3d138c1de23ac8dcb6b1a80730d649" prot="public" static="no">
+        <name>FILE_BINARY</name>
+        <initializer>(1 &lt;&lt; 3)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1a39eafd8be8b38d6867f8ea6f37555154" prot="public" static="no">
+        <name>FILE_CREATE</name>
+        <initializer>(1 &lt;&lt; 5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1aea0d6d2bf8dc1ad57d506222cd4c1341" prot="public" static="no">
+        <name>FILE_ERASE</name>
+        <initializer>(1 &lt;&lt; 4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1ad52d51659a75e25d96fb04d22ff718cb" prot="public" static="no">
+        <name>FILE_READ</name>
+        <initializer>(1 &lt;&lt; 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1ace34e503254fa9004599ddf122264c8f" prot="public" static="no">
+        <name>FILE_WRITE</name>
+        <initializer>(1 &lt;&lt; 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1a4c8d0b76b470ba65a43ca46a88320f39" prot="public" static="no">
+        <name>SEEK_CUR</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="12" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1ad2a2e6c114780c3071efd24f16c7f7d8" prot="public" static="no">
+        <name>SEEK_END</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="16" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__filelib_8h_1a0d112bae8fd35be772185b6ec6bcbe64" prot="public" static="no">
+        <name>SEEK_SET</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="20" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="fat__filelib_8h_1a0e185ab27bc0e04a34c4fd884056192a" prot="public" static="no">
+        <type>struct <ref refid="structfs__dir__list__status" kindref="compound">fs_dir_list_status</ref></type>
+        <definition>typedef struct fs_dir_list_status FL_DIR</definition>
+        <argsstring></argsstring>
+        <name>FL_DIR</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="98" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="fat__filelib_8h_1ae511f1d179c3f530088b0f990760eea0" prot="public" static="no">
+        <type>struct <ref refid="structfs__dir__ent" kindref="compound">fs_dir_ent</ref></type>
+        <definition>typedef struct fs_dir_ent fl_dirent</definition>
+        <argsstring></argsstring>
+        <name>fl_dirent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="98" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="fat__filelib_8h_1ab1659dbb766794c2537f83372fc2705b" prot="public" static="no">
+        <type>struct <ref refid="structsFL__FILE" kindref="compound">sFL_FILE</ref></type>
+        <definition>typedef struct sFL_FILE  FL_FILE</definition>
+        <argsstring></argsstring>
+        <name>FL_FILE</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="72" column="9"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__filelib_8h_1a71ff2c6cb4d49c94ee51db25be152b1d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fl_attach_locks</definition>
+        <argsstring>(void(*lock)(void), void(*unlock)(void))</argsstring>
+        <name>fl_attach_locks</name>
+        <param>
+          <type>void(*)(void)</type>
+          <declname>lock</declname>
+        </param>
+        <param>
+          <type>void(*)(void)</type>
+          <declname>unlock</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="80" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="599" bodyend="602" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="80" declcolumn="21"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1af9d46bc71dd1953eb78c99d6615ade92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_attach_media</definition>
+        <argsstring>(fn_diskio_read rd, fn_diskio_write wr)</argsstring>
+        <name>fl_attach_media</name>
+        <param>
+          <type><ref refid="fat__access_8h_1aaf031f5384342c34f5a446c5dd5b5ed3" kindref="member">fn_diskio_read</ref></type>
+          <declname>rd</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__access_8h_1a8532f8239b515a20628a74e37d5a598e" kindref="member">fn_diskio_write</ref></type>
+          <declname>wr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="81" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="606" bodyend="623" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="81" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a236effde34fb2dd06c45f88035d0a670" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_closedir</definition>
+        <argsstring>(FL_DIR *dir)</argsstring>
+        <name>fl_closedir</name>
+        <param>
+          <type><ref refid="fat__filelib_8h_1a0e185ab27bc0e04a34c4fd884056192a" kindref="member">FL_DIR</ref> *</type>
+          <declname>dir</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="106" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1451" bodyend="1454" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="106" declcolumn="21"/>
+        <referencedby refid="fat__filelib_8h_1a02c9d78edd8026a5a633724a36849d16" compoundref="fat__filelib_8c" startline="1460" endline="1470">fl_is_dir</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1ab8d071e615bfb315cc0b6a3836e275e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_createdirectory</definition>
+        <argsstring>(const char *path)</argsstring>
+        <name>fl_createdirectory</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="110" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1345" bodyend="1356" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="110" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1ad10e5f401505a6d2b006b1a24aee82d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fl_fclose</definition>
+        <argsstring>(void *file)</argsstring>
+        <name>fl_fclose</name>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="86" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="856" bodyend="891" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="86" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a870d92346325af5246948e81e33a51d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_feof</definition>
+        <argsstring>(void *f)</argsstring>
+        <name>fl_feof</name>
+        <param>
+          <type>void *</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="97" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1125" bodyend="1142" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="97" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1ac3ce0b4a8ee1030821b73cf4a2718139" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fflush</definition>
+        <argsstring>(void *file)</argsstring>
+        <name>fl_fflush</name>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="87" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="831" bodyend="852" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="87" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a3ac89cbc4edd114760c1dbd18e0d594d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fgetc</definition>
+        <argsstring>(void *file)</argsstring>
+        <name>fl_fgetc</name>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="88" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="895" bodyend="904" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="88" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1acfc7937a8a1f6846f762a2af33507b66" compoundref="fat__filelib_8c" startline="938" endline="1030">fl_fread</references>
+        <referencedby refid="fat__filelib_8h_1adfca2fc192150a8814b2b404c6b31cd7" compoundref="fat__filelib_8c" startline="908" endline="934">fl_fgets</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1afe3f5045d3c354c464f5ddd96271dc33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fgetpos</definition>
+        <argsstring>(void *file, uint32 *position)</argsstring>
+        <name>fl_fgetpos</name>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref> *</type>
+          <declname>position</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="95" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1097" bodyend="1111" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="95" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="fat__filelib_8h_1a1e80992d09dd901c83d9e1d924d642f4" compoundref="fat__filelib_8c" startline="1115" endline="1121">fl_ftell</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1adfca2fc192150a8814b2b404c6b31cd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* fl_fgets</definition>
+        <argsstring>(char *s, int n, void *f)</argsstring>
+        <name>fl_fgets</name>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="89" column="20" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="908" bodyend="934" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="89" declcolumn="20"/>
+        <references refid="fat__filelib_8c_1ade02f44157d32df37dc881d3e6702129" compoundref="fat__filelib_8c" startline="895" endline="904">fl_fgetc</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a475709f0a4f7ea3ab61799081ab4dd29" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* fl_fopen</definition>
+        <argsstring>(const char *path, const char *modifiers)</argsstring>
+        <name>fl_fopen</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>modifiers</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="85" column="20" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="638" bodyend="745" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="85" declcolumn="20"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="tcpdump_8c_1a03d2d7be521e9d357862075078d24f06" compoundref="tcpdump_8c" startline="45">file</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+        <referencedby refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1af3d1cddac050fee30d1420e68b01e7c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_format</definition>
+        <argsstring>(uint32 volume_sectors, const char *name)</argsstring>
+        <name>fl_format</name>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>volume_sectors</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="113" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1476" bodyend="1478" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="113" declcolumn="21"/>
+        <references refid="fat__format_8c_1a8958cfd5dc4bfceb08f41e50e54da92d" compoundref="fat__format_8c" startline="524" endline="531">fatfs_format</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a8304df4fb0abe6a2d552fa39d8559a2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fputc</definition>
+        <argsstring>(int c, void *file)</argsstring>
+        <name>fl_fputc</name>
+        <param>
+          <type>int</type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="90" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1147" bodyend="1156" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="90" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" compoundref="fat__filelib_8c" startline="1162" endline="1294">fl_fwrite</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a3e374b01d35084aa1eee63e50afdf097" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fputs</definition>
+        <argsstring>(const char *str, void *file)</argsstring>
+        <name>fl_fputs</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="91" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1300" bodyend="1308" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="91" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" compoundref="fat__filelib_8c" startline="1162" endline="1294">fl_fwrite</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1ab8d83b67a235a4c7913086785f0b3002" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fread</definition>
+        <argsstring>(void *data, int size, int count, void *file)</argsstring>
+        <name>fl_fread</name>
+        <param>
+          <type>void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="93" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="938" bodyend="1030" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="93" declcolumn="21"/>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__opts_8h_1a873b78b38ef34edf6291274eb0708634" compoundref="fat__opts_8h" startline="70">FAT_SECTOR_SIZE</references>
+        <references refid="fat__filelib_8h_1ad52d51659a75e25d96fb04d22ff718cb" compoundref="fat__filelib_8h" startline="64">FILE_READ</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="fat__filelib_8h_1a3ac89cbc4edd114760c1dbd18e0d594d" compoundref="fat__filelib_8c" startline="895" endline="904">fl_fgetc</referencedby>
+        <referencedby refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" compoundref="fat_8c" startline="101" endline="114">read_fat</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1aad8ebccf6a0e92762349c738bbe72b3a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fseek</definition>
+        <argsstring>(void *file, long offset, int origin)</argsstring>
+        <name>fl_fseek</name>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>origin</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="94" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1034" bodyend="1093" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="94" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <references refid="fat__filelib_8h_1ad2a2e6c114780c3071efd24f16c7f7d8" compoundref="fat__filelib_8h" startline="16">SEEK_END</references>
+        <referencedby refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" compoundref="fat_8c" startline="101" endline="114">read_fat</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a1e80992d09dd901c83d9e1d924d642f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long fl_ftell</definition>
+        <argsstring>(void *f)</argsstring>
+        <name>fl_ftell</name>
+        <param>
+          <type>void *</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="96" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1115" bodyend="1121" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="96" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1a3be6a942f1ebea135e5390e409681c00" compoundref="fat__filelib_8c" startline="1097" endline="1111">fl_fgetpos</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a72f5f8018ba62e365718d2e7eba374fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_fwrite</definition>
+        <argsstring>(const void *data, int size, int count, void *file)</argsstring>
+        <name>fl_fwrite</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="92" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1162" bodyend="1294" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="92" declcolumn="21"/>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+        <referencedby refid="fat__filelib_8h_1a8304df4fb0abe6a2d552fa39d8559a2d" compoundref="fat__filelib_8c" startline="1147" endline="1156">fl_fputc</referencedby>
+        <referencedby refid="fat__filelib_8h_1a3e374b01d35084aa1eee63e50afdf097" compoundref="fat__filelib_8c" startline="1300" endline="1308">fl_fputs</referencedby>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+        <referencedby refid="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" compoundref="fat_8c" startline="116" endline="129">write_fat</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1ac4154a1278a172ab8e6427eb64161179" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fl_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>fl_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="79" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="584" bodyend="595" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="79" declcolumn="21"/>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a02c9d78edd8026a5a633724a36849d16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_is_dir</definition>
+        <argsstring>(const char *path)</argsstring>
+        <name>fl_is_dir</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="111" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1460" bodyend="1470" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="111" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1a236effde34fb2dd06c45f88035d0a670" compoundref="fat__filelib_8c" startline="1451" endline="1454">fl_closedir</references>
+        <references refid="fat__filelib_8c_1a3aba2e202e0af1fb8711eec13e5e9b08" compoundref="fat__filelib_8c" startline="1401" endline="1426">fl_opendir</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a28ef1f43950ba4743e5ddd57db5b8b6e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fl_listdirectory</definition>
+        <argsstring>(const char *path)</argsstring>
+        <name>fl_listdirectory</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="109" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1362" bodyend="1395" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="109" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a3aba2e202e0af1fb8711eec13e5e9b08" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="fat__filelib_8h_1a0e185ab27bc0e04a34c4fd884056192a" kindref="member">FL_DIR</ref> *</type>
+        <definition>FL_DIR* fl_opendir</definition>
+        <argsstring>(const char *path, FL_DIR *dir)</argsstring>
+        <name>fl_opendir</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__filelib_8h_1a0e185ab27bc0e04a34c4fd884056192a" kindref="member">FL_DIR</ref> *</type>
+          <declname>dir</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="104" column="20" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1401" bodyend="1426" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="104" declcolumn="20"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="structfs__dir__ent_1a6286cbb9d382cacf4e15b03ffd0c352c" compoundref="fat__access_8h" startline="101">fs_dir_ent::cluster</references>
+        <references refid="fat__defs_8h_1a8dd000b545e9a127169fdbd82d418965" compoundref="fat__defs_8h" startline="109">FAT32_INVALID_CLUSTER</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="fat__filelib_8h_1a02c9d78edd8026a5a633724a36849d16" compoundref="fat__filelib_8c" startline="1460" endline="1470">fl_is_dir</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1aa13527c9d4fc15a67a5608d9645b7ad8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_readdir</definition>
+        <argsstring>(FL_DIR *dirls, fl_dirent *entry)</argsstring>
+        <name>fl_readdir</name>
+        <param>
+          <type><ref refid="fat__filelib_8h_1a0e185ab27bc0e04a34c4fd884056192a" kindref="member">FL_DIR</ref> *</type>
+          <declname>dirls</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__filelib_8h_1ae511f1d179c3f530088b0f990760eea0" kindref="member">fl_dirent</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="105" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1432" bodyend="1445" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="105" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1ac3e517a9ac192e87329a62e5e8d53b2b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fl_remove</definition>
+        <argsstring>(const char *filename)</argsstring>
+        <name>fl_remove</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="98" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="1314" bodyend="1339" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="98" declcolumn="21"/>
+        <references refid="tcpdump_8c_1a03d2d7be521e9d357862075078d24f06" compoundref="tcpdump_8c" startline="45">file</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__filelib_8h_1a9e4ba72f7c41f41f4a31ca5d46de3f5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fl_shutdown</definition>
+        <argsstring>(void)</argsstring>
+        <name>fl_shutdown</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="82" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c" bodystart="627" bodyend="634" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" declline="82" declcolumn="21"/>
+        <references refid="fat__filelib_8c_1ac1d106623faa1621ee2244ac086c7252" compoundref="fat__filelib_8c" startline="58">CHECK_FL_INIT</references>
+        <references refid="fat__filelib_8c_1a83cfcbafb27a4a899cc602da8a9ab29d" compoundref="fat__filelib_8c" startline="60">FL_LOCK</references>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_FILELIB_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_FILELIB_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__opts_8h" kindref="compound">fat_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__access_8h" kindref="compound">fat_access.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__list_8h" kindref="compound">fat_list.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Defines</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SEEK_CUR</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12" refid="fat__filelib_8h_1a4c8d0b76b470ba65a43ca46a88320f39" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>SEEK_CUR<sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SEEK_END</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="fat__filelib_8h_1ad2a2e6c114780c3071efd24f16c7f7d8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>SEEK_END<sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SEEK_SET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="fat__filelib_8h_1a0d112bae8fd35be772185b6ec6bcbe64" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>SEEK_SET<sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>EOF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="fat__filelib_8h_1a59adc4c82490d23754cd39c2fb99b0da" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>EOF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(-1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsFL__FILE" kindref="compound">sFL_FILE</ref>;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="structcluster__lookup" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcluster__lookup" kindref="compound">cluster_lookup</ref></highlight></codeline>
+<codeline lineno="33"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="34" refid="structcluster__lookup_1a37275d527a9c31fc63545abd697de747" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><ref refid="structcluster__lookup_1a37275d527a9c31fc63545abd697de747" kindref="member">ClusterIdx</ref>;</highlight></codeline>
+<codeline lineno="35" refid="structcluster__lookup_1a5ef8db877361efc3d38d0966305552c8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><ref refid="structcluster__lookup_1a5ef8db877361efc3d38d0966305552c8" kindref="member">CurrentCluster</ref>;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="structsFL__FILE" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsFL__FILE" kindref="compound">sFL_FILE</ref></highlight></codeline>
+<codeline lineno="39"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="40" refid="structsFL__FILE_1a7100b62bd702edd8aae838b7461ddfa8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a7100b62bd702edd8aae838b7461ddfa8" kindref="member">parentcluster</ref>;</highlight></codeline>
+<codeline lineno="41" refid="structsFL__FILE_1a6990c8cfed08794aadccb9352d2f8252" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a6990c8cfed08794aadccb9352d2f8252" kindref="member">startcluster</ref>;</highlight></codeline>
+<codeline lineno="42" refid="structsFL__FILE_1a5372bba4c822b27d1ddb0febc222ac2e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a5372bba4c822b27d1ddb0febc222ac2e" kindref="member">bytenum</ref>;</highlight></codeline>
+<codeline lineno="43" refid="structsFL__FILE_1ad5a244bf8c1f0fb541220cb00e924703" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1ad5a244bf8c1f0fb541220cb00e924703" kindref="member">filelength</ref>;</highlight></codeline>
+<codeline lineno="44" refid="structsFL__FILE_1a34905208c8121f86fa55357bc6851ae4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a34905208c8121f86fa55357bc6851ae4" kindref="member">filelength_changed</ref>;</highlight></codeline>
+<codeline lineno="45" refid="structsFL__FILE_1ac711b022c3ad32744cf964bd27f6359c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1ac711b022c3ad32744cf964bd27f6359c" kindref="member">path</ref>[<ref refid="fat__opts_8h_1a0512aa1c7fba93172e1ff275e5046dd4" kindref="member">FATFS_MAX_LONG_FILENAME</ref>];</highlight></codeline>
+<codeline lineno="46" refid="structsFL__FILE_1a555306a9493ae9b64a236bbeb43436cf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a555306a9493ae9b64a236bbeb43436cf" kindref="member">filename</ref>[<ref refid="fat__opts_8h_1a0512aa1c7fba93172e1ff275e5046dd4" kindref="member">FATFS_MAX_LONG_FILENAME</ref>];</highlight></codeline>
+<codeline lineno="47" refid="structsFL__FILE_1a6e5656f96e124f1c87a3eda6ec05a274" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a6e5656f96e124f1c87a3eda6ec05a274" kindref="member">shortfilename</ref>[11];</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>FAT_CLUSTER_CACHE_ENTRIES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cluster_cache_idx[FAT_CLUSTER_CACHE_ENTRIES];</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cluster_cache_data[FAT_CLUSTER_CACHE_ENTRIES];</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Cluster<sp/>Lookup</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structsFL__FILE_1aff679075b139c37ebbf76a04000ae104" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcluster__lookup" kindref="compound">cluster_lookup</ref><sp/><sp/><sp/><ref refid="structsFL__FILE_1aff679075b139c37ebbf76a04000ae104" kindref="member">last_fat_lookup</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Read/Write<sp/>sector<sp/>buffer</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="structsFL__FILE_1af18e542517b5de6fb46a267e9616fc0c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1af18e542517b5de6fb46a267e9616fc0c" kindref="member">file_data_sector</ref>[<ref refid="fat__opts_8h_1a873b78b38ef34edf6291274eb0708634" kindref="member">FAT_SECTOR_SIZE</ref>];</highlight></codeline>
+<codeline lineno="59" refid="structsFL__FILE_1ad47438866096eaac7a444d23d28958ee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1ad47438866096eaac7a444d23d28958ee" kindref="member">file_data_address</ref>;</highlight></codeline>
+<codeline lineno="60" refid="structsFL__FILE_1a1807ccadb24d1357411bff0cad0988aa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a1807ccadb24d1357411bff0cad0988aa" kindref="member">file_data_dirty</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>File<sp/>fopen<sp/>flags</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="structsFL__FILE_1a0e5d3919015a115c20176536679ec28b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a0e5d3919015a115c20176536679ec28b" kindref="member">flags</ref>;</highlight></codeline>
+<codeline lineno="64" refid="fat__filelib_8h_1ad52d51659a75e25d96fb04d22ff718cb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_READ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="fat__filelib_8h_1ace34e503254fa9004599ddf122264c8f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_WRITE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="fat__filelib_8h_1abb57841952be5b0be972b4bef8fd5021" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_APPEND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>2)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="fat__filelib_8h_1a9d3d138c1de23ac8dcb6b1a80730d649" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_BINARY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>3)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="fat__filelib_8h_1aea0d6d2bf8dc1ad57d506222cd4c1341" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ERASE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="fat__filelib_8h_1a39eafd8be8b38d6867f8ea6f37555154" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_CREATE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>5)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structsFL__FILE_1a4afab9a2b9ab00fa947083d629b5c71b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE_1a4afab9a2b9ab00fa947083d629b5c71b" kindref="member">list_node</ref>;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">}<sp/><ref refid="fat__filelib_8h_1ab1659dbb766794c2537f83372fc2705b" kindref="member">FL_FILE</ref>;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Prototypes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">//<sp/>External</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1ac4154a1278a172ab8e6427eb64161179" kindref="member">fl_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a71ff2c6cb4d49c94ee51db25be152b1d" kindref="member">fl_attach_locks</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*lock)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">),<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*unlock)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1af9d46bc71dd1953eb78c99d6615ade92" kindref="member">fl_attach_media</ref>(<ref refid="fat__access_8h_1aaf031f5384342c34f5a446c5dd5b5ed3" kindref="member">fn_diskio_read</ref><sp/>rd,<sp/><ref refid="fat__access_8h_1a8532f8239b515a20628a74e37d5a598e" kindref="member">fn_diskio_write</ref><sp/>wr);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a9e4ba72f7c41f41f4a31ca5d46de3f5d" kindref="member">fl_shutdown</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Standard<sp/>API</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a475709f0a4f7ea3ab61799081ab4dd29" kindref="member">fl_fopen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*modifiers);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1ad10e5f401505a6d2b006b1a24aee82d2" kindref="member">fl_fclose</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1ac3ce0b4a8ee1030821b73cf4a2718139" kindref="member">fl_fflush</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a3ac89cbc4edd114760c1dbd18e0d594d" kindref="member">fl_fgetc</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1adfca2fc192150a8814b2b404c6b31cd7" kindref="member">fl_fgets</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*s,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>n,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*f);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a8304df4fb0abe6a2d552fa39d8559a2d" kindref="member">fl_fputc</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>c,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a3e374b01d35084aa1eee63e50afdf097" kindref="member">fl_fputs</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>str,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a72f5f8018ba62e365718d2e7eba374fa" kindref="member">fl_fwrite</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>data,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref><sp/>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1ab8d83b67a235a4c7913086785f0b3002" kindref="member">fl_fread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>data,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref><sp/>);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1aad8ebccf6a0e92762349c738bbe72b3a" kindref="member">fl_fseek</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref><sp/>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>offset<sp/>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>origin<sp/>);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1afe3f5045d3c354c464f5ddd96271dc33" kindref="member">fl_fgetpos</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref><sp/>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>*<sp/>position);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a1e80992d09dd901c83d9e1d924d642f4" kindref="member">fl_ftell</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*f);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a870d92346325af5246948e81e33a51d5" kindref="member">fl_feof</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*f);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1ac3e517a9ac192e87329a62e5e8d53b2b" kindref="member">fl_remove</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>filename);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Equivelant<sp/>dirent.h</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="fat__filelib_8h_1a0e185ab27bc0e04a34c4fd884056192a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfs__dir__list__status" kindref="compound">fs_dir_list_status</ref><sp/><sp/><sp/><sp/><ref refid="structfs__dir__list__status" kindref="compound">FL_DIR</ref>;</highlight></codeline>
+<codeline lineno="102" refid="fat__filelib_8h_1ae511f1d179c3f530088b0f990760eea0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfs__dir__ent" kindref="compound">fs_dir_ent</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structfs__dir__ent" kindref="compound">fl_dirent</ref>;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><ref refid="structfs__dir__list__status" kindref="compound">FL_DIR</ref>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a3aba2e202e0af1fb8711eec13e5e9b08" kindref="member">fl_opendir</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>path,<sp/><ref refid="structfs__dir__list__status" kindref="compound">FL_DIR</ref><sp/>*dir);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1aa13527c9d4fc15a67a5608d9645b7ad8" kindref="member">fl_readdir</ref>(<ref refid="structfs__dir__list__status" kindref="compound">FL_DIR</ref><sp/>*dirls,<sp/><ref refid="structfs__dir__ent" kindref="compound">fl_dirent</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a236effde34fb2dd06c45f88035d0a670" kindref="member">fl_closedir</ref>(<ref refid="structfs__dir__list__status" kindref="compound">FL_DIR</ref>*<sp/>dir);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Extensions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a28ef1f43950ba4743e5ddd57db5b8b6e" kindref="member">fl_listdirectory</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1ab8d071e615bfb315cc0b6a3836e275e2" kindref="member">fl_createdirectory</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1a02c9d78edd8026a5a633724a36849d16" kindref="member">fl_is_dir</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8h_1af3d1cddac050fee30d1420e68b01e7c2" kindref="member">fl_format</ref>(<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>volume_sectors,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Test<sp/>hooks</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>FATFS_INC_TEST_HOOKS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfatfs" kindref="compound">fatfs</ref>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_get_fs(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Stdio<sp/>file<sp/>I/O<sp/>names</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>USE_FILELIB_STDIO_COMPAT_NAMES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>FL_FILE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fopen(a,b)<sp/><sp/><sp/><sp/><sp/><sp/>fl_fopen(a,<sp/>b)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fclose(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_fclose(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fflush(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_fflush(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fgetc(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_fgetc(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fgets(a,b,c)<sp/><sp/><sp/><sp/>fl_fgets(a,<sp/>b,<sp/>c)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fputc(a,b)<sp/><sp/><sp/><sp/><sp/><sp/>fl_fputc(a,<sp/>b)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fputs(a,b)<sp/><sp/><sp/><sp/><sp/><sp/>fl_fputs(a,<sp/>b)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fwrite(a,b,c,d)<sp/>fl_fwrite(a,<sp/>b,<sp/>c,<sp/>d)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fread(a,b,c,d)<sp/><sp/>fl_fread(a,<sp/>b,<sp/>c,<sp/>d)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fseek(a,b,c)<sp/><sp/><sp/><sp/>fl_fseek(a,<sp/>b,<sp/>c)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fgetpos(a,b)<sp/><sp/><sp/><sp/>fl_fgetpos(a,<sp/>b)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ftell(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_ftell(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>feof(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_feof(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>remove(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_remove(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>mkdir(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fl_createdirectory(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>rmdir(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h"/>
+  </compounddef>
+</doxygen>

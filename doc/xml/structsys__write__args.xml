@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__write__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_write_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__write__args_1a0d548a06729e6674b8310634e345f07f" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+        <definition>const void* sys_write_args::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="80" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="80" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1a43823ace5837200659d43a5931fd170e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_write_args::buf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>buf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="79" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1a6f39815c90d6179c6a8c420a7819075b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_write_args::buf_r_[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</argsstring>
+        <name>buf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="81" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1a45cd1139d4d410f71c8cec212e6ff3ec" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_write_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="76" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="76" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1a052d27890916ccfdf6a568c01c5eefa4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_write_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="75" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1a365aa957e14af6b438e87f8c55162cb4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_write_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="77" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1ac441511caeedf53cf8c315f482bb9863" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t sys_write_args::nbyte</definition>
+        <argsstring></argsstring>
+        <name>nbyte</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="84" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="84" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1a7ffa646bb6a07417d1669d001c29cfda" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_write_args::nbyte_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>nbyte_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="83" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__write__args_1aade5f19906e7df1ee8860349a851688b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_write_args::nbyte_r_[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</argsstring>
+        <name>nbyte_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="85" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_write_args</label>
+        <link refid="structsys__write__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="74" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="74" bodyend="86"/>
+    <listofallmembers>
+      <member refid="structsys__write__args_1a0d548a06729e6674b8310634e345f07f" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>buf</name></member>
+      <member refid="structsys__write__args_1a43823ace5837200659d43a5931fd170e" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>buf_l_</name></member>
+      <member refid="structsys__write__args_1a6f39815c90d6179c6a8c420a7819075b" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>buf_r_</name></member>
+      <member refid="structsys__write__args_1a45cd1139d4d410f71c8cec212e6ff3ec" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>fd</name></member>
+      <member refid="structsys__write__args_1a052d27890916ccfdf6a568c01c5eefa4" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>fd_l_</name></member>
+      <member refid="structsys__write__args_1a365aa957e14af6b438e87f8c55162cb4" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>fd_r_</name></member>
+      <member refid="structsys__write__args_1ac441511caeedf53cf8c315f482bb9863" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>nbyte</name></member>
+      <member refid="structsys__write__args_1a7ffa646bb6a07417d1669d001c29cfda" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>nbyte_l_</name></member>
+      <member refid="structsys__write__args_1aade5f19906e7df1ee8860349a851688b" prot="public" virt="non-virtual"><scope>sys_write_args</scope><name>nbyte_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

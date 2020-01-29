@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__tcp__raw" kind="group">
+    <compoundname>tcp_raw</compoundname>
+    <title>TCP</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Transmission Control Protocol for IP<linebreak/>
+<simplesect kind="see"><para>raw_api and <ref refid="group__netconn" kindref="compound">Netconn API</ref></para>
+</simplesect>
+Common functions for the TCP implementation, such as functinos for manipulating the data structures and the TCP timer functions. TCP functions related to input and output is found in <ref refid="tcp__in_8c" kindref="compound">tcp_in.c</ref> and <ref refid="tcp__out_8c" kindref="compound">tcp_out.c</ref> respectively.<linebreak/>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

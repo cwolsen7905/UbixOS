@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__debugging__levels" kind="group">
+    <compoundname>debugging_levels</compoundname>
+    <title>LWIP_DBG_MIN_LEVEL and LWIP_DBG_TYPES_ON values</title>
+      <sectiondef kind="user-defined">
+      <header>Debug level (LWIP_DBG_MIN_LEVEL)</header>
+      <memberdef kind="define" id="group__debugging__levels_1ga8ebaeb006b43f55897f3196b3617dc87" prot="public" static="no">
+        <name>LWIP_DBG_LEVEL_ALL</name>
+        <initializer>0x00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Debug level: ALL messages </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1ga77c491e468bf7d9a1bc48430c1866a96" prot="public" static="no">
+        <name>LWIP_DBG_LEVEL_WARNING</name>
+        <initializer>0x01</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Debug level: Warnings. bad checksums, dropped packets, ... </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" prot="public" static="no">
+        <name>LWIP_DBG_LEVEL_SERIOUS</name>
+        <initializer>0x02</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Debug level: Serious. memory allocation failures, ... </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1gaab41143277cd38047b6660d90e9cec3b" prot="public" static="no">
+        <name>LWIP_DBG_LEVEL_SEVERE</name>
+        <initializer>0x03</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Debug level: Severe </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="user-defined">
+      <header>Enable/disable debug messages completely (LWIP_DBG_TYPES_ON)</header>
+      <memberdef kind="define" id="group__debugging__levels_1ga9e31b7cbbc8f46af8e62b548079acd4e" prot="public" static="no">
+        <name>LWIP_DBG_ON</name>
+        <initializer>0x80U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>flag for LWIP_DEBUGF to enable that debug message </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" prot="public" static="no">
+        <name>LWIP_DBG_OFF</name>
+        <initializer>0x00U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>flag for LWIP_DEBUGF to disable that debug message </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="74" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="user-defined">
+      <header>Debug message types (LWIP_DBG_TYPES_ON)</header>
+      <memberdef kind="define" id="group__debugging__levels_1ga988147559b78642ac881815b66023646" prot="public" static="no">
+        <name>LWIP_DBG_TRACE</name>
+        <initializer>0x40U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>flag for LWIP_DEBUGF indicating a tracing message (to follow program flow) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="83" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1ga511ee3deb3240635f5ec6a1709c6d741" prot="public" static="no">
+        <name>LWIP_DBG_STATE</name>
+        <initializer>0x20U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>flag for LWIP_DEBUGF indicating a state debug message (to follow module states) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1ga7d44d1804fa5e747aed86816e2a6cae0" prot="public" static="no">
+        <name>LWIP_DBG_FRESH</name>
+        <initializer>0x10U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>flag for LWIP_DEBUGF indicating newly added code, not thoroughly tested yet </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="87" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1gab0a296414983155b30ad51871606b90f" prot="public" static="no">
+        <name>LWIP_DBG_HALT</name>
+        <initializer>0x08U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>flag for LWIP_DEBUGF to halt after printing this debug message </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="89" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__debugging__levels_1gac2faac6759cbe02e4f1f9f27edbed78e" prot="public" static="no">
+        <name>LWIP_DBG_LEVEL_OFF</name>
+        <initializer><ref refid="group__debugging__levels_1ga8ebaeb006b43f55897f3196b3617dc87" kindref="member">LWIP_DBG_LEVEL_ALL</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__debugging__levels_1gad64836d29d071e1db104f49a01c951f1" prot="public" static="no">
+        <name>LWIP_DBG_MASK_LEVEL</name>
+        <initializer>0x03</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/debug.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/debug.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

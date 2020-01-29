@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="lwiperf_8h" kind="file" language="C++">
+    <compoundname>lwiperf.h</compoundname>
+    <includes local="yes">lwip/opt.h</includes>
+    <includes local="yes">lwip/ip_addr.h</includes>
+    <incdepgraph>
+      <node id="3">
+        <label>lwip/ip_addr.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h</label>
+        <link refid="lwiperf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>lwip/opt.h</label>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="lwiperf_8h_1a911cc7e298ab38433bd4a4980cdcad15" prot="public" static="no">
+        <name>LWIPERF_TCP_PORT_DEFAULT</name>
+        <initializer>5001</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6" prot="public" static="no" strong="no">
+        <type></type>
+        <name>lwiperf_report_type</name>
+        <enumvalue id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6aa52255236ad2983346311ce7f28210e5" prot="public">
+          <name>LWIPERF_TCP_DONE_SERVER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>The server side test is done </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6a4f9bde0cad305eaab25d2c1d0196677b" prot="public">
+          <name>LWIPERF_TCP_DONE_CLIENT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>The client side test is done </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6abee2bf6da51a0845c15ac52b280203cb" prot="public">
+          <name>LWIPERF_TCP_ABORTED_LOCAL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Local error lead to test abort </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6adda7e5dbaf1e04eb04ec0fd2b05584a5" prot="public">
+          <name>LWIPERF_TCP_ABORTED_LOCAL_DATAERROR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Data check error lead to test abort </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6a3d4e1f5742d80aeafb6b22aa74d93e40" prot="public">
+          <name>LWIPERF_TCP_ABORTED_LOCAL_TXERROR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Transmit error lead to test abort </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6ae664c0f987584f07fb0f6f8896aada0d" prot="public">
+          <name>LWIPERF_TCP_ABORTED_REMOTE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Remote side aborted the test </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>lwIPerf test results </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" line="51" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" bodystart="50" bodyend="64"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* lwiperf_report_fn) (void *arg, enum lwiperf_report_type report_type, const ip_addr_t *local_addr, u16_t local_port, const ip_addr_t *remote_addr, u16_t remote_port, u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec)</definition>
+        <argsstring>)(void *arg, enum lwiperf_report_type report_type, const ip_addr_t *local_addr, u16_t local_port, const ip_addr_t *remote_addr, u16_t remote_port, u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec)</argsstring>
+        <name>lwiperf_report_fn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Prototype of a report function that is called when a session is finished. This report function can show the test results. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>report_type</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>contains the test result </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="lwiperf_8h_1ac51c9c44a38bfa1140bd44b793a0a004" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void lwiperf_abort</definition>
+        <argsstring>(void *lwiperf_session)</argsstring>
+        <name>lwiperf_abort</name>
+        <param>
+          <type>void *</type>
+          <declname>lwiperf_session</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" line="77" column="7" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" declline="77" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="lwiperf_8h_1ad97bf77057e7f96d6d8def812deea202" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* lwiperf_start_tcp_server</definition>
+        <argsstring>(const ip_addr_t *local_addr, u16_t local_port, lwiperf_report_fn report_fn, void *report_arg)</argsstring>
+        <name>lwiperf_start_tcp_server</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref> *</type>
+          <declname>local_addr</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>local_port</declname>
+        </param>
+        <param>
+          <type><ref refid="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" kindref="member">lwiperf_report_fn</ref></type>
+          <declname>report_fn</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>report_arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" line="74" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" declline="74" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="lwiperf_8h_1ae1f30a02b86c4dd3d47810cd493baf26" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* lwiperf_start_tcp_server_default</definition>
+        <argsstring>(lwiperf_report_fn report_fn, void *report_arg)</argsstring>
+        <name>lwiperf_start_tcp_server_default</name>
+        <param>
+          <type><ref refid="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" kindref="member">lwiperf_report_fn</ref></type>
+          <declname>report_fn</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>report_arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" line="76" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h" declline="76" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>lwIP iPerf server implementation </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2014<sp/>Simon<sp/>Goldschmidt</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Simon<sp/>Goldschmidt</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_APPS_LWIPERF_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_APPS_LWIPERF_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/opt.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/ip_addr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="lwiperf_8h_1a911cc7e298ab38433bd4a4980cdcad15" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIPERF_TCP_PORT_DEFAULT<sp/><sp/>5001</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6" kindref="member">lwiperf_report_type</ref></highlight></codeline>
+<codeline lineno="51"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="53" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6aa52255236ad2983346311ce7f28210e5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6aa52255236ad2983346311ce7f28210e5" kindref="member">LWIPERF_TCP_DONE_SERVER</ref>,</highlight></codeline>
+<codeline lineno="55" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6a4f9bde0cad305eaab25d2c1d0196677b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6a4f9bde0cad305eaab25d2c1d0196677b" kindref="member">LWIPERF_TCP_DONE_CLIENT</ref>,</highlight></codeline>
+<codeline lineno="57" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6abee2bf6da51a0845c15ac52b280203cb" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6abee2bf6da51a0845c15ac52b280203cb" kindref="member">LWIPERF_TCP_ABORTED_LOCAL</ref>,</highlight></codeline>
+<codeline lineno="59" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6adda7e5dbaf1e04eb04ec0fd2b05584a5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6adda7e5dbaf1e04eb04ec0fd2b05584a5" kindref="member">LWIPERF_TCP_ABORTED_LOCAL_DATAERROR</ref>,</highlight></codeline>
+<codeline lineno="61" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6a3d4e1f5742d80aeafb6b22aa74d93e40" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6a3d4e1f5742d80aeafb6b22aa74d93e40" kindref="member">LWIPERF_TCP_ABORTED_LOCAL_TXERROR</ref>,</highlight></codeline>
+<codeline lineno="63" refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6ae664c0f987584f07fb0f6f8896aada0d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6ae664c0f987584f07fb0f6f8896aada0d" kindref="member">LWIPERF_TCP_ABORTED_REMOTE</ref></highlight></codeline>
+<codeline lineno="64"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" kindref="member">lwiperf_report_fn</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="lwiperf_8h_1ab72a2d205e43d5243a291f937bbc24d6" kindref="member">lwiperf_report_type</ref><sp/>report_type,</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref>*<sp/>local_addr,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>local_port,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref>*<sp/>remote_addr,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>remote_port,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>bytes_transferred,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ms_duration,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>bandwidth_kbitpsec);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="lwiperf_8h_1ad97bf77057e7f96d6d8def812deea202" kindref="member">lwiperf_start_tcp_server</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref>*<sp/>local_addr,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>local_port,</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" kindref="member">lwiperf_report_fn</ref><sp/>report_fn,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>report_arg);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="lwiperf_8h_1ae1f30a02b86c4dd3d47810cd493baf26" kindref="member">lwiperf_start_tcp_server_default</ref>(<ref refid="lwiperf_8h_1a248ea47a58a14c6aecf6525217a812fd" kindref="member">lwiperf_report_fn</ref><sp/>report_fn,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>report_arg);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><ref refid="lwiperf_8h_1ac51c9c44a38bfa1140bd44b793a0a004" kindref="member">lwiperf_abort</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>lwiperf_session);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_APPS_LWIPERF_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/lwiperf.h"/>
+  </compounddef>
+</doxygen>

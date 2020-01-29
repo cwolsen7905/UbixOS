@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Move" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Move</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Move_1a25c402d8b1991f61f6ecc539368cd99a" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Move::m_info</definition>
+        <argsstring></argsstring>
+        <name>m_info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="163" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Move_1a4b1119df05b7672effd0afb09b258f85" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Move::m_poffset</definition>
+        <argsstring></argsstring>
+        <name>m_poffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="164" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Move_1a84620f9a22f6a4b0f8a8a6c4e332f600" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Move::m_repeat</definition>
+        <argsstring></argsstring>
+        <name>m_repeat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="165" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Move_1a85ca12bb9ac30146a8533fccfe601b43" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Move::m_stride</definition>
+        <argsstring></argsstring>
+        <name>m_stride</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="166" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Move_1a11ef0924032559a925893490fae974ab" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1ac6515aa02b362a99f0b75d7f24e1b730" kindref="member">Elf32_Lword</ref></type>
+        <definition>Elf32_Lword Elf32_Move::m_value</definition>
+        <argsstring></argsstring>
+        <name>m_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="162" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Move</label>
+        <link refid="structElf32__Move"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="161" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="161" bodyend="167"/>
+    <listofallmembers>
+      <member refid="structElf32__Move_1a25c402d8b1991f61f6ecc539368cd99a" prot="public" virt="non-virtual"><scope>Elf32_Move</scope><name>m_info</name></member>
+      <member refid="structElf32__Move_1a4b1119df05b7672effd0afb09b258f85" prot="public" virt="non-virtual"><scope>Elf32_Move</scope><name>m_poffset</name></member>
+      <member refid="structElf32__Move_1a84620f9a22f6a4b0f8a8a6c4e332f600" prot="public" virt="non-virtual"><scope>Elf32_Move</scope><name>m_repeat</name></member>
+      <member refid="structElf32__Move_1a85ca12bb9ac30146a8533fccfe601b43" prot="public" virt="non-virtual"><scope>Elf32_Move</scope><name>m_stride</name></member>
+      <member refid="structElf32__Move_1a11ef0924032559a925893490fae974ab" prot="public" virt="non-virtual"><scope>Elf32_Move</scope><name>m_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

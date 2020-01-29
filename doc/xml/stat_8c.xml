@@ -1,0 +1,856 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="stat_8c" kind="file" language="C++">
+    <compoundname>stat.c</compoundname>
+    <includes refid="ubixos_2errno_8h" local="no">ubixos/errno.h</includes>
+    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
+    <includes refid="stat_8h" local="no">vfs/stat.h</includes>
+    <includes refid="include_2vfs_2file_8h" local="no">vfs/file.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="descrip_8h" local="no">sys/descrip.h</includes>
+    <incdepgraph>
+      <node id="30">
+        <label>sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+      </node>
+      <node id="23">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/stat.c</label>
+        <link refid="stat_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="13">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="14">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="20">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="26">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>vfs/stat.h</label>
+        <link refid="stat_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int _sys_stat</definition>
+        <argsstring>(char *path, struct stat *sb, int flags)</argsstring>
+        <name>_sys_stat</name>
+        <param>
+          <type>char *</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structstat" kindref="compound">stat</ref> *</type>
+          <declname>sb</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flags</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="36" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="36" bodyend="89"/>
+        <references refid="structufs2__dinode_1a884a0a3cb517902f2648b51782f713ed" compoundref="ufs_8h" startline="112">ufs2_dinode::di_atime</references>
+        <references refid="structufs2__dinode_1a7faf94a254583325c1de14b3eedc4672" compoundref="ufs_8h" startline="114">ufs2_dinode::di_ctime</references>
+        <references refid="structufs2__dinode_1a21124da4705829d63dd28f0d7bcf2a1e" compoundref="ufs_8h" startline="108">ufs2_dinode::di_gid</references>
+        <references refid="structufs2__dinode_1acb7ed3e4a81ba003ec405439d39a307c" compoundref="ufs_8h" startline="105">ufs2_dinode::di_mode</references>
+        <references refid="structufs2__dinode_1a891b9a4ebc71c40776c6af460ea8c5b6" compoundref="ufs_8h" startline="113">ufs2_dinode::di_mtime</references>
+        <references refid="structufs2__dinode_1a1398daf0dae2b3f39bc5f821e704ad89" compoundref="ufs_8h" startline="106">ufs2_dinode::di_nlink</references>
+        <references refid="structufs2__dinode_1ad5993494c57c494293c25dc81ec3b154" compoundref="ufs_8h" startline="110">ufs2_dinode::di_size</references>
+        <references refid="structufs2__dinode_1abe8c549f9c8f7178291b1e34cc9bbc45" compoundref="ufs_8h" startline="107">ufs2_dinode::di_uid</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" compoundref="file_8c" startline="388" endline="518">fopen</references>
+        <references refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" compoundref="include_2vfs_2file_8h" startline="66">fileDescriptor::ino</references>
+        <references refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" compoundref="include_2vfs_2file_8h" startline="80">fileDescriptor::inode</references>
+        <references refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" compoundref="stat_8h" startline="52">stat::st_atime</references>
+        <references refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" compoundref="stat_8h" startline="56">stat::st_ctime</references>
+        <references refid="structstat_1afb143a1534bf763afd6b353ea3cad102" compoundref="stat_8h" startline="45">stat::st_dev</references>
+        <references refid="structstat_1ab864f16f436cec370f0ced585d897698" compoundref="stat_8h" startline="50">stat::st_gid</references>
+        <references refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" compoundref="stat_8h" startline="46">stat::st_ino</references>
+        <references refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" compoundref="stat_8h" startline="47">stat::st_mode</references>
+        <references refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" compoundref="stat_8h" startline="54">stat::st_mtime</references>
+        <references refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" compoundref="stat_8h" startline="48">stat::st_nlink</references>
+        <references refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" compoundref="stat_8h" startline="51">stat::st_rdev</references>
+        <references refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" compoundref="stat_8h" startline="58">stat::st_size</references>
+        <references refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" compoundref="stat_8h" startline="49">stat::st_uid</references>
+        <references refid="structinode_1a82b45e7d93016820fc4927298aa2f772">inode::u</references>
+        <references refid="structinode_1ae43bfb8e013c227880cd49b341f86292" compoundref="inode_8h" startline="75">inode::ufs2_i</references>
+        <referencedby refid="sysproto__posix_8h_1a5904b4cf0404c2843cffcc05ff2182e8" compoundref="stat_8c" startline="297" endline="300">sys_lstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1adc863cd02e90335388170f0289e97189" compoundref="stat_8c" startline="302" endline="305">sys_stat</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="stat_8c_1a20c64cd904d02f5580b4de7c194b9357" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_fstat</definition>
+        <argsstring>(struct thread *td, struct sys_fstat_args *args)</argsstring>
+        <name>sys_fstat</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__fstat__args" kindref="compound">sys_fstat_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="91" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="91" bodyend="131"/>
+        <references refid="structufs2__dinode_1a884a0a3cb517902f2648b51782f713ed" compoundref="ufs_8h" startline="112">ufs2_dinode::di_atime</references>
+        <references refid="structufs2__dinode_1a7faf94a254583325c1de14b3eedc4672" compoundref="ufs_8h" startline="114">ufs2_dinode::di_ctime</references>
+        <references refid="structufs2__dinode_1a21124da4705829d63dd28f0d7bcf2a1e" compoundref="ufs_8h" startline="108">ufs2_dinode::di_gid</references>
+        <references refid="structufs2__dinode_1acb7ed3e4a81ba003ec405439d39a307c" compoundref="ufs_8h" startline="105">ufs2_dinode::di_mode</references>
+        <references refid="structufs2__dinode_1a891b9a4ebc71c40776c6af460ea8c5b6" compoundref="ufs_8h" startline="113">ufs2_dinode::di_mtime</references>
+        <references refid="structufs2__dinode_1a1398daf0dae2b3f39bc5f821e704ad89" compoundref="ufs_8h" startline="106">ufs2_dinode::di_nlink</references>
+        <references refid="structufs2__dinode_1ad5993494c57c494293c25dc81ec3b154" compoundref="ufs_8h" startline="110">ufs2_dinode::di_size</references>
+        <references refid="structufs2__dinode_1abe8c549f9c8f7178291b1e34cc9bbc45" compoundref="ufs_8h" startline="107">ufs2_dinode::di_uid</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="structsys__fstat__args_1ad8de8fb29a07e6c09a9f60930a16059f" compoundref="sysproto__posix_8h" startline="469">sys_fstat_args::fd</references>
+        <references refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" compoundref="descrip_8c" startline="214" endline="227">getfd</references>
+        <references refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" compoundref="include_2vfs_2file_8h" startline="66">fileDescriptor::ino</references>
+        <references refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" compoundref="include_2vfs_2file_8h" startline="80">fileDescriptor::inode</references>
+        <references refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" compoundref="include_2vfs_2file_8h" startline="82">fileDescriptor::res</references>
+        <references refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" compoundref="sysproto__posix_8h" startline="472">sys_fstat_args::sb</references>
+        <references refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" compoundref="include_2vfs_2file_8h" startline="70">fileDescriptor::size</references>
+        <references refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" compoundref="stat_8h" startline="52">stat::st_atime</references>
+        <references refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" compoundref="stat_8h" startline="56">stat::st_ctime</references>
+        <references refid="structstat_1afb143a1534bf763afd6b353ea3cad102" compoundref="stat_8h" startline="45">stat::st_dev</references>
+        <references refid="structstat_1ab864f16f436cec370f0ced585d897698" compoundref="stat_8h" startline="50">stat::st_gid</references>
+        <references refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" compoundref="stat_8h" startline="46">stat::st_ino</references>
+        <references refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" compoundref="stat_8h" startline="47">stat::st_mode</references>
+        <references refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" compoundref="stat_8h" startline="54">stat::st_mtime</references>
+        <references refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" compoundref="stat_8h" startline="48">stat::st_nlink</references>
+        <references refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" compoundref="stat_8h" startline="51">stat::st_rdev</references>
+        <references refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" compoundref="stat_8h" startline="58">stat::st_size</references>
+        <references refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" compoundref="stat_8h" startline="49">stat::st_uid</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structinode_1a82b45e7d93016820fc4927298aa2f772">inode::u</references>
+        <references refid="structinode_1ae43bfb8e013c227880cd49b341f86292" compoundref="inode_8h" startline="75">inode::ufs2_i</references>
+      </memberdef>
+      <memberdef kind="function" id="stat_8c_1aadc04b2a7dff6c7f77610e7231d66dd9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_fstatat</definition>
+        <argsstring>(struct thread *td, struct sys_fstatat_args *args)</argsstring>
+        <name>sys_fstatat</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__fstatat__args" kindref="compound">sys_fstatat_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="133" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="133" bodyend="180"/>
+        <references refid="structsys__fstatat__args_1a6783f510ae899c37a1c99d55edc6461d" compoundref="sysproto__posix_8h" startline="613">sys_fstatat_args::buf</references>
+        <references refid="structufs2__dinode_1a884a0a3cb517902f2648b51782f713ed" compoundref="ufs_8h" startline="112">ufs2_dinode::di_atime</references>
+        <references refid="structufs2__dinode_1a7faf94a254583325c1de14b3eedc4672" compoundref="ufs_8h" startline="114">ufs2_dinode::di_ctime</references>
+        <references refid="structufs2__dinode_1a21124da4705829d63dd28f0d7bcf2a1e" compoundref="ufs_8h" startline="108">ufs2_dinode::di_gid</references>
+        <references refid="structufs2__dinode_1acb7ed3e4a81ba003ec405439d39a307c" compoundref="ufs_8h" startline="105">ufs2_dinode::di_mode</references>
+        <references refid="structufs2__dinode_1a891b9a4ebc71c40776c6af460ea8c5b6" compoundref="ufs_8h" startline="113">ufs2_dinode::di_mtime</references>
+        <references refid="structufs2__dinode_1a1398daf0dae2b3f39bc5f821e704ad89" compoundref="ufs_8h" startline="106">ufs2_dinode::di_nlink</references>
+        <references refid="structufs2__dinode_1ad5993494c57c494293c25dc81ec3b154" compoundref="ufs_8h" startline="110">ufs2_dinode::di_size</references>
+        <references refid="structufs2__dinode_1abe8c549f9c8f7178291b1e34cc9bbc45" compoundref="ufs_8h" startline="107">ufs2_dinode::di_uid</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="structsys__fstatat__args_1ac79c76decad5ad13a3f3750b3822fdb5" compoundref="sysproto__posix_8h" startline="607">sys_fstatat_args::fd</references>
+        <references refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" compoundref="file_8c" startline="388" endline="518">fopen</references>
+        <references refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" compoundref="descrip_8c" startline="214" endline="227">getfd</references>
+        <references refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" compoundref="include_2vfs_2file_8h" startline="66">fileDescriptor::ino</references>
+        <references refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" compoundref="include_2vfs_2file_8h" startline="80">fileDescriptor::inode</references>
+        <references refid="structsys__fstatat__args_1a724d992a283dd8b6400787095031f365" compoundref="sysproto__posix_8h" startline="610">sys_fstatat_args::path</references>
+        <references refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" compoundref="stat_8h" startline="52">stat::st_atime</references>
+        <references refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" compoundref="stat_8h" startline="56">stat::st_ctime</references>
+        <references refid="structstat_1afb143a1534bf763afd6b353ea3cad102" compoundref="stat_8h" startline="45">stat::st_dev</references>
+        <references refid="structstat_1ab864f16f436cec370f0ced585d897698" compoundref="stat_8h" startline="50">stat::st_gid</references>
+        <references refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" compoundref="stat_8h" startline="46">stat::st_ino</references>
+        <references refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" compoundref="stat_8h" startline="47">stat::st_mode</references>
+        <references refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" compoundref="stat_8h" startline="54">stat::st_mtime</references>
+        <references refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" compoundref="stat_8h" startline="48">stat::st_nlink</references>
+        <references refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" compoundref="stat_8h" startline="51">stat::st_rdev</references>
+        <references refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" compoundref="stat_8h" startline="58">stat::st_size</references>
+        <references refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" compoundref="stat_8h" startline="49">stat::st_uid</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structinode_1a82b45e7d93016820fc4927298aa2f772">inode::u</references>
+        <references refid="structinode_1ae43bfb8e013c227880cd49b341f86292" compoundref="inode_8h" startline="75">inode::ufs2_i</references>
+      </memberdef>
+      <memberdef kind="function" id="stat_8c_1a30aafea2c6eb09289d163ff81fa8f26b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_fstatfs</definition>
+        <argsstring>(struct thread *td, struct sys_fstatfs_args *args)</argsstring>
+        <name>sys_fstatfs</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__fstatfs__args" kindref="compound">sys_fstatfs_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="182" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="182" bodyend="237"/>
+        <references refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" compoundref="sysproto__posix_8h" startline="292">sys_fstatfs_args::buf</references>
+        <references refid="structstatfs_1a3c391f765ed54c74df309db6e40ca988" compoundref="mount_8h" startline="55">statfs::f_asyncreads</references>
+        <references refid="structstatfs_1a63d1b0f892f4426aeea95e33afa06f2b" compoundref="mount_8h" startline="53">statfs::f_asyncwrites</references>
+        <references refid="structstatfs_1ad16c9666a946d7fad9014f4c874e6393" compoundref="mount_8h" startline="49">statfs::f_bavail</references>
+        <references refid="structstatfs_1a8108951b97f47c474dd873e416f93eaa" compoundref="mount_8h" startline="48">statfs::f_bfree</references>
+        <references refid="structstatfs_1a336d5fd42293d94526439e64a44c986f" compoundref="mount_8h" startline="47">statfs::f_blocks</references>
+        <references refid="structstatfs_1af5222b571c9008db7ae1791417294832" compoundref="mount_8h" startline="45">statfs::f_bsize</references>
+        <references refid="structstatfs_1a323625cc7177126a589182aa43886f27" compoundref="mount_8h" startline="51">statfs::f_ffree</references>
+        <references refid="structstatfs_1ad86b300ea3456919ade65070a1a386a6" compoundref="mount_8h" startline="50">statfs::f_files</references>
+        <references refid="structstatfs_1ab36b2eeeda4ec12d3cc3306be0e409b2" compoundref="mount_8h" startline="44">statfs::f_flags</references>
+        <references refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" compoundref="mount_8h" startline="59">statfs::f_fsid</references>
+        <references refid="structstatfs_1abed4a6c93c33aeaff6fcc82372200cdb" compoundref="mount_8h" startline="61">statfs::f_fstypename</references>
+        <references refid="structstatfs_1a24e79c417c6200bd1d3302abf24e8c29" compoundref="mount_8h" startline="46">statfs::f_iosize</references>
+        <references refid="structstatfs_1a70db5edf2cfd9827dae1be5ee94448a7" compoundref="mount_8h" startline="62">statfs::f_mntfromname</references>
+        <references refid="structstatfs_1aa0c4e424f8ff4b24479e1931ffe4ef77" compoundref="mount_8h" startline="63">statfs::f_mntonname</references>
+        <references refid="structstatfs_1a5f0abc0cf6d99454e2304571ff7deb80" compoundref="mount_8h" startline="57">statfs::f_namemax</references>
+        <references refid="structstatfs_1afa7dfd5088527ec04b11153360ac7cad" compoundref="mount_8h" startline="58">statfs::f_owner</references>
+        <references refid="structstatfs_1aaee0c2fa85d30049e948c7fdfcdfe659" compoundref="mount_8h" startline="54">statfs::f_syncreads</references>
+        <references refid="structstatfs_1a4b47172314e490136e2ff5ee168dfae7" compoundref="mount_8h" startline="52">statfs::f_syncwrites</references>
+        <references refid="structstatfs_1ac15a3e59d63b9537567de36817392165" compoundref="mount_8h" startline="43">statfs::f_type</references>
+        <references refid="structstatfs_1a03c4e8d17fcf59e1257834b868f759cf" compoundref="mount_8h" startline="42">statfs::f_version</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="structsys__fstatfs__args_1a15d9cd95dab3a41e743428dcabfbfeb4" compoundref="sysproto__posix_8h" startline="289">sys_fstatfs_args::fd</references>
+        <references refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" compoundref="descrip_8c" startline="214" endline="227">getfd</references>
+        <references refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="278" endline="286">sprintf</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" compoundref="mount_8h" startline="38">fsid::val</references>
+      </memberdef>
+      <memberdef kind="function" id="stat_8c_1a4b775cc1ea799b4c54da7904c03756b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_lstat</definition>
+        <argsstring>(struct thread *td, struct sys_lstat_args *args)</argsstring>
+        <name>sys_lstat</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__lstat__args" kindref="compound">sys_lstat_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="297" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="297" bodyend="300"/>
+        <references refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</references>
+        <references refid="structsys__lstat__args_1ab050ec2828eff5280e99c48586804831" compoundref="sysproto__posix_8h" startline="410">sys_lstat_args::path</references>
+        <references refid="structsys__lstat__args_1a4e9db6132a7aa2f77d1231eaa3b7593d" compoundref="sysproto__posix_8h" startline="413">sys_lstat_args::sb</references>
+        <references refid="stat_8h_1a97bd22e5b2bee15bdaef9450ea2e9105" compoundref="stat_8h" startline="34">STAT_LSTAT</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="stat_8c_1a1c419cd11d05a0bd998b4cc0de4ee142" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_stat</definition>
+        <argsstring>(struct thread *td, struct sys_stat_args *args)</argsstring>
+        <name>sys_stat</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__stat__args" kindref="compound">sys_stat_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="302" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="302" bodyend="305"/>
+        <references refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</references>
+        <references refid="structsys__stat__args_1a31d2e51ea6e4c5e20b60540a7087aa03" compoundref="sysproto__posix_8h" startline="401">sys_stat_args::path</references>
+        <references refid="stat_8h_1a97bd22e5b2bee15bdaef9450ea2e9105" compoundref="stat_8h" startline="34">STAT_LSTAT</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structsys__stat__args_1aa9f3b9face32c52039f70e88e73bfa84" compoundref="sysproto__posix_8h" startline="404">sys_stat_args::ub</references>
+      </memberdef>
+      <memberdef kind="function" id="stat_8c_1a6194ac39a3ce5a21050d2a9a3117b433" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_statfs</definition>
+        <argsstring>(struct thread *td, struct sys_statfs_args *args)</argsstring>
+        <name>sys_statfs</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__statfs__args" kindref="compound">sys_statfs_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" line="239" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c" bodystart="239" bodyend="294"/>
+        <references refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" compoundref="sysproto__posix_8h" startline="601">sys_statfs_args::buf</references>
+        <references refid="structstatfs_1a3c391f765ed54c74df309db6e40ca988" compoundref="mount_8h" startline="55">statfs::f_asyncreads</references>
+        <references refid="structstatfs_1a63d1b0f892f4426aeea95e33afa06f2b" compoundref="mount_8h" startline="53">statfs::f_asyncwrites</references>
+        <references refid="structstatfs_1ad16c9666a946d7fad9014f4c874e6393" compoundref="mount_8h" startline="49">statfs::f_bavail</references>
+        <references refid="structstatfs_1a8108951b97f47c474dd873e416f93eaa" compoundref="mount_8h" startline="48">statfs::f_bfree</references>
+        <references refid="structstatfs_1a336d5fd42293d94526439e64a44c986f" compoundref="mount_8h" startline="47">statfs::f_blocks</references>
+        <references refid="structstatfs_1af5222b571c9008db7ae1791417294832" compoundref="mount_8h" startline="45">statfs::f_bsize</references>
+        <references refid="structstatfs_1a323625cc7177126a589182aa43886f27" compoundref="mount_8h" startline="51">statfs::f_ffree</references>
+        <references refid="structstatfs_1ad86b300ea3456919ade65070a1a386a6" compoundref="mount_8h" startline="50">statfs::f_files</references>
+        <references refid="structstatfs_1ab36b2eeeda4ec12d3cc3306be0e409b2" compoundref="mount_8h" startline="44">statfs::f_flags</references>
+        <references refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" compoundref="mount_8h" startline="59">statfs::f_fsid</references>
+        <references refid="structstatfs_1abed4a6c93c33aeaff6fcc82372200cdb" compoundref="mount_8h" startline="61">statfs::f_fstypename</references>
+        <references refid="structstatfs_1a24e79c417c6200bd1d3302abf24e8c29" compoundref="mount_8h" startline="46">statfs::f_iosize</references>
+        <references refid="structstatfs_1a70db5edf2cfd9827dae1be5ee94448a7" compoundref="mount_8h" startline="62">statfs::f_mntfromname</references>
+        <references refid="structstatfs_1aa0c4e424f8ff4b24479e1931ffe4ef77" compoundref="mount_8h" startline="63">statfs::f_mntonname</references>
+        <references refid="structstatfs_1a5f0abc0cf6d99454e2304571ff7deb80" compoundref="mount_8h" startline="57">statfs::f_namemax</references>
+        <references refid="structstatfs_1afa7dfd5088527ec04b11153360ac7cad" compoundref="mount_8h" startline="58">statfs::f_owner</references>
+        <references refid="structstatfs_1aaee0c2fa85d30049e948c7fdfcdfe659" compoundref="mount_8h" startline="54">statfs::f_syncreads</references>
+        <references refid="structstatfs_1a4b47172314e490136e2ff5ee168dfae7" compoundref="mount_8h" startline="52">statfs::f_syncwrites</references>
+        <references refid="structstatfs_1ac15a3e59d63b9537567de36817392165" compoundref="mount_8h" startline="43">statfs::f_type</references>
+        <references refid="structstatfs_1a03c4e8d17fcf59e1257834b868f759cf" compoundref="mount_8h" startline="42">statfs::f_version</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" compoundref="file_8c" startline="388" endline="518">fopen</references>
+        <references refid="structsys__statfs__args_1aa9d10a8011db65bf68c64135d60fa511" compoundref="sysproto__posix_8h" startline="598">sys_statfs_args::path</references>
+        <references refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="278" endline="286">sprintf</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" compoundref="mount_8h" startline="38">fsid::val</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubixos_2errno_8h" kindref="compound">ubixos/errno.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="stat_8h" kindref="compound">vfs/stat.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="descrip_8h" kindref="compound">sys/descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" kindref="member">_sys_stat</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structstat" kindref="compound">stat</ref><sp/>*sb,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags)<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//struct<sp/>inode<sp/>*inode;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>kprintf(&quot;SYS_STAT<sp/>{%s}&quot;,<sp/>path);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/><sp/><sp/>switch<sp/>(flags)<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/><sp/><sp/>case<sp/>STAT_LSTAT:</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/><sp/><sp/>error<sp/>=<sp/>namei(path,<sp/>NULL,<sp/>STAT_NO_FOLLOW,<sp/>&amp;inode);</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_dev<sp/>=<sp/>inode-&gt;i_dev;</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_ino<sp/>=<sp/>inode-&gt;i_ino;</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_mode<sp/>=<sp/>inode-&gt;i_mode;</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_nlink<sp/>=<sp/>inode-&gt;i_nlink;</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_uid<sp/>=<sp/>inode-&gt;i_uid;</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_gid<sp/>=<sp/>inode-&gt;i_gid;</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_rdev<sp/>=<sp/>inode-&gt;i_rdev;</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_size<sp/>=<sp/>inode-&gt;i_size;</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_atime<sp/>=<sp/>inode-&gt;i_atime;</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_mtime<sp/>=<sp/>inode-&gt;i_mtime;</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/><sp/><sp/>sb-&gt;st_ctime<sp/>=<sp/>inode-&gt;i_ctime;</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/><sp/><sp/>//MrOlsen<sp/>kprintf(&quot;LSTAT(%i)=st_ino<sp/>0x%X,<sp/>st_mode=0x%X,<sp/>st_uid<sp/>%i,<sp/>st_gid<sp/>%i,<sp/>st_size=0x%X&quot;,<sp/>error,<sp/>sb-&gt;st_ino,<sp/>sb-&gt;st_mode,<sp/>sb-&gt;st_uid,<sp/>sb-&gt;st_gid,<sp/>sb-&gt;st_size);</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/><sp/><sp/>break;</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/><sp/><sp/>default:</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/><sp/><sp/>kprintf(&quot;STAT<sp/>ERROR={%s}&quot;,<sp/>path);</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/><sp/><sp/>break;</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*fd<sp/>=<sp/><ref refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" kindref="member">fopen</ref>(path,<sp/></highlight><highlight class="stringliteral">&quot;rb&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>kprintf(&quot;FD=0x%X&quot;,<sp/>fd);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fd<sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1afb143a1534bf763afd6b353ea3cad102" kindref="member">st_dev</ref><sp/>=<sp/>0xDEADBEEF;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" kindref="member">st_ino</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" kindref="member">ino</ref>;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" kindref="member">st_mode</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1acb7ed3e4a81ba003ec405439d39a307c" kindref="member">di_mode</ref>;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" kindref="member">st_nlink</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a1398daf0dae2b3f39bc5f821e704ad89" kindref="member">di_nlink</ref>;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" kindref="member">st_uid</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1abe8c549f9c8f7178291b1e34cc9bbc45" kindref="member">di_uid</ref>;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1ab864f16f436cec370f0ced585d897698" kindref="member">st_gid</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a21124da4705829d63dd28f0d7bcf2a1e" kindref="member">di_gid</ref>;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" kindref="member">st_rdev</ref><sp/>=<sp/>0xBEEFDEAD;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" kindref="member">st_size</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1ad5993494c57c494293c25dc81ec3b154" kindref="member">di_size</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" kindref="member">st_atime</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a884a0a3cb517902f2648b51782f713ed" kindref="member">di_atime</ref>;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" kindref="member">st_mtime</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a891b9a4ebc71c40776c6af460ea8c5b6" kindref="member">di_mtime</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" kindref="member">st_ctime</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a7faf94a254583325c1de14b3eedc4672" kindref="member">di_ctime</ref>;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>kprintf(&quot;LSTAT(%i)=st_ino<sp/>0x%X,<sp/>st_mode=0x%X,<sp/>st_uid<sp/>%i,<sp/>st_gid<sp/>%i,<sp/>st_size=0x%X&quot;,<sp/>error,<sp/>sb-&gt;st_ino,<sp/>sb-&gt;st_mode,<sp/>sb-&gt;st_uid,<sp/>sb-&gt;st_gid,<sp/>sb-&gt;st_size);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" kindref="member">fclose</ref>(fd);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1a20c64cd904d02f5580b4de7c194b9357" kindref="member">sys_fstat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__fstat__args" kindref="compound">sys_fstat_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fdd<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" kindref="member">getfd</ref>(td,<sp/>&amp;fdd,<sp/>args-&gt;<ref refid="structsys__fstat__args_1ad8de8fb29a07e6c09a9f60930a16059f" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>fdd-&gt;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fdd<sp/>==<sp/>0<sp/>||<sp/>fdd-&gt;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" kindref="member">res</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1afb143a1534bf763afd6b353ea3cad102" kindref="member">st_dev</ref><sp/>=<sp/>0xDEADBEEF;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" kindref="member">st_ino</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" kindref="member">ino</ref>;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" kindref="member">st_rdev</ref><sp/>=<sp/>0xBEEFDEAD;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" kindref="member">st_size</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" kindref="member">size</ref>;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" kindref="member">st_uid</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1ab864f16f436cec370f0ced585d897698" kindref="member">st_gid</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;FSTAT<sp/>DOS&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1afb143a1534bf763afd6b353ea3cad102" kindref="member">st_dev</ref><sp/>=<sp/>0xDEADBEEF;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" kindref="member">st_ino</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" kindref="member">ino</ref>;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" kindref="member">st_mode</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1acb7ed3e4a81ba003ec405439d39a307c" kindref="member">di_mode</ref>;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" kindref="member">st_nlink</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a1398daf0dae2b3f39bc5f821e704ad89" kindref="member">di_nlink</ref>;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" kindref="member">st_uid</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1abe8c549f9c8f7178291b1e34cc9bbc45" kindref="member">di_uid</ref>;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1ab864f16f436cec370f0ced585d897698" kindref="member">st_gid</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a21124da4705829d63dd28f0d7bcf2a1e" kindref="member">di_gid</ref>;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" kindref="member">st_rdev</ref><sp/>=<sp/>0xBEEFDEAD;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" kindref="member">st_size</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1ad5993494c57c494293c25dc81ec3b154" kindref="member">di_size</ref>;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" kindref="member">st_atime</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a884a0a3cb517902f2648b51782f713ed" kindref="member">di_atime</ref>;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" kindref="member">st_mtime</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a891b9a4ebc71c40776c6af460ea8c5b6" kindref="member">di_mtime</ref>;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" kindref="member">st_ctime</ref><sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a7faf94a254583325c1de14b3eedc4672" kindref="member">di_ctime</ref>;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;FSTAT(%i)=st_ino<sp/>0x%X,<sp/>st_mode=0x%X,<sp/>st_uid<sp/>%i,<sp/>st_gid<sp/>%i,<sp/>st_size=0x%X:0x%X&quot;,<sp/>args-&gt;fd,<sp/>args-&gt;sb-&gt;st_ino,<sp/>args-&gt;sb-&gt;st_mode,<sp/>args-&gt;sb-&gt;st_uid,<sp/>args-&gt;sb-&gt;st_gid,<sp/>args-&gt;sb-&gt;st_size,<sp/>fd-&gt;size);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>error;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1aadc04b2a7dff6c7f77610e7231d66dd9" kindref="member">sys_fstatat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__fstatat__args" kindref="compound">sys_fstatat_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fdd<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structstat" kindref="compound">stat</ref><sp/>*sb<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>uP<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;FSTATAT(%i:%s:%s)&quot;,<sp/>args-&gt;fd,<sp/>args-&gt;path,<sp/>args-&gt;flag);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" kindref="member">strlen</ref>(args-&gt;<ref refid="structsys__fstatat__args_1a724d992a283dd8b6400787095031f365" kindref="member">path</ref>)<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/>fd<sp/>=<sp/><ref refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" kindref="member">fopen</ref>(args-&gt;<ref refid="structsys__fstatat__args_1a724d992a283dd8b6400787095031f365" kindref="member">path</ref>,<sp/></highlight><highlight class="stringliteral">&quot;rb&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/>uP<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" kindref="member">getfd</ref>(td,<sp/>&amp;fdd,<sp/>args-&gt;<ref refid="structsys__fstatat__args_1ac79c76decad5ad13a3f3750b3822fdb5" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fdd<sp/>==<sp/>0<sp/>||<sp/>fdd-&gt;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fd<sp/>=<sp/>fdd-&gt;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fd<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/>sb<sp/>=<sp/>args-&gt;<ref refid="structsys__fstatat__args_1a6783f510ae899c37a1c99d55edc6461d" kindref="member">buf</ref>;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1afb143a1534bf763afd6b353ea3cad102" kindref="member">st_dev</ref><sp/>=<sp/>0xDEADBEEF;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" kindref="member">st_ino</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" kindref="member">ino</ref>;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" kindref="member">st_mode</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1acb7ed3e4a81ba003ec405439d39a307c" kindref="member">di_mode</ref>;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" kindref="member">st_nlink</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a1398daf0dae2b3f39bc5f821e704ad89" kindref="member">di_nlink</ref>;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" kindref="member">st_uid</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1abe8c549f9c8f7178291b1e34cc9bbc45" kindref="member">di_uid</ref>;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1ab864f16f436cec370f0ced585d897698" kindref="member">st_gid</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a21124da4705829d63dd28f0d7bcf2a1e" kindref="member">di_gid</ref>;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" kindref="member">st_rdev</ref><sp/>=<sp/>0xBEEFDEAD;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" kindref="member">st_size</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1ad5993494c57c494293c25dc81ec3b154" kindref="member">di_size</ref>;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" kindref="member">st_atime</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a884a0a3cb517902f2648b51782f713ed" kindref="member">di_atime</ref>;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" kindref="member">st_mtime</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a891b9a4ebc71c40776c6af460ea8c5b6" kindref="member">di_mtime</ref>;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>sb-&gt;<ref refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" kindref="member">st_ctime</ref><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1a0f327ca421a257ebbabbb741cfcf2904" kindref="member">inode</ref>.<ref refid="structinode_1a82b45e7d93016820fc4927298aa2f772" kindref="member">u</ref>.<ref refid="structinode_1ae43bfb8e013c227880cd49b341f86292" kindref="member">ufs2_i</ref>.<ref refid="structufs2__dinode_1a7faf94a254583325c1de14b3eedc4672" kindref="member">di_ctime</ref>;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;FSTAT(%i:%s:%i)=st_ino<sp/>0x%X,<sp/>st_mode=0x%X,<sp/>st_uid<sp/>%i,<sp/>st_gid<sp/>%i,<sp/>st_size=0x%X:0x%X&quot;,<sp/>args-&gt;fd,<sp/>args-&gt;path,<sp/>args-&gt;flag,<sp/>sb-&gt;st_ino,<sp/>sb-&gt;st_mode,<sp/>sb-&gt;st_uid,<sp/>sb-&gt;st_gid,<sp/>sb-&gt;st_size,<sp/>fd-&gt;size);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(uP<sp/>==<sp/>1)</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" kindref="member">fclose</ref>(fd);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>error;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182" refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1a30aafea2c6eb09289d163ff81fa8f26b" kindref="member">sys_fstatfs</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__fstatfs__args" kindref="compound">sys_fstatfs_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><ref refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" kindref="member">getfd</ref>(td,<sp/>&amp;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>,<sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a15d9cd95dab3a41e743428dcabfbfeb4" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="194"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_dev<sp/>=<sp/>0xDEADBEEF;</highlight></codeline>
+<codeline lineno="195"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_ino<sp/>=<sp/>fd-&gt;fd-&gt;ino;</highlight></codeline>
+<codeline lineno="196"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_mode<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_mode;</highlight></codeline>
+<codeline lineno="197"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_nlink<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_nlink;</highlight></codeline>
+<codeline lineno="198"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_uid<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_uid;</highlight></codeline>
+<codeline lineno="199"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_gid<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_gid;</highlight></codeline>
+<codeline lineno="200"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_rdev<sp/>=<sp/>0xBEEFDEAD;</highlight></codeline>
+<codeline lineno="201"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_size<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_size;</highlight></codeline>
+<codeline lineno="202"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_atime<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_atime;</highlight></codeline>
+<codeline lineno="203"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_mtime<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_mtime;</highlight></codeline>
+<codeline lineno="204"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_ctime<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_ctime;</highlight></codeline>
+<codeline lineno="205"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>//MrOlsen<sp/>kprintf(&quot;LSTAT(%i)=st_ino<sp/>0x%X,<sp/>st_mode=0x%X,<sp/>st_uid<sp/>%i,<sp/>st_gid<sp/>%i,<sp/>st_size=0x%X&quot;,<sp/>error,<sp/>args-&gt;buf-&gt;st_ino,<sp/>args-&gt;buf-&gt;st_mode,<sp/>args-&gt;buf-&gt;st_uid,<sp/>args-&gt;buf-&gt;st_gid,<sp/>args-&gt;buf-&gt;st_size);</highlight></codeline>
+<codeline lineno="206"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>//fclose(fd);</highlight></codeline>
+<codeline lineno="207"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a03c4e8d17fcf59e1257834b868f759cf" kindref="member">f_version</ref><sp/>=<sp/>0x20030518;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ac15a3e59d63b9537567de36817392165" kindref="member">f_type</ref><sp/>=<sp/>0x35;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ab36b2eeeda4ec12d3cc3306be0e409b2" kindref="member">f_flags</ref><sp/>=<sp/>0x1000;</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1af5222b571c9008db7ae1791417294832" kindref="member">f_bsize</ref><sp/>=<sp/>0x1000;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a24e79c417c6200bd1d3302abf24e8c29" kindref="member">f_iosize</ref><sp/>=<sp/>0x8000;</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a336d5fd42293d94526439e64a44c986f" kindref="member">f_blocks</ref><sp/>=<sp/>0x7bf9d;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a8108951b97f47c474dd873e416f93eaa" kindref="member">f_bfree</ref><sp/>=<sp/>0x73c0c;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ad16c9666a946d7fad9014f4c874e6393" kindref="member">f_bavail</ref><sp/>=<sp/>0x69d5c;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ad86b300ea3456919ade65070a1a386a6" kindref="member">f_files</ref><sp/>=<sp/>0x3fffe;</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a323625cc7177126a589182aa43886f27" kindref="member">f_ffree</ref><sp/>=<sp/>0x3d3f0;</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a4b47172314e490136e2ff5ee168dfae7" kindref="member">f_syncwrites</ref><sp/>=<sp/>0x75232;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a63d1b0f892f4426aeea95e33afa06f2b" kindref="member">f_asyncwrites</ref><sp/>=<sp/>0x2b804;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1aaee0c2fa85d30049e948c7fdfcdfe659" kindref="member">f_syncreads</ref><sp/>=<sp/>0x2edea;</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a3c391f765ed54c74df309db6e40ca988" kindref="member">f_asyncreads</ref><sp/>=<sp/>0x6182;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a5f0abc0cf6d99454e2304571ff7deb80" kindref="member">f_namemax</ref><sp/>=<sp/>0xFF;</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1afa7dfd5088527ec04b11153360ac7cad" kindref="member">f_owner</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" kindref="member">f_fsid</ref>.<ref refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" kindref="member">val</ref>[0]<sp/>=<sp/>0x5A31F4F0;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" kindref="member">f_fsid</ref>.<ref refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" kindref="member">val</ref>[1]<sp/>=<sp/>0x65E7C98F;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="comment">//args-&gt;buf-&gt;f_charspare=<sp/>{&quot;&quot;};</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1abed4a6c93c33aeaff6fcc82372200cdb" kindref="member">f_fstypename</ref>,<sp/></highlight><highlight class="stringliteral">&quot;ufs&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a70db5edf2cfd9827dae1be5ee94448a7" kindref="member">f_mntfromname</ref>,<sp/></highlight><highlight class="stringliteral">&quot;/dev/ada0s1a&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(args-&gt;<ref refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1aa0c4e424f8ff4b24479e1931ffe4ef77" kindref="member">f_mntonname</ref>,<sp/></highlight><highlight class="stringliteral">&quot;/&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>error;</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239" refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1a6194ac39a3ce5a21050d2a9a3117b433" kindref="member">sys_statfs</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__statfs__args" kindref="compound">sys_statfs_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/><ref refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" kindref="member">fopen</ref>(args-&gt;<ref refid="structsys__statfs__args_1aa9d10a8011db65bf68c64135d60fa511" kindref="member">path</ref>,<sp/></highlight><highlight class="stringliteral">&quot;rb&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="250"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_dev<sp/>=<sp/>0xDEADBEEF;</highlight></codeline>
+<codeline lineno="251"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_ino<sp/>=<sp/>fd-&gt;fd-&gt;ino;</highlight></codeline>
+<codeline lineno="252"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_mode<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_mode;</highlight></codeline>
+<codeline lineno="253"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_nlink<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_nlink;</highlight></codeline>
+<codeline lineno="254"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_uid<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_uid;</highlight></codeline>
+<codeline lineno="255"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_gid<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_gid;</highlight></codeline>
+<codeline lineno="256"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_rdev<sp/>=<sp/>0xBEEFDEAD;</highlight></codeline>
+<codeline lineno="257"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_size<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_size;</highlight></codeline>
+<codeline lineno="258"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_atime<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_atime;</highlight></codeline>
+<codeline lineno="259"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_mtime<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_mtime;</highlight></codeline>
+<codeline lineno="260"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>args-&gt;buf-&gt;st_ctime<sp/>=<sp/>fd-&gt;fd-&gt;inode.u.ufs2_i.di_ctime;</highlight></codeline>
+<codeline lineno="261"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>//MrOlsen<sp/>kprintf(&quot;LSTAT(%i)=st_ino<sp/>0x%X,<sp/>st_mode=0x%X,<sp/>st_uid<sp/>%i,<sp/>st_gid<sp/>%i,<sp/>st_size=0x%X&quot;,<sp/>error,<sp/>args-&gt;buf-&gt;st_ino,<sp/>args-&gt;buf-&gt;st_mode,<sp/>args-&gt;buf-&gt;st_uid,<sp/>args-&gt;buf-&gt;st_gid,<sp/>args-&gt;buf-&gt;st_size);</highlight></codeline>
+<codeline lineno="262"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>//fclose(fd);</highlight></codeline>
+<codeline lineno="263"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight><highlight class="comment">//kprintf(&quot;sFS:<sp/>%s&quot;,<sp/>args-&gt;path);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a03c4e8d17fcf59e1257834b868f759cf" kindref="member">f_version</ref><sp/>=<sp/>0x20030518;</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ac15a3e59d63b9537567de36817392165" kindref="member">f_type</ref><sp/>=<sp/>0x35;</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ab36b2eeeda4ec12d3cc3306be0e409b2" kindref="member">f_flags</ref><sp/>=<sp/>0x1000;</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1af5222b571c9008db7ae1791417294832" kindref="member">f_bsize</ref><sp/>=<sp/>0x1000;</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a24e79c417c6200bd1d3302abf24e8c29" kindref="member">f_iosize</ref><sp/>=<sp/>0x8000;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a336d5fd42293d94526439e64a44c986f" kindref="member">f_blocks</ref><sp/>=<sp/>0x7bf9d;</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a8108951b97f47c474dd873e416f93eaa" kindref="member">f_bfree</ref><sp/>=<sp/>0x73c0c;</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ad16c9666a946d7fad9014f4c874e6393" kindref="member">f_bavail</ref><sp/>=<sp/>0x69d5c;</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1ad86b300ea3456919ade65070a1a386a6" kindref="member">f_files</ref><sp/>=<sp/>0x3fffe;</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a323625cc7177126a589182aa43886f27" kindref="member">f_ffree</ref><sp/>=<sp/>0x3d3f0;</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a4b47172314e490136e2ff5ee168dfae7" kindref="member">f_syncwrites</ref><sp/>=<sp/>0x75232;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a63d1b0f892f4426aeea95e33afa06f2b" kindref="member">f_asyncwrites</ref><sp/>=<sp/>0x2b804;</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1aaee0c2fa85d30049e948c7fdfcdfe659" kindref="member">f_syncreads</ref><sp/>=<sp/>0x2edea;</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a3c391f765ed54c74df309db6e40ca988" kindref="member">f_asyncreads</ref><sp/>=<sp/>0x6182;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a5f0abc0cf6d99454e2304571ff7deb80" kindref="member">f_namemax</ref><sp/>=<sp/>0xFF;</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1afa7dfd5088527ec04b11153360ac7cad" kindref="member">f_owner</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" kindref="member">f_fsid</ref>.<ref refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" kindref="member">val</ref>[0]<sp/>=<sp/>0x5A31F4F0;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/>args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" kindref="member">f_fsid</ref>.<ref refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" kindref="member">val</ref>[1]<sp/>=<sp/>0x65E7C98F;</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight><highlight class="comment">//args-&gt;buf-&gt;f_charspare=<sp/>{&quot;&quot;};</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1abed4a6c93c33aeaff6fcc82372200cdb" kindref="member">f_fstypename</ref>,<sp/></highlight><highlight class="stringliteral">&quot;ufs&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1a70db5edf2cfd9827dae1be5ee94448a7" kindref="member">f_mntfromname</ref>,<sp/></highlight><highlight class="stringliteral">&quot;/dev/ada0s1a&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(args-&gt;<ref refid="structsys__statfs__args_1a5bd0ef2ca63fa2afc637464255576cb7" kindref="member">buf</ref>-&gt;<ref refid="structstatfs_1aa0c4e424f8ff4b24479e1931ffe4ef77" kindref="member">f_mntonname</ref>,<sp/></highlight><highlight class="stringliteral">&quot;/&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>error;</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Return<sp/>stat<sp/>of<sp/>path<sp/>do<sp/>not<sp/>follow<sp/>if<sp/>link<sp/>return<sp/>stat<sp/>of<sp/>link<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="297" refid="sysproto__posix_8h_1a5904b4cf0404c2843cffcc05ff2182e8" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1a4b775cc1ea799b4c54da7904c03756b5" kindref="member">sys_lstat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__lstat__args" kindref="compound">sys_lstat_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" kindref="member">_sys_stat</ref>(args-&gt;<ref refid="structsys__lstat__args_1ab050ec2828eff5280e99c48586804831" kindref="member">path</ref>,<sp/>args-&gt;<ref refid="structsys__lstat__args_1a4e9db6132a7aa2f77d1231eaa3b7593d" kindref="member">sb</ref>,<sp/><ref refid="stat_8h_1a97bd22e5b2bee15bdaef9450ea2e9105" kindref="member">STAT_LSTAT</ref>);</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="300"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"></highlight></codeline>
+<codeline lineno="302" refid="sysproto__posix_8h_1adc863cd02e90335388170f0289e97189" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stat_8c_1a1c419cd11d05a0bd998b4cc0de4ee142" kindref="member">sys_stat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__stat__args" kindref="compound">sys_stat_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" kindref="member">_sys_stat</ref>(args-&gt;<ref refid="structsys__stat__args_1a31d2e51ea6e4c5e20b60540a7087aa03" kindref="member">path</ref>,<sp/>args-&gt;<ref refid="structsys__stat__args_1aa9f3b9face32c52039f70e88e73bfa84" kindref="member">ub</ref>,<sp/><ref refid="stat_8h_1a97bd22e5b2bee15bdaef9450ea2e9105" kindref="member">STAT_LSTAT</ref>);</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/vfs/stat.c"/>
+  </compounddef>
+</doxygen>

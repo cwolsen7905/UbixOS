@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__execve__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_execve_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__execve__args_1a792931a7873b262d71701e54f870a869" prot="public" static="no" mutable="no">
+        <type>char **</type>
+        <definition>char** sys_execve_args::argv</definition>
+        <argsstring></argsstring>
+        <name>argv</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="159" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="159" bodyend="-1"/>
+        <referencedby refid="execve_8c_1ac05d0992d0ab7f05cc3555380ed092a9" compoundref="execve_8c" startline="33" endline="39">sys_execve</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a48659395e51b2d33a53a85a24fb42955" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_execve_args::argv_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>argv_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="158" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a9e6c05ff6e542c88f5bd9574791d14c1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_execve_args::argv_r_[(sizeof(register_t)&lt;=sizeof(char **) ? 0 :sizeof(register_t) - sizeof(char **))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char **) ? 0 :sizeof(register_t) - sizeof(char **))]</argsstring>
+        <name>argv_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="160" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a06c65942ce7c628ace0e7644729af0d0" prot="public" static="no" mutable="no">
+        <type>char **</type>
+        <definition>char** sys_execve_args::envp</definition>
+        <argsstring></argsstring>
+        <name>envp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="162" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="162" bodyend="-1"/>
+        <referencedby refid="execve_8c_1ac05d0992d0ab7f05cc3555380ed092a9" compoundref="execve_8c" startline="33" endline="39">sys_execve</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1aaa57c2a78a36ec4bdbf5db6c95443137" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_execve_args::envp_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>envp_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="161" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a943b40c1e83a0ba7d10ff2847bba4387" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_execve_args::envp_r_[(sizeof(register_t)&lt;=sizeof(char **) ? 0 :sizeof(register_t) - sizeof(char **))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char **) ? 0 :sizeof(register_t) - sizeof(char **))]</argsstring>
+        <name>envp_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="163" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a2945df6c56249c2da3ec9a0fa3255f03" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_execve_args::fname</definition>
+        <argsstring></argsstring>
+        <name>fname</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="156" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="156" bodyend="-1"/>
+        <referencedby refid="execve_8c_1ac05d0992d0ab7f05cc3555380ed092a9" compoundref="execve_8c" startline="33" endline="39">sys_execve</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a97e2cefb812429e89adfb671abe471d8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_execve_args::fname_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fname_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="155" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__execve__args_1a1a2482d58d19fdd1ef57755477f202f4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_execve_args::fname_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>fname_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="157" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_execve_args</label>
+        <link refid="structsys__execve__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="154" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="154" bodyend="164"/>
+    <listofallmembers>
+      <member refid="structsys__execve__args_1a792931a7873b262d71701e54f870a869" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>argv</name></member>
+      <member refid="structsys__execve__args_1a48659395e51b2d33a53a85a24fb42955" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>argv_l_</name></member>
+      <member refid="structsys__execve__args_1a9e6c05ff6e542c88f5bd9574791d14c1" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>argv_r_</name></member>
+      <member refid="structsys__execve__args_1a06c65942ce7c628ace0e7644729af0d0" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>envp</name></member>
+      <member refid="structsys__execve__args_1aaa57c2a78a36ec4bdbf5db6c95443137" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>envp_l_</name></member>
+      <member refid="structsys__execve__args_1a943b40c1e83a0ba7d10ff2847bba4387" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>envp_r_</name></member>
+      <member refid="structsys__execve__args_1a2945df6c56249c2da3ec9a0fa3255f03" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>fname</name></member>
+      <member refid="structsys__execve__args_1a97e2cefb812429e89adfb671abe471d8" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>fname_l_</name></member>
+      <member refid="structsys__execve__args_1a1a2482d58d19fdd1ef57755477f202f4" prot="public" virt="non-virtual"><scope>sys_execve_args</scope><name>fname_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

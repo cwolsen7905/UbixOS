@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_8a452844cab5a537277ef786999bc939" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/net</compoundname>
+    <innerdir refid="dir_21e12f15c353f338a385e10009a09aca">C:/Dev/git/UbixOS/sys/include/net/apps</innerdir>
+    <innerdir refid="dir_f02a5ff2eb833a3d60b98d8b91a8899f">C:/Dev/git/UbixOS/sys/include/net/arch</innerdir>
+    <innerdir refid="dir_860402f1cbc34f52a46bdb76ccd99d75">C:/Dev/git/UbixOS/sys/include/net/priv</innerdir>
+    <innerdir refid="dir_8e7aca17b1c41a49c5b9b5f4a96a3b39">C:/Dev/git/UbixOS/sys/include/net/prot</innerdir>
+    <innerfile refid="api_8h">api.h</innerfile>
+    <innerfile refid="arch_8h">arch.h</innerfile>
+    <innerfile refid="autoip_8h">autoip.h</innerfile>
+    <innerfile refid="debug_8h">debug.h</innerfile>
+    <innerfile refid="def_8h">def.h</innerfile>
+    <innerfile refid="dhcp_8h">dhcp.h</innerfile>
+    <innerfile refid="dhcp6_8h">dhcp6.h</innerfile>
+    <innerfile refid="dns_8h">dns.h</innerfile>
+    <innerfile refid="err_8h">err.h</innerfile>
+    <innerfile refid="net_2errno_8h">errno.h</innerfile>
+    <innerfile refid="etharp_8h">etharp.h</innerfile>
+    <innerfile refid="ethip6_8h">ethip6.h</innerfile>
+    <innerfile refid="icmp_8h">icmp.h</innerfile>
+    <innerfile refid="icmp6_8h">icmp6.h</innerfile>
+    <innerfile refid="igmp_8h">igmp.h</innerfile>
+    <innerfile refid="inet_8h">inet.h</innerfile>
+    <innerfile refid="inet__chksum_8h">inet_chksum.h</innerfile>
+    <innerfile refid="net_2init_8h">init.h</innerfile>
+    <innerfile refid="ip_8h">ip.h</innerfile>
+    <innerfile refid="ip4_8h">ip4.h</innerfile>
+    <innerfile refid="ip4__addr_8h">ip4_addr.h</innerfile>
+    <innerfile refid="ip4__frag_8h">ip4_frag.h</innerfile>
+    <innerfile refid="ip6_8h">ip6.h</innerfile>
+    <innerfile refid="ip6__addr_8h">ip6_addr.h</innerfile>
+    <innerfile refid="ip6__frag_8h">ip6_frag.h</innerfile>
+    <innerfile refid="ip__addr_8h">ip_addr.h</innerfile>
+    <innerfile refid="lwipopts_8h">lwipopts.h</innerfile>
+    <innerfile refid="mem_8h">mem.h</innerfile>
+    <innerfile refid="memp_8h">memp.h</innerfile>
+    <innerfile refid="mld6_8h">mld6.h</innerfile>
+    <innerfile refid="nd6_8h">nd6.h</innerfile>
+    <innerfile refid="net_8h">net.h</innerfile>
+    <innerfile refid="netbuf_8h">netbuf.h</innerfile>
+    <innerfile refid="netdb_8h">netdb.h</innerfile>
+    <innerfile refid="netif_8h">netif.h</innerfile>
+    <innerfile refid="netifapi_8h">netifapi.h</innerfile>
+    <innerfile refid="opt_8h">opt.h</innerfile>
+    <innerfile refid="pbuf_8h">pbuf.h</innerfile>
+    <innerfile refid="raw_8h">raw.h</innerfile>
+    <innerfile refid="sio_8h">sio.h</innerfile>
+    <innerfile refid="snmp_8h">snmp.h</innerfile>
+    <innerfile refid="sockets_8h">sockets.h</innerfile>
+    <innerfile refid="stats_8h">stats.h</innerfile>
+    <innerfile refid="sys_8h">sys.h</innerfile>
+    <innerfile refid="tcp_8h">tcp.h</innerfile>
+    <innerfile refid="tcpip_8h">tcpip.h</innerfile>
+    <innerfile refid="timeouts_8h">timeouts.h</innerfile>
+    <innerfile refid="udp_8h">udp.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/"/>
+  </compounddef>
+</doxygen>

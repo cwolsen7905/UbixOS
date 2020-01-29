@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_4ee4322b756ac3a28adc4652628681d8" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/objgfx</compoundname>
+    <innerfile refid="objgfx30_8h">objgfx30.h</innerfile>
+    <innerfile refid="ogDisplay__VESA_8h">ogDisplay_VESA.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/"/>
+  </compounddef>
+</doxygen>

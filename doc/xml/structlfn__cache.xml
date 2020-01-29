@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structlfn__cache" kind="struct" language="C++" prot="public">
+    <compoundname>lfn_cache</compoundname>
+    <includes refid="fat__misc_8h" local="no">fat_misc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 lfn_cache::no_of_strings</definition>
+        <argsstring></argsstring>
+        <name>no_of_strings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="37" column="11" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="fat__misc_8h_1a27351ac7857382bf893d7e5a74cf5710" compoundref="fat__misc_8c" startline="132" endline="137">fatfs_entry_lfn_exists</referencedby>
+        <referencedby refid="fat__misc_8h_1a37178e1cd0b3c962e4c41bd4e350c712" compoundref="fat__misc_8c" startline="56" endline="88">fatfs_lfn_cache_entry</referencedby>
+        <referencedby refid="fat__misc_8h_1a30fee82472e2faf585b0a84068abc672" compoundref="fat__misc_8c" startline="94" endline="104">fatfs_lfn_cache_get</referencedby>
+        <referencedby refid="fat__misc_8h_1aa1fe29de6c2c59fdcf3159607ac2af47" compoundref="fat__misc_8c" startline="38" endline="50">fatfs_lfn_cache_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlfn__cache_1a9217d0b98362b34ff1fda188c4755bd4" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 lfn_cache::Null</definition>
+        <argsstring></argsstring>
+        <name>Null</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="35" column="11" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="fat__misc_8h_1a30fee82472e2faf585b0a84068abc672" compoundref="fat__misc_8c" startline="94" endline="104">fatfs_lfn_cache_get</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 lfn_cache::String[20][13]</definition>
+        <argsstring>[20][13]</argsstring>
+        <name>String</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="34" column="11" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="34" bodyend="-1"/>
+        <referencedby refid="fat__misc_8h_1a37178e1cd0b3c962e4c41bd4e350c712" compoundref="fat__misc_8c" startline="56" endline="88">fatfs_lfn_cache_entry</referencedby>
+        <referencedby refid="fat__misc_8h_1a30fee82472e2faf585b0a84068abc672" compoundref="fat__misc_8c" startline="94" endline="104">fatfs_lfn_cache_get</referencedby>
+        <referencedby refid="fat__misc_8h_1aa1fe29de6c2c59fdcf3159607ac2af47" compoundref="fat__misc_8c" startline="38" endline="50">fatfs_lfn_cache_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>lfn_cache</label>
+        <link refid="structlfn__cache"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="31" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="30" bodyend="38"/>
+    <listofallmembers>
+      <member refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" prot="public" virt="non-virtual"><scope>lfn_cache</scope><name>no_of_strings</name></member>
+      <member refid="structlfn__cache_1a9217d0b98362b34ff1fda188c4755bd4" prot="public" virt="non-virtual"><scope>lfn_cache</scope><name>Null</name></member>
+      <member refid="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" prot="public" virt="non-virtual"><scope>lfn_cache</scope><name>String</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

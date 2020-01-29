@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__raw" kind="group">
+    <compoundname>lwip_opts_raw</compoundname>
+    <title>RAW</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__raw_1gaca452be5cb05d9666f8f57e582c39221" prot="public" static="no">
+        <name>LWIP_RAW</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_RAW==1: Enable application layer to hook into the IP layer itself. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="771" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="771" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__raw_1ga36e3ffa66073ca0d27d11c422778249c" prot="public" static="no">
+        <name>RAW_TTL</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv4_1ga556b9b58fd02c0fdd126791baef77411" kindref="member">IP_DEFAULT_TTL</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_RAW==1: Enable application layer to hook into the IP layer itself. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="778" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="778" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

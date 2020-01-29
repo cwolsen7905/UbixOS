@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Chdr" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Chdr</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Chdr_1a509098e81e05dc00688c2739a7836ed9" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Chdr::ch_addralign</definition>
+        <argsstring></argsstring>
+        <name>ch_addralign</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="264" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="264" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Chdr_1a60439447207fd3d24c2254547947ab0f" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Chdr::ch_reserved</definition>
+        <argsstring></argsstring>
+        <name>ch_reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="262" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="262" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Chdr_1ab3f1fb2625aec2f565bd508b0b8062e3" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Chdr::ch_size</definition>
+        <argsstring></argsstring>
+        <name>ch_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="263" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="263" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Chdr_1a2c223162cc65a21d7827e9218a441550" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Chdr::ch_type</definition>
+        <argsstring></argsstring>
+        <name>ch_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="261" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="261" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Chdr</label>
+        <link refid="structElf64__Chdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="260" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="260" bodyend="265"/>
+    <listofallmembers>
+      <member refid="structElf64__Chdr_1a509098e81e05dc00688c2739a7836ed9" prot="public" virt="non-virtual"><scope>Elf64_Chdr</scope><name>ch_addralign</name></member>
+      <member refid="structElf64__Chdr_1a60439447207fd3d24c2254547947ab0f" prot="public" virt="non-virtual"><scope>Elf64_Chdr</scope><name>ch_reserved</name></member>
+      <member refid="structElf64__Chdr_1ab3f1fb2625aec2f565bd508b0b8062e3" prot="public" virt="non-virtual"><scope>Elf64_Chdr</scope><name>ch_size</name></member>
+      <member refid="structElf64__Chdr_1a2c223162cc65a21d7827e9218a441550" prot="public" virt="non-virtual"><scope>Elf64_Chdr</scope><name>ch_type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

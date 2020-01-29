@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__mutex" kind="struct" language="C++" prot="public">
+    <compoundname>sys_mutex</compoundname>
+    <includes refid="sys__arch_8h" local="no">sys_arch.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__mutex_1a756aea442175e0bb604f43582d1b0761" prot="public" static="no" mutable="no">
+        <type><ref refid="ubthread_8h_1a2b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref></type>
+        <definition>ubthread_mutex_t sys_mutex::mutex</definition>
+        <argsstring></argsstring>
+        <name>mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="17" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_mutex</label>
+        <link refid="structsys__mutex"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+mutex</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ubthread_mutex</label>
+        <link refid="structubthread__mutex"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="16" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="16" bodyend="18"/>
+    <listofallmembers>
+      <member refid="structsys__mutex_1a756aea442175e0bb604f43582d1b0761" prot="public" virt="non-virtual"><scope>sys_mutex</scope><name>mutex</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

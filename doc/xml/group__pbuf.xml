@@ -1,0 +1,1179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__pbuf" kind="group">
+    <compoundname>pbuf</compoundname>
+    <title>Packet buffers (PBUF)</title>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__pbuf_1gaee1baa59bb2f85ba575b5a8619ac1ebf" prot="public" static="no" strong="no">
+        <type></type>
+        <name>pbuf_layer</name>
+        <enumvalue id="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa2ded3594a3977f8bf9cf09552be327b5" prot="public">
+          <name>PBUF_TRANSPORT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Includes spare room for transport layer header, e.g. UDP header. Use this if you intend to pass the pbuf to functions like udp_send(). </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfafcc1e506061ba69dfa142eb6b3da5f13" prot="public">
+          <name>PBUF_IP</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Includes spare room for IP header. Use this if you intend to pass the pbuf to functions like raw_send(). </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfab4de441e737330558b609a990cd17346" prot="public">
+          <name>PBUF_LINK</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Includes spare room for link layer header (ethernet header). Use this if you intend to pass the pbuf to functions like ethernet_output(). <simplesect kind="see"><para><ref refid="group__lwip__opts__pbuf_1ga35998a3d56af9940e6a80bb372597685" kindref="member">PBUF_LINK_HLEN</ref> </para>
+</simplesect>
+</para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa0ff039585f05f9208bcb66c2d37783e2" prot="public">
+          <name>PBUF_RAW_TX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Includes spare room for additional encapsulation header before ethernet headers (e.g. 802.11). Use this if you intend to pass the pbuf to functions like netif-&gt;linkoutput(). <simplesect kind="see"><para><ref refid="group__lwip__opts__pbuf_1ga6e1ba1875ae5168a17b53d83597bc1de" kindref="member">PBUF_LINK_ENCAPSULATION_HLEN</ref> </para>
+</simplesect>
+</para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa21116654fbab6d5a4dfeb87a1bb8f0ba" prot="public">
+          <name>PBUF_RAW</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Use this for input packets in a netif driver when calling netif-&gt;input() in the most common case - ethernet-layer netif driver. </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Enumeration of pbuf layers </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/pbuf.h" line="72" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/pbuf.h" bodystart="72" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="enum" id="group__pbuf_1gab7e0e32fcc292c0d7107721766ed92fb" prot="public" static="no" strong="no">
+        <type></type>
+        <name>pbuf_type</name>
+        <enumvalue id="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" prot="public">
+          <name>PBUF_RAM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>pbuf data is stored in RAM, used for TX mostly, struct pbuf and its payload are allocated in one piece of contiguous memory (so the first payload byte can be calculated from struct pbuf). <ref refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" kindref="member">pbuf_alloc()</ref> allocates PBUF_RAM pbufs as unchained pbufs (although that might change in future versions). This should be used for all OUTGOING packets (TX). </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac120b0fe39efe35bb682e4aa3b82e2c9" prot="public">
+          <name>PBUF_ROM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>pbuf data is stored in ROM, i.e. struct pbuf and its payload are located in totally different memory areas. Since it points to ROM, payload does not have to be copied when queued for transmission. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac9b6ba960fdea6f2e8f35c8313b77e4e" prot="public">
+          <name>PBUF_REF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>pbuf comes from the pbuf pool. Much like PBUF_ROM but payload might change so it has to be duplicated when queued before transmitting, depending on who has a &apos;ref&apos; to it. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbae969347127387b9b59a23ccd24b76d21" prot="public">
+          <name>PBUF_POOL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>pbuf payload refers to RAM. This one comes from a pool and should be used for RX. Payload can be chained (scatter-gather RX) but like PBUF_RAM, struct pbuf and its payload are allocated in one piece of contiguous memory (so the first payload byte can be calculated from struct pbuf). Don&apos;t use this for TX, if the pool becomes empty e.g. because of TCP queuing, you are unable to receive TCP acks! </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Enumeration of pbuf types </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/pbuf.h" line="101" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/pbuf.h" bodystart="101" bodyend="124"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>struct pbuf* pbuf_alloc</definition>
+        <argsstring>(pbuf_layer layer, u16_t length, pbuf_type type)</argsstring>
+        <name>pbuf_alloc</name>
+        <param>
+          <type><ref refid="group__pbuf_1gaee1baa59bb2f85ba575b5a8619ac1ebf" kindref="member">pbuf_layer</ref></type>
+          <declname>layer</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type><ref refid="group__pbuf_1gab7e0e32fcc292c0d7107721766ed92fb" kindref="member">pbuf_type</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Allocates a pbuf of the given type (possibly a chain for PBUF_POOL type).</para>
+<para>The actual memory allocated for the pbuf is determined by the layer at which the pbuf is allocated and the requested size (from the size parameter).</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>layer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>flag to define header size </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>size of the pbuf&apos;s payload </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>type</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>this parameter decides how and where the pbuf should be allocated as follows:</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<itemizedlist>
+<listitem><para>PBUF_RAM: buffer memory for pbuf is allocated as one large chunk. This includes protocol headers as well.</para>
+</listitem><listitem><para>PBUF_ROM: no buffer memory is allocated for the pbuf, even for protocol headers. Additional headers must be prepended by allocating another pbuf and chain in to the front of the ROM pbuf. It is assumed that the memory used is really similar to ROM in that it is immutable and will not be changed. Memory which is dynamic should generally not be attached to PBUF_ROM pbufs. Use PBUF_REF instead.</para>
+</listitem><listitem><para>PBUF_REF: no buffer memory is allocated for the pbuf, even for protocol headers. It is assumed that the pbuf is only being used in a single thread. If the pbuf gets queued, then pbuf_take should be called to copy the buffer.</para>
+</listitem><listitem><para>PBUF_POOL: the pbuf is allocated as a pbuf chain, with pbufs from the pbuf pool that is allocated during <ref refid="pbuf_8h_1a0c9b6a35471ebe1628ffe74bbc67f0b4" kindref="member">pbuf_init()</ref>.</para>
+</listitem></itemizedlist>
+</para>
+<para><simplesect kind="return"><para>the allocated pbuf. If multiple pbufs where allocated, this is the first pbuf of a pbuf chain. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="248" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="248" bodyend="405"/>
+        <references refid="structpbuf_1aa4d1af2cab3d9280d29212095b5b872a" compoundref="pbuf_8h" startline="165">flags</references>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" compoundref="debug_8h" startline="57">LWIP_DBG_LEVEL_SERIOUS</references>
+        <references refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" compoundref="debug_8h" startline="83">LWIP_DBG_TRACE</references>
+        <references refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" compoundref="debug_8h" startline="164">LWIP_DEBUGF</references>
+        <references refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" compoundref="arch_8h" startline="236">LWIP_MEM_ALIGN</references>
+        <references refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" compoundref="arch_8h" startline="221">LWIP_MEM_ALIGN_SIZE</references>
+        <references refid="def_8h_1a748f5df614a3fc989e8900fd229d6e4e" compoundref="def_8h" startline="55">LWIP_MIN</references>
+        <references refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" compoundref="lwipopts_8h" startline="54">MEM_ALIGNMENT</references>
+        <references refid="mem_8h_1a932aa40d85b14cb7331625e012d12335" compoundref="mem_8c" startline="603" endline="742">mem_malloc</references>
+        <references refid="memp_8h_1a2b00593d086313c267b54a976bf67aa5" compoundref="memp_8c" startline="385" endline="404">memp_malloc</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="147">payload</references>
+        <references refid="lwipopts_8h_1a5c3d44a0ec3bb8bd66f776c70d5c6a6c" compoundref="lwipopts_8h" startline="435">PBUF_DEBUG</references>
+        <references refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</references>
+        <references refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfafcc1e506061ba69dfa142eb6b3da5f13" compoundref="pbuf_8h" startline="80">PBUF_IP</references>
+        <references refid="pbuf_8h_1aae0fea237167bb06ea4dc5333df5b0a7" compoundref="pbuf_8h" startline="65">PBUF_IP_HLEN</references>
+        <references refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfab4de441e737330558b609a990cd17346" compoundref="pbuf_8h" startline="85">PBUF_LINK</references>
+        <references refid="lwipopts_8h_1a6e1ba1875ae5168a17b53d83597bc1de" compoundref="lwipopts_8h" startline="211">PBUF_LINK_ENCAPSULATION_HLEN</references>
+        <references refid="lwipopts_8h_1a35998a3d56af9940e6a80bb372597685" compoundref="lwipopts_8h" startline="209">PBUF_LINK_HLEN</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbae969347127387b9b59a23ccd24b76d21" compoundref="pbuf_8h" startline="123">PBUF_POOL</references>
+        <references refid="pbuf_8c_1a3dad81a8286ee8e9a7c70a74f9f4bb0f" compoundref="pbuf_8c" startline="132">PBUF_POOL_BUFSIZE_ALIGNED</references>
+        <references refid="pbuf_8c_1aed70c61e971683736c569a1a99b76569" compoundref="pbuf_8c" startline="135">PBUF_POOL_IS_EMPTY</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" compoundref="pbuf_8h" startline="108">PBUF_RAM</references>
+        <references refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa21116654fbab6d5a4dfeb87a1bb8f0ba" compoundref="pbuf_8h" startline="94">PBUF_RAW</references>
+        <references refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa0ff039585f05f9208bcb66c2d37783e2" compoundref="pbuf_8h" startline="91">PBUF_RAW_TX</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac9b6ba960fdea6f2e8f35c8313b77e4e" compoundref="pbuf_8h" startline="116">PBUF_REF</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac120b0fe39efe35bb682e4aa3b82e2c9" compoundref="pbuf_8h" startline="112">PBUF_ROM</references>
+        <references refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa2ded3594a3977f8bf9cf09552be327b5" compoundref="pbuf_8h" startline="76">PBUF_TRANSPORT</references>
+        <references refid="pbuf_8h_1af9da2e1ca60dc0c584938ccc5d662307" compoundref="pbuf_8h" startline="61">PBUF_TRANSPORT_HLEN</references>
+        <references refid="structpbuf_1a18e2c02942feb1baa3756fcd585b6731" compoundref="pbuf_8h" startline="172">ref</references>
+        <references refid="pbuf_8c_1a8357a994e45ff94c9494aa55b6c3ecb3" compoundref="pbuf_8c" startline="129">SIZEOF_STRUCT_PBUF</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+        <references refid="structpbuf_1afd7bff5210a022424caa97d2f25fe8e6" compoundref="pbuf_8h" startline="162">type</references>
+        <references refid="group__compiler__abstraction_1gaa9d7f6eb2ee9fcc5eda3545dbb1886e0" compoundref="arch_8h" startline="148">U16_F</references>
+        <referencedby refid="arp_8c_1a9d1287b9a80c370797b2ac5c63f70e2e" compoundref="arp_8c" startline="273" endline="309">arp_query</referencedby>
+        <referencedby refid="group__pbuf_1ga54ac7b116c6f53c704cbf74f35a8b35c" compoundref="pbuf_8c" startline="1230" endline="1247">pbuf_coalesce</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga82429084fe29015509c9b4a072707cd4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void pbuf_cat</definition>
+        <argsstring>(struct pbuf *h, struct pbuf *t)</argsstring>
+        <name>pbuf_cat</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>h</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Concatenate two pbufs (each may be a pbuf chain) and take over the caller&apos;s reference of the tail pbuf.</para>
+<para><simplesect kind="note"><para>The caller MAY NOT reference the tail pbuf afterwards. Use <ref refid="group__pbuf_1ga831c9a72bda1d3bd4c7b96f5a0e3b891" kindref="member">pbuf_chain()</ref> for that purpose.</para>
+</simplesect>
+<simplesect kind="see"><para><ref refid="group__pbuf_1ga831c9a72bda1d3bd4c7b96f5a0e3b891" kindref="member">pbuf_chain()</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="841" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="841" bodyend="863"/>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="debug_8h_1a827bc03cd7889e7c007df39d33b33d18" compoundref="debug_8h" startline="135">LWIP_ERROR</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+        <referencedby refid="group__pbuf_1ga831c9a72bda1d3bd4c7b96f5a0e3b891" compoundref="pbuf_8c" startline="883" endline="889">pbuf_chain</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga831c9a72bda1d3bd4c7b96f5a0e3b891" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void pbuf_chain</definition>
+        <argsstring>(struct pbuf *h, struct pbuf *t)</argsstring>
+        <name>pbuf_chain</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>h</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Chain two pbufs (or pbuf chains) together.</para>
+<para>The caller MUST call pbuf_free(t) once it has stopped using it. Use <ref refid="group__pbuf_1ga82429084fe29015509c9b4a072707cd4" kindref="member">pbuf_cat()</ref> instead if you no longer use t.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>h</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>head pbuf (chain) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>t</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>tail pbuf (chain) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>The pbufs MUST belong to the same packet. </para>
+</simplesect>
+<simplesect kind="note"><para>MAY NOT be called on a packet queue.</para>
+</simplesect>
+The -&gt;tot_len fields of all pbufs of the head chain are adjusted. The -&gt;next field of the last pbuf of the head chain is adjusted. The -&gt;ref field of the first pbuf of the tail chain is adjusted. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="883" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="883" bodyend="889"/>
+        <references refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" compoundref="debug_8h" startline="83">LWIP_DBG_TRACE</references>
+        <references refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" compoundref="debug_8h" startline="164">LWIP_DEBUGF</references>
+        <references refid="group__pbuf_1ga82429084fe29015509c9b4a072707cd4" compoundref="pbuf_8c" startline="841" endline="863">pbuf_cat</references>
+        <references refid="lwipopts_8h_1a5c3d44a0ec3bb8bd66f776c70d5c6a6c" compoundref="lwipopts_8h" startline="435">PBUF_DEBUG</references>
+        <references refid="group__pbuf_1ga77f6bbd69e45e542014d9c547c7da74e" compoundref="pbuf_8c" startline="821" endline="828">pbuf_ref</references>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga54ac7b116c6f53c704cbf74f35a8b35c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>struct pbuf* pbuf_coalesce</definition>
+        <argsstring>(struct pbuf *p, pbuf_layer layer)</argsstring>
+        <name>pbuf_coalesce</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="group__pbuf_1gaee1baa59bb2f85ba575b5a8619ac1ebf" kindref="member">pbuf_layer</ref></type>
+          <declname>layer</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Creates a single pbuf out of a queue of pbufs.</para>
+<para><simplesect kind="remark"><para>: Either the source pbuf &apos;p&apos; is freed by this function or the original pbuf &apos;p&apos; is returned, therefore the caller has to check the result!</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the source pbuf </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>layer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf_layer of the new pbuf</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>a new, single pbuf (p-&gt;next is NULL) or the old pbuf if allocation fails </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1230" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1230" bodyend="1247"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" compoundref="arch_8h" startline="315">LWIP_UNUSED_ARG</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" compoundref="pbuf_8c" startline="248" endline="405">pbuf_alloc</references>
+        <references refid="group__pbuf_1gaba88511dee3df4b631fde691f421320d" compoundref="pbuf_8c" startline="949" endline="1001">pbuf_copy</references>
+        <references refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" compoundref="pbuf_8h" startline="108">PBUF_RAM</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1gaba88511dee3df4b631fde691f421320d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t pbuf_copy</definition>
+        <argsstring>(struct pbuf *p_to, const struct pbuf *p_from)</argsstring>
+        <name>pbuf_copy</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p_to</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p_from</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create PBUF_RAM copies of pbufs.</para>
+<para>Used to queue packets on behalf of the lwIP stack, such as ARP based queueing.</para>
+<para><simplesect kind="note"><para>You MUST explicitly use p = pbuf_take(p);</para>
+</simplesect>
+<simplesect kind="note"><para>Only one packet is copied, no packet queue!</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p_to</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf destination of the copy </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>p_from</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf source of the copy</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if pbuf was copied ERR_ARG if one of the pbufs is NULL or p_to is not big enough to hold p_from </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="949" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="949" bodyend="1001"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab508ce0ebdf3ca735208b00a80a45c91" compoundref="err_8h" startline="96">ERR_ARG</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa9a1c5a6fdeed0aad7fe41d538482bbd" compoundref="err_8h" startline="75">ERR_VAL</references>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" compoundref="debug_8h" startline="83">LWIP_DBG_TRACE</references>
+        <references refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" compoundref="debug_8h" startline="164">LWIP_DEBUGF</references>
+        <references refid="debug_8h_1a827bc03cd7889e7c007df39d33b33d18" compoundref="debug_8h" startline="135">LWIP_ERROR</references>
+        <references refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" compoundref="lwipopts_8h" startline="43">MEMCPY</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="lwipopts_8h_1a5c3d44a0ec3bb8bd66f776c70d5c6a6c" compoundref="lwipopts_8h" startline="435">PBUF_DEBUG</references>
+        <referencedby refid="group__pbuf_1ga54ac7b116c6f53c704cbf74f35a8b35c" compoundref="pbuf_8c" startline="1230" endline="1247">pbuf_coalesce</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1gac2f1f58fd36042e82af46f5015720899" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t pbuf_copy_partial</definition>
+        <argsstring>(const struct pbuf *buf, void *dataptr, u16_t len, u16_t offset)</argsstring>
+        <name>pbuf_copy_partial</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>dataptr</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Copy (part of) the contents of a packet buffer to an application supplied buffer.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>buf</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the pbuf from which to copy data </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>dataptr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the application supplied buffer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>length of data to copy (dataptr must be big enough). No more than buf-&gt;tot_len will be copied, irrespective of len </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset into the packet buffer from where to begin copying len bytes </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>the number of bytes copied, or 0 on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1016" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1016" bodyend="1052"/>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="debug_8h_1a827bc03cd7889e7c007df39d33b33d18" compoundref="debug_8h" startline="135">LWIP_ERROR</references>
+        <references refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" compoundref="lwipopts_8h" startline="43">MEMCPY</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="147">payload</references>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t pbuf_free</definition>
+        <argsstring>(struct pbuf *p)</argsstring>
+        <name>pbuf_free</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Dereference a pbuf chain or queue and deallocate any no-longer-used pbufs at the head of this chain or queue.</para>
+<para>Decrements the pbuf reference count. If it reaches zero, the pbuf is deallocated.</para>
+<para>For a pbuf chain, this is repeated for each pbuf in the chain, up to the first pbuf which has a non-zero reference count after decrementing. So, when all reference counts are one, the whole chain is free&apos;d.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The pbuf (chain) to be dereferenced.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>the number of pbufs that were de-allocated from the head of the chain.</para>
+</simplesect>
+<simplesect kind="note"><para>MUST NOT be called on a packet queue (Not verified to work yet). </para>
+</simplesect>
+<simplesect kind="note"><para>the reference counter of a pbuf equals the number of pointers that refer to the pbuf (or into the pbuf).</para>
+</simplesect>
+</para>
+<internal><para>examples:</para>
+<para>Assuming existing chains a-&gt;b-&gt;c with the following reference counts, calling pbuf_free(a) results in:</para>
+<para>1-&gt;2-&gt;3 becomes ...1-&gt;3 3-&gt;3-&gt;3 becomes 2-&gt;3-&gt;3 1-&gt;1-&gt;2 becomes ......1 2-&gt;1-&gt;1 becomes 1-&gt;1-&gt;1 1-&gt;1-&gt;1 becomes ....... </para>
+</internal>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="715" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="715" bodyend="792"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" compoundref="debug_8h" startline="57">LWIP_DBG_LEVEL_SERIOUS</references>
+        <references refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" compoundref="debug_8h" startline="83">LWIP_DBG_TRACE</references>
+        <references refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" compoundref="debug_8h" startline="164">LWIP_DEBUGF</references>
+        <references refid="mem_8h_1a2fd7aa1adf6e394d3be7c7734e7df41a" compoundref="mem_8c" startline="419" endline="465">mem_free</references>
+        <references refid="memp_8h_1aecd94926b7c2a0e23ae195f4ae97581f" compoundref="memp_8c" startline="469" endline="496">memp_free</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="lwipopts_8h_1a5c3d44a0ec3bb8bd66f776c70d5c6a6c" compoundref="lwipopts_8h" startline="435">PBUF_DEBUG</references>
+        <references refid="pbuf_8h_1af78a7e1815dc0e31884d095b666d997f" compoundref="pbuf_8h" startline="131">PBUF_FLAG_IS_CUSTOM</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbae969347127387b9b59a23ccd24b76d21" compoundref="pbuf_8h" startline="123">PBUF_POOL</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" compoundref="pbuf_8h" startline="108">PBUF_RAM</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac9b6ba960fdea6f2e8f35c8313b77e4e" compoundref="pbuf_8h" startline="116">PBUF_REF</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac120b0fe39efe35bb682e4aa3b82e2c9" compoundref="pbuf_8h" startline="112">PBUF_ROM</references>
+        <references refid="perf_8h_1aa1d6977095e51331f65dcfb2b076da52" compoundref="perf_8h" startline="20">PERF_START</references>
+        <references refid="perf_8h_1a8ac3afe5d720793a229fbf70a78eb82f" compoundref="perf_8h" startline="21">PERF_STOP</references>
+        <references refid="structpbuf_1a18e2c02942feb1baa3756fcd585b6731" compoundref="pbuf_8h" startline="172">ref</references>
+        <references refid="sys_8h_1a945395fa326214fc9736487242710a90" compoundref="sys_8h" startline="361">SYS_ARCH_DECL_PROTECT</references>
+        <references refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" compoundref="sys_8h" startline="362">SYS_ARCH_PROTECT</references>
+        <references refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" compoundref="sys_8h" startline="363">SYS_ARCH_UNPROTECT</references>
+        <references refid="structpbuf_1afd7bff5210a022424caa97d2f25fe8e6" compoundref="pbuf_8h" startline="162">type</references>
+        <references refid="group__compiler__abstraction_1gaa9d7f6eb2ee9fcc5eda3545dbb1886e0" compoundref="arch_8h" startline="148">U16_F</references>
+        <referencedby refid="arp_8c_1a57a25dd51cf73f048ad5364ecc2f040b" compoundref="arp_8c" startline="197" endline="257">arp_arp_input</referencedby>
+        <referencedby refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" compoundref="pbuf_8c" startline="248" endline="405">pbuf_alloc</referencedby>
+        <referencedby refid="group__pbuf_1ga54ac7b116c6f53c704cbf74f35a8b35c" compoundref="pbuf_8c" startline="1230" endline="1247">pbuf_coalesce</referencedby>
+        <referencedby refid="pbuf_8c_1abf3d29c4f43986b4cb5eb314d5b9729d" compoundref="pbuf_8c" startline="900" endline="928">pbuf_dechain</referencedby>
+        <referencedby refid="group__pbuf_1ga50abfe830a33a1a47a562febee66015d" compoundref="pbuf_8c" startline="493" endline="555">pbuf_realloc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga6d803d9945bffb7ad97743f2fa503da6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t pbuf_get_at</definition>
+        <argsstring>(const struct pbuf *p, u16_t offset)</argsstring>
+        <name>pbuf_get_at</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get one byte from the specified position in a pbuf WARNING: returns zero for offset &gt;= p-&gt;tot_len</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to parse </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset into p of the byte to return </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>byte at an offset into p OR ZERO IF &apos;offset&apos; &gt;= p-&gt;tot_len </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1300" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1300" bodyend="1307"/>
+        <references refid="group__pbuf_1ga839f342803b0cf89049744124c5a98ad" compoundref="pbuf_8c" startline="1318" endline="1328">pbuf_try_get_at</references>
+        <referencedby refid="group__pbuf_1ga2170ccbbb13238380dbb203ee1b85974" compoundref="pbuf_8c" startline="1363" endline="1390">pbuf_memcmp</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga2170ccbbb13238380dbb203ee1b85974" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t pbuf_memcmp</definition>
+        <argsstring>(const struct pbuf *p, u16_t offset, const void *s2, u16_t n)</argsstring>
+        <name>pbuf_memcmp</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>s2</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Compare pbuf contents at specified offset with memory s2, both of length n</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to compare </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset into p at which to start comparing </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>s2</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>buffer to compare </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>length of buffer to compare </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>zero if equal, nonzero otherwise (0xffff if p is too short, diffoffset+1 otherwise) </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1363" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1363" bodyend="1390"/>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="group__pbuf_1ga6d803d9945bffb7ad97743f2fa503da6" compoundref="pbuf_8c" startline="1300" endline="1307">pbuf_get_at</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+        <referencedby refid="group__pbuf_1ga18c164a6e4a24d89ea9eb7571a886448" compoundref="pbuf_8c" startline="1405" endline="1418">pbuf_memfind</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga18c164a6e4a24d89ea9eb7571a886448" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t pbuf_memfind</definition>
+        <argsstring>(const struct pbuf *p, const void *mem, u16_t mem_len, u16_t start_offset)</argsstring>
+        <name>pbuf_memfind</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>mem</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>mem_len</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>start_offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Find occurrence of mem (with length mem_len) in pbuf p, starting at offset start_offset.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to search, maximum length is 0xFFFE since 0xFFFF is used as return value &apos;not found&apos; </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>search for the contents of this buffer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mem_len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>length of &apos;mem&apos; </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>start_offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset into p at which to start searching </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0xFFFF if substr was not found in p or the index where it was found </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1405" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1405" bodyend="1418"/>
+        <references refid="group__pbuf_1ga2170ccbbb13238380dbb203ee1b85974" compoundref="pbuf_8c" startline="1363" endline="1390">pbuf_memcmp</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+        <referencedby refid="pbuf_8c_1a9ba3f7b705309ceadb147692fd5a1c7d" compoundref="pbuf_8c" startline="1432" endline="1443">pbuf_strstr</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1gaf76863707dc02993eae116574b1ea03f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void pbuf_put_at</definition>
+        <argsstring>(struct pbuf *p, u16_t offset, u8_t data)</argsstring>
+        <name>pbuf_put_at</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Put one byte to the specified position in a pbuf WARNING: silently ignores offset &gt;= p-&gt;tot_len</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to fill </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset into p of the byte to write </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>byte to write at an offset into p </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1340" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1340" bodyend="1349"/>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="147">payload</references>
+        <references refid="group__pbuf_1ga6a961522d81f0327aaf4d4ee6d96c583" compoundref="pbuf_8c" startline="1132" endline="1136">pbuf_skip</references>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga50abfe830a33a1a47a562febee66015d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void pbuf_realloc</definition>
+        <argsstring>(struct pbuf *p, u16_t new_len)</argsstring>
+        <name>pbuf_realloc</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>new_len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shrink a pbuf chain to a desired length.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to shrink. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>new_len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>desired new length of pbuf chain</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Depending on the desired length, the first few pbufs in a chain might be skipped and left unchanged. The new last pbuf in the chain will be resized, and any remaining pbufs will be freed.</para>
+<para><simplesect kind="note"><para>If the pbuf is ROM/REF, only the -&gt;tot_len and -&gt;len fields are adjusted. </para>
+</simplesect>
+<simplesect kind="note"><para>May not be called on a packet queue.</para>
+</simplesect>
+<simplesect kind="note"><para>Despite its name, pbuf_realloc cannot grow the size of a pbuf (chain). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="493" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="493" bodyend="555"/>
+        <references refid="structpbuf_1aa4d1af2cab3d9280d29212095b5b872a" compoundref="pbuf_8h" startline="165">flags</references>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="pbuf_8h_1a64174c5169b48dc17674324afd9c63b9" compoundref="pbuf_8h" startline="55">LWIP_SUPPORT_CUSTOM_PBUF</references>
+        <references refid="mem_8h_1a5e39a108c44d8a72df0b30a117cb62e4" compoundref="mem_8c" startline="478" endline="592">mem_trim</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="147">payload</references>
+        <references refid="pbuf_8h_1af78a7e1815dc0e31884d095b666d997f" compoundref="pbuf_8h" startline="131">PBUF_FLAG_IS_CUSTOM</references>
+        <references refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbae969347127387b9b59a23ccd24b76d21" compoundref="pbuf_8h" startline="123">PBUF_POOL</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" compoundref="pbuf_8h" startline="108">PBUF_RAM</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac9b6ba960fdea6f2e8f35c8313b77e4e" compoundref="pbuf_8h" startline="116">PBUF_REF</references>
+        <references refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac120b0fe39efe35bb682e4aa3b82e2c9" compoundref="pbuf_8h" startline="112">PBUF_ROM</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+        <references refid="structpbuf_1afd7bff5210a022424caa97d2f25fe8e6" compoundref="pbuf_8h" startline="162">type</references>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga77f6bbd69e45e542014d9c547c7da74e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void pbuf_ref</definition>
+        <argsstring>(struct pbuf *p)</argsstring>
+        <name>pbuf_ref</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Increment the reference count of the pbuf.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to increase reference counter of </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="821" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="821" bodyend="828"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a18e2c02942feb1baa3756fcd585b6731" compoundref="pbuf_8h" startline="172">ref</references>
+        <references refid="sys_8h_1acc5f7f8cbd020de628d1e9a0443da4c7" compoundref="sys_8h" startline="375">SYS_ARCH_INC</references>
+        <referencedby refid="group__pbuf_1ga831c9a72bda1d3bd4c7b96f5a0e3b891" compoundref="pbuf_8c" startline="883" endline="889">pbuf_chain</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga6a961522d81f0327aaf4d4ee6d96c583" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>struct pbuf* pbuf_skip</definition>
+        <argsstring>(struct pbuf *in, u16_t in_offset, u16_t *out_offset)</argsstring>
+        <name>pbuf_skip</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>in</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>in_offset</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref> *</type>
+          <declname>out_offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Skip a number of bytes at the start of a pbuf</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>in</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>input pbuf </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>in_offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset to skip </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>out_offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>resulting offset in the returned pbuf </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>the pbuf in the queue where the offset is </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1132" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1132" bodyend="1136"/>
+        <referencedby refid="group__pbuf_1gaf76863707dc02993eae116574b1ea03f" compoundref="pbuf_8c" startline="1340" endline="1349">pbuf_put_at</referencedby>
+        <referencedby refid="group__pbuf_1gae1cf2bf7454ff87ff377b0b2262f9b44" compoundref="pbuf_8c" startline="1194" endline="1214">pbuf_take_at</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1gad1e31e370271335b197272af2724ca85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t pbuf_take</definition>
+        <argsstring>(struct pbuf *buf, const void *dataptr, u16_t len)</argsstring>
+        <name>pbuf_take</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>dataptr</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Copy application supplied data into a pbuf. This function can only be used to copy the equivalent of buf-&gt;tot_len data.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>buf</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to fill with data </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>dataptr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>application supplied data buffer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>length of the application supplied data buffer</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, ERR_MEM if the pbuf is not big enough </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1150" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1150" bodyend="1180"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab508ce0ebdf3ca735208b00a80a45c91" compoundref="err_8h" startline="96">ERR_ARG</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaaaeafdbf3aecc46864daa3cd829c7e05" compoundref="err_8h" startline="65">ERR_MEM</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="debug_8h_1a827bc03cd7889e7c007df39d33b33d18" compoundref="debug_8h" startline="135">LWIP_ERROR</references>
+        <references refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" compoundref="lwipopts_8h" startline="43">MEMCPY</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="147">payload</references>
+        <referencedby refid="group__pbuf_1gae1cf2bf7454ff87ff377b0b2262f9b44" compoundref="pbuf_8c" startline="1194" endline="1214">pbuf_take_at</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1gae1cf2bf7454ff87ff377b0b2262f9b44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t pbuf_take_at</definition>
+        <argsstring>(struct pbuf *buf, const void *dataptr, u16_t len, u16_t offset)</argsstring>
+        <name>pbuf_take_at</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>dataptr</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Same as <ref refid="group__pbuf_1gad1e31e370271335b197272af2724ca85" kindref="member">pbuf_take()</ref> but puts data at an offset</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>buf</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to fill with data </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>dataptr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>application supplied data buffer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>length of the application supplied data buffer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset in pbuf where to copy dataptr to</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, ERR_MEM if the pbuf is not big enough </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1194" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1194" bodyend="1214"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaaaeafdbf3aecc46864daa3cd829c7e05" compoundref="err_8h" startline="65">ERR_MEM</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">len</references>
+        <references refid="def_8h_1a748f5df614a3fc989e8900fd229d6e4e" compoundref="def_8h" startline="55">LWIP_MIN</references>
+        <references refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" compoundref="lwipopts_8h" startline="43">MEMCPY</references>
+        <references refid="structpbuf_1a5e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="144">next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="147">payload</references>
+        <references refid="group__pbuf_1ga6a961522d81f0327aaf4d4ee6d96c583" compoundref="pbuf_8c" startline="1132" endline="1136">pbuf_skip</references>
+        <references refid="group__pbuf_1gad1e31e370271335b197272af2724ca85" compoundref="pbuf_8c" startline="1150" endline="1180">pbuf_take</references>
+        <references refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" compoundref="pbuf_8h" startline="156">tot_len</references>
+      </memberdef>
+      <memberdef kind="function" id="group__pbuf_1ga839f342803b0cf89049744124c5a98ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int pbuf_try_get_at</definition>
+        <argsstring>(const struct pbuf *p, u16_t offset)</argsstring>
+        <name>pbuf_try_get_at</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get one byte from the specified position in a pbuf</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>p</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pbuf to parse </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>offset into p of the byte to return </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>byte at an offset into p [0..0xFF] OR negative if &apos;offset&apos; &gt;= p-&gt;tot_len </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" line="1318" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/pbuf.c" bodystart="1318" bodyend="1328"/>
+        <referencedby refid="group__pbuf_1ga6d803d9945bffb7ad97743f2fa503da6" compoundref="pbuf_8c" startline="1300" endline="1307">pbuf_get_at</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Packets are built from the pbuf data structure. It supports dynamic memory allocation for packet contents or can reference externally managed packet contents both in RAM and ROM. Quick allocation for incoming packets is provided through pools with fixed sized pbufs.</para>
+<para>A packet may span over multiple pbufs, chained as a singly linked list. This is called a &quot;pbuf chain&quot;.</para>
+<para>Multiple packets may be queued, also using this singly linked list. This is called a &quot;packet queue&quot;.</para>
+<para>So, a packet queue consists of one or more pbuf chains, each of which consist of one or more pbufs. CURRENTLY, PACKET QUEUES ARE NOT SUPPORTED!!! Use helper structs to queue multiple packets.</para>
+<para>The differences between a pbuf chain and a packet queue are very precise but subtle.</para>
+<para>The last pbuf of a packet has a -&gt;tot_len field that equals the -&gt;len field. It can be found by traversing the list. If the last pbuf of a packet has a -&gt;next field other than NULL, more packets are on the queue.</para>
+<para>Therefore, looping through a pbuf of a single packet, has an loop end condition (tot_len == p-&gt;len), NOT (next == NULL).</para>
+<para>Example of custom pbuf usage for zero-copy RX: <programlisting filename=".c"><codeline><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">my_custom_pbuf</highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">pbuf_custom<sp/>p;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>dma_descriptor;</highlight></codeline>
+<codeline><highlight class="normal">}<sp/>my_custom_pbuf_t;</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><ref refid="group__mempool_1ga5b1fb3ce7942432d87cc948b1c5ed6cb" kindref="member">LWIP_MEMPOOL_DECLARE</ref>(RX_POOL,<sp/>10,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(my_custom_pbuf_t),<sp/></highlight><highlight class="stringliteral">&quot;Zero-copy<sp/>RX<sp/>PBUF<sp/>pool&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>my_pbuf_free_custom(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>p)</highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>my_custom_pbuf_t*<sp/>my_puf<sp/>=<sp/>(my_custom_pbuf_t*)p;</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>LOCK_INTERRUPTS();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>free_rx_dma_descriptor(my_pbuf-&gt;dma_descriptor);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><ref refid="group__mempool_1gaa43d114dd702fbd8f1db18474ea93a04" kindref="member">LWIP_MEMPOOL_FREE</ref>(RX_POOL,<sp/>my_pbuf);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>UNLOCK_INTERRUPTS();</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>eth_rx_irq()</highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>dma_descriptor*<sp/><sp/><sp/>dma_desc<sp/>=<sp/>get_RX_DMA_descriptor_from_ethernet();</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>my_custom_pbuf_t*<sp/>my_pbuf<sp/><sp/>=<sp/>(my_custom_pbuf_t*)<ref refid="group__mempool_1ga5e2498f6c17746c1fe7153de5f7f275a" kindref="member">LWIP_MEMPOOL_ALLOC</ref>(RX_POOL);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>my_pbuf-&gt;p.custom_free_function<sp/>=<sp/>my_pbuf_free_custom;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>my_pbuf-&gt;dma_descriptor<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>dma_desc;</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>invalidate_cpu_cache(dma_desc-&gt;rx_data,<sp/>dma_desc-&gt;rx_length);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref>*<sp/>p<sp/>=<sp/>pbuf_alloced_custom(<ref refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfa21116654fbab6d5a4dfeb87a1bb8f0ba" kindref="member">PBUF_RAW</ref>,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>dma_desc-&gt;rx_length,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac9b6ba960fdea6f2e8f35c8313b77e4e" kindref="member">PBUF_REF</ref>,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>&amp;my_pbuf-&gt;p,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>dma_desc-&gt;rx_data,</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>dma_desc-&gt;max_buffer_size);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="structnetif" kindref="compound">netif</ref>-&gt;<ref refid="structnetif_1a8fe4f1b7b0d710216287da9615164a5c" kindref="member">input</ref>(p,<sp/><ref refid="structnetif" kindref="compound">netif</ref>)<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting> </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

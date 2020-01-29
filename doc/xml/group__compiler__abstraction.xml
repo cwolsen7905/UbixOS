@@ -1,0 +1,483 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__compiler__abstraction" kind="group">
+    <compoundname>compiler_abstraction</compoundname>
+    <title>Compiler/platform abstraction</title>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a09674b9e56fd7a93a2169aa9210deec7" kindref="member">uintptr_t</ref></type>
+        <definition>typedef uintptr_t mem_ptr_t</definition>
+        <argsstring></argsstring>
+        <name>mem_ptr_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="128" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a3542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref></type>
+        <definition>typedef int16_t s16_t</definition>
+        <argsstring></argsstring>
+        <name>s16_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="125" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__compiler__abstraction_1ga10f9a3d7baef58ccc23228c3bd29c1fb" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>typedef int32_t s32_t</definition>
+        <argsstring></argsstring>
+        <name>s32_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="127" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__compiler__abstraction_1ga9cd1d7891fe315de1201e2c6e45f4f57" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a06ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
+        <definition>typedef int8_t s8_t</definition>
+        <argsstring></argsstring>
+        <name>s8_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="123" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>typedef uint16_t u16_t</definition>
+        <argsstring></argsstring>
+        <name>u16_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="124" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>typedef uint32_t u32_t</definition>
+        <argsstring></argsstring>
+        <name>u32_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="126" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>typedef uint8_t u8_t</definition>
+        <argsstring></argsstring>
+        <name>u8_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="122" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__compiler__abstraction_1ga1771b7fb65ee640524d0052f229768c3" prot="public" static="no">
+        <name>BYTE_ORDER</name>
+        <initializer><ref refid="arch_8h_1a8782a401fbf55261460863fc2f8df1ce" kindref="member">LITTLE_ENDIAN</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define the byte order of the system. Needed for conversion of network data to host byte order. Allowed values: LITTLE_ENDIAN and BIG_ENDIAN </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaade87973d72135b0b3afccfff4f62eb8" prot="public" static="no">
+        <name>LWIP_ALIGNMENT_CAST</name>
+        <param><defname>target_type</defname></param>
+        <param><defname>val</defname></param>
+        <initializer><ref refid="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" kindref="member">LWIP_CONST_CAST</ref>(target_type, val)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get rid of alignment cast warnings (GCC -Wcast-align) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="192" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="192" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" prot="public" static="no">
+        <name>LWIP_CONST_CAST</name>
+        <param><defname>target_type</defname></param>
+        <param><defname>val</defname></param>
+        <initializer>((target_type)((<ref refid="include_2sys_2types_8h_1a34b856b1e3c67b5e5c1da0ef877b8157" kindref="member">ptrdiff_t</ref>)val))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>C++ const_cast&lt;target_type&gt;(val) equivalent to remove constness from a value (GCC -Wcast-qual) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="187" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="187" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga651bb349041669fe717b19f127ef16c0" prot="public" static="no">
+        <name>LWIP_DECLARE_MEMORY_ALIGNED</name>
+        <param><defname>variable_name</defname></param>
+        <param><defname>size</defname></param>
+        <initializer><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> variable_name[<ref refid="group__compiler__abstraction_1ga25591dcb72fccc7b5dc46fbc1959694e" kindref="member">LWIP_MEM_ALIGN_BUFFER</ref>(size)]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Allocates a memory buffer of specified size that is of sufficient size to align its start address using LWIP_MEM_ALIGN. You can declare your own version here e.g. to enforce alignment without adding trailing padding bytes (see LWIP_MEM_ALIGN_BUFFER) or your own section placement requirements.<linebreak/>
+e.g. if you use gcc and need 32 bit alignment:<linebreak/>
+#define <ref refid="group__compiler__abstraction_1ga651bb349041669fe717b19f127ef16c0" kindref="member">LWIP_DECLARE_MEMORY_ALIGNED(variable_name, size)</ref> u8_t variable_name[size] __attribute__((aligned(4)))<linebreak/>
+or more portable:<linebreak/>
+#define <ref refid="group__compiler__abstraction_1ga651bb349041669fe717b19f127ef16c0" kindref="member">LWIP_DECLARE_MEMORY_ALIGNED(variable_name, size)</ref> u32_t variable_name[(size + sizeof(u32_t) - 1) / sizeof(u32_t)] </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="213" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="213" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" prot="public" static="no">
+        <name>LWIP_MEM_ALIGN</name>
+        <param><defname>addr</defname></param>
+        <initializer>((void *)(((<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)(addr) + <ref refid="group__lwip__opts__mem_1ga97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref> - 1) &amp; ~(<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)(<ref refid="group__lwip__opts__mem_1ga97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref>-1)))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Align a memory pointer to the alignment defined by MEM_ALIGNMENT so that ADDR % MEM_ALIGNMENT == 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="236" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="236" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga25591dcb72fccc7b5dc46fbc1959694e" prot="public" static="no">
+        <name>LWIP_MEM_ALIGN_BUFFER</name>
+        <param><defname>size</defname></param>
+        <initializer>(((size) + <ref refid="group__lwip__opts__mem_1ga97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref> - 1U))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Calculate safe memory size for an aligned buffer when using an unaligned type as storage. This includes a safety-margin on (MEM_ALIGNMENT - 1) at the start (e.g. if buffer is u8_t[] and actual data will be u32_t*) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="229" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" prot="public" static="no">
+        <name>LWIP_MEM_ALIGN_SIZE</name>
+        <param><defname>size</defname></param>
+        <initializer>(((size) + <ref refid="group__lwip__opts__mem_1ga97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref> - 1U) &amp; ~(<ref refid="group__lwip__opts__mem_1ga97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref>-1U))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Calculate memory size for an aligned buffer - returns the next highest multiple of MEM_ALIGNMENT (e.g. <ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE(3)</ref> and <ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE(4)</ref> will both yield 4 for MEM_ALIGNMENT == 4). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="221" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga5bf52d6f2729d0c8afd365f69d7d4373" prot="public" static="no">
+        <name>LWIP_NO_INTTYPES_H</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define this to 1 in <ref refid="cc_8h" kindref="compound">arch/cc.h</ref> of your port if your compiler does not provide the inttypes.h header. You need to define the format strings listed in lwip/arch.h yourself in this case (X8_F, U16_F...). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="136" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="136" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gade9c8513419a799cd78a07ae894bb805" prot="public" static="no">
+        <name>LWIP_NO_LIMITS_H</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define this to 1 in <ref refid="cc_8h" kindref="compound">arch/cc.h</ref> of your port if your compiler does not provide the limits.h header. You need to define the type limits yourself in this case (e.g. INT_MAX). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="175" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga53954d507c09e521ec0d44a2450bb89d" prot="public" static="no">
+        <name>LWIP_NO_STDDEF_H</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define this to 1 in <ref refid="cc_8h" kindref="compound">arch/cc.h</ref> of your port if you do not want to include stddef.h header to get size_t. You need to typedef size_t by yourself in this case. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga122c754db96ecad23bc6f4541d6360c1" prot="public" static="no">
+        <name>LWIP_NO_STDINT_H</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define this to 1 in <ref refid="cc_8h" kindref="compound">arch/cc.h</ref> of your port if your compiler does not provide the stdint.h header. You need to typedef the generic types listed in lwip/arch.h yourself in this case (u8_t, u16_t...). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="114" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga7e8bcd0282525704d6dd596bdd1b47d0" prot="public" static="no">
+        <name>LWIP_PLATFORM_ASSERT</name>
+        <param><defname>x</defname></param>
+        <initializer>do {<ref refid="kprintf_8c_1ab2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(&quot;Assertion \&quot;%s\&quot; failed at line %d in %s\n&quot;, x, __LINE__, __FILE__); <ref refid="kpanic_8h_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(&quot;asserted&quot;);} while(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Platform specific assertion handling.<linebreak/>
+Note the default implementation pulls in printf, fflush and abort, which may in turn pull in a lot of standard libary code. In resource-constrained systems, this should be defined to something less resource-consuming. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="91" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" prot="public" static="no">
+        <name>LWIP_PLATFORM_DIAG</name>
+        <param><defname>x</defname></param>
+        <initializer>do {<ref refid="kprintf_8c_1ab2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref> x;} while(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define random number generator function of your system Platform specific diagnostic output.<linebreak/>
+Note the default implementation pulls in printf, which may in turn pull in a lot of standard libary code. In resource-constrained systems, this should be defined to something less resource-consuming. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="82" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga683e5c35d3263fe3145e6a6bc546604a" prot="public" static="no">
+        <name>LWIP_PTR_NUMERIC_CAST</name>
+        <param><defname>target_type</defname></param>
+        <param><defname>val</defname></param>
+        <initializer><ref refid="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" kindref="member">LWIP_CONST_CAST</ref>(target_type, val)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get rid of warnings related to pointer-to-numeric and vice-versa casts, e.g. &quot;conversion from &apos;u8_t&apos; to &apos;void *&apos; of greater size&quot; </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="199" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="199" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" prot="public" static="no">
+        <name>LWIP_UNUSED_ARG</name>
+        <param><defname>x</defname></param>
+        <initializer>(void)x</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support using #include files before and after struct to be packed.<linebreak/>
+The file included BEFORE the struct is &quot;arch/bpstruct.h&quot;.<linebreak/>
+The file included AFTER the struct is &quot;arch/epstruct.h&quot;.<linebreak/>
+This can be used to implement struct packing on MS Visual C compilers, see the Win32 port in the lwIP contrib repository for reference. For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. Eliminates compiler warning about unused arguments (GCC -Wextra -Wunused). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="315" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="315" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" prot="public" static="no">
+        <name>PACK_STRUCT_BEGIN</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support. Placed BEFORE declaration of a packed struct.<linebreak/>
+For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="249" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga465fef70f294e21cbf4ea51fc342f20e" prot="public" static="no">
+        <name>PACK_STRUCT_END</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support. Placed AFTER declaration of a packed struct.<linebreak/>
+For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="258" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="258" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaab0b988124e37a978d9a88e7c1c778e0" prot="public" static="no">
+        <name>PACK_STRUCT_FIELD</name>
+        <param><defname>x</defname></param>
+        <initializer>x</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support. Wraps u32_t and u16_t members.<linebreak/>
+For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="280" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="280" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaa8f75e4117374c2d09fbda5566e40b62" prot="public" static="no">
+        <name>PACK_STRUCT_FLD_8</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="group__compiler__abstraction_1gaab0b988124e37a978d9a88e7c1c778e0" kindref="member">PACK_STRUCT_FIELD</ref>(x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support. Wraps u8_t members, where some compilers warn that packing is not necessary.<linebreak/>
+For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="289" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="289" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gacc89e224363eb0ebca24b64d925c3cb7" prot="public" static="no">
+        <name>PACK_STRUCT_FLD_S</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="group__compiler__abstraction_1gaab0b988124e37a978d9a88e7c1c778e0" kindref="member">PACK_STRUCT_FIELD</ref>(x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support. Wraps members that are packed structs themselves, where some compilers warn that packing is not necessary.<linebreak/>
+For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="298" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="298" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga33623da05bb55497534c3dc26ebebeb2" prot="public" static="no">
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Packed structs support. Placed between end of declaration of a packed struct and trailing semicolon.<linebreak/>
+For examples of packed struct declarations, see include/lwip/prot/ subfolder.<linebreak/>
+A port to GCC/clang is included in lwIP, if you use these compilers there is nothing to do here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="270" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="270" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gac05a82d37afb251470f5e17ca15ab6e9" prot="public" static="no">
+        <name>S16_F</name>
+        <initializer>PRId16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="151" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga4b1eca99bc81e248c7074ea87fc9ca63" prot="public" static="no">
+        <name>S32_F</name>
+        <initializer>PRId32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="160" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga4cd359b6110f318ef71814587e1df029" prot="public" static="no">
+        <name>SZT_F</name>
+        <initializer>PRIuPTR</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="166" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gaa9d7f6eb2ee9fcc5eda3545dbb1886e0" prot="public" static="no">
+        <name>U16_F</name>
+        <initializer>PRIu16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="148" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" prot="public" static="no">
+        <name>U32_F</name>
+        <initializer>PRIu32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="157" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga1418f92673e54a36b6e376109e526382" prot="public" static="no">
+        <name>X16_F</name>
+        <initializer>PRIx16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="154" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1gac219830a93d05c5f18f64ce87a34be14" prot="public" static="no">
+        <name>X32_F</name>
+        <initializer>PRIx32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="163" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__compiler__abstraction_1ga90c130a97711a9d7e5015c610f2dfe8f" prot="public" static="no">
+        <name>X8_F</name>
+        <initializer>&quot;02&quot; PRIx8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch.h" line="145" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>All defines related to this section must not be placed in <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref>, but in <ref refid="cc_8h" kindref="compound">arch/cc.h</ref>! These options cannot be #defined in <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref> since they are not options of lwIP itself, but options of the lwIP port to your system. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

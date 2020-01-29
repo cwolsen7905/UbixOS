@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structlwip__cyclic__timer" kind="struct" language="C++" prot="public">
+    <compoundname>lwip_cyclic_timer</compoundname>
+    <includes refid="timeouts_8h" local="no">timeouts.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structlwip__cyclic__timer_1a4fada87ea068f44bbb92c63b4d65ac1d" prot="public" static="no" mutable="no">
+        <type><ref refid="timeouts_8h_1a985c5d366b62bd179195e093ffcb7ecd" kindref="member">lwip_cyclic_timer_handler</ref></type>
+        <definition>lwip_cyclic_timer_handler lwip_cyclic_timer::handler</definition>
+        <argsstring></argsstring>
+        <name>handler</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/timeouts.h" line="67" column="29" bodyfile="C:/Dev/git/UbixOS/sys/include/net/timeouts.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structlwip__cyclic__timer_1addbc7ac275287e62a81cdd16b3dd56f9" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+        <definition>u32_t lwip_cyclic_timer::interval_ms</definition>
+        <argsstring></argsstring>
+        <name>interval_ms</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/timeouts.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/timeouts.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This struct contains information about a stack-internal timer function that has to be called at a defined interval </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>lwip_cyclic_timer</label>
+        <link refid="structlwip__cyclic__timer"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/timeouts.h" line="65" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/net/timeouts.h" bodystart="65" bodyend="71"/>
+    <listofallmembers>
+      <member refid="structlwip__cyclic__timer_1a4fada87ea068f44bbb92c63b4d65ac1d" prot="public" virt="non-virtual"><scope>lwip_cyclic_timer</scope><name>handler</name></member>
+      <member refid="structlwip__cyclic__timer_1addbc7ac275287e62a81cdd16b3dd56f9" prot="public" virt="non-virtual"><scope>lwip_cyclic_timer</scope><name>interval_ms</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

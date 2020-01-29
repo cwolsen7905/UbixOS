@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmsdos__inode__info" kind="struct" language="C++" prot="public">
+    <compoundname>msdos_inode_info</compoundname>
+    <includes refid="msdos__fs_8h" local="no">msdos_fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmsdos__inode__info_1aa7b66ce04f81ad1ae4b5daf8320c9bad" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int msdos_inode_info::i_attrs</definition>
+        <argsstring></argsstring>
+        <name>i_attrs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmsdos__inode__info_1a8dbdcf1988aa660d467ef3c63d46646b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int msdos_inode_info::i_binary</definition>
+        <argsstring></argsstring>
+        <name>i_binary</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmsdos__inode__info_1aa8bae9a90769941f4d6fba22b854d668" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int msdos_inode_info::i_busy</definition>
+        <argsstring></argsstring>
+        <name>i_busy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmsdos__inode__info_1aefc7e562fd93c3a334150fb55e4b10e7" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* msdos_inode_info::i_depend</definition>
+        <argsstring></argsstring>
+        <name>i_depend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="63" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmsdos__inode__info_1acb6192c38358869037188023488a1019" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* msdos_inode_info::i_old</definition>
+        <argsstring></argsstring>
+        <name>i_old</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="65" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmsdos__inode__info_1a34ec624b7bbd331fc252a1a01c6c36c5" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int msdos_inode_info::i_start</definition>
+        <argsstring></argsstring>
+        <name>i_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="7">
+        <label>i387Struct</label>
+        <link refid="structi387Struct"/>
+      </node>
+      <node id="31">
+        <label>ufs1_dinode</label>
+        <link refid="structufs1__dinode"/>
+      </node>
+      <node id="25">
+        <label>tssStruct</label>
+        <link refid="structtssStruct"/>
+      </node>
+      <node id="23">
+        <label>tty_termNode</label>
+        <link refid="structtty__termNode"/>
+      </node>
+      <node id="20">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="19">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+devRec</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>+devInfo</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
+        <label>osInfo</label>
+        <link refid="structosInfo"/>
+      </node>
+      <node id="4">
+        <label>msdos_sb_info</label>
+        <link refid="structmsdos__sb__info"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+fat_wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="14">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+fileListTail</edgelabel>
+          <edgelabel>+fileListHead</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>msdos_inode_info</label>
+        <link refid="structmsdos__inode__info"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+i_old</edgelabel>
+          <edgelabel>+i_depend</edgelabel>
+        </childnode>
+      </node>
+      <node id="17">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>inode</label>
+        <link refid="structinode"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+msdos_i</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+i_sb</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+i_prev</edgelabel>
+          <edgelabel>+i_bound_by</edgelabel>
+          <edgelabel>+i_hash_next</edgelabel>
+          <edgelabel>+i_next</edgelabel>
+          <edgelabel>+i_bound_to</edgelabel>
+          <edgelabel>+i_hash_prev</edgelabel>
+          <edgelabel>+i_mount</edgelabel>
+        </childnode>
+        <childnode refid="27" relation="usage">
+          <edgelabel>+i_sem</edgelabel>
+        </childnode>
+        <childnode refid="28" relation="usage">
+          <edgelabel>+pipe_i</edgelabel>
+        </childnode>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+ufs2_i</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+i_wait</edgelabel>
+        </childnode>
+        <childnode refid="30" relation="usage">
+          <edgelabel>+i_op</edgelabel>
+        </childnode>
+        <childnode refid="31" relation="usage">
+          <edgelabel>+ufs1_i</edgelabel>
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="26">
+        <label>super_operations</label>
+        <link refid="structsuper__operations"/>
+      </node>
+      <node id="10">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+      <node id="16">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="17" relation="usage">
+          <edgelabel>+diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+device</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+fs</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>super_block</label>
+        <link refid="structsuper__block"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+msdos_sb</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+s_mounted</edgelabel>
+          <edgelabel>+s_covered</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+s_wait</edgelabel>
+        </childnode>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+s_op</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>taskStruct</label>
+        <link refid="structtaskStruct"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+exec</edgelabel>
+          <edgelabel>+root</edgelabel>
+          <edgelabel>+pwd</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+i387</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>+td</edgelabel>
+        </childnode>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+files</edgelabel>
+        </childnode>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+term</edgelabel>
+        </childnode>
+        <childnode refid="24" relation="usage">
+          <edgelabel>+oInfo</edgelabel>
+        </childnode>
+        <childnode refid="25" relation="usage">
+          <edgelabel>+tss</edgelabel>
+        </childnode>
+      </node>
+      <node id="9">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+      <node id="21">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="27">
+        <label>semaphore</label>
+        <link refid="structsemaphore"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="13">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+inode</edgelabel>
+        </childnode>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>+dmadat</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+mp</edgelabel>
+        </childnode>
+      </node>
+      <node id="15">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="28">
+        <label>pipe_inode_info</label>
+        <link refid="structpipe__inode__info"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>wait_queue</label>
+        <link refid="structwait__queue"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+task</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="11">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+      <node id="8">
+        <label>thread</label>
+        <link refid="structthread"/>
+        <childnode refid="9" relation="usage">
+          <edgelabel>+frame</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+sigmask</edgelabel>
+        </childnode>
+        <childnode refid="11" relation="usage">
+          <edgelabel>+rlim</edgelabel>
+        </childnode>
+        <childnode refid="12" relation="usage">
+          <edgelabel>+sigact</edgelabel>
+        </childnode>
+      </node>
+      <node id="29">
+        <label>ufs2_dinode</label>
+        <link refid="structufs2__dinode"/>
+      </node>
+      <node id="30">
+        <label>inode_operations</label>
+        <link refid="structinode__operations"/>
+      </node>
+      <node id="22">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" line="58" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/msdos_fs.h" bodystart="58" bodyend="68"/>
+    <listofallmembers>
+      <member refid="structmsdos__inode__info_1aa7b66ce04f81ad1ae4b5daf8320c9bad" prot="public" virt="non-virtual"><scope>msdos_inode_info</scope><name>i_attrs</name></member>
+      <member refid="structmsdos__inode__info_1a8dbdcf1988aa660d467ef3c63d46646b" prot="public" virt="non-virtual"><scope>msdos_inode_info</scope><name>i_binary</name></member>
+      <member refid="structmsdos__inode__info_1aa8bae9a90769941f4d6fba22b854d668" prot="public" virt="non-virtual"><scope>msdos_inode_info</scope><name>i_busy</name></member>
+      <member refid="structmsdos__inode__info_1aefc7e562fd93c3a334150fb55e4b10e7" prot="public" virt="non-virtual"><scope>msdos_inode_info</scope><name>i_depend</name></member>
+      <member refid="structmsdos__inode__info_1acb6192c38358869037188023488a1019" prot="public" virt="non-virtual"><scope>msdos_inode_info</scope><name>i_old</name></member>
+      <member refid="structmsdos__inode__info_1a34ec624b7bbd331fc252a1a01c6c36c5" prot="public" virt="non-virtual"><scope>msdos_inode_info</scope><name>i_start</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

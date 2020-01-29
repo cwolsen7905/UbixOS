@@ -1,0 +1,7 @@
+digraph "directoryEntry"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{directoryEntry\n|+ attributes\l+ creationDate\l+ fileName\l+ gid\l+ lastModified\l+ permissions\l+ size\l+ startCluster\l+ uid\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

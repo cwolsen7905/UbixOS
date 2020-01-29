@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_34dbdcf62f851fc330fe234d0297df87" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/lib</compoundname>
+    <innerfile refid="assert_8c">assert.c</innerfile>
+    <innerfile refid="atan_8c">atan.c</innerfile>
+    <innerfile refid="divdi3_8c">divdi3.c</innerfile>
+    <innerfile refid="kern__trie_8c">kern_trie.c</innerfile>
+    <innerfile refid="kmalloc_8c">kmalloc.c</innerfile>
+    <innerfile refid="kprintf_8c">kprintf.c</innerfile>
+    <innerfile refid="libcpp_8cc">libcpp.cc</innerfile>
+    <innerfile refid="net_8c">net.c</innerfile>
+    <innerfile refid="ogprintf_8cc">ogprintf.cc</innerfile>
+    <innerfile refid="sqrt_8c">sqrt.c</innerfile>
+    <innerfile refid="string_8c">string.c</innerfile>
+    <innerfile refid="strlen_8c">strlen.c</innerfile>
+    <innerfile refid="strncpy_8c">strncpy.c</innerfile>
+    <innerfile refid="strstr_8c">strstr.c</innerfile>
+    <innerfile refid="strtok_8c">strtok.c</innerfile>
+    <innerfile refid="strtol_8c">strtol.c</innerfile>
+    <innerfile refid="vsprintf_8c">vsprintf.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/lib/"/>
+  </compounddef>
+</doxygen>

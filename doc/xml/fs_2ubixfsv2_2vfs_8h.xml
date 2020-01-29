@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fs_2ubixfsv2_2vfs_8h" kind="file" language="C++">
+    <compoundname>vfs.h</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*#ifndef<sp/>VFS_H</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">#define<sp/>VFS_H</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">#include<sp/>&lt;stdlib.h&gt;</highlight></codeline>
+<codeline lineno="5"><highlight class="comment">#include<sp/>&lt;stdio.h&gt;</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"></highlight></codeline>
+<codeline lineno="7"><highlight class="comment">class<sp/>FileSystemAbstract<sp/>{</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>protected:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>public:<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/><sp/>virtual<sp/><sp/><sp/>int<sp/>read(char<sp/>*,<sp/>long,<sp/>long)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/><sp/>virtual<sp/><sp/><sp/>int<sp/>write(char<sp/>*,<sp/>long,<sp/>long)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/><sp/>virtual<sp/><sp/>~FileSystemAbstract(void)<sp/>{};</highlight></codeline>
+<codeline lineno="13"><highlight class="comment">};<sp/>//<sp/>FileSystemAbstract</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"></highlight></codeline>
+<codeline lineno="15"><highlight class="comment">class<sp/>DiskFS<sp/>:<sp/>public<sp/>FileSystemAbstract<sp/>{</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>protected:</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/><sp/><sp/>FILE<sp/>*<sp/>diskFile;</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>public:</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DiskFS(const<sp/>char<sp/>*);</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/><sp/>virtual<sp/><sp/><sp/>int<sp/>write(const<sp/>void<sp/>*,<sp/>long,<sp/>long);</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/><sp/>virtual<sp/><sp/><sp/>int<sp/>read(void<sp/>*,<sp/>long,<sp/>long);</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/><sp/>virtual<sp/><sp/>~DiskFS(void)<sp/>{<sp/>};</highlight></codeline>
+<codeline lineno="23"><highlight class="comment">};<sp/>//<sp/>DiskFS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"></highlight></codeline>
+<codeline lineno="25"><highlight class="comment">#endif<sp/>//<sp/>!VFS_H</highlight></codeline>
+<codeline lineno="26"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/ubixfsv2/vfs.h"/>
+  </compounddef>
+</doxygen>

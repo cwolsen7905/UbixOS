@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Shdr" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Shdr</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Shdr_1ac4ee2ceaec74ab5704ebba226e83b200" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Shdr::sh_addr</definition>
+        <argsstring></argsstring>
+        <name>sh_addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="102" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1ab6b9f67208a04cc0d374203c0a3ab93a" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Shdr::sh_addralign</definition>
+        <argsstring></argsstring>
+        <name>sh_addralign</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="107" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a879406e9ddf2bd7e45346d430d0aaa44" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Shdr::sh_entsize</definition>
+        <argsstring></argsstring>
+        <name>sh_entsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="108" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a20aab677eb99c91c0e6c3c5dc8f0f3db" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Shdr::sh_flags</definition>
+        <argsstring></argsstring>
+        <name>sh_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="101" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a72dd754689db27582817c0691f7d0c77" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Shdr::sh_info</definition>
+        <argsstring></argsstring>
+        <name>sh_info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="106" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a29812c42d9310eb3ad17dcd68ec25536" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Shdr::sh_link</definition>
+        <argsstring></argsstring>
+        <name>sh_link</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="105" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a18f4475eeec871316099323b512d999d" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Shdr::sh_name</definition>
+        <argsstring></argsstring>
+        <name>sh_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="98" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1afd5e899b00b6527bbecf9cd4bda50112" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a6f7837bc80df7a68291fce54ff088849" kindref="member">Elf64_Off</ref></type>
+        <definition>Elf64_Off Elf64_Shdr::sh_offset</definition>
+        <argsstring></argsstring>
+        <name>sh_offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="103" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a8988fd6e383835e9d51344eddf38ef24" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Shdr::sh_size</definition>
+        <argsstring></argsstring>
+        <name>sh_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="104" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Shdr_1a6379cd77214969499ae99e6e8a46405c" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Shdr::sh_type</definition>
+        <argsstring></argsstring>
+        <name>sh_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="100" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Shdr</label>
+        <link refid="structElf64__Shdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="97" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="97" bodyend="109"/>
+    <listofallmembers>
+      <member refid="structElf64__Shdr_1ac4ee2ceaec74ab5704ebba226e83b200" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_addr</name></member>
+      <member refid="structElf64__Shdr_1ab6b9f67208a04cc0d374203c0a3ab93a" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_addralign</name></member>
+      <member refid="structElf64__Shdr_1a879406e9ddf2bd7e45346d430d0aaa44" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_entsize</name></member>
+      <member refid="structElf64__Shdr_1a20aab677eb99c91c0e6c3c5dc8f0f3db" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_flags</name></member>
+      <member refid="structElf64__Shdr_1a72dd754689db27582817c0691f7d0c77" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_info</name></member>
+      <member refid="structElf64__Shdr_1a29812c42d9310eb3ad17dcd68ec25536" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_link</name></member>
+      <member refid="structElf64__Shdr_1a18f4475eeec871316099323b512d999d" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_name</name></member>
+      <member refid="structElf64__Shdr_1afd5e899b00b6527bbecf9cd4bda50112" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_offset</name></member>
+      <member refid="structElf64__Shdr_1a8988fd6e383835e9d51344eddf38ef24" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_size</name></member>
+      <member refid="structElf64__Shdr_1a6379cd77214969499ae99e6e8a46405c" prot="public" virt="non-virtual"><scope>Elf64_Shdr</scope><name>sh_type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

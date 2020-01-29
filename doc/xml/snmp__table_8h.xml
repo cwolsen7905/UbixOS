@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="snmp__table_8h" kind="file" language="C++">
+    <compoundname>snmp_table.h</compoundname>
+    <includes local="yes">lwip/apps/snmp_opts.h</includes>
+    <includes local="yes">lwip/apps/snmp_core.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/snmp_table.h</label>
+        <link refid="snmp__table_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>lwip/apps/snmp_core.h</label>
+      </node>
+      <node id="2">
+        <label>lwip/apps/snmp_opts.h</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>SNMP server MIB API to implement table nodes </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Martin<sp/>Hentschel<sp/>&lt;info@cl-soft.de&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_APPS_SNMP_TABLE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_APPS_SNMP_TABLE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/apps/snmp_opts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/apps/snmp_core.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_SNMP<sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_table_col_def</highlight></codeline>
+<codeline lineno="52"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>index;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>asn1_type;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>snmp_access_t<sp/><ref refid="gdt_8h_1a8c3d836bf6ce197ad635d670265b97e1" kindref="member">access</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_table_node</highlight></codeline>
+<codeline lineno="60"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_leaf_node<sp/>node;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>column_count;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_table_col_def*<sp/>columns;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/>snmp_err_t<sp/>(*get_cell_instance)(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>column,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>row_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>row_oid_len,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*<sp/>cell_instance);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>snmp_err_t<sp/>(*get_next_cell_instance)(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>column,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_obj_id*<sp/>row_oid,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*<sp/>cell_instance);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/>node_instance_get_value_method<sp/>get_value;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>node_instance_set_test_method<sp/>set_test;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>node_instance_set_value_method<sp/>set_value;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal">snmp_err_t<sp/>snmp_table_get_instance(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*root_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>root_oid_len,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal">snmp_err_t<sp/>snmp_table_get_next_instance(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*root_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>root_oid_len,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_TABLE_CREATE(oid,<sp/>columns,<sp/>get_cell_instance_method,<sp/>get_next_cell_instance_method,<sp/>get_value_method,<sp/>set_test_method,<sp/>set_value_method)<sp/>\</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"><sp/><sp/>{{{<sp/>SNMP_NODE_TABLE,<sp/>(oid)<sp/>},<sp/>\</highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor"><sp/><sp/>snmp_table_get_instance,<sp/>\</highlight></codeline>
+<codeline lineno="81"><highlight class="preprocessor"><sp/><sp/>snmp_table_get_next_instance<sp/>},<sp/>\</highlight></codeline>
+<codeline lineno="82"><highlight class="preprocessor"><sp/><sp/>(u16_t)LWIP_ARRAYSIZE(columns),<sp/>(columns),<sp/>\</highlight></codeline>
+<codeline lineno="83"><highlight class="preprocessor"><sp/><sp/>(get_cell_instance_method),<sp/>(get_next_cell_instance_method),<sp/>\</highlight></codeline>
+<codeline lineno="84"><highlight class="preprocessor"><sp/><sp/>(get_value_method),<sp/>(set_test_method),<sp/>(set_value_method)}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_TABLE_GET_COLUMN_FROM_OID(oid)<sp/>((oid)[1])<sp/></highlight><highlight class="comment">/*<sp/>first<sp/>array<sp/>value<sp/>is<sp/>(fixed)<sp/>row<sp/>entry<sp/>(fixed<sp/>to<sp/>1)<sp/>and<sp/>2nd<sp/>value<sp/>is<sp/>column,<sp/>follow3ed<sp/>by<sp/>instance<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/>SNMP_VARIANT_VALUE_TYPE_U32,</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>SNMP_VARIANT_VALUE_TYPE_S32,</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/>SNMP_VARIANT_VALUE_TYPE_PTR,</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>SNMP_VARIANT_VALUE_TYPE_CONST_PTR</highlight></codeline>
+<codeline lineno="95"><highlight class="normal">}<sp/>snmp_table_column_data_type_t;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_table_simple_col_def</highlight></codeline>
+<codeline lineno="98"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>index;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>asn1_type;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>snmp_table_column_data_type_t<sp/>data_type;<sp/></highlight><highlight class="comment">/*<sp/>depending<sp/>of<sp/>what<sp/>union<sp/>member<sp/>is<sp/>used<sp/>to<sp/>store<sp/>the<sp/>value*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_table_simple_node</highlight></codeline>
+<codeline lineno="106"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>inherited<sp/>&quot;base<sp/>class&quot;<sp/>members<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_leaf_node<sp/>node;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>column_count;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_table_simple_col_def*<sp/>columns;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>snmp_err_t<sp/>(*get_cell_value)(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>column,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>row_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>row_oid_len,<sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">snmp_variant_value*<sp/>value,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>value_len);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>snmp_err_t<sp/>(*get_next_cell_instance_and_value)(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>column,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_obj_id*<sp/>row_oid,<sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">snmp_variant_value*<sp/>value,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>value_len);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal">snmp_err_t<sp/>snmp_table_simple_get_instance(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*root_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>root_oid_len,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal">snmp_err_t<sp/>snmp_table_simple_get_next_instance(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*root_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>root_oid_len,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_TABLE_CREATE_SIMPLE(oid,<sp/>columns,<sp/>get_cell_value_method,<sp/>get_next_cell_instance_and_value_method)<sp/>\</highlight></codeline>
+<codeline lineno="119"><highlight class="preprocessor"><sp/><sp/>{{{<sp/>SNMP_NODE_TABLE,<sp/>(oid)<sp/>},<sp/>\</highlight></codeline>
+<codeline lineno="120"><highlight class="preprocessor"><sp/><sp/>snmp_table_simple_get_instance,<sp/>\</highlight></codeline>
+<codeline lineno="121"><highlight class="preprocessor"><sp/><sp/>snmp_table_simple_get_next_instance<sp/>},<sp/>\</highlight></codeline>
+<codeline lineno="122"><highlight class="preprocessor"><sp/><sp/>(u16_t)LWIP_ARRAYSIZE(columns),<sp/>(columns),<sp/>(get_cell_value_method),<sp/>(get_next_cell_instance_and_value_method)<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref><sp/>snmp_table_extract_value_from_s32ref(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>value);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref><sp/>snmp_table_extract_value_from_u32ref(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>value);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref><sp/>snmp_table_extract_value_from_refconstptr(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>value);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_SNMP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_APPS_SNMP_TABLE_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/snmp_table.h"/>
+  </compounddef>
+</doxygen>

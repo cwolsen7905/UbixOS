@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__dhcp4" kind="group">
+    <compoundname>dhcp4</compoundname>
+    <title>DHCPv4</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>DHCP (IPv4) related functions This is a DHCP client for the lwIP TCP/IP stack. It aims to conform with RFC 2131 and RFC 2132.</para>
+<para><xrefsect id="todo_1_todo000007"><xreftitle>Todo</xreftitle><xrefdescription><para>:<itemizedlist>
+<listitem><para>Support for interfaces other than Ethernet (SLIP, PPP, ...)</para>
+</listitem></itemizedlist>
+</para>
+</xrefdescription></xrefsect></para>
+<para>Options: DHCP_COARSE_TIMER_SECS (recommended 60 which is a minute) DHCP_FINE_TIMER_MSECS (recommended 500 which equals TCP coarse timer)</para>
+<para>dhcp_start() starts a DHCP client instance which configures the interface by obtaining an IP address lease and maintaining it.</para>
+<para>Use dhcp_release() to end the lease and use dhcp_stop() to remove the DHCP client.</para>
+<para><simplesect kind="see"><para>netifapi_dhcp4 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,11 @@
+digraph "C:/Dev/git/UbixOS/sys/fs/ubixfs" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_f0f1d03d7166acaa9846e3e5eebb6906 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="fs" fontname="Helvetica", fontsize="10", URL="dir_f0f1d03d7166acaa9846e3e5eebb6906.html"]
+  dir_cb8ca09a09b88e5783c23dbafd3d00a3 [shape=box, label="ubixfs", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_cb8ca09a09b88e5783c23dbafd3d00a3.html"];
+  }
+  dir_d1be8160e739b6eed1f7843efdbae1b3 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"];
+  dir_cb8ca09a09b88e5783c23dbafd3d00a3->dir_d1be8160e739b6eed1f7843efdbae1b3 [headlabel="30", labeldistance=1.5 headhref="dir_000017_000019.html"];
+}

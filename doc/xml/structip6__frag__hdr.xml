@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structip6__frag__hdr" kind="struct" language="C++" prot="public">
+    <compoundname>ip6_frag_hdr</compoundname>
+    <includes refid="prot_2ip6_8h" local="no">ip6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structip6__frag__hdr_1a623f3b24b23b28e1509c810e7a1d4711" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip6_frag_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t _fragment_offset)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>_fragment_offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="143" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structip6__frag__hdr_1a43e81c07478bce98b5dc3daeddcc7634" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip6_frag_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t _identification)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>_identification</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="145" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structip6__frag__hdr_1a8604fbb38f61d571cdc373f3ecc79512" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip6_frag_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t _nexth)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>_nexth</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="139" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structip6__frag__hdr_1aa86f3ff1670a90d948e15e8b8597bb33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip6_frag_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t reserved)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>reserved</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="141" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>ip6_frag_hdr</label>
+        <link refid="structip6__frag__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="137" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="137" bodyend="146"/>
+    <listofallmembers>
+      <member refid="structip6__frag__hdr_1a623f3b24b23b28e1509c810e7a1d4711" prot="public" virt="non-virtual"><scope>ip6_frag_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structip6__frag__hdr_1a43e81c07478bce98b5dc3daeddcc7634" prot="public" virt="non-virtual"><scope>ip6_frag_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structip6__frag__hdr_1a8604fbb38f61d571cdc373f3ecc79512" prot="public" virt="non-virtual"><scope>ip6_frag_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structip6__frag__hdr_1aa86f3ff1670a90d948e15e8b8597bb33" prot="public" virt="non-virtual"><scope>ip6_frag_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

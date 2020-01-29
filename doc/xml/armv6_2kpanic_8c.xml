@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="armv6_2kpanic_8c" kind="file" language="C++">
+    <compoundname>kpanic.c</compoundname>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="8259_8h" local="no">isa/8259.h</includes>
+    <includes refid="stdarg_8h" local="no">stdarg.h</includes>
+    <includes refid="tty_8h" local="no">ubixos/tty.h</includes>
+    <incdepgraph>
+      <node id="11">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="2">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="13">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/kpanic.c</label>
+        <link refid="armv6_2kpanic_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kpanic</definition>
+        <argsstring>(const char *fmt,...)</argsstring>
+        <name>kpanic</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>fmt</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+<para>print panic message and halt system </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>fmt</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>panic message </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/kpanic.c" line="41" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/kpanic.c" bodystart="41" bodyend="61"/>
+        <referencedby refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="168" endline="175">cpuidDetect</referencedby>
+        <referencedby refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="177" endline="227">cpuInfo</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="lnc_8c_1a85f794a709a826cb783b49a20dda4cf3" compoundref="lnc_8c" startline="546" endline="571">lnc_sendPacket</referencedby>
+        <referencedby refid="ne2k_8c_1af6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="113" endline="160">PCtoNIC</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a6b56b9893c2a4b04598034085d8cee8c" compoundref="ubixfs_8c" startline="192" endline="220">readUbixFS</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+        <referencedby refid="classogDisplay__UbixOS_1a63ff8d6ee36f49385885fd0cf64fba3f" compoundref="ogDisplay__UbixOS_8cc" startline="99" endline="203">ogDisplay_UbixOS::SetMode</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+        <referencedby refid="tcpdump_8c_1a5a1493a11fbda3bb015f788583dfd3e4" compoundref="tcpdump_8c" startline="47" endline="55">tcpdump_init</referencedby>
+        <referencedby refid="tty_8c_1a52a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="84" endline="113">tty_change</referencedby>
+        <referencedby refid="ubthread_8c_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</referencedby>
+        <referencedby refid="ubthread_8c_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</referencedby>
+        <referencedby refid="vitals_8c_1a34d7f48e003fe73f05d594c6c1f00d49" compoundref="vitals_8c" startline="47" endline="70">vitals_init</referencedby>
+        <referencedby refid="vmm__allocpagetable_8c_1ab5107978c7d2053460e2d890e4fd6242" compoundref="vmm__allocpagetable_8c" startline="7" endline="46">vmm_allocPageTable</referencedby>
+        <referencedby refid="vmm__memory_8c_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</referencedby>
+        <referencedby refid="paging_8c_1a3615feeeee9f4038cd1070372ccba22e" compoundref="paging_8c" startline="291" endline="346">vmm_getFreeKernelPage</referencedby>
+        <referencedby refid="paging_8c_1ad6c3897473d837504f3d1415fb8ab796" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</referencedby>
+        <referencedby refid="setpageattributes_8c_1a7900e6837133f7d21ac4d2152afb1d63" compoundref="setpageattributes_8c" startline="39" endline="66">vmm_setPageAttributes</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="stdarg_8h" kindref="compound">stdarg.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tty_8h" kindref="compound">ubixos/tty.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="kpanic_8h_1adb9a182aa071791a306163d50d653deb" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*fmt,<sp/>...)<sp/>{</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref>[512];</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><ref refid="stdarg_8h_1abaefbc6cabb217bf0138d4f9c94d4775" kindref="member">va_list</ref><sp/>args;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/>vaStart(args,<sp/>fmt);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="stdarg_8h_1aaa83f2a89dae6d03dfe15deae29f383a" kindref="member">vsprintf</ref>(<ref refid="structbuf" kindref="compound">buf</ref>,<sp/>fmt,<sp/>args);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>vaEnd(args);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>It&apos;s<sp/>important<sp/>that<sp/>we<sp/>print<sp/>on<sp/>the<sp/>current<sp/>terminal<sp/>so<sp/>let&apos;s<sp/>reset<sp/>foreground<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1aafbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref><sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;kPanic:<sp/>%s&quot;</highlight><highlight class="normal">,<sp/><ref refid="structbuf" kindref="compound">buf</ref>);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Halt<sp/>The<sp/>System<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//asm(&quot;cli&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="8259_8h_1a2b9ec30943ddb0a2ef3bd7ccfd2026c0" kindref="member">irqDisable</ref>(0x0);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;hlt&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/kpanic.c"/>
+  </compounddef>
+</doxygen>

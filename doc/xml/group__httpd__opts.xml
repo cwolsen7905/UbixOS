@@ -1,0 +1,520 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__httpd__opts" kind="group">
+    <compoundname>httpd_opts</compoundname>
+    <title>Options</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__httpd__opts_1ga662e88120b507426374dd8ebbd54a048" prot="public" static="no">
+        <name>HTTP_IS_TAG_VOLATILE</name>
+        <param><defname>ptr</defname></param>
+        <initializer>TCP_WRITE_FLAG_COPY</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Default: Tags are sent from struct http_state and are therefore volatile </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="254" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="254" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga33cd73e701130f8fc3dc7db0a3013aa1" prot="public" static="no">
+        <name>HTTPD_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="120" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga5f2642874f930798d975b1f7a6d2e1da" prot="public" static="no">
+        <name>HTTPD_DEBUG_TIMING</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable timing each file sent </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="161" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga5410b604b135deaf5efc472dd7ab9d88" prot="public" static="no">
+        <name>HTTPD_LIMIT_SENDING_TO_2MSS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="260" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="260" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gad92e78e19fd3ab2af42750e83ed73fd5" prot="public" static="no">
+        <name>HTTPD_MAX_RETRIES</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Maximum retries before the connection is aborted/closed.<itemizedlist>
+<listitem><para>number of times pcb-&gt;poll is called -&gt; default is 4*500ms = 2s;</para>
+</listitem><listitem><para>reset when pcb-&gt;sent is called </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="140" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga9faa2c18e1963ab5dfae826f6ee6d874" prot="public" static="no">
+        <name>HTTPD_MAX_WRITE_LEN</name>
+        <param><defname>pcb</defname></param>
+        <initializer>(2 * tcp_mss(pcb))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="267" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="267" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacc3e7667baa2cfafd23de2b152df7a63" prot="public" static="no">
+        <name>HTTPD_POLL_INTERVAL</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The poll delay is X*500ms </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="145" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga6e5de8515c89af12277e4cb011165103" prot="public" static="no">
+        <name>HTTPD_PRECALCULATED_CHECKSUM</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>HTTPD_PRECALCULATED_CHECKSUM==1: include precompiled checksums for predefined (MSS-sized) chunks of the files to prevent having to calculate the checksums at runtime. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="303" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="303" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gafb2115e763ed3163a3e204a0ba53edb9" prot="public" static="no">
+        <name>HTTPD_SERVER_AGENT</name>
+        <initializer>&quot;lwIP/&quot; LWIP_VERSION_STRING &quot; (http://savannah.nongnu.org/projects/lwip)&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This string is passed in the HTTP header as &quot;Server: &quot; </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="107" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga2b058c5d1bd67e5d7cb260166e3ace50" prot="public" static="no">
+        <name>HTTPD_SERVER_PORT</name>
+        <initializer>80</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The server port for HTTPD to use </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="132" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaabd1f6319d04b8d5f2c93270794d5182" prot="public" static="no">
+        <name>HTTPD_TCP_PRIO</name>
+        <initializer>TCP_PRIO_MIN</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Priority for tcp pcbs created by HTTPD (very low by default). Lower priorities get killed first when running out of memory. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="152" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gafd16fcfb798be426cc87611772ba437c" prot="public" static="no">
+        <name>HTTPD_USE_CUSTOM_FSDATA</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to include &quot;fsdata_custom.c&quot; instead of &quot;fsdata.c&quot; for the file system (to prevent changing the file included in CVS) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="316" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="316" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gabb13219495a813fceaafa954a238a924" prot="public" static="no">
+        <name>HTTPD_USE_MEM_POOL</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to use a memp pool for allocating struct http_state instead of the heap. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="127" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga0ff20ebc4ab50d4aa6151c3241dacb3a" prot="public" static="no">
+        <name>LWIP_HTTPD_ABORT_ON_CLOSE_MEM_ERROR</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to call tcp_abort when tcp_close fails with memory error. This can be used to prevent consuming all memory in situations where the HTTP server has low priority compared to other communication. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="235" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="235" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gafb28f7c5fee75f013a199d427452372c" prot="public" static="no">
+        <name>LWIP_HTTPD_CGI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support CGI (old style) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gad3960bf65731bd0f1341867664afe860" prot="public" static="no">
+        <name>LWIP_HTTPD_CGI_SSI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support CGI (new style) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gadadb70f5663cdf004bf879e3b5d326bd" prot="public" static="no">
+        <name>LWIP_HTTPD_CUSTOM_FILES</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 and provide the functions:<itemizedlist>
+<listitem><para>&quot;int fs_open_custom(struct fs_file *file, const char *name)&quot; Called first for every opened file to allow opening files that are not included in fsdata(_custom).c</para>
+</listitem><listitem><para>&quot;void fs_close_custom(struct fs_file *file)&quot; Called to free resources allocated by fs_open_custom(). </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="281" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga1ee8d7c975c7e3d1c9d9dd9b43660c79" prot="public" static="no">
+        <name>LWIP_HTTPD_DYNAMIC_FILE_READ</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support fs_read() to dynamically read file data. Without this (default=off), only one-block files are supported, and the contents must be ready after <ref refid="net_2apps_2fs_8h_1a594058d3f4dd9f333c51b7e5ca910ac3" kindref="member">fs_open()</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="289" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="289" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga75932fc5eeb9abeddfdaf8413574c6d7" prot="public" static="no">
+        <name>LWIP_HTTPD_DYNAMIC_HEADERS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 if you want to include code that creates HTTP headers at runtime. Default is off: HTTP headers are then created statically by the makefsdata tool. Static headers mean smaller code size, but the (readonly) fsdata will grow a bit as every file includes the HTTP header. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="116" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaedd0fa3d356170d8ca3557acb410fd7c" prot="public" static="no">
+        <name>LWIP_HTTPD_FILE_STATE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to include an application state argument per file that is opened. This allows to keep a state per connection/file. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="296" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="296" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga51cb673cb5cc362acc409f23c1e0a331" prot="public" static="no">
+        <name>LWIP_HTTPD_FS_ASYNC_READ</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_HTTPD_FS_ASYNC_READ==1: support asynchronous read operations (fs_read_async returns FS_READ_DELAYED and calls a callback when finished). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="310" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="310" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga0d5074965efd40786182287895feb691" prot="public" static="no">
+        <name>LWIP_HTTPD_KILL_OLD_ON_CONNECTIONS_EXCEEDED</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to kill the oldest connection when running out of memory for &apos;struct http_state&apos; or &apos;struct http_ssi_state&apos;. ATTENTION: This puts all connections on a linked list, so may be kind of slow. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="243" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="243" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga872adc1562d87d8b445f2231d5bab77a" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_CGI_PARAMETERS</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga30dc71c59f3904df7daaf293f74f91f8" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_REQ_LENGTH</name>
+        <initializer><ref refid="def_8h_1a748f5df614a3fc989e8900fd229d6e4e" kindref="member">LWIP_MIN</ref>(1023, (<ref refid="group__httpd__opts_1gaef23f4e3525aa5dd0ecbce9b5e16d4e0" kindref="member">LWIP_HTTPD_REQ_QUEUELEN</ref> * <ref refid="group__lwip__opts__pbuf_1gae61f4491d56e805e79b79eb5d35a00e5" kindref="member">PBUF_POOL_BUFSIZE</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Defines the maximum length of a HTTP request line (up to the first CRLF, copied from pbuf into this a global buffer when pbuf- or packet-queues are received - otherwise the input pbuf is used directly) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="205" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="205" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaca4ef53e7a9abbd8d4bd8bc1ba7b486a" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_REQUEST_URI_LEN</name>
+        <initializer>63</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This is the size of a static buffer used when URIs end with &apos;/&apos;. In this buffer, the directory requested is concatenated with all the configured default file names. Set to 0 to disable checking default filenames on non-root directories. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="215" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="215" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga9764ba9504923caf9cdd483479334ef5" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_TAG_INSERT_LEN</name>
+        <initializer>192</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacb2d74a4aa50287cf55c93d0aa4bcee1" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_TAG_NAME_LEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="93" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga82a030ce2ecdcf741b02b7be41c012b3" prot="public" static="no">
+        <name>LWIP_HTTPD_OMIT_HEADER_FOR_EXTENSIONLESS_URI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to send URIs without extension without headers (who uses this at all??) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="249" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga81de5c62c846e73ab59c4cb46264fd6f" prot="public" static="no">
+        <name>LWIP_HTTPD_POST_MANUAL_WND</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaa27f7c5450392d10aeed033ca878cce3" prot="public" static="no">
+        <name>LWIP_HTTPD_POST_MAX_RESPONSE_URI_LEN</name>
+        <initializer>63</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Maximum length of the filename to send as response to a POST request, filled in by the application when a POST is finished. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="222" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="222" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga8dbe61a35228da0e7365a088197191b8" prot="public" static="no">
+        <name>LWIP_HTTPD_REQ_BUFSIZE</name>
+        <initializer><ref refid="group__httpd__opts_1ga30dc71c59f3904df7daaf293f74f91f8" kindref="member">LWIP_HTTPD_MAX_REQ_LENGTH</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number of (TCP payload-) bytes (in pbufs) to enqueue to parse and incoming request (up to the first double-newline) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="198" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaef23f4e3525aa5dd0ecbce9b5e16d4e0" prot="public" static="no">
+        <name>LWIP_HTTPD_REQ_QUEUELEN</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number of rx pbufs to enqueue to parse an incoming request (up to the first newline) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="192" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="192" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacb70e0cdd30a940f8bce681c6cc63949" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support SSI (Server-Side-Includes) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga975961a6d22d1a077118fb85dfec809a" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI_INCLUDE_TAG</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 0 to not send the SSI tag (default is on, so the tag will be sent in the HTML page </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="228" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="228" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga3167d52d20cf90857e2c809b92458bf0" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI_MULTIPART</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_HTTPD_SSI_MULTIPART==1: SSI handler function is called with 2 more arguments indicating a counter for insert string that are too long to be inserted at once: the SSI handler function must then set &apos;next_tag_part&apos; which will be passed back to it in the next call. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="88" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga520858778b84d4d2fa125294c0f119e5" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI_RAW</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to implement an SSI tag handler callback that gets a const char* to the tag (instead of an index into a pre-registered array of known tags) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga6f78487bc829f7f98274f1264020045e" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_11_KEEPALIVE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable HTTP/1.1 persistent connections. ATTENTION: If the generated file system includes HTTP headers, these must include the &quot;Connection: keep-alive&quot; header (pass argument &quot;-11&quot; to makefsdata). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="180" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="180" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga85ebddbc4236b1e31bfa68fa163f9b07" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_EXTSTATUS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to one to show error pages when parsing a request fails instead of simply closing the connection. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="167" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacbea06ce33933e3ef2f2f1834a21cc2c" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_POST</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support HTTP POST </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="75" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga0bd0f9a89423fb3bbfea4e4c6141ae43" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_REQUESTLIST</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support HTTP request coming in in multiple packets/pbufs </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="185" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="185" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga7a8f4ab787b6fb8482c8a36c9fd0c7dd" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_V09</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 0 to drop support for HTTP/0.9 clients (to save some bytes) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="172" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga054db3f080715942967969c6ae30bb6a" prot="public" static="no">
+        <name>LWIP_HTTPD_TIMING</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable timing each file sent </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="157" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,407 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structcg" kind="struct" language="C++" prot="public">
+    <compoundname>cg</compoundname>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structcg_1aceada36408389a91028335c34b8f1155" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_cgx</definition>
+        <argsstring></argsstring>
+        <name>cg_cgx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="477" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="477" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a2fec2c1851d01640cdd1f7e79b8a6c27" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_clusteroff</definition>
+        <argsstring></argsstring>
+        <name>cg_clusteroff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="492" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="492" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a5f7ec2931318694963baba548c69dba6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_clustersumoff</definition>
+        <argsstring></argsstring>
+        <name>cg_clustersumoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="491" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="491" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a352e2d3f82fbc0d04146d5b81a4c8883" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcsum" kindref="compound">csum</ref></type>
+        <definition>struct csum cg::cg_cs</definition>
+        <argsstring></argsstring>
+        <name>cg_cs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="480" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="481" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a1549459c3334b515b7d603e7761d7c89" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t cg::cg_firstfield</definition>
+        <argsstring></argsstring>
+        <name>cg_firstfield</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="474" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="474" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a55992e8fc119b63883dba8e95a71ca4b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_freeoff</definition>
+        <argsstring></argsstring>
+        <name>cg_freeoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="489" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="489" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1af647c6284b3a503d74a86e18d21e7713" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_frotor</definition>
+        <argsstring></argsstring>
+        <name>cg_frotor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="483" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="483" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1ae1db958010964e7b1f79d18073d1d1f1" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_frsum[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>cg_frsum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="485" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="485" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1ae863f73fe3756c6a4480c6983264d96b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_initediblk</definition>
+        <argsstring></argsstring>
+        <name>cg_initediblk</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="495" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="495" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a0b5e0ed212a5ca12d57fa73b6ade7e6d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_irotor</definition>
+        <argsstring></argsstring>
+        <name>cg_irotor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="484" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="484" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1abef9dae6d7b2be4d8ebd5101bbf20fe9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_iusedoff</definition>
+        <argsstring></argsstring>
+        <name>cg_iusedoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="488" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="488" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a6629382df74fc53d4cd75335ac356c4f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t cg::cg_magic</definition>
+        <argsstring></argsstring>
+        <name>cg_magic</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="475" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="475" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1aa39739c2163167bfa532ce47113257e3" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_nclusterblks</definition>
+        <argsstring></argsstring>
+        <name>cg_nclusterblks</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="493" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="493" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a91889f3c3755c33d5358d36ee9fd4ead" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_ndblk</definition>
+        <argsstring></argsstring>
+        <name>cg_ndblk</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="480" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="480" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a031907005887ad84d5a2a2da5d9b845a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_nextfreeoff</definition>
+        <argsstring></argsstring>
+        <name>cg_nextfreeoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="490" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="490" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1afa149be56047f3105c9e0dd613f4d167" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_niblk</definition>
+        <argsstring></argsstring>
+        <name>cg_niblk</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="494" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="494" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a5d2597d680958b4c819945ca8ceb1c51" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t cg::cg_old_boff</definition>
+        <argsstring></argsstring>
+        <name>cg_old_boff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="487" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="487" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a2208c3571c5132d7a71c391fc01831ec" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t cg::cg_old_btotoff</definition>
+        <argsstring></argsstring>
+        <name>cg_old_btotoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="486" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="486" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1af44e6cc32447721638515ce1a8038eed" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a3542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref></type>
+        <definition>int16_t cg::cg_old_ncyl</definition>
+        <argsstring></argsstring>
+        <name>cg_old_ncyl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="478" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="478" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1ad40cea978c5330c511d7d4d2b2de7d76" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a3542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref></type>
+        <definition>int16_t cg::cg_old_niblk</definition>
+        <argsstring></argsstring>
+        <name>cg_old_niblk</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="479" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="479" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a1bdeaf16858c154be8aa5104a924751c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t cg::cg_old_time</definition>
+        <argsstring></argsstring>
+        <name>cg_old_time</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="476" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="476" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1aa52ea1ed3541365c0c8c5f88398b4ef3" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_rotor</definition>
+        <argsstring></argsstring>
+        <name>cg_rotor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="482" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="482" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1ab07080046ac58389c390e6d3428036cd" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t cg::cg_space[1]</definition>
+        <argsstring>[1]</argsstring>
+        <name>cg_space</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="500" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="500" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a7d115802a32162161a2fb5c0bf578429" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t cg::cg_sparecon32[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>cg_sparecon32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="497" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="497" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a6d53ca6360ffc18d638f244bd3a3a47d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t cg::cg_sparecon64[3]</definition>
+        <argsstring>[3]</argsstring>
+        <name>cg_sparecon64</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="499" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="499" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a40b8e4a904a59fc359f03c727c934846" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1aec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref></type>
+        <definition>ufs_time_t cg::cg_time</definition>
+        <argsstring></argsstring>
+        <name>cg_time</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="498" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="498" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcg_1a53b8d892549fdbe29cf4fd1192f5a528" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t cg::cg_unrefs</definition>
+        <argsstring></argsstring>
+        <name>cg_unrefs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="496" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="496" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>csum</label>
+        <link refid="structcsum"/>
+      </node>
+      <node id="1">
+        <label>cg</label>
+        <link refid="structcg"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+cg_cs</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="473" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="473" bodyend="502"/>
+    <listofallmembers>
+      <member refid="structcg_1aceada36408389a91028335c34b8f1155" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_cgx</name></member>
+      <member refid="structcg_1a2fec2c1851d01640cdd1f7e79b8a6c27" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_clusteroff</name></member>
+      <member refid="structcg_1a5f7ec2931318694963baba548c69dba6" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_clustersumoff</name></member>
+      <member refid="structcg_1a352e2d3f82fbc0d04146d5b81a4c8883" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_cs</name></member>
+      <member refid="structcg_1a1549459c3334b515b7d603e7761d7c89" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_firstfield</name></member>
+      <member refid="structcg_1a55992e8fc119b63883dba8e95a71ca4b" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_freeoff</name></member>
+      <member refid="structcg_1af647c6284b3a503d74a86e18d21e7713" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_frotor</name></member>
+      <member refid="structcg_1ae1db958010964e7b1f79d18073d1d1f1" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_frsum</name></member>
+      <member refid="structcg_1ae863f73fe3756c6a4480c6983264d96b" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_initediblk</name></member>
+      <member refid="structcg_1a0b5e0ed212a5ca12d57fa73b6ade7e6d" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_irotor</name></member>
+      <member refid="structcg_1abef9dae6d7b2be4d8ebd5101bbf20fe9" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_iusedoff</name></member>
+      <member refid="structcg_1a6629382df74fc53d4cd75335ac356c4f" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_magic</name></member>
+      <member refid="structcg_1aa39739c2163167bfa532ce47113257e3" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_nclusterblks</name></member>
+      <member refid="structcg_1a91889f3c3755c33d5358d36ee9fd4ead" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_ndblk</name></member>
+      <member refid="structcg_1a031907005887ad84d5a2a2da5d9b845a" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_nextfreeoff</name></member>
+      <member refid="structcg_1afa149be56047f3105c9e0dd613f4d167" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_niblk</name></member>
+      <member refid="structcg_1a5d2597d680958b4c819945ca8ceb1c51" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_old_boff</name></member>
+      <member refid="structcg_1a2208c3571c5132d7a71c391fc01831ec" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_old_btotoff</name></member>
+      <member refid="structcg_1af44e6cc32447721638515ce1a8038eed" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_old_ncyl</name></member>
+      <member refid="structcg_1ad40cea978c5330c511d7d4d2b2de7d76" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_old_niblk</name></member>
+      <member refid="structcg_1a1bdeaf16858c154be8aa5104a924751c" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_old_time</name></member>
+      <member refid="structcg_1aa52ea1ed3541365c0c8c5f88398b4ef3" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_rotor</name></member>
+      <member refid="structcg_1ab07080046ac58389c390e6d3428036cd" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_space</name></member>
+      <member refid="structcg_1a7d115802a32162161a2fb5c0bf578429" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_sparecon32</name></member>
+      <member refid="structcg_1a6d53ca6360ffc18d638f244bd3a3a47d" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_sparecon64</name></member>
+      <member refid="structcg_1a40b8e4a904a59fc359f03c727c934846" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_time</name></member>
+      <member refid="structcg_1a53b8d892549fdbe29cf4fd1192f5a528" prot="public" virt="non-virtual"><scope>cg</scope><name>cg_unrefs</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

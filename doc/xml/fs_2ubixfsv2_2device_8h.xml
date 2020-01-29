@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fs_2ubixfsv2_2device_8h" kind="file" language="C++">
+    <compoundname>device.h</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id:<sp/>device.h<sp/>54<sp/>2016-01-11<sp/>01:29:55Z<sp/>reddawg<sp/>$</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="30"><highlight class="comment">#ifndef<sp/>_DEVICE_H</highlight></codeline>
+<codeline lineno="31"><highlight class="comment">#define<sp/>_DEVICE_H</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"></highlight></codeline>
+<codeline lineno="33"><highlight class="comment">//<sp/>#include<sp/>&lt;ubixos/types.h&gt;</highlight></codeline>
+<codeline lineno="34"><highlight class="comment">#include<sp/>&lt;sys/types.h&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment">#include<sp/>&quot;types.h&quot;</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"></highlight></codeline>
+<codeline lineno="37"><highlight class="comment">struct<sp/>device_node<sp/>{</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/><sp/>struct<sp/>device_node<sp/><sp/><sp/><sp/><sp/><sp/>*prev;</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/><sp/>struct<sp/>device_node<sp/><sp/><sp/><sp/><sp/><sp/>*next;</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/><sp/>struct<sp/>device_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*devInfo;</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/><sp/>struct<sp/>device_resource<sp/><sp/>*devRec;</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/><sp/>char<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>type;</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>minor;</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/><sp/></highlight></codeline>
+<codeline lineno="46"><highlight class="comment">struct<sp/>device_resource<sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/><sp/>uInt8<sp/>irq;</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"></highlight></codeline>
+<codeline lineno="50"><highlight class="comment">typedef<sp/>struct<sp/>device_t<sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/><sp/>int<sp/><sp/><sp/><sp/>major;</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/><sp/>void<sp/><sp/>*info;</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/><sp/>uInt32<sp/>sectors;</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/><sp/>int<sp/><sp/>(*read)(device_t<sp/>*,<sp/>void<sp/>*,<sp/>off_t,<sp/>size_t);</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/><sp/>int<sp/><sp/>(*write)(device_t<sp/>*,<sp/>void<sp/>*,<sp/>off_t,<sp/>size_t);</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/><sp/>int<sp/><sp/>(*reset)(void<sp/>*);</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/><sp/>int<sp/><sp/>(*init)(device_t<sp/>*);</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/><sp/>void<sp/>(*ioctl)(void<sp/>*);</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/><sp/>void<sp/>(*stop)(void<sp/>*);</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/><sp/>void<sp/>(*start)(void<sp/>*);</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/><sp/>void<sp/>(*standby)(void<sp/>*);</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"></highlight></codeline>
+<codeline lineno="64"><highlight class="comment">#endif</highlight></codeline>
+<codeline lineno="65"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>$Log:<sp/>device.h,v<sp/>$</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:15<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"></highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:38<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"></highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:44<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"></highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/09/20<sp/>00:53:04<sp/><sp/>flameshadow</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>chg:<sp/>UbixFS::vfs_read()<sp/>now<sp/>works<sp/>for<sp/>direct<sp/>block<sp/>extents</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>chg:<sp/>UbixFS::vfs_read()<sp/>returns<sp/>~0<sp/>on<sp/>error,<sp/>or<sp/>the<sp/>size<sp/>read<sp/>in<sp/>on<sp/>success</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>chg:<sp/>UbixFS::root<sp/>member<sp/>is<sp/>now<sp/>a<sp/>fileDescriptor</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/>chg:<sp/>UbixFS::vfs_init()<sp/>creates<sp/>a<sp/>file<sp/>descriptor<sp/>for<sp/>the<sp/>root<sp/>dir</highlight></codeline>
+<codeline lineno="82"><highlight class="comment"><sp/>chg:<sp/>UbixFS::vfs_format()<sp/>now<sp/>sets<sp/>all<sp/>values<sp/>in<sp/>the<sp/>bTreeHeader<sp/>before<sp/>writing</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>chg:<sp/>UbixFS::vfs_format()<sp/>sets<sp/>the<sp/>inode<sp/>magic<sp/>number</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"><sp/>chg:<sp/>device_t::read(device_t<sp/>*,<sp/>void<sp/>*,<sp/>off_t,<sp/>size_t)</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/>chg:<sp/>device_t::write(device_t<sp/>*,<sp/>void<sp/>*,<sp/>off_t,<sp/>size_t)</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>chg:<sp/>vfs_abstract::vfs_read(fileDescriptor<sp/>*,<sp/>void<sp/>*,<sp/>off_t,<sp/>size_t)</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/>chg:<sp/>vfs_abstract::vfs_write(fileDescriptor<sp/>*,<sp/>void<sp/>*,<sp/>off_t,<sp/>size_t)</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/>chg:<sp/>ramDrive_read(device_t<sp/>*dev,void<sp/>*ptr,off_t<sp/>offset,size_t<sp/>length)</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/>chg:<sp/>ramDrive_write(device_t<sp/>*dev,void<sp/>*ptr,off_t<sp/>offset,size_t<sp/>length)</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"></highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/09/13<sp/>15:21:26<sp/><sp/>flameshadow</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>add:<sp/>ramdrive.h</highlight></codeline>
+<codeline lineno="93"><highlight class="comment"><sp/>chg:<sp/>renamed<sp/>device_t.size<sp/>to<sp/>sectors</highlight></codeline>
+<codeline lineno="94"><highlight class="comment"><sp/>chg:<sp/>made<sp/>#define<sp/>for<sp/>size<sp/>of<sp/>ramdisk</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/>chg:<sp/>calculated<sp/>sectors<sp/>of<sp/>ramdisk<sp/>and<sp/>stored<sp/>in<sp/>the<sp/>device_t<sp/>struct</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"></highlight></codeline>
+<codeline lineno="97"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/09/11<sp/>22:05:59<sp/><sp/>flameshadow</highlight></codeline>
+<codeline lineno="98"><highlight class="comment"><sp/>chg:<sp/>modified<sp/>UbixFS::vfs_format()<sp/>to<sp/>properly<sp/>init<sp/>the<sp/>device</highlight></codeline>
+<codeline lineno="99"><highlight class="comment"><sp/>chg:<sp/>modified<sp/>UbixFS::vfs_init()<sp/>to<sp/>verify<sp/>that<sp/>it&apos;s<sp/>a<sp/>ubixfs<sp/>partition</highlight></codeline>
+<codeline lineno="100"><highlight class="comment"><sp/>add:<sp/>added<sp/>BAT<sp/>blockRun<sp/>in<sp/>the<sp/>superBlock</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"></highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/09/11<sp/>12:43:42<sp/><sp/>flameshadow</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>add:<sp/>device.h,<sp/>types.h.<sp/>Temporarily<sp/>moved<sp/>custom<sp/>ubix<sp/>typedefs<sp/>to<sp/>types.h</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>(&lt;ubixos/types.h&gt;<sp/>supercedes<sp/>this<sp/>file<sp/>when<sp/>this<sp/>code<sp/>is<sp/>included<sp/>into</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>the<sp/>kernel)</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>chg:<sp/>changed<sp/>dev_t<sp/>to<sp/>device_interface<sp/>so<sp/>as<sp/>to<sp/>not<sp/>conflict<sp/>with<sp/>bsd/linux</highlight></codeline>
+<codeline lineno="107"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>definitions</highlight></codeline>
+<codeline lineno="108"><highlight class="comment"><sp/>chg:<sp/>fixed<sp/>up<sp/>compiler<sp/>warnings<sp/>in<sp/>btree.cpp</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"></highlight></codeline>
+<codeline lineno="110"><highlight class="comment"><sp/>Revision<sp/>1.14<sp/><sp/>2004/08/15<sp/>00:33:02<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="111"><highlight class="comment"><sp/>Wow<sp/>the<sp/>ide<sp/>driver<sp/>works<sp/>again</highlight></codeline>
+<codeline lineno="112"><highlight class="comment"></highlight></codeline>
+<codeline lineno="113"><highlight class="comment"><sp/>Revision<sp/>1.13<sp/><sp/>2004/08/14<sp/>21:56:44<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="114"><highlight class="comment"><sp/>Added<sp/>initialized<sp/>byte<sp/>to<sp/>the<sp/>device<sp/>system<sp/>to<sp/>make<sp/>it<sp/>easy<sp/>to<sp/>add<sp/>child<sp/>devices<sp/>which<sp/>use<sp/>parent<sp/>hardware.</highlight></codeline>
+<codeline lineno="115"><highlight class="comment"></highlight></codeline>
+<codeline lineno="116"><highlight class="comment"><sp/>Revision<sp/>1.12<sp/><sp/>2004/07/21<sp/>10:02:09<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="117"><highlight class="comment"><sp/>devfs:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="118"><highlight class="comment"><sp/>device<sp/>system:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"><sp/>fdc:<sp/>fixed<sp/>a<sp/>few<sp/>potential<sp/>bugs<sp/>and<sp/>cleaned<sp/>up<sp/>some<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="120"><highlight class="comment"><sp/>strol:<sp/>fixed<sp/>definition</highlight></codeline>
+<codeline lineno="121"><highlight class="comment"><sp/>endtask:<sp/>made<sp/>it<sp/>print<sp/>out<sp/>freepage<sp/>debug<sp/>info</highlight></codeline>
+<codeline lineno="122"><highlight class="comment"><sp/>kmalloc:<sp/>fixed<sp/>a<sp/>huge<sp/>memory<sp/>leak<sp/>we<sp/>had<sp/>some<sp/>unhandled<sp/>descriptor<sp/>insertion<sp/>so<sp/>some<sp/>descriptors<sp/>were<sp/>lost</highlight></codeline>
+<codeline lineno="123"><highlight class="comment"><sp/>ld:<sp/>fixed<sp/>a<sp/>pointer<sp/>conversion</highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/>file:<sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="125"><highlight class="comment"><sp/>sched:<sp/>broke<sp/>task<sp/>deletion</highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/>kprintf:<sp/>fixed<sp/>ogPrintf<sp/>definition</highlight></codeline>
+<codeline lineno="127"><highlight class="comment"></highlight></codeline>
+<codeline lineno="128"><highlight class="comment"><sp/>Revision<sp/>1.11<sp/><sp/>2004/05/22<sp/>02:40:04<sp/><sp/>ionix</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"></highlight></codeline>
+<codeline lineno="130"><highlight class="comment"></highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/>fixed<sp/>typo<sp/>in<sp/>device.h<sp/>and<sp/>initialized<sp/>previous<sp/>in<sp/>device.c<sp/>:)</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"></highlight></codeline>
+<codeline lineno="133"><highlight class="comment"><sp/>Revision<sp/>1.10<sp/><sp/>2004/05/22<sp/>02:34:03<sp/><sp/>ionix</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"></highlight></codeline>
+<codeline lineno="135"><highlight class="comment"></highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/>Added<sp/>proto</highlight></codeline>
+<codeline lineno="137"><highlight class="comment"></highlight></codeline>
+<codeline lineno="138"><highlight class="comment"><sp/>Revision<sp/>1.9<sp/><sp/>2004/05/21<sp/>15:12:17<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="139"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="140"><highlight class="comment"></highlight></codeline>
+<codeline lineno="141"><highlight class="comment"></highlight></codeline>
+<codeline lineno="142"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="143"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/ubixfsv2/device.h"/>
+  </compounddef>
+</doxygen>

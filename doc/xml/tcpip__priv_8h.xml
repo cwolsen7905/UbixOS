@@ -1,0 +1,954 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="tcpip__priv_8h" kind="file" language="C++">
+    <compoundname>tcpip_priv.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="tcpip_8h" local="yes">net/tcpip.h</includes>
+    <includes refid="sys_8h" local="yes">net/sys.h</includes>
+    <includes refid="timeouts_8h" local="yes">net/timeouts.h</includes>
+    <includedby refid="tcpip_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/tcpip.c</includedby>
+    <includedby refid="memp_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/memp.c</includedby>
+    <includedby refid="timeouts_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/timeouts.c</includedby>
+    <incdepgraph>
+      <node id="37">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="42">
+        <label>ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="49">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="40">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="23">
+        <label>net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="31">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="34">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="48">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="20">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structtcpip__api__call__data" prot="public">tcpip_api_call_data</innerclass>
+    <innerclass refid="structtcpip__msg" prot="public">tcpip_msg</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="tcpip__priv_8h_1a4b2322aa0c1906f84f16acf359f06a92" prot="public" static="no">
+        <name>API_EXPR_DEREF</name>
+        <param><defname>expr</defname></param>
+        <initializer>(*(expr))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="90" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a1f3c3ae0938b5510978cbd31560a5797" prot="public" static="no">
+        <name>API_EXPR_REF</name>
+        <param><defname>expr</defname></param>
+        <initializer>expr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="88" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a91e803b3c3f0ab89b20d7a85e3e92624" prot="public" static="no">
+        <name>API_EXPR_REF_SEM</name>
+        <param><defname>expr</defname></param>
+        <initializer><ref refid="tcpip__priv_8h_1a1f3c3ae0938b5510978cbd31560a5797" kindref="member">API_EXPR_REF</ref>(expr)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="89" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1ad299ce8f259fb9f1f6c5c5a812f1bc58" prot="public" static="no">
+        <name>API_MSG_M_DEF</name>
+        <param><defname>m</defname></param>
+        <initializer>*m</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="91" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a3a9d654eb42f26b409d1386d162f1e31" prot="public" static="no">
+        <name>API_MSG_M_DEF_C</name>
+        <param><defname>t</defname></param>
+        <param><defname>m</defname></param>
+        <initializer><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> t * m</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="92" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a8ff9b936b16d91844c0e32424e97f493" prot="public" static="no">
+        <name>API_VAR_ALLOC</name>
+        <param><defname>type</defname></param>
+        <param><defname>pool</defname></param>
+        <param><defname>name</defname></param>
+        <param><defname>errorval</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a0b826b1ea2ee54ebb94ab354578a1ffe" prot="public" static="no">
+        <name>API_VAR_ALLOC_POOL</name>
+        <param><defname>type</defname></param>
+        <param><defname>pool</defname></param>
+        <param><defname>name</defname></param>
+        <param><defname>errorval</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1ab5d4a4fa91c4c144bedabf593a68b4dd" prot="public" static="no">
+        <name>API_VAR_DECLARE</name>
+        <param><defname>type</defname></param>
+        <param><defname>name</defname></param>
+        <initializer>type <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="83" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a30caebb5334f52d49ac938a507094094" prot="public" static="no">
+        <name>API_VAR_FREE</name>
+        <param><defname>pool</defname></param>
+        <param><defname>name</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="86" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a803c2dd81f7e69515115b78759be0d76" prot="public" static="no">
+        <name>API_VAR_FREE_POOL</name>
+        <param><defname>pool</defname></param>
+        <param><defname>name</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="87" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="tcpip__priv_8h_1a3518256af0d1a422755a899b13c2b563" prot="public" static="no">
+        <name>API_VAR_REF</name>
+        <param><defname>name</defname></param>
+        <initializer><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="82" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937" prot="public" static="no" strong="no">
+        <type></type>
+        <name>tcpip_msg_type</name>
+        <enumvalue id="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a8665d0f2f1498c366e90d67a1e4c7f80" prot="public">
+          <name>TCPIP_MSG_API</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937ae68ceceeb8f3bfda0dfdb824dfd0aa8a" prot="public">
+          <name>TCPIP_MSG_API_CALL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a64972ba60577a99b44f088e0b5150c8a" prot="public">
+          <name>TCPIP_MSG_INPKT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a3915e837fa47d5b65cc17d47a0790662" prot="public">
+          <name>TCPIP_MSG_CALLBACK</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a17160cdc581db556a47a57cd4efb3b78" prot="public">
+          <name>TCPIP_MSG_CALLBACK_STATIC</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="111" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="111" bodyend="121"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="tcpip__priv_8h_1aa7ecde8c8d8012fe5c498f7ee58f9458" prot="public" static="no">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref>(*</type>
+        <definition>typedef err_t(* tcpip_api_call_fn) (struct tcpip_api_call_data *call)</definition>
+        <argsstring>)(struct tcpip_api_call_data *call)</argsstring>
+        <name>tcpip_api_call_fn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="108" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="tcpip__priv_8h_1a3d42b0c46607f91aedcc7745ed466b08" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t tcpip_api_call</definition>
+        <argsstring>(tcpip_api_call_fn fn, struct tcpip_api_call_data *call)</argsstring>
+        <name>tcpip_api_call</name>
+        <param>
+          <type><ref refid="tcpip__priv_8h_1aa7ecde8c8d8012fe5c498f7ee58f9458" kindref="member">tcpip_api_call_fn</ref></type>
+          <declname>fn</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structtcpip__api__call__data" kindref="compound">tcpip_api_call_data</ref> *</type>
+          <declname>call</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Synchronously calls function in TCPIP thread and waits for its completion. It is recommended to use LWIP_TCPIP_CORE_LOCKING (preferred) or LWIP_NETCONN_SEM_PER_THREAD. If not, a semaphore is created and destroyed on every call which is usually an expensive/slow operation. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>fn</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Function to call </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>call</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Call parameters </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Return value from tcpip_api_call_fn </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="109" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/api/tcpip.c" bodystart="356" bodyend="394" declfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" declline="109" declcolumn="7"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="tcpip_8h_1a4700525e737fc025fea4887b172e0c95" compoundref="tcpip_8h" startline="60">LOCK_TCPIP_CORE</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="structtcpip__msg_1a18c49fcbcfeb09f203a6fb84e74e367b" compoundref="tcpip__priv_8h" startline="128">tcpip_msg::msg</references>
+        <references refid="structtcpip__api__call__data_1a430b64d7617893939ed12cc957765431" compoundref="tcpip__priv_8h" startline="102">tcpip_api_call_data::sem</references>
+        <references refid="sys_8h_1aae82640d0bdbeec7b9b6511b3f8d99cb" compoundref="sys_8h" startline="271">sys_mbox_valid_val</references>
+        <references refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</references>
+        <references refid="tcpip_8c_1aecf85047afc1ea35a976f7e279fb0f7b" compoundref="tcpip_8c" startline="48">TCPIP_MSG_VAR_DECLARE</references>
+        <references refid="tcpip_8h_1a915effea029b9c4891e1ec635eb1826d" compoundref="tcpip_8h" startline="61">UNLOCK_TCPIP_CORE</references>
+      </memberdef>
+      <memberdef kind="function" id="tcpip__priv_8h_1a12bdf37eddcd72c4178e3ea7d370395d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t tcpip_send_msg_wait_sem</definition>
+        <argsstring>(tcpip_callback_fn fn, void *apimsg, sys_sem_t *sem)</argsstring>
+        <name>tcpip_send_msg_wait_sem</name>
+        <param>
+          <type><ref refid="tcpip_8h_1a35203296bb838f3b493839ffc6e7285d" kindref="member">tcpip_callback_fn</ref></type>
+          <declname>fn</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>apimsg</declname>
+        </param>
+        <param>
+          <type><ref refid="sem_8h_1a900e36da93bb688c29fc8148f2f44e04" kindref="member">sys_sem_t</ref> *</type>
+          <declname>sem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sends a message to TCPIP thread to call a function. Caller thread blocks on on a provided semaphore, which ist NOT automatically signalled by TCPIP thread, this has to be done by the user. It is recommended to use LWIP_TCPIP_CORE_LOCKING since this is the way with least runtime overhead.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>fn</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>function to be called from TCPIP thread </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>apimsg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>argument to API function </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>semaphore to wait on </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if the function was called, another err_t if not </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="95" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/api/tcpip.c" bodystart="322" bodyend="344" declfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" declline="95" declcolumn="7"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="tcpip_8h_1a4700525e737fc025fea4887b172e0c95" compoundref="tcpip_8h" startline="60">LOCK_TCPIP_CORE</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" compoundref="arch_8h" startline="315">LWIP_UNUSED_ARG</references>
+        <references refid="structtcpip__msg_1a18c49fcbcfeb09f203a6fb84e74e367b" compoundref="tcpip__priv_8h" startline="128">tcpip_msg::msg</references>
+        <references refid="structtcpip__msg_1a68b745804255e3b227ec2f5ef0f8e136" compoundref="tcpip__priv_8h" startline="133">tcpip_msg::sem</references>
+        <references refid="sys_8h_1aae82640d0bdbeec7b9b6511b3f8d99cb" compoundref="sys_8h" startline="271">sys_mbox_valid_val</references>
+        <references refid="group__sys__sem_1gac7ff314270976b80559d043f6098817b" compoundref="sys__arch_8c" startline="132" endline="138">sys_sem_valid</references>
+        <references refid="tcpip_8c_1aecf85047afc1ea35a976f7e279fb0f7b" compoundref="tcpip_8c" startline="48">TCPIP_MSG_VAR_DECLARE</references>
+        <references refid="tcpip_8h_1a915effea029b9c4891e1ec635eb1826d" compoundref="tcpip_8h" startline="61">UNLOCK_TCPIP_CORE</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>TCPIP API internal implementations (do not use in application code) </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_TCPIP_PRIV_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_TCPIP_PRIV_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!NO_SYS<sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tcpip_8h" kindref="compound">net/tcpip.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys_8h" kindref="compound">net/sys.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="timeouts_8h" kindref="compound">net/timeouts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_MPU_COMPATIBLE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_REF(name)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(*(name))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_DECLARE(type,<sp/>name)<sp/><sp/><sp/><sp/><sp/>type<sp/>*<sp/>name</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_ALLOC(type,<sp/>pool,<sp/>name,<sp/>errorval)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="59"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>name<sp/>=<sp/>(type<sp/>*)memp_malloc(pool);<sp/>\</highlight></codeline>
+<codeline lineno="60"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(name<sp/>==<sp/>NULL)<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>errorval;<sp/>\</highlight></codeline>
+<codeline lineno="62"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>\</highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_ALLOC_POOL(type,<sp/>pool,<sp/>name,<sp/>errorval)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="65"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>name<sp/>=<sp/>(type<sp/>*)LWIP_MEMPOOL_ALLOC(pool);<sp/>\</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(name<sp/>==<sp/>NULL)<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>errorval;<sp/>\</highlight></codeline>
+<codeline lineno="68"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>\</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_FREE(pool,<sp/>name)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>memp_free(pool,<sp/>name)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_FREE_POOL(pool,<sp/>name)<sp/><sp/><sp/>LWIP_MEMPOOL_FREE(pool,<sp/>name)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_REF(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(&amp;(expr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_NETCONN_SEM_PER_THREAD</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_REF_SEM(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(expr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_REF_SEM(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>API_EXPR_REF(expr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_DEREF(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>expr</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_MSG_M_DEF(m)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>m</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_MSG_M_DEF_C(t,<sp/>m)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t<sp/>m</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_MPU_COMPATIBLE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82" refid="tcpip__priv_8h_1a3518256af0d1a422755a899b13c2b563" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_REF(name)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>name</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="tcpip__priv_8h_1ab5d4a4fa91c4c144bedabf593a68b4dd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_DECLARE(type,<sp/>name)<sp/><sp/><sp/><sp/><sp/>type<sp/>name</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="tcpip__priv_8h_1a8ff9b936b16d91844c0e32424e97f493" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_ALLOC(type,<sp/>pool,<sp/>name,<sp/>errorval)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="tcpip__priv_8h_1a0b826b1ea2ee54ebb94ab354578a1ffe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_ALLOC_POOL(type,<sp/>pool,<sp/>name,<sp/>errorval)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="tcpip__priv_8h_1a30caebb5334f52d49ac938a507094094" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_FREE(pool,<sp/>name)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="tcpip__priv_8h_1a803c2dd81f7e69515115b78759be0d76" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_VAR_FREE_POOL(pool,<sp/>name)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="tcpip__priv_8h_1a1f3c3ae0938b5510978cbd31560a5797" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_REF(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>expr</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="tcpip__priv_8h_1a91e803b3c3f0ab89b20d7a85e3e92624" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_REF_SEM(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>API_EXPR_REF(expr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="tcpip__priv_8h_1a4b2322aa0c1906f84f16acf359f06a92" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_EXPR_DEREF(expr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(*(expr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="tcpip__priv_8h_1ad299ce8f259fb9f1f6c5c5a812f1bc58" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_MSG_M_DEF(m)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*m</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="tcpip__priv_8h_1a3a9d654eb42f26b409d1386d162f1e31" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_MSG_M_DEF_C(t,<sp/>m)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/>t<sp/>*<sp/>m</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_MPU_COMPATIBLE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="tcpip__priv_8h_1a12bdf37eddcd72c4178e3ea7d370395d" kindref="member">tcpip_send_msg_wait_sem</ref>(<ref refid="tcpip_8h_1a35203296bb838f3b493839ffc6e7285d" kindref="member">tcpip_callback_fn</ref><sp/>fn,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*apimsg,<sp/><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref>*<sp/>sem);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="structtcpip__api__call__data" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtcpip__api__call__data" kindref="compound">tcpip_api_call_data</ref></highlight></codeline>
+<codeline lineno="98"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!LWIP_TCPIP_CORE_LOCKING</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="structtcpip__api__call__data_1a1a1d5bb2f7fd09f592fb56089e762307" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="structtcpip__api__call__data_1a1a1d5bb2f7fd09f592fb56089e762307" kindref="member">err</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!LWIP_NETCONN_SEM_PER_THREAD</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="structtcpip__api__call__data_1a430b64d7617893939ed12cc957765431" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/><ref refid="structtcpip__api__call__data_1a430b64d7617893939ed12cc957765431" kindref="member">sem</ref>;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_NETCONN_SEM_PER_THREAD<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>!LWIP_TCPIP_CORE_LOCKING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>dummy;<sp/></highlight><highlight class="comment">/*<sp/>avoid<sp/>empty<sp/>struct<sp/>:-(<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!LWIP_TCPIP_CORE_LOCKING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="108" refid="tcpip__priv_8h_1aa7ecde8c8d8012fe5c498f7ee58f9458" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>(*<ref refid="tcpip__priv_8h_1aa7ecde8c8d8012fe5c498f7ee58f9458" kindref="member">tcpip_api_call_fn</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtcpip__api__call__data" kindref="compound">tcpip_api_call_data</ref>*<sp/>call);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="tcpip__priv_8h_1a3d42b0c46607f91aedcc7745ed466b08" kindref="member">tcpip_api_call</ref>(<ref refid="tcpip__priv_8h_1aa7ecde8c8d8012fe5c498f7ee58f9458" kindref="member">tcpip_api_call_fn</ref><sp/>fn,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtcpip__api__call__data" kindref="compound">tcpip_api_call_data</ref><sp/>*call);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111" refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937" kindref="member">tcpip_msg_type</ref><sp/>{</highlight></codeline>
+<codeline lineno="112" refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a8665d0f2f1498c366e90d67a1e4c7f80" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a8665d0f2f1498c366e90d67a1e4c7f80" kindref="member">TCPIP_MSG_API</ref>,</highlight></codeline>
+<codeline lineno="113" refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937ae68ceceeb8f3bfda0dfdb824dfd0aa8a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937ae68ceceeb8f3bfda0dfdb824dfd0aa8a" kindref="member">TCPIP_MSG_API_CALL</ref>,</highlight></codeline>
+<codeline lineno="114" refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a64972ba60577a99b44f088e0b5150c8a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a64972ba60577a99b44f088e0b5150c8a" kindref="member">TCPIP_MSG_INPKT</ref>,</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TCPIP_TIMEOUT<sp/>&amp;&amp;<sp/>LWIP_TIMERS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>TCPIP_MSG_TIMEOUT,</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>TCPIP_MSG_UNTIMEOUT,</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_TCPIP_TIMEOUT<sp/>&amp;&amp;<sp/>LWIP_TIMERS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a3915e837fa47d5b65cc17d47a0790662" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a3915e837fa47d5b65cc17d47a0790662" kindref="member">TCPIP_MSG_CALLBACK</ref>,</highlight></codeline>
+<codeline lineno="120" refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a17160cdc581db556a47a57cd4efb3b78" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937a17160cdc581db556a47a57cd4efb3b78" kindref="member">TCPIP_MSG_CALLBACK_STATIC</ref></highlight></codeline>
+<codeline lineno="121"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123" refid="structtcpip__msg" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtcpip__msg" kindref="compound">tcpip_msg</ref><sp/>{</highlight></codeline>
+<codeline lineno="124" refid="structtcpip__msg_1a5b992b509c516199c800c913993574c1" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="tcpip__priv_8h_1a1e0cb5032a61055e3f4a3426ed548937" kindref="member">tcpip_msg_type</ref><sp/><ref refid="structtcpip__msg_1a5b992b509c516199c800c913993574c1" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="127" refid="structtcpip__msg_1ad294175efea90f55493a9465a65c8e4c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="tcpip_8h_1a35203296bb838f3b493839ffc6e7285d" kindref="member">tcpip_callback_fn</ref><sp/></highlight><highlight class="keyword">function</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="128" refid="structtcpip__msg_1a18c49fcbcfeb09f203a6fb84e74e367b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="structtcpip__msg_1a18c49fcbcfeb09f203a6fb84e74e367b" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structtcpip__msg_1abc27b4f9b477f51eeb469330ff744cc3" kindref="member">api_msg</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="131" refid="structtcpip__msg_1a3c72cc53894cab34a142a1ec56b7b59d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="tcpip__priv_8h_1aa7ecde8c8d8012fe5c498f7ee58f9458" kindref="member">tcpip_api_call_fn</ref><sp/></highlight><highlight class="keyword">function</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="132" refid="structtcpip__msg_1a080f04f9cdfa4533fab6608cde6a4649" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtcpip__api__call__data" kindref="compound">tcpip_api_call_data</ref><sp/>*<ref refid="structtcpip__msg_1a080f04f9cdfa4533fab6608cde6a4649" kindref="member">arg</ref>;</highlight></codeline>
+<codeline lineno="133" refid="structtcpip__msg_1a68b745804255e3b227ec2f5ef0f8e136" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>*<ref refid="structtcpip__msg_1a68b745804255e3b227ec2f5ef0f8e136" kindref="member">sem</ref>;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structtcpip__msg_1af961387b064113a49484061ad48ded03" kindref="member">api_call</ref>;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="136" refid="structtcpip__msg_1a9298bc5d6d92c5efd478dac92c09459b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*<ref refid="structtcpip__msg_1a9298bc5d6d92c5efd478dac92c09459b" kindref="member">p</ref>;</highlight></codeline>
+<codeline lineno="137" refid="structtcpip__msg_1a6d19f55f8a96b18f2d6ab5bc9733f81b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structtcpip__msg_1a6d19f55f8a96b18f2d6ab5bc9733f81b" kindref="member">netif</ref>;</highlight></codeline>
+<codeline lineno="138" refid="structtcpip__msg_1a44fe1469e2472890fe71ebbc1427a19b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="netif_8h_1ab2302b1b64ac7b95f24c6bab754a575e" kindref="member">netif_input_fn</ref><sp/><ref refid="structtcpip__msg_1a44fe1469e2472890fe71ebbc1427a19b" kindref="member">input_fn</ref>;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structtcpip__msg_1a7d9bc654de358efed5d9737a77bd7c71" kindref="member">inp</ref>;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="tcpip_8h_1a35203296bb838f3b493839ffc6e7285d" kindref="member">tcpip_callback_fn</ref><sp/></highlight><highlight class="keyword">function</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="142" refid="structtcpip__msg_1a7edb4f4e181f9cffbef13dc7a7d41d8b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structtcpip__msg_1a7edb4f4e181f9cffbef13dc7a7d41d8b" kindref="member">ctx</ref>;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structtcpip__msg_1af5685982f642bb8accf01ac73ca33816" kindref="member">cb</ref>;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TCPIP_TIMEOUT<sp/>&amp;&amp;<sp/>LWIP_TIMERS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>msecs;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sys_timeout_handler<sp/>h;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structtcpip__msg_1a080f04f9cdfa4533fab6608cde6a4649" kindref="member">arg</ref>;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>tmo;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_TCPIP_TIMEOUT<sp/>&amp;&amp;<sp/>LWIP_TIMERS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="structtcpip__msg_1a18c49fcbcfeb09f203a6fb84e74e367b" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!NO_SYS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_TCPIP_PRIV_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h"/>
+  </compounddef>
+</doxygen>

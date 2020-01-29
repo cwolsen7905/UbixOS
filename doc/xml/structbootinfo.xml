@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structbootinfo" kind="struct" language="C++" prot="public">
+    <compoundname>bootinfo</compoundname>
+    <includes refid="bootinfo_8h" local="no">bootinfo.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbootinfo_1a4561e0a52867c84dc6edd21f2b9bba87" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_basemem</definition>
+        <argsstring></argsstring>
+        <name>bi_basemem</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="17" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a4570abd481d8371076fbb6609754786c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t bootinfo::bi_bios_dev</definition>
+        <argsstring></argsstring>
+        <name>bi_bios_dev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="15" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a82967b4777b4c8906d7c86b494a678c6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_bios_geom[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>bi_bios_geom</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="12" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1ac93240f3049fae72be3992026593b4ed" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_envp</definition>
+        <argsstring></argsstring>
+        <name>bi_envp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="23" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1afdfb66c8a12a4f9498f4c8c0b317295f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_esymtab</definition>
+        <argsstring></argsstring>
+        <name>bi_esymtab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="20" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a72b7402769a6d7a6213f13ab2c35c1df" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_extmem</definition>
+        <argsstring></argsstring>
+        <name>bi_extmem</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="18" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1ad83d8b62277301745b1bc867043c2a93" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t bootinfo::bi_fpswa</definition>
+        <argsstring></argsstring>
+        <name>bi_fpswa</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="30" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a17751b0542c0d0ab467553865a122c24" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t bootinfo::bi_hcdp</definition>
+        <argsstring></argsstring>
+        <name>bi_hcdp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="29" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a13d55b77736e865540f58a597b18a10b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_kernelname</definition>
+        <argsstring></argsstring>
+        <name>bi_kernelname</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="7" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1aed8199512836cf4b7b8992c2f7a301a8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_kernend</definition>
+        <argsstring></argsstring>
+        <name>bi_kernend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="22" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a8958e1b7b1de09a9c7be031ca60a6790" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t bootinfo::bi_memdesc_size</definition>
+        <argsstring></argsstring>
+        <name>bi_memdesc_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="26" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a0f4f38fd366237430e1333ed10475a1e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bootinfo::bi_memdesc_version</definition>
+        <argsstring></argsstring>
+        <name>bi_memdesc_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="25" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1aec5fca43949165517a39b8f5242f7b9d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t bootinfo::bi_memmap</definition>
+        <argsstring></argsstring>
+        <name>bi_memmap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="27" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1ada395afe1ff401dc0a43352f7713a4bd" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t bootinfo::bi_memmap_size</definition>
+        <argsstring></argsstring>
+        <name>bi_memmap_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="28" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a138a7d9594577cbe541abbbf20c4ace1" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t bootinfo::bi_memsizes_valid</definition>
+        <argsstring></argsstring>
+        <name>bi_memsizes_valid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="14" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a51d5181d9e4232f2c10e1984491994a4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_modulep</definition>
+        <argsstring></argsstring>
+        <name>bi_modulep</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="24" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a1a59f8678ccfa7c6cd3cbe1e06f1c18f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_n_bios_used</definition>
+        <argsstring></argsstring>
+        <name>bi_n_bios_used</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="11" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1ac9b0a44646158909cf68dd4a9d0ace28" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_nfs_diskless</definition>
+        <argsstring></argsstring>
+        <name>bi_nfs_diskless</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="8" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a454b41cd1fed4e22212b03996b1e1949" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t bootinfo::bi_pad[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>bi_pad</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="16" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a07551b66b66d8f45bc40f1a70098d2e5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_size</definition>
+        <argsstring></argsstring>
+        <name>bi_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="13" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1ab458d8269b72d5f251c548c12ec5fe75" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_symtab</definition>
+        <argsstring></argsstring>
+        <name>bi_symtab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="19" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a4b377394e7630409a7b4effe6b91f707" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t bootinfo::bi_systab</definition>
+        <argsstring></argsstring>
+        <name>bi_systab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="31" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbootinfo_1a53bf5cac412e5d0a2837e391cc0419a9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bootinfo::bi_version</definition>
+        <argsstring></argsstring>
+        <name>bi_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="6" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="6" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>bootinfo</label>
+        <link refid="structbootinfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" line="5" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/bootinfo.h" bodystart="5" bodyend="32"/>
+    <listofallmembers>
+      <member refid="structbootinfo_1a4561e0a52867c84dc6edd21f2b9bba87" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_basemem</name></member>
+      <member refid="structbootinfo_1a4570abd481d8371076fbb6609754786c" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_bios_dev</name></member>
+      <member refid="structbootinfo_1a82967b4777b4c8906d7c86b494a678c6" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_bios_geom</name></member>
+      <member refid="structbootinfo_1ac93240f3049fae72be3992026593b4ed" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_envp</name></member>
+      <member refid="structbootinfo_1afdfb66c8a12a4f9498f4c8c0b317295f" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_esymtab</name></member>
+      <member refid="structbootinfo_1a72b7402769a6d7a6213f13ab2c35c1df" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_extmem</name></member>
+      <member refid="structbootinfo_1ad83d8b62277301745b1bc867043c2a93" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_fpswa</name></member>
+      <member refid="structbootinfo_1a17751b0542c0d0ab467553865a122c24" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_hcdp</name></member>
+      <member refid="structbootinfo_1a13d55b77736e865540f58a597b18a10b" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_kernelname</name></member>
+      <member refid="structbootinfo_1aed8199512836cf4b7b8992c2f7a301a8" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_kernend</name></member>
+      <member refid="structbootinfo_1a8958e1b7b1de09a9c7be031ca60a6790" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_memdesc_size</name></member>
+      <member refid="structbootinfo_1a0f4f38fd366237430e1333ed10475a1e" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_memdesc_version</name></member>
+      <member refid="structbootinfo_1aec5fca43949165517a39b8f5242f7b9d" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_memmap</name></member>
+      <member refid="structbootinfo_1ada395afe1ff401dc0a43352f7713a4bd" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_memmap_size</name></member>
+      <member refid="structbootinfo_1a138a7d9594577cbe541abbbf20c4ace1" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_memsizes_valid</name></member>
+      <member refid="structbootinfo_1a51d5181d9e4232f2c10e1984491994a4" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_modulep</name></member>
+      <member refid="structbootinfo_1a1a59f8678ccfa7c6cd3cbe1e06f1c18f" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_n_bios_used</name></member>
+      <member refid="structbootinfo_1ac9b0a44646158909cf68dd4a9d0ace28" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_nfs_diskless</name></member>
+      <member refid="structbootinfo_1a454b41cd1fed4e22212b03996b1e1949" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_pad</name></member>
+      <member refid="structbootinfo_1a07551b66b66d8f45bc40f1a70098d2e5" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_size</name></member>
+      <member refid="structbootinfo_1ab458d8269b72d5f251c548c12ec5fe75" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_symtab</name></member>
+      <member refid="structbootinfo_1a4b377394e7630409a7b4effe6b91f707" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_systab</name></member>
+      <member refid="structbootinfo_1a53bf5cac412e5d0a2837e391cc0419a9" prot="public" virt="non-virtual"><scope>bootinfo</scope><name>bi_version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

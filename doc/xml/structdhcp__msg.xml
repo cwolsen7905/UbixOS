@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdhcp__msg" kind="struct" language="C++" prot="public">
+    <compoundname>dhcp_msg</compoundname>
+    <includes refid="prot_2dhcp_8h" local="no">dhcp.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structdhcp__msg_1a8ba3547dfd4a1ef3e96eaf5a88321c46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t flags)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>flags</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="73" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a1579df9397d7c34905ad94fa6b5962e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t secs)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>secs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="72" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a579f758f76b1b5b1b26718f7798d5cc8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t cookie)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>cookie</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="81" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1accc488cabd8c68c9b0fb32fd348ede34" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t xid)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>xid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="71" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a423f37c3d18fb9e7eee1f04a6f679702" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t chaddr[16U])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>chaddr</declname>
+          <array>[16U]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="78" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a9e4489b13013e9f24bb4d897323530c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t file[128U])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>file</declname>
+          <array>[128U]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="80" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a1e357a1c4a76ea5f5f1dae1b716003d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t hlen)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>hlen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="69" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1afdd8c2585f5e68071d75b77376f4d844" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t hops)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>hops</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="70" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a6f499a0e2367bc665327c6e924db1c84" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t htype)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>htype</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="68" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t op)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>op</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="67" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a573786bfd3cce1b4bd96a4ed4cf3c941" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t options[68U])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>options</declname>
+          <array>[68U]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="92" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1af355a4093dad2c671c8824077a1ba4b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t sname[64U])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>sname</declname>
+          <array>[64U]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="79" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a1b1e3b64cb761605e306dff17be06b5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t ciaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>ciaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="74" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1a26c28cde7f50c104ff1615fc35a38203" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t giaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>giaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="77" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1adaca7852f7ece62ca23221a1f988fff1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t siaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>siaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="76" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdhcp__msg_1ae567055c4eba06a1254cddb7f7c17612" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dhcp_msg::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t yiaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>yiaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="75" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>minimum set of fields of any DHCP message </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>dhcp_msg</label>
+        <link refid="structdhcp__msg"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="66" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="65" bodyend="93"/>
+    <listofallmembers>
+      <member refid="structdhcp__msg_1accc488cabd8c68c9b0fb32fd348ede34" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdhcp__msg_1a1579df9397d7c34905ad94fa6b5962e1" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdhcp__msg_1a8ba3547dfd4a1ef3e96eaf5a88321c46" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdhcp__msg_1a579f758f76b1b5b1b26718f7798d5cc8" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1a6f499a0e2367bc665327c6e924db1c84" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1a1e357a1c4a76ea5f5f1dae1b716003d9" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1afdd8c2585f5e68071d75b77376f4d844" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1a423f37c3d18fb9e7eee1f04a6f679702" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1af355a4093dad2c671c8824077a1ba4b4" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1a9e4489b13013e9f24bb4d897323530c5" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1a573786bfd3cce1b4bd96a4ed4cf3c941" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdhcp__msg_1a1b1e3b64cb761605e306dff17be06b5e" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structdhcp__msg_1ae567055c4eba06a1254cddb7f7c17612" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structdhcp__msg_1adaca7852f7ece62ca23221a1f988fff1" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structdhcp__msg_1a26c28cde7f50c104ff1615fc35a38203" prot="public" virt="non-virtual"><scope>dhcp_msg</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

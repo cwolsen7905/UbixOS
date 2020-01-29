@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="asmacros_8h" kind="file" language="C++">
+    <compoundname>asmacros.h</compoundname>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="asmacros_8h_1adb645e14c22708de4b9b031081d24a16" prot="public" static="no">
+        <name>ALIGN_TEXT</name>
+        <initializer>.p2align 4,0x90 /* 16-byte alignment, <ref refid="wait_8h_1a6c92c29fa8e83ab85e05543010e10d7c" kindref="member">nop</ref> filled */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="asmacros_8h_1a13894bb36785ffe3ff4633f55d2cc1a4" prot="public" static="no">
+        <name>CNAME</name>
+        <param><defname>csym</defname></param>
+        <initializer>csym</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="asmacros_8h_1a3abaa73c21fd6e189ca037ceeb1c0885" prot="public" static="no">
+        <name>END</name>
+        <param><defname>name</defname></param>
+        <initializer>.size <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>, . - <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="asmacros_8h_1a3eaf7ea3408047a3c086306a150a5fe6" prot="public" static="no">
+        <name>ENTRY</name>
+        <param><defname>name</defname></param>
+        <initializer><ref refid="asmacros_8h_1a780c8ac6a061d968995a39e0b87452d4" kindref="member">GEN_ENTRY</ref>(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>) ; 9: ; <ref refid="asmacros_8h_1a40e13d92b4cf82312cb0fd03a88aaa47" kindref="member">MCOUNT</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="asmacros_8h_1a780c8ac6a061d968995a39e0b87452d4" prot="public" static="no">
+        <name>GEN_ENTRY</name>
+        <param><defname>name</defname></param>
+        <initializer><ref refid="asmacros_8h_1adb645e14c22708de4b9b031081d24a16" kindref="member">ALIGN_TEXT</ref>; .globl <ref refid="asmacros_8h_1a13894bb36785ffe3ff4633f55d2cc1a4" kindref="member">CNAME</ref>(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>); \
+                                .type <ref refid="asmacros_8h_1a13894bb36785ffe3ff4633f55d2cc1a4" kindref="member">CNAME</ref>(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>),@function; <ref refid="asmacros_8h_1a13894bb36785ffe3ff4633f55d2cc1a4" kindref="member">CNAME</ref>(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>):</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="asmacros_8h_1a40e13d92b4cf82312cb0fd03a88aaa47" prot="public" static="no">
+        <name>MCOUNT</name>
+        <initializer><ref refid="wait_8h_1a6c92c29fa8e83ab85e05543010e10d7c" kindref="member">nop</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>asmacros.h</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/><sp/>Created<sp/>on:<sp/>Jan<sp/>12,<sp/>2018</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Author:<sp/>cwolsen</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_I386_ASMACROS_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_I386_ASMACROS_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/>CNAME<sp/>is<sp/>used<sp/>to<sp/>manage<sp/>the<sp/>relationship<sp/>between<sp/>symbol<sp/>names<sp/>in<sp/>C</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*<sp/>and<sp/>the<sp/>equivalent<sp/>assembly<sp/>language<sp/>names.<sp/><sp/>CNAME<sp/>is<sp/>given<sp/>a<sp/>name<sp/>as</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>*<sp/>it<sp/>would<sp/>be<sp/>used<sp/>in<sp/>a<sp/>C<sp/>program.<sp/><sp/>It<sp/>expands<sp/>to<sp/>the<sp/>equivalent<sp/>assembly</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>*<sp/>language<sp/>name.</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="asmacros_8h_1a13894bb36785ffe3ff4633f55d2cc1a4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CNAME(csym)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>csym</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="asmacros_8h_1adb645e14c22708de4b9b031081d24a16" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ALIGN_TEXT<sp/><sp/><sp/><sp/><sp/><sp/>.p2align<sp/>4,0x90<sp/></highlight><highlight class="comment">/*<sp/>16-byte<sp/>alignment,<sp/>nop<sp/>filled<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="asmacros_8h_1a780c8ac6a061d968995a39e0b87452d4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GEN_ENTRY(name)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ALIGN_TEXT;<sp/>.globl<sp/>CNAME(name);<sp/>\</highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.type<sp/>CNAME(name),@function;<sp/>CNAME(name):</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="asmacros_8h_1a3eaf7ea3408047a3c086306a150a5fe6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ENTRY(name)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GEN_ENTRY(name)<sp/>;<sp/>9:<sp/>;<sp/>MCOUNT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="asmacros_8h_1a40e13d92b4cf82312cb0fd03a88aaa47" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MCOUNT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>nop</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="asmacros_8h_1a3abaa73c21fd6e189ca037ceeb1c0885" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>END(name)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.size<sp/>name,<sp/>.<sp/>-<sp/>name</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_I386_ASMACROS_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/i386/asmacros.h"/>
+  </compounddef>
+</doxygen>

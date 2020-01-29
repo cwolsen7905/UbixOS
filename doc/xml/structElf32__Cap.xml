@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Cap" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Cap</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Cap_1a2b1ecb3ae7c040989e8ccaac30c8826e" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref></type>
+        <definition>Elf32_Addr Elf32_Cap::c_ptr</definition>
+        <argsstring></argsstring>
+        <name>c_ptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="187" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="187" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Cap_1a99cbb38e312e8da513b80ed4f8abea91" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Cap::c_tag</definition>
+        <argsstring></argsstring>
+        <name>c_tag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="184" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="184" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Cap_1a3924686980433e862adc08e822c26113" prot="public" static="no" mutable="no">
+        <type>union Elf32_Cap::@10</type>
+        <definition>union Elf32_Cap::@10  Elf32_Cap::c_un</definition>
+        <argsstring></argsstring>
+        <name>c_un</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="188" column="10"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Cap_1a42b71cb8452d291b2f0216f1583eabc8" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Cap::c_val</definition>
+        <argsstring></argsstring>
+        <name>c_val</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="186" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="186" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Cap</label>
+        <link refid="structElf32__Cap"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="183" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="183" bodyend="189"/>
+    <listofallmembers>
+      <member refid="structElf32__Cap_1a2b1ecb3ae7c040989e8ccaac30c8826e" prot="public" virt="non-virtual"><scope>Elf32_Cap</scope><name>c_ptr</name></member>
+      <member refid="structElf32__Cap_1a99cbb38e312e8da513b80ed4f8abea91" prot="public" virt="non-virtual"><scope>Elf32_Cap</scope><name>c_tag</name></member>
+      <member refid="structElf32__Cap_1a3924686980433e862adc08e822c26113" prot="public" virt="non-virtual"><scope>Elf32_Cap</scope><name>c_un</name></member>
+      <member refid="structElf32__Cap_1a42b71cb8452d291b2f0216f1583eabc8" prot="public" virt="non-virtual"><scope>Elf32_Cap</scope><name>c_val</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_882a4f3fc84b6da391008d1fc053f74f" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/sde</compoundname>
+    <innerfile refid="colours_8cc">colours.cc</innerfile>
+    <innerfile refid="main_8cc">main.cc</innerfile>
+    <innerfile refid="ogDisplay__UbixOS_8cc">ogDisplay_UbixOS.cc</innerfile>
+    <innerfile refid="sde_8cc">sde.cc</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/sde/"/>
+  </compounddef>
+</doxygen>

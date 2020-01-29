@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__mld6" kind="group">
+    <compoundname>lwip_opts_mld6</compoundname>
+    <title>Multicast listener discovery</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__mld6_1ga44d8f24eaebbc50221ac1336212a3528" prot="public" static="no">
+        <name>LWIP_IPV6_MLD</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_MLD==1: Enable multicast listener discovery protocol. If LWIP_IPV6 is enabled but this setting is disabled, the MAC layer must indiscriminately pass all inbound IPv6 multicast traffic to lwIP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2209" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2209" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__mld6_1ga89e92d8de8898696e797f13fdd169494" prot="public" static="no">
+        <name>MEMP_NUM_MLD6_GROUP</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_MLD6_GROUP: Max number of IPv6 multicast groups that can be joined. There must be enough groups so that each netif can join the solicited-node multicast group for each of its local addresses, plus one for MDNS if applicable, plus any number of groups to be joined on UDP sockets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2219" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2219" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

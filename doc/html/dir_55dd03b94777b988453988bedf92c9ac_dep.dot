@@ -1,0 +1,11 @@
+digraph "C:/Dev/git/UbixOS/sys/net/core/ipv6" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_cd4906596c0f2eb6dae79633ab001247 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="core" fontname="Helvetica", fontsize="10", URL="dir_cd4906596c0f2eb6dae79633ab001247.html"]
+  dir_55dd03b94777b988453988bedf92c9ac [shape=box, label="ipv6", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_55dd03b94777b988453988bedf92c9ac.html"];
+  }
+  dir_d1be8160e739b6eed1f7843efdbae1b3 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"];
+  dir_55dd03b94777b988453988bedf92c9ac->dir_d1be8160e739b6eed1f7843efdbae1b3 [headlabel="18", labeldistance=1.5 headhref="dir_000059_000019.html"];
+}

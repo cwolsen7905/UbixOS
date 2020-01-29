@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsyscall__entry" kind="struct" language="C++" prot="public">
+    <compoundname>syscall_entry</compoundname>
+    <includes refid="syscalls_8h" local="no">syscalls.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsyscall__entry_1a000a8c7d695eca7f877ac79c2c6108ce" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int syscall_entry::sc_args</definition>
+        <argsstring></argsstring>
+        <name>sc_args</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsyscall__entry_1a90285e9d1c3dcc6f72b95934681f5cd2" prot="public" static="no" mutable="no">
+        <type><ref refid="syscalls_8h_1a5cc1a9cc9c2ff693ecb7982c3a4b506d" kindref="member">sys_call_t</ref> *</type>
+        <definition>sys_call_t* syscall_entry::sc_entry</definition>
+        <argsstring></argsstring>
+        <name>sc_entry</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="54" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsyscall__entry_1a1ec13625ae86125bbac17514955e8332" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* syscall_entry::sc_name</definition>
+        <argsstring></argsstring>
+        <name>sc_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="53" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsyscall__entry_1a6410cbc15e1b5fee0d2ee276fc5f52cb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int syscall_entry::sc_status</definition>
+        <argsstring></argsstring>
+        <name>sc_status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>syscall_entry</label>
+        <link refid="structsyscall__entry"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="51" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="51" bodyend="56"/>
+    <listofallmembers>
+      <member refid="structsyscall__entry_1a000a8c7d695eca7f877ac79c2c6108ce" prot="public" virt="non-virtual"><scope>syscall_entry</scope><name>sc_args</name></member>
+      <member refid="structsyscall__entry_1a90285e9d1c3dcc6f72b95934681f5cd2" prot="public" virt="non-virtual"><scope>syscall_entry</scope><name>sc_entry</name></member>
+      <member refid="structsyscall__entry_1a1ec13625ae86125bbac17514955e8332" prot="public" virt="non-virtual"><scope>syscall_entry</scope><name>sc_name</name></member>
+      <member refid="structsyscall__entry_1a6410cbc15e1b5fee0d2ee276fc5f52cb" prot="public" virt="non-virtual"><scope>syscall_entry</scope><name>sc_status</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

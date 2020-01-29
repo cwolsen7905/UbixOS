@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__dup2__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_dup2_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__dup2__args_1a5f3ccda3a4a4890e7e3c59da420166d7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+        <definition>u_int sys_dup2_args::from</definition>
+        <argsstring></argsstring>
+        <name>from</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="812" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="812" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" compoundref="descrip_8c" startline="377" endline="385">sys_dup2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__dup2__args_1a413b6d5a71e02b0140ba8f4d6ac8d490" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_dup2_args::from_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>from_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="811" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="811" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__dup2__args_1a1a789223fb733742fc856751099827d9" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_dup2_args::from_r_[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</argsstring>
+        <name>from_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="813" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="813" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__dup2__args_1ad6a2433961f4e5eadd2eb1e00cf21a20" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+        <definition>u_int sys_dup2_args::to</definition>
+        <argsstring></argsstring>
+        <name>to</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="815" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="815" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" compoundref="descrip_8c" startline="377" endline="385">sys_dup2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__dup2__args_1adedfe1efba1bfa7a5f0718c797408fa8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_dup2_args::to_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>to_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="814" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="814" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__dup2__args_1a0b7b0c6155a86316e4191f457d7c27ab" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_dup2_args::to_r_[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</argsstring>
+        <name>to_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="816" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="816" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_dup2_args</label>
+        <link refid="structsys__dup2__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="810" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="810" bodyend="817"/>
+    <listofallmembers>
+      <member refid="structsys__dup2__args_1a5f3ccda3a4a4890e7e3c59da420166d7" prot="public" virt="non-virtual"><scope>sys_dup2_args</scope><name>from</name></member>
+      <member refid="structsys__dup2__args_1a413b6d5a71e02b0140ba8f4d6ac8d490" prot="public" virt="non-virtual"><scope>sys_dup2_args</scope><name>from_l_</name></member>
+      <member refid="structsys__dup2__args_1a1a789223fb733742fc856751099827d9" prot="public" virt="non-virtual"><scope>sys_dup2_args</scope><name>from_r_</name></member>
+      <member refid="structsys__dup2__args_1ad6a2433961f4e5eadd2eb1e00cf21a20" prot="public" virt="non-virtual"><scope>sys_dup2_args</scope><name>to</name></member>
+      <member refid="structsys__dup2__args_1adedfe1efba1bfa7a5f0718c797408fa8" prot="public" virt="non-virtual"><scope>sys_dup2_args</scope><name>to_l_</name></member>
+      <member refid="structsys__dup2__args_1a0b7b0c6155a86316e4191f457d7c27ab" prot="public" virt="non-virtual"><scope>sys_dup2_args</scope><name>to_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

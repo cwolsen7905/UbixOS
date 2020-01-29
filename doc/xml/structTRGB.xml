@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structTRGB" kind="struct" language="C++" prot="public">
+    <compoundname>TRGB</compoundname>
+    <includes refid="objgfx30_8h" local="no">objgfx30.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structTRGB_1a02d8230339dbeca13a6b7eb9f42cff08" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGB::blue</definition>
+        <argsstring></argsstring>
+        <name>blue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="58" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTRGB_1ae05d9b5d39230ed190000c01f7e0ebb0" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGB::green</definition>
+        <argsstring></argsstring>
+        <name>green</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="57" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTRGB_1a7f952730031491fee049ebbd99bd3341" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGB::red</definition>
+        <argsstring></argsstring>
+        <name>red</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="56" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>TRGB</label>
+        <link refid="structTRGB"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="55" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="55" bodyend="59"/>
+    <listofallmembers>
+      <member refid="structTRGB_1a02d8230339dbeca13a6b7eb9f42cff08" prot="public" virt="non-virtual"><scope>TRGB</scope><name>blue</name></member>
+      <member refid="structTRGB_1ae05d9b5d39230ed190000c01f7e0ebb0" prot="public" virt="non-virtual"><scope>TRGB</scope><name>green</name></member>
+      <member refid="structTRGB_1a7f952730031491fee049ebbd99bd3341" prot="public" virt="non-virtual"><scope>TRGB</scope><name>red</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

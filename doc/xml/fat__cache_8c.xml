@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__cache_8c" kind="file" language="C++">
+    <compoundname>fat_cache.c</compoundname>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="fat__cache_8h" local="yes">fat_cache.h</includes>
+    <incdepgraph>
+      <node id="10">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fat_list.h</label>
+        <link refid="fat__list_8h"/>
+      </node>
+      <node id="17">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="2">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>stdio.h</label>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__cache_8c_1afe54582a1aa9848bd2cb4724e1baf6bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_cache_get_next_cluster</definition>
+        <argsstring>(struct fatfs *fs, FL_FILE *file, uint32 clusterIdx, uint32 *pNextCluster)</argsstring>
+        <name>fatfs_cache_get_next_cluster</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__filelib_8h_1ab1659dbb766794c2537f83372fc2705b" kindref="member">FL_FILE</ref> *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>clusterIdx</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref> *</type>
+          <declname>pNextCluster</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c" line="59" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c" bodystart="59" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__cache_8c_1a205d74e989d0e076b031ea2990370c4d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_cache_init</definition>
+        <argsstring>(struct fatfs *fs, FL_FILE *file)</argsstring>
+        <name>fatfs_cache_init</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__filelib_8h_1ab1659dbb766794c2537f83372fc2705b" kindref="member">FL_FILE</ref> *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c" line="42" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c" bodystart="42" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__cache_8c_1ac21308cd551be1d3bafd1dc9e3690e5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_cache_set_next_cluster</definition>
+        <argsstring>(struct fatfs *fs, FL_FILE *file, uint32 clusterIdx, uint32 nextCluster)</argsstring>
+        <name>fatfs_cache_set_next_cluster</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__filelib_8h_1ab1659dbb766794c2537f83372fc2705b" kindref="member">FL_FILE</ref> *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>clusterIdx</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>nextCluster</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c" line="76" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c" bodystart="76" bodyend="91"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>FAT16/32<sp/>File<sp/>IO<sp/>Library</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>V2.6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Ultra-Embedded.com</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Copyright<sp/>2003<sp/>-<sp/>2012</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Email:<sp/>admin@ultra-embedded.com</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>License:<sp/>GPL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>If<sp/>you<sp/>would<sp/>like<sp/>a<sp/>version<sp/>with<sp/>a<sp/>more<sp/>permissive<sp/>license<sp/>for<sp/>use<sp/>in</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/>closed<sp/>source<sp/>commercial<sp/>applications<sp/>please<sp/>contact<sp/>me<sp/>for<sp/>details.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>FAT<sp/>File<sp/>IO<sp/>Library.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT<sp/>File<sp/>IO<sp/>Library<sp/>is<sp/>free<sp/>software;<sp/>you<sp/>can<sp/>redistribute<sp/>it<sp/>and/or<sp/>modify</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//<sp/>it<sp/>under<sp/>the<sp/>terms<sp/>of<sp/>the<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>as<sp/>published<sp/>by</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//<sp/>the<sp/>Free<sp/>Software<sp/>Foundation;<sp/>either<sp/>version<sp/>2<sp/>of<sp/>the<sp/>License,<sp/>or</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//<sp/>(at<sp/>your<sp/>option)<sp/>any<sp/>later<sp/>version.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT<sp/>File<sp/>IO<sp/>Library<sp/>is<sp/>distributed<sp/>in<sp/>the<sp/>hope<sp/>that<sp/>it<sp/>will<sp/>be<sp/>useful,</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="comment">//<sp/>but<sp/>WITHOUT<sp/>ANY<sp/>WARRANTY;<sp/>without<sp/>even<sp/>the<sp/>implied<sp/>warranty<sp/>of</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="comment">//<sp/>MERCHANTABILITY<sp/>or<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE.<sp/><sp/>See<sp/>the</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="comment">//<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>for<sp/>more<sp/>details.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//<sp/>You<sp/>should<sp/>have<sp/>received<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>GNU<sp/>General<sp/>Public<sp/>License</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">//<sp/>along<sp/>with<sp/>FAT<sp/>File<sp/>IO<sp/>Library;<sp/>if<sp/>not,<sp/>write<sp/>to<sp/>the<sp/>Free<sp/>Software</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Foundation,<sp/>Inc.,<sp/>59<sp/>Temple<sp/>Place,<sp/>Suite<sp/>330,<sp/>Boston,<sp/>MA<sp/><sp/>02111-1307<sp/><sp/>USA</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__cache_8h" kindref="compound">fat_cache.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Per<sp/>file<sp/>cluster<sp/>chain<sp/>caching<sp/>used<sp/>to<sp/>improve<sp/>performance.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>does<sp/>not<sp/>have<sp/>to<sp/>be<sp/>enabled<sp/>for<sp/>architectures<sp/>with<sp/>low</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">//<sp/>memory<sp/>space.</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fatfs_cache_init:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="fat__cache_8h_1a205d74e989d0e076b031ea2990370c4d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__cache_8c_1a205d74e989d0e076b031ea2990370c4d" kindref="member">fatfs_cache_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*<ref refid="structfile" kindref="compound">file</ref>)</highlight></codeline>
+<codeline lineno="43"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>FAT_CLUSTER_CACHE_ENTRIES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;i&lt;FAT_CLUSTER_CACHE_ENTRIES;i++)</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_idx[i]<sp/>=<sp/>0xFFFFFFFF;<sp/></highlight><highlight class="comment">//<sp/>Not<sp/>used</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_data[i]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fatfs_cache_get_next_cluster:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="fat__cache_8h_1afe54582a1aa9848bd2cb4724e1baf6bc" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__cache_8c_1afe54582a1aa9848bd2cb4724e1baf6bc" kindref="member">fatfs_cache_get_next_cluster</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>clusterIdx,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>*pNextCluster)</highlight></codeline>
+<codeline lineno="60"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>FAT_CLUSTER_CACHE_ENTRIES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>slot<sp/>=<sp/>clusterIdx<sp/>%<sp/>FAT_CLUSTER_CACHE_ENTRIES;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_idx[slot]<sp/>==<sp/>clusterIdx)</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*pNextCluster<sp/>=<sp/><ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_data[slot];</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fatfs_cache_set_next_cluster:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="fat__cache_8h_1ac21308cd551be1d3bafd1dc9e3690e5a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__cache_8c_1ac21308cd551be1d3bafd1dc9e3690e5a" kindref="member">fatfs_cache_set_next_cluster</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>clusterIdx,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>nextCluster)</highlight></codeline>
+<codeline lineno="77"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>FAT_CLUSTER_CACHE_ENTRIES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>slot<sp/>=<sp/>clusterIdx<sp/>%<sp/>FAT_CLUSTER_CACHE_ENTRIES;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_idx[slot]<sp/>==<sp/>clusterIdx)</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_data[slot]<sp/>=<sp/>nextCluster;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_idx[slot]<sp/>=<sp/>clusterIdx;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structfile" kindref="compound">file</ref>-&gt;cluster_cache_data[slot]<sp/>=<sp/>nextCluster;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c"/>
+  </compounddef>
+</doxygen>

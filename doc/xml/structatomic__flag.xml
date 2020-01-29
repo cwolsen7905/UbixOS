@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structatomic__flag" kind="struct" language="C++" prot="public">
+    <compoundname>atomic_flag</compoundname>
+    <includes refid="stdatomic_8h" local="no">stdatomic.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structatomic__flag_1adaef29a498d05b3c8b7b9b56c789d3f3" prot="public" static="no" mutable="no">
+        <type>atomic_bool</type>
+        <definition>atomic_bool atomic_flag::__flag</definition>
+        <argsstring></argsstring>
+        <name>__flag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/stdatomic.h" line="375" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/stdatomic.h" bodystart="375" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>atomic_flag</label>
+        <link refid="structatomic__flag"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/stdatomic.h" line="374" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/stdatomic.h" bodystart="374" bodyend="376"/>
+    <listofallmembers>
+      <member refid="structatomic__flag_1adaef29a498d05b3c8b7b9b56c789d3f3" prot="public" virt="non-virtual"><scope>atomic_flag</scope><name>__flag</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

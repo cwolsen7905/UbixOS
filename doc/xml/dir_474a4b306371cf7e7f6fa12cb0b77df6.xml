@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_474a4b306371cf7e7f6fa12cb0b77df6" kind="dir">
+    <compoundname>C:/Dev/git</compoundname>
+    <innerdir refid="dir_849109bbd106d461b128d63e5babcedf">C:/Dev/git/UbixOS</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/"/>
+  </compounddef>
+</doxygen>

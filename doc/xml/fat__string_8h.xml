@@ -1,0 +1,291 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__string_8h" kind="file" language="C++">
+    <compoundname>fat_string.h</compoundname>
+    <includedby refid="fat__access_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</includedby>
+    <includedby refid="fat__filelib_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</includedby>
+    <includedby refid="fat__format_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</includedby>
+    <includedby refid="fat__string_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c</includedby>
+    <includedby refid="fat__write_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</includedby>
+    <invincdepgraph>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c</label>
+        <link refid="fat__string_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h</label>
+        <link refid="fat__string_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" prot="public" static="no">
+        <name>NULL</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="17" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__string_8h_1a88289160199a24ccb76d819a07c47921" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_compare_names</definition>
+        <argsstring>(char *strA, char *strB)</argsstring>
+        <name>fatfs_compare_names</name>
+        <param>
+          <type>char *</type>
+          <declname>strA</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>strB</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="10" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="260" bodyend="319" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="10" declcolumn="5"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1a3f5672103cd0dfe71c87c95a1ad3cb60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_create_path_string</definition>
+        <argsstring>(char *path, char *filename, char *out, int maxlen)</argsstring>
+        <name>fatfs_create_path_string</name>
+        <param>
+          <type>char *</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>filename</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>out</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>maxlen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="14" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="403" bodyend="436" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="14" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1a375b265a962a087842f0fb7375f20bf4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_get_extension</definition>
+        <argsstring>(char *filename, char *out, int maxlen)</argsstring>
+        <name>fatfs_get_extension</name>
+        <param>
+          <type>char *</type>
+          <declname>filename</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>out</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>maxlen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="13" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="370" bodyend="398" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="13" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1a591f207df5e2aa9fe091df89b0c0f3f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_get_sfn_display_name</definition>
+        <argsstring>(char *out, char *in)</argsstring>
+        <name>fatfs_get_sfn_display_name</name>
+        <param>
+          <type>char *</type>
+          <declname>out</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>in</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="12" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="345" bodyend="364" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="12" declcolumn="5"/>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1afe765f763082e56ad03a7512c926dead" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_get_substring</definition>
+        <argsstring>(char *Path, int levelreq, char *output, int max_len)</argsstring>
+        <name>fatfs_get_substring</name>
+        <param>
+          <type>char *</type>
+          <declname>Path</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>levelreq</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>output</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>max_len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="8" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="92" bodyend="144" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="8" declcolumn="5"/>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+        <referencedby refid="fat__string_8h_1a5d871ba6e84ac429b88cb32f61d49b74" compoundref="fat__string_8c" startline="151" endline="178">fatfs_split_path</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1a5d871ba6e84ac429b88cb32f61d49b74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_split_path</definition>
+        <argsstring>(char *FullPath, char *Path, int max_path, char *FileName, int max_filename)</argsstring>
+        <name>fatfs_split_path</name>
+        <param>
+          <type>char *</type>
+          <declname>FullPath</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>Path</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>max_path</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>FileName</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>max_filename</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="9" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="151" bodyend="178" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="9" declcolumn="5"/>
+        <references refid="fat__string_8c_1af78d4ac644689020e4a75fc7fb2bc8fb" compoundref="fat__string_8c" startline="92" endline="144">fatfs_get_substring</references>
+        <references refid="fat__string_8c_1aa3ef1d2590f2284ef1f983d6f7b2ad29" compoundref="fat__string_8c" startline="44" endline="85">fatfs_total_path_levels</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1adb3f50400ea7f9bf0794eea97f2e87ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_string_ends_with_slash</definition>
+        <argsstring>(char *path)</argsstring>
+        <name>fatfs_string_ends_with_slash</name>
+        <param>
+          <type>char *</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="11" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="323" bodyend="341" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="11" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__string_8h_1aa3ef1d2590f2284ef1f983d6f7b2ad29" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_total_path_levels</definition>
+        <argsstring>(char *path)</argsstring>
+        <name>fatfs_total_path_levels</name>
+        <param>
+          <type>char *</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" line="7" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c" bodystart="44" bodyend="85" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h" declline="7" declcolumn="5"/>
+        <referencedby refid="fat__string_8h_1a5d871ba6e84ac429b88cb32f61d49b74" compoundref="fat__string_8c" startline="151" endline="178">fatfs_split_path</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FILESTRING_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FILESTRING_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Prototypes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1aa3ef1d2590f2284ef1f983d6f7b2ad29" kindref="member">fatfs_total_path_levels</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path);</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1afe765f763082e56ad03a7512c926dead" kindref="member">fatfs_get_substring</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*Path,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>levelreq,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*output,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>max_len);</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a5d871ba6e84ac429b88cb32f61d49b74" kindref="member">fatfs_split_path</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*FullPath,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*Path,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>max_path,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*FileName,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>max_filename);</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a88289160199a24ccb76d819a07c47921" kindref="member">fatfs_compare_names</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>strA,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>strB);</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1adb3f50400ea7f9bf0794eea97f2e87ed" kindref="member">fatfs_string_ends_with_slash</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*path);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a591f207df5e2aa9fe091df89b0c0f3f8" kindref="member">fatfs_get_sfn_display_name</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>out,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>in);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a375b265a962a087842f0fb7375f20bf4" kindref="member">fatfs_get_extension</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>filename,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>out,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>maxlen);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a3f5672103cd0dfe71c87c95a1ad3cb60" kindref="member">fatfs_create_path_string</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>path,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*filename,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>out,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>maxlen);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>NULL<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_string.h"/>
+  </compounddef>
+</doxygen>

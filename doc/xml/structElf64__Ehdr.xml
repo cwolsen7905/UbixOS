@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Ehdr" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Ehdr</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Ehdr_1a404b7e3566d912b0382cacea17475e92" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_ehsize</definition>
+        <argsstring></argsstring>
+        <name>e_ehsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="73" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1a943c7d038a3cc3c1115e84b4cd19966d" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Ehdr::e_entry</definition>
+        <argsstring></argsstring>
+        <name>e_entry</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="69" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1ae6ea9e821472d35e7d2c446fa79bdc3a" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Ehdr::e_flags</definition>
+        <argsstring></argsstring>
+        <name>e_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="72" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1acdd2e122af003c5b5708d1ae75b4a85c" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Elf64_Ehdr::e_ident[EI_NIDENT]</definition>
+        <argsstring>[EI_NIDENT]</argsstring>
+        <name>e_ident</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="65" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1adecc8b3641e23794f39c78f15ab8c809" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_machine</definition>
+        <argsstring></argsstring>
+        <name>e_machine</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="67" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1ab5aefb7a14b9cf2eafcbaf0664852369" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_phentsize</definition>
+        <argsstring></argsstring>
+        <name>e_phentsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="74" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1af13bac5685d725c2ba9930c1176f3082" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_phnum</definition>
+        <argsstring></argsstring>
+        <name>e_phnum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="75" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1adc7d13d5c0e0eb4b62f0f898f03b2e66" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a6f7837bc80df7a68291fce54ff088849" kindref="member">Elf64_Off</ref></type>
+        <definition>Elf64_Off Elf64_Ehdr::e_phoff</definition>
+        <argsstring></argsstring>
+        <name>e_phoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="70" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1a078af1eaf7681f9d85ff545b6c7aa9c5" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_shentsize</definition>
+        <argsstring></argsstring>
+        <name>e_shentsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="76" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1a317679f1ef5e41e0717e95670c6a1d24" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_shnum</definition>
+        <argsstring></argsstring>
+        <name>e_shnum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="77" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1a63fca3f9b273e5fd4d190d9cb7fba9b0" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a6f7837bc80df7a68291fce54ff088849" kindref="member">Elf64_Off</ref></type>
+        <definition>Elf64_Off Elf64_Ehdr::e_shoff</definition>
+        <argsstring></argsstring>
+        <name>e_shoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="71" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1ae8289d7705794be744876f6246242b9b" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_shstrndx</definition>
+        <argsstring></argsstring>
+        <name>e_shstrndx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="78" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1a031210e6571dad798c4ed66b85631d58" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Ehdr::e_type</definition>
+        <argsstring></argsstring>
+        <name>e_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="66" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Ehdr_1a3855471cf08a9e4cd4b898e9a1e11fa4" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Ehdr::e_version</definition>
+        <argsstring></argsstring>
+        <name>e_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="68" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Ehdr</label>
+        <link refid="structElf64__Ehdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="64" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="64" bodyend="79"/>
+    <listofallmembers>
+      <member refid="structElf64__Ehdr_1a404b7e3566d912b0382cacea17475e92" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_ehsize</name></member>
+      <member refid="structElf64__Ehdr_1a943c7d038a3cc3c1115e84b4cd19966d" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_entry</name></member>
+      <member refid="structElf64__Ehdr_1ae6ea9e821472d35e7d2c446fa79bdc3a" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_flags</name></member>
+      <member refid="structElf64__Ehdr_1acdd2e122af003c5b5708d1ae75b4a85c" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_ident</name></member>
+      <member refid="structElf64__Ehdr_1adecc8b3641e23794f39c78f15ab8c809" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_machine</name></member>
+      <member refid="structElf64__Ehdr_1ab5aefb7a14b9cf2eafcbaf0664852369" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_phentsize</name></member>
+      <member refid="structElf64__Ehdr_1af13bac5685d725c2ba9930c1176f3082" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_phnum</name></member>
+      <member refid="structElf64__Ehdr_1adc7d13d5c0e0eb4b62f0f898f03b2e66" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_phoff</name></member>
+      <member refid="structElf64__Ehdr_1a078af1eaf7681f9d85ff545b6c7aa9c5" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_shentsize</name></member>
+      <member refid="structElf64__Ehdr_1a317679f1ef5e41e0717e95670c6a1d24" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_shnum</name></member>
+      <member refid="structElf64__Ehdr_1a63fca3f9b273e5fd4d190d9cb7fba9b0" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_shoff</name></member>
+      <member refid="structElf64__Ehdr_1ae8289d7705794be744876f6246242b9b" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_shstrndx</name></member>
+      <member refid="structElf64__Ehdr_1a031210e6571dad798c4ed66b85631d58" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_type</name></member>
+      <member refid="structElf64__Ehdr_1a3855471cf08a9e4cd4b898e9a1e11fa4" prot="public" virt="non-virtual"><scope>Elf64_Ehdr</scope><name>e_version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

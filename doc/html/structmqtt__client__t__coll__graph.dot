@@ -1,0 +1,13 @@
+digraph "mqtt_client_t"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{mqtt_client_t\n|+ conn\l+ conn_state\l+ connect_arg\l+ cyclic_tick\l+ data_cb\l+ inpub_arg\l+ inpub_pkt_id\l+ keep_alive\l+ msg_idx\l+ pkt_id_seq\l+ pub_cb\l+ rx_buffer\l+ server_watchdog\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +pend_req_queue\n+req_list" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{mqtt_request_t\n|+ arg\l+ cb\l+ pkt_id\l+ timeout_diff\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmqtt__request__t.html",tooltip=" "];
+  Node2 -> Node2 [color="grey25",fontsize="10",style="solid",label=" +next" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node1 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +connect_cb" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +output" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{mqtt_ringbuf_t\n|+ buf\l+ get\l+ put\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmqtt__ringbuf__t.html",tooltip=" "];
+}

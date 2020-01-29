@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="stats_8c" kind="file" language="C++">
+    <compoundname>stats.c</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/net/core/stats.c</label>
+        <link refid="stats_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Statistics module </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="7"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_STATS<sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">net/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">stats_<sp/>lwip_stats;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><ref refid="stats_8h_1a832291112716a16838a0cc49595211b2" kindref="member">stats_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="54"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>lwip_stats.mem.name<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;MEM&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_STATS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_STATS_DISPLAY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><ref refid="stats_8h_1a0a3b76c2f476e34cde79de0cca51887f" kindref="member">stats_display_proto</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>stats_proto<sp/>*proto,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</highlight></codeline>
+<codeline lineno="65"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;\n%s\n\t&quot;</highlight><highlight class="normal">,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>));</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;xmit:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;xmit));</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;recv:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;recv));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;fw:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;fw));</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;drop:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;drop));</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;chkerr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;chkerr));</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;lenerr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;lenerr));</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;memerr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;memerr));</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;rterr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;rterr));</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;proterr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;proterr));</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;opterr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;opterr));</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;err:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;err));</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;cachehit:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">,<sp/>proto-&gt;cachehit));</highlight></codeline>
+<codeline lineno="79"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>IGMP_STATS<sp/>||<sp/>MLD6_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><ref refid="stats_8h_1a5fc0d790a4aadf108ebdc7f6c58d0113" kindref="member">stats_display_igmp</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>stats_igmp<sp/>*igmp,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</highlight></codeline>
+<codeline lineno="84"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;\n%s\n\t&quot;</highlight><highlight class="normal">,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>));</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;xmit:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;xmit));</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;recv:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;recv));</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;drop:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;drop));</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;chkerr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;chkerr));</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;lenerr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;lenerr));</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;memerr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;memerr));</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;proterr:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;proterr));</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;rx_v1:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;rx_v1));</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;rx_group:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;rx_group));</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;rx_general:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;rx_general));</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;rx_report:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;rx_report));</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;tx_join:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;tx_join));</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;tx_leave:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;tx_leave));</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;tx_report:<sp/>%&quot;</highlight><highlight class="normal">STAT_COUNTER_F</highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">,<sp/>igmp-&gt;tx_report));</highlight></codeline>
+<codeline lineno="100"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>IGMP_STATS<sp/>||<sp/>MLD6_STATS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_STATS<sp/>||<sp/>MEMP_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><ref refid="stats_8h_1a8fd0f5a8680322d2a9776258c815cdab" kindref="member">stats_display_mem</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>stats_mem<sp/>*<ref refid="structmem" kindref="compound">mem</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</highlight></codeline>
+<codeline lineno="106"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;\nMEM<sp/>%s\n\t&quot;</highlight><highlight class="normal">,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>));</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;avail:<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="structmem" kindref="compound">mem</ref>-&gt;avail));</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;used:<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>));</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;max:<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="structmem" kindref="compound">mem</ref>-&gt;max));</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;err:<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="structmem" kindref="compound">mem</ref>-&gt;err));</highlight></codeline>
+<codeline lineno="112"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><ref refid="stats_8h_1a6b8be67cc5fe751f2076de9e9a34c5cc" kindref="member">stats_display_memp</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>stats_mem<sp/>*<ref refid="structmem" kindref="compound">mem</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>index)</highlight></codeline>
+<codeline lineno="117"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(index<sp/>&lt;<sp/><ref refid="memp_8h_1a85a164b1f7764951cc685ea525114e57a3387042084427642949f3223c7ddd321" kindref="member">MEMP_MAX</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a8fd0f5a8680322d2a9776258c815cdab" kindref="member">stats_display_mem</ref>(<ref refid="structmem" kindref="compound">mem</ref>,<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;name);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEMP_STATS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_STATS<sp/>||<sp/>MEMP_STATS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>SYS_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><ref refid="stats_8h_1adb5c64ed647bd5227ab2161b1570b1bb" kindref="member">stats_display_sys</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>stats_sys<sp/>*sys)</highlight></codeline>
+<codeline lineno="128"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;\nSYS\n\t&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;sem.used:<sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;sem.used));</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;sem.max:<sp/><sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;sem.max));</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;sem.err:<sp/><sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;sem.err));</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;mutex.used:<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;mutex.used));</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;mutex.max:<sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;mutex.max));</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;mutex.err:<sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;mutex.err));</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;mbox.used:<sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;mbox.used));</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;mbox.max:<sp/><sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n\t&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;mbox.max));</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaccef167be13a500ce30036030a9b142b" kindref="member">LWIP_PLATFORM_DIAG</ref>((</highlight><highlight class="stringliteral">&quot;mbox.err:<sp/><sp/><sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gad8b0a364e95b07cb0c47709fdc6037d6" kindref="member">U32_F</ref></highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)sys-&gt;mbox.err));</highlight></codeline>
+<codeline lineno="139"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_STATS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><ref refid="stats_8h_1aed60ffa8a5b8bacdcf0f8204bd95a881" kindref="member">stats_display</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="144"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref><sp/>i;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a1be80e9854df72d7dd9b3e9839ab6132" kindref="member">LINK_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a558b6a7fcc76a1b26c103c4797c7ce5a" kindref="member">ETHARP_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1acd0d1d9dac48c36b5eafcc76ba6414cf" kindref="member">IPFRAG_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1adfb7a077b87d62907b2747140f121315" kindref="member">IP6_FRAG_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1adb69913e155d092852bcaa27e599b864" kindref="member">IP_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a82730a5b7c1639033d62deab1c572a4e" kindref="member">ND6_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a022dc55f4c54659d588da17e7ced1e71" kindref="member">IP6_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a8ed6ad7a8d32d6738da2f95a9873b1cb" kindref="member">IGMP_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a018cf6f11dad2650f0387ac97b7f41e5" kindref="member">MLD6_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a87488399aba1ae313ec48a782d1710d0" kindref="member">ICMP_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1abc1cea8fb9afffa0e7212f78e96397c0" kindref="member">ICMP6_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1aaddc6f77df5f9381ddf4c51f2f4eec65" kindref="member">UDP_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a4e99d88049a4180c07076df710a75b32" kindref="member">TCP_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1ae2f2b54057cfba82517799a4c1441bbe" kindref="member">MEM_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/><ref refid="memp_8h_1a85a164b1f7764951cc685ea525114e57a3387042084427642949f3223c7ddd321" kindref="member">MEMP_MAX</ref>;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a7470beb09784d7479501a636079c2211" kindref="member">MEMP_STATS_DISPLAY</ref>(i);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1ac82dcbecd8e2683231386511c7bd1b89" kindref="member">SYS_STATS_DISPLAY</ref>();</highlight></codeline>
+<codeline lineno="165"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_STATS_DISPLAY<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_STATS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/stats.c"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,762 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="inet_8h" kind="file" language="C++">
+    <compoundname>inet.h</compoundname>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includes refid="def_8h" local="no">net/def.h</includes>
+    <includes refid="ip__addr_8h" local="no">net/ip_addr.h</includes>
+    <includes refid="ip6__addr_8h" local="no">net/ip6_addr.h</includes>
+    <includedby refid="net_8c" local="no">C:/Dev/git/UbixOS/sys/lib/net.c</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet.h</label>
+        <link refid="inet_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet.h</label>
+        <link refid="inet_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structin6__addr" prot="public">in6_addr</innerclass>
+    <innerclass refid="structin__addr" prot="public">in_addr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="inet_8h_1a1de876a356ee05a2e9427b741f99f49c" prot="public" static="no">
+        <name>IN6ADDR_ANY_INIT</name>
+        <initializer>{{{0,0,0,0}}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This macro can be used to initialize a variable of type struct <ref refid="structin6__addr" kindref="compound">in6_addr</ref> to the IPv6 wildcard address. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="81" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a5562c81af19ee5988ddc5a5c6153cf37" prot="public" static="no">
+        <name>IN6ADDR_LOOPBACK_INIT</name>
+        <initializer>{{{0,0,0,<ref refid="def_8h_1afea9c21aa1f56180cdf6fb42ef14a294" kindref="member">PP_HTONL</ref>(1)}}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This macro can be used to initialize a variable of type struct <ref refid="structin6__addr" kindref="compound">in6_addr</ref> to the IPv6 loopback address. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1ad4485a652d68ab36f423d29d332d5482" prot="public" static="no">
+        <name>IN_BADCLASS</name>
+        <param><defname>a</defname></param>
+        <initializer>IP_BADCLASS(a)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="119" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a1e47e367a806b409613e165212c3e019" prot="public" static="no">
+        <name>IN_CLASSA</name>
+        <param><defname>a</defname></param>
+        <initializer>IP_CLASSA(a)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="92" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a211ecfc0b171c80b7cb7aadc81f6f4bc" prot="public" static="no">
+        <name>IN_CLASSA_HOST</name>
+        <initializer>IP_CLASSA_HOST</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="95" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a2b2f20dceae36aa9fd14bae05cdaf2fc" prot="public" static="no">
+        <name>IN_CLASSA_MAX</name>
+        <initializer>IP_CLASSA_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="96" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a615c805e78c867afb51fa883d6b8301c" prot="public" static="no">
+        <name>IN_CLASSA_NET</name>
+        <initializer>IP_CLASSA_NET</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="93" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a7517815cda63a519a06841d67ee2326b" prot="public" static="no">
+        <name>IN_CLASSA_NSHIFT</name>
+        <initializer>IP_CLASSA_NSHIFT</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="94" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a4c6ac301b6e4ea04773f9a50f538fdb1" prot="public" static="no">
+        <name>IN_CLASSB</name>
+        <param><defname>b</defname></param>
+        <initializer>IP_CLASSB(b)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a95f8fdfa0a54362c3e9371f98b98f05a" prot="public" static="no">
+        <name>IN_CLASSB_HOST</name>
+        <initializer>IP_CLASSB_HOST</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="101" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1ae51e84d158fa4b02e60179b4b77aaf45" prot="public" static="no">
+        <name>IN_CLASSB_MAX</name>
+        <initializer>IP_CLASSB_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1af54b89d40773f4ee7067f7ae294959fe" prot="public" static="no">
+        <name>IN_CLASSB_NET</name>
+        <initializer>IP_CLASSB_NET</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a20ccbb620e8382e6806931c88bd83105" prot="public" static="no">
+        <name>IN_CLASSB_NSHIFT</name>
+        <initializer>IP_CLASSB_NSHIFT</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="100" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1adce550d19c100db32f7c1b62039c36ae" prot="public" static="no">
+        <name>IN_CLASSC</name>
+        <param><defname>c</defname></param>
+        <initializer>IP_CLASSC(c)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="104" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a847a8a659ae0d3a4f600486b8c32cb3e" prot="public" static="no">
+        <name>IN_CLASSC_HOST</name>
+        <initializer>IP_CLASSC_HOST</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="107" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1acfb442312902f91f37a48045905f9d91" prot="public" static="no">
+        <name>IN_CLASSC_MAX</name>
+        <initializer>IP_CLASSC_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="108" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a912fdaf0cebcbc2210348ec94a006d53" prot="public" static="no">
+        <name>IN_CLASSC_NET</name>
+        <initializer>IP_CLASSC_NET</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="105" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a4ec512a20fd799440b84734dd672c34b" prot="public" static="no">
+        <name>IN_CLASSC_NSHIFT</name>
+        <initializer>IP_CLASSC_NSHIFT</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="106" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1acb4f6667ca485b6f580d0f3b76097aec" prot="public" static="no">
+        <name>IN_CLASSD</name>
+        <param><defname>d</defname></param>
+        <initializer>IP_CLASSD(d)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="110" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a8fafe51d5e796049fa5d5a9dfaecdba5" prot="public" static="no">
+        <name>IN_CLASSD_HOST</name>
+        <initializer>IP_CLASSD_HOST    /*   routing needn&apos;t know. */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="113" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1aa0ac56dad56bb35e08a5cb1151f658a2" prot="public" static="no">
+        <name>IN_CLASSD_MAX</name>
+        <initializer>IP_CLASSD_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="114" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a720505aad7a94c994bc6ee284231d68c" prot="public" static="no">
+        <name>IN_CLASSD_NET</name>
+        <initializer>IP_CLASSD_NET     /* These ones aren&apos;t really */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="111" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a2f8ed18d4a11ac9915e75811c6b42879" prot="public" static="no">
+        <name>IN_CLASSD_NSHIFT</name>
+        <initializer>IP_CLASSD_NSHIFT  /*   <ref refid="structnet" kindref="compound">net</ref> and host fields, but */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="112" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1af168ec04d060a593fb5607320c90f06c" prot="public" static="no">
+        <name>IN_EXPERIMENTAL</name>
+        <param><defname>a</defname></param>
+        <initializer>IP_EXPERIMENTAL(a)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="118" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a3d2d5e8347d77665a4aa3bd3ada19ff0" prot="public" static="no">
+        <name>IN_LOOPBACKNET</name>
+        <initializer>IP_LOOPBACKNET</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="121" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1abcddcc195249a64bb13b5fc8b438548d" prot="public" static="no">
+        <name>IN_MULTICAST</name>
+        <param><defname>a</defname></param>
+        <initializer>IP_MULTICAST(a)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="116" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a5d1940045dc2e7de552f3d4ff13a74ab" prot="public" static="no">
+        <name>INADDR_ANY</name>
+        <initializer>IPADDR_ANY</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>0.0.0.0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="75" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a4a725f61ded23ce8a7dff8e82ed51986" prot="public" static="no">
+        <name>INADDR_BROADCAST</name>
+        <initializer>IPADDR_BROADCAST</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>255.255.255.255 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="77" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1ae1ac25d7797666cff6d01d6c795c2378" prot="public" static="no">
+        <name>INADDR_LOOPBACK</name>
+        <initializer>IPADDR_LOOPBACK</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>127.0.0.1 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a3d2472d6cf31b73eeb829110dd0fffea" prot="public" static="no">
+        <name>INADDR_NONE</name>
+        <initializer>IPADDR_NONE</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>255.255.255.255 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1a93b37007689284fd9c4bde1a8f4b9199" prot="public" static="no">
+        <name>INET_ADDRSTRLEN</name>
+        <initializer>IP4ADDR_STRLEN_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="125" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="inet_8h_1ac7f92897f00d3373bf818709dfb0724a" prot="public" static="no">
+        <name>s6_addr</name>
+        <initializer>un.u8_addr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="inet_8h_1ab4fa3cac7cd90edc5ceb4efca7ec0059" prot="public" static="no">
+        <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+        <definition>typedef u32_t in_addr_t</definition>
+        <argsstring></argsstring>
+        <name>in_addr_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="55" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="inet_8h_1af8c97553060738d9edd6bfeab13ef7c3" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structin6__addr" kindref="compound">in6_addr</ref></type>
+        <definition>const struct in6_addr in6addr_any</definition>
+        <argsstring></argsstring>
+        <name>in6addr_any</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This variable is initialized by the system to contain the wildcard IPv6 address. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="55" column="15" declfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" declline="55" declcolumn="15"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This file (together with <ref refid="sockets_8h" kindref="compound">sockets.h</ref>) aims to provide structs and functions from<itemizedlist>
+<listitem><para>arpa/inet.h</para>
+</listitem><listitem><para>netinet/in.h </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="9"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_INET_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_INET_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="def_8h" kindref="compound">net/def.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ip__addr_8h" kindref="compound">net/ip_addr.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ip6__addr_8h" kindref="compound">net/ip6_addr.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>If<sp/>your<sp/>port<sp/>already<sp/>typedef&apos;s<sp/>in_addr_t,<sp/>define<sp/>IN_ADDR_T_DEFINED</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/><sp/><sp/>to<sp/>prevent<sp/>this<sp/>code<sp/>from<sp/>redefining<sp/>it.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined(in_addr_t)<sp/>&amp;&amp;<sp/>!defined(IN_ADDR_T_DEFINED)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="inet_8h_1ab4fa3cac7cd90edc5ceb4efca7ec0059" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/><ref refid="inet_8h_1ab4fa3cac7cd90edc5ceb4efca7ec0059" kindref="member">in_addr_t</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="structin__addr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structin__addr" kindref="compound">in_addr</ref><sp/>{</highlight></codeline>
+<codeline lineno="59" refid="structin__addr_1a3b6ef12385f913cc23a199205d9bf858" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="inet_8h_1ab4fa3cac7cd90edc5ceb4efca7ec0059" kindref="member">in_addr_t</ref><sp/><ref refid="structin__addr_1a3b6ef12385f913cc23a199205d9bf858" kindref="member">s_addr</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="structin6__addr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structin6__addr" kindref="compound">in6_addr</ref><sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="64" refid="structin6__addr_1a5a2ca960bb7ff446cb8ca70478843cdd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/><ref refid="structin6__addr_1a5a2ca960bb7ff446cb8ca70478843cdd" kindref="member">u32_addr</ref>[4];</highlight></codeline>
+<codeline lineno="65" refid="structin6__addr_1abfef295d9dd6db109a1f1f95eacdb5f6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/><ref refid="structin6__addr_1abfef295d9dd6db109a1f1f95eacdb5f6" kindref="member">u8_addr</ref>[16];</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="structin6__addr_1a498c500ad25a20b2b8a95898ffa8f052" kindref="member">un</ref>;</highlight></codeline>
+<codeline lineno="67" refid="inet_8h_1ac7f92897f00d3373bf818709dfb0724a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>s6_addr<sp/><sp/>un.u8_addr</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="inet_8h_1a3d2472d6cf31b73eeb829110dd0fffea" refkind="member"><highlight class="preprocessor">#define<sp/>INADDR_NONE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IPADDR_NONE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="inet_8h_1ae1ac25d7797666cff6d01d6c795c2378" refkind="member"><highlight class="preprocessor">#define<sp/>INADDR_LOOPBACK<sp/><sp/><sp/><sp/><sp/>IPADDR_LOOPBACK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="inet_8h_1a5d1940045dc2e7de552f3d4ff13a74ab" refkind="member"><highlight class="preprocessor">#define<sp/>INADDR_ANY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IPADDR_ANY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="inet_8h_1a4a725f61ded23ce8a7dff8e82ed51986" refkind="member"><highlight class="preprocessor">#define<sp/>INADDR_BROADCAST<sp/><sp/><sp/><sp/>IPADDR_BROADCAST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="inet_8h_1a1de876a356ee05a2e9427b741f99f49c" refkind="member"><highlight class="preprocessor">#define<sp/>IN6ADDR_ANY_INIT<sp/>{{{0,0,0,0}}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="inet_8h_1a5562c81af19ee5988ddc5a5c6153cf37" refkind="member"><highlight class="preprocessor">#define<sp/>IN6ADDR_LOOPBACK_INIT<sp/>{{{0,0,0,PP_HTONL(1)}}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structin6__addr" kindref="compound">in6_addr</ref><sp/><ref refid="inet_8h_1af8c97553060738d9edd6bfeab13ef7c3" kindref="member">in6addr_any</ref>;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Definitions<sp/>of<sp/>the<sp/>bits<sp/>in<sp/>an<sp/>(IPv4)<sp/>Internet<sp/>address<sp/>integer.</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"></highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>On<sp/>subnets,<sp/>host<sp/>and<sp/>network<sp/>parts<sp/>are<sp/>found<sp/>according<sp/>to</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/><sp/><sp/>the<sp/>subnet<sp/>mask,<sp/>not<sp/>these<sp/>masks.<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="inet_8h_1a1e47e367a806b409613e165212c3e019" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSA(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSA(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="inet_8h_1a615c805e78c867afb51fa883d6b8301c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSA_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSA_NET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="inet_8h_1a7517815cda63a519a06841d67ee2326b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSA_NSHIFT<sp/><sp/><sp/><sp/>IP_CLASSA_NSHIFT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="inet_8h_1a211ecfc0b171c80b7cb7aadc81f6f4bc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSA_HOST<sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSA_HOST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="inet_8h_1a2b2f20dceae36aa9fd14bae05cdaf2fc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSA_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSA_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="inet_8h_1a4c6ac301b6e4ea04773f9a50f538fdb1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSB(b)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSB(b)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="inet_8h_1af54b89d40773f4ee7067f7ae294959fe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSB_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSB_NET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="inet_8h_1a20ccbb620e8382e6806931c88bd83105" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSB_NSHIFT<sp/><sp/><sp/><sp/>IP_CLASSB_NSHIFT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="inet_8h_1a95f8fdfa0a54362c3e9371f98b98f05a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSB_HOST<sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSB_HOST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="inet_8h_1ae51e84d158fa4b02e60179b4b77aaf45" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSB_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSB_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104" refid="inet_8h_1adce550d19c100db32f7c1b62039c36ae" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSC(c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSC(c)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="inet_8h_1a912fdaf0cebcbc2210348ec94a006d53" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSC_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSC_NET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="inet_8h_1a4ec512a20fd799440b84734dd672c34b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSC_NSHIFT<sp/><sp/><sp/><sp/>IP_CLASSC_NSHIFT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107" refid="inet_8h_1a847a8a659ae0d3a4f600486b8c32cb3e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSC_HOST<sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSC_HOST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="inet_8h_1acfb442312902f91f37a48045905f9d91" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSC_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSC_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="inet_8h_1acb4f6667ca485b6f580d0f3b76097aec" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSD(d)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSD(d)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111" refid="inet_8h_1a720505aad7a94c994bc6ee284231d68c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSD_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSD_NET<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>These<sp/>ones<sp/>aren&apos;t<sp/>really<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112" refid="inet_8h_1a2f8ed18d4a11ac9915e75811c6b42879" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSD_NSHIFT<sp/><sp/><sp/><sp/>IP_CLASSD_NSHIFT<sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>net<sp/>and<sp/>host<sp/>fields,<sp/>but<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="inet_8h_1a8fafe51d5e796049fa5d5a9dfaecdba5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSD_HOST<sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSD_HOST<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>routing<sp/>needn&apos;t<sp/>know.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="inet_8h_1aa0ac56dad56bb35e08a5cb1151f658a2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_CLASSD_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP_CLASSD_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="inet_8h_1abcddcc195249a64bb13b5fc8b438548d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_MULTICAST(a)<sp/><sp/><sp/><sp/><sp/>IP_MULTICAST(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="inet_8h_1af168ec04d060a593fb5607320c90f06c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_EXPERIMENTAL(a)<sp/><sp/>IP_EXPERIMENTAL(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="inet_8h_1ad4485a652d68ab36f423d29d332d5482" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_BADCLASS(a)<sp/><sp/><sp/><sp/><sp/><sp/>IP_BADCLASS(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121" refid="inet_8h_1a3d2d5e8347d77665a4aa3bd3ada19ff0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IN_LOOPBACKNET<sp/><sp/><sp/><sp/><sp/><sp/>IP_LOOPBACKNET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>INET_ADDRSTRLEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="inet_8h_1a93b37007689284fd9c4bde1a8f4b9199" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INET_ADDRSTRLEN<sp/><sp/><sp/><sp/><sp/>IP4ADDR_STRLEN_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>INET6_ADDRSTRLEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INET6_ADDRSTRLEN<sp/><sp/><sp/><sp/>IP6ADDR_STRLEN_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_addr_from_ip4addr(target_inaddr,<sp/>source_ipaddr)<sp/>((target_inaddr)-&gt;s_addr<sp/>=<sp/>ip4_addr_get_u32(source_ipaddr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_addr_to_ip4addr(target_ipaddr,<sp/>source_inaddr)<sp/><sp/><sp/>(ip4_addr_set_u32(target_ipaddr,<sp/>(source_inaddr)-&gt;s_addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>ATTENTION:<sp/>the<sp/>next<sp/>define<sp/>only<sp/>works<sp/>because<sp/>both<sp/>s_addr<sp/>and<sp/>ip4_addr_t<sp/>are<sp/>an<sp/>u32_t<sp/>effectively!<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_addr_to_ip4addr_p(target_ip4addr_p,<sp/>source_inaddr)<sp/><sp/><sp/>((target_ip4addr_p)<sp/>=<sp/>(ip4_addr_t*)&amp;((source_inaddr)-&gt;s_addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>directly<sp/>map<sp/>this<sp/>to<sp/>the<sp/>lwip<sp/>internal<sp/>functions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_addr(cp)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ipaddr_addr(cp)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_aton(cp,<sp/>addr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4addr_aton(cp,<sp/>(ip4_addr_t*)addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_ntoa(addr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4addr_ntoa((const<sp/>ip4_addr_t*)&amp;(addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet_ntoa_r(addr,<sp/>buf,<sp/>buflen)<sp/><sp/>ip4addr_ntoa_r((const<sp/>ip4_addr_t*)&amp;(addr),<sp/>buf,<sp/>buflen)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet6_addr_from_ip6addr(target_in6addr,<sp/>source_ip6addr)<sp/>{(target_in6addr)-&gt;un.u32_addr[0]<sp/>=<sp/>(source_ip6addr)-&gt;addr[0];<sp/>\</highlight></codeline>
+<codeline lineno="150"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(target_in6addr)-&gt;un.u32_addr[1]<sp/>=<sp/>(source_ip6addr)-&gt;addr[1];<sp/>\</highlight></codeline>
+<codeline lineno="151"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(target_in6addr)-&gt;un.u32_addr[2]<sp/>=<sp/>(source_ip6addr)-&gt;addr[2];<sp/>\</highlight></codeline>
+<codeline lineno="152"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(target_in6addr)-&gt;un.u32_addr[3]<sp/>=<sp/>(source_ip6addr)-&gt;addr[3];}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet6_addr_to_ip6addr(target_ip6addr,<sp/>source_in6addr)<sp/><sp/><sp/>{(target_ip6addr)-&gt;addr[0]<sp/>=<sp/>(source_in6addr)-&gt;un.u32_addr[0];<sp/>\</highlight></codeline>
+<codeline lineno="154"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(target_ip6addr)-&gt;addr[1]<sp/>=<sp/>(source_in6addr)-&gt;un.u32_addr[1];<sp/>\</highlight></codeline>
+<codeline lineno="155"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(target_ip6addr)-&gt;addr[2]<sp/>=<sp/>(source_in6addr)-&gt;un.u32_addr[2];<sp/>\</highlight></codeline>
+<codeline lineno="156"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(target_ip6addr)-&gt;addr[3]<sp/>=<sp/>(source_in6addr)-&gt;un.u32_addr[3];}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>ATTENTION:<sp/>the<sp/>next<sp/>define<sp/>only<sp/>works<sp/>because<sp/>both<sp/>in6_addr<sp/>and<sp/>ip6_addr_t<sp/>are<sp/>an<sp/>u32_t[4]<sp/>effectively!<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet6_addr_to_ip6addr_p(target_ip6addr_p,<sp/>source_in6addr)<sp/><sp/><sp/>((target_ip6addr_p)<sp/>=<sp/>(ip6_addr_t*)(source_in6addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>directly<sp/>map<sp/>this<sp/>to<sp/>the<sp/>lwip<sp/>internal<sp/>functions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet6_aton(cp,<sp/>addr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6addr_aton(cp,<sp/>(ip6_addr_t*)addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet6_ntoa(addr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6addr_ntoa((const<sp/>ip6_addr_t*)&amp;(addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>inet6_ntoa_r(addr,<sp/>buf,<sp/>buflen)<sp/>ip6addr_ntoa_r((const<sp/>ip6_addr_t*)&amp;(addr),<sp/>buf,<sp/>buflen)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_INET_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h"/>
+  </compounddef>
+</doxygen>

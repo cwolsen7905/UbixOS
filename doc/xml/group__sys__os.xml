@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__os" kind="group">
+    <compoundname>sys_os</compoundname>
+    <title>OS abstraction layer</title>
+    <innergroup refid="group__sys__sem">Semaphores</innergroup>
+    <innergroup refid="group__sys__mutex">Mutexes</innergroup>
+    <innergroup refid="group__sys__mbox">Mailboxes</innergroup>
+    <innergroup refid="group__sys__misc">Misc</innergroup>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>No need to implement functions in this section in NO_SYS mode. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

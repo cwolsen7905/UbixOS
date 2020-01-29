@@ -1,0 +1,7 @@
+digraph "sys_sendto_args"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sys_sendto_args\n|+ buf\l+ buf_l_\l+ buf_r_\l+ flags\l+ flags_l_\l+ flags_r_\l+ len\l+ len_l_\l+ len_r_\l+ s\land 8 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

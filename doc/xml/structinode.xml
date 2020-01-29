@@ -1,0 +1,863 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structinode" kind="struct" language="C++" prot="public">
+    <compoundname>inode</compoundname>
+    <includes refid="inode_8h" local="no">inode.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structinode_1a66addc37db421ed973cc9393f941104b" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+        <definition>time_t inode::i_atime</definition>
+        <argsstring></argsstring>
+        <name>i_atime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="48" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1ae1ce31feea433eda6b2437c25bdc5eed" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long inode::i_blksize</definition>
+        <argsstring></argsstring>
+        <name>i_blksize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="51" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1abadff565590879ade20157b305bf2565" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long inode::i_blocks</definition>
+        <argsstring></argsstring>
+        <name>i_blocks</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="52" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1af6c60db8855ad35b06ce0b188b73371b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode * inode::i_bound_by</definition>
+        <argsstring></argsstring>
+        <name>i_bound_by</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="61" column="28" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a2189555943875b184d979dfcd4772beb" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* inode::i_bound_to</definition>
+        <argsstring></argsstring>
+        <name>i_bound_to</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="61" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1af6da47fa3f89db802bc7039589bbe982" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short inode::i_count</definition>
+        <argsstring></argsstring>
+        <name>i_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="64" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1acade74c45ea8864fb410a0c78caa1c95" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+        <definition>time_t inode::i_ctime</definition>
+        <argsstring></argsstring>
+        <name>i_ctime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="50" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a58a68d03e35aaff0fac5a6f8c75cc192" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a45c90547fafad0ff956b06bb5245cdcf" kindref="member">__dev_t</ref></type>
+        <definition>__dev_t inode::i_dev</definition>
+        <argsstring></argsstring>
+        <name>i_dev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="40" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a8c071b0db1ae2f7301b3119c717a3d95" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char inode::i_dirt</definition>
+        <argsstring></argsstring>
+        <name>i_dirt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="67" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1aee44402e70177d45c0f3bdb7e939743e" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short inode::i_flags</definition>
+        <argsstring></argsstring>
+        <name>i_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="65" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1af55672db786b410d6df1d8057df09719" prot="public" static="no" mutable="no">
+        <type>struct file_lock *</type>
+        <definition>struct file_lock* inode::i_flock</definition>
+        <argsstring></argsstring>
+        <name>i_flock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="57" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a0c14ee3e0c6392287359562051162885" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a9520fe38856d436aa8c5850ff21839ec" kindref="member">gid_t</ref></type>
+        <definition>gid_t inode::i_gid</definition>
+        <argsstring></argsstring>
+        <name>i_gid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="45" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a42f5d5d5346833c3f4939cb33c74af73" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* inode::i_hash_next</definition>
+        <argsstring></argsstring>
+        <name>i_hash_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="60" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a7fe26ba803d9eae5e442d233a46a7016" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode * inode::i_hash_prev</definition>
+        <argsstring></argsstring>
+        <name>i_hash_prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="60" column="29" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a8131bb3b2d76d9e8b2353ddd6a453705" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long inode::i_ino</definition>
+        <argsstring></argsstring>
+        <name>i_ino</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="41" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1ae3aca8d74205feb53ee3b2fed18f6de3" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char inode::i_lock</definition>
+        <argsstring></argsstring>
+        <name>i_lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="66" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1abec4b72119782d0994b97c76c48260e4" prot="public" static="no" mutable="no">
+        <type>struct vm_area_struct *</type>
+        <definition>struct vm_area_struct* inode::i_mmap</definition>
+        <argsstring></argsstring>
+        <name>i_mmap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="58" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1aceb810156528818f5f17fd1918d58456" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a633606f8a0f9a59b300c4947280d816f" kindref="member">__mode_t</ref></type>
+        <definition>__mode_t inode::i_mode</definition>
+        <argsstring></argsstring>
+        <name>i_mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="42" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a86a36f0121b674ab6129fa3c956738cd" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* inode::i_mount</definition>
+        <argsstring></argsstring>
+        <name>i_mount</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="62" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1ab6bd6e53e00bf571f0a799eaff253a22" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+        <definition>time_t inode::i_mtime</definition>
+        <argsstring></argsstring>
+        <name>i_mtime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="49" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1aff9bfb8d94b8831fdaeaa19c82966013" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* inode::i_next</definition>
+        <argsstring></argsstring>
+        <name>i_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="59" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1aaf3909ab8783e663e30e0f3496b57ea5" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1ac1789b464296a1bd0de1734e17d0a146" kindref="member">__nlink_t</ref></type>
+        <definition>__nlink_t inode::i_nlink</definition>
+        <argsstring></argsstring>
+        <name>i_nlink</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="43" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a141e71619963d0d497eca9952e74b705" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode__operations" kindref="compound">inode_operations</ref> *</type>
+        <definition>struct inode_operations* inode::i_op</definition>
+        <argsstring></argsstring>
+        <name>i_op</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="54" column="28" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" compoundref="namei_8c" startline="34" endline="50">follow_link</referencedby>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a62da92e16379e2f23870256dc390ffff" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char inode::i_pipe</definition>
+        <argsstring></argsstring>
+        <name>i_pipe</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="68" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1ade631e66f58f16721642d8f7c2bfd8a1" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode * inode::i_prev</definition>
+        <argsstring></argsstring>
+        <name>i_prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="59" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a881d617f130ed3797ef9856766dbdc8c" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a45c90547fafad0ff956b06bb5245cdcf" kindref="member">__dev_t</ref></type>
+        <definition>__dev_t inode::i_rdev</definition>
+        <argsstring></argsstring>
+        <name>i_rdev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="46" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a8e3ca37fd8f709720380afd9f60d0e71" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsuper__block" kindref="compound">super_block</ref> *</type>
+        <definition>struct super_block* inode::i_sb</definition>
+        <argsstring></argsstring>
+        <name>i_sb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="55" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a894e5f87025deb7be063c18cf665662b" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char inode::i_seek</definition>
+        <argsstring></argsstring>
+        <name>i_seek</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="69" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a7ff052310736a60de39d05bcc7d9a19c" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsemaphore" kindref="compound">semaphore</ref></type>
+        <definition>struct semaphore inode::i_sem</definition>
+        <argsstring></argsstring>
+        <name>i_sem</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="52" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a06ec8477793a9d55c0fd6406183a35f6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t inode::i_size</definition>
+        <argsstring></argsstring>
+        <name>i_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="47" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1aa116913d28a3303447c85ee1c6bfc75a" prot="public" static="no" mutable="no">
+        <type>struct socket *</type>
+        <definition>struct socket* inode::i_socket</definition>
+        <argsstring></argsstring>
+        <name>i_socket</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="63" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a9661c7379438c25c6cc91c3239f54a85" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a1844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref></type>
+        <definition>uid_t inode::i_uid</definition>
+        <argsstring></argsstring>
+        <name>i_uid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="44" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a5643d5c9c9ebf795aa37ac1759b35bba" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char inode::i_update</definition>
+        <argsstring></argsstring>
+        <name>i_update</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="70" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a2428445b93b43ebf63ca8aac15b1f381" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structwait__queue" kindref="compound">wait_queue</ref> *</type>
+        <definition>struct wait_queue* inode::i_wait</definition>
+        <argsstring></argsstring>
+        <name>i_wait</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="56" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1add89fc2ded51486f09cedd1bd47e89a8" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmsdos__inode__info" kindref="compound">msdos_inode_info</ref></type>
+        <definition>struct msdos_inode_info inode::msdos_i</definition>
+        <argsstring></argsstring>
+        <name>msdos_i</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="70" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a87eca42ddb2033b29d8ce4a658c3b4ca" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structpipe__inode__info" kindref="compound">pipe_inode_info</ref></type>
+        <definition>struct pipe_inode_info inode::pipe_i</definition>
+        <argsstring></argsstring>
+        <name>pipe_i</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="70" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a82b45e7d93016820fc4927298aa2f772" prot="public" static="no" mutable="no">
+        <type>union inode::@22</type>
+        <definition>union inode::@22  inode::u</definition>
+        <argsstring></argsstring>
+        <name>u</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="76" column="7"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1a8d458da2adb1d183a99f6ebd4f4f3887" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structufs1__dinode" kindref="compound">ufs1_dinode</ref></type>
+        <definition>struct ufs1_dinode inode::ufs1_i</definition>
+        <argsstring></argsstring>
+        <name>ufs1_i</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="70" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode_1ae43bfb8e013c227880cd49b341f86292" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structufs2__dinode" kindref="compound">ufs2_dinode</ref></type>
+        <definition>struct ufs2_dinode inode::ufs2_i</definition>
+        <argsstring></argsstring>
+        <name>ufs2_i</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="70" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="75" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="7">
+        <label>i387Struct</label>
+        <link refid="structi387Struct"/>
+      </node>
+      <node id="31">
+        <label>ufs1_dinode</label>
+        <link refid="structufs1__dinode"/>
+      </node>
+      <node id="25">
+        <label>tssStruct</label>
+        <link refid="structtssStruct"/>
+      </node>
+      <node id="23">
+        <label>tty_termNode</label>
+        <link refid="structtty__termNode"/>
+      </node>
+      <node id="20">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="19">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+devRec</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>+devInfo</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
+        <label>osInfo</label>
+        <link refid="structosInfo"/>
+      </node>
+      <node id="4">
+        <label>msdos_sb_info</label>
+        <link refid="structmsdos__sb__info"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+fat_wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="14">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+fileListTail</edgelabel>
+          <edgelabel>+fileListHead</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>msdos_inode_info</label>
+        <link refid="structmsdos__inode__info"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+i_old</edgelabel>
+          <edgelabel>+i_depend</edgelabel>
+        </childnode>
+      </node>
+      <node id="17">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>inode</label>
+        <link refid="structinode"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+msdos_i</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+i_sb</edgelabel>
+        </childnode>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+i_prev</edgelabel>
+          <edgelabel>+i_bound_by</edgelabel>
+          <edgelabel>+i_hash_next</edgelabel>
+          <edgelabel>+i_next</edgelabel>
+          <edgelabel>+i_bound_to</edgelabel>
+          <edgelabel>+i_hash_prev</edgelabel>
+          <edgelabel>+i_mount</edgelabel>
+        </childnode>
+        <childnode refid="27" relation="usage">
+          <edgelabel>+i_sem</edgelabel>
+        </childnode>
+        <childnode refid="28" relation="usage">
+          <edgelabel>+pipe_i</edgelabel>
+        </childnode>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+ufs2_i</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+i_wait</edgelabel>
+        </childnode>
+        <childnode refid="30" relation="usage">
+          <edgelabel>+i_op</edgelabel>
+        </childnode>
+        <childnode refid="31" relation="usage">
+          <edgelabel>+ufs1_i</edgelabel>
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="26">
+        <label>super_operations</label>
+        <link refid="structsuper__operations"/>
+      </node>
+      <node id="10">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+      <node id="16">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="17" relation="usage">
+          <edgelabel>+diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+device</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+fs</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>super_block</label>
+        <link refid="structsuper__block"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+msdos_sb</edgelabel>
+        </childnode>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+s_mounted</edgelabel>
+          <edgelabel>+s_covered</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+s_wait</edgelabel>
+        </childnode>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+s_op</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>taskStruct</label>
+        <link refid="structtaskStruct"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+exec</edgelabel>
+          <edgelabel>+root</edgelabel>
+          <edgelabel>+pwd</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+i387</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>+td</edgelabel>
+        </childnode>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+files</edgelabel>
+        </childnode>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+term</edgelabel>
+        </childnode>
+        <childnode refid="24" relation="usage">
+          <edgelabel>+oInfo</edgelabel>
+        </childnode>
+        <childnode refid="25" relation="usage">
+          <edgelabel>+tss</edgelabel>
+        </childnode>
+      </node>
+      <node id="9">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+      <node id="21">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="27">
+        <label>semaphore</label>
+        <link refid="structsemaphore"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="13">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+inode</edgelabel>
+        </childnode>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>+dmadat</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+mp</edgelabel>
+        </childnode>
+      </node>
+      <node id="15">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="28">
+        <label>pipe_inode_info</label>
+        <link refid="structpipe__inode__info"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>wait_queue</label>
+        <link refid="structwait__queue"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+task</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="11">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+      <node id="8">
+        <label>thread</label>
+        <link refid="structthread"/>
+        <childnode refid="9" relation="usage">
+          <edgelabel>+frame</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+sigmask</edgelabel>
+        </childnode>
+        <childnode refid="11" relation="usage">
+          <edgelabel>+rlim</edgelabel>
+        </childnode>
+        <childnode refid="12" relation="usage">
+          <edgelabel>+sigact</edgelabel>
+        </childnode>
+      </node>
+      <node id="29">
+        <label>ufs2_dinode</label>
+        <link refid="structufs2__dinode"/>
+      </node>
+      <node id="30">
+        <label>inode_operations</label>
+        <link refid="structinode__operations"/>
+      </node>
+      <node id="22">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" line="39" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/inode.h" bodystart="39" bodyend="77"/>
+    <listofallmembers>
+      <member refid="structinode_1a66addc37db421ed973cc9393f941104b" prot="public" virt="non-virtual"><scope>inode</scope><name>i_atime</name></member>
+      <member refid="structinode_1ae1ce31feea433eda6b2437c25bdc5eed" prot="public" virt="non-virtual"><scope>inode</scope><name>i_blksize</name></member>
+      <member refid="structinode_1abadff565590879ade20157b305bf2565" prot="public" virt="non-virtual"><scope>inode</scope><name>i_blocks</name></member>
+      <member refid="structinode_1af6c60db8855ad35b06ce0b188b73371b" prot="public" virt="non-virtual"><scope>inode</scope><name>i_bound_by</name></member>
+      <member refid="structinode_1a2189555943875b184d979dfcd4772beb" prot="public" virt="non-virtual"><scope>inode</scope><name>i_bound_to</name></member>
+      <member refid="structinode_1af6da47fa3f89db802bc7039589bbe982" prot="public" virt="non-virtual"><scope>inode</scope><name>i_count</name></member>
+      <member refid="structinode_1acade74c45ea8864fb410a0c78caa1c95" prot="public" virt="non-virtual"><scope>inode</scope><name>i_ctime</name></member>
+      <member refid="structinode_1a58a68d03e35aaff0fac5a6f8c75cc192" prot="public" virt="non-virtual"><scope>inode</scope><name>i_dev</name></member>
+      <member refid="structinode_1a8c071b0db1ae2f7301b3119c717a3d95" prot="public" virt="non-virtual"><scope>inode</scope><name>i_dirt</name></member>
+      <member refid="structinode_1aee44402e70177d45c0f3bdb7e939743e" prot="public" virt="non-virtual"><scope>inode</scope><name>i_flags</name></member>
+      <member refid="structinode_1af55672db786b410d6df1d8057df09719" prot="public" virt="non-virtual"><scope>inode</scope><name>i_flock</name></member>
+      <member refid="structinode_1a0c14ee3e0c6392287359562051162885" prot="public" virt="non-virtual"><scope>inode</scope><name>i_gid</name></member>
+      <member refid="structinode_1a42f5d5d5346833c3f4939cb33c74af73" prot="public" virt="non-virtual"><scope>inode</scope><name>i_hash_next</name></member>
+      <member refid="structinode_1a7fe26ba803d9eae5e442d233a46a7016" prot="public" virt="non-virtual"><scope>inode</scope><name>i_hash_prev</name></member>
+      <member refid="structinode_1a8131bb3b2d76d9e8b2353ddd6a453705" prot="public" virt="non-virtual"><scope>inode</scope><name>i_ino</name></member>
+      <member refid="structinode_1ae3aca8d74205feb53ee3b2fed18f6de3" prot="public" virt="non-virtual"><scope>inode</scope><name>i_lock</name></member>
+      <member refid="structinode_1abec4b72119782d0994b97c76c48260e4" prot="public" virt="non-virtual"><scope>inode</scope><name>i_mmap</name></member>
+      <member refid="structinode_1aceb810156528818f5f17fd1918d58456" prot="public" virt="non-virtual"><scope>inode</scope><name>i_mode</name></member>
+      <member refid="structinode_1a86a36f0121b674ab6129fa3c956738cd" prot="public" virt="non-virtual"><scope>inode</scope><name>i_mount</name></member>
+      <member refid="structinode_1ab6bd6e53e00bf571f0a799eaff253a22" prot="public" virt="non-virtual"><scope>inode</scope><name>i_mtime</name></member>
+      <member refid="structinode_1aff9bfb8d94b8831fdaeaa19c82966013" prot="public" virt="non-virtual"><scope>inode</scope><name>i_next</name></member>
+      <member refid="structinode_1aaf3909ab8783e663e30e0f3496b57ea5" prot="public" virt="non-virtual"><scope>inode</scope><name>i_nlink</name></member>
+      <member refid="structinode_1a141e71619963d0d497eca9952e74b705" prot="public" virt="non-virtual"><scope>inode</scope><name>i_op</name></member>
+      <member refid="structinode_1a62da92e16379e2f23870256dc390ffff" prot="public" virt="non-virtual"><scope>inode</scope><name>i_pipe</name></member>
+      <member refid="structinode_1ade631e66f58f16721642d8f7c2bfd8a1" prot="public" virt="non-virtual"><scope>inode</scope><name>i_prev</name></member>
+      <member refid="structinode_1a881d617f130ed3797ef9856766dbdc8c" prot="public" virt="non-virtual"><scope>inode</scope><name>i_rdev</name></member>
+      <member refid="structinode_1a8e3ca37fd8f709720380afd9f60d0e71" prot="public" virt="non-virtual"><scope>inode</scope><name>i_sb</name></member>
+      <member refid="structinode_1a894e5f87025deb7be063c18cf665662b" prot="public" virt="non-virtual"><scope>inode</scope><name>i_seek</name></member>
+      <member refid="structinode_1a7ff052310736a60de39d05bcc7d9a19c" prot="public" virt="non-virtual"><scope>inode</scope><name>i_sem</name></member>
+      <member refid="structinode_1a06ec8477793a9d55c0fd6406183a35f6" prot="public" virt="non-virtual"><scope>inode</scope><name>i_size</name></member>
+      <member refid="structinode_1aa116913d28a3303447c85ee1c6bfc75a" prot="public" virt="non-virtual"><scope>inode</scope><name>i_socket</name></member>
+      <member refid="structinode_1a9661c7379438c25c6cc91c3239f54a85" prot="public" virt="non-virtual"><scope>inode</scope><name>i_uid</name></member>
+      <member refid="structinode_1a5643d5c9c9ebf795aa37ac1759b35bba" prot="public" virt="non-virtual"><scope>inode</scope><name>i_update</name></member>
+      <member refid="structinode_1a2428445b93b43ebf63ca8aac15b1f381" prot="public" virt="non-virtual"><scope>inode</scope><name>i_wait</name></member>
+      <member refid="structinode_1add89fc2ded51486f09cedd1bd47e89a8" prot="public" virt="non-virtual"><scope>inode</scope><name>msdos_i</name></member>
+      <member refid="structinode_1a87eca42ddb2033b29d8ce4a658c3b4ca" prot="public" virt="non-virtual"><scope>inode</scope><name>pipe_i</name></member>
+      <member refid="structinode_1a82b45e7d93016820fc4927298aa2f772" prot="public" virt="non-virtual"><scope>inode</scope><name>u</name></member>
+      <member refid="structinode_1a8d458da2adb1d183a99f6ebd4f4f3887" prot="public" virt="non-virtual"><scope>inode</scope><name>ufs1_i</name></member>
+      <member refid="structinode_1ae43bfb8e013c227880cd49b341f86292" prot="public" virt="non-virtual"><scope>inode</scope><name>ufs2_i</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

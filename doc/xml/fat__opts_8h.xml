@@ -1,0 +1,423 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__opts_8h" kind="file" language="C++">
+    <compoundname>fat_opts.h</compoundname>
+    <includes local="no">stdio.h</includes>
+    <includedby refid="fat__filelib_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</includedby>
+    <includedby refid="fat__defs_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</includedby>
+    <includedby refid="fat__access_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h</includedby>
+    <includedby refid="fat__table_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</includedby>
+    <includedby refid="fat__misc_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</includedby>
+    <includedby refid="fat__write_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.h</includedby>
+    <includedby refid="fat__format_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>stdio.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.h</label>
+        <link refid="fat__write_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</label>
+        <link refid="fat__format_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__opts_8h_1a16d1dd1641be9f2d5b9bc7016d3e4558" prot="public" static="no">
+        <name>FAT_BUFFER_SECTORS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="29" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1aa9354e4947875cd05f1d02b6e1f0ae96" prot="public" static="no">
+        <name>FAT_BUFFERS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="35" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a77e202c52dfa1ae6a4a060b21b70a80c" prot="public" static="no">
+        <name>FAT_PRINTF</name>
+        <param><defname>a</defname></param>
+        <initializer>printf a</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="81" column="31" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a873b78b38ef34edf6291274eb0708634" prot="public" static="no">
+        <name>FAT_SECTOR_SIZE</name>
+        <initializer>512</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a85ce369db42d9900f4257021a81b8bc3" prot="public" static="no">
+        <name>FATFS_DIR_LIST_SUPPORT</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="56" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a1e1063d4b04386f36096c2c929a7f963" prot="public" static="no">
+        <name>FATFS_INC_FORMAT_SUPPORT</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="66" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1adc487f734665c6917872d3d8be52554e" prot="public" static="no">
+        <name>FATFS_INC_LFN_SUPPORT</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="51" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1ad312b33d4724292c6cdb1a097f3f3112" prot="public" static="no">
+        <name>FATFS_INC_TIME_DATE_SUPPORT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="61" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a726b238df5d704ae8139e0fb9ef123b2" prot="public" static="no">
+        <name>FATFS_INC_WRITE_SUPPORT</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="45" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a1bd8eac224db2612814628f3b8da7449" prot="public" static="no">
+        <name>FATFS_IS_LITTLE_ENDIAN</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="14" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1a0512aa1c7fba93172e1ff275e5046dd4" prot="public" static="no">
+        <name>FATFS_MAX_LONG_FILENAME</name>
+        <initializer>260</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="19" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__opts_8h_1afa06a8fa57091187d821deea2ffe93b9" prot="public" static="no">
+        <name>FATFS_MAX_OPEN_FILES</name>
+        <initializer>64</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" line="24" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_OPTS_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_OPTS_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>FATFS_USE_CUSTOM_OPTS_FILE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#include<sp/>&quot;fat_custom.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Configuration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Is<sp/>the<sp/>processor<sp/>little<sp/>endian<sp/>(1)<sp/>or<sp/>big<sp/>endian<sp/>(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_IS_LITTLE_ENDIAN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="fat__opts_8h_1a1bd8eac224db2612814628f3b8da7449" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_IS_LITTLE_ENDIAN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Max<sp/>filename<sp/>Length</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_MAX_LONG_FILENAME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="fat__opts_8h_1a0512aa1c7fba93172e1ff275e5046dd4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_MAX_LONG_FILENAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>260</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Max<sp/>open<sp/>files<sp/>(reduce<sp/>to<sp/>lower<sp/>memory<sp/>requirements)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_MAX_OPEN_FILES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="fat__opts_8h_1afa06a8fa57091187d821deea2ffe93b9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FATFS_MAX_OPEN_FILES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Number<sp/>of<sp/>sectors<sp/>per<sp/>FAT_BUFFER<sp/>(min<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FAT_BUFFER_SECTORS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29" refid="fat__opts_8h_1a16d1dd1641be9f2d5b9bc7016d3e4558" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_BUFFER_SECTORS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Max<sp/>FAT<sp/>sectors<sp/>to<sp/>buffer<sp/>(min<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">//<sp/>(mem<sp/>used<sp/>is<sp/>FAT_BUFFERS<sp/>*<sp/>FAT_BUFFER_SECTORS<sp/>*<sp/>FAT_SECTOR_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FAT_BUFFERS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="fat__opts_8h_1aa9354e4947875cd05f1d02b6e1f0ae96" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_BUFFERS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Size<sp/>of<sp/>cluster<sp/>chain<sp/>cache<sp/>(can<sp/>be<sp/>undefined)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Mem<sp/>used<sp/>=<sp/>FAT_CLUSTER_CACHE_ENTRIES<sp/>*<sp/>4<sp/>*<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Improves<sp/>access<sp/>speed<sp/>considerably</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">//#define<sp/>FAT_CLUSTER_CACHE_ENTRIES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Include<sp/>support<sp/>for<sp/>writing<sp/>files<sp/>(1<sp/>/<sp/>0)?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_INC_WRITE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="fat__opts_8h_1a726b238df5d704ae8139e0fb9ef123b2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_INC_WRITE_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Support<sp/>long<sp/>filenames<sp/>(1<sp/>/<sp/>0)?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">//<sp/>(if<sp/>not<sp/>(0)<sp/>only<sp/>8.3<sp/>format<sp/>is<sp/>supported)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_INC_LFN_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="fat__opts_8h_1adc487f734665c6917872d3d8be52554e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_INC_LFN_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Support<sp/>directory<sp/>listing<sp/>(1<sp/>/<sp/>0)?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_DIR_LIST_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="fat__opts_8h_1a85ce369db42d9900f4257021a81b8bc3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_DIR_LIST_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Support<sp/>time/date<sp/>(1<sp/>/<sp/>0)?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_INC_TIME_DATE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="fat__opts_8h_1ad312b33d4724292c6cdb1a097f3f3112" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_INC_TIME_DATE_SUPPORT<sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Include<sp/>support<sp/>for<sp/>formatting<sp/>disks<sp/>(1<sp/>/<sp/>0)?</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_INC_FORMAT_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="fat__opts_8h_1a1e1063d4b04386f36096c2c929a7f963" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FATFS_INC_FORMAT_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Sector<sp/>size<sp/>used</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="fat__opts_8h_1a873b78b38ef34edf6291274eb0708634" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_SECTOR_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>512</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Printf<sp/>output<sp/>(directory<sp/>listing<sp/>/<sp/>debug)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FAT_PRINTF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Don&apos;t<sp/>include<sp/>stdio,<sp/>but<sp/>there<sp/>is<sp/>a<sp/>printf<sp/>function<sp/>available</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#ifdef<sp/>FAT_PRINTF_NOINC_STDIO</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>printf(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>ctrl1,<sp/>...<sp/>);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>#define<sp/>FAT_PRINTF(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf<sp/>a</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Include<sp/>stdio<sp/>to<sp/>use<sp/>printf</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="fat__opts_8h_1a77e202c52dfa1ae6a4a060b21b70a80c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>#define<sp/>FAT_PRINTF(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf<sp/>a</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Time/Date<sp/>support<sp/>requires<sp/>time.h</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>FATFS_INC_TIME_DATE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#include<sp/>&lt;<ref refid="time_8h" kindref="compound">time.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_opts.h"/>
+  </compounddef>
+</doxygen>

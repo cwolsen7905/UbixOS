@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_afcf3461ab02e1bc9b71d2f3c9f1f65d" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/lib</compoundname>
+    <innerfile refid="bioscall_8h">bioscall.h</innerfile>
+    <innerfile refid="kern__trie_8h">kern_trie.h</innerfile>
+    <innerfile refid="kmalloc_8h">kmalloc.h</innerfile>
+    <innerfile refid="kprintf_8h">kprintf.h</innerfile>
+    <innerfile refid="libcpp_8h">libcpp.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/lib/"/>
+  </compounddef>
+</doxygen>

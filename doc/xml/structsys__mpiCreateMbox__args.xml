@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__mpiCreateMbox__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_mpiCreateMbox_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_mpiCreateMbox_args::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="49" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a05dfdcd5cf13ea0da5f17ec2ff50b149" compoundref="mpi__syscalls_8c" startline="4" endline="7">sys_mpiCreateMbox</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiCreateMbox__args_1a3f722b6bbb38595fe7765a2e4eee0721" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiCreateMbox_args::name_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>name_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="48" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiCreateMbox__args_1a5ead48eacbd23dbe9516a32653211461" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiCreateMbox_args::name_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>name_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="50" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_mpiCreateMbox_args</label>
+        <link refid="structsys__mpiCreateMbox__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="47" column="29" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="47" bodyend="51"/>
+    <listofallmembers>
+      <member refid="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" prot="public" virt="non-virtual"><scope>sys_mpiCreateMbox_args</scope><name>name</name></member>
+      <member refid="structsys__mpiCreateMbox__args_1a3f722b6bbb38595fe7765a2e4eee0721" prot="public" virt="non-virtual"><scope>sys_mpiCreateMbox_args</scope><name>name_l_</name></member>
+      <member refid="structsys__mpiCreateMbox__args_1a5ead48eacbd23dbe9516a32653211461" prot="public" virt="non-virtual"><scope>sys_mpiCreateMbox_args</scope><name>name_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

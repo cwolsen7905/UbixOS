@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structTrie" kind="struct" language="C++" prot="public">
+    <compoundname>Trie</compoundname>
+    <includes refid="kern__trie_8h" local="no">kern_trie.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structTrie" kindref="compound">Trie</ref> *</type>
+        <definition>struct Trie* Trie::character[26]</definition>
+        <argsstring>[26]</argsstring>
+        <name>character</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="38" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="kern__trie_8c_1a0d5e94a35ef6770fd351039714381a68" compoundref="kern__trie_8c" startline="143" endline="149">haveChildren</referencedby>
+        <referencedby refid="kern__trie_8c_1a07e8f86b54a5cef01d03eddada7dbaef" compoundref="kern__trie_8c" startline="46" endline="67">insert_trieNode</referencedby>
+        <referencedby refid="kern__trie_8c_1afadb3489e5ff24f80e606d9651ec59fc" compoundref="kern__trie_8c" startline="33" endline="43">new_trieNode</referencedby>
+        <referencedby refid="kern__trie_8c_1a180f49543d31feac873622e189efc064" compoundref="kern__trie_8c" startline="70" endline="94">search_trieNode</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structTrie_1a0d43a2b490ad3501ae54366f674ed726" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* Trie::e</definition>
+        <argsstring></argsstring>
+        <name>e</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="39" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="kern__trie_8c_1a07e8f86b54a5cef01d03eddada7dbaef" compoundref="kern__trie_8c" startline="46" endline="67">insert_trieNode</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structTrie_1ac64f365c3bbfe79362504d1580dc90aa" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t Trie::isLeaf</definition>
+        <argsstring></argsstring>
+        <name>isLeaf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="37" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="kern__trie_8c_1a07e8f86b54a5cef01d03eddada7dbaef" compoundref="kern__trie_8c" startline="46" endline="67">insert_trieNode</referencedby>
+        <referencedby refid="kern__trie_8c_1afadb3489e5ff24f80e606d9651ec59fc" compoundref="kern__trie_8c" startline="33" endline="43">new_trieNode</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Trie</label>
+        <link refid="structTrie"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+character</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="36" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" bodystart="36" bodyend="40"/>
+    <listofallmembers>
+      <member refid="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" prot="public" virt="non-virtual"><scope>Trie</scope><name>character</name></member>
+      <member refid="structTrie_1a0d43a2b490ad3501ae54366f674ed726" prot="public" virt="non-virtual"><scope>Trie</scope><name>e</name></member>
+      <member refid="structTrie_1ac64f365c3bbfe79362504d1580dc90aa" prot="public" virt="non-virtual"><scope>Trie</scope><name>isLeaf</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

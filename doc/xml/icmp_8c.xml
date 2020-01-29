@@ -1,0 +1,496 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="icmp_8c" kind="file" language="C++">
+    <compoundname>icmp.c</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/icmp.c</label>
+        <link refid="icmp_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>ICMP - Internet Control Message Protocol </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="7"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Some<sp/>ICMP<sp/>messages<sp/>should<sp/>be<sp/>passed<sp/>to<sp/>the<sp/>transport<sp/>protocols.<sp/>This</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/><sp/><sp/>is<sp/>not<sp/>implemented.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_ICMP<sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="icmp_8h" kindref="compound">net/icmp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="inet__chksum_8h" kindref="compound">net/inet_chksum.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip_8h" kindref="compound">net/ip.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">net/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_HOOK_FILENAME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>LWIP_HOOK_FILENAME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor">#ifndef<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>amount<sp/>of<sp/>data<sp/>from<sp/>the<sp/>original<sp/>packet<sp/>to<sp/>return<sp/>in<sp/>a<sp/>dest-unreachable<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ICMP_DEST_UNREACH_DATASIZE<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>icmp_send_response(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>type,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>code);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal">icmp_input(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*inp)</highlight></codeline>
+<codeline lineno="81"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>type;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>code;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref><sp/>*iecho;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>*iphdr_in;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>hlen;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip4_addr_t*<sp/>src;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.recv);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinmsgs);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>iphdr_in<sp/>=<sp/>ip4_current_header();</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>hlen<sp/>=<sp/><ref refid="prot_2ip4_8h_1a7c60caeb708571a07a44309c10ec3a01" kindref="member">IPH_HL</ref>(iphdr_in)<sp/>*<sp/>4;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(hlen<sp/>&lt;<sp/><ref refid="prot_2ip4_8h_1ad76777d4d34f33ab5f715f9ca15503c3" kindref="member">IP_HLEN</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>short<sp/>IP<sp/>header<sp/>(%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gac05a82d37afb251470f5e17ca15ab6e9" kindref="member">S16_F</ref></highlight><highlight class="stringliteral">&quot;<sp/>bytes)<sp/>received\n&quot;</highlight><highlight class="normal">,<sp/>hlen));</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>lenerr;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(p-&gt;<ref refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" kindref="member">len</ref><sp/>&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref>)*2)<sp/>{</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>short<sp/>ICMP<sp/>(%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gaa9d7f6eb2ee9fcc5eda3545dbb1886e0" kindref="member">U16_F</ref></highlight><highlight class="stringliteral">&quot;<sp/>bytes)<sp/>received\n&quot;</highlight><highlight class="normal">,<sp/>p-&gt;<ref refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" kindref="member">tot_len</ref>));</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>lenerr;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>type<sp/>=<sp/>*((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)p-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/>code<sp/>=<sp/>*(((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)p-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>)+1);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(type)<sp/>{</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="prot_2icmp_8h_1af1ff8912ae85b066d9dbe6caf3334ab7" kindref="member">ICMP_ER</ref>:</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>This<sp/>is<sp/>OK,<sp/>echo<sp/>reply<sp/>might<sp/>have<sp/>been<sp/>parsed<sp/>by<sp/>a<sp/>raw<sp/>PCB</highlight></codeline>
+<codeline lineno="112"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(as<sp/>obviously,<sp/>an<sp/>echo<sp/>request<sp/>has<sp/>been<sp/>sent,<sp/>too).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinechoreps);</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="prot_2icmp_8h_1ad58231410d58e34b455328b888a9e73c" kindref="member">ICMP_ECHO</ref>:</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinechos);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>src<sp/>=<sp/>ip4_current_dest_addr();</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>multicast<sp/>destination<sp/>address?<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ip4_addr_ismulticast(ip4_current_dest_addr()))<sp/>{</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_MULTICAST_PING</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>For<sp/>multicast,<sp/>use<sp/>address<sp/>of<sp/>receiving<sp/>interface<sp/>as<sp/>source<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>src<sp/>=<sp/>netif_ip4_addr(inp);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_MULTICAST_PING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>Not<sp/>echoing<sp/>to<sp/>multicast<sp/>pings\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_MULTICAST_PING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>broadcast<sp/>destination<sp/>address?<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ip4_addr_isbroadcast(ip4_current_dest_addr(),<sp/><ref refid="ip_8h_1aabecef3c7653a9767c79245c44fcab9f" kindref="member">ip_current_netif</ref>()))<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_BROADCAST_PING</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>For<sp/>broadcast,<sp/>use<sp/>address<sp/>of<sp/>receiving<sp/>interface<sp/>as<sp/>source<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>src<sp/>=<sp/>netif_ip4_addr(inp);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_BROADCAST_PING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>Not<sp/>echoing<sp/>to<sp/>broadcast<sp/>pings\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_BROADCAST_PING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>ping\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(p-&gt;<ref refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" kindref="member">tot_len</ref><sp/>&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>bad<sp/>ICMP<sp/>echo<sp/>received\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>lenerr;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>CHECKSUM_CHECK_ICMP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="netif_8h_1ad968df1b35c2fae368e087966e3bc677" kindref="member">IF__NETIF_CHECKSUM_ENABLED</ref>(inp,<sp/>NETIF_CHECKSUM_CHECK_ICMP)<sp/>{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="inet__chksum_8h_1ab35967a50418358e194e8f80fdc3c865" kindref="member">inet_chksum_pbuf</ref>(p)<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>checksum<sp/>failed<sp/>for<sp/>received<sp/>ICMP<sp/>echo\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.chkerr);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinerrors);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="pbuf_8h_1aaa17c1951cf2d207b6adfd3947d91f00" kindref="member">pbuf_header</ref>(p,<sp/>(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)(hlen<sp/>+<sp/><ref refid="lwipopts_8h_1a35998a3d56af9940e6a80bb372597685" kindref="member">PBUF_LINK_HLEN</ref><sp/>+<sp/><ref refid="lwipopts_8h_1a6e1ba1875ae5168a17b53d83597bc1de" kindref="member">PBUF_LINK_ENCAPSULATION_HLEN</ref>)))<sp/>{</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>p<sp/>is<sp/>not<sp/>big<sp/>enough<sp/>to<sp/>contain<sp/>link<sp/>headers</highlight></codeline>
+<codeline lineno="157"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>allocate<sp/>a<sp/>new<sp/>one<sp/>and<sp/>copy<sp/>p<sp/>into<sp/>it</highlight></codeline>
+<codeline lineno="158"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*r;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>allocate<sp/>new<sp/>packet<sp/>buffer<sp/>with<sp/>space<sp/>for<sp/>link<sp/>headers<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>r<sp/>=<sp/><ref refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" kindref="member">pbuf_alloc</ref>(<ref refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfab4de441e737330558b609a990cd17346" kindref="member">PBUF_LINK</ref>,<sp/>p-&gt;<ref refid="structpbuf_1a5259e7ec29bab9c0999b64f2e86b411f" kindref="member">tot_len</ref><sp/>+<sp/>hlen,<sp/><ref refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" kindref="member">PBUF_RAM</ref>);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(r<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>allocating<sp/>new<sp/>pbuf<sp/>failed\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(r-&gt;<ref refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" kindref="member">len</ref><sp/>&lt;<sp/>hlen<sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" kindref="member">LWIP_DBG_LEVEL_SERIOUS</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;first<sp/>pbuf<sp/>cannot<sp/>hold<sp/>the<sp/>ICMP<sp/>header&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(r);</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>the<sp/>ip<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" kindref="member">MEMCPY</ref>(r-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>,<sp/>iphdr_in,<sp/>hlen);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>switch<sp/>r-&gt;payload<sp/>back<sp/>to<sp/>icmp<sp/>header<sp/>(cannot<sp/>fail)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="pbuf_8h_1aaa17c1951cf2d207b6adfd3947d91f00" kindref="member">pbuf_header</ref>(r,<sp/>(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)-hlen))<sp/>{</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>moving<sp/>r-&gt;payload<sp/>to<sp/>icmp<sp/>header<sp/>failed\n&quot;</highlight><highlight class="normal">,<sp/>0);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(r);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>the<sp/>rest<sp/>of<sp/>the<sp/>packet<sp/>without<sp/>ip<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="group__pbuf_1gaba88511dee3df4b631fde691f421320d" kindref="member">pbuf_copy</ref>(r,<sp/>p)<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" kindref="member">LWIP_DBG_LEVEL_SERIOUS</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>copying<sp/>to<sp/>new<sp/>pbuf<sp/>failed&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(r);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>free<sp/>the<sp/>original<sp/>p<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>we<sp/>now<sp/>have<sp/>an<sp/>identical<sp/>copy<sp/>of<sp/>p<sp/>that<sp/>has<sp/>room<sp/>for<sp/>link<sp/>headers<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>p<sp/>=<sp/>r;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>restore<sp/>p-&gt;payload<sp/>to<sp/>point<sp/>to<sp/>icmp<sp/>header<sp/>(cannot<sp/>fail)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="pbuf_8h_1aaa17c1951cf2d207b6adfd3947d91f00" kindref="member">pbuf_header</ref>(p,<sp/>-(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)(hlen<sp/>+<sp/><ref refid="lwipopts_8h_1a35998a3d56af9940e6a80bb372597685" kindref="member">PBUF_LINK_HLEN</ref><sp/>+<sp/><ref refid="lwipopts_8h_1a6e1ba1875ae5168a17b53d83597bc1de" kindref="member">PBUF_LINK_ENCAPSULATION_HLEN</ref>)))<sp/>{</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>restoring<sp/>original<sp/>p-&gt;payload<sp/>failed\n&quot;</highlight><highlight class="normal">,<sp/>0);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>icmperr;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>At<sp/>this<sp/>point,<sp/>all<sp/>checks<sp/>are<sp/>OK.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>We<sp/>generate<sp/>an<sp/>answer<sp/>by<sp/>switching<sp/>the<sp/>dest<sp/>and<sp/>src<sp/>ip<sp/>addresses,</highlight></codeline>
+<codeline lineno="199"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>setting<sp/>the<sp/>icmp<sp/>type<sp/>to<sp/>ECHO_RESPONSE<sp/>and<sp/>updating<sp/>the<sp/>checksum.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/>iecho<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref><sp/>*)p-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/>if<sp/>(<ref refid="pbuf_8h_1aaa17c1951cf2d207b6adfd3947d91f00" kindref="member">pbuf_header</ref>(p,<sp/>(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)hlen))<sp/>{</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" kindref="member">LWIP_DBG_LEVEL_SERIOUS</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;Can&apos;t<sp/>move<sp/>over<sp/>header<sp/>in<sp/>packet&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>ret;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>*iphdr<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref>*)p-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ip4_addr_copy(iphdr-&gt;src,<sp/>*src);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ip4_addr_copy(iphdr-&gt;dest,<sp/>*ip4_current_src_addr());</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="prot_2icmp_8h_1ace6032454f29355a352ec8218e45959f" kindref="member">ICMPH_TYPE_SET</ref>(iecho,<sp/><ref refid="prot_2icmp_8h_1af1ff8912ae85b066d9dbe6caf3334ab7" kindref="member">ICMP_ER</ref>);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>CHECKSUM_GEN_ICMP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="netif_8h_1ad968df1b35c2fae368e087966e3bc677" kindref="member">IF__NETIF_CHECKSUM_ENABLED</ref>(inp,<sp/>NETIF_CHECKSUM_GEN_ICMP)<sp/>{</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>adjust<sp/>the<sp/>checksum<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(iecho-&gt;chksum<sp/>&gt;<sp/><ref refid="def_8h_1a0dfd02d7c09f9c698a5a7ecc0b7287ad" kindref="member">PP_HTONS</ref>(0xffffU<sp/>-<sp/>(<ref refid="prot_2icmp_8h_1ad58231410d58e34b455328b888a9e73c" kindref="member">ICMP_ECHO</ref><sp/>&lt;&lt;<sp/>8)))<sp/>{</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iecho-&gt;chksum<sp/>+=<sp/><ref refid="def_8h_1a0dfd02d7c09f9c698a5a7ecc0b7287ad" kindref="member">PP_HTONS</ref>(<ref refid="prot_2icmp_8h_1ad58231410d58e34b455328b888a9e73c" kindref="member">ICMP_ECHO</ref><sp/>&lt;&lt;<sp/>8)<sp/>+<sp/>1;</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iecho-&gt;chksum<sp/>+=<sp/><ref refid="def_8h_1a0dfd02d7c09f9c698a5a7ecc0b7287ad" kindref="member">PP_HTONS</ref>(<ref refid="prot_2icmp_8h_1ad58231410d58e34b455328b888a9e73c" kindref="member">ICMP_ECHO</ref><sp/>&lt;&lt;<sp/>8);</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_CHECKSUM_CTRL_PER_NETIF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iecho-&gt;chksum<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_CHECKSUM_CTRL_PER_NETIF<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>CHECKSUM_GEN_ICMP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>iecho-&gt;chksum<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>CHECKSUM_GEN_ICMP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>the<sp/>correct<sp/>TTL<sp/>and<sp/>recalculate<sp/>the<sp/>header<sp/>checksum.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="prot_2ip4_8h_1aa0e49f03bd4c3144e3548a0db72d1deb" kindref="member">IPH_TTL_SET</ref>(iphdr,<sp/><ref refid="lwipopts_8h_1ae1533f2bc39a5843989909555f6ce0cf" kindref="member">ICMP_TTL</ref>);</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="prot_2ip4_8h_1aec30403fb98b013bd094688de55cdaef" kindref="member">IPH_CHKSUM_SET</ref>(iphdr,<sp/>0);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>CHECKSUM_GEN_IP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="netif_8h_1ad968df1b35c2fae368e087966e3bc677" kindref="member">IF__NETIF_CHECKSUM_ENABLED</ref>(inp,<sp/>NETIF_CHECKSUM_GEN_IP)<sp/>{</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="prot_2ip4_8h_1aec30403fb98b013bd094688de55cdaef" kindref="member">IPH_CHKSUM_SET</ref>(iphdr,<sp/><ref refid="inet__chksum_8h_1a34f1aa1587562a09e11b704b51bab043" kindref="member">inet_chksum</ref>(iphdr,<sp/>hlen));</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>CHECKSUM_GEN_IP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.xmit);</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>increase<sp/>number<sp/>of<sp/>messages<sp/>attempted<sp/>to<sp/>send<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpoutmsgs);</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>increase<sp/>number<sp/>of<sp/>echo<sp/>replies<sp/>attempted<sp/>to<sp/>send<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpoutechoreps);</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>send<sp/>an<sp/>ICMP<sp/>packet<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ret<sp/>=<sp/>ip4_output_if(p,<sp/>src,<sp/><ref refid="ip_8h_1a2b7dff1859ced5f2be3fc3da231819d7" kindref="member">LWIP_IP_HDRINCL</ref>,</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lwipopts_8h_1ae1533f2bc39a5843989909555f6ce0cf" kindref="member">ICMP_TTL</ref>,<sp/>0,<sp/><ref refid="prot_2ip_8h_1aacaea7b8c4c8a5229c02b653766b4793" kindref="member">IP_PROTO_ICMP</ref>,<sp/>inp);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ret<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>ip_output_if<sp/>returned<sp/>an<sp/>error:<sp/>%s\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="err_8h_1ab58c2561ad3b133e625183721b25ba27" kindref="member">lwip_strerr</ref>(ret)));</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1a87f8266c067fb604419fbf17c0d57d64" kindref="member">ICMP_DUR</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpindestunreachs);</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1a58e03a47804158d97a9c069cc2204797" kindref="member">ICMP_TE</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpintimeexcds);</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1a495e2e90e09c924c16ad8e6fef4b89dc" kindref="member">ICMP_PP</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinparmprobs);</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1aeaa5cc8a0b5b0c7ffe590991b3b2a262" kindref="member">ICMP_SQ</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinsrcquenchs);</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1af8671e386aaa07888ad2bcb6150b113f" kindref="member">ICMP_RD</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinredirects);</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1a776eca11e543699d8e55d470b3809a05" kindref="member">ICMP_TS</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpintimestamps);</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1a01f3814d260088de9777de2634130070" kindref="member">ICMP_TSR</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpintimestampreps);</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1aafd8ecaee2bd9157acd53aa36786939e" kindref="member">ICMP_AM</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinaddrmasks);</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/><ref refid="prot_2icmp_8h_1af77f81e08bcebe7c581da033c3f95465" kindref="member">ICMP_AMR</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinaddrmaskreps);</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_input:<sp/>ICMP<sp/>type<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gac05a82d37afb251470f5e17ca15ab6e9" kindref="member">S16_F</ref></highlight><highlight class="stringliteral">&quot;<sp/>code<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gac05a82d37afb251470f5e17ca15ab6e9" kindref="member">S16_F</ref></highlight><highlight class="stringliteral">&quot;<sp/>not<sp/>supported.\n&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)type,<sp/>(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)code));</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.proterr);</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.drop);</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal">lenerr:</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.lenerr);</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinerrors);</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN<sp/>||<sp/>!LWIP_MULTICAST_PING<sp/>||<sp/>!LWIP_BROADCAST_PING</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal">icmperr:</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.err);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpinerrors);</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ICMP_ECHO_CHECK_INPUT_PBUF_LEN<sp/>||<sp/>!LWIP_MULTICAST_PING<sp/>||<sp/>!LWIP_BROADCAST_PING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="301"><highlight class="normal">icmp_dest_unreach(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="icmp_8h_1a17637465f209385e5d19ef47fd9266a5" kindref="member">icmp_dur_type</ref><sp/>t)</highlight></codeline>
+<codeline lineno="302"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpoutdestunreachs);</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/>icmp_send_response(p,<sp/><ref refid="prot_2icmp_8h_1a87f8266c067fb604419fbf17c0d57d64" kindref="member">ICMP_DUR</ref>,<sp/>t);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>IP_FORWARD<sp/>||<sp/>IP_REASSEMBLY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal">icmp_time_exceeded(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="icmp_8h_1a058d0a0769bd38db99fc6fd1dad1324a" kindref="member">icmp_te_type</ref><sp/>t)</highlight></codeline>
+<codeline lineno="317"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="318"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpouttimeexcds);</highlight></codeline>
+<codeline lineno="319"><highlight class="normal"><sp/><sp/>icmp_send_response(p,<sp/><ref refid="prot_2icmp_8h_1a58e03a47804158d97a9c069cc2204797" kindref="member">ICMP_TE</ref>,<sp/>t);</highlight></codeline>
+<codeline lineno="320"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="321"><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>IP_FORWARD<sp/>||<sp/>IP_REASSEMBLY<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight></codeline>
+<codeline lineno="332"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="333"><highlight class="normal">icmp_send_response(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>type,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>code)</highlight></codeline>
+<codeline lineno="334"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*q;</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>*iphdr;</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>we<sp/>can<sp/>use<sp/>the<sp/>echo<sp/>header<sp/>here<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref><sp/>*icmphdr;</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/>ip4_addr_t<sp/>iphdr_src;</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>;</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"></highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>increase<sp/>number<sp/>of<sp/>messages<sp/>attempted<sp/>to<sp/>send<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpoutmsgs);</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>ICMP<sp/>header<sp/>+<sp/>IP<sp/>header<sp/>+<sp/>8<sp/>bytes<sp/>of<sp/>data<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/>q<sp/>=<sp/><ref refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" kindref="member">pbuf_alloc</ref>(<ref refid="group__pbuf_1ggaee1baa59bb2f85ba575b5a8619ac1ebfafcc1e506061ba69dfa142eb6b3da5f13" kindref="member">PBUF_IP</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref>)<sp/>+<sp/><ref refid="prot_2ip4_8h_1ad76777d4d34f33ab5f715f9ca15503c3" kindref="member">IP_HLEN</ref><sp/>+<sp/>ICMP_DEST_UNREACH_DATASIZE,</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__pbuf_1ggab7e0e32fcc292c0d7107721766ed92fbac5e9f28455bca98944a030d4b84ecfab" kindref="member">PBUF_RAM</ref>);</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(q<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_time_exceeded:<sp/>failed<sp/>to<sp/>allocate<sp/>pbuf<sp/>for<sp/>ICMP<sp/>packet.\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a237a8f1e47af42fb612e936e928a9ced" kindref="member">MIB2_STATS_INC</ref>(mib2.icmpouterrors);</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;check<sp/>that<sp/>first<sp/>pbuf<sp/>can<sp/>hold<sp/>icmp<sp/>message&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(q-&gt;<ref refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" kindref="member">len</ref><sp/>&gt;=<sp/>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref>)<sp/>+<sp/><ref refid="prot_2ip4_8h_1ad76777d4d34f33ab5f715f9ca15503c3" kindref="member">IP_HLEN</ref><sp/>+<sp/>ICMP_DEST_UNREACH_DATASIZE)));</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/>iphdr<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>*)p-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;icmp_time_exceeded<sp/>from<sp/>&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="358"><highlight class="normal"><sp/><sp/>ip4_addr_debug_print_val(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>iphdr-&gt;src);</highlight></codeline>
+<codeline lineno="359"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;<sp/>to<sp/>&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/>ip4_addr_debug_print_val(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>iphdr-&gt;dest);</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a9595904a1cb9bfe0b9b1d958abdc923a" kindref="member">ICMP_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="362"><highlight class="normal"></highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/>icmphdr<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref><sp/>*)q-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/>icmphdr-&gt;type<sp/>=<sp/>type;</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"><sp/><sp/>icmphdr-&gt;code<sp/>=<sp/>code;</highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/>icmphdr-&gt;id<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/>icmphdr-&gt;seqno<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"></highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>fields<sp/>from<sp/>original<sp/>packet<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/><ref refid="lwipopts_8h_1a8c6e3c1e4f74acb16376188dbf8909ec" kindref="member">SMEMCPY</ref>((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)q-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref><sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref>),<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)p-&gt;<ref refid="structpbuf_1a8d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>,</highlight></codeline>
+<codeline lineno="371"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="prot_2ip4_8h_1ad76777d4d34f33ab5f715f9ca15503c3" kindref="member">IP_HLEN</ref><sp/>+<sp/>ICMP_DEST_UNREACH_DATASIZE);</highlight></codeline>
+<codeline lineno="372"><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/>ip4_addr_copy(iphdr_src,<sp/>iphdr-&gt;src);</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_HOOK_IP4_ROUTE_SRC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="375"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"><sp/><sp/><sp/><sp/>ip4_addr_t<sp/>iphdr_dst;</highlight></codeline>
+<codeline lineno="377"><highlight class="normal"><sp/><sp/><sp/><sp/>ip4_addr_copy(iphdr_dst,<sp/>iphdr-&gt;dest);</highlight></codeline>
+<codeline lineno="378"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>=<sp/>ip4_route_src(&amp;iphdr_src,<sp/>&amp;iphdr_dst);</highlight></codeline>
+<codeline lineno="379"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="381"><highlight class="normal"><sp/><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>=<sp/>ip4_route(&amp;iphdr_src);</highlight></codeline>
+<codeline lineno="382"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="383"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structnetif" kindref="compound">netif</ref><sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="384"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>calculate<sp/>checksum<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="385"><highlight class="normal"><sp/><sp/><sp/><sp/>icmphdr-&gt;chksum<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="386"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>CHECKSUM_GEN_ICMP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="387"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="netif_8h_1ad968df1b35c2fae368e087966e3bc677" kindref="member">IF__NETIF_CHECKSUM_ENABLED</ref>(<ref refid="structnetif" kindref="compound">netif</ref>,<sp/>NETIF_CHECKSUM_GEN_ICMP)<sp/>{</highlight></codeline>
+<codeline lineno="388"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>icmphdr-&gt;chksum<sp/>=<sp/><ref refid="inet__chksum_8h_1a34f1aa1587562a09e11b704b51bab043" kindref="member">inet_chksum</ref>(icmphdr,<sp/>q-&gt;<ref refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" kindref="member">len</ref>);</highlight></codeline>
+<codeline lineno="389"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="390"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="391"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1ab885363b29506cb4b68d891f5a056e55" kindref="member">ICMP_STATS_INC</ref>(icmp.xmit);</highlight></codeline>
+<codeline lineno="392"><highlight class="normal"><sp/><sp/><sp/><sp/>ip4_output_if(q,<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/>&amp;iphdr_src,<sp/><ref refid="lwipopts_8h_1ae1533f2bc39a5843989909555f6ce0cf" kindref="member">ICMP_TTL</ref>,<sp/>0,<sp/><ref refid="prot_2ip_8h_1aacaea7b8c4c8a5229c02b653766b4793" kindref="member">IP_PROTO_ICMP</ref>,<sp/><ref refid="structnetif" kindref="compound">netif</ref>);</highlight></codeline>
+<codeline lineno="393"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="394"><highlight class="normal"><sp/><sp/><ref refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" kindref="member">pbuf_free</ref>(q);</highlight></codeline>
+<codeline lineno="395"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="396"><highlight class="normal"></highlight></codeline>
+<codeline lineno="397"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_ICMP<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/ipv4/icmp.c"/>
+  </compounddef>
+</doxygen>

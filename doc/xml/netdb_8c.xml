@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="netdb_8c" kind="file" language="C++">
+    <compoundname>netdb.c</compoundname>
+    <includes local="yes">lwip/netdb.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>lwip/netdb.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/net/api/netdb.c</label>
+        <link refid="netdb_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>API functions for name resolving </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="9"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Simon<sp/>Goldschmidt</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/netdb.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_DNS<sp/>&amp;&amp;<sp/>LWIP_SOCKET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/err.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/mem.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/memp.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/ip_addr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/api.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/dns.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>memset<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>atoi<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">gethostbyname_r_helper<sp/>{</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*addr_list[2];</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>addr;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*aliases;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="preprocessor">#if<sp/>LWIP_DNS_API_DECLARE_H_ERRNO</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>h_errno;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DNS_API_DECLARE_H_ERRNO<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor">#ifndef<sp/>LWIP_DNS_API_HOSTENT_STORAGE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_DNS_API_HOSTENT_STORAGE<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor">#if<sp/>LWIP_DNS_API_HOSTENT_STORAGE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HOSTENT_STORAGE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HOSTENT_STORAGE<sp/>static</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DNS_API_STATIC_HOSTENT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">hostent*</highlight></codeline>
+<codeline lineno="87"><highlight class="normal">lwip_gethostbyname(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</highlight></codeline>
+<codeline lineno="88"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>err;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>addr;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>buffer<sp/>variables<sp/>for<sp/>lwip_gethostbyname()<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/>HOSTENT_STORAGE<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">hostent<sp/>s_hostent;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>HOSTENT_STORAGE<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*s_aliases;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>HOSTENT_STORAGE<sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>s_hostent_addr;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>HOSTENT_STORAGE<sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*s_phostent_addr[2];</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/>HOSTENT_STORAGE<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>s_hostname[<ref refid="lwipopts_8h_1a3b01c79902063c170ef57deb72f56124" kindref="member">DNS_MAX_NAME_LENGTH</ref><sp/>+<sp/>1];</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>query<sp/>host<sp/>IP<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/>err<sp/>=<sp/>netconn_gethostbyname(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/>&amp;addr);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(err<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;lwip_gethostbyname(%s)<sp/>failed,<sp/>err=%d\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/>err));</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>h_errno<sp/>=<sp/>HOST_NOT_FOUND;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>fill<sp/>hostent<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>s_hostent_addr<sp/>=<sp/>addr;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>s_phostent_addr[0]<sp/>=<sp/>&amp;s_hostent_addr;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>s_phostent_addr[1]<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1a3a2a3fddad0b7aa0ddb8fcd7509b9e27" kindref="member">strncpy</ref>(s_hostname,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/><ref refid="lwipopts_8h_1a3b01c79902063c170ef57deb72f56124" kindref="member">DNS_MAX_NAME_LENGTH</ref>);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>s_hostname[<ref refid="lwipopts_8h_1a3b01c79902063c170ef57deb72f56124" kindref="member">DNS_MAX_NAME_LENGTH</ref>]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>s_hostent.h_name<sp/>=<sp/>s_hostname;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>s_aliases<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/>s_hostent.h_aliases<sp/>=<sp/>&amp;s_aliases;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>s_hostent.h_addrtype<sp/>=<sp/>AF_INET;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>s_hostent.h_length<sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref>);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>s_hostent.h_addr_list<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">**)&amp;s_phostent_addr;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>DNS_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>dump<sp/>hostent<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_name<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>==<sp/>%s\n&quot;</highlight><highlight class="normal">,<sp/>s_hostent.h_name));</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_aliases<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>==<sp/>%p\n&quot;</highlight><highlight class="normal">,<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)s_hostent.h_aliases));</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>h_aliases<sp/>are<sp/>always<sp/>empty<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_addrtype<sp/><sp/><sp/><sp/><sp/><sp/><sp/>==<sp/>%d\n&quot;</highlight><highlight class="normal">,<sp/>s_hostent.h_addrtype));</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_length<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>==<sp/>%d\n&quot;</highlight><highlight class="normal">,<sp/>s_hostent.h_length));</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_addr_list<sp/><sp/><sp/><sp/><sp/><sp/>==<sp/>%p\n&quot;</highlight><highlight class="normal">,<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)s_hostent.h_addr_list));</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(s_hostent.h_addr_list<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>idx;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(idx=0;<sp/>s_hostent.h_addr_list[idx];<sp/>idx++)<sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_addr_list[%i]<sp/><sp/><sp/>==<sp/>%p\n&quot;</highlight><highlight class="normal">,<sp/>idx,<sp/>s_hostent.h_addr_list[idx]));</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;hostent.h_addr_list[%i]-&gt;<sp/>==<sp/>%s\n&quot;</highlight><highlight class="normal">,<sp/>idx,<sp/><ref refid="ip__addr_8h_1ad345f630acbf2a01536d10d3aacee04f" kindref="member">ipaddr_ntoa</ref>((<ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref>*)s_hostent.h_addr_list[idx])));</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>DNS_DEBUG<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_DNS_API_HOSTENT_STORAGE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>this<sp/>function<sp/>should<sp/>return<sp/>the<sp/>&quot;per-thread&quot;<sp/>hostent<sp/>after<sp/>copy<sp/>from<sp/>s_hostent<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>sys_thread_hostent(&amp;s_hostent);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>&amp;s_hostent;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DNS_API_HOSTENT_STORAGE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="keywordtype">int</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal">lwip_gethostbyname_r(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>hostent<sp/>*ret,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>buflen,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>hostent<sp/>**result,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*h_errnop)</highlight></codeline>
+<codeline lineno="164"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>err;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">gethostbyname_r_helper<sp/>*h;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*hostname;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>namelen;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>lh_errno;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(h_errnop<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ensure<sp/>h_errnop<sp/>is<sp/>never<sp/>NULL<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/>h_errnop<sp/>=<sp/>&amp;lh_errno;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(result<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>not<sp/>all<sp/>arguments<sp/>given<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/>*h_errnop<sp/>=<sp/><ref refid="sys_2errno_8h_1a2d1678d5a7cc8ce499643f3b8957def4" kindref="member">EINVAL</ref>;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>first<sp/>thing<sp/>to<sp/>do:<sp/>set<sp/>*result<sp/>to<sp/>nothing<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/>*result<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref><sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>||<sp/>(ret<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>||<sp/>(<ref refid="structbuf" kindref="compound">buf</ref><sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>not<sp/>all<sp/>arguments<sp/>given<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>*h_errnop<sp/>=<sp/><ref refid="sys_2errno_8h_1a2d1678d5a7cc8ce499643f3b8957def4" kindref="member">EINVAL</ref>;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/>namelen<sp/>=<sp/><ref refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" kindref="member">strlen</ref>(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(buflen<sp/>&lt;<sp/>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>gethostbyname_r_helper)<sp/>+<sp/>namelen<sp/>+<sp/>1<sp/>+<sp/>(<ref refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref><sp/>-<sp/>1)))<sp/>{</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>buf<sp/>can&apos;t<sp/>hold<sp/>the<sp/>data<sp/>needed<sp/>+<sp/>a<sp/>copy<sp/>of<sp/>name<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/>*h_errnop<sp/>=<sp/><ref refid="sys_2errno_8h_1aa1591a4f3a86360108de5b9ba34980ca" kindref="member">ERANGE</ref>;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>h<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">gethostbyname_r_helper*)<ref refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" kindref="member">LWIP_MEM_ALIGN</ref>(<ref refid="structbuf" kindref="compound">buf</ref>);</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/>hostname<sp/>=<sp/>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*)h)<sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">gethostbyname_r_helper);</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>query<sp/>host<sp/>IP<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/>err<sp/>=<sp/>netconn_gethostbyname(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/>&amp;h-&gt;addr);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(err<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1aba55da2352c99d813767913e5e36be1f" kindref="member">DNS_DEBUG</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;lwip_gethostbyname(%s)<sp/>failed,<sp/>err=%d\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/>err));</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/>*h_errnop<sp/>=<sp/>HOST_NOT_FOUND;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>the<sp/>hostname<sp/>into<sp/>buf<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><ref refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" kindref="member">MEMCPY</ref>(hostname,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/>namelen);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/>hostname[namelen]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>fill<sp/>hostent<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/>h-&gt;addr_list[0]<sp/>=<sp/>&amp;h-&gt;addr;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/>h-&gt;addr_list[1]<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/>h-&gt;aliases<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/>ret-&gt;h_name<sp/>=<sp/>hostname;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/>ret-&gt;h_aliases<sp/>=<sp/>&amp;h-&gt;aliases;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/>ret-&gt;h_addrtype<sp/>=<sp/>AF_INET;</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/>ret-&gt;h_length<sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref>);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/>ret-&gt;h_addr_list<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">**)&amp;h-&gt;addr_list;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>result<sp/>!=<sp/>NULL<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/>*result<sp/>=<sp/>ret;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>return<sp/>success<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal">lwip_freeaddrinfo(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>addrinfo<sp/>*ai)</highlight></codeline>
+<codeline lineno="237"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">addrinfo<sp/>*next;</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(ai<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/>next<sp/>=<sp/>ai-&gt;ai_next;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="memp_8h_1aecd94926b7c2a0e23ae195f4ae97581f" kindref="member">memp_free</ref>(MEMP_NETDB,<sp/>ai);</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/>ai<sp/>=<sp/>next;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="245"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="keywordtype">int</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal">lwip_getaddrinfo(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*nodename,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*servname,</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>addrinfo<sp/>*hints,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>addrinfo<sp/>**res)</highlight></codeline>
+<codeline lineno="271"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>err;</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>addr;</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">addrinfo<sp/>*ai;</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_storage<sp/>*sa<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port_nr<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>total_size;</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>namelen<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ai_family;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(res<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_FAIL;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/>*res<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((nodename<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>&amp;&amp;<sp/>(servname<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_NONAME;</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(hints<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/>ai_family<sp/>=<sp/>hints-&gt;ai_family;</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((ai_family<sp/>!=<sp/>AF_UNSPEC)</highlight></codeline>
+<codeline lineno="292"><highlight class="normal">#</highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/><ref refid="lwipopts_8h_1a429e811a80ebb5157e14a854870c4410" kindref="member">LWIP_IPV4</ref></highlight></codeline>
+<codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&amp;&amp;<sp/>(ai_family<sp/>!=<sp/>AF_INET)</highlight></codeline>
+<codeline lineno="294"><highlight class="normal">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="normal">#</highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/><ref refid="lwipopts_8h_1a872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>&amp;&amp;<sp/>(ai_family<sp/>!=<sp/>AF_INET6)</highlight></codeline>
+<codeline lineno="297"><highlight class="normal">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_FAMILY;</highlight></codeline>
+<codeline lineno="300"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/>ai_family<sp/>=<sp/>AF_UNSPEC;</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(servname<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>service<sp/>name<sp/>specified:<sp/>convert<sp/>to<sp/>port<sp/>number</highlight></codeline>
+<codeline lineno="307"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>@todo?:<sp/>currently,<sp/>only<sp/>ASCII<sp/>integers<sp/>(port<sp/>numbers)<sp/>are<sp/>supported<sp/>(AI_NUMERICSERV)!<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/>port_nr<sp/>=<sp/>atoi(servname);</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((port_nr<sp/>&lt;=<sp/>0)<sp/>||<sp/>(port_nr<sp/>&gt;<sp/>0xffff))<sp/>{</highlight></codeline>
+<codeline lineno="310"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_SERVICE;</highlight></codeline>
+<codeline lineno="311"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="312"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(nodename<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>service<sp/>location<sp/>specified,<sp/>try<sp/>to<sp/>resolve<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((hints<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>&amp;&amp;<sp/>(hints-&gt;ai_flags<sp/>&amp;<sp/>AI_NUMERICHOST))<sp/>{</highlight></codeline>
+<codeline lineno="317"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>no<sp/>DNS<sp/>lookup,<sp/>just<sp/>parse<sp/>for<sp/>an<sp/>address<sp/>string<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="ip__addr_8h_1a9b9fae6ad88a288c3c6da050644e2a48" kindref="member">ipaddr_aton</ref>(nodename,<sp/>&amp;addr))<sp/>{</highlight></codeline>
+<codeline lineno="319"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_NONAME;</highlight></codeline>
+<codeline lineno="320"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="321"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="ip__addr_8h_1a1578e34703e86711a7fb7dcc3857004d" kindref="member">IP_IS_V6_VAL</ref>(addr)<sp/>&amp;&amp;<sp/>ai_family<sp/>==<sp/>AF_INET)<sp/>||</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(<ref refid="ip__addr_8h_1ab1a059f07bd9c50aa58447d963b823a1" kindref="member">IP_IS_V4_VAL</ref>(addr)<sp/>&amp;&amp;<sp/>ai_family<sp/>==<sp/>AF_INET6))<sp/>{</highlight></codeline>
+<codeline lineno="324"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_NONAME;</highlight></codeline>
+<codeline lineno="325"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="326"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="327"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="328"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="329"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>AF_UNSPEC:<sp/>prefer<sp/>IPv4<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="330"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>type<sp/>=<sp/>NETCONN_DNS_IPV4_IPV6;</highlight></codeline>
+<codeline lineno="331"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ai_family<sp/>==<sp/>AF_INET)<sp/>{</highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>type<sp/>=<sp/>NETCONN_DNS_IPV4;</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ai_family<sp/>==<sp/>AF_INET6)<sp/>{</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>type<sp/>=<sp/>NETCONN_DNS_IPV6;</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>err<sp/>=<sp/>netconn_gethostbyname_addrtype(nodename,<sp/>&amp;addr,<sp/>type);</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(err<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_FAIL;</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>service<sp/>location<sp/>specified,<sp/>use<sp/>loopback<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((hints<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>&amp;&amp;<sp/>(hints-&gt;ai_flags<sp/>&amp;<sp/>AI_PASSIVE))<sp/>{</highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ip__addr_8h_1a8853fce54b1816dca3af90b48677e673" kindref="member">ip_addr_set_any</ref>(ai_family<sp/>==<sp/>AF_INET6,<sp/>&amp;addr);</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ip__addr_8h_1a8f9d56ac85cd87338a1823e4a58ba1da" kindref="member">ip_addr_set_loopback</ref>(ai_family<sp/>==<sp/>AF_INET6,<sp/>&amp;addr);</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"></highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/>total_size<sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">addrinfo)<sp/>+<sp/>sizeof(struct<sp/>sockaddr_storage);</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(nodename<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/>namelen<sp/>=<sp/><ref refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" kindref="member">strlen</ref>(nodename);</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(namelen<sp/>&gt;<sp/><ref refid="lwipopts_8h_1a3b01c79902063c170ef57deb72f56124" kindref="member">DNS_MAX_NAME_LENGTH</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>invalid<sp/>name<sp/>length<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_FAIL;</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;namelen<sp/>is<sp/>too<sp/>long&quot;</highlight><highlight class="normal">,<sp/>total_size<sp/>+<sp/>namelen<sp/>+<sp/>1<sp/>&gt;<sp/>total_size);</highlight></codeline>
+<codeline lineno="359"><highlight class="normal"><sp/><sp/><sp/><sp/>total_size<sp/>+=<sp/>namelen<sp/>+<sp/>1;</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>If<sp/>this<sp/>fails,<sp/>please<sp/>report<sp/>to<sp/>lwip-devel!<sp/>:-)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="362"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;total_size<sp/>&lt;=<sp/>NETDB_ELEM_SIZE:<sp/>please<sp/>report<sp/>this!&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/><sp/><sp/>total_size<sp/>&lt;=<sp/>NETDB_ELEM_SIZE);</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/>ai<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">addrinfo<sp/>*)<ref refid="memp_8h_1a2b00593d086313c267b54a976bf67aa5" kindref="member">memp_malloc</ref>(MEMP_NETDB);</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ai<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>EAI_MEMORY;</highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>(ai,<sp/>0,<sp/>total_size);</highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>cast<sp/>through<sp/>void*<sp/>to<sp/>get<sp/>rid<sp/>of<sp/>alignment<sp/>warnings<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/>sa<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_storage<sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)ai<sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>addrinfo));</highlight></codeline>
+<codeline lineno="371"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="ip__addr_8h_1a1578e34703e86711a7fb7dcc3857004d" kindref="member">IP_IS_V6_VAL</ref>(addr))<sp/>{</highlight></codeline>
+<codeline lineno="372"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_in6<sp/>*sa6<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_in6*)sa;</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>up<sp/>sockaddr<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="375"><highlight class="normal"><sp/><sp/><sp/><sp/>inet6_addr_from_ip6addr(&amp;sa6-&gt;sin6_addr,<sp/><ref refid="ip__addr_8h_1a06e75bcd198012b5ba39480c233608bd" kindref="member">ip_2_ip6</ref>(&amp;addr));</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"><sp/><sp/><sp/><sp/>sa6-&gt;sin6_family<sp/>=<sp/>AF_INET6;</highlight></codeline>
+<codeline lineno="377"><highlight class="normal"><sp/><sp/><sp/><sp/>sa6-&gt;sin6_len<sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_in6);</highlight></codeline>
+<codeline lineno="378"><highlight class="normal"><sp/><sp/><sp/><sp/>sa6-&gt;sin6_port<sp/>=<sp/><ref refid="def_8c_1ad637280639de4066392e6b5614fa3e56" kindref="member">lwip_htons</ref>((<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref>)port_nr);</highlight></codeline>
+<codeline lineno="379"><highlight class="normal"><sp/><sp/><sp/><sp/>ai-&gt;ai_family<sp/>=<sp/>AF_INET6;</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="381"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="382"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="383"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_in<sp/>*sa4<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_in*)sa;</highlight></codeline>
+<codeline lineno="384"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>up<sp/>sockaddr<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="385"><highlight class="normal"><sp/><sp/><sp/><sp/>inet_addr_from_ip4addr(&amp;sa4-&gt;sin_addr,<sp/>ip_2_ip4(&amp;addr));</highlight></codeline>
+<codeline lineno="386"><highlight class="normal"><sp/><sp/><sp/><sp/>sa4-&gt;sin_family<sp/>=<sp/>AF_INET;</highlight></codeline>
+<codeline lineno="387"><highlight class="normal"><sp/><sp/><sp/><sp/>sa4-&gt;sin_len<sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_in);</highlight></codeline>
+<codeline lineno="388"><highlight class="normal"><sp/><sp/><sp/><sp/>sa4-&gt;sin_port<sp/>=<sp/><ref refid="def_8c_1ad637280639de4066392e6b5614fa3e56" kindref="member">lwip_htons</ref>((<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref>)port_nr);</highlight></codeline>
+<codeline lineno="389"><highlight class="normal"><sp/><sp/><sp/><sp/>ai-&gt;ai_family<sp/>=<sp/>AF_INET;</highlight></codeline>
+<codeline lineno="390"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="391"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="392"><highlight class="normal"></highlight></codeline>
+<codeline lineno="393"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>up<sp/>addrinfo<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="394"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(hints<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="395"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>socktype<sp/>&amp;<sp/>protocol<sp/>from<sp/>hints<sp/>if<sp/>specified<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="396"><highlight class="normal"><sp/><sp/><sp/><sp/>ai-&gt;ai_socktype<sp/>=<sp/>hints-&gt;ai_socktype;</highlight></codeline>
+<codeline lineno="397"><highlight class="normal"><sp/><sp/><sp/><sp/>ai-&gt;ai_protocol<sp/>=<sp/>hints-&gt;ai_protocol;</highlight></codeline>
+<codeline lineno="398"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="399"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(nodename<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="400"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>nodename<sp/>to<sp/>canonname<sp/>if<sp/>specified<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="401"><highlight class="normal"><sp/><sp/><sp/><sp/>ai-&gt;ai_canonname<sp/>=<sp/>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*)ai<sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>addrinfo)<sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_storage));</highlight></codeline>
+<codeline lineno="402"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lwipopts_8h_1aa1dd57a66b6de8c0593e9e3e8d1411f6" kindref="member">MEMCPY</ref>(ai-&gt;ai_canonname,<sp/>nodename,<sp/>namelen);</highlight></codeline>
+<codeline lineno="403"><highlight class="normal"><sp/><sp/><sp/><sp/>ai-&gt;ai_canonname[namelen]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="404"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="405"><highlight class="normal"><sp/><sp/>ai-&gt;ai_addrlen<sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr_storage);</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"><sp/><sp/>ai-&gt;ai_addr<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr*)sa;</highlight></codeline>
+<codeline lineno="407"><highlight class="normal"></highlight></codeline>
+<codeline lineno="408"><highlight class="normal"><sp/><sp/>*res<sp/>=<sp/>ai;</highlight></codeline>
+<codeline lineno="409"><highlight class="normal"></highlight></codeline>
+<codeline lineno="410"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="411"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="412"><highlight class="normal"></highlight></codeline>
+<codeline lineno="413"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DNS<sp/>&amp;&amp;<sp/>LWIP_SOCKET<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/net/api/netdb.c"/>
+  </compounddef>
+</doxygen>

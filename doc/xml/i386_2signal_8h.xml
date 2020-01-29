@@ -1,0 +1,482 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="i386_2signal_8h" kind="file" language="C++">
+    <compoundname>signal.h</compoundname>
+    <includedby refid="trap_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/trap.c</includedby>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/i386/signal.h</label>
+        <link refid="i386_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/trap.c</label>
+        <link refid="trap_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="i386_2signal_8h_1a275020780cb70a8b0cba8db5accc5d19" prot="public" static="no">
+        <name>_NSIG</name>
+        <initializer>32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="32" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1ab83b88daaecc469d1edb90a527ab4a39" prot="public" static="no">
+        <name>NSIG</name>
+        <initializer><ref refid="i386_2signal_8h_1a275020780cb70a8b0cba8db5accc5d19" kindref="member">_NSIG</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="33" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1aa86c630133e5b5174ac970227b273446" prot="public" static="no">
+        <name>SIGABRT</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1aa6946723c6b7a86ec3c33caaf832840b" prot="public" static="no">
+        <name>SIGALRM</name>
+        <initializer>14</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1aead3d488474201acf18c4b63d91edc3c" prot="public" static="no">
+        <name>SIGBUS</name>
+        <initializer>7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a0e63521a64cc8bc2b91d36a87d32c9f8" prot="public" static="no">
+        <name>SIGCHLD</name>
+        <initializer>17</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a024f43063003e753afc6cca1acd6e104" prot="public" static="no">
+        <name>SIGCONT</name>
+        <initializer>18</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a7fbba29aec3e4a8daae12935299df92d" prot="public" static="no">
+        <name>SIGFPE</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a136c64ec2d1306de745e39d6aee362ca" prot="public" static="no">
+        <name>SIGHUP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a4c9c5284f8c8d146bd7a93d25017fc62" prot="public" static="no">
+        <name>SIGILL</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a487309e3e9e0527535644115204a639a" prot="public" static="no">
+        <name>SIGINT</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a929c5eace94ce2e099c6fa732450ce86" prot="public" static="no">
+        <name>SIGIO</name>
+        <initializer>29</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1ab12271d5e5911f8a85dc7c3f0e2364c7" prot="public" static="no">
+        <name>SIGIOT</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1addd8dcd406ce514ab3b4f576a5343d42" prot="public" static="no">
+        <name>SIGKILL</name>
+        <initializer>9</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a57e9c8c5fa13bf86bc779a9f6f408b7c" prot="public" static="no">
+        <name>SIGPIPE</name>
+        <initializer>13</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a1614264a836d6a5642554775ef0134d0" prot="public" static="no">
+        <name>SIGPOLL</name>
+        <initializer><ref refid="i386_2signal_8h_1a929c5eace94ce2e099c6fa732450ce86" kindref="member">SIGIO</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1ab6bd2a2ff7e58d45965ef257f96dfe65" prot="public" static="no">
+        <name>SIGPROF</name>
+        <initializer>27</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a633dbd7dca7d839e6af0299bd4713f0a" prot="public" static="no">
+        <name>SIGPWR</name>
+        <initializer>30</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a62045b465be11891160d53c10861b16c" prot="public" static="no">
+        <name>SIGQUIT</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1ae20b4f7171a09516ea73c9d2745bd596" prot="public" static="no">
+        <name>SIGSEGV</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a03612fcda4ab9671dfa7051e7b666fb6" prot="public" static="no">
+        <name>SIGSTKFLT</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a069e358bc9a864b7dc4fed2440eda14c" prot="public" static="no">
+        <name>SIGSTOP</name>
+        <initializer>19</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a682182a5e5f38fd61f4311501e9dac5d" prot="public" static="no">
+        <name>SIGTERM</name>
+        <initializer>15</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1aa2beb906ab1b46676e63823f4e773c38" prot="public" static="no">
+        <name>SIGTRAP</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1abe65c086e01f0d286b7a785a7e3cdd1a" prot="public" static="no">
+        <name>SIGTSTP</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a2c146e34a6b5a78dfba41cded3331181" prot="public" static="no">
+        <name>SIGTTIN</name>
+        <initializer>21</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a782864287613e2c5c030411fa9c5e9b1" prot="public" static="no">
+        <name>SIGTTOU</name>
+        <initializer>22</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a11e925ada5a97c7bbb6b88de8ed543b4" prot="public" static="no">
+        <name>SIGUNUSED</name>
+        <initializer>31</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1ad9ff13149e36144a4ea28788948c34dd" prot="public" static="no">
+        <name>SIGURG</name>
+        <initializer>23</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a944a8250e34bfd7991123abd3436d8c0" prot="public" static="no">
+        <name>SIGUSR1</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1abaaa61abe503c43481e35e21b0b5a031" prot="public" static="no">
+        <name>SIGUSR2</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a71403d2f5240e409e213060ea3301851" prot="public" static="no">
+        <name>SIGVTALRM</name>
+        <initializer>26</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a13ba0e7c4365813312eb4566907bce4f" prot="public" static="no">
+        <name>SIGWINCH</name>
+        <initializer>28</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a7265cbba4972503c1c30a2e52a929874" prot="public" static="no">
+        <name>SIGXCPU</name>
+        <initializer>24</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2signal_8h_1a75440a7aa885a1052dfd3b4393fd9baa" prot="public" static="no">
+        <name>SIGXFSZ</name>
+        <initializer>25</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/signal.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_I386_SIGNAL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_I386_SIGNAL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="i386_2signal_8h_1a275020780cb70a8b0cba8db5accc5d19" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_NSIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="i386_2signal_8h_1ab83b88daaecc469d1edb90a527ab4a39" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NSIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>_NSIG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="i386_2signal_8h_1a136c64ec2d1306de745e39d6aee362ca" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGHUP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="i386_2signal_8h_1a487309e3e9e0527535644115204a639a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGINT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="i386_2signal_8h_1a62045b465be11891160d53c10861b16c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGQUIT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="i386_2signal_8h_1a4c9c5284f8c8d146bd7a93d25017fc62" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGILL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="i386_2signal_8h_1aa2beb906ab1b46676e63823f4e773c38" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGTRAP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="i386_2signal_8h_1aa86c630133e5b5174ac970227b273446" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGABRT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="i386_2signal_8h_1ab12271d5e5911f8a85dc7c3f0e2364c7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGIOT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="i386_2signal_8h_1aead3d488474201acf18c4b63d91edc3c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGBUS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="i386_2signal_8h_1a7fbba29aec3e4a8daae12935299df92d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGFPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="i386_2signal_8h_1addd8dcd406ce514ab3b4f576a5343d42" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGKILL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="i386_2signal_8h_1a944a8250e34bfd7991123abd3436d8c0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGUSR1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="i386_2signal_8h_1ae20b4f7171a09516ea73c9d2745bd596" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGSEGV<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="i386_2signal_8h_1abaaa61abe503c43481e35e21b0b5a031" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGUSR2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>12</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="i386_2signal_8h_1a57e9c8c5fa13bf86bc779a9f6f408b7c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGPIPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>13</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="i386_2signal_8h_1aa6946723c6b7a86ec3c33caaf832840b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGALRM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>14</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="i386_2signal_8h_1a682182a5e5f38fd61f4311501e9dac5d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGTERM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>15</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="i386_2signal_8h_1a03612fcda4ab9671dfa7051e7b666fb6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGSTKFLT<sp/><sp/><sp/><sp/><sp/><sp/><sp/>16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="i386_2signal_8h_1a0e63521a64cc8bc2b91d36a87d32c9f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGCHLD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>17</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="i386_2signal_8h_1a024f43063003e753afc6cca1acd6e104" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGCONT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>18</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="i386_2signal_8h_1a069e358bc9a864b7dc4fed2440eda14c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGSTOP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>19</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="i386_2signal_8h_1abe65c086e01f0d286b7a785a7e3cdd1a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGTSTP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="i386_2signal_8h_1a2c146e34a6b5a78dfba41cded3331181" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGTTIN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>21</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="i386_2signal_8h_1a782864287613e2c5c030411fa9c5e9b1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGTTOU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>22</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="i386_2signal_8h_1ad9ff13149e36144a4ea28788948c34dd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGURG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>23</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="i386_2signal_8h_1a7265cbba4972503c1c30a2e52a929874" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGXCPU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>24</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="i386_2signal_8h_1a75440a7aa885a1052dfd3b4393fd9baa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGXFSZ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>25</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="i386_2signal_8h_1a71403d2f5240e409e213060ea3301851" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGVTALRM<sp/><sp/><sp/><sp/><sp/><sp/><sp/>26</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="i386_2signal_8h_1ab6bd2a2ff7e58d45965ef257f96dfe65" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGPROF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>27</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="i386_2signal_8h_1a13ba0e7c4365813312eb4566907bce4f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGWINCH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>28</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="i386_2signal_8h_1a929c5eace94ce2e099c6fa732450ce86" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGIO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>29</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="i386_2signal_8h_1a1614264a836d6a5642554775ef0134d0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGPOLL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SIGIO</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="i386_2signal_8h_1a633dbd7dca7d839e6af0299bd4713f0a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGPWR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>30</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="i386_2signal_8h_1a11e925ada5a97c7bbb6b88de8ed543b4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGUNUSED<sp/><sp/><sp/><sp/><sp/><sp/><sp/>31</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/i386/signal.h"/>
+  </compounddef>
+</doxygen>

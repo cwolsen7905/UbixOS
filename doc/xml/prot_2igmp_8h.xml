@@ -1,0 +1,380 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2igmp_8h" kind="file" language="C++">
+    <compoundname>igmp.h</compoundname>
+    <includes refid="arch_8h" local="yes">net/arch.h</includes>
+    <includes refid="ip4__addr_8h" local="yes">net/ip4_addr.h</includes>
+    <incdepgraph>
+      <node id="14">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="15">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="11">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h</label>
+        <link refid="prot_2igmp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structigmp__msg" prot="public">igmp_msg</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2igmp_8h_1a9c2129b3fb6f212eac44192ced19d33d" prot="public" static="no">
+        <name>IGMP_GROUP_DELAYING_MEMBER</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a5b9419fe533da22ca7015cac97e8b1e3" prot="public" static="no">
+        <name>IGMP_GROUP_IDLE_MEMBER</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a0357ddf34e5e88adaa654ad562adab54" prot="public" static="no">
+        <name>IGMP_GROUP_NON_MEMBER</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a4d87457009ed27ade2309cebe7a1dfcf" prot="public" static="no">
+        <name>IGMP_LEAVE_GROUP</name>
+        <initializer>0x17 /* Leave-group message      */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a0f85ab43aac98cc525c4d21b45bb08c9" prot="public" static="no">
+        <name>IGMP_MEMB_QUERY</name>
+        <initializer>0x11 /* Membership query         */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1ad91c1a732326c16656dc7059f807acfd" prot="public" static="no">
+        <name>IGMP_MINLEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a6ff76a6f7654b21a70e216151c97a869" prot="public" static="no">
+        <name>IGMP_TTL</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a7a18745c2691de97a594257e8588957e" prot="public" static="no">
+        <name>IGMP_V1_MEMB_REPORT</name>
+        <initializer>0x12 /* Ver. 1 membership report */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a26b6b8b5dc43098b16d417a29b31a9e0" prot="public" static="no">
+        <name>IGMP_V2_MEMB_REPORT</name>
+        <initializer>0x16 /* Ver. 2 membership report */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1a0b0944c1c4f2a64c79831d18f7d31802" prot="public" static="no">
+        <name>ROUTER_ALERT</name>
+        <initializer>0x9404U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2igmp_8h_1aa4bce84f942c375b780404c56f0ed51c" prot="public" static="no">
+        <name>ROUTER_ALERTLEN</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2igmp_8h_1a5d6a573cb2d6ebb0fff6849b16a94c07" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structigmp__msg" kindref="compound">igmp_msg</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct igmp_msg  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="80" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IGMP protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_IGMP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_IGMP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip4__addr_8h" kindref="compound">net/ip4_addr.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*<sp/>IGMP<sp/>constants</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="prot_2igmp_8h_1a6ff76a6f7654b21a70e216151c97a869" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_TTL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="prot_2igmp_8h_1ad91c1a732326c16656dc7059f807acfd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_MINLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="prot_2igmp_8h_1a0b0944c1c4f2a64c79831d18f7d31802" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ROUTER_ALERT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x9404U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="prot_2igmp_8h_1aa4bce84f942c375b780404c56f0ed51c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ROUTER_ALERTLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>IGMP<sp/>message<sp/>types,<sp/>including<sp/>version<sp/>number.</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="prot_2igmp_8h_1a0f85ab43aac98cc525c4d21b45bb08c9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_MEMB_QUERY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x11<sp/></highlight><highlight class="comment">/*<sp/>Membership<sp/>query<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="prot_2igmp_8h_1a7a18745c2691de97a594257e8588957e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_V1_MEMB_REPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x12<sp/></highlight><highlight class="comment">/*<sp/>Ver.<sp/>1<sp/>membership<sp/>report<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="prot_2igmp_8h_1a26b6b8b5dc43098b16d417a29b31a9e0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_V2_MEMB_REPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x16<sp/></highlight><highlight class="comment">/*<sp/>Ver.<sp/>2<sp/>membership<sp/>report<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="prot_2igmp_8h_1a4d87457009ed27ade2309cebe7a1dfcf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_LEAVE_GROUP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x17<sp/></highlight><highlight class="comment">/*<sp/>Leave-group<sp/>message<sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Group<sp/><sp/>membership<sp/>states<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="prot_2igmp_8h_1a0357ddf34e5e88adaa654ad562adab54" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_GROUP_NON_MEMBER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="prot_2igmp_8h_1a9c2129b3fb6f212eac44192ced19d33d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_GROUP_DELAYING_MEMBER<sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="prot_2igmp_8h_1a5b9419fe533da22ca7015cac97e8b1e3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IGMP_GROUP_IDLE_MEMBER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="75" refid="structigmp__msg" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structigmp__msg" kindref="compound">igmp_msg</ref><sp/>{</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="structigmp__msg_1a623a3baf99a86878b7d0c2a87a7f9935" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>igmp_msgtype);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="structigmp__msg_1a623a3baf99a86878b7d0c2a87a7f9935" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>igmp_maxresp);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="structigmp__msg_1a875894e6ca7849ad9eae5f81f5eeab29" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>igmp_checksum);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="structigmp__msg_1a935034863490ec706ba33f238b77126a" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>igmp_group_address);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal">}<sp/><ref refid="prot_2igmp_8h_1a5d6a573cb2d6ebb0fff6849b16a94c07" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_IGMP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h"/>
+  </compounddef>
+</doxygen>

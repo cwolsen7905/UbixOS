@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__issetugid__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_issetugid_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__issetugid__args_1a0d38a7723b8a84a00636f8e54b148b97" prot="public" static="no" mutable="no">
+        <type><ref refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref></type>
+        <definition>register_t sys_issetugid_args::dummy</definition>
+        <argsstring></argsstring>
+        <name>dummy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="335" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="335" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_issetugid_args</label>
+        <link refid="structsys__issetugid__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="334" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="334" bodyend="336"/>
+    <listofallmembers>
+      <member refid="structsys__issetugid__args_1a0d38a7723b8a84a00636f8e54b148b97" prot="public" virt="non-virtual"><scope>sys_issetugid_args</scope><name>dummy</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

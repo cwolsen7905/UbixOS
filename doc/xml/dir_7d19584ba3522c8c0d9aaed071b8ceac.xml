@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_7d19584ba3522c8c0d9aaed071b8ceac" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/net/core/ipv4</compoundname>
+    <innerfile refid="autoip_8c">autoip.c</innerfile>
+    <innerfile refid="dhcp_8c">dhcp.c</innerfile>
+    <innerfile refid="etharp_8c">etharp.c</innerfile>
+    <innerfile refid="icmp_8c">icmp.c</innerfile>
+    <innerfile refid="igmp_8c">igmp.c</innerfile>
+    <innerfile refid="ip4_8c">ip4.c</innerfile>
+    <innerfile refid="ip4__addr_8c">ip4_addr.c</innerfile>
+    <innerfile refid="ip4__frag_8c">ip4_frag.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/ipv4/"/>
+  </compounddef>
+</doxygen>

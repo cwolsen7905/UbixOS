@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kern__trie_8h" kind="file" language="C++">
+    <compoundname>kern_trie.h</compoundname>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="kern__sysctl_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="kern__trie_8c" local="no">C:/Dev/git/UbixOS/sys/lib/kern_trie.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h</label>
+        <link refid="kern__trie_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h</label>
+        <link refid="kern__trie_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/lib/kern_trie.c</label>
+        <link refid="kern__trie_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structTrie" prot="public">Trie</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="kern__trie_8h_1a22c7f61c2f0fa6b1943548e838055cec" prot="public" static="no">
+        <name>CHAR_SIZE</name>
+        <initializer>26</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kern__trie_8h_1aa2069af12d868f912da6c625c6daf571" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int delete_trieNode</definition>
+        <argsstring>(struct Trie **, char *)</argsstring>
+        <name>delete_trieNode</name>
+        <param>
+          <type>struct <ref refid="structTrie" kindref="compound">Trie</ref> **</type>
+        </param>
+        <param>
+          <type>char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="49" column="5" bodyfile="C:/Dev/git/UbixOS/sys/lib/kern_trie.c" bodystart="99" bodyend="140" declfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" declline="49" declcolumn="5"/>
+        <references refid="kern__trie_8c_1a0d5e94a35ef6770fd351039714381a68" compoundref="kern__trie_8c" startline="143" endline="149">haveChildren</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="kern__trie_8h_1a63f3fe8b4181d1c5de41d1444f4fde7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void insert_trieNode</definition>
+        <argsstring>(struct Trie **, char *, void *)</argsstring>
+        <name>insert_trieNode</name>
+        <param>
+          <type>struct <ref refid="structTrie" kindref="compound">Trie</ref> **</type>
+        </param>
+        <param>
+          <type>char *</type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="45" column="6" bodyfile="C:/Dev/git/UbixOS/sys/lib/kern_trie.c" bodystart="46" bodyend="67" declfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" declline="45" declcolumn="6"/>
+        <references refid="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" compoundref="kern__trie_8h" startline="38">Trie::character</references>
+        <references refid="structTrie_1a0d43a2b490ad3501ae54366f674ed726" compoundref="kern__trie_8h" startline="39">Trie::e</references>
+        <references refid="structTrie_1ac64f365c3bbfe79362504d1580dc90aa" compoundref="kern__trie_8h" startline="37">Trie::isLeaf</references>
+        <references refid="kern__trie_8c_1afadb3489e5ff24f80e606d9651ec59fc" compoundref="kern__trie_8c" startline="33" endline="43">new_trieNode</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="kern__trie_8h_1afadb3489e5ff24f80e606d9651ec59fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structTrie" kindref="compound">Trie</ref> *</type>
+        <definition>struct Trie* new_trieNode</definition>
+        <argsstring>()</argsstring>
+        <name>new_trieNode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="43" column="11" bodyfile="C:/Dev/git/UbixOS/sys/lib/kern_trie.c" bodystart="33" bodyend="43" declfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" declline="43" declcolumn="11"/>
+        <references refid="kern__trie_8h_1a22c7f61c2f0fa6b1943548e838055cec" compoundref="kern__trie_8h" startline="34">CHAR_SIZE</references>
+        <references refid="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" compoundref="kern__trie_8h" startline="38">Trie::character</references>
+        <references refid="structTrie_1ac64f365c3bbfe79362504d1580dc90aa" compoundref="kern__trie_8h" startline="37">Trie::isLeaf</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="kern__trie_8c_1a07e8f86b54a5cef01d03eddada7dbaef" compoundref="kern__trie_8c" startline="46" endline="67">insert_trieNode</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="kern__trie_8h_1ad1139bfb80936f02d159c91e28773922" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structTrie" kindref="compound">Trie</ref> *</type>
+        <definition>struct Trie* search_trieNode</definition>
+        <argsstring>(struct Trie *, char *)</argsstring>
+        <name>search_trieNode</name>
+        <param>
+          <type>struct <ref refid="structTrie" kindref="compound">Trie</ref> *</type>
+        </param>
+        <param>
+          <type>char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" line="47" column="11" bodyfile="C:/Dev/git/UbixOS/sys/lib/kern_trie.c" bodystart="70" bodyend="94" declfile="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h" declline="47" declcolumn="11"/>
+        <references refid="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" compoundref="kern__trie_8h" startline="38">Trie::character</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_LIB_KERN_TRIE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_LIB_KERN_TRIE_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="kern__trie_8h_1a22c7f61c2f0fa6b1943548e838055cec" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAR_SIZE<sp/>26</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="structTrie" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structTrie" kindref="compound">Trie</ref><sp/>{</highlight></codeline>
+<codeline lineno="37" refid="structTrie_1ac64f365c3bbfe79362504d1580dc90aa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref><sp/><ref refid="structTrie_1ac64f365c3bbfe79362504d1580dc90aa" kindref="member">isLeaf</ref>;</highlight></codeline>
+<codeline lineno="38" refid="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structTrie" kindref="compound">Trie</ref><sp/>*<ref refid="structTrie_1afd70d2d6861cb0fc6574f554dabbd56d" kindref="member">character</ref>[<ref refid="kern__trie_8h_1a22c7f61c2f0fa6b1943548e838055cec" kindref="member">CHAR_SIZE</ref>];</highlight></codeline>
+<codeline lineno="39" refid="structTrie_1a0d43a2b490ad3501ae54366f674ed726" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structTrie_1a0d43a2b490ad3501ae54366f674ed726" kindref="member">e</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structTrie" kindref="compound">Trie</ref><sp/>*<ref refid="kern__trie_8h_1afadb3489e5ff24f80e606d9651ec59fc" kindref="member">new_trieNode</ref>();</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="kern__trie_8h_1a63f3fe8b4181d1c5de41d1444f4fde7d" kindref="member">insert_trieNode</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structTrie" kindref="compound">Trie</ref><sp/>**,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structTrie" kindref="compound">Trie</ref><sp/>*<ref refid="kern__trie_8h_1ad1139bfb80936f02d159c91e28773922" kindref="member">search_trieNode</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structTrie" kindref="compound">Trie</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__trie_8h_1aa2069af12d868f912da6c625c6daf571" kindref="member">delete_trieNode</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structTrie" kindref="compound">Trie</ref><sp/>**,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>_LIB_LKERN_TRIE_H_</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/lib/kern_trie.h"/>
+  </compounddef>
+</doxygen>

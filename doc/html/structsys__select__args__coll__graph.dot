@@ -1,0 +1,11 @@
+digraph "sys_select_args"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sys_select_args\n|+ ex_l_\l+ ex_r_\l+ in_l_\l+ in_r_\l+ nd\l+ nd_l_\l+ nd_r_\l+ ou_l_\l+ ou_r_\l+ tv_l_\l+ tv_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +tv" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{timeval\n|+ tv_sec\l+ tv_usec\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structtimeval.html",tooltip=" "];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +ex\n+in\n+ou" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{fd_set\n|+ __fds_bits\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfd__set.html",tooltip=" "];
+}

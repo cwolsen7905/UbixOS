@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfsid" kind="struct" language="C++" prot="public">
+    <compoundname>fsid</compoundname>
+    <includes refid="mount_8h" local="no">mount.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfsid_1a9a793a22b9735f8da248eeee91322aaa" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fsid::val[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>val</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="38" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fsid</label>
+        <link refid="structfsid"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="37" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="37" bodyend="39"/>
+    <listofallmembers>
+      <member refid="structfsid_1a9a793a22b9735f8da248eeee91322aaa" prot="public" virt="non-virtual"><scope>fsid</scope><name>val</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

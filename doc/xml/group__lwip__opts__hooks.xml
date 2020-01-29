@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__hooks" kind="group">
+    <compoundname>lwip_opts_hooks</compoundname>
+    <title>Hooks</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Hooks are undefined by default, define them to a function if you need them. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

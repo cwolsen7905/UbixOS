@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__mutex" kind="group">
+    <compoundname>sys_mutex</compoundname>
+    <title>Mutexes</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__sys__mutex_1ga16336ce68b741e98204102ca4bc84dd9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_free</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_free</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Delete a semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the mutex to delete </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="109" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="149" bodyend="151" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="109" declcolumn="6"/>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="ubthread_8h_1a278f5d5b1e11b6668b75da6a285442e4" compoundref="ubthread_8c" startline="77" endline="81">ubthread_mutex_destroy</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_lock</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_lock</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Lock a mutex <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the mutex to lock </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="97" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="153" bodyend="155" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="97" declcolumn="6"/>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="ubthread_8h_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</references>
+        <referencedby refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" compoundref="mem_8c" startline="603" endline="742">mem_malloc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga38e7dae1fd88b338eb1cd97f110f3897" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_mutex_new</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_new</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create a new mutex. Note that mutexes are expected to not be taken recursively by the lwIP code, so both implementation types (recursive or non-recursive) should work. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to the mutex to create </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, another err_t otherwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="91" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="144" bodyend="147" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="91" declcolumn="7"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="ubthread_8h_1ab6bfc2169b55532821582f24b68dc855">ubthread_mutex_init</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga3f392725971dc837aa56dd7e45fa7ca8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_set_invalid</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_set_invalid</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set a mutex invalid so that sys_mutex_valid returns 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="122" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="122" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_unlock</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_unlock</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Unlock a mutex <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the mutex to unlock </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="103" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="157" bodyend="159" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="103" declcolumn="6"/>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="ubthread_8h_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1gaebe83ba90a6d9c23cdb3eb5d49562c4a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mutex_valid</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_valid</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Check if a mutex is valid/allocated: return 1 for valid, 0 for invalid </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="115" column="5" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="115" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Mutexes are recommended to correctly handle priority inversion, especially if you use LWIP_CORE_LOCKING . </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

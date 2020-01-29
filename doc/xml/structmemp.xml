@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmemp" kind="struct" language="C++" prot="public">
+    <compoundname>memp</compoundname>
+    <includes refid="memp__priv_8h" local="no">memp_priv.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmemp_1a86abb86558e1cdee1bd2382f0323654d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmemp" kindref="compound">memp</ref> *</type>
+        <definition>struct memp* memp::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="92" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="memp_8c_1a6416303426d05526bed33f241fa6ecd7" compoundref="memp_8c" startline="230" endline="262">memp_init_pool</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>memp</label>
+        <link refid="structmemp"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="91" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="91" bodyend="97"/>
+    <listofallmembers>
+      <member refid="structmemp_1a86abb86558e1cdee1bd2382f0323654d" prot="public" virt="non-virtual"><scope>memp</scope><name>next</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__mpiPostMessage__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_mpiPostMessage_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+        <definition>const void* sys_mpiPostMessage_args::msg</definition>
+        <argsstring></argsstring>
+        <name>msg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="76" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="76" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" compoundref="mpi__syscalls_8c" startline="19" endline="23">sys_mpiPostMessage</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1ae3f994d8f649993171decda3c02860fb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiPostMessage_args::msg_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>msg_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="75" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1a80bda02354ee521744e37661820aa1e3" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiPostMessage_args::msg_r_[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</argsstring>
+        <name>msg_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="77" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_mpiPostMessage_args::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="70" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="70" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" compoundref="mpi__syscalls_8c" startline="19" endline="23">sys_mpiPostMessage</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1a41eb4f9a72503dc3bc969a70d7566ad9" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiPostMessage_args::name_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>name_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="69" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1af759655b396eed057fbb4c5cc16b72e2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiPostMessage_args::name_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>name_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="71" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_mpiPostMessage_args::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="73" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" compoundref="mpi__syscalls_8c" startline="19" endline="23">sys_mpiPostMessage</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1a04fbb8f9cd9407c9e6c1ed69f644b3ef" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiPostMessage_args::type_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>type_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="72" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiPostMessage__args_1a18f34ebdc59a49c0c9e538133823bbeb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiPostMessage_args::type_r_[(sizeof(register_t)&lt;=sizeof(uint32_t) ? 0 :sizeof(register_t) - sizeof(uint32_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(uint32_t) ? 0 :sizeof(register_t) - sizeof(uint32_t))]</argsstring>
+        <name>type_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="74" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_mpiPostMessage_args</label>
+        <link refid="structsys__mpiPostMessage__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="68" column="30" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="68" bodyend="78"/>
+    <listofallmembers>
+      <member refid="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>msg</name></member>
+      <member refid="structsys__mpiPostMessage__args_1ae3f994d8f649993171decda3c02860fb" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>msg_l_</name></member>
+      <member refid="structsys__mpiPostMessage__args_1a80bda02354ee521744e37661820aa1e3" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>msg_r_</name></member>
+      <member refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>name</name></member>
+      <member refid="structsys__mpiPostMessage__args_1a41eb4f9a72503dc3bc969a70d7566ad9" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>name_l_</name></member>
+      <member refid="structsys__mpiPostMessage__args_1af759655b396eed057fbb4c5cc16b72e2" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>name_r_</name></member>
+      <member refid="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>type</name></member>
+      <member refid="structsys__mpiPostMessage__args_1a04fbb8f9cd9407c9e6c1ed69f644b3ef" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>type_l_</name></member>
+      <member refid="structsys__mpiPostMessage__args_1a18f34ebdc59a49c0c9e538133823bbeb" prot="public" virt="non-virtual"><scope>sys_mpiPostMessage_args</scope><name>type_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

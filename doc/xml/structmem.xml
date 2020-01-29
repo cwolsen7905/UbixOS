@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmem" kind="struct" language="C++" prot="public">
+    <compoundname>mem</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" prot="public" static="no" mutable="no">
+        <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+        <definition>mem_size_t mem::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>index (-&gt; ram[next]) of the next struct </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="266" column="14" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="266" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmem_1a9d7722ed10adf965fa98563d502f98ac" prot="public" static="no" mutable="no">
+        <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+        <definition>mem_size_t mem::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>index (-&gt; ram[prev]) of the previous struct </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="268" column="14" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="268" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmem_1aa76b6a39425617435978dce903f0d456" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t mem::used</definition>
+        <argsstring></argsstring>
+        <name>used</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>1: this area is used; 0: this area is unused </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="270" column="8" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="270" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>The heap is made up as a list of structs of this type. This does not have to be aligned since for getting its size, we only use the macro SIZEOF_STRUCT_MEM, which automatically aligns. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>mem</label>
+        <link refid="structmem"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="264" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="264" bodyend="271"/>
+    <listofallmembers>
+      <member refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" prot="public" virt="non-virtual"><scope>mem</scope><name>next</name></member>
+      <member refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" prot="public" virt="non-virtual"><scope>mem</scope><name>prev</name></member>
+      <member refid="structmem_1aa76b6a39425617435978dce903f0d456" prot="public" virt="non-virtual"><scope>mem</scope><name>used</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

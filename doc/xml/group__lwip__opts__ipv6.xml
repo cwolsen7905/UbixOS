@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__ipv6" kind="group">
+    <compoundname>lwip_opts_ipv6</compoundname>
+    <title>IPv6</title>
+    <innergroup refid="group__lwip__opts__icmp6">ICMP6</innergroup>
+    <innergroup refid="group__lwip__opts__mld6">Multicast listener discovery</innergroup>
+    <innergroup refid="group__lwip__opts__nd6">Neighbor discovery</innergroup>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" prot="public" static="no">
+        <name>LWIP_IPV6</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6==1: Enable IPv6 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2112" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1ga580039bf2baf49fcb9e504e5d2b40a03" prot="public" static="no">
+        <name>LWIP_IPV6_AUTOCONFIG</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_AUTOCONFIG==1: Enable stateless address autoconfiguration as per RFC 4862. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2155" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1gad8489522d34f37e42b4001bab3781bcb" prot="public" static="no">
+        <name>LWIP_IPV6_DUP_DETECT_ATTEMPTS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_DUP_DETECT_ATTEMPTS=[0..7]: Number of duplicate address detection attempts. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2162" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1gac96c5802de6c75dd62ab38cff6d16a32" prot="public" static="no">
+        <name>LWIP_IPV6_FORWARD</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_FORWARD==1: Forward IPv6 packets across netifs </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2126" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1ga9ab6269f3087f6d9f7b2c7181ef043c3" prot="public" static="no">
+        <name>LWIP_IPV6_FRAG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_FRAG==1: Fragment outgoing IPv6 packets that are too big. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2133" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1ga16c1b672604bfb0a66a6aeeb854589d3" prot="public" static="no">
+        <name>LWIP_IPV6_NUM_ADDRESSES</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_NUM_ADDRESSES: Number of IPv6 addresses per netif. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2119" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1gad0ef160d72e63b02c5e875b06ec53864" prot="public" static="no">
+        <name>LWIP_IPV6_REASS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_REASS==1: reassemble incoming IPv6 packets that fragmented </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2140" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__ipv6_1ga273ed2e1a4e6a43713a0e4a06a34ee5c" prot="public" static="no">
+        <name>LWIP_IPV6_SEND_ROUTER_SOLICIT</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IPV6_SEND_ROUTER_SOLICIT==1: Send router solicitation messages during network startup. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2148" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2148" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

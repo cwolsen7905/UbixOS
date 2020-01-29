@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__mpiFetchMessage__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_mpiFetchMessage_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+        <definition>const void* sys_mpiFetchMessage_args::msg</definition>
+        <argsstring></argsstring>
+        <name>msg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="64" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" compoundref="mpi__syscalls_8c" startline="14" endline="17">sys_mpiFetchMessage</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiFetchMessage__args_1aa2806a3072e1a2eb199260ffeb1f114c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiFetchMessage_args::msg_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>msg_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="63" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiFetchMessage__args_1a4bf4fa77b9199f82a281b3e1c52579f1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiFetchMessage_args::msg_r_[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</argsstring>
+        <name>msg_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="65" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_mpiFetchMessage_args::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="61" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" compoundref="mpi__syscalls_8c" startline="14" endline="17">sys_mpiFetchMessage</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiFetchMessage__args_1a87ee000bd8126d41223e35b2c3472c00" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiFetchMessage_args::name_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>name_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="60" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiFetchMessage__args_1a5db8ff21c006dc0daa34f1cf58d0ba28" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiFetchMessage_args::name_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>name_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="62" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_mpiFetchMessage_args</label>
+        <link refid="structsys__mpiFetchMessage__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="59" column="31" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="59" bodyend="66"/>
+    <listofallmembers>
+      <member refid="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" prot="public" virt="non-virtual"><scope>sys_mpiFetchMessage_args</scope><name>msg</name></member>
+      <member refid="structsys__mpiFetchMessage__args_1aa2806a3072e1a2eb199260ffeb1f114c" prot="public" virt="non-virtual"><scope>sys_mpiFetchMessage_args</scope><name>msg_l_</name></member>
+      <member refid="structsys__mpiFetchMessage__args_1a4bf4fa77b9199f82a281b3e1c52579f1" prot="public" virt="non-virtual"><scope>sys_mpiFetchMessage_args</scope><name>msg_r_</name></member>
+      <member refid="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" prot="public" virt="non-virtual"><scope>sys_mpiFetchMessage_args</scope><name>name</name></member>
+      <member refid="structsys__mpiFetchMessage__args_1a87ee000bd8126d41223e35b2c3472c00" prot="public" virt="non-virtual"><scope>sys_mpiFetchMessage_args</scope><name>name_l_</name></member>
+      <member refid="structsys__mpiFetchMessage__args_1a5db8ff21c006dc0daa34f1cf58d0ba28" prot="public" virt="non-virtual"><scope>sys_mpiFetchMessage_args</scope><name>name_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

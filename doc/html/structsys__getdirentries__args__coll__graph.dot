@@ -1,0 +1,7 @@
+digraph "sys_getdirentries_args"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sys_getdirentries_args\n|+ basep\l+ basep_l_\l+ basep_r_\l+ buf\l+ buf_l_\l+ buf_r_\l+ count\l+ count_l_\l+ count_r_\l+ fd\l+ fd_l_\l+ fd_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

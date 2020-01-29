@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_9b476d9515c77bf70eb8ecf4a503ee6b" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/sys</compoundname>
+    <innerfile refid="device_8c">device.c</innerfile>
+    <innerfile refid="dma_8c">dma.c</innerfile>
+    <innerfile refid="sys_2elf_8c">elf.c</innerfile>
+    <innerfile refid="idt_8c">idt.c</innerfile>
+    <innerfile refid="io_8c">io.c</innerfile>
+    <innerfile refid="video_8c">video.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/sys/"/>
+  </compounddef>
+</doxygen>

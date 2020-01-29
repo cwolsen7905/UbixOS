@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structuuid" kind="struct" language="C++" prot="public">
+    <compoundname>uuid</compoundname>
+    <includes refid="uuid_8h" local="no">uuid.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structuuid_1a417e5c4b6e182d1d25e8aaeb71b8aca4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t uuid::clock_seq_hi_and_reserved</definition>
+        <argsstring></argsstring>
+        <name>clock_seq_hi_and_reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="49" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structuuid_1a06caaa600c4c03ea30c750b4ffbcf1c2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t uuid::clock_seq_low</definition>
+        <argsstring></argsstring>
+        <name>clock_seq_low</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="50" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structuuid_1a2d6a632649ae128bc68dc0a7c154b3ba" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t uuid::node[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>node</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="51" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structuuid_1ac89486073118cbca117c9204aeecb9d4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t uuid::time_hi_and_version</definition>
+        <argsstring></argsstring>
+        <name>time_hi_and_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="48" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structuuid_1aeabb39e916355b8a0cdd8912e8c27317" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t uuid::time_low</definition>
+        <argsstring></argsstring>
+        <name>time_low</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="46" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structuuid_1a0b92f5d247288e1db17317232ae29694" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t uuid::time_mid</definition>
+        <argsstring></argsstring>
+        <name>time_mid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="47" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>uuid</label>
+        <link refid="structuuid"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" line="45" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/uuid.h" bodystart="45" bodyend="52"/>
+    <listofallmembers>
+      <member refid="structuuid_1a417e5c4b6e182d1d25e8aaeb71b8aca4" prot="public" virt="non-virtual"><scope>uuid</scope><name>clock_seq_hi_and_reserved</name></member>
+      <member refid="structuuid_1a06caaa600c4c03ea30c750b4ffbcf1c2" prot="public" virt="non-virtual"><scope>uuid</scope><name>clock_seq_low</name></member>
+      <member refid="structuuid_1a2d6a632649ae128bc68dc0a7c154b3ba" prot="public" virt="non-virtual"><scope>uuid</scope><name>node</name></member>
+      <member refid="structuuid_1ac89486073118cbca117c9204aeecb9d4" prot="public" virt="non-virtual"><scope>uuid</scope><name>time_hi_and_version</name></member>
+      <member refid="structuuid_1aeabb39e916355b8a0cdd8912e8c27317" prot="public" virt="non-virtual"><scope>uuid</scope><name>time_low</name></member>
+      <member refid="structuuid_1a0b92f5d247288e1db17317232ae29694" prot="public" virt="non-virtual"><scope>uuid</scope><name>time_mid</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

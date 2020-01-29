@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfat__list" kind="struct" language="C++" prot="public">
+    <compoundname>fat_list</compoundname>
+    <includes refid="fat__list_8h" local="no">fat_list.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+        <definition>struct fat_node* fat_list::head</definition>
+        <argsstring></argsstring>
+        <name>head</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="25" column="19" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+        <definition>struct fat_node* fat_list::tail</definition>
+        <argsstring></argsstring>
+        <name>tail</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="26" column="19" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fat_list</label>
+        <link refid="structfat__list"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+head</edgelabel>
+          <edgelabel>+tail</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>fat_node</label>
+        <link refid="structfat__node"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+previous</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="24" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="23" bodyend="27"/>
+    <listofallmembers>
+      <member refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" prot="public" virt="non-virtual"><scope>fat_list</scope><name>head</name></member>
+      <member refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" prot="public" virt="non-virtual"><scope>fat_list</scope><name>tail</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

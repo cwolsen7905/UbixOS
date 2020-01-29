@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__wait4__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_wait4_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__wait4__args_1ae793a88500ec844cdfcc3a2367bda638" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_wait4_args::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="118" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1acb7c625a7e05ae36047c46926cb76633" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::options_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>options_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="117" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a3ad8b17ce784a69b93c336368b56feb2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::options_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>options_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="119" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a925b7f871a480c9cfc79000673246eff" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_wait4_args::pid</definition>
+        <argsstring></argsstring>
+        <name>pid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="110" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="110" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a70c01ea30a559e3db5bd09d9100f7bcf" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::pid_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>pid_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="109" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a4df0cf69531d7b5f8fa778b39790051f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::pid_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>pid_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="111" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a1a8fdd798cc9829bc22ecc1742bc0cb5" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* sys_wait4_args::rusage</definition>
+        <argsstring></argsstring>
+        <name>rusage</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="122" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a9bd4bcc81fe17e1d53a91d72ea27d7a6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::rusage_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>rusage_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="121" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a27f7353444e689763b5e78f54feaffdd" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::rusage_r_[(sizeof(register_t)&lt;=sizeof(void *) ? 0 :sizeof(register_t) - sizeof(void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(void *) ? 0 :sizeof(register_t) - sizeof(void *))]</argsstring>
+        <name>rusage_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="123" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a403a312007bda1c4d17597ff8c75e857" prot="public" static="no" mutable="no">
+        <type>int *</type>
+        <definition>int* sys_wait4_args::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="114" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1a57b757b406ffeddf1fefe5f48941b6e7" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::status_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>status_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="113" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__wait4__args_1ad6865b1f9d9020435f125e6fd590cf56" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_wait4_args::status_r_[(sizeof(register_t)&lt;=sizeof(int *) ? 0 :sizeof(register_t) - sizeof(int *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int *) ? 0 :sizeof(register_t) - sizeof(int *))]</argsstring>
+        <name>status_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="115" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_wait4_args</label>
+        <link refid="structsys__wait4__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="108" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="108" bodyend="124"/>
+    <listofallmembers>
+      <member refid="structsys__wait4__args_1ae793a88500ec844cdfcc3a2367bda638" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>options</name></member>
+      <member refid="structsys__wait4__args_1acb7c625a7e05ae36047c46926cb76633" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>options_l_</name></member>
+      <member refid="structsys__wait4__args_1a3ad8b17ce784a69b93c336368b56feb2" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>options_r_</name></member>
+      <member refid="structsys__wait4__args_1a925b7f871a480c9cfc79000673246eff" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>pid</name></member>
+      <member refid="structsys__wait4__args_1a70c01ea30a559e3db5bd09d9100f7bcf" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>pid_l_</name></member>
+      <member refid="structsys__wait4__args_1a4df0cf69531d7b5f8fa778b39790051f" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>pid_r_</name></member>
+      <member refid="structsys__wait4__args_1a1a8fdd798cc9829bc22ecc1742bc0cb5" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>rusage</name></member>
+      <member refid="structsys__wait4__args_1a9bd4bcc81fe17e1d53a91d72ea27d7a6" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>rusage_l_</name></member>
+      <member refid="structsys__wait4__args_1a27f7353444e689763b5e78f54feaffdd" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>rusage_r_</name></member>
+      <member refid="structsys__wait4__args_1a403a312007bda1c4d17597ff8c75e857" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>status</name></member>
+      <member refid="structsys__wait4__args_1a57b757b406ffeddf1fefe5f48941b6e7" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>status_l_</name></member>
+      <member refid="structsys__wait4__args_1ad6865b1f9d9020435f125e6fd590cf56" prot="public" virt="non-virtual"><scope>sys_wait4_args</scope><name>status_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_256d947363de5d2e978c467334167a28" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/arch/i386</compoundname>
+    <innerfile refid="i386_2ap-boot_8S">ap-boot.S</innerfile>
+    <innerfile refid="bios16code_8S">bios16code.S</innerfile>
+    <innerfile refid="i386_2bioscall_8c">bioscall.c</innerfile>
+    <innerfile refid="cpu_8c">cpu.c</innerfile>
+    <innerfile refid="i386_2fork_8c">fork.c</innerfile>
+    <innerfile refid="i386__exec_8c">i386_exec.c</innerfile>
+    <innerfile refid="i386_2kpanic_8c">kpanic.c</innerfile>
+    <innerfile refid="memcmp_8S">memcmp.S</innerfile>
+    <innerfile refid="memset_8S">memset.S</innerfile>
+    <innerfile refid="i386_2sched_8c">sched.c</innerfile>
+    <innerfile refid="i386_2schedyield_8S">schedyield.S</innerfile>
+    <innerfile refid="i386_2spinlock_8c">spinlock.c</innerfile>
+    <innerfile refid="strcmp_8S">strcmp.S</innerfile>
+    <innerfile refid="strcpy_8S">strcpy.S</innerfile>
+    <innerfile refid="strncmp_8S">strncmp.S</innerfile>
+    <innerfile refid="support_8S">support.S</innerfile>
+    <innerfile refid="i386_2sys__call_8S">sys_call.S</innerfile>
+    <innerfile refid="sys__call__posix_8S">sys_call_posix.S</innerfile>
+    <innerfile refid="i386_2systemtask_8c">systemtask.c</innerfile>
+    <innerfile refid="i386_2timer_8S">timer.S</innerfile>
+    <innerfile refid="trap_8c">trap.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/arch/i386/"/>
+  </compounddef>
+</doxygen>

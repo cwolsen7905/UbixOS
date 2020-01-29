@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_674cfa2aa5c4f20e1e28b60514329d0f" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/net/netif</compoundname>
+    <innerfile refid="arp_8c">arp.c</innerfile>
+    <innerfile refid="ethernet_8c">ethernet.c</innerfile>
+    <innerfile refid="ethernetif_8c">ethernetif.c</innerfile>
+    <innerfile refid="loopif_8c">loopif.c</innerfile>
+    <innerfile refid="tcpdump_8c">tcpdump.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/net/netif/"/>
+  </compounddef>
+</doxygen>

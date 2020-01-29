@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__exit__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_exit_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__exit__args_1a8fcff0b9999b486656ed155ea32ebaf3" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_exit_args::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__exit__args_1af3833b72ab8e5e66c99f7af98b734ece" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_exit_args::status_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>status_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="51" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__exit__args_1a10fc54bf09cbcad65c4ca8152d5096b0" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_exit_args::status_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>status_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="53" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_exit_args</label>
+        <link refid="structsys__exit__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="50" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="50" bodyend="54"/>
+    <listofallmembers>
+      <member refid="structsys__exit__args_1a8fcff0b9999b486656ed155ea32ebaf3" prot="public" virt="non-virtual"><scope>sys_exit_args</scope><name>status</name></member>
+      <member refid="structsys__exit__args_1af3833b72ab8e5e66c99f7af98b734ece" prot="public" virt="non-virtual"><scope>sys_exit_args</scope><name>status_l_</name></member>
+      <member refid="structsys__exit__args_1a10fc54bf09cbcad65c4ca8152d5096b0" prot="public" virt="non-virtual"><scope>sys_exit_args</scope><name>status_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

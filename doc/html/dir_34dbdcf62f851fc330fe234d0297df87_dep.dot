@@ -1,0 +1,11 @@
+digraph "C:/Dev/git/UbixOS/sys/lib" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6ec99f6d7d5182ba8913209ab70c9f18 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="sys" fontname="Helvetica", fontsize="10", URL="dir_6ec99f6d7d5182ba8913209ab70c9f18.html"]
+  dir_34dbdcf62f851fc330fe234d0297df87 [shape=box, label="lib", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_34dbdcf62f851fc330fe234d0297df87.html"];
+  }
+  dir_d1be8160e739b6eed1f7843efdbae1b3 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"];
+  dir_34dbdcf62f851fc330fe234d0297df87->dir_d1be8160e739b6eed1f7843efdbae1b3 [headlabel="42", labeldistance=1.5 headhref="dir_000052_000019.html"];
+}

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__pbuf" kind="group">
+    <compoundname>lwip_opts_pbuf</compoundname>
+    <title>PBUF</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__pbuf_1ga6e1ba1875ae5168a17b53d83597bc1de" prot="public" static="no">
+        <name>PBUF_LINK_ENCAPSULATION_HLEN</name>
+        <initializer>0u</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PBUF_LINK_ENCAPSULATION_HLEN: the number of bytes that should be allocated for an additional encapsulation header before ethernet headers (e.g. 802.11) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1323" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1323" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__pbuf_1ga35998a3d56af9940e6a80bb372597685" prot="public" static="no">
+        <name>PBUF_LINK_HLEN</name>
+        <initializer>(14 + <ref refid="group__lwip__opts__arp_1gad7fa3b356ca7e603e848b069c4cc6276" kindref="member">ETH_PAD_SIZE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PBUF_LINK_HLEN: the number of bytes that should be allocated for a link level header. The default is 14, the standard value for Ethernet. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1314" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1314" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__pbuf_1gae61f4491d56e805e79b79eb5d35a00e5" prot="public" static="no">
+        <name>PBUF_POOL_BUFSIZE</name>
+        <initializer><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(<ref refid="group__lwip__opts__tcp_1gaf1ab7bb27860aa3677c387a2f3ba317b" kindref="member">TCP_MSS</ref>+40+<ref refid="group__lwip__opts__pbuf_1ga6e1ba1875ae5168a17b53d83597bc1de" kindref="member">PBUF_LINK_ENCAPSULATION_HLEN</ref>+<ref refid="group__lwip__opts__pbuf_1ga35998a3d56af9940e6a80bb372597685" kindref="member">PBUF_LINK_HLEN</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. The default is designed to accommodate single full size TCP frame in one pbuf, including TCP_MSS, IP header, and link header. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1332" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1332" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

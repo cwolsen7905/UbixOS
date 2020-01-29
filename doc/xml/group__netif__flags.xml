@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__netif__flags" kind="group">
+    <compoundname>netif_flags</compoundname>
+    <title>Flags</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__netif__flags_1gaef64fe15c82bc7b235366923e517104e" prot="public" static="no">
+        <name>NETIF_FLAG_BROADCAST</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If set, the netif has broadcast capability. Set by the netif driver in its init function. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="89" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__netif__flags_1ga92448dc510bc8d700c09e5c971ef0676" prot="public" static="no">
+        <name>NETIF_FLAG_ETHARP</name>
+        <initializer>0x08U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If set, the netif is an ethernet device using ARP. Set by the netif driver in its init function. Used to check input packet types and use of DHCP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__netif__flags_1ga76ad9d0cf9f029df0ab2a998c64040dc" prot="public" static="no">
+        <name>NETIF_FLAG_ETHERNET</name>
+        <initializer>0x10U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If set, the netif is an ethernet device. It might not use ARP or TCP/IP if it is used for PPPoE only. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__netif__flags_1gac9493b923d733c73f6006d9714826558" prot="public" static="no">
+        <name>NETIF_FLAG_IGMP</name>
+        <initializer>0x20U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If set, the netif has IGMP capability. Set by the netif driver in its init function. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="106" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__netif__flags_1ga75f5a2b9276c93e3bd18a568459fd2d8" prot="public" static="no">
+        <name>NETIF_FLAG_LINK_UP</name>
+        <initializer>0x04U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If set, the interface has an active link (set by the network interface driver). Either set by the netif driver in its init function (if the link is up at that time) or at a later point once the link comes up (if link detection is supported by the hardware). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="95" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__netif__flags_1gab14fbe1447d2fdbdf5abc87f51eb6508" prot="public" static="no">
+        <name>NETIF_FLAG_MLD6</name>
+        <initializer>0x40U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If set, the netif has MLD6 capability. Set by the netif driver in its init function. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="109" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__netif__flags_1gab47d7d130693dc155f480a5bf447725e" prot="public" static="no">
+        <name>NETIF_FLAG_UP</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Whether the network interface is &apos;up&apos;. This is a software flag used to control whether this network interface is enabled and processes traffic. It must be set by the startup code before this netif can be used (also for dhcp/autoip). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="86" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

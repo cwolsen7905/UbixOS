@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_d30d4e36b590a245c15c34f21c61e7a6" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/netif</compoundname>
+    <innerdir refid="dir_60a47962a3554048f3afe735257bc308">C:/Dev/git/UbixOS/sys/include/netif/ppp</innerdir>
+    <innerfile refid="f_2etharp_8h">etharp.h</innerfile>
+    <innerfile refid="f_2ethernet_8h">ethernet.h</innerfile>
+    <innerfile refid="ethernetif_8h">ethernetif.h</innerfile>
+    <innerfile refid="lowpan6_8h">lowpan6.h</innerfile>
+    <innerfile refid="lowpan6__opts_8h">lowpan6_opts.h</innerfile>
+    <innerfile refid="slipif_8h">slipif.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/netif/"/>
+  </compounddef>
+</doxygen>

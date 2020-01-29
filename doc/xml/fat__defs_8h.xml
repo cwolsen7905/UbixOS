@@ -1,0 +1,1115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__defs_8h" kind="file" language="C++">
+    <compoundname>fat_defs.h</compoundname>
+    <includes refid="fat_8h" local="yes">fat/fat.h</includes>
+    <includes refid="fat__opts_8h" local="yes">fat_opts.h</includes>
+    <includes refid="fat__types_8h" local="yes">fat_types.h</includes>
+    <includedby refid="fat__access_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h</includedby>
+    <includedby refid="fat__access_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</includedby>
+    <includedby refid="fat__misc_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</includedby>
+    <includedby refid="fat__write_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.h</includedby>
+    <includedby refid="fat__filelib_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</includedby>
+    <includedby refid="fat__format_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</includedby>
+    <includedby refid="fat__format_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</includedby>
+    <includedby refid="fat__table_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</includedby>
+    <includedby refid="fat__write_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="5">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>stdio.h</label>
+      </node>
+      <node id="3">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.h</label>
+        <link refid="fat__write_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</label>
+        <link refid="fat__format_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structfat__dir__entry" prot="public">fat_dir_entry</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__defs_8h_1a64f6214c3cd6ea996aa49c66ef704440" prot="public" static="no">
+        <name>BPB_BYTSPERSEC</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="16" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a36524b485b1e4fb4f7776d5ebee503a3" prot="public" static="no">
+        <name>BPB_FAT32_BKBOOTSEC</name>
+        <initializer>50</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a4219fe47617691ead76dcce44ecd19f0" prot="public" static="no">
+        <name>BPB_FAT32_EXTFLAGS</name>
+        <initializer>40</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a2f7e14590bc89d5c273e4945b1378ee8" prot="public" static="no">
+        <name>BPB_FAT32_FATSZ32</name>
+        <initializer>36</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a6b66c1d291ef97e70fbe5f1f36fda793" prot="public" static="no">
+        <name>BPB_FAT32_FSINFO</name>
+        <initializer>48</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a363afd53a154478a0ff7e9d4a3ac1c28" prot="public" static="no">
+        <name>BPB_FAT32_FSVER</name>
+        <initializer>42</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ac22b455a3ed7ca414efe28f0da310f7a" prot="public" static="no">
+        <name>BPB_FAT32_ROOTCLUS</name>
+        <initializer>44</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a495df1c692e51d1590dbe5d5b0f5dbb3" prot="public" static="no">
+        <name>BPB_FATSZ16</name>
+        <initializer>22</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="23" column="12" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a11e304da485bd8294a025762905adc45" prot="public" static="no">
+        <name>BPB_HIDDSEC</name>
+        <initializer>28</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="26" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a2afacdaa3e5c9453cf9f8b89e78bec43" prot="public" static="no">
+        <name>BPB_MEDIA</name>
+        <initializer>21</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="22" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a530b676e7e69bbc5038bd4b3cb499331" prot="public" static="no">
+        <name>BPB_NUMFATS</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="19" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a6a3972e83abe950396388f10d1f53a99" prot="public" static="no">
+        <name>BPB_NUMHEADS</name>
+        <initializer>26</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="25" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a788e987621983dd44b5f7e22b17577bb" prot="public" static="no">
+        <name>BPB_ROOTENTCNT</name>
+        <initializer>17</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="20" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ab42c8f7a0994062257044882b2ff4313" prot="public" static="no">
+        <name>BPB_RSVDSECCNT</name>
+        <initializer>14</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="18" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a23d5a5317bb9b8c2c299d37d3fae1207" prot="public" static="no">
+        <name>BPB_SECPERCLUS</name>
+        <initializer>13</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="17" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a06504f1ae855e65764d243070edf51d7" prot="public" static="no">
+        <name>BPB_SECPERTRK</name>
+        <initializer>24</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="24" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a54c5035f6b96c9e4d5b0844f30de59e2" prot="public" static="no">
+        <name>BPB_TOTSEC16</name>
+        <initializer>19</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="21" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a48e78c7d6a5b5afa2dc41541dd31ee2c" prot="public" static="no">
+        <name>BPB_TOTSEC32</name>
+        <initializer>32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="27" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a8a109731531b19ebae8ada95114bf5e2" prot="public" static="no">
+        <name>BS_FAT32_BOOTSIG</name>
+        <initializer>66</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a1be359cd942fa782c7040c8346130006" prot="public" static="no">
+        <name>BS_FAT32_DRVNUM</name>
+        <initializer>64</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aa1d1447a5358a3e990461a2b4ebd398b" prot="public" static="no">
+        <name>BS_FAT32_FILSYSTYPE</name>
+        <initializer>82</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aad0f01789f2c16a9b591a18350a8fdb7" prot="public" static="no">
+        <name>BS_FAT32_VOLID</name>
+        <initializer>67</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ae4d0c116dfdb638cc1fc445aa0190326" prot="public" static="no">
+        <name>BS_FAT32_VOLLAB</name>
+        <initializer>71</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ae5c9ef5581594bf62793a9ef1f664776" prot="public" static="no">
+        <name>BS_FAT_BOOTSIG</name>
+        <initializer>38</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="31" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a0009d229d45d4d2f7f1d2c9488349382" prot="public" static="no">
+        <name>BS_FAT_DRVNUM</name>
+        <initializer>36</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="30" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a0e1d6a6fbc86187690920c87f407f356" prot="public" static="no">
+        <name>BS_FAT_FILSYSTYPE</name>
+        <initializer>54</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aaffc2d4aa44c21874ec00225bf5303a8" prot="public" static="no">
+        <name>BS_FAT_VOLID</name>
+        <initializer>39</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="32" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a4657e7716eb7f996c9cc3000ce0c2523" prot="public" static="no">
+        <name>BS_FAT_VOLLAB</name>
+        <initializer>43</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="33" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ab0b87701fceb353fb525b32e847dc663" prot="public" static="no">
+        <name>BS_JMPBOOT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="14" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a8d99acd8824be48a5a9587d191e0ab4a" prot="public" static="no">
+        <name>BS_OEMNAME</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="15" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a8dd000b545e9a127169fdbd82d418965" prot="public" static="no">
+        <name>FAT32_INVALID_CLUSTER</name>
+        <initializer>0xFFFFFFFF</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="109" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a6542eeb37905e8f378fb8f3e5e94d083" prot="public" static="no">
+        <name>FAT32_LAST_CLUSTER</name>
+        <initializer>0xFFFFFFFF</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="108" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a9ea4d2e492da588e584a91d78ca38ccc" prot="public" static="no">
+        <name>FAT32_TYPECODE1</name>
+        <initializer>0x0B</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a5c4ae9dd6a689a059a83b12f2c4c4731" prot="public" static="no">
+        <name>FAT32_TYPECODE2</name>
+        <initializer>0x0C</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1afc13d70fa37b5fc0e88b59e0653d5dba" prot="public" static="no">
+        <name>FAT_DATE_DAY_MASK</name>
+        <initializer>0x1F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a6f5c053dba4c9105b0ad14ac88ab8ec0" prot="public" static="no">
+        <name>FAT_DATE_DAY_SHIFT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="101" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a77a9292b0fc358929617fd649e27745a" prot="public" static="no">
+        <name>FAT_DATE_MONTH_MASK</name>
+        <initializer>0xF</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="100" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a965d68f837886808a79ecef6c7bbe14d" prot="public" static="no">
+        <name>FAT_DATE_MONTH_SHIFT</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ac3a347eb42be2d219f09f73e170b54d0" prot="public" static="no">
+        <name>FAT_DATE_YEAR_MASK</name>
+        <initializer>0x7F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a3032347c7c3e2fdf1eb83af61e62c949" prot="public" static="no">
+        <name>FAT_DATE_YEAR_OFFSET</name>
+        <initializer>1980</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aca30ee4a2f42462ae75f909b894e9c7f" prot="public" static="no">
+        <name>FAT_DATE_YEAR_SHIFT</name>
+        <initializer>9</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="97" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a0d73859aacf6d6e4ece7720fed28b9ca" prot="public" static="no">
+        <name>FAT_DIR_ENTRY_SIZE</name>
+        <initializer>32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a0918d60f1f01721da31d3b2b0f79f7aa" prot="public" static="no">
+        <name>FAT_SFN_SIZE_FULL</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a25a96fb1ddc1bd5dae208f2491b0f7c3" prot="public" static="no">
+        <name>FAT_SFN_SIZE_PARTIAL</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a169ea846dbe1e7806e9358dfb4c74aee" prot="public" static="no">
+        <name>FAT_TIME_HOURS_MASK</name>
+        <initializer>0x1F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="91" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1af8807f252b1136ddddb7c1846a531cec" prot="public" static="no">
+        <name>FAT_TIME_HOURS_SHIFT</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="90" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a930a47e4485e327b1d3dd3e1d87aa541" prot="public" static="no">
+        <name>FAT_TIME_MINUTES_MASK</name>
+        <initializer>0x3F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="93" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ad816eb22eafec0d1ccc2c0eb0f64930d" prot="public" static="no">
+        <name>FAT_TIME_MINUTES_SHIFT</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="92" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ae1fb932e80c563cb8ec6c25dfd5aa2ab" prot="public" static="no">
+        <name>FAT_TIME_SECONDS_MASK</name>
+        <initializer>0x1F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="95" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a22c7162ca5c0c072ee2c69feb8f9abfb" prot="public" static="no">
+        <name>FAT_TIME_SECONDS_SCALE</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="96" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1adceaf5062e20400b9d551a49f58b3bcb" prot="public" static="no">
+        <name>FAT_TIME_SECONDS_SHIFT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="94" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1af0640a4e1c545c96db6f7018ba507774" prot="public" static="no">
+        <name>FAT_TYPE_FAT12</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aff75c9d9b3f8d53f35af544cdb82ece5" prot="public" static="no">
+        <name>FAT_TYPE_FAT16</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a056c51a9acd8e469d56f8e4541adf09b" prot="public" static="no">
+        <name>FAT_TYPE_FAT32</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a4b786fea1ab7647f4dd615e045964cb2" prot="public" static="no">
+        <name>FILE_ATTR_ARCHIVE</name>
+        <initializer>0x20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1af05527a5bc09562e941dd51ac24f4638" prot="public" static="no">
+        <name>FILE_ATTR_DIRECTORY</name>
+        <initializer>0x10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="79" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a14cf4b69e21183017bb2b5d7083ed4f8" prot="public" static="no">
+        <name>FILE_ATTR_HIDDEN</name>
+        <initializer>0x02</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="75" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aeb0ab47a26edbbf113af1128a44304ee" prot="public" static="no">
+        <name>FILE_ATTR_LFN_TEXT</name>
+        <initializer>0x0F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="81" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1afdc644c8b6be1949ae474889c1431260" prot="public" static="no">
+        <name>FILE_ATTR_READ_ONLY</name>
+        <initializer>0x01</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="74" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a9c6349054e802adf1045219e99714bed" prot="public" static="no">
+        <name>FILE_ATTR_SYSHID</name>
+        <initializer>0x06</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="77" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1ab6f85130118310e636cb9957d08d1592" prot="public" static="no">
+        <name>FILE_ATTR_SYSTEM</name>
+        <initializer>0x04</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="76" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a491017a8d29ca6102617583588eceb0e" prot="public" static="no">
+        <name>FILE_ATTR_VOLUME_ID</name>
+        <initializer>0x08</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="78" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a7e2aeee00ea979682b81bea8f046af71" prot="public" static="no">
+        <name>FILE_HEADER_BLANK</name>
+        <initializer>0x00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="82" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1acc2882877e3f516e53feb76ee87013d3" prot="public" static="no">
+        <name>FILE_HEADER_DELETED</name>
+        <initializer>0xE5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="83" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a57d8f1ade52476af4ab3c03f7387b973" prot="public" static="no">
+        <name>FILE_TYPE_DIR</name>
+        <initializer>0x10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1abace2d6eb53e065d5a32ab4c4758813b" prot="public" static="no">
+        <name>FILE_TYPE_FILE</name>
+        <initializer>0x20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a3fe9dae3b04bdb4bfacd8a49aec4823d" prot="public" static="no">
+        <name>PARTITION1_LBA_BEGIN_LOCATION</name>
+        <initializer>454</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aaf0f4a08662fb5840011f95510299a61" prot="public" static="no">
+        <name>PARTITION1_SIZE_LOCATION</name>
+        <initializer>458</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a812cfec2f2979480abd1b320d1762498" prot="public" static="no">
+        <name>PARTITION1_TYPECODE_LOCATION</name>
+        <initializer>450</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1aa2e01dc9f319fbe7ce7ae6467aa27e76" prot="public" static="no">
+        <name>SIGNATURE_POSITION</name>
+        <initializer>510</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__defs_8h_1a0a6c76f061940b33990aff8b968805b8" prot="public" static="no">
+        <name>SIGNATURE_VALUE</name>
+        <initializer>0xAA55</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_DEFS_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_DEFS_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat_8h" kindref="compound">fat/fat.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__opts_8h" kindref="compound">fat_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__types_8h" kindref="compound">fat_types.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>FAT32<sp/>Offsets</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Name<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Offset</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Boot<sp/>Sector</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="fat__defs_8h_1ab0b87701fceb353fb525b32e847dc663" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_JMPBOOT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="fat__defs_8h_1a8d99acd8824be48a5a9587d191e0ab4a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_OEMNAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="fat__defs_8h_1a64f6214c3cd6ea996aa49c66ef704440" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_BYTSPERSEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>11<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="fat__defs_8h_1a23d5a5317bb9b8c2c299d37d3fae1207" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_SECPERCLUS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>13<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="fat__defs_8h_1ab42c8f7a0994062257044882b2ff4313" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_RSVDSECCNT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>14<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="fat__defs_8h_1a530b676e7e69bbc5038bd4b3cb499331" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_NUMFATS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>16<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="fat__defs_8h_1a788e987621983dd44b5f7e22b17577bb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_ROOTENTCNT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>17<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="fat__defs_8h_1a54c5035f6b96c9e4d5b0844f30de59e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_TOTSEC16<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>19<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="fat__defs_8h_1a2afacdaa3e5c9453cf9f8b89e78bec43" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_MEDIA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>21<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="fat__defs_8h_1a495df1c692e51d1590dbe5d5b0f5dbb3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/>BPB_FATSZ16<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>22<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="fat__defs_8h_1a06504f1ae855e65764d243070edf51d7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_SECPERTRK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>24<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="fat__defs_8h_1a6a3972e83abe950396388f10d1f53a99" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_NUMHEADS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>26<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="fat__defs_8h_1a11e304da485bd8294a025762905adc45" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_HIDDSEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>28<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="fat__defs_8h_1a48e78c7d6a5b5afa2dc41541dd31ee2c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_TOTSEC32<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>32<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT<sp/>12/16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="fat__defs_8h_1a0009d229d45d4d2f7f1d2c9488349382" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT_DRVNUM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>36<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="fat__defs_8h_1ae5c9ef5581594bf62793a9ef1f664776" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT_BOOTSIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>38<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="fat__defs_8h_1aaffc2d4aa44c21874ec00225bf5303a8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT_VOLID<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>39<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="fat__defs_8h_1a4657e7716eb7f996c9cc3000ce0c2523" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT_VOLLAB<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>43<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="fat__defs_8h_1a0e1d6a6fbc86187690920c87f407f356" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT_FILSYSTYPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>54<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT<sp/>32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="fat__defs_8h_1a2f7e14590bc89d5c273e4945b1378ee8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_FAT32_FATSZ32<sp/><sp/><sp/><sp/><sp/><sp/><sp/>36<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="fat__defs_8h_1a4219fe47617691ead76dcce44ecd19f0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_FAT32_EXTFLAGS<sp/><sp/><sp/><sp/><sp/><sp/>40<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="fat__defs_8h_1a363afd53a154478a0ff7e9d4a3ac1c28" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_FAT32_FSVER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>42<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="fat__defs_8h_1ac22b455a3ed7ca414efe28f0da310f7a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_FAT32_ROOTCLUS<sp/><sp/><sp/><sp/><sp/><sp/>44<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="fat__defs_8h_1a6b66c1d291ef97e70fbe5f1f36fda793" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_FAT32_FSINFO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>48<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="fat__defs_8h_1a36524b485b1e4fb4f7776d5ebee503a3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BPB_FAT32_BKBOOTSEC<sp/><sp/><sp/><sp/><sp/>50<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="fat__defs_8h_1a1be359cd942fa782c7040c8346130006" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT32_DRVNUM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>64<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="fat__defs_8h_1a8a109731531b19ebae8ada95114bf5e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT32_BOOTSIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>66<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="fat__defs_8h_1aad0f01789f2c16a9b591a18350a8fdb7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT32_VOLID<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>67<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="fat__defs_8h_1ae4d0c116dfdb638cc1fc445aa0190326" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT32_VOLLAB<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>71<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="fat__defs_8h_1aa1d1447a5358a3e990461a2b4ebd398b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BS_FAT32_FILSYSTYPE<sp/><sp/><sp/><sp/><sp/>82<sp/><sp/><sp/><sp/>//<sp/>Length<sp/>=<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT<sp/>Types</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="fat__defs_8h_1af0640a4e1c545c96db6f7018ba507774" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TYPE_FAT12<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="fat__defs_8h_1aff75c9d9b3f8d53f35af544cdb82ece5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TYPE_FAT16<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="fat__defs_8h_1a056c51a9acd8e469d56f8e4541adf09b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TYPE_FAT32<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT32<sp/>Specific<sp/>Statics</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="fat__defs_8h_1aa2e01dc9f319fbe7ce7ae6467aa27e76" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGNATURE_POSITION<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>510</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="fat__defs_8h_1a0a6c76f061940b33990aff8b968805b8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIGNATURE_VALUE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xAA55</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="fat__defs_8h_1a812cfec2f2979480abd1b320d1762498" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PARTITION1_TYPECODE_LOCATION<sp/><sp/><sp/><sp/>450</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="fat__defs_8h_1a9ea4d2e492da588e584a91d78ca38ccc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT32_TYPECODE1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0B</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="fat__defs_8h_1a5c4ae9dd6a689a059a83b12f2c4c4731" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT32_TYPECODE2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0C</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="fat__defs_8h_1a3fe9dae3b04bdb4bfacd8a49aec4823d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PARTITION1_LBA_BEGIN_LOCATION<sp/><sp/><sp/>454</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="fat__defs_8h_1aaf0f4a08662fb5840011f95510299a61" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PARTITION1_SIZE_LOCATION<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>458</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="fat__defs_8h_1a0d73859aacf6d6e4ece7720fed28b9ca" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DIR_ENTRY_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="fat__defs_8h_1a0918d60f1f01721da31d3b2b0f79f7aa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_SFN_SIZE_FULL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="fat__defs_8h_1a25a96fb1ddc1bd5dae208f2491b0f7c3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_SFN_SIZE_PARTIAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT32<sp/>File<sp/>Attributes<sp/>and<sp/>Types</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="fat__defs_8h_1afdc644c8b6be1949ae474889c1431260" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_READ_ONLY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x01</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="fat__defs_8h_1a14cf4b69e21183017bb2b5d7083ed4f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_HIDDEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x02</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="fat__defs_8h_1ab6f85130118310e636cb9957d08d1592" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_SYSTEM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x04</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="fat__defs_8h_1a9c6349054e802adf1045219e99714bed" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_SYSHID<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x06</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="fat__defs_8h_1a491017a8d29ca6102617583588eceb0e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_VOLUME_ID<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x08</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="fat__defs_8h_1af05527a5bc09562e941dd51ac24f4638" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_DIRECTORY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="fat__defs_8h_1a4b786fea1ab7647f4dd615e045964cb2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_ARCHIVE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="fat__defs_8h_1aeb0ab47a26edbbf113af1128a44304ee" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_ATTR_LFN_TEXT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82" refid="fat__defs_8h_1a7e2aeee00ea979682b81bea8f046af71" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_HEADER_BLANK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="fat__defs_8h_1acc2882877e3f516e53feb76ee87013d3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_HEADER_DELETED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xE5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="fat__defs_8h_1a57d8f1ade52476af4ab3c03f7387b973" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_TYPE_DIR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="fat__defs_8h_1abace2d6eb53e065d5a32ab4c4758813b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FILE_TYPE_FILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Time<sp/>/<sp/>Date<sp/>details</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="fat__defs_8h_1af8807f252b1136ddddb7c1846a531cec" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_HOURS_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="fat__defs_8h_1a169ea846dbe1e7806e9358dfb4c74aee" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_HOURS_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x1F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="fat__defs_8h_1ad816eb22eafec0d1ccc2c0eb0f64930d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_MINUTES_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="fat__defs_8h_1a930a47e4485e327b1d3dd3e1d87aa541" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_MINUTES_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x3F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="fat__defs_8h_1adceaf5062e20400b9d551a49f58b3bcb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_SECONDS_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="fat__defs_8h_1ae1fb932e80c563cb8ec6c25dfd5aa2ab" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_SECONDS_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x1F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="fat__defs_8h_1a22c7162ca5c0c072ee2c69feb8f9abfb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_TIME_SECONDS_SCALE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="fat__defs_8h_1aca30ee4a2f42462ae75f909b894e9c7f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_YEAR_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="fat__defs_8h_1ac3a347eb42be2d219f09f73e170b54d0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_YEAR_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x7F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="fat__defs_8h_1a965d68f837886808a79ecef6c7bbe14d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_MONTH_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="fat__defs_8h_1a77a9292b0fc358929617fd649e27745a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_MONTH_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="fat__defs_8h_1a6f5c053dba4c9105b0ad14ac88ab8ec0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_DAY_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="fat__defs_8h_1afc13d70fa37b5fc0e88b59e0653d5dba" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_DAY_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x1F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="fat__defs_8h_1a3032347c7c3e2fdf1eb83af61e62c949" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT_DATE_YEAR_OFFSET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1980</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Other<sp/>Defines</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="fat__defs_8h_1a6542eeb37905e8f378fb8f3e5e94d083" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT32_LAST_CLUSTER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xFFFFFFFF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="fat__defs_8h_1a8dd000b545e9a127169fdbd82d418965" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAT32_INVALID_CLUSTER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xFFFFFFFF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><ref refid="fat__types_8h_1a828b10da1c1bb6503e9f755fa758f3e2" kindref="member">STRUCT_PACK_BEGIN</ref></highlight></codeline>
+<codeline lineno="112" refid="structfat__dir__entry" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/><ref refid="fat__types_8h_1ae599587b3b3162073fb0df95cd661cd2" kindref="member">STRUCT_PACK</ref></highlight></codeline>
+<codeline lineno="113"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="114" refid="structfat__dir__entry_1a3b690c897cb2883c0fd9b651128fbc69" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a3b690c897cb2883c0fd9b651128fbc69" kindref="member">Name</ref>[11];</highlight></codeline>
+<codeline lineno="115" refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" kindref="member">Attr</ref>;</highlight></codeline>
+<codeline lineno="116" refid="structfat__dir__entry_1a0af375d10cb5e96f95787716816a64d1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a0af375d10cb5e96f95787716816a64d1" kindref="member">NTRes</ref>;</highlight></codeline>
+<codeline lineno="117" refid="structfat__dir__entry_1a2201702ad673bc37d3e732f4baab3ef6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a2201702ad673bc37d3e732f4baab3ef6" kindref="member">CrtTimeTenth</ref>;</highlight></codeline>
+<codeline lineno="118" refid="structfat__dir__entry_1a6a6b6e66fa26b03fad695a62bc12905f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a6a6b6e66fa26b03fad695a62bc12905f" kindref="member">CrtTime</ref>[2];</highlight></codeline>
+<codeline lineno="119" refid="structfat__dir__entry_1a4a12f862ca27a01051664d72e6c95b6e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a4a12f862ca27a01051664d72e6c95b6e" kindref="member">CrtDate</ref>[2];</highlight></codeline>
+<codeline lineno="120" refid="structfat__dir__entry_1a3908642d313faf4cb05c70052ce34b91" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a3908642d313faf4cb05c70052ce34b91" kindref="member">LstAccDate</ref>[2];</highlight></codeline>
+<codeline lineno="121" refid="structfat__dir__entry_1abc27727d77c39b4481215c310058e7ef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref><sp/><ref refid="structfat__dir__entry_1abc27727d77c39b4481215c310058e7ef" kindref="member">FstClusHI</ref>;</highlight></codeline>
+<codeline lineno="122" refid="structfat__dir__entry_1acab2693a2267a89aaaa11ffb35ec479d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1acab2693a2267a89aaaa11ffb35ec479d" kindref="member">WrtTime</ref>[2];</highlight></codeline>
+<codeline lineno="123" refid="structfat__dir__entry_1a7e05fe6b6708c7e57ff675fe06d47d58" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structfat__dir__entry_1a7e05fe6b6708c7e57ff675fe06d47d58" kindref="member">WrtDate</ref>[2];</highlight></codeline>
+<codeline lineno="124" refid="structfat__dir__entry_1ae91aaa2c62dd33e7f7d6e5042e7c42ed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref><sp/><ref refid="structfat__dir__entry_1ae91aaa2c62dd33e7f7d6e5042e7c42ed" kindref="member">FstClusLO</ref>;</highlight></codeline>
+<codeline lineno="125" refid="structfat__dir__entry_1a0a053ffe5aa88eb280c5ddde56c3c0c8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><ref refid="structfat__dir__entry_1a0a053ffe5aa88eb280c5ddde56c3c0c8" kindref="member">FileSize</ref>;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal">}<sp/><ref refid="fat__types_8h_1a18632e181f087370c9c9b1a0d1b629be" kindref="member">STRUCT_PACKED</ref>;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><ref refid="fat__types_8h_1a8c556109c509a7464c257e01dae85efb" kindref="member">STRUCT_PACK_END</ref></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h"/>
+  </compounddef>
+</doxygen>

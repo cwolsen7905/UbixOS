@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__socket__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_socket_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__socket__args_1add6da33e33b8e25e144ee8b38e56fe7e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_socket_args::domain</definition>
+        <argsstring></argsstring>
+        <name>domain</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="643" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="643" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1a60377fb57b759b26ef2d45aca5536e55" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_socket_args::domain_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>domain_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="642" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="642" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1a5b60b6cae7defbf8ba1d48656e92b63d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_socket_args::domain_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>domain_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="644" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="644" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1aaccf6efd6512d1cf88c9823c8e53e454" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_socket_args::protocol</definition>
+        <argsstring></argsstring>
+        <name>protocol</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="649" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="649" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1a35fa252c2e5e0bb5aedec140377c1f8d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_socket_args::protocol_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>protocol_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="648" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="648" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1a28c9775889ba1d86b585d0e8d175afba" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_socket_args::protocol_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>protocol_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="650" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="650" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1a3824ec8b40b6aa901143a2644846e2ab" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_socket_args::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="646" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="646" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1afc54e5b12d274bff0674716a6d77f14c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_socket_args::type_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>type_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="645" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="645" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__socket__args_1a34e9af3a2796923c170063ce267715f0" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_socket_args::type_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>type_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="647" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="647" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_socket_args</label>
+        <link refid="structsys__socket__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="641" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="641" bodyend="651"/>
+    <listofallmembers>
+      <member refid="structsys__socket__args_1add6da33e33b8e25e144ee8b38e56fe7e" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>domain</name></member>
+      <member refid="structsys__socket__args_1a60377fb57b759b26ef2d45aca5536e55" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>domain_l_</name></member>
+      <member refid="structsys__socket__args_1a5b60b6cae7defbf8ba1d48656e92b63d" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>domain_r_</name></member>
+      <member refid="structsys__socket__args_1aaccf6efd6512d1cf88c9823c8e53e454" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>protocol</name></member>
+      <member refid="structsys__socket__args_1a35fa252c2e5e0bb5aedec140377c1f8d" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>protocol_l_</name></member>
+      <member refid="structsys__socket__args_1a28c9775889ba1d86b585d0e8d175afba" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>protocol_r_</name></member>
+      <member refid="structsys__socket__args_1a3824ec8b40b6aa901143a2644846e2ab" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>type</name></member>
+      <member refid="structsys__socket__args_1afc54e5b12d274bff0674716a6d77f14c" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>type_l_</name></member>
+      <member refid="structsys__socket__args_1a34e9af3a2796923c170063ce267715f0" prot="public" virt="non-virtual"><scope>sys_socket_args</scope><name>type_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

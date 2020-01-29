@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfs__file" kind="struct" language="C++" prot="public">
+    <compoundname>fs_file</compoundname>
+    <includes refid="net_2apps_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfs__file_1adfa3b97b42838ec0d0c9c8dfacd5ea59" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        <definition>const char* fs_file::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" line="57" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs__file_1a61973387cec852f3eca876acf288ca01" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t fs_file::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" line="65" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs__file_1af27b72371512e6cbf6104bc3a7063aab" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fs_file::index</definition>
+        <argsstring></argsstring>
+        <name>index</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" line="59" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs__file_1a99a16a5082bf9510cb1cb8069402f1f0" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fs_file::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" line="58" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs__file_1a4f6a1fc1d02d5811f352d40b06e6bb3f" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* fs_file::pextension</definition>
+        <argsstring></argsstring>
+        <name>pextension</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" line="60" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fs_file</label>
+        <link refid="structfs__file"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" line="56" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/fs.h" bodystart="56" bodyend="72"/>
+    <listofallmembers>
+      <member refid="structfs__file_1adfa3b97b42838ec0d0c9c8dfacd5ea59" prot="public" virt="non-virtual"><scope>fs_file</scope><name>data</name></member>
+      <member refid="structfs__file_1a61973387cec852f3eca876acf288ca01" prot="public" virt="non-virtual"><scope>fs_file</scope><name>flags</name></member>
+      <member refid="structfs__file_1af27b72371512e6cbf6104bc3a7063aab" prot="public" virt="non-virtual"><scope>fs_file</scope><name>index</name></member>
+      <member refid="structfs__file_1a99a16a5082bf9510cb1cb8069402f1f0" prot="public" virt="non-virtual"><scope>fs_file</scope><name>len</name></member>
+      <member refid="structfs__file_1a4f6a1fc1d02d5811f352d40b06e6bb3f" prot="public" virt="non-virtual"><scope>fs_file</scope><name>pextension</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

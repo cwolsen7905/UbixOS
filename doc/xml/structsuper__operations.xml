@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsuper__operations" kind="struct" language="C++" prot="public">
+    <compoundname>super_operations</compoundname>
+    <includes refid="include_2vfs_2vfs_8h" local="no">vfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsuper__operations_1ae4c95dd626e62f1656f0f14652b082e7" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* super_operations::notify_change) (int flags, struct inode *)</definition>
+        <argsstring>)(int flags, struct inode *)</argsstring>
+        <name>notify_change</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="98" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1ac2d5b20c8406fe65285daa09beb32ef5" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* super_operations::put_inode) (struct inode *)</definition>
+        <argsstring>)(struct inode *)</argsstring>
+        <name>put_inode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="100" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1a5c4551d81dbabe2163a93ffbe09f7c3d" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* super_operations::put_super) (struct super_block *)</definition>
+        <argsstring>)(struct super_block *)</argsstring>
+        <name>put_super</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="101" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1ad3f81a8ac9bb6ca4f5666bc6232eb592" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* super_operations::read_inode) (struct inode *)</definition>
+        <argsstring>)(struct inode *)</argsstring>
+        <name>read_inode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="97" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1a11784cb284a2c8e15ce109aae1494a5c" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* super_operations::remount_fs) (struct super_block *, int *, char *)</definition>
+        <argsstring>)(struct super_block *, int *, char *)</argsstring>
+        <name>remount_fs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="104" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1a1ea5a538642868cf254313a62c3473fd" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* super_operations::statfs) (struct super_block *, struct statfs *)</definition>
+        <argsstring>)(struct super_block *, struct statfs *)</argsstring>
+        <name>statfs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="103" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1a600df86ad28345eabc0e69ca919e8827" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* super_operations::write_inode) (struct inode *)</definition>
+        <argsstring>)(struct inode *)</argsstring>
+        <name>write_inode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="99" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsuper__operations_1a89850afa042e226983bfdbd215437258" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* super_operations::write_super) (struct super_block *)</definition>
+        <argsstring>)(struct super_block *)</argsstring>
+        <name>write_super</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="102" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>super_operations</label>
+        <link refid="structsuper__operations"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="96" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="96" bodyend="105"/>
+    <listofallmembers>
+      <member refid="structsuper__operations_1ae4c95dd626e62f1656f0f14652b082e7" prot="public" virt="non-virtual"><scope>super_operations</scope><name>notify_change</name></member>
+      <member refid="structsuper__operations_1ac2d5b20c8406fe65285daa09beb32ef5" prot="public" virt="non-virtual"><scope>super_operations</scope><name>put_inode</name></member>
+      <member refid="structsuper__operations_1a5c4551d81dbabe2163a93ffbe09f7c3d" prot="public" virt="non-virtual"><scope>super_operations</scope><name>put_super</name></member>
+      <member refid="structsuper__operations_1ad3f81a8ac9bb6ca4f5666bc6232eb592" prot="public" virt="non-virtual"><scope>super_operations</scope><name>read_inode</name></member>
+      <member refid="structsuper__operations_1a11784cb284a2c8e15ce109aae1494a5c" prot="public" virt="non-virtual"><scope>super_operations</scope><name>remount_fs</name></member>
+      <member refid="structsuper__operations_1a1ea5a538642868cf254313a62c3473fd" prot="public" virt="non-virtual"><scope>super_operations</scope><name>statfs</name></member>
+      <member refid="structsuper__operations_1a600df86ad28345eabc0e69ca919e8827" prot="public" virt="non-virtual"><scope>super_operations</scope><name>write_inode</name></member>
+      <member refid="structsuper__operations_1a89850afa042e226983bfdbd215437258" prot="public" virt="non-virtual"><scope>super_operations</scope><name>write_super</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

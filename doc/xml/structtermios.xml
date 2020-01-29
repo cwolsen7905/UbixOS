@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtermios" kind="struct" language="C++" prot="public">
+    <compoundname>termios</compoundname>
+    <includes refid="ioctl_8h" local="no">ioctl.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1a02a4a51b25871e505aad0dcae945a0dc" kindref="member">cc_t</ref></type>
+        <definition>cc_t termios::c_cc[20]</definition>
+        <argsstring>[20]</argsstring>
+        <name>c_cc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="41" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtermios_1a5d42b95faa4745c3bea53652d2812162" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref></type>
+        <definition>tcflag_t termios::c_cflag</definition>
+        <argsstring></argsstring>
+        <name>c_cflag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="39" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtermios_1a85b6c86d2a3db45a3829488190e357e4" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref></type>
+        <definition>tcflag_t termios::c_iflag</definition>
+        <argsstring></argsstring>
+        <name>c_iflag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="37" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtermios_1a02ae972cbc9fb2cf4a1aa6a6751a421a" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" kindref="member">speed_t</ref></type>
+        <definition>speed_t termios::c_ispeed</definition>
+        <argsstring></argsstring>
+        <name>c_ispeed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="42" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtermios_1a91bdd7691180800fccc4b791466ee9c3" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref></type>
+        <definition>tcflag_t termios::c_lflag</definition>
+        <argsstring></argsstring>
+        <name>c_lflag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="40" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtermios_1ad6e2cfedb81530e5a6a3a0e30b8c6362" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref></type>
+        <definition>tcflag_t termios::c_oflag</definition>
+        <argsstring></argsstring>
+        <name>c_oflag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="38" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtermios_1a3f42b69c0c7fa4ce2179cb61f8c7ca99" prot="public" static="no" mutable="no">
+        <type><ref refid="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" kindref="member">speed_t</ref></type>
+        <definition>speed_t termios::c_ospeed</definition>
+        <argsstring></argsstring>
+        <name>c_ospeed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="43" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>termios</label>
+        <link refid="structtermios"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="36" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="36" bodyend="44"/>
+    <listofallmembers>
+      <member refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" prot="public" virt="non-virtual"><scope>termios</scope><name>c_cc</name></member>
+      <member refid="structtermios_1a5d42b95faa4745c3bea53652d2812162" prot="public" virt="non-virtual"><scope>termios</scope><name>c_cflag</name></member>
+      <member refid="structtermios_1a85b6c86d2a3db45a3829488190e357e4" prot="public" virt="non-virtual"><scope>termios</scope><name>c_iflag</name></member>
+      <member refid="structtermios_1a02ae972cbc9fb2cf4a1aa6a6751a421a" prot="public" virt="non-virtual"><scope>termios</scope><name>c_ispeed</name></member>
+      <member refid="structtermios_1a91bdd7691180800fccc4b791466ee9c3" prot="public" virt="non-virtual"><scope>termios</scope><name>c_lflag</name></member>
+      <member refid="structtermios_1ad6e2cfedb81530e5a6a3a0e30b8c6362" prot="public" virt="non-virtual"><scope>termios</scope><name>c_oflag</name></member>
+      <member refid="structtermios_1a3f42b69c0c7fa4ce2179cb61f8c7ca99" prot="public" virt="non-virtual"><scope>termios</scope><name>c_ospeed</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

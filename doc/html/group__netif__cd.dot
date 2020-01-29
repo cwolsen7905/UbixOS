@@ -1,0 +1,9 @@
+digraph "Client data handling"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node1 [label="Client data handling",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Store data (void*) on a netif for application usage."];
+  Node2 [label="Network interface \l(NETIF)",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__netif.html",tooltip=" "];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+}

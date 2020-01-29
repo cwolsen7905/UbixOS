@@ -1,0 +1,17 @@
+digraph "jrec"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{jrec\n||}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rec_jtrncrec" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{jtrncrec\n|+ jt_extsize\l+ jt_ino\l+ jt_op\l+ jt_pad\l+ jt_size\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structjtrncrec.html",tooltip=" "];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rec_jsegrec" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{jsegrec\n|+ jsr_blocks\l+ jsr_cnt\l+ jsr_crc\l+ jsr_oldest\l+ jsr_seq\l+ jsr_time\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structjsegrec.html",tooltip=" "];
+  Node4 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rec_jrefrec" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node4 [label="{jrefrec\n|+ jr_diroff\l+ jr_ino\l+ jr_mode\l+ jr_nlink\l+ jr_op\l+ jr_parent\l+ jr_unused\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structjrefrec.html",tooltip=" "];
+  Node5 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rec_jblkrec" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node5 [label="{jblkrec\n|+ jb_blkno\l+ jb_frags\l+ jb_ino\l+ jb_lbn\l+ jb_oldfrags\l+ jb_op\l+ jb_unused\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structjblkrec.html",tooltip=" "];
+  Node6 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rec_jmvrec" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node6 [label="{jmvrec\n|+ jm_ino\l+ jm_newoff\l+ jm_oldoff\l+ jm_op\l+ jm_parent\l+ jm_unused\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structjmvrec.html",tooltip=" "];
+}

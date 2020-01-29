@@ -1,0 +1,358 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__types_8h" kind="file" language="C++">
+    <compoundname>fat_types.h</compoundname>
+    <includedby refid="fat__defs_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</includedby>
+    <invincdepgraph>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h</label>
+        <link refid="fat__types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.h</label>
+        <link refid="fat__write_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</label>
+        <link refid="fat__format_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__types_8h_1a79f47acd161cf6d4943a43745c179a6e" prot="public" static="no">
+        <name>FAT_HTONL</name>
+        <param><defname>n</defname></param>
+        <initializer>(((((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)(n) &amp; 0xFF)) &lt;&lt; 24) | \
+                    ((((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)(n) &amp; 0xFF00)) &lt;&lt; 8) | \
+                    ((((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)(n) &amp; 0xFF0000)) &gt;&gt; 8) | \
+                    ((((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)(n) &amp; 0xFF000000)) &gt;&gt; 24))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="46" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__types_8h_1abbb9c5db3bb96b1398c9b011870c335b" prot="public" static="no">
+        <name>FAT_HTONS</name>
+        <param><defname>n</defname></param>
+        <initializer>((((<ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref>)((n) &amp; 0xff)) &lt;&lt; 8) | (((n) &amp; 0xff00) &gt;&gt; 8))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="45" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__types_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" prot="public" static="no">
+        <name>NULL</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="28" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__types_8h_1ae599587b3b3162073fb0df95cd661cd2" prot="public" static="no">
+        <name>STRUCT_PACK</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="63" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__types_8h_1a828b10da1c1bb6503e9f755fa758f3e2" prot="public" static="no">
+        <name>STRUCT_PACK_BEGIN</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="64" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__types_8h_1a8c556109c509a7464c257e01dae85efb" prot="public" static="no">
+        <name>STRUCT_PACK_END</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="65" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__types_8h_1a18632e181f087370c9c9b1a0d1b629be" prot="public" static="no">
+        <name>STRUCT_PACKED</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="66" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" prot="public" static="no">
+        <type>unsigned short</type>
+        <definition>typedef unsigned short uint16</definition>
+        <argsstring></argsstring>
+        <name>uint16</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="16" column="28" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" prot="public" static="no">
+        <type>unsigned long</type>
+        <definition>typedef unsigned long uint32</definition>
+        <argsstring></argsstring>
+        <name>uint32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="23" column="31" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" prot="public" static="no">
+        <type>unsigned char</type>
+        <definition>typedef unsigned char uint8</definition>
+        <argsstring></argsstring>
+        <name>uint8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" line="15" column="27" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_TYPES_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_TYPES_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Detect<sp/>64-bit<sp/>compilation<sp/>on<sp/>GCC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__GNUC__)<sp/>&amp;&amp;<sp/>defined(__SIZEOF_LONG__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#if<sp/>__SIZEOF_LONG__<sp/>==<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>#define<sp/>FATFS_DEF_UINT32_AS_INT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="comment">//<sp/>System<sp/>specific<sp/>types</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FATFS_NO_DEF_TYPES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>;</highlight></codeline>
+<codeline lineno="16" refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref>;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>If<sp/>compiling<sp/>on<sp/>a<sp/>64-bit<sp/>machine,<sp/>use<sp/>int<sp/>as<sp/>32-bits</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#ifdef<sp/>FATFS_DEF_UINT32_AS_INT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Else<sp/>for<sp/>32-bit<sp/>machines<sp/>&amp;<sp/>embedded<sp/>systems,<sp/>use<sp/>long...</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28" refid="fat__types_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>NULL<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Endian<sp/>Macros</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">//<sp/>FAT<sp/>is<sp/>little<sp/>endian<sp/>so<sp/>big<sp/>endian<sp/>systems<sp/>need<sp/>to<sp/>swap<sp/>words</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Little<sp/>Endian<sp/>-<sp/>No<sp/>swap<sp/>required</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>FATFS_IS_LITTLE_ENDIAN<sp/>==<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_HTONS(n)<sp/>(n)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_HTONL(n)<sp/>(n)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Big<sp/>Endian<sp/>-<sp/>Swap<sp/>required</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="fat__types_8h_1abbb9c5db3bb96b1398c9b011870c335b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_HTONS(n)<sp/>((((uint16)((n)<sp/>&amp;<sp/>0xff))<sp/>&lt;&lt;<sp/>8)<sp/>|<sp/>(((n)<sp/>&amp;<sp/>0xff00)<sp/>&gt;&gt;<sp/>8))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="fat__types_8h_1a79f47acd161cf6d4943a43745c179a6e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_HTONL(n)<sp/>(((((uint32)(n)<sp/>&amp;<sp/>0xFF))<sp/>&lt;&lt;<sp/>24)<sp/>|<sp/>\</highlight></codeline>
+<codeline lineno="47"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((uint32)(n)<sp/>&amp;<sp/>0xFF00))<sp/>&lt;&lt;<sp/>8)<sp/>|<sp/>\</highlight></codeline>
+<codeline lineno="48"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((uint32)(n)<sp/>&amp;<sp/>0xFF0000))<sp/>&gt;&gt;<sp/>8)<sp/>|<sp/>\</highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((uint32)(n)<sp/>&amp;<sp/>0xFF000000))<sp/>&gt;&gt;<sp/>24))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structure<sp/>Packing<sp/>Compile<sp/>Options</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">//-------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__GNUC__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACK_BEGIN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACK_END</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACKED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>__attribute__<sp/>((packed))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Other<sp/>compilers<sp/>may<sp/>require<sp/>other<sp/>methods<sp/>of<sp/>packing<sp/>structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="fat__types_8h_1ae599587b3b3162073fb0df95cd661cd2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="fat__types_8h_1a828b10da1c1bb6503e9f755fa758f3e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACK_BEGIN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="fat__types_8h_1a8c556109c509a7464c257e01dae85efb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACK_END</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="fat__types_8h_1a18632e181f087370c9c9b1a0d1b629be" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STRUCT_PACKED</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_types.h"/>
+  </compounddef>
+</doxygen>

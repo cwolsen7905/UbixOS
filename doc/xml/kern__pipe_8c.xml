@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kern__pipe_8c" kind="file" language="C++">
+    <compoundname>kern_pipe.c</compoundname>
+    <includes refid="thread_8h" local="no">sys/thread.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sys/sysproto_posix.h</includes>
+    <includes refid="pipe_8h" local="no">sys/pipe.h</includes>
+    <includes refid="descrip_8h" local="no">sys/descrip.h</includes>
+    <includes refid="video_8h" local="no">sys/video.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="28">
+        <label>sys/video.h</label>
+        <link refid="video_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+      </node>
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>sys/pipe.h</label>
+        <link refid="pipe_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c</label>
+        <link refid="kern__pipe_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>vfs/stat.h</label>
+        <link refid="stat_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_pipe2</definition>
+        <argsstring>(struct thread *thr, struct sys_pipe2_args *args)</argsstring>
+        <name>sys_pipe2</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>thr</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__pipe2__args" kindref="compound">sys_pipe2_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c" line="36" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c" bodystart="36" bodyend="69"/>
+        <references refid="structfile_1adfb0c6311589d1d62b720c9610430ad0" compoundref="descrip_8h" startline="74">file::data</references>
+        <references refid="descrip_8h_1a434fb15226182b0ee879a5afe9a8c190" compoundref="descrip_8c" startline="96" endline="123">falloc</references>
+        <references refid="structfile_1ac43cc1da8bee1eb339249ad88518f769" compoundref="descrip_8h" startline="72">file::fd_type</references>
+        <references refid="structsys__pipe2__args_1a7cd3e1a28b459403e1f2419ef5476f8c" compoundref="sysproto__posix_8h" startline="759">sys_pipe2_args::fildes</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="structpipeInfo_1a7b8ab29519bbfd2a4f319bb08b13d999" compoundref="pipe_8h" startline="46">pipeInfo::rFD</references>
+        <references refid="structpipeInfo_1ad1f25bacb95bd28fd47a62b648dbd125" compoundref="pipe_8h" startline="47">pipeInfo::rfdCNT</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structpipeInfo_1ab3c324342452efcb74529c9c830d708b" compoundref="pipe_8h" startline="48">pipeInfo::wFD</references>
+        <references refid="structpipeInfo_1a73534b061097015a340b287279fe52ed" compoundref="pipe_8h" startline="49">pipeInfo::wfdCNT</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto__posix_8h" kindref="compound">sys/sysproto_posix.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="pipe_8h" kindref="compound">sys/pipe.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="descrip_8h" kindref="compound">sys/descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="video_8h" kindref="compound">sys/video.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" kindref="member">sys_pipe2</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*thr,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__pipe2__args" kindref="compound">sys_pipe2_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>fd1<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>fd2<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*nfp1<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*nfp2<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpipeInfo" kindref="compound">pipeInfo</ref><sp/>*pipeDesc<sp/>=<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpipeInfo" kindref="compound">pipeInfo</ref>));</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>(pipeDesc,<sp/>0x0,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpipeInfo" kindref="compound">pipeInfo</ref>));</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>error<sp/>=<sp/><ref refid="descrip_8h_1a434fb15226182b0ee879a5afe9a8c190" kindref="member">falloc</ref>(thr,<sp/>&amp;nfp1,<sp/>&amp;fd1);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>error<sp/>=<sp/><ref refid="descrip_8h_1a434fb15226182b0ee879a5afe9a8c190" kindref="member">falloc</ref>(thr,<sp/>&amp;nfp2,<sp/>&amp;fd2);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/>nfp1-&gt;<ref refid="structfile_1adfb0c6311589d1d62b720c9610430ad0" kindref="member">data</ref><sp/>=<sp/>pipeDesc;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>nfp2-&gt;<ref refid="structfile_1adfb0c6311589d1d62b720c9610430ad0" kindref="member">data</ref><sp/>=<sp/>pipeDesc;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>nfp1-&gt;<ref refid="structfile_1ac43cc1da8bee1eb339249ad88518f769" kindref="member">fd_type</ref><sp/>=<sp/>3;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/>nfp2-&gt;<ref refid="structfile_1ac43cc1da8bee1eb339249ad88518f769" kindref="member">fd_type</ref><sp/>=<sp/>3;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>pipeDesc-&gt;<ref refid="structpipeInfo_1a7b8ab29519bbfd2a4f319bb08b13d999" kindref="member">rFD</ref><sp/>=<sp/>fd1;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>pipeDesc-&gt;<ref refid="structpipeInfo_1ad1f25bacb95bd28fd47a62b648dbd125" kindref="member">rfdCNT</ref><sp/>=<sp/>2;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>pipeDesc-&gt;<ref refid="structpipeInfo_1ab3c324342452efcb74529c9c830d708b" kindref="member">wFD</ref><sp/>=<sp/>fd2;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>pipeDesc-&gt;<ref refid="structpipeInfo_1a73534b061097015a340b287279fe52ed" kindref="member">wfdCNT</ref><sp/>=<sp/>2;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>args-&gt;<ref refid="structsys__pipe2__args_1a7cd3e1a28b459403e1f2419ef5476f8c" kindref="member">fildes</ref>[0]<sp/>=<sp/>fd1;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>args-&gt;<ref refid="structsys__pipe2__args_1a7cd3e1a28b459403e1f2419ef5476f8c" kindref="member">fildes</ref>[1]<sp/>=<sp/>fd2;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>thr-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c"/>
+  </compounddef>
+</doxygen>

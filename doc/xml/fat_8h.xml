@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat_8h" kind="file" language="C++">
+    <compoundname>fat.h</compoundname>
+    <includedby refid="fat__defs_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</includedby>
+    <includedby refid="fat__fread_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_fread.c</includedby>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <invincdepgraph>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/fat/fat.h</label>
+        <link refid="fat_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_fread.c</label>
+        <link refid="fat__fread_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.h</label>
+        <link refid="fat__write_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</label>
+        <link refid="fat__format_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat_8h_1a77e202c52dfa1ae6a4a060b21b70a80c" prot="public" static="no">
+        <name>FAT_PRINTF</name>
+        <param><defname>a</defname></param>
+        <initializer><ref refid="kprintf_8c_1ab2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref> a</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fat/fat.h" line="1" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/fat/fat.h" bodystart="1" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fat_init</definition>
+        <argsstring>()</argsstring>
+        <name>fat_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fat/fat.h" line="3" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="179" bodyend="206" declfile="C:/Dev/git/UbixOS/sys/include/fat/fat.h" declline="3" declcolumn="5"/>
+        <references refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</references>
+        <references refid="fat__filelib_8c_1ac4154a1278a172ab8e6427eb64161179" compoundref="fat__filelib_8c" startline="584" endline="595">fl_init</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="fat_8c_1ab66e873ee114640f0462a7fd5826b3fe" compoundref="fat_8c" startline="175" endline="177">mkdir_fat</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</references>
+        <references refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" compoundref="fat_8c" startline="101" endline="114">read_fat</references>
+        <references refid="fat_8c_1ab09f570c60b6705826298d9896fd45d2" compoundref="fat_8c" startline="171" endline="173">unlink_fat</references>
+        <references refid="vfs_8c_1ad8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="79" endline="136">vfsRegisterFS</references>
+        <references refid="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" compoundref="fat_8c" startline="116" endline="129">write_fat</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="fat_8h_1a77e202c52dfa1ae6a4a060b21b70a80c" refkind="member"><highlight class="preprocessor"><sp/>#define<sp/>FAT_PRINTF(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>kprintf<sp/>a</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" kindref="member">fat_init</ref>();</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/fat/fat.h"/>
+  </compounddef>
+</doxygen>

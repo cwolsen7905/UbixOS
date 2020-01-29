@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2autoip_8h" kind="file" language="C++">
+    <compoundname>autoip.h</compoundname>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2autoip_8h_1a7ed8f0b9d3330a2967142e0e48b28521" prot="public" static="no">
+        <name>ANNOUNCE_INTERVAL</name>
+        <initializer>2   /* seconds  (time between announcement packets)    */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a29141f41d1391d34730b75539000f9ea" prot="public" static="no">
+        <name>ANNOUNCE_NUM</name>
+        <initializer>2   /*          (number of announcement packets)       */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a1a9b374b5e2e6da152f3a1556d09e6b3" prot="public" static="no">
+        <name>ANNOUNCE_WAIT</name>
+        <initializer>2   /* seconds  (delay before announcing)              */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1ac19d92e0bfcb52079adbe92fb569d468" prot="public" static="no">
+        <name>AUTOIP_NET</name>
+        <initializer>0xA9FE0000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a84dec606d57f40eed1cdc782f702f161" prot="public" static="no">
+        <name>AUTOIP_RANGE_END</name>
+        <initializer>(<ref refid="prot_2autoip_8h_1ac19d92e0bfcb52079adbe92fb569d468" kindref="member">AUTOIP_NET</ref> | 0xFEFF)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a8b4506c8e0ab7631f49567f9b81779c6" prot="public" static="no">
+        <name>AUTOIP_RANGE_START</name>
+        <initializer>(<ref refid="prot_2autoip_8h_1ac19d92e0bfcb52079adbe92fb569d468" kindref="member">AUTOIP_NET</ref> | 0x0100)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a5c21e0d4d66eb7056ba4d515d36f0a20" prot="public" static="no">
+        <name>DEFEND_INTERVAL</name>
+        <initializer>10  /* seconds  (min. wait between defensive ARPs)     */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a14d30da6b838f3d718c0d92a9f3f3816" prot="public" static="no">
+        <name>MAX_CONFLICTS</name>
+        <initializer>10  /*          (max conflicts before rate limiting)   */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1ad408cf94a71b848cff8108dc5c1558e6" prot="public" static="no">
+        <name>PROBE_MAX</name>
+        <initializer>2   /* seconds  (maximum delay till repeated <ref refid="lnc_8h_1a7b84655da5c5a354e1dd00faf729506c" kindref="member">probe</ref>)    */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a959b454f842224af595205645244f946" prot="public" static="no">
+        <name>PROBE_MIN</name>
+        <initializer>1   /* second   (minimum delay till repeated <ref refid="lnc_8h_1a7b84655da5c5a354e1dd00faf729506c" kindref="member">probe</ref>)    */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a3a610440fbb8d2c6abb4aa9702f904ef" prot="public" static="no">
+        <name>PROBE_NUM</name>
+        <initializer>3   /*          (number of <ref refid="lnc_8h_1a7b84655da5c5a354e1dd00faf729506c" kindref="member">probe</ref> packets)              */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1aecea6220ab7fcd0910262d5929eb5d95" prot="public" static="no">
+        <name>PROBE_WAIT</name>
+        <initializer>1   /* second   (initial random delay)                 */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2autoip_8h_1a420da51b5955d94c44d285638b3931bf" prot="public" static="no">
+        <name>RATE_LIMIT_INTERVAL</name>
+        <initializer>60  /* seconds  (delay between successive attempts)    */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0c" prot="public" static="no" strong="no">
+        <type></type>
+        <name>autoip_state_enum_t</name>
+        <enumvalue id="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0ca11fa34497b2b043e2a5e7a43323374af" prot="public">
+          <name>AUTOIP_STATE_OFF</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0ca0926fae84a811e23d48115263b8744a3" prot="public">
+          <name>AUTOIP_STATE_PROBING</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0cad35142124e3ef9875cb3a9b16209157b" prot="public">
+          <name>AUTOIP_STATE_ANNOUNCING</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0caa2c50906623e140882d3654c149cca45" prot="public">
+          <name>AUTOIP_STATE_BOUND</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" line="67" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h" bodystart="67" bodyend="72"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>AutoIP protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2007<sp/>Dominik<sp/>Spies<sp/>&lt;kontakt@dspies.de&gt;</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Dominik<sp/>Spies<sp/>&lt;kontakt@dspies.de&gt;</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>This<sp/>is<sp/>a<sp/>AutoIP<sp/>implementation<sp/>for<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.<sp/>It<sp/>aims<sp/>to<sp/>conform</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*<sp/>with<sp/>RFC<sp/>3927.</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_AUTOIP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_AUTOIP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>169.254.0.0<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="prot_2autoip_8h_1ac19d92e0bfcb52079adbe92fb569d468" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AUTOIP_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xA9FE0000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>169.254.1.0<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="prot_2autoip_8h_1a8b4506c8e0ab7631f49567f9b81779c6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AUTOIP_RANGE_START<sp/><sp/><sp/><sp/><sp/><sp/>(AUTOIP_NET<sp/>|<sp/>0x0100)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>169.254.254.255<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="prot_2autoip_8h_1a84dec606d57f40eed1cdc782f702f161" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AUTOIP_RANGE_END<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(AUTOIP_NET<sp/>|<sp/>0xFEFF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>RFC<sp/>3927<sp/>Constants<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="prot_2autoip_8h_1aecea6220ab7fcd0910262d5929eb5d95" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROBE_WAIT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>second<sp/><sp/><sp/>(initial<sp/>random<sp/>delay)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="prot_2autoip_8h_1a959b454f842224af595205645244f946" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROBE_MIN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>second<sp/><sp/><sp/>(minimum<sp/>delay<sp/>till<sp/>repeated<sp/>probe)<sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="prot_2autoip_8h_1ad408cf94a71b848cff8108dc5c1558e6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROBE_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/><sp/>(maximum<sp/>delay<sp/>till<sp/>repeated<sp/>probe)<sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="prot_2autoip_8h_1a3a610440fbb8d2c6abb4aa9702f904ef" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROBE_NUM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(number<sp/>of<sp/>probe<sp/>packets)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="prot_2autoip_8h_1a29141f41d1391d34730b75539000f9ea" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ANNOUNCE_NUM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(number<sp/>of<sp/>announcement<sp/>packets)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="prot_2autoip_8h_1a7ed8f0b9d3330a2967142e0e48b28521" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ANNOUNCE_INTERVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/><sp/>(time<sp/>between<sp/>announcement<sp/>packets)<sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="prot_2autoip_8h_1a1a9b374b5e2e6da152f3a1556d09e6b3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ANNOUNCE_WAIT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/><sp/>(delay<sp/>before<sp/>announcing)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="prot_2autoip_8h_1a14d30da6b838f3d718c0d92a9f3f3816" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_CONFLICTS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10<sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(max<sp/>conflicts<sp/>before<sp/>rate<sp/>limiting)<sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="prot_2autoip_8h_1a420da51b5955d94c44d285638b3931bf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>RATE_LIMIT_INTERVAL<sp/><sp/><sp/><sp/><sp/>60<sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/><sp/>(delay<sp/>between<sp/>successive<sp/>attempts)<sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="prot_2autoip_8h_1a5c21e0d4d66eb7056ba4d515d36f0a20" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEFEND_INTERVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10<sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/><sp/>(min.<sp/>wait<sp/>between<sp/>defensive<sp/>ARPs)<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>AutoIP<sp/>client<sp/>states<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="68" refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0ca11fa34497b2b043e2a5e7a43323374af" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0ca11fa34497b2b043e2a5e7a43323374af" kindref="member">AUTOIP_STATE_OFF</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="69" refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0ca0926fae84a811e23d48115263b8744a3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0ca0926fae84a811e23d48115263b8744a3" kindref="member">AUTOIP_STATE_PROBING</ref><sp/><sp/><sp/><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="70" refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0cad35142124e3ef9875cb3a9b16209157b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0cad35142124e3ef9875cb3a9b16209157b" kindref="member">AUTOIP_STATE_ANNOUNCING</ref><sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="71" refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0caa2c50906623e140882d3654c149cca45" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0caa2c50906623e140882d3654c149cca45" kindref="member">AUTOIP_STATE_BOUND</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>3</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">}<sp/><ref refid="prot_2autoip_8h_1a1a27a030b740b1577f95d5aeb54a1a0c" kindref="member">autoip_state_enum_t</ref>;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_AUTOIP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/autoip.h"/>
+  </compounddef>
+</doxygen>

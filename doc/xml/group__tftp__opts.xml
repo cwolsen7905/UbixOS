@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__tftp__opts" kind="group">
+    <compoundname>tftp_opts</compoundname>
+    <title>Options</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__tftp__opts_1ga2dd54a1d0c3006527b8a7a8604b81981" prot="public" static="no">
+        <name>TFTP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1ga9e31b7cbbc8f46af8e62b548079acd4e" kindref="member">LWIP_DBG_ON</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Enable TFTP debug messages </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__tftp__opts_1ga8e975900b4397313f1a649ff76a3063b" prot="public" static="no">
+        <name>TFTP_MAX_FILENAME_LEN</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Max. length of TFTP filename </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="91" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__tftp__opts_1gaa8a449c25e37be757f5efccd422c9055" prot="public" static="no">
+        <name>TFTP_MAX_MODE_LEN</name>
+        <initializer>7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Max. length of TFTP mode </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__tftp__opts_1ga6a01757ad942eb602e8a87e2be42d313" prot="public" static="no">
+        <name>TFTP_MAX_RETRIES</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Max. number of retries when a file is read from server </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="77" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__tftp__opts_1gad9230620a5d3bb87a7ac280ff99875d1" prot="public" static="no">
+        <name>TFTP_PORT</name>
+        <initializer>69</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TFTP server port </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__tftp__opts_1ga36986e5465dc2ccb6184fc57f9a37d63" prot="public" static="no">
+        <name>TFTP_TIMEOUT_MSECS</name>
+        <initializer>10000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TFTP timeout </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__tftp__opts_1ga3e6caacb3f4d43f780b2d68ffe4258ea" prot="public" static="no">
+        <name>TFTP_TIMER_MSECS</name>
+        <initializer>50</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TFTP timer cyclic interval </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_opts.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

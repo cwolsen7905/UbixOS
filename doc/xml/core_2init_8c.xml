@@ -1,0 +1,1078 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="core_2init_8c" kind="file" language="C++">
+    <compoundname>init.c</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="sem_8h" local="no">ubixos/sem.h</includes>
+    <includes refid="net_2init_8h" local="yes">net/init.h</includes>
+    <includes refid="stats_8h" local="yes">net/stats.h</includes>
+    <includes refid="sys_8h" local="yes">net/sys.h</includes>
+    <includes refid="mem_8h" local="yes">net/mem.h</includes>
+    <includes refid="memp_8h" local="yes">net/memp.h</includes>
+    <includes refid="pbuf_8h" local="yes">net/pbuf.h</includes>
+    <includes refid="netif_8h" local="yes">net/netif.h</includes>
+    <includes refid="sockets_8h" local="yes">net/sockets.h</includes>
+    <includes refid="ip_8h" local="yes">net/ip.h</includes>
+    <includes refid="raw_8h" local="yes">net/raw.h</includes>
+    <includes refid="udp_8h" local="yes">net/udp.h</includes>
+    <includes refid="tcp__priv_8h" local="yes">net/priv/tcp_priv.h</includes>
+    <includes refid="igmp_8h" local="yes">net/igmp.h</includes>
+    <includes refid="dns_8h" local="yes">net/dns.h</includes>
+    <includes refid="timeouts_8h" local="yes">net/timeouts.h</includes>
+    <includes refid="etharp_8h" local="yes">net/etharp.h</includes>
+    <includes refid="ip6_8h" local="yes">net/ip6.h</includes>
+    <includes refid="nd6_8h" local="yes">net/nd6.h</includes>
+    <includes refid="mld6_8h" local="yes">net/mld6.h</includes>
+    <includes refid="api_8h" local="yes">net/api.h</includes>
+    <includes refid="ppp__opts_8h" local="yes">netif/ppp/ppp_opts.h</includes>
+    <includes refid="ppp__impl_8h" local="yes">netif/ppp/ppp_impl.h</includes>
+    <incdepgraph>
+      <node id="34">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>net/igmp.h</label>
+        <link refid="igmp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="66">
+        <label>net/nd6.h</label>
+        <link refid="nd6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="48">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="37">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>net/ip4.h</label>
+        <link refid="ip4_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>net/dns.h</label>
+        <link refid="dns_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>net/priv/tcp_priv.h</label>
+        <link refid="tcp__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="64">
+        <label>net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/init.h</label>
+        <link refid="net_2init_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="46">
+        <label>net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>net/etharp.h</label>
+        <link refid="etharp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>net/sockets.h</label>
+        <link refid="sockets_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="28">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>net/ip6.h</label>
+        <link refid="ip6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>net/raw.h</label>
+        <link refid="raw_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="31">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="53">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="69">
+        <label>netif/ppp/ppp_opts.h</label>
+        <link refid="ppp__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="70">
+        <label>netif/ppp/ppp_impl.h</label>
+        <link refid="ppp__impl_8h"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>net/prot/ip.h</label>
+        <link refid="prot_2ip_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>net/mld6.h</label>
+        <link refid="mld6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structpacked__struct__test" prot="public">packed_struct_test</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="core_2init_8c_1ad76cb551defb63d2352d696afcb8ade6" prot="public" static="no">
+        <name>LWIP_DISABLE_MEMP_SANITY_CHECKS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="270" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/init.c" bodystart="270" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="core_2init_8c_1a2fd90dfd6cee216d4a316078cc0ec2b9" prot="public" static="no">
+        <name>LWIP_DISABLE_TCP_SANITY_CHECKS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="267" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/init.c" bodystart="267" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="core_2init_8c_1afa3b6d3e87614ea5ab1aa9e7ac00cda4" prot="public" static="no">
+        <name>PACKED_STRUCT_TEST_EXPECTED_SIZE</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="75" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/core/init.c" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="core_2init_8c_1a2457c50d3c04347155d7101316bbbc24" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structpacked__struct__test" kindref="compound">packed_struct_test</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct packed_struct_test  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="70" column="20"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="core_2init_8c_1a0c1a18439524d2f4a5e51d25c0ca2ce9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void lwip_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>lwip_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialize all modules. Use this in NO_SYS mode. Use <ref refid="tcpip_8h_1ac104b53faf0e3905ad0e970866835661" kindref="member">tcpip_init()</ref> otherwise. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/init.c" line="333" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/init.c" bodystart="333" bodyend="381"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" compoundref="arch_8h" startline="187">LWIP_CONST_CAST</references>
+        <references refid="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" compoundref="arch_8h" startline="315">LWIP_UNUSED_ARG</references>
+        <references refid="mem_8h_1a44a136e3b70c36abb6f8dc060c778113" compoundref="mem_8c" startline="382" endline="410">mem_init</references>
+        <references refid="memp_8h_1a9693e5b1ac2c6b9c0e7870522d45efa2" compoundref="memp_8c" startline="271" endline="288">memp_init</references>
+        <references refid="netif_8h_1a0f4a53e47c840904f824a2a1c0d4ebf4" compoundref="netif_8c" startline="163" endline="191">netif_init</references>
+        <references refid="core_2init_8c_1afa3b6d3e87614ea5ab1aa9e7ac00cda4" compoundref="core_2init_8c" startline="75">PACKED_STRUCT_TEST_EXPECTED_SIZE</references>
+        <references refid="pbuf_8h_1a0c9b6a35471ebe1628ffe74bbc67f0b4" compoundref="pbuf_8h" startline="221">pbuf_init</references>
+        <references refid="stats_8h_1a832291112716a16838a0cc49595211b2" compoundref="stats_8h" startline="318">stats_init</references>
+        <references refid="sys_8h_1af411a8bc6b7ed4b0af9114e10c959448" compoundref="sys__arch_8c" startline="32" endline="35">sys_init</references>
+        <referencedby refid="tcpip_8c_1a1f3a88b8df6ba3b9ed1c00e0a305e3db" compoundref="tcpip_8c" startline="446" endline="461">tcpip_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sem_8h" kindref="compound">ubixos/sem.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="net_2init_8h" kindref="compound">net/init.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">net/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys_8h" kindref="compound">net/sys.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="memp_8h" kindref="compound">net/memp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="pbuf_8h" kindref="compound">net/pbuf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="netif_8h" kindref="compound">net/netif.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sockets_8h" kindref="compound">net/sockets.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip_8h" kindref="compound">net/ip.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="raw_8h" kindref="compound">net/raw.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="udp_8h" kindref="compound">net/udp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tcp__priv_8h" kindref="compound">net/priv/tcp_priv.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="igmp_8h" kindref="compound">net/igmp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="dns_8h" kindref="compound">net/dns.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="timeouts_8h" kindref="compound">net/timeouts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="etharp_8h" kindref="compound">net/etharp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip6_8h" kindref="compound">net/ip6.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="nd6_8h" kindref="compound">net/nd6.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mld6_8h" kindref="compound">net/mld6.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="api_8h" kindref="compound">net/api.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ppp__opts_8h" kindref="compound">netif/ppp/ppp_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ppp__impl_8h" kindref="compound">netif/ppp/ppp_impl.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_SKIP_PACKING_CHECK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="66" refid="structpacked__struct__test" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpacked__struct__test" kindref="compound">packed_struct_test</ref></highlight></codeline>
+<codeline lineno="67"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="structpacked__struct__test_1a3e24dcbac86147707ffe8afb7b2b1198" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/>dummy1);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><ref refid="structpacked__struct__test_1a50b12c50fb386ded21c3306c3b2248c8" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>dummy2);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal">}<sp/><ref refid="core_2init_8c_1a2457c50d3c04347155d7101316bbbc24" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="core_2init_8c_1afa3b6d3e87614ea5ab1aa9e7ac00cda4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PACKED_STRUCT_TEST_EXPECTED_SIZE<sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Compile-time<sp/>sanity<sp/>checks<sp/>for<sp/>configuration<sp/>errors.</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>*<sp/>These<sp/>can<sp/>be<sp/>done<sp/>independently<sp/>of<sp/>LWIP_DEBUG,<sp/>without<sp/>penalty.</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>BYTE_ORDER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;BYTE_ORDER<sp/>is<sp/>not<sp/>defined,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>it<sp/>in<sp/>your<sp/>cc.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(!IP_SOF_BROADCAST<sp/>&amp;&amp;<sp/>IP_SOF_BROADCAST_RECV)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>broadcast<sp/>filter<sp/>per<sp/>pcb<sp/>on<sp/>recv<sp/>operations,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>IP_SOF_BROADCAST=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(!LWIP_UDP<sp/>&amp;&amp;<sp/>LWIP_UDPLITE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>UDP<sp/>Lite,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_UDP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(!LWIP_UDP<sp/>&amp;&amp;<sp/>LWIP_DHCP)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>DHCP,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_UDP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(!LWIP_UDP<sp/>&amp;&amp;<sp/>LWIP_MULTICAST_TX_OPTIONS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>IGMP/LWIP_MULTICAST_TX_OPTIONS,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_UDP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(!LWIP_UDP<sp/>&amp;&amp;<sp/>LWIP_DNS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>DNS,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_UDP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!MEMP_MEM_MALLOC<sp/></highlight><highlight class="comment">/*<sp/>MEMP_NUM_*<sp/>checks<sp/>are<sp/>disabled<sp/>when<sp/>not<sp/>using<sp/>the<sp/>pool<sp/>allocator<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_ARP<sp/>&amp;&amp;<sp/>ARP_QUEUEING<sp/>&amp;&amp;<sp/>(MEMP_NUM_ARP_QUEUE&lt;=0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>ARP<sp/>Queueing,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>MEMP_NUM_ARP_QUEUE&gt;=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_RAW<sp/>&amp;&amp;<sp/>(MEMP_NUM_RAW_PCB&lt;=0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>RAW,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>MEMP_NUM_RAW_PCB&gt;=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_UDP<sp/>&amp;&amp;<sp/>(MEMP_NUM_UDP_PCB&lt;=0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>UDP,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>MEMP_NUM_UDP_PCB&gt;=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(MEMP_NUM_TCP_PCB&lt;=0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>TCP,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>MEMP_NUM_TCP_PCB&gt;=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_IGMP<sp/>&amp;&amp;<sp/>(MEMP_NUM_IGMP_GROUP&lt;=1))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>IGMP,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>MEMP_NUM_IGMP_GROUP&gt;1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_IGMP<sp/>&amp;&amp;<sp/>!LWIP_MULTICAST_TX_OPTIONS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>IGMP,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_MULTICAST_TX_OPTIONS==1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_IGMP<sp/>&amp;&amp;<sp/>!LWIP_IPV4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;IGMP<sp/>needs<sp/>LWIP_IPV4<sp/>enabled<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_MULTICAST_TX_OPTIONS<sp/>&amp;&amp;<sp/>!LWIP_IPV4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;LWIP_MULTICAST_TX_OPTIONS<sp/>needs<sp/>LWIP_IPV4<sp/>enabled<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>((LWIP_NETCONN<sp/>||<sp/>LWIP_SOCKET)<sp/>&amp;&amp;<sp/>(MEMP_NUM_TCPIP_MSG_API&lt;=0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>Sequential<sp/>API,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>MEMP_NUM_TCPIP_MSG_API&gt;=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>There<sp/>must<sp/>be<sp/>sufficient<sp/>timeouts,<sp/>taking<sp/>into<sp/>account<sp/>requirements<sp/>of<sp/>the<sp/>subsystems.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TIMERS<sp/>&amp;&amp;<sp/>(MEMP_NUM_SYS_TIMEOUT<sp/>&lt;<sp/>(LWIP_TCP<sp/>+<sp/>IP_REASSEMBLY<sp/>+<sp/>LWIP_ARP<sp/>+<sp/>(2*LWIP_DHCP)<sp/>+<sp/>LWIP_AUTOIP<sp/>+<sp/>LWIP_IGMP<sp/>+<sp/>LWIP_DNS<sp/>+<sp/>PPP_SUPPORT<sp/>+<sp/>(LWIP_IPV6<sp/>?<sp/>(1<sp/>+<sp/>LWIP_IPV6_REASS<sp/>+<sp/>LWIP_IPV6_MLD)<sp/>:<sp/>0)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;MEMP_NUM_SYS_TIMEOUT<sp/>is<sp/>too<sp/>low<sp/>to<sp/>accomodate<sp/>all<sp/>required<sp/>timeouts&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(IP_REASSEMBLY<sp/>&amp;&amp;<sp/>(MEMP_NUM_REASSDATA<sp/>&gt;<sp/>IP_REASS_MAX_PBUFS))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;MEMP_NUM_REASSDATA<sp/>&gt;<sp/>IP_REASS_MAX_PBUFS<sp/>doesn&apos;t<sp/>make<sp/>sense<sp/>since<sp/>each<sp/>struct<sp/>ip_reassdata<sp/>must<sp/>hold<sp/>2<sp/>pbufs<sp/>at<sp/>least!&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!MEMP_MEM_MALLOC<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_WND_SCALE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(TCP_WND<sp/>&gt;<sp/>0xffffffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>TCP,<sp/>TCP_WND<sp/>must<sp/>fit<sp/>in<sp/>an<sp/>u32_t,<sp/>so,<sp/>you<sp/>have<sp/>to<sp/>reduce<sp/>it<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(TCP_RCV_SCALE<sp/>&gt;<sp/>14))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;The<sp/>maximum<sp/>valid<sp/>window<sp/>scale<sp/>value<sp/>is<sp/>14!&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(TCP_WND<sp/>&gt;<sp/>(0xFFFFU<sp/>&lt;&lt;<sp/>TCP_RCV_SCALE)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;TCP_WND<sp/>is<sp/>bigger<sp/>than<sp/>the<sp/>configured<sp/>LWIP_WND_SCALE<sp/>allows!&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>((TCP_WND<sp/>&gt;&gt;<sp/>TCP_RCV_SCALE)<sp/>==<sp/>0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;TCP_WND<sp/>is<sp/>too<sp/>small<sp/>for<sp/>the<sp/>configured<sp/>LWIP_WND_SCALE<sp/>(results<sp/>in<sp/>zero<sp/>window)!&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_WND_SCALE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(TCP_WND<sp/>&gt;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>TCP,<sp/>TCP_WND<sp/>must<sp/>fit<sp/>in<sp/>an<sp/>u16_t,<sp/>so,<sp/>you<sp/>have<sp/>to<sp/>reduce<sp/>it<sp/>in<sp/>your<sp/>lwipopts.h<sp/>(or<sp/>enable<sp/>window<sp/>scaling)&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_WND_SCALE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(TCP_SND_QUEUELEN<sp/>&gt;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>TCP,<sp/>TCP_SND_QUEUELEN<sp/>must<sp/>fit<sp/>in<sp/>an<sp/>u16_t,<sp/>so,<sp/>you<sp/>have<sp/>to<sp/>reduce<sp/>it<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>(TCP_SND_QUEUELEN<sp/>&lt;<sp/>2))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;TCP_SND_QUEUELEN<sp/>must<sp/>be<sp/>at<sp/>least<sp/>2<sp/>for<sp/>no-copy<sp/>TCP<sp/>writes<sp/>to<sp/>work&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>((TCP_MAXRTX<sp/>&gt;<sp/>12)<sp/>||<sp/>(TCP_SYNMAXRTX<sp/>&gt;<sp/>12)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>TCP,<sp/>TCP_MAXRTX<sp/>and<sp/>TCP_SYNMAXRTX<sp/>must<sp/>less<sp/>or<sp/>equal<sp/>to<sp/>12<sp/>(due<sp/>to<sp/>tcp_backoff<sp/>table),<sp/>so,<sp/>you<sp/>have<sp/>to<sp/>reduce<sp/>them<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>TCP_LISTEN_BACKLOG<sp/>&amp;&amp;<sp/>((TCP_DEFAULT_LISTEN_BACKLOG<sp/>&lt;<sp/>0)<sp/>||<sp/>(TCP_DEFAULT_LISTEN_BACKLOG<sp/>&gt;<sp/>0xff)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>TCP<sp/>backlog,<sp/>TCP_DEFAULT_LISTEN_BACKLOG<sp/>must<sp/>fit<sp/>into<sp/>an<sp/>u8_t&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_NETIF_API<sp/>&amp;&amp;<sp/>(NO_SYS==1))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>NETIF<sp/>API,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>NO_SYS=0<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>((LWIP_SOCKET<sp/>||<sp/>LWIP_NETCONN)<sp/>&amp;&amp;<sp/>(NO_SYS==1))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>Sequential<sp/>API,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>NO_SYS=0<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_PPP_API<sp/>&amp;&amp;<sp/>(NO_SYS==1))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>PPP<sp/>API,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>NO_SYS=0<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_PPP_API<sp/>&amp;&amp;<sp/>(PPP_SUPPORT==0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>PPP<sp/>API,<sp/>you<sp/>have<sp/>to<sp/>enable<sp/>PPP_SUPPORT<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(((!LWIP_DHCP)<sp/>||<sp/>(!LWIP_AUTOIP))<sp/>&amp;&amp;<sp/>LWIP_DHCP_AUTOIP_COOP)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>DHCP/AUTOIP<sp/>cooperation<sp/>mode,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_DHCP=1<sp/>and<sp/>LWIP_AUTOIP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(((!LWIP_DHCP)<sp/>||<sp/>(!LWIP_ARP))<sp/>&amp;&amp;<sp/>DHCP_DOES_ARP_CHECK)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>DHCP<sp/>ARP<sp/>checking,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_DHCP=1<sp/>and<sp/>LWIP_ARP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(!LWIP_ARP<sp/>&amp;&amp;<sp/>LWIP_AUTOIP)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;If<sp/>you<sp/>want<sp/>to<sp/>use<sp/>AUTOIP,<sp/>you<sp/>have<sp/>to<sp/>define<sp/>LWIP_ARP=1<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LWIP_TCP<sp/>&amp;&amp;<sp/>((LWIP_EVENT_API<sp/>&amp;&amp;<sp/>LWIP_CALLBACK_API)<sp/>||<sp/>(!LWIP_EVENT_API<sp/>&amp;&amp;<sp/>!LWIP_CALLBACK_API)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;One<sp/>and<sp/>exactly<sp/>one<sp/>of<sp/>LWIP_EVENT_API<sp/>and<sp/>LWIP_CALLBACK_API<sp/>has<sp/>to<sp/>be<sp/>enabled<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(MEM_LIBC_MALLOC<sp/>&amp;&amp;<sp/>MEM_USE_POOLS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;MEM_LIBC_MALLOC<sp/>and<sp/>MEM_USE_POOLS<sp/>may<sp/>not<sp/>both<sp/>be<sp/>simultaneously<sp/>enabled<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(MEM_USE_POOLS<sp/>&amp;&amp;<sp/>!MEMP_USE_CUSTOM_POOLS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;MEM_USE_POOLS<sp/>requires<sp/>custom<sp/>pools<sp/>(MEMP_USE_CUSTOM_POOLS)<sp/>to<sp/>be<sp/>enabled<sp/>in<sp/>your<sp/>lwipopts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(PBUF_POOL_BUFSIZE<sp/>&lt;=<sp/>MEM_ALIGNMENT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;PBUF_POOL_BUFSIZE<sp/>must<sp/>be<sp/>greater<sp/>than<sp/>MEM_ALIGNMENT<sp/>or<sp/>the<sp/>offset<sp/>may<sp/>take<sp/>the<sp/>full<sp/>first<sp/>pbuf&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(DNS_LOCAL_HOSTLIST<sp/>&amp;&amp;<sp/>!DNS_LOCAL_HOSTLIST_IS_DYNAMIC<sp/>&amp;&amp;<sp/>!(defined(DNS_LOCAL_HOSTLIST_INIT)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;you<sp/>have<sp/>to<sp/>define<sp/>define<sp/>DNS_LOCAL_HOSTLIST_INIT<sp/>{{&apos;host1&apos;,<sp/>0x123},<sp/>{&apos;host2&apos;,<sp/>0x234}}<sp/>to<sp/>initialize<sp/>DNS_LOCAL_HOSTLIST&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT<sp/>&amp;&amp;<sp/>!PPPOS_SUPPORT<sp/>&amp;&amp;<sp/>!PPPOE_SUPPORT<sp/>&amp;&amp;<sp/>!PPPOL2TP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;PPP_SUPPORT<sp/>needs<sp/>at<sp/>least<sp/>one<sp/>of<sp/>PPPOS_SUPPORT,<sp/>PPPOE_SUPPORT<sp/>or<sp/>PPPOL2TP_SUPPORT<sp/>turned<sp/>on&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT<sp/>&amp;&amp;<sp/>!PPP_IPV4_SUPPORT<sp/>&amp;&amp;<sp/>!PPP_IPV6_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;PPP_SUPPORT<sp/>needs<sp/>PPP_IPV4_SUPPORT<sp/>and/or<sp/>PPP_IPV6_SUPPORT<sp/>turned<sp/>on&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT<sp/>&amp;&amp;<sp/>PPP_IPV4_SUPPORT<sp/>&amp;&amp;<sp/>!LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;PPP_IPV4_SUPPORT<sp/>needs<sp/>LWIP_IPV4<sp/>turned<sp/>on&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT<sp/>&amp;&amp;<sp/>PPP_IPV6_SUPPORT<sp/>&amp;&amp;<sp/>!LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;PPP_IPV6_SUPPORT<sp/>needs<sp/>LWIP_IPV6<sp/>turned<sp/>on&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!LWIP_ETHERNET<sp/>&amp;&amp;<sp/>(LWIP_ARP<sp/>||<sp/>PPPOE_SUPPORT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;LWIP_ETHERNET<sp/>needs<sp/>to<sp/>be<sp/>turned<sp/>on<sp/>for<sp/>LWIP_ARP<sp/>or<sp/>PPPOE_SUPPORT&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TCPIP_CORE_LOCKING_INPUT<sp/>&amp;&amp;<sp/>!LWIP_TCPIP_CORE_LOCKING</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;When<sp/>using<sp/>LWIP_TCPIP_CORE_LOCKING_INPUT,<sp/>LWIP_TCPIP_CORE_LOCKING<sp/>must<sp/>be<sp/>enabled,<sp/>too&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TCP<sp/>&amp;&amp;<sp/>LWIP_NETIF_TX_SINGLE_PBUF<sp/>&amp;&amp;<sp/>!TCP_OVERSIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;LWIP_NETIF_TX_SINGLE_PBUF<sp/>needs<sp/>TCP_OVERSIZE<sp/>enabled<sp/>to<sp/>create<sp/>single-pbuf<sp/>TCP<sp/>packets&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_NETCONN<sp/>&amp;&amp;<sp/>LWIP_TCP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>NETCONN_COPY<sp/>!=<sp/>TCP_WRITE_FLAG_COPY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;NETCONN_COPY<sp/>!=<sp/>TCP_WRITE_FLAG_COPY&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>NETCONN_MORE<sp/>!=<sp/>TCP_WRITE_FLAG_MORE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;NETCONN_MORE<sp/>!=<sp/>TCP_WRITE_FLAG_MORE&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_NETCONN<sp/>&amp;&amp;<sp/>LWIP_TCP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_SOCKET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Check<sp/>that<sp/>the<sp/>SO_*<sp/>socket<sp/>options<sp/>and<sp/>SOF_*<sp/>lwIP-internal<sp/>flags<sp/>match<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>SO_REUSEADDR<sp/>!=<sp/>SOF_REUSEADDR</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;WARNING:<sp/>SO_REUSEADDR<sp/>!=<sp/>SOF_REUSEADDR&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>SO_KEEPALIVE<sp/>!=<sp/>SOF_KEEPALIVE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;WARNING:<sp/>SO_KEEPALIVE<sp/>!=<sp/>SOF_KEEPALIVE&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>SO_BROADCAST<sp/>!=<sp/>SOF_BROADCAST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;WARNING:<sp/>SO_BROADCAST<sp/>!=<sp/>SOF_BROADCAST&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_SOCKET<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Compile-time<sp/>checks<sp/>for<sp/>deprecated<sp/>options.</highlight></codeline>
+<codeline lineno="246"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>MEMP_NUM_TCPIP_MSG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;MEMP_NUM_TCPIP_MSG<sp/>option<sp/>is<sp/>deprecated.<sp/>Remove<sp/>it<sp/>from<sp/>your<sp/>lwipopts.h.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>TCP_REXMIT_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;TCP_REXMIT_DEBUG<sp/>option<sp/>is<sp/>deprecated.<sp/>Remove<sp/>it<sp/>from<sp/>your<sp/>lwipopts.h.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="252"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>RAW_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;RAW_STATS<sp/>option<sp/>is<sp/>deprecated.<sp/>Remove<sp/>it<sp/>from<sp/>your<sp/>lwipopts.h.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>ETHARP_QUEUE_FIRST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;ETHARP_QUEUE_FIRST<sp/>option<sp/>is<sp/>deprecated.<sp/>Remove<sp/>it<sp/>from<sp/>your<sp/>lwipopts.h.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>ETHARP_ALWAYS_INSERT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;ETHARP_ALWAYS_INSERT<sp/>option<sp/>is<sp/>deprecated.<sp/>Remove<sp/>it<sp/>from<sp/>your<sp/>lwipopts.h.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!NO_SYS<sp/>&amp;&amp;<sp/>LWIP_TCPIP_CORE_LOCKING<sp/>&amp;&amp;<sp/>LWIP_COMPAT_MUTEX<sp/>&amp;&amp;<sp/>!defined(LWIP_COMPAT_MUTEX_ALLOWED)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;LWIP_COMPAT_MUTEX<sp/>cannot<sp/>prevent<sp/>priority<sp/>inversion.<sp/>It<sp/>is<sp/>recommended<sp/>to<sp/>implement<sp/>priority-aware<sp/>mutexes.<sp/>(Define<sp/>LWIP_COMPAT_MUTEX_ALLOWED<sp/>to<sp/>disable<sp/>this<sp/>error.)&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267" refid="core_2init_8c_1a2fd90dfd6cee216d4a316078cc0ec2b9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_DISABLE_MEMP_SANITY_CHECKS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="270" refid="core_2init_8c_1ad76cb551defb63d2352d696afcb8ade6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_DISABLE_MEMP_SANITY_CHECKS<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MEMP<sp/>sanity<sp/>checks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_MEM_MALLOC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!LWIP_DISABLE_MEMP_SANITY_CHECKS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_NETCONN<sp/>||<sp/>LWIP_SOCKET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!MEMP_NUM_NETCONN<sp/>&amp;&amp;<sp/>LWIP_SOCKET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>MEMP_NUM_NETCONN<sp/>cannot<sp/>be<sp/>0<sp/>when<sp/>using<sp/>sockets!&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>MEMP_MEM_MALLOC<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_NUM_NETCONN<sp/>&gt;<sp/>(MEMP_NUM_TCP_PCB+MEMP_NUM_TCP_PCB_LISTEN+MEMP_NUM_UDP_PCB+MEMP_NUM_RAW_PCB)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>MEMP_NUM_NETCONN<sp/>should<sp/>be<sp/>less<sp/>than<sp/>the<sp/>sum<sp/>of<sp/>MEMP_NUM_{TCP,RAW,UDP}_PCB+MEMP_NUM_TCP_PCB_LISTEN.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_MEMP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_NETCONN<sp/>||<sp/>LWIP_SOCKET<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!LWIP_DISABLE_MEMP_SANITY_CHECKS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_USE_POOLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;MEMP_MEM_MALLOC<sp/>and<sp/>MEM_USE_POOLS<sp/>cannot<sp/>be<sp/>enabled<sp/>at<sp/>the<sp/>same<sp/>time&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_HOOK_MEMP_AVAILABLE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;LWIP_HOOK_MEMP_AVAILABLE<sp/>doesn&apos;t<sp/>make<sp/>sense<sp/>with<sp/>MEMP_MEM_MALLOC&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEMP_MEM_MALLOC<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>TCP<sp/>sanity<sp/>checks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!LWIP_DISABLE_TCP_SANITY_CHECKS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TCP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="297"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!MEMP_MEM_MALLOC<sp/>&amp;&amp;<sp/>(MEMP_NUM_TCP_SEG<sp/>&lt;<sp/>TCP_SND_QUEUELEN)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>MEMP_NUM_TCP_SEG<sp/>should<sp/>be<sp/>at<sp/>least<sp/>as<sp/>big<sp/>as<sp/>TCP_SND_QUEUELEN.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>TCP_SND_BUF<sp/>&lt;<sp/>(2<sp/>*<sp/>TCP_MSS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="301"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_SND_BUF<sp/>must<sp/>be<sp/>at<sp/>least<sp/>as<sp/>much<sp/>as<sp/>(2<sp/>*<sp/>TCP_MSS)<sp/>for<sp/>things<sp/>to<sp/>work<sp/>smoothly.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>TCP_SND_QUEUELEN<sp/>&lt;<sp/>(2<sp/>*<sp/>(TCP_SND_BUF<sp/>/<sp/>TCP_MSS))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_SND_QUEUELEN<sp/>must<sp/>be<sp/>at<sp/>least<sp/>as<sp/>much<sp/>as<sp/>(2<sp/>*<sp/>TCP_SND_BUF/TCP_MSS)<sp/>for<sp/>things<sp/>to<sp/>work.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>TCP_SNDLOWAT<sp/>&gt;=<sp/>TCP_SND_BUF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_SNDLOWAT<sp/>must<sp/>be<sp/>less<sp/>than<sp/>TCP_SND_BUF.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="309"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>TCP_SNDLOWAT<sp/>&gt;=<sp/>(0xFFFF<sp/>-<sp/>(4<sp/>*<sp/>TCP_MSS))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_SNDLOWAT<sp/>must<sp/>at<sp/>least<sp/>be<sp/>4*MSS<sp/>below<sp/>u16_t<sp/>overflow!&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>TCP_SNDQUEUELOWAT<sp/>&gt;=<sp/>TCP_SND_QUEUELEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_SNDQUEUELOWAT<sp/>must<sp/>be<sp/>less<sp/>than<sp/>TCP_SND_QUEUELEN.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!MEMP_MEM_MALLOC<sp/>&amp;&amp;<sp/>PBUF_POOL_SIZE<sp/>&amp;&amp;<sp/>(PBUF_POOL_BUFSIZE<sp/>&lt;=<sp/>(PBUF_LINK_ENCAPSULATION_HLEN<sp/>+<sp/>PBUF_LINK_HLEN<sp/>+<sp/>PBUF_IP_HLEN<sp/>+<sp/>PBUF_TRANSPORT_HLEN))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>PBUF_POOL_BUFSIZE<sp/>does<sp/>not<sp/>provide<sp/>enough<sp/>space<sp/>for<sp/>protocol<sp/>headers.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!MEMP_MEM_MALLOC<sp/>&amp;&amp;<sp/>PBUF_POOL_SIZE<sp/>&amp;&amp;<sp/>(TCP_WND<sp/>&gt;<sp/>(PBUF_POOL_SIZE<sp/>*<sp/>(PBUF_POOL_BUFSIZE<sp/>-<sp/>(PBUF_LINK_ENCAPSULATION_HLEN<sp/>+<sp/>PBUF_LINK_HLEN<sp/>+<sp/>PBUF_IP_HLEN<sp/>+<sp/>PBUF_TRANSPORT_HLEN))))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_WND<sp/>is<sp/>larger<sp/>than<sp/>space<sp/>provided<sp/>by<sp/>PBUF_POOL_SIZE<sp/>*<sp/>(PBUF_POOL_BUFSIZE<sp/>-<sp/>protocol<sp/>headers).<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>TCP_WND<sp/>&lt;<sp/>TCP_MSS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/>#error<sp/>&quot;lwip_sanity_check:<sp/>WARNING:<sp/>TCP_WND<sp/>is<sp/>smaller<sp/>than<sp/>MSS.<sp/>If<sp/>you<sp/>know<sp/>what<sp/>you<sp/>are<sp/>doing,<sp/>define<sp/>LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>to<sp/>1<sp/>to<sp/>disable<sp/>this<sp/>error.&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_TCP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="325"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!LWIP_DISABLE_TCP_SANITY_CHECKS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="326"><highlight class="normal"></highlight></codeline>
+<codeline lineno="332"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="333" refid="core_2init_8c_1a0c1a18439524d2f4a5e51d25c0ca2ce9" refkind="member"><highlight class="normal"><ref refid="core_2init_8c_1a0c1a18439524d2f4a5e51d25c0ca2ce9" kindref="member">lwip_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="334"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_SKIP_CONST_CHECK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>a<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" kindref="member">LWIP_UNUSED_ARG</ref>(a);</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;LWIP_CONST_CAST<sp/>not<sp/>implemented<sp/>correctly.<sp/>Check<sp/>your<sp/>lwIP<sp/>port.&quot;</highlight><highlight class="normal">,<sp/><ref refid="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" kindref="member">LWIP_CONST_CAST</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*,<sp/>&amp;a)<sp/>==<sp/>&amp;a);</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="340"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_SKIP_PACKING_CHECK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;Struct<sp/>packing<sp/>not<sp/>implemented<sp/>correctly.<sp/>Check<sp/>your<sp/>lwIP<sp/>port.&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpacked__struct__test" kindref="compound">packed_struct_test</ref>)<sp/>==<sp/><ref refid="core_2init_8c_1afa3b6d3e87614ea5ab1aa9e7ac00cda4" kindref="member">PACKED_STRUCT_TEST_EXPECTED_SIZE</ref>);</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="343"><highlight class="normal"></highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Modules<sp/>initialization<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a832291112716a16838a0cc49595211b2" kindref="member">stats_init</ref>();</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!NO_SYS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1af411a8bc6b7ed4b0af9114e10c959448" kindref="member">sys_init</ref>();</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!NO_SYS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a44a136e3b70c36abb6f8dc060c778113" kindref="member">mem_init</ref>();</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_1a9693e5b1ac2c6b9c0e7870522d45efa2" kindref="member">memp_init</ref>();</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><ref refid="pbuf_8h_1a0c9b6a35471ebe1628ffe74bbc67f0b4" kindref="member">pbuf_init</ref>();</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><ref refid="netif_8h_1a0f4a53e47c840904f824a2a1c0d4ebf4" kindref="member">netif_init</ref>();</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/>ip_init();</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ARP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/>etharp_init();</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ARP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="358"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_RAW</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/>raw_init();</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_RAW<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="362"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_UDP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/>udp_init();</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_UDP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TCP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/>tcp_init();</highlight></codeline>
+<codeline lineno="367"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_TCP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="368"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IGMP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/>igmp_init();</highlight></codeline>
+<codeline lineno="370"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IGMP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="371"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_DNS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="372"><highlight class="normal"><sp/><sp/>dns_init();</highlight></codeline>
+<codeline lineno="373"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DNS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="374"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="375"><highlight class="normal"><sp/><sp/>ppp_init();</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="377"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="378"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_TIMERS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="379"><highlight class="normal"><sp/><sp/>sys_timeouts_init();</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_TIMERS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="381"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/init.c"/>
+  </compounddef>
+</doxygen>

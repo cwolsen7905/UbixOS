@@ -1,0 +1,14 @@
+digraph "vmm_memMapInit"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="vmm_memMapInit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="countMemory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$vmm__memory_8c.html#a1a89fbc2f80ca828332c5ef31801faa3",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="inportByte",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$io_8h.html#a77b934268de1b3ecdcf3f275413b3108",tooltip="input one byte from specified port"];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="outportByte",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1",tooltip="outputut one byte to specified port"];
+}

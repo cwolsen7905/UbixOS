@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__format_8h" kind="file" language="C++">
+    <compoundname>fat_format.h</compoundname>
+    <includes refid="fat__defs_8h" local="yes">fat_defs.h</includes>
+    <includes refid="fat__opts_8h" local="yes">fat_opts.h</includes>
+    <includes refid="fat__access_8h" local="yes">fat_access.h</includes>
+    <includedby refid="fat__format_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</includedby>
+    <incdepgraph>
+      <node id="3">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="6">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="2">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>stdio.h</label>
+      </node>
+      <node id="7">
+        <label>fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</label>
+        <link refid="fat__format_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h</label>
+        <link refid="fat__format_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__format_8h_1a8958cfd5dc4bfceb08f41e50e54da92d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_format</definition>
+        <argsstring>(struct fatfs *fs, uint32 volume_sectors, const char *name)</argsstring>
+        <name>fatfs_format</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>volume_sectors</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h" line="11" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" bodystart="524" bodyend="531" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h" declline="11" declcolumn="5"/>
+        <references refid="fat__format_8c_1a7e6b1990138851af406cd5fc667569d6" compoundref="fat__format_8c" startline="426" endline="471">fatfs_format_fat16</references>
+        <references refid="fat__format_8c_1a44986a3210ea48d5274da16dd60d27c1" compoundref="fat__format_8c" startline="475" endline="520">fatfs_format_fat32</references>
+        <references refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="37">name</references>
+        <referencedby refid="fat__filelib_8h_1af3d1cddac050fee30d1420e68b01e7c2" compoundref="fat__filelib_8c" startline="1476" endline="1478">fl_format</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__format_8h_1a7e6b1990138851af406cd5fc667569d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_format_fat16</definition>
+        <argsstring>(struct fatfs *fs, uint32 volume_sectors, const char *name)</argsstring>
+        <name>fatfs_format_fat16</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>volume_sectors</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h" line="12" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" bodystart="426" bodyend="471" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h" declline="12" declcolumn="5"/>
+        <references refid="fat__defs_8h_1a8dd000b545e9a127169fdbd82d418965" compoundref="fat__defs_8h" startline="109">FAT32_INVALID_CLUSTER</references>
+        <references refid="fat__access_8h_1a2ffc1cf01469bc98451356bac154af38" compoundref="fat__access_8h" startline="11">FAT_INIT_MEDIA_ACCESS_ERROR</references>
+        <references refid="fat__access_8h_1abd20c4673fcbadb1753696ba8353a13ba5ba99630da99c25c9e9efd7ed0bebf51" compoundref="fat__access_8h" startline="53">FAT_TYPE_16</references>
+        <references refid="fat__table_8c_1acee4d83639e6fa1a228aec05618140e6" compoundref="fat__table_8c" startline="60" endline="79">fatfs_fat_init</references>
+        <referencedby refid="fat__format_8h_1a8958cfd5dc4bfceb08f41e50e54da92d" compoundref="fat__format_8c" startline="524" endline="531">fatfs_format</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__format_8h_1a44986a3210ea48d5274da16dd60d27c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_format_fat32</definition>
+        <argsstring>(struct fatfs *fs, uint32 volume_sectors, const char *name)</argsstring>
+        <name>fatfs_format_fat32</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>volume_sectors</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h" line="13" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" bodystart="475" bodyend="520" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h" declline="13" declcolumn="5"/>
+        <references refid="fat__defs_8h_1a8dd000b545e9a127169fdbd82d418965" compoundref="fat__defs_8h" startline="109">FAT32_INVALID_CLUSTER</references>
+        <references refid="fat__access_8h_1a2ffc1cf01469bc98451356bac154af38" compoundref="fat__access_8h" startline="11">FAT_INIT_MEDIA_ACCESS_ERROR</references>
+        <references refid="fat__access_8h_1abd20c4673fcbadb1753696ba8353a13baf87a06e051a75de30afdcb374f70ec58" compoundref="fat__access_8h" startline="54">FAT_TYPE_32</references>
+        <references refid="fat__table_8c_1acee4d83639e6fa1a228aec05618140e6" compoundref="fat__table_8c" startline="60" endline="79">fatfs_fat_init</references>
+        <referencedby refid="fat__format_8h_1a8958cfd5dc4bfceb08f41e50e54da92d" compoundref="fat__format_8c" startline="524" endline="531">fatfs_format</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_FORMAT_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_FORMAT_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__defs_8h" kindref="compound">fat_defs.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__opts_8h" kindref="compound">fat_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__access_8h" kindref="compound">fat_access.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Prototypes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__format_8h_1a8958cfd5dc4bfceb08f41e50e54da92d" kindref="member">fatfs_format</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>volume_sectors,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__format_8h_1a7e6b1990138851af406cd5fc667569d6" kindref="member">fatfs_format_fat16</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>volume_sectors,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat__format_8h_1a44986a3210ea48d5274da16dd60d27c1" kindref="member">fatfs_format_fat32</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>volume_sectors,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h"/>
+  </compounddef>
+</doxygen>

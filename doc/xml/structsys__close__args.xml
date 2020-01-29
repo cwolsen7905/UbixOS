@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__close__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_close_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__close__args_1a0699a7f6afdc76534e0c1de130cd668a" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_close_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="104" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="104" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__close__args_1aa39a58ea0a19912ef472ee76c40bcf70" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_close_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="103" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__close__args_1aa6d6fad5dab7bcab69ae11a904411da2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_close_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="105" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_close_args</label>
+        <link refid="structsys__close__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="102" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="102" bodyend="106"/>
+    <listofallmembers>
+      <member refid="structsys__close__args_1a0699a7f6afdc76534e0c1de130cd668a" prot="public" virt="non-virtual"><scope>sys_close_args</scope><name>fd</name></member>
+      <member refid="structsys__close__args_1aa39a58ea0a19912ef472ee76c40bcf70" prot="public" virt="non-virtual"><scope>sys_close_args</scope><name>fd_l_</name></member>
+      <member refid="structsys__close__args_1aa6d6fad5dab7bcab69ae11a904411da2" prot="public" virt="non-virtual"><scope>sys_close_args</scope><name>fd_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,12 @@
+digraph "sys_chdir"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="sys_chdir",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="sprintf",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$kprintf_8h.html#ac38cd16373d98782e1465bd3d5aba470",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="strstr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$string_8h.html#adcec9a82a6a276e8edb0fd4fc26fe8f2",tooltip=" "];
+}

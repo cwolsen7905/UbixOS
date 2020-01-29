@@ -1,0 +1,7 @@
+digraph "sysctl_args"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sysctl_args\n|+ name\l+ name_l_\l+ name_r_\l+ namelen\l+ namelen_l_\l+ namelen_r_\l+ new_l_\l+ new_r_\l+ newlen\l+ newlen_l_\land 8 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

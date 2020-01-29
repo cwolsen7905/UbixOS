@@ -1,0 +1,1000 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="armv6_2sched_8c" kind="file" language="C++">
+    <compoundname>sched.c</compoundname>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="mount_8h" local="no">vfs/mount.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="gdt_8h" local="no">sys/gdt.h</includes>
+    <includes refid="idt_8h" local="no">sys/idt.h</includes>
+    <includes refid="8259_8h" local="no">isa/8259.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <includes refid="descrip_8h" local="no">sys/descrip.h</includes>
+    <incdepgraph>
+      <node id="43">
+        <label>sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+      </node>
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="26">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="25">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>sys/gdt.h</label>
+        <link refid="gdt_8h"/>
+      </node>
+      <node id="24">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="40">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="30">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="2">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>vfs/stat.h</label>
+        <link refid="stat_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" prot="public" static="no" mutable="no">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* _current</definition>
+        <argsstring></argsstring>
+        <name>_current</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="50" bodyend="-1"/>
+        <referencedby refid="idt_8c_1a8a3ea6df190181b987577b14c99c6f9b" compoundref="idt_8c" startline="633" endline="637">__alignmentCheck</referencedby>
+        <referencedby refid="idt_8c_1a93a791c71216d3dd3550e193c805102f" compoundref="idt_8c" startline="285" endline="289">__debug</referencedby>
+        <referencedby refid="idt_8c_1adccd9730ac2b0fa6ef3b41cec9af2162" compoundref="idt_8c" startline="259" endline="263">__divideError</referencedby>
+        <referencedby refid="idt_8c_1a0f0ee5dbd5337bac161bd2490ad21397" compoundref="idt_8c" startline="382" endline="386">__doubleFault</referencedby>
+        <referencedby refid="idt_8c_1a867bddfec4bbeb769465d958bcbda312" compoundref="idt_8c" startline="607" endline="611">__floatingPoint</referencedby>
+        <referencedby refid="idt_8c_1ac51d829134fa5beed7f8fb62e8c297b3" compoundref="idt_8c" startline="658" endline="662">__machineCheck</referencedby>
+        <referencedby refid="idt_8c_1ae45963ae287b44ec905a7924207657e4" compoundref="idt_8c" startline="311" endline="315">__nmi</referencedby>
+        <referencedby refid="idt_8c_1ad3beb87208d6cbc992574f9e04f6f2be" compoundref="idt_8c" startline="737" endline="741">__security</referencedby>
+        <referencedby refid="idt_8c_1a8ec618b934fbea05a071a13c8f338d7e" compoundref="idt_8c" startline="684" endline="688">__simd</referencedby>
+        <referencedby refid="idt_8c_1a848a9f54eb3ac3c0046824e1a0b97eb2" compoundref="idt_8c" startline="711" endline="715">__virtualization</referencedby>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+        <referencedby refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" compoundref="descrip_8c" startline="185" endline="197">fstat</referencedby>
+        <referencedby refid="gen__calls_8c_1a2cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="70" endline="76">getgid</referencedby>
+        <referencedby refid="gen__calls_8c_1a4f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="52" endline="58">getpid</referencedby>
+        <referencedby refid="gen__calls_8c_1a5c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="61" endline="67">getuid</referencedby>
+        <referencedby refid="access_8c_1a0e5f21be079a3e8f83618c8c6e062c5a" compoundref="access_8c" startline="76" endline="89">in_group_p</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1aaf261b06fab146a232b1b55ab16123eb" compoundref="kernel_2syscall_8c" startline="101" endline="112">invalidCall</referencedby>
+        <referencedby refid="syscall__posix_8c_1a732bce33711189953191fb779fa98c3a" compoundref="syscall__posix_8c" startline="124" endline="135">invalidCall_posix</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+        <referencedby refid="idt_8c_1a6423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="763" endline="786">mathStateRestore</referencedby>
+        <referencedby refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</referencedby>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+        <referencedby refid="sched_8h_1addf5d772556328769f19029d068d97e3" compoundref="armv6_2sched_8c" startline="228" endline="231">schedEndTask</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2eb9cc767595f53b3c580cd534a0a890" compoundref="file_8c" startline="186" endline="195">sys_chdir</referencedby>
+        <referencedby refid="gen__calls_8c_1ac94a3863f0a2d89003e5bdfc18baffa0" compoundref="gen__calls_8c" startline="45" endline="49">sys_exit</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a5ad4ab96ec36d0f1763b9540edaf0128" compoundref="file_8c" startline="197" endline="218">sys_fchdir</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a635e457cca04f0435b1b25d0d6b987df" compoundref="file_8c" startline="76" endline="113">sys_fgetc</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1a6b6b8f061ddd1e9631f0858ff0d83ff0" compoundref="file_8c" startline="47" endline="62">sys_fwrite</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1a96b9eebf3580117ce76158b2d53f188f" compoundref="kernel_2syscall_8c" startline="204" endline="222">sys_getcwd</referencedby>
+        <referencedby refid="gen__calls_8c_1a4b9ea4e44afeadecbe639569ef2cc6b4" compoundref="gen__calls_8c" startline="233" endline="236">sys_getegid</referencedby>
+        <referencedby refid="access_8c_1ad481d200b2b0cc6fa1ef4f50ba74b61d" compoundref="access_8c" startline="55" endline="57">sys_getEUID</referencedby>
+        <referencedby refid="gen__calls_8c_1a95814d9f34da704d5981360d98e23af9" compoundref="gen__calls_8c" startline="228" endline="231">sys_geteuid</referencedby>
+        <referencedby refid="access_8c_1a5375d82bafca30d9e46cd4a2f90e0b0e" compoundref="access_8c" startline="59" endline="61">sys_getGID</referencedby>
+        <referencedby refid="gen__calls_8c_1aa52846421fb6bb39fb090a155cbfbdab" compoundref="gen__calls_8c" startline="360" endline="366">sys_getlogin</referencedby>
+        <referencedby refid="gen__calls_8c_1a60684ca6776c6a48469cd3b07e7302ac" compoundref="gen__calls_8c" startline="310" endline="313">sys_getpgrp</referencedby>
+        <referencedby refid="gen__calls_8c_1a806b59c1d474ceb991d2e61f980b82ad" compoundref="gen__calls_8c" startline="224" endline="227">sys_getpid</referencedby>
+        <referencedby refid="gen__calls_8c_1a26b5c98e54c7a5e8698fba05710936df" compoundref="gen__calls_8c" startline="238" endline="241">sys_getppid</referencedby>
+        <referencedby refid="access_8c_1a191a0476bfcb185d8d22ed931f4d975d" compoundref="access_8c" startline="51" endline="53">sys_getUID</referencedby>
+        <referencedby refid="gen__calls_8c_1a6d945e107f5f3d710b7b571eac2784b5" compoundref="gen__calls_8c" startline="141" endline="145">sys_invalid</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="access_8c_1a2f790b60f547274cdc5c8381c7b8bff8" compoundref="access_8c" startline="63" endline="74">sys_setGID</referencedby>
+        <referencedby refid="gen__calls_8c_1a2c9b502d95322a6c040cf0f87f15aeba" compoundref="gen__calls_8c" startline="368" endline="374">sys_setlogin</referencedby>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+        <referencedby refid="access_8c_1a2bf535530dc717d50a761ccfb9d0e3f8" compoundref="access_8c" startline="43" endline="49">sys_setUID</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="file_8c_1a1a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="66" endline="74">sysFwrite</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1aa1858601da45332a2cd7d43bb3bcb80d" compoundref="arch_2armv6_2syscall_8c" startline="216" endline="220">sysGetCwd</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a1db3bfbad534c2fa75c02646fcf80a90" compoundref="arch_2armv6_2syscall_8c" startline="188" endline="196">sysGetFreePage</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1ae96a621ca025dd8af6bc3c8288cc0cb7" compoundref="arch_2armv6_2syscall_8c" startline="137" endline="141">sysGetGid</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a850d08e73e21c01850eea87fbe334fb6" compoundref="arch_2armv6_2syscall_8c" startline="125" endline="129">sysGetpid</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a20b15028f242e382e441fff69880b55b" compoundref="arch_2armv6_2syscall_8c" startline="131" endline="135">sysGetUid</referencedby>
+        <referencedby refid="file_8c_1a81e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="576" endline="609">sysMkDir</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a87ae7b6cdc0230fbdf65c167a776e9ad" compoundref="arch_2armv6_2syscall_8c" startline="112" endline="115">sysPasswd</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
+        <referencedby refid="ubthread_8c_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</referencedby>
+        <referencedby refid="ubthread_8c_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</referencedby>
+        <referencedby refid="ubthread_8c_1a72a362bc8127b8d63e1107062638664d" compoundref="ubthread_8c" startline="45" endline="47">ubthread_self</referencedby>
+        <referencedby refid="pagefault_8c_1a046643b9b8c1ad9efffaaaeb5ff11431" compoundref="pagefault_8c" startline="53" endline="147">vmm_pageFault</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="armv6_2sched_8c_1a93c7d4c40424b17a73f34f6fd89b2804" prot="public" static="no" mutable="no">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* _usedMath</definition>
+        <argsstring></argsstring>
+        <name>_usedMath</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="51" bodyend="-1"/>
+        <referencedby refid="idt_8c_1a6423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="763" endline="786">mathStateRestore</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="armv6_2sched_8c_1acb5b7561437e7d2fb6a222ba875057ca" prot="public" static="yes" mutable="no">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* delList</definition>
+        <argsstring></argsstring>
+        <name>delList</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="47" column="16" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="armv6_2sched_8c_1adfbc9d1d85a9b69ee799f309066ddbf5" prot="public" static="yes" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 nextID</definition>
+        <argsstring></argsstring>
+        <name>nextID</name>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="48" column="15" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="armv6_2sched_8c_1ac9049c47e21d6332b410114d99ce4fdf" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structspinLock" kindref="compound">spinLock</ref></type>
+        <definition>struct spinLock schedulerSpinLock</definition>
+        <argsstring></argsstring>
+        <name>schedulerSpinLock</name>
+        <initializer>= <ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="armv6_2sched_8c_1adf65a6dfe4c14f58df9052c048df01a1" prot="public" static="yes" mutable="no">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* taskList</definition>
+        <argsstring></argsstring>
+        <name>taskList</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="46" column="16" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="armv6_2sched_8c_1a549a0c1cc47933fa045b200690965cbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sched</definition>
+        <argsstring>()</argsstring>
+        <name>sched</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="80" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="80" bodyend="133"/>
+        <referencedby refid="sched_8h_1a08933fe6d593a1c78b9080359f15a0b7" compoundref="armv6_2sched_8c" startline="244" endline="246">sched_yield</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1aee1d1286c2a03f57a76d84682839d581" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_addDelTask</definition>
+        <argsstring>(kTask_t *tmpTask)</argsstring>
+        <name>sched_addDelTask</name>
+        <param>
+          <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+          <declname>tmpTask</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="186" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="186" bodyend="193"/>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1a18e47c4bb14b30f210b7b93c611a3782" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_deleteTask</definition>
+        <argsstring>(pidType id)</argsstring>
+        <name>sched_deleteTask</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="167" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="167" bodyend="184"/>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1a9608fa7a57005270e866d0a8b3a933f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* sched_getDelTask</definition>
+        <argsstring>()</argsstring>
+        <name>sched_getDelTask</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="195" column="9" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="195" bodyend="204"/>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1acc9c0d52122a455dbd018fabfc11ab59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_init</definition>
+        <argsstring>()</argsstring>
+        <name>sched_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="66" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="66" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1a2cbadd034400c65dbd11fd4892ddf26e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_setStatus</definition>
+        <argsstring>(pidType pid, tState state)</argsstring>
+        <name>sched_setStatus</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <param>
+          <type><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9" kindref="member">tState</ref></type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="265" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="265" bodyend="271"/>
+        <referencedby refid="endtask_8c_1a62d64dfdc841301f6ddfb8b79453a6c5" compoundref="endtask_8c" startline="44" endline="50">endTask</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sched_yield</definition>
+        <argsstring>()</argsstring>
+        <name>sched_yield</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="244" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="244" bodyend="246"/>
+        <referencedby refid="idt_8c_1a8a3ea6df190181b987577b14c99c6f9b" compoundref="idt_8c" startline="633" endline="637">__alignmentCheck</referencedby>
+        <referencedby refid="idt_8c_1a93a791c71216d3dd3550e193c805102f" compoundref="idt_8c" startline="285" endline="289">__debug</referencedby>
+        <referencedby refid="idt_8c_1adccd9730ac2b0fa6ef3b41cec9af2162" compoundref="idt_8c" startline="259" endline="263">__divideError</referencedby>
+        <referencedby refid="idt_8c_1a0f0ee5dbd5337bac161bd2490ad21397" compoundref="idt_8c" startline="382" endline="386">__doubleFault</referencedby>
+        <referencedby refid="idt_8c_1a867bddfec4bbeb769465d958bcbda312" compoundref="idt_8c" startline="607" endline="611">__floatingPoint</referencedby>
+        <referencedby refid="idt_8c_1ac51d829134fa5beed7f8fb62e8c297b3" compoundref="idt_8c" startline="658" endline="662">__machineCheck</referencedby>
+        <referencedby refid="idt_8c_1ae45963ae287b44ec905a7924207657e4" compoundref="idt_8c" startline="311" endline="315">__nmi</referencedby>
+        <referencedby refid="idt_8c_1ad3beb87208d6cbc992574f9e04f6f2be" compoundref="idt_8c" startline="737" endline="741">__security</referencedby>
+        <referencedby refid="idt_8c_1a8ec618b934fbea05a071a13c8f338d7e" compoundref="idt_8c" startline="684" endline="688">__simd</referencedby>
+        <referencedby refid="idt_8c_1a848a9f54eb3ac3c0046824e1a0b97eb2" compoundref="idt_8c" startline="711" endline="715">__virtualization</referencedby>
+        <referencedby refid="i386_2bioscall_8c_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="i386_2bioscall_8c" startline="40" endline="91">biosCall</referencedby>
+        <referencedby refid="endtask_8c_1a62d64dfdc841301f6ddfb8b79453a6c5" compoundref="endtask_8c" startline="44" endline="50">endTask</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="lnc_8c_1a6fb9d9c3d73ce2d10b2cebe1d71f07e2" compoundref="lnc_8c" startline="278" endline="314">lnc_thread</referencedby>
+        <referencedby refid="sched_8h_1addf5d772556328769f19029d068d97e3" compoundref="armv6_2sched_8c" startline="228" endline="231">schedEndTask</referencedby>
+        <referencedby refid="main_8cc_1a4290727c1924758744edacd57ff00def" compoundref="colours_8cc" startline="42" endline="68">sdeTestThread</referencedby>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+        <referencedby refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a635e457cca04f0435b1b25d0d6b987df" compoundref="file_8c" startline="76" endline="113">sys_fgetc</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1a770ac969c8caa5b63641bd50e92132a0" compoundref="kernel_2syscall_8c" startline="224" endline="227">sys_sched_yield</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a4fe050b57d00373f9f9810f1934244e7" compoundref="arch_2armv6_2syscall_8c" startline="222" endline="224">sysSchedYield</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+        <referencedby refid="ubthread_8c_1a996be9a927447a62f7168a082a046c54" compoundref="ubthread_8c" startline="129" endline="146">ubthread_cond_timedwait</referencedby>
+        <referencedby refid="ubthread_8c_1a30eb7c156c2422801ddb86326dbc3d81" compoundref="ubthread_8c" startline="148" endline="155">ubthread_cond_wait</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1addf5d772556328769f19029d068d97e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void schedEndTask</definition>
+        <argsstring>(pidType pid)</argsstring>
+        <name>schedEndTask</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="228" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="228" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1a9cf37ade4c1f6184b33014ac2015e8ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* schedFindTask</definition>
+        <argsstring>(uInt32 id)</argsstring>
+        <name>schedFindTask</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="207" column="1" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="207" bodyend="216"/>
+        <referencedby refid="sched_8h_1a51101e12c9236ea1286477695c110482" compoundref="armv6_2sched_8c" startline="265" endline="271">sched_setStatus</referencedby>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a618ade9098959166434c56fedf05f71a" compoundref="arch_2armv6_2syscall_8c" startline="173" endline="180">sysCheckPid</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2sched_8c_1a92458df2063761371869cdfe0c9b4ee3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="sched_8h_1a4096d94f76d96bbf005b9bbd45ed4ae1" kindref="member">kTask_t</ref> *</type>
+        <definition>kTask_t* schedNewTask</definition>
+        <argsstring>()</argsstring>
+        <name>schedNewTask</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" line="135" column="9" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c" bodystart="135" bodyend="165"/>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="idt_8h" kindref="compound">sys/idt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="descrip_8h" kindref="compound">sys/descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*taskList<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*delList<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>nextID<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="sched_8h_1a54397bfe18d5da4d50ff03b15f540858" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="51" refid="sched_8h_1a93c7d4c40424b17a73f34f6fd89b2804" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="armv6_2sched_8c_1a93c7d4c40424b17a73f34f6fd89b2804" kindref="member">_usedMath</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspinLock" kindref="compound">spinLock</ref><sp/>schedulerSpinLock<sp/>=<sp/><ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"></highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>Function:<sp/>int<sp/>sched_init()</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"></highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>is<sp/>used<sp/>to<sp/>enable<sp/>the<sp/>kernel<sp/>scheduler</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"></highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"></highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"></highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="sched_8h_1acc9c0d52122a455dbd018fabfc11ab59" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1acc9c0d52122a455dbd018fabfc11ab59" kindref="member">sched_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/>taskList<sp/>=<sp/>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref>));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(taskList<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Unable<sp/>to<sp/>create<sp/>task<sp/>list&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>taskList-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>=<sp/>nextID++;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Print<sp/>out<sp/>information<sp/>on<sp/>scheduler<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;sched0<sp/>-<sp/>Address:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>taskList);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>everything<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="80" refid="sched_8h_1a549a0c1cc47933fa045b200690965cbd" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1a549a0c1cc47933fa045b200690965cbd" kindref="member">sched</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>memAddr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*delTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="armv6_2spinlock_8c_1a740766af5da58616f700fffab6768a78" kindref="member">spinTryLock</ref>(&amp;schedulerSpinLock))</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/>tmpTask<sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//outportByte(0xE9,_current-&gt;id<sp/>+<sp/>&apos;0&apos;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/>schedStart:</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Yield<sp/>the<sp/>next<sp/>task<sp/>from<sp/>the<sp/>current<sp/>prio<sp/>queue<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>tmpTask<sp/>!=<sp/>0x0;<sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>&gt;<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>==<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9aeb5838b12f5849b4544c2d9d10dc6548" kindref="member">FORK</ref>)</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9a6564f2f3e15be06b670547bbcaaf0798" kindref="member">READY</ref>;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>==<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9a11fd9ca455f92c69c084484d5cd803c2" kindref="member">DEAD</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>delTask<sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2sched_8c_1a18e47c4bb14b30f210b7b93c611a3782" kindref="member">sched_deleteTask</ref>(delTask-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2sched_8c_1aee1d1286c2a03f57a76d84682839d581" kindref="member">sched_addDelTask</ref>(delTask);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>schedStart;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Finished<sp/>all<sp/>the<sp/>tasks,<sp/>restarting<sp/>the<sp/>list<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(0x0<sp/>==<sp/>tmpTask)<sp/>{</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpTask<sp/>=<sp/>taskList;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>schedStart;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>&gt;<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1abefa906e51d2b28b2475a74e16219ded" kindref="member">v86Task</ref><sp/>==<sp/>0x1)</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="8259_8h_1a2b9ec30943ddb0a2ef3bd7ccfd2026c0" kindref="member">irqDisable</ref>(0x0);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;cli&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>memAddr<sp/>=<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/>&amp;(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gdt_8h_1a7061e97a5e93568027196f9ab7a47b04" kindref="member">ubixGDT</ref>[4].<ref refid="uniondescriptorTableUnion_1a5c0b66fcfd449657154ad846df5cf701" kindref="member">descriptor</ref>.<ref refid="structgdtDescriptor_1ad8fb7196c3b0b2d15ebbc0d20006d0a8" kindref="member">baseLow</ref><sp/>=<sp/>(memAddr<sp/>&amp;<sp/>0xFFFF);</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gdt_8h_1a7061e97a5e93568027196f9ab7a47b04" kindref="member">ubixGDT</ref>[4].<ref refid="uniondescriptorTableUnion_1a5c0b66fcfd449657154ad846df5cf701" kindref="member">descriptor</ref>.<ref refid="structgdtDescriptor_1aef125e8406580a85d2201c2d63245575" kindref="member">baseMed</ref><sp/>=<sp/>((memAddr<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gdt_8h_1a7061e97a5e93568027196f9ab7a47b04" kindref="member">ubixGDT</ref>[4].<ref refid="uniondescriptorTableUnion_1a5c0b66fcfd449657154ad846df5cf701" kindref="member">descriptor</ref>.<ref refid="structgdtDescriptor_1a2cd45ddaee984e45ef519b5f96cb4151" kindref="member">baseHigh</ref><sp/>=<sp/>(memAddr<sp/>&gt;&gt;<sp/>24);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gdt_8h_1a7061e97a5e93568027196f9ab7a47b04" kindref="member">ubixGDT</ref>[4].<ref refid="uniondescriptorTableUnion_1a5c0b66fcfd449657154ad846df5cf701" kindref="member">descriptor</ref>.<ref refid="structgdtDescriptor_1ae0bca342b5caa6d39826f21fc9ac4d56" kindref="member">access</ref><sp/>=<sp/></highlight><highlight class="stringliteral">&apos;\x89&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;schedulerSpinLock);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;sti&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;ljmp<sp/>$0x20,$0\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;schedulerSpinLock);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="135" refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="armv6_2sched_8c_1a92458df2063761371869cdfe0c9b4ee3" kindref="member">schedNewTask</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref>));</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>schedNewTask()<sp/>-<sp/>kmalloc<sp/>failed<sp/>trying<sp/>to<sp/>initialize<sp/>a<sp/>new<sp/>task<sp/>struct\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>(tmpTask,<sp/>0x0,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref>));</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Filling<sp/>in<sp/>tasks<sp/>attrs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1afe3af11009b07961be7296b360827669" kindref="member">usedMath</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9aec34b0b90541576a22697631105dc847" kindref="member">NEW</ref>;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>HACK<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>3;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/>fp<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>.<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[i]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>fp;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>fp-&gt;<ref refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" kindref="member">f_flag</ref><sp/>=<sp/>0x4;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;schedulerSpinLock);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>=<sp/>nextID++;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>=<sp/>taskList;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/>taskList-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/>taskList<sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;schedulerSpinLock);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(tmpTask);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="167" refid="sched_8h_1a086cc0adc0b6a3860ceeeb5bc5ea94ea" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1a18e47c4bb14b30f210b7b93c611a3782" kindref="member">sched_deleteTask</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Checking<sp/>each<sp/>task<sp/>from<sp/>the<sp/>prio<sp/>queue<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpTask<sp/>=<sp/>taskList;<sp/>tmpTask<sp/>!=<sp/>0x0;<sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>==<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref>-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(taskList<sp/>==<sp/>tmpTask)</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>taskList<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="186" refid="sched_8h_1ae969273d772018d111e1f0344eb550f8" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1aee1d1286c2a03f57a76d84682839d581" kindref="member">sched_addDelTask</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask)<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>=<sp/>delList;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(delList<sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>delList-&gt;<ref refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/>delList<sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="195" refid="sched_8h_1a9608fa7a57005270e866d0a8b3a933f3" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="armv6_2sched_8c_1a9608fa7a57005270e866d0a8b3a933f3" kindref="member">sched_getDelTask</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(delList<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/>tmpTask<sp/>=<sp/>delList;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/>delList<sp/>=<sp/>delList-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(tmpTask);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207" refid="sched_8h_1a9cf37ade4c1f6184b33014ac2015e8ed" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><ref refid="armv6_2sched_8c_1a9cf37ade4c1f6184b33014ac2015e8ed" kindref="member">schedFindTask</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpTask<sp/>=<sp/>taskList;<sp/>tmpTask;<sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>==<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(tmpTask);</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="220"><highlight class="comment"></highlight></codeline>
+<codeline lineno="221"><highlight class="comment"><sp/>Function:<sp/>void<sp/>schedEndTask()</highlight></codeline>
+<codeline lineno="222"><highlight class="comment"></highlight></codeline>
+<codeline lineno="223"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>end<sp/>a<sp/>task</highlight></codeline>
+<codeline lineno="224"><highlight class="comment"></highlight></codeline>
+<codeline lineno="225"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="226"><highlight class="comment"></highlight></codeline>
+<codeline lineno="227"><highlight class="comment"><sp/>02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="228" refid="sched_8h_1addf5d772556328769f19029d068d97e3" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="229"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1addf5d772556328769f19029d068d97e3" kindref="member">schedEndTask</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid)<sp/>{</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1a152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><ref refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="233"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="236"><highlight class="comment"></highlight></codeline>
+<codeline lineno="237"><highlight class="comment"><sp/>Function:<sp/>int<sp/>schedEndTask()</highlight></codeline>
+<codeline lineno="238"><highlight class="comment"></highlight></codeline>
+<codeline lineno="239"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>yield<sp/>a<sp/>task</highlight></codeline>
+<codeline lineno="240"><highlight class="comment"></highlight></codeline>
+<codeline lineno="241"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="242"><highlight class="comment"></highlight></codeline>
+<codeline lineno="243"><highlight class="comment"><sp/>02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="244" refid="sched_8h_1a08933fe6d593a1c78b9080359f15a0b7" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="245"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><ref refid="armv6_2sched_8c_1a549a0c1cc47933fa045b200690965cbd" kindref="member">sched</ref>();</highlight></codeline>
+<codeline lineno="249"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="252"><highlight class="comment"><sp/>asm(</highlight></codeline>
+<codeline lineno="253"><highlight class="comment"><sp/>&quot;.globl<sp/>sched_yield<sp/>\n&quot;</highlight></codeline>
+<codeline lineno="254"><highlight class="comment"><sp/>&quot;sched_yield:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight></codeline>
+<codeline lineno="255"><highlight class="comment"><sp/>&quot;<sp/><sp/>cli<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight></codeline>
+<codeline lineno="256"><highlight class="comment"><sp/>&quot;<sp/><sp/>call<sp/>sched<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight></codeline>
+<codeline lineno="257"><highlight class="comment"><sp/>);</highlight></codeline>
+<codeline lineno="258"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="261"><highlight class="comment"></highlight></codeline>
+<codeline lineno="262"><highlight class="comment"><sp/>Function:<sp/>int<sp/>sched_setStatus(pidType<sp/>pid,tState<sp/>state)</highlight></codeline>
+<codeline lineno="263"><highlight class="comment"></highlight></codeline>
+<codeline lineno="264"><highlight class="comment"><sp/>Description:<sp/>Change<sp/>the<sp/>tasks<sp/>status</highlight></codeline>
+<codeline lineno="265" refid="sched_8h_1a51101e12c9236ea1286477695c110482" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="266"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="267"><highlight class="comment"></highlight></codeline>
+<codeline lineno="268"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="armv6_2sched_8c_1a2cbadd034400c65dbd11fd4892ddf26e" kindref="member">sched_setStatus</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid,<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9" kindref="member">tState</ref><sp/>state)<sp/>{</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/><ref refid="armv6_2sched_8c_1a9cf37ade4c1f6184b33014ac2015e8ed" kindref="member">schedFindTask</ref>(pid);</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/>state;</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="275"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="278"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="279"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sched.c"/>
+  </compounddef>
+</doxygen>

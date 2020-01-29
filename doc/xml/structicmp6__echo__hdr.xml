@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structicmp6__echo__hdr" kind="struct" language="C++" prot="public">
+    <compoundname>icmp6_echo_hdr</compoundname>
+    <includes refid="prot_2icmp6_8h" local="no">icmp6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structicmp6__echo__hdr_1a64bd94a5426b0aff92ce461739346692" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp6_echo_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t chksum)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>chksum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="157" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structicmp6__echo__hdr_1a1a5d230fbe6856e2a774bd498d8e32c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp6_echo_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t id)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="158" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structicmp6__echo__hdr_1a792bf2a70fb149902049a16df69a7312" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp6_echo_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t seqno)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>seqno</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="159" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structicmp6__echo__hdr_1afaf4cb9398e8faf686c75d9b26f987a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp6_echo_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t code)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="156" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structicmp6__echo__hdr_1a279c091f6e223e301974e61ae47af90d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp6_echo_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="155" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This is the ICMP6 header adapted for echo req/resp. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>icmp6_echo_hdr</label>
+        <link refid="structicmp6__echo__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="154" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" bodystart="154" bodyend="160"/>
+    <listofallmembers>
+      <member refid="structicmp6__echo__hdr_1a64bd94a5426b0aff92ce461739346692" prot="public" virt="non-virtual"><scope>icmp6_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp6__echo__hdr_1a1a5d230fbe6856e2a774bd498d8e32c4" prot="public" virt="non-virtual"><scope>icmp6_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp6__echo__hdr_1a792bf2a70fb149902049a16df69a7312" prot="public" virt="non-virtual"><scope>icmp6_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp6__echo__hdr_1a279c091f6e223e301974e61ae47af90d" prot="public" virt="non-virtual"><scope>icmp6_echo_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structicmp6__echo__hdr_1afaf4cb9398e8faf686c75d9b26f987a7" prot="public" virt="non-virtual"><scope>icmp6_echo_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

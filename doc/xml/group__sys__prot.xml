@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__prot" kind="group">
+    <compoundname>sys_prot</compoundname>
+    <title>Critical sections</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Used to protect short regions of code against concurrent access.<itemizedlist>
+<listitem><para>Your system is a bare-metal system (probably with an RTOS) and interrupts are under your control: Implement this as LockInterrupts() / UnlockInterrupts()</para>
+</listitem><listitem><para>Your system uses an RTOS with deferred interrupt handling from a worker thread: Implement as a global mutex or lock/unlock scheduler</para>
+</listitem><listitem><para>Your system uses a high-level OS with e.g. POSIX signals: Implement as a global mutex </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

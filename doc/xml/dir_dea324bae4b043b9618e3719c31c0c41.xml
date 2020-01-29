@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_dea324bae4b043b9618e3719c31c0c41" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/vmm</compoundname>
+    <innerfile refid="copyvirtualspace_8c">copyvirtualspace.c</innerfile>
+    <innerfile refid="createvirtualspace_8c">createvirtualspace.c</innerfile>
+    <innerfile refid="freevirtualpage_8c">freevirtualpage.c</innerfile>
+    <innerfile refid="getfreepage_8c">getfreepage.c</innerfile>
+    <innerfile refid="getfreevirtualpage_8c">getfreevirtualpage.c</innerfile>
+    <innerfile refid="getphysicaladdr_8c">getphysicaladdr.c</innerfile>
+    <innerfile refid="page__fault_8S">page_fault.S</innerfile>
+    <innerfile refid="pagefault_8c">pagefault.c</innerfile>
+    <innerfile refid="paging_8c">paging.c</innerfile>
+    <innerfile refid="setpageattributes_8c">setpageattributes.c</innerfile>
+    <innerfile refid="unmappage_8c">unmappage.c</innerfile>
+    <innerfile refid="vmm__allocpagetable_8c">vmm_allocpagetable.c</innerfile>
+    <innerfile refid="vmm__init_8c">vmm_init.c</innerfile>
+    <innerfile refid="vmm__memory_8c">vmm_memory.c</innerfile>
+    <innerfile refid="vmm__mmap_8c">vmm_mmap.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/vmm/"/>
+  </compounddef>
+</doxygen>

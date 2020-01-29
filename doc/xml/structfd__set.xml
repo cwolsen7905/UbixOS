@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfd__set" kind="struct" language="C++" prot="public">
+    <compoundname>fd_set</compoundname>
+    <includes refid="select_8h" local="no">select.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfd__set_1a735d53532d28e55ec1d741ee8f72cc67" prot="public" static="no" mutable="no">
+        <type><ref refid="select_8h_1ab24e8dc53c4c513f474bce25dcdf7d58" kindref="member">__fd_mask</ref></type>
+        <definition>__fd_mask fd_set::__fds_bits[((( 1024)+(((sizeof(__fd_mask) *8)) - 1))/((sizeof(__fd_mask) *8)))]</definition>
+        <argsstring>[(((1024)+(((sizeof(__fd_mask) *8)) - 1))/((sizeof(__fd_mask) *8)))]</argsstring>
+        <name>__fds_bits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/select.h" line="65" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/select.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fd_set</label>
+        <link refid="structfd__set"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/select.h" line="64" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/select.h" bodystart="64" bodyend="66"/>
+    <listofallmembers>
+      <member refid="structfd__set_1a735d53532d28e55ec1d741ee8f72cc67" prot="public" virt="non-virtual"><scope>fd_set</scope><name>__fds_bits</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

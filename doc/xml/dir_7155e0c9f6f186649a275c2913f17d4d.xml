@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_7155e0c9f6f186649a275c2913f17d4d" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/fs/fat</compoundname>
+    <innerfile refid="example_8c">example.c</innerfile>
+    <innerfile refid="fat_8c">fat.c</innerfile>
+    <innerfile refid="fat__access_8c">fat_access.c</innerfile>
+    <innerfile refid="fat__access_8h">fat_access.h</innerfile>
+    <innerfile refid="fat__cache_8c">fat_cache.c</innerfile>
+    <innerfile refid="fat__cache_8h">fat_cache.h</innerfile>
+    <innerfile refid="fat__defs_8h">fat_defs.h</innerfile>
+    <innerfile refid="fat__filelib_8c">fat_filelib.c</innerfile>
+    <innerfile refid="fat__filelib_8h">fat_filelib.h</innerfile>
+    <innerfile refid="fat__format_8c">fat_format.c</innerfile>
+    <innerfile refid="fat__format_8h">fat_format.h</innerfile>
+    <innerfile refid="fat__fread_8c">fat_fread.c</innerfile>
+    <innerfile refid="fat__list_8h">fat_list.h</innerfile>
+    <innerfile refid="fat__misc_8c">fat_misc.c</innerfile>
+    <innerfile refid="fat__misc_8h">fat_misc.h</innerfile>
+    <innerfile refid="fat__opts_8h">fat_opts.h</innerfile>
+    <innerfile refid="fat__string_8c">fat_string.c</innerfile>
+    <innerfile refid="fat__string_8h">fat_string.h</innerfile>
+    <innerfile refid="fat__table_8c">fat_table.c</innerfile>
+    <innerfile refid="fat__table_8h">fat_table.h</innerfile>
+    <innerfile refid="fat__types_8h">fat_types.h</innerfile>
+    <innerfile refid="fat__write_8c">fat_write.c</innerfile>
+    <innerfile refid="fat__write_8h">fat_write.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/"/>
+  </compounddef>
+</doxygen>

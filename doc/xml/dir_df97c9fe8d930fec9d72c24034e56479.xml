@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_df97c9fe8d930fec9d72c24034e56479" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/boot</compoundname>
+    <innerdir refid="dir_c0419893b4a351c1690c3086e9588268">C:/Dev/git/UbixOS/sys/boot/arm</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/boot/"/>
+  </compounddef>
+</doxygen>

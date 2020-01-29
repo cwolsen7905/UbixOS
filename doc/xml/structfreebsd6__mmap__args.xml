@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfreebsd6__mmap__args" kind="struct" language="C++" prot="public">
+    <compoundname>freebsd6_mmap_args</compoundname>
+    <includes refid="vmm_8h" local="no">vmm.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a841d856e3b8557c71f49cbb1f2912915" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t freebsd6_mmap_args::addr</definition>
+        <argsstring></argsstring>
+        <name>addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="75" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="75" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a2e5363b741b5c3ad4c1864ea4c7a499a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::addr_l_[PADL_(caddr_t)]</definition>
+        <argsstring>[PADL_(caddr_t)]</argsstring>
+        <name>addr_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="74" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1abff572a3f34d5f8af6c9e1932fd90e11" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::addr_r_[PADR_(caddr_t)]</definition>
+        <argsstring>[PADR_(caddr_t)]</argsstring>
+        <name>addr_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="76" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a13eef518e4a15d1bcb4edd0fb8baf209" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int freebsd6_mmap_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="90" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="90" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a537ce932fda3476cd2300c9c9e197689" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::fd_l_[PADL_(int)]</definition>
+        <argsstring>[PADL_(int)]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="89" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a963a912a081dcfd70416bf8a8346f009" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::fd_r_[PADR_(int)]</definition>
+        <argsstring>[PADR_(int)]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="91" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a9233fccfb817eef25ee6aae5de43bef0" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int freebsd6_mmap_args::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="87" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="87" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a67b39e4cd604050e00d1b76119aa31c4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::flags_l_[PADL_(int)]</definition>
+        <argsstring>[PADL_(int)]</argsstring>
+        <name>flags_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="85" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a21af01078b32a5574498aa4e462ef2ae" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::flags_r_[PADR_(int)]</definition>
+        <argsstring>[PADR_(int)]</argsstring>
+        <name>flags_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="88" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1aa6f8c3f17fdac371851c44f0f05a503e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t freebsd6_mmap_args::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="79" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="79" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1ab2aa0f7be5486a57974d179f26ff826f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::len_l_[PADL_(size_t)]</definition>
+        <argsstring>[PADL_(size_t)]</argsstring>
+        <name>len_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="78" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1aaecf42ce57412dfff472b2f7a6682529" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::len_r_[PADR_(size_t)]</definition>
+        <argsstring>[PADR_(size_t)]</argsstring>
+        <name>len_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="80" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1ac879a1ee14fb849a4d830bec94d5ae13" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int freebsd6_mmap_args::pad</definition>
+        <argsstring></argsstring>
+        <name>pad</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="94" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="94" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1aaa99bf308f23fca37fb31ccb6477c9bf" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::pad_l_[PADL_(int)]</definition>
+        <argsstring>[PADL_(int)]</argsstring>
+        <name>pad_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="93" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a6ae49554a30a09a56caee8d6e45227a6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::pad_r_[PADR_(int)]</definition>
+        <argsstring>[PADR_(int)]</argsstring>
+        <name>pad_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="95" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a5ba1d1bc00b43b73a9edc1b299f2a56e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t freebsd6_mmap_args::pos</definition>
+        <argsstring></argsstring>
+        <name>pos</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="98" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="98" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a71c4d84ab305322c3120587cc04c8753" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::pos_l_[PADL_(off_t)]</definition>
+        <argsstring>[PADL_(off_t)]</argsstring>
+        <name>pos_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="97" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1acc34261237aa7fa6ed5ac5c3b2e17af6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::pos_r_[PADR_(off_t)]</definition>
+        <argsstring>[PADR_(off_t)]</argsstring>
+        <name>pos_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="99" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1ae114b2b851ebbd32b7a58224a59bd716" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int freebsd6_mmap_args::prot</definition>
+        <argsstring></argsstring>
+        <name>prot</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="83" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="83" bodyend="-1"/>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1ac467b6a711f988fa06dcaa37a8549da2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::prot_l_[PADL_(int)]</definition>
+        <argsstring>[PADL_(int)]</argsstring>
+        <name>prot_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="82" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfreebsd6__mmap__args_1a4fe5c5253f17139e7aa41896df7756ce" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char freebsd6_mmap_args::prot_r_[PADR_(int)]</definition>
+        <argsstring>[PADR_(int)]</argsstring>
+        <name>prot_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="84" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>freebsd6_mmap_args</label>
+        <link refid="structfreebsd6__mmap__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" line="73" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/vmm.h" bodystart="73" bodyend="100"/>
+    <listofallmembers>
+      <member refid="structfreebsd6__mmap__args_1a841d856e3b8557c71f49cbb1f2912915" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>addr</name></member>
+      <member refid="structfreebsd6__mmap__args_1a2e5363b741b5c3ad4c1864ea4c7a499a" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>addr_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1abff572a3f34d5f8af6c9e1932fd90e11" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>addr_r_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a13eef518e4a15d1bcb4edd0fb8baf209" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>fd</name></member>
+      <member refid="structfreebsd6__mmap__args_1a537ce932fda3476cd2300c9c9e197689" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>fd_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a963a912a081dcfd70416bf8a8346f009" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>fd_r_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a9233fccfb817eef25ee6aae5de43bef0" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>flags</name></member>
+      <member refid="structfreebsd6__mmap__args_1a67b39e4cd604050e00d1b76119aa31c4" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>flags_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a21af01078b32a5574498aa4e462ef2ae" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>flags_r_</name></member>
+      <member refid="structfreebsd6__mmap__args_1aa6f8c3f17fdac371851c44f0f05a503e" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>len</name></member>
+      <member refid="structfreebsd6__mmap__args_1ab2aa0f7be5486a57974d179f26ff826f" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>len_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1aaecf42ce57412dfff472b2f7a6682529" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>len_r_</name></member>
+      <member refid="structfreebsd6__mmap__args_1ac879a1ee14fb849a4d830bec94d5ae13" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>pad</name></member>
+      <member refid="structfreebsd6__mmap__args_1aaa99bf308f23fca37fb31ccb6477c9bf" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>pad_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a6ae49554a30a09a56caee8d6e45227a6" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>pad_r_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a5ba1d1bc00b43b73a9edc1b299f2a56e" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>pos</name></member>
+      <member refid="structfreebsd6__mmap__args_1a71c4d84ab305322c3120587cc04c8753" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>pos_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1acc34261237aa7fa6ed5ac5c3b2e17af6" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>pos_r_</name></member>
+      <member refid="structfreebsd6__mmap__args_1ae114b2b851ebbd32b7a58224a59bd716" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>prot</name></member>
+      <member refid="structfreebsd6__mmap__args_1ac467b6a711f988fa06dcaa37a8549da2" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>prot_l_</name></member>
+      <member refid="structfreebsd6__mmap__args_1a4fe5c5253f17139e7aa41896df7756ce" prot="public" virt="non-virtual"><scope>freebsd6_mmap_args</scope><name>prot_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

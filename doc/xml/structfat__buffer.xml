@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfat__buffer" kind="struct" language="C++" prot="public">
+    <compoundname>fat_buffer</compoundname>
+    <includes refid="fat__access_8h" local="no">fat_access.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfat__buffer_1aac81891a2e6cdeceeb0b875b1b5aaad6" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 fat_buffer::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="43" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfat__buffer_1a1679a1936a7f1862e0a13389f03f7270" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fat_buffer::dirty</definition>
+        <argsstring></argsstring>
+        <name>dirty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="44" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="fat__table_8h_1a4122bbba15645ebdeea241ef7bcb663e" compoundref="fat__table_8c" startline="179" endline="195">fatfs_fat_purge</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfat__buffer_1a7bf0427e8229c466e093aad4563ce369" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfat__buffer" kindref="compound">fat_buffer</ref> *</type>
+        <definition>struct fat_buffer* fat_buffer::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="48" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfat__buffer_1acc02e408347f85e6c24db4574365e102" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref> *</type>
+        <definition>uint8* fat_buffer::ptr</definition>
+        <argsstring></argsstring>
+        <name>ptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="45" column="28" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfat__buffer_1ad26f6eb3714e0ea2cdb08e22cb6d1ae1" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 fat_buffer::sector[512 * 1]</definition>
+        <argsstring>[512 *1]</argsstring>
+        <name>sector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="42" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fat_buffer</label>
+        <link refid="structfat__buffer"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="41" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="40" bodyend="49"/>
+    <listofallmembers>
+      <member refid="structfat__buffer_1aac81891a2e6cdeceeb0b875b1b5aaad6" prot="public" virt="non-virtual"><scope>fat_buffer</scope><name>address</name></member>
+      <member refid="structfat__buffer_1a1679a1936a7f1862e0a13389f03f7270" prot="public" virt="non-virtual"><scope>fat_buffer</scope><name>dirty</name></member>
+      <member refid="structfat__buffer_1a7bf0427e8229c466e093aad4563ce369" prot="public" virt="non-virtual"><scope>fat_buffer</scope><name>next</name></member>
+      <member refid="structfat__buffer_1acc02e408347f85e6c24db4574365e102" prot="public" virt="non-virtual"><scope>fat_buffer</scope><name>ptr</name></member>
+      <member refid="structfat__buffer_1ad26f6eb3714e0ea2cdb08e22cb6d1ae1" prot="public" virt="non-virtual"><scope>fat_buffer</scope><name>sector</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

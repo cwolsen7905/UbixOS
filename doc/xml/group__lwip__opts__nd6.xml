@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__nd6" kind="group">
+    <compoundname>lwip_opts_nd6</compoundname>
+    <title>Neighbor discovery</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gad35d10353ac7c7d2c8d4b83788cdc6d9" prot="public" static="no">
+        <name>LWIP_ND6_ALLOW_RA_UPDATES</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_ALLOW_RA_UPDATES==1: Allow Router Advertisement messages to update Reachable time and retransmission timers, and netif MTU. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2331" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2331" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga315bd6d4a9d185766dfc3253cd9d7715" prot="public" static="no">
+        <name>LWIP_ND6_DELAY_FIRST_PROBE_TIME</name>
+        <initializer>5000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_DELAY_FIRST_PROBE_TIME: Delay before first unicast neighbor solicitation message is sent, during neighbor reachability detection. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2323" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2323" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga960b8973df083fad53ae0eaa79f8c4df" prot="public" static="no">
+        <name>LWIP_ND6_MAX_ANYCAST_DELAY_TIME</name>
+        <initializer>1000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Unused: See ND RFC (time in milliseconds). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2293" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2293" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga980909018aed54adc10dd68be3572b30" prot="public" static="no">
+        <name>LWIP_ND6_MAX_MULTICAST_SOLICIT</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_MAX_MULTICAST_SOLICIT: max number of multicast solicit messages to send (neighbor solicit and router solicit) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2278" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2278" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga86ab0cac87cdc7aeff09384ddbaaba2a" prot="public" static="no">
+        <name>LWIP_ND6_MAX_NEIGHBOR_ADVERTISEMENT</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Unused: See ND RFC </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2300" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2300" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gafa6f4c2d2c259ab0895fa03a6f08c691" prot="public" static="no">
+        <name>LWIP_ND6_MAX_UNICAST_SOLICIT</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_MAX_UNICAST_SOLICIT: max number of unicast neighbor solicitation messages to send during neighbor reachability detection. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2286" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2286" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gacad118b1ae886e80137a1d4f0fb19672" prot="public" static="no">
+        <name>LWIP_ND6_NUM_DESTINATIONS</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_NUM_DESTINATIONS: number of entries in IPv6 destination cache </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2256" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2256" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gab2fe15bdb4e0a41f295eb5577b11ad16" prot="public" static="no">
+        <name>LWIP_ND6_NUM_NEIGHBORS</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_NUM_NEIGHBORS: Number of entries in IPv6 neighbor cache </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2249" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gad9cc576b5951f1b5e1c2b0d0bb831d9a" prot="public" static="no">
+        <name>LWIP_ND6_NUM_PREFIXES</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_NUM_PREFIXES: number of entries in IPv6 on-link prefixes cache </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2263" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2263" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga75e81a96148f266c8fad8c0bcab2f36a" prot="public" static="no">
+        <name>LWIP_ND6_NUM_ROUTERS</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_NUM_ROUTERS: number of entries in IPv6 default router cache </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2270" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2270" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga0757a3c1b5d1563ad2d77228e1d8a60f" prot="public" static="no">
+        <name>LWIP_ND6_QUEUEING</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_QUEUEING==1: queue outgoing IPv6 packets while MAC address is being resolved. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2235" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2235" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gaea4d829c0b52cc6cc28925eee89a7429" prot="public" static="no">
+        <name>LWIP_ND6_RDNSS_MAX_DNS_SERVERS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_RDNSS_MAX_DNS_SERVERS &gt; 0: Use IPv6 Router Advertisement Recursive DNS Server Option (as per RFC 6106) to copy a defined maximum number of DNS servers to the DNS module. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2349" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2349" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga269db9d61cdfc2fd3bc7b12c56261c74" prot="public" static="no">
+        <name>LWIP_ND6_REACHABLE_TIME</name>
+        <initializer>30000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_REACHABLE_TIME: default neighbor reachable time (in milliseconds). May be updated by router advertisement messages. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2308" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2308" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga461abcbeef1d236d1f3201827dd28ad9" prot="public" static="no">
+        <name>LWIP_ND6_RETRANS_TIMER</name>
+        <initializer>1000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_RETRANS_TIMER: default retransmission timer for solicitation messages </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2315" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2315" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1ga9d7cb6fd447ef0f6726f565e2c7509c4" prot="public" static="no">
+        <name>LWIP_ND6_TCP_REACHABILITY_HINTS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ND6_TCP_REACHABILITY_HINTS==1: Allow TCP to provide Neighbor Discovery with reachability hints for connected destinations. This helps avoid sending unicast neighbor solicitation messages. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2340" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2340" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__nd6_1gabfaf3d92d51e2a9d70c8360af2611fb2" prot="public" static="no">
+        <name>MEMP_NUM_ND6_QUEUE</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_ND6_QUEUE: Max number of IPv6 packets to queue during MAC resolution. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2242" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2242" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structrdnss__option" kind="struct" language="C++" prot="public">
+    <compoundname>rdnss_option</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structrdnss__option_1a7628b9cbc479b88e71724c48771489fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rdnss_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t reserved)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>reserved</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="264" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrdnss__option_1aa158675e583bf7ede6d7f49ef067010b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rdnss_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t lifetime)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>lifetime</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="265" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrdnss__option_1a81a66053d3a91489850b84ea28ea5756" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rdnss_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="263" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrdnss__option_1a48a99ff0a93ae6215faab37a1d314792" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rdnss_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="262" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrdnss__option_1a71ac04f04f0842fcb126aaf5ad372831" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rdnss_option::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip6_addr_p_t rdnss_address[1])</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref></type>
+          <declname>rdnss_address</declname>
+          <array>[1]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="266" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>rdnss_option</label>
+        <link refid="structrdnss__option"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="261" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="261" bodyend="267"/>
+    <listofallmembers>
+      <member refid="structrdnss__option_1a7628b9cbc479b88e71724c48771489fa" prot="public" virt="non-virtual"><scope>rdnss_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structrdnss__option_1aa158675e583bf7ede6d7f49ef067010b" prot="public" virt="non-virtual"><scope>rdnss_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structrdnss__option_1a48a99ff0a93ae6215faab37a1d314792" prot="public" virt="non-virtual"><scope>rdnss_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structrdnss__option_1a81a66053d3a91489850b84ea28ea5756" prot="public" virt="non-virtual"><scope>rdnss_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structrdnss__option_1a71ac04f04f0842fcb126aaf5ad372831" prot="public" virt="non-virtual"><scope>rdnss_option</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

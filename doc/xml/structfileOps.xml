@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfileOps" kind="struct" language="C++" prot="public">
+    <compoundname>fileOps</compoundname>
+    <includes refid="descrip_8h" local="no">descrip.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfileOps_1a9dc0634ce672ddd26cd1b442a5b7bee5" prot="public" static="no" mutable="no">
+        <type><ref refid="descrip_8h_1aea172d12f3d010efb1c413fd8fdc39b3" kindref="member">fo_close_t</ref> *</type>
+        <definition>fo_close_t* fileOps::close</definition>
+        <argsstring></argsstring>
+        <name>close</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="81" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfileOps_1a1fae56c4e194b63f774dbebca530e721" prot="public" static="no" mutable="no">
+        <type><ref refid="descrip_8h_1a75116012fe309ee2b3b5094cabb634e2" kindref="member">fo_rdwr_t</ref> *</type>
+        <definition>fo_rdwr_t* fileOps::read</definition>
+        <argsstring></argsstring>
+        <name>read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="78" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfileOps_1a104e81450f108dfbf47b6961a5d47d04" prot="public" static="no" mutable="no">
+        <type><ref refid="descrip_8h_1a2a2c048445e6f662a2f408e9cf13e955" kindref="member">fo_stat_t</ref> *</type>
+        <definition>fo_stat_t* fileOps::stat</definition>
+        <argsstring></argsstring>
+        <name>stat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="80" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfileOps_1acaaff927eddb287f956556d9b1d178e6" prot="public" static="no" mutable="no">
+        <type><ref refid="descrip_8h_1a75116012fe309ee2b3b5094cabb634e2" kindref="member">fo_rdwr_t</ref> *</type>
+        <definition>fo_rdwr_t* fileOps::write</definition>
+        <argsstring></argsstring>
+        <name>write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="79" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fileOps</label>
+        <link refid="structfileOps"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="77" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="77" bodyend="82"/>
+    <listofallmembers>
+      <member refid="structfileOps_1a9dc0634ce672ddd26cd1b442a5b7bee5" prot="public" virt="non-virtual"><scope>fileOps</scope><name>close</name></member>
+      <member refid="structfileOps_1a1fae56c4e194b63f774dbebca530e721" prot="public" virt="non-virtual"><scope>fileOps</scope><name>read</name></member>
+      <member refid="structfileOps_1a104e81450f108dfbf47b6961a5d47d04" prot="public" virt="non-virtual"><scope>fileOps</scope><name>stat</name></member>
+      <member refid="structfileOps_1acaaff927eddb287f956556d9b1d178e6" prot="public" virt="non-virtual"><scope>fileOps</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

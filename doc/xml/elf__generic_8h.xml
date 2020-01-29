@@ -1,0 +1,908 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="elf__generic_8h" kind="file" language="C++">
+    <compoundname>elf_generic.h</compoundname>
+    <includes refid="cdefs_8h" local="no">sys/cdefs.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h</label>
+        <link refid="elf__generic_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="elf__generic_8h_1ae3b872285ecf1d92939a78b24ee0d114" prot="public" static="no">
+        <name>__elfN</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(<ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(<ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(elf,__ELF_WORD_SIZE),_),x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a9b2e0ea3c5a83d1686e34beffa894fa7" prot="public" static="no">
+        <name>__ElfN</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(<ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(<ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(Elf,__ELF_WORD_SIZE),_),x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" prot="public" static="no">
+        <name>__ELFN</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(<ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(<ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(ELF,__ELF_WORD_SIZE),_),x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" prot="public" static="no">
+        <name>__ElfType</name>
+        <param><defname>x</defname></param>
+        <initializer>typedef <ref refid="elf__generic_8h_1a9b2e0ea3c5a83d1686e34beffa894fa7" kindref="member">__ElfN</ref>(x) <ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(Elf_,x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1aa2cd54ae5068cd9c5f323c40bd98f61a" prot="public" static="no">
+        <name>ELF_CLASS</name>
+        <initializer><ref refid="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" kindref="member">__CONCAT</ref>(ELFCLASS,__ELF_WORD_SIZE)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a9b282f6ace36079197a127685b8949ae" prot="public" static="no">
+        <name>ELF_DATA</name>
+        <initializer><ref refid="elf__common_8h_1af66303c799da18c8aec282ea8592e7e7" kindref="member">ELFDATA2LSB</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1aed22252cd9c8bac88c0db0d2328250d9" prot="public" static="no">
+        <name>ELF_R_INFO</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(R_INFO)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="83" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a8d3fc5bbbc767d0e484843f6831659cf" prot="public" static="no">
+        <name>ELF_R_SYM</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(R_SYM)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="81" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1ae91c561e4921f0a1cf5868d775ac3243" prot="public" static="no">
+        <name>ELF_R_TYPE</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(R_TYPE)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="82" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a5370d61077b153ba6b515994e185b9f8" prot="public" static="no">
+        <name>ELF_ST_BIND</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(ST_BIND)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a4599f6eed80dce210951fb73c8b389fe" prot="public" static="no">
+        <name>ELF_ST_INFO</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(ST_INFO)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="86" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a972d66fcb6578448641a95d7a321dc4b" prot="public" static="no">
+        <name>ELF_ST_TYPE</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(ST_TYPE)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf__generic_8h_1a5b8ec81699c70e79f85bd17a946a355f" prot="public" static="no">
+        <name>ELF_ST_VISIBILITY</name>
+        <initializer><ref refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" kindref="member">__ELFN</ref>(ST_VISIBILITY)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="87" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="elf__generic_8h_1a4df636c500c71fab9453425b8cc6a618" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Addr</definition>
+        <argsstring></argsstring>
+        <name>Addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="58" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a9ed54cce994e315323a69df8625594e8" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Dyn</definition>
+        <argsstring></argsstring>
+        <name>Dyn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="66" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a26798906752083baf1ef4d345f7bf67c" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Ehdr</definition>
+        <argsstring></argsstring>
+        <name>Ehdr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="63" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a274a09c44bcd51b764a1e1aa8224c6d4" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Half</definition>
+        <argsstring></argsstring>
+        <name>Half</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="59" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1ab93d718472fe1a5d8dd7ff634717de3a" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Hashelt</definition>
+        <argsstring></argsstring>
+        <name>Hashelt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="77" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1af485526f47682ec03119c76d166c8664" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Off</definition>
+        <argsstring></argsstring>
+        <name>Off</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="60" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a7886b5515f0b6e6ba3f68029ffb8197f" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Phdr</definition>
+        <argsstring></argsstring>
+        <name>Phdr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="65" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1ac856e307e582e31cc2298a59f54aad56" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Rel</definition>
+        <argsstring></argsstring>
+        <name>Rel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="67" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a0486620d2dfac7afd720b88c10971651" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Rela</definition>
+        <argsstring></argsstring>
+        <name>Rela</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="68" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1ac2834eb6a8660684cffef4d2b89f219b" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Shdr</definition>
+        <argsstring></argsstring>
+        <name>Shdr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="64" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a8f083052502d1aead5adf3f980dede7a" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Size</definition>
+        <argsstring></argsstring>
+        <name>Size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="78" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a991ece9a7275aa9d22c2a7ce2040ca81" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Ssize</definition>
+        <argsstring></argsstring>
+        <name>Ssize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="79" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1ac180aa43dfb9aaaa96a6e4307cb39cc3" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Sword</definition>
+        <argsstring></argsstring>
+        <name>Sword</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="61" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1abe3b8f8ac275b360160c9908cfbf71e7" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Sym</definition>
+        <argsstring></argsstring>
+        <name>Sym</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="69" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1abec3242f14d891c91935f8e858d8fba3" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Verdaux</definition>
+        <argsstring></argsstring>
+        <name>Verdaux</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="71" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a018d3e14ed5e9ec6d78612414bdfc19c" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Verdef</definition>
+        <argsstring></argsstring>
+        <name>Verdef</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="70" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1ab4644c1c7689e62b862ea61a79dc685d" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Vernaux</definition>
+        <argsstring></argsstring>
+        <name>Vernaux</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="73" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1aa55ed5601a988f4b3910de4fea24eab0" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Verneed</definition>
+        <argsstring></argsstring>
+        <name>Verneed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="72" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1abfca91b7114f919895cd6dfc93cf666f" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Versym</definition>
+        <argsstring></argsstring>
+        <name>Versym</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="74" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="elf__generic_8h_1a91ce677f3048390667685187faec25f9" prot="public" static="no" mutable="no">
+        <type>typedef</type>
+        <definition>typedef Word</definition>
+        <argsstring></argsstring>
+        <name>Word</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="62" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="elf__generic_8h_1a8fcf2d3cc575ec8355b5ff97eeaf46b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Addr) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a4df636c500c71fab9453425b8cc6a618" kindref="member">Addr</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="58" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a6c9bd66a5c79e75a135eeb6455d65216" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Dyn) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a9ed54cce994e315323a69df8625594e8" kindref="member">Dyn</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="66" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a825b959ab2269b8532c317ef0d5d3d39" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Ehdr) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a26798906752083baf1ef4d345f7bf67c" kindref="member">Ehdr</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="63" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a9a2f504d082a49af22f28d25cd82cab8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Half) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a274a09c44bcd51b764a1e1aa8224c6d4" kindref="member">Half</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="59" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1ac38642ed9084d732eb170346adeafed6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Hashelt) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1ab93d718472fe1a5d8dd7ff634717de3a" kindref="member">Hashelt</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="77" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a81a637a16e0576e3989b5310c7d0da88" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Off) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1af485526f47682ec03119c76d166c8664" kindref="member">Off</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="60" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1affdce3a875990c9e06d1c51024f29800" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Phdr) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a7886b5515f0b6e6ba3f68029ffb8197f" kindref="member">Phdr</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="65" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a71750597b961f5f35adba1452f44358f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Rel) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1ac856e307e582e31cc2298a59f54aad56" kindref="member">Rel</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="67" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1ad853331c4810811beb0b4181157989b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Rela) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a0486620d2dfac7afd720b88c10971651" kindref="member">Rela</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="68" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1abdf68d840695884b80d87e8e6c165959" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Shdr) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1ac2834eb6a8660684cffef4d2b89f219b" kindref="member">Shdr</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="64" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a3c63846cdd28aa07edae94ea88fc2db8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Size) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a8f083052502d1aead5adf3f980dede7a" kindref="member">Size</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="78" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a1760594d1cb9588ba9ad1d077805b1d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Ssize) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a991ece9a7275aa9d22c2a7ce2040ca81" kindref="member">Ssize</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="79" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1ab6b72e9a043fb5c68a1b6aca3b190e8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Sword) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1ac180aa43dfb9aaaa96a6e4307cb39cc3" kindref="member">Sword</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="61" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1ab984a315109d174f14300113f5883b4c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Sym) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1abe3b8f8ac275b360160c9908cfbf71e7" kindref="member">Sym</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="69" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a3540c39966274bba829df326a1cf521e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Verdaux) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1abec3242f14d891c91935f8e858d8fba3" kindref="member">Verdaux</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="71" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1ab982876b9210b8d52d9642b7ffac478c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Verdef) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a018d3e14ed5e9ec6d78612414bdfc19c" kindref="member">Verdef</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="70" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1ad68e61db06f814facf64941d7e025a0e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Vernaux) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1ab4644c1c7689e62b862ea61a79dc685d" kindref="member">Vernaux</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="73" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1abc2b2366b20f14ab99144a4a415a7107" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Verneed) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1aa55ed5601a988f4b3910de4fea24eab0" kindref="member">Verneed</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="72" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a2847e34871cdd0d40e253f9db6aec342" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Versym) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1abfca91b7114f919895cd6dfc93cf666f" kindref="member">Versym</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="74" column="9"/>
+      </memberdef>
+      <memberdef kind="function" id="elf__generic_8h_1a9b60392b104eda114f46db1f8caf0acd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>typedef</type>
+        <definition>typedef __CONCAT</definition>
+        <argsstring>(__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _), Word) __CONCAT(Elf_</argsstring>
+        <name>__CONCAT</name>
+        <param>
+          <type>__CONCAT(__CONCAT(Elf, __ELF_WORD_SIZE), _)</type>
+        </param>
+        <param>
+          <type><ref refid="elf__generic_8h_1a91ce677f3048390667685187faec25f9" kindref="member">Word</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h" line="62" column="9"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_ELF_GENERIC_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_ELF_GENERIC_H_<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="cdefs_8h" kindref="compound">sys/cdefs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>Definitions<sp/>of<sp/>generic<sp/>ELF<sp/>names<sp/>which<sp/>relieve<sp/>applications<sp/>from</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*<sp/>needing<sp/>to<sp/>know<sp/>the<sp/>word<sp/>size.</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>__ELF_WORD_SIZE<sp/>!=<sp/>32<sp/>&amp;&amp;<sp/>__ELF_WORD_SIZE<sp/>!=<sp/>64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;__ELF_WORD_SIZE<sp/>must<sp/>be<sp/>defined<sp/>as<sp/>32<sp/>or<sp/>64&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="elf__generic_8h_1aa2cd54ae5068cd9c5f323c40bd98f61a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_CLASS<sp/><sp/><sp/><sp/><sp/><sp/><sp/>__CONCAT(ELFCLASS,__ELF_WORD_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>BYTE_ORDER<sp/>==<sp/>LITTLE_ENDIAN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="elf__generic_8h_1a9b282f6ace36079197a127685b8949ae" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_DATA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ELFDATA2LSB</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>BYTE_ORDER<sp/>==<sp/>BIG_ENDIAN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_DATA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ELFDATA2MSB</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;Unknown<sp/>byte<sp/>order&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="elf__generic_8h_1ae3b872285ecf1d92939a78b24ee0d114" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__elfN(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>__CONCAT(__CONCAT(__CONCAT(elf,__ELF_WORD_SIZE),_),x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="elf__generic_8h_1a9b2e0ea3c5a83d1686e34beffa894fa7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__ElfN(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>__CONCAT(__CONCAT(__CONCAT(Elf,__ELF_WORD_SIZE),_),x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="elf__generic_8h_1a1aa704344f4d66985eed4d2faab1d838" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__ELFN(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>__CONCAT(__CONCAT(__CONCAT(ELF,__ELF_WORD_SIZE),_),x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__ElfType(x)<sp/><sp/><sp/><sp/>typedef<sp/>__ElfN(x)<sp/>__CONCAT(Elf_,x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="elf__generic_8h_1a4df636c500c71fab9453425b8cc6a618" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a4df636c500c71fab9453425b8cc6a618" kindref="member">Addr</ref>);</highlight></codeline>
+<codeline lineno="59" refid="elf__generic_8h_1a274a09c44bcd51b764a1e1aa8224c6d4" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a274a09c44bcd51b764a1e1aa8224c6d4" kindref="member">Half</ref>);</highlight></codeline>
+<codeline lineno="60" refid="elf__generic_8h_1af485526f47682ec03119c76d166c8664" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1af485526f47682ec03119c76d166c8664" kindref="member">Off</ref>);</highlight></codeline>
+<codeline lineno="61" refid="elf__generic_8h_1ac180aa43dfb9aaaa96a6e4307cb39cc3" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1ac180aa43dfb9aaaa96a6e4307cb39cc3" kindref="member">Sword</ref>);</highlight></codeline>
+<codeline lineno="62" refid="elf__generic_8h_1a91ce677f3048390667685187faec25f9" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a91ce677f3048390667685187faec25f9" kindref="member">Word</ref>);</highlight></codeline>
+<codeline lineno="63" refid="elf__generic_8h_1a26798906752083baf1ef4d345f7bf67c" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a26798906752083baf1ef4d345f7bf67c" kindref="member">Ehdr</ref>);</highlight></codeline>
+<codeline lineno="64" refid="elf__generic_8h_1ac2834eb6a8660684cffef4d2b89f219b" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1ac2834eb6a8660684cffef4d2b89f219b" kindref="member">Shdr</ref>);</highlight></codeline>
+<codeline lineno="65" refid="elf__generic_8h_1a7886b5515f0b6e6ba3f68029ffb8197f" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a7886b5515f0b6e6ba3f68029ffb8197f" kindref="member">Phdr</ref>);</highlight></codeline>
+<codeline lineno="66" refid="elf__generic_8h_1a9ed54cce994e315323a69df8625594e8" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a9ed54cce994e315323a69df8625594e8" kindref="member">Dyn</ref>);</highlight></codeline>
+<codeline lineno="67" refid="elf__generic_8h_1ac856e307e582e31cc2298a59f54aad56" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1ac856e307e582e31cc2298a59f54aad56" kindref="member">Rel</ref>);</highlight></codeline>
+<codeline lineno="68" refid="elf__generic_8h_1a0486620d2dfac7afd720b88c10971651" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a0486620d2dfac7afd720b88c10971651" kindref="member">Rela</ref>);</highlight></codeline>
+<codeline lineno="69" refid="elf__generic_8h_1abe3b8f8ac275b360160c9908cfbf71e7" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1abe3b8f8ac275b360160c9908cfbf71e7" kindref="member">Sym</ref>);</highlight></codeline>
+<codeline lineno="70" refid="elf__generic_8h_1a018d3e14ed5e9ec6d78612414bdfc19c" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a018d3e14ed5e9ec6d78612414bdfc19c" kindref="member">Verdef</ref>);</highlight></codeline>
+<codeline lineno="71" refid="elf__generic_8h_1abec3242f14d891c91935f8e858d8fba3" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1abec3242f14d891c91935f8e858d8fba3" kindref="member">Verdaux</ref>);</highlight></codeline>
+<codeline lineno="72" refid="elf__generic_8h_1aa55ed5601a988f4b3910de4fea24eab0" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1aa55ed5601a988f4b3910de4fea24eab0" kindref="member">Verneed</ref>);</highlight></codeline>
+<codeline lineno="73" refid="elf__generic_8h_1ab4644c1c7689e62b862ea61a79dc685d" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1ab4644c1c7689e62b862ea61a79dc685d" kindref="member">Vernaux</ref>);</highlight></codeline>
+<codeline lineno="74" refid="elf__generic_8h_1abfca91b7114f919895cd6dfc93cf666f" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1abfca91b7114f919895cd6dfc93cf666f" kindref="member">Versym</ref>);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Non-standard<sp/>ELF<sp/>types.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="elf__generic_8h_1ab93d718472fe1a5d8dd7ff634717de3a" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1ab93d718472fe1a5d8dd7ff634717de3a" kindref="member">Hashelt</ref>);</highlight></codeline>
+<codeline lineno="78" refid="elf__generic_8h_1a8f083052502d1aead5adf3f980dede7a" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a8f083052502d1aead5adf3f980dede7a" kindref="member">Size</ref>);</highlight></codeline>
+<codeline lineno="79" refid="elf__generic_8h_1a991ece9a7275aa9d22c2a7ce2040ca81" refkind="member"><highlight class="normal"><ref refid="elf__generic_8h_1ae9d1fbc4e8c53578b5760b958dbeeea7" kindref="member">__ElfType</ref>(<ref refid="elf__generic_8h_1a991ece9a7275aa9d22c2a7ce2040ca81" kindref="member">Ssize</ref>);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="elf__generic_8h_1a8d3fc5bbbc767d0e484843f6831659cf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_R_SYM<sp/><sp/><sp/><sp/><sp/><sp/><sp/>__ELFN(R_SYM)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82" refid="elf__generic_8h_1ae91c561e4921f0a1cf5868d775ac3243" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_R_TYPE<sp/><sp/><sp/><sp/><sp/><sp/>__ELFN(R_TYPE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="elf__generic_8h_1aed22252cd9c8bac88c0db0d2328250d9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_R_INFO<sp/><sp/><sp/><sp/><sp/><sp/>__ELFN(R_INFO)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="elf__generic_8h_1a5370d61077b153ba6b515994e185b9f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_ST_BIND<sp/><sp/><sp/><sp/><sp/>__ELFN(ST_BIND)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="elf__generic_8h_1a972d66fcb6578448641a95d7a321dc4b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_ST_TYPE<sp/><sp/><sp/><sp/><sp/>__ELFN(ST_TYPE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="elf__generic_8h_1a4599f6eed80dce210951fb73c8b389fe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_ST_INFO<sp/><sp/><sp/><sp/><sp/>__ELFN(ST_INFO)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="elf__generic_8h_1a5b8ec81699c70e79f85bd17a946a355f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF_ST_VISIBILITY<sp/><sp/><sp/><sp/><sp/><sp/><sp/>__ELFN(ST_VISIBILITY)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!_SYS_ELF_GENERIC_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_generic.h"/>
+  </compounddef>
+</doxygen>

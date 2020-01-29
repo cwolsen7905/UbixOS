@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__getrlimit__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_getrlimit_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__getrlimit__args_1a17cceaf95313e824c3eeb41b7f5ca704" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structrlimit" kindref="compound">rlimit</ref> *</type>
+        <definition>struct rlimit* sys_getrlimit_args::rlp</definition>
+        <argsstring></argsstring>
+        <name>rlp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="793" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="793" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1abe3341acee6fc13d0806e33bf4950cc0" compoundref="gen__calls_8c" startline="376" endline="448">sys_getrlimit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getrlimit__args_1a7adcb046d24091ceb64df8e2ae68bbc3" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getrlimit_args::rlp_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>rlp_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="792" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="792" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getrlimit__args_1a94e6f6e0f3f5768d764e1d6fc6308a3a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getrlimit_args::rlp_r_[(sizeof(register_t)&lt;=sizeof(struct rlimit *) ? 0 :sizeof(register_t) - sizeof(struct rlimit *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct rlimit *) ? 0 :sizeof(register_t) - sizeof(struct rlimit *))]</argsstring>
+        <name>rlp_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="794" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="794" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getrlimit__args_1a3b5241088cc7365c2e852ffe892dc092" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+        <definition>u_int sys_getrlimit_args::which</definition>
+        <argsstring></argsstring>
+        <name>which</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="790" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="790" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1abe3341acee6fc13d0806e33bf4950cc0" compoundref="gen__calls_8c" startline="376" endline="448">sys_getrlimit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getrlimit__args_1aa379c4eb549e760670513cd0a5e0f6c0" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getrlimit_args::which_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>which_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="789" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="789" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getrlimit__args_1affccda7f2632199f6607917281a8096d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getrlimit_args::which_r_[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</argsstring>
+        <name>which_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="791" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="791" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_getrlimit_args</label>
+        <link refid="structsys__getrlimit__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+rlp</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="788" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="788" bodyend="795"/>
+    <listofallmembers>
+      <member refid="structsys__getrlimit__args_1a17cceaf95313e824c3eeb41b7f5ca704" prot="public" virt="non-virtual"><scope>sys_getrlimit_args</scope><name>rlp</name></member>
+      <member refid="structsys__getrlimit__args_1a7adcb046d24091ceb64df8e2ae68bbc3" prot="public" virt="non-virtual"><scope>sys_getrlimit_args</scope><name>rlp_l_</name></member>
+      <member refid="structsys__getrlimit__args_1a94e6f6e0f3f5768d764e1d6fc6308a3a" prot="public" virt="non-virtual"><scope>sys_getrlimit_args</scope><name>rlp_r_</name></member>
+      <member refid="structsys__getrlimit__args_1a3b5241088cc7365c2e852ffe892dc092" prot="public" virt="non-virtual"><scope>sys_getrlimit_args</scope><name>which</name></member>
+      <member refid="structsys__getrlimit__args_1aa379c4eb549e760670513cd0a5e0f6c0" prot="public" virt="non-virtual"><scope>sys_getrlimit_args</scope><name>which_l_</name></member>
+      <member refid="structsys__getrlimit__args_1affccda7f2632199f6607917281a8096d" prot="public" virt="non-virtual"><scope>sys_getrlimit_args</scope><name>which_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

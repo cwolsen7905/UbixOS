@@ -1,0 +1,561 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="strings_8h" kind="file" language="C++">
+    <compoundname>strings.h</compoundname>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="string_8h" local="no">C:/Dev/git/UbixOS/sys/include/string.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</label>
+        <link refid="inet__chksum_8c"/>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/net/core/def.c</label>
+        <link refid="def_8c"/>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/lib/kprintf.c</label>
+        <link refid="kprintf_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c</label>
+        <link refid="vmm__allocpagetable_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</label>
+        <link refid="i386_2spinlock_8c"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vfs_calls.c</label>
+        <link refid="vfs__calls_8c"/>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c</label>
+        <link refid="kern__pipe_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c</label>
+        <link refid="fat__string_8c"/>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/lib/strncpy.c</label>
+        <link refid="strncpy_8c"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</label>
+        <link refid="gpt_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/lib/string.c</label>
+        <link refid="string_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/lib/strtok.c</label>
+        <link refid="strtok_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/lib/vsprintf.c</label>
+        <link refid="vsprintf_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="strings_8h_1aa4c3aee2deb111efd7af25f98541c29a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bcopy</definition>
+        <argsstring>(const void *, void *, size_t)</argsstring>
+        <name>bcopy</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/strings.h" line="34" column="6" declfile="C:/Dev/git/UbixOS/sys/include/strings.h" declline="34" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="strings_8h_1ab828ad07c8ebf898973f27778c543651" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bzero</definition>
+        <argsstring>(void *, size_t)</argsstring>
+        <name>bzero</name>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/strings.h" line="35" column="6" declfile="C:/Dev/git/UbixOS/sys/include/strings.h" declline="35" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_STRINGS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_STRINGS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="strings_8h_1aa4c3aee2deb111efd7af25f98541c29a" kindref="member">bcopy</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="strings_8h_1ab828ad07c8ebf898973f27778c543651" kindref="member">bzero</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_STRING_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/strings.h"/>
+  </compounddef>
+</doxygen>

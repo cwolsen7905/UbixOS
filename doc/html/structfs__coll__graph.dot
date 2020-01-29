@@ -1,0 +1,11 @@
+digraph "fs"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{fs\n|+ fs_active\l+ fs_avgfilesize\l+ fs_avgfilesize\l+ fs_avgfpdir\l+ fs_avgfpdir\l+ fs_bmask\l+ fs_bshift\l+ fs_bsize\l+ fs_cblkno\l+ fs_cgrotor\land 88 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +fs_csp\n+fs_old_cstotal" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{csum\n|+ cs_nbfree\l+ cs_ndir\l+ cs_nffree\l+ cs_nifree\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcsum.html",tooltip=" "];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +fs_cstotal" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{csum_total\n|+ cs_nbfree\l+ cs_ndir\l+ cs_nffree\l+ cs_nifree\l+ cs_numclusters\l+ cs_spare\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcsum__total.html",tooltip=" "];
+}

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_21e12f15c353f338a385e10009a09aca" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/net/apps</compoundname>
+    <innerfile refid="net_2apps_2fs_8h">fs.h</innerfile>
+    <innerfile refid="httpd_8h">httpd.h</innerfile>
+    <innerfile refid="httpd__opts_8h">httpd_opts.h</innerfile>
+    <innerfile refid="lwiperf_8h">lwiperf.h</innerfile>
+    <innerfile refid="mdns_8h">mdns.h</innerfile>
+    <innerfile refid="mdns__opts_8h">mdns_opts.h</innerfile>
+    <innerfile refid="mdns__priv_8h">mdns_priv.h</innerfile>
+    <innerfile refid="mqtt_8h">mqtt.h</innerfile>
+    <innerfile refid="mqtt__opts_8h">mqtt_opts.h</innerfile>
+    <innerfile refid="netbiosns_8h">netbiosns.h</innerfile>
+    <innerfile refid="netbiosns__opts_8h">netbiosns_opts.h</innerfile>
+    <innerfile refid="apps_2snmp_8h">snmp.h</innerfile>
+    <innerfile refid="snmp__core_8h">snmp_core.h</innerfile>
+    <innerfile refid="snmp__mib2_8h">snmp_mib2.h</innerfile>
+    <innerfile refid="snmp__opts_8h">snmp_opts.h</innerfile>
+    <innerfile refid="snmp__scalar_8h">snmp_scalar.h</innerfile>
+    <innerfile refid="snmp__table_8h">snmp_table.h</innerfile>
+    <innerfile refid="snmp__threadsync_8h">snmp_threadsync.h</innerfile>
+    <innerfile refid="snmpv3_8h">snmpv3.h</innerfile>
+    <innerfile refid="sntp_8h">sntp.h</innerfile>
+    <innerfile refid="sntp__opts_8h">sntp_opts.h</innerfile>
+    <innerfile refid="tftp__opts_8h">tftp_opts.h</innerfile>
+    <innerfile refid="tftp__server_8h">tftp_server.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__sendto__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_sendto_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__sendto__args_1ab732d29637ff40328a2df62544d483d0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t sys_sendto_args::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="703" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="703" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1aa6f2348564736c6b9ec2b59add148c44" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::buf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>buf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="702" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="702" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a4d6d4d3bfd69458b0fa6ab8479e0d3e9" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::buf_r_[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</argsstring>
+        <name>buf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="704" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="704" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1ae4a3e262bcfe54357d6561277c7d042b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_sendto_args::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="709" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="709" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a1103a9ed45144ffa42dd75d37b6d6c88" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::flags_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>flags_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="708" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="708" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a42763103d6229e85972f30894fd3c9eb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::flags_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>flags_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="710" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="710" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a59447a72b4f723da2fc62d0c5277f37a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t sys_sendto_args::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="706" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="706" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1ac854b8070cf4cba469676e44ebe25a81" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::len_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>len_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="705" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="705" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a1c235730b1ed197e8cf12c4390b53fa5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::len_r_[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</argsstring>
+        <name>len_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="707" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="707" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a0cdf2b658bc69bf5953307834bd24762" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_sendto_args::s</definition>
+        <argsstring></argsstring>
+        <name>s</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="700" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="700" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1ab9da994c19f0c2b67595226a7f6e5d89" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::s_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>s_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="699" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="699" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a53e41f293dc10e479b5dfa5c48321433" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::s_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>s_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="701" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="701" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a49a036c43bd615d5538abf735d8e961b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t sys_sendto_args::to</definition>
+        <argsstring></argsstring>
+        <name>to</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="712" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="712" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a05f63382763f2aaf7bd3728aaed6a6cd" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::to_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>to_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="711" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="711" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a8a602d27d75cead252de2cb2db22ba67" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::to_r_[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</argsstring>
+        <name>to_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="713" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="713" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a43184dc4152b51eff221e5bb127777ed" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_sendto_args::tolen</definition>
+        <argsstring></argsstring>
+        <name>tolen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="715" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="715" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1a6c38baa2ba88164728ddbf281c3d3a6b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::tolen_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>tolen_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="714" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="714" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sendto__args_1aa346bf45cf1458f3f0b5d7a2ea8666d4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sendto_args::tolen_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>tolen_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="716" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="716" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_sendto_args</label>
+        <link refid="structsys__sendto__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="698" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="698" bodyend="717"/>
+    <listofallmembers>
+      <member refid="structsys__sendto__args_1ab732d29637ff40328a2df62544d483d0" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>buf</name></member>
+      <member refid="structsys__sendto__args_1aa6f2348564736c6b9ec2b59add148c44" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>buf_l_</name></member>
+      <member refid="structsys__sendto__args_1a4d6d4d3bfd69458b0fa6ab8479e0d3e9" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>buf_r_</name></member>
+      <member refid="structsys__sendto__args_1ae4a3e262bcfe54357d6561277c7d042b" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>flags</name></member>
+      <member refid="structsys__sendto__args_1a1103a9ed45144ffa42dd75d37b6d6c88" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>flags_l_</name></member>
+      <member refid="structsys__sendto__args_1a42763103d6229e85972f30894fd3c9eb" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>flags_r_</name></member>
+      <member refid="structsys__sendto__args_1a59447a72b4f723da2fc62d0c5277f37a" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>len</name></member>
+      <member refid="structsys__sendto__args_1ac854b8070cf4cba469676e44ebe25a81" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>len_l_</name></member>
+      <member refid="structsys__sendto__args_1a1c235730b1ed197e8cf12c4390b53fa5" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>len_r_</name></member>
+      <member refid="structsys__sendto__args_1a0cdf2b658bc69bf5953307834bd24762" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>s</name></member>
+      <member refid="structsys__sendto__args_1ab9da994c19f0c2b67595226a7f6e5d89" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>s_l_</name></member>
+      <member refid="structsys__sendto__args_1a53e41f293dc10e479b5dfa5c48321433" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>s_r_</name></member>
+      <member refid="structsys__sendto__args_1a49a036c43bd615d5538abf735d8e961b" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>to</name></member>
+      <member refid="structsys__sendto__args_1a05f63382763f2aaf7bd3728aaed6a6cd" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>to_l_</name></member>
+      <member refid="structsys__sendto__args_1a8a602d27d75cead252de2cb2db22ba67" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>to_r_</name></member>
+      <member refid="structsys__sendto__args_1a43184dc4152b51eff221e5bb127777ed" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>tolen</name></member>
+      <member refid="structsys__sendto__args_1a6c38baa2ba88164728ddbf281c3d3a6b" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>tolen_l_</name></member>
+      <member refid="structsys__sendto__args_1aa346bf45cf1458f3f0b5d7a2ea8666d4" prot="public" virt="non-virtual"><scope>sys_sendto_args</scope><name>tolen_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

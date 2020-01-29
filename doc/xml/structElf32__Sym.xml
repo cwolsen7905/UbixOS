@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Sym" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Sym</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Sym_1a7d131c44ec48708b1c98f9b00ca9d528" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Elf32_Sym::st_info</definition>
+        <argsstring></argsstring>
+        <name>st_info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="199" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="199" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Sym_1a6a972b30868879f8a1e071e0c45e5031" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Sym::st_name</definition>
+        <argsstring></argsstring>
+        <name>st_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="196" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="196" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Sym_1a2e1bf6bedb5180f74ea8cbaf9cedfd36" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Elf32_Sym::st_other</definition>
+        <argsstring></argsstring>
+        <name>st_other</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="200" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="200" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Sym_1a46e54847ab00fbea62df8ee5dff8dec6" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Sym::st_shndx</definition>
+        <argsstring></argsstring>
+        <name>st_shndx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="201" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="201" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Sym_1a1b410e69fecd2610bc7e58d2b0245053" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Sym::st_size</definition>
+        <argsstring></argsstring>
+        <name>st_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="198" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Sym_1abf8ff76884bc5e2acb5f7eb42f733c2e" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref></type>
+        <definition>Elf32_Addr Elf32_Sym::st_value</definition>
+        <argsstring></argsstring>
+        <name>st_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="197" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="197" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Sym</label>
+        <link refid="structElf32__Sym"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="195" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="195" bodyend="202"/>
+    <listofallmembers>
+      <member refid="structElf32__Sym_1a7d131c44ec48708b1c98f9b00ca9d528" prot="public" virt="non-virtual"><scope>Elf32_Sym</scope><name>st_info</name></member>
+      <member refid="structElf32__Sym_1a6a972b30868879f8a1e071e0c45e5031" prot="public" virt="non-virtual"><scope>Elf32_Sym</scope><name>st_name</name></member>
+      <member refid="structElf32__Sym_1a2e1bf6bedb5180f74ea8cbaf9cedfd36" prot="public" virt="non-virtual"><scope>Elf32_Sym</scope><name>st_other</name></member>
+      <member refid="structElf32__Sym_1a46e54847ab00fbea62df8ee5dff8dec6" prot="public" virt="non-virtual"><scope>Elf32_Sym</scope><name>st_shndx</name></member>
+      <member refid="structElf32__Sym_1a1b410e69fecd2610bc7e58d2b0245053" prot="public" virt="non-virtual"><scope>Elf32_Sym</scope><name>st_size</name></member>
+      <member refid="structElf32__Sym_1abf8ff76884bc5e2acb5f7eb42f733c2e" prot="public" virt="non-virtual"><scope>Elf32_Sym</scope><name>st_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

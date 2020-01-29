@@ -1,0 +1,638 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="elf32_8h" kind="file" language="C++">
+    <compoundname>elf32.h</compoundname>
+    <includes refid="elf__common_8h" local="no">sys/elf_common.h</includes>
+    <includedby refid="sys_2elf_8h" local="no">C:/Dev/git/UbixOS/sys/include/sys/elf.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf32.h</label>
+        <link refid="elf32_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/elf_common.h</label>
+        <link refid="elf__common_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf32.h</label>
+        <link refid="elf32_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/sys/elf.c</label>
+        <link refid="sys_2elf_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structElf32__Cap" prot="public">Elf32_Cap</innerclass>
+    <innerclass refid="structElf32__Chdr" prot="public">Elf32_Chdr</innerclass>
+    <innerclass refid="structElf32__Dyn" prot="public">Elf32_Dyn</innerclass>
+    <innerclass refid="structElf32__Ehdr" prot="public">Elf32_Ehdr</innerclass>
+    <innerclass refid="structElf32__Lib" prot="public">Elf32_Lib</innerclass>
+    <innerclass refid="structElf32__Move" prot="public">Elf32_Move</innerclass>
+    <innerclass refid="structElf32__Phdr" prot="public">Elf32_Phdr</innerclass>
+    <innerclass refid="structElf32__Rel" prot="public">Elf32_Rel</innerclass>
+    <innerclass refid="structElf32__Rela" prot="public">Elf32_Rela</innerclass>
+    <innerclass refid="structElf32__Shdr" prot="public">Elf32_Shdr</innerclass>
+    <innerclass refid="structElf32__Sym" prot="public">Elf32_Sym</innerclass>
+    <innerclass refid="structElf32__Syminfo" prot="public">Elf32_Syminfo</innerclass>
+    <innerclass refid="structElf32__Verdaux" prot="public">Elf32_Verdaux</innerclass>
+    <innerclass refid="structElf32__Verdef" prot="public">Elf32_Verdef</innerclass>
+    <innerclass refid="structElf32__Vernaux" prot="public">Elf32_Vernaux</innerclass>
+    <innerclass refid="structElf32__Verneed" prot="public">Elf32_Verneed</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="elf32_8h_1a8c77181c84baf40ff5a6b8be922249e2" prot="public" static="no">
+        <name>ELF32_M_INFO</name>
+        <param><defname>sym</defname></param>
+        <param><defname>size</defname></param>
+        <initializer>(((sym)&lt;&lt;8)+(unsigned char)(size))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="178" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="178" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1a4c1ba328268c503a908c9ff9a8bb60ae" prot="public" static="no">
+        <name>ELF32_M_SIZE</name>
+        <param><defname>info</defname></param>
+        <initializer>((unsigned char)(info))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="177" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1affc4f95cb4d9a0978e2e9d4561af1e10" prot="public" static="no">
+        <name>ELF32_M_SYM</name>
+        <param><defname>info</defname></param>
+        <initializer>((info)&gt;&gt;8)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="176" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="176" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1a50353a918aa39887e701e95ece09c37f" prot="public" static="no">
+        <name>ELF32_R_INFO</name>
+        <param><defname>sym</defname></param>
+        <param><defname>type</defname></param>
+        <initializer>(((sym) &lt;&lt; 8) + (unsigned char)(type))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="151" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1af407354d17dceb417c6e79554a45b31a" prot="public" static="no">
+        <name>ELF32_R_SYM</name>
+        <param><defname>info</defname></param>
+        <initializer>((info) &gt;&gt; 8)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="147" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1aeecb1a128443aeb30505b409133fc5bf" prot="public" static="no">
+        <name>ELF32_R_TYPE</name>
+        <param><defname>info</defname></param>
+        <initializer>((unsigned char)(info))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="148" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1a1ac2af28735ac82302fee2e09956b0e2" prot="public" static="no">
+        <name>ELF32_ST_BIND</name>
+        <param><defname>info</defname></param>
+        <initializer>((info) &gt;&gt; 4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="205" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="205" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1abc4e291764a8281f7a0e2dab4b5a7a6e" prot="public" static="no">
+        <name>ELF32_ST_INFO</name>
+        <param><defname>bind</defname></param>
+        <param><defname>type</defname></param>
+        <initializer>(((bind) &lt;&lt; 4) + ((type) &amp; 0xf))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="209" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="209" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1acde81341b366f9fa2681beec70527ad4" prot="public" static="no">
+        <name>ELF32_ST_TYPE</name>
+        <param><defname>info</defname></param>
+        <initializer>((info) &amp; 0xf)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="206" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="206" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="elf32_8h_1a26951672679d9870ef20469b1fed1007" prot="public" static="no">
+        <name>ELF32_ST_VISIBILITY</name>
+        <param><defname>oth</defname></param>
+        <initializer>((oth) &amp; 0x3)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="212" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="212" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>typedef uint32_t Elf32_Addr</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="38" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>typedef uint16_t Elf32_Half</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Half</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="39" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1a199cd979190df7e42f3e75a4a6a3cf23" prot="public" static="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>typedef Elf32_Word Elf32_Hashelt</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Hashelt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="45" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1ac6515aa02b362a99f0b75d7f24e1b730" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>typedef uint64_t Elf32_Lword</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Lword</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="43" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1a85d5cd3f4828c22b708f79e6de5541a9" prot="public" static="no">
+        <type><ref refid="structElf__Note" kindref="compound">Elf_Note</ref></type>
+        <definition>typedef Elf_Note Elf32_Nhdr</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Nhdr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="156" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1a655751f9b317369b93c581ea8ed84516" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>typedef uint32_t Elf32_Off</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Off</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="40" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1af1754878a7a7c86b8e73a89f65e14e0e" prot="public" static="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>typedef Elf32_Word Elf32_Size</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="48" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1aa7018ae70195bf84e47ebb7fbe9b2fb0" prot="public" static="no">
+        <type><ref refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" kindref="member">Elf32_Sword</ref></type>
+        <definition>typedef Elf32_Sword Elf32_Ssize</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Ssize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="49" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1a30ce6352cf03c667272698ada477da95" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>typedef int32_t Elf32_Sword</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Sword</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="41" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1a8acefd6aa26497ad5a3fe579b0c47004" prot="public" static="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>typedef Elf32_Half Elf32_Versym</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Versym</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="246" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="246" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="elf32_8h_1af5924ece606c732e86f8263a19408e45" prot="public" static="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>typedef uint32_t Elf32_Word</definition>
+        <argsstring></argsstring>
+        <name>Elf32_Word</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="42" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_ELF32_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_ELF32_H_<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="elf__common_8h" kindref="compound">sys/elf_common.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>ELF<sp/>definitions<sp/>common<sp/>to<sp/>all<sp/>32-bit<sp/>architectures.</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref>;</highlight></codeline>
+<codeline lineno="39" refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref>;</highlight></codeline>
+<codeline lineno="40" refid="elf32_8h_1a655751f9b317369b93c581ea8ed84516" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="elf32_8h_1a655751f9b317369b93c581ea8ed84516" kindref="member">Elf32_Off</ref>;</highlight></codeline>
+<codeline lineno="41" refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><ref refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" kindref="member">Elf32_Sword</ref>;</highlight></codeline>
+<codeline lineno="42" refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref>;</highlight></codeline>
+<codeline lineno="43" refid="elf32_8h_1ac6515aa02b362a99f0b75d7f24e1b730" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref><sp/><ref refid="elf32_8h_1ac6515aa02b362a99f0b75d7f24e1b730" kindref="member">Elf32_Lword</ref>;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="elf32_8h_1a199cd979190df7e42f3e75a4a6a3cf23" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="elf32_8h_1a199cd979190df7e42f3e75a4a6a3cf23" kindref="member">Elf32_Hashelt</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Non-standard<sp/>class-dependent<sp/>datatype<sp/>used<sp/>for<sp/>abstraction.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="elf32_8h_1af1754878a7a7c86b8e73a89f65e14e0e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="elf32_8h_1af1754878a7a7c86b8e73a89f65e14e0e" kindref="member">Elf32_Size</ref>;</highlight></codeline>
+<codeline lineno="49" refid="elf32_8h_1aa7018ae70195bf84e47ebb7fbe9b2fb0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" kindref="member">Elf32_Sword</ref><sp/><ref refid="elf32_8h_1aa7018ae70195bf84e47ebb7fbe9b2fb0" kindref="member">Elf32_Ssize</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*<sp/>ELF<sp/>header.</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structElf32__Ehdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="56" refid="structElf32__Ehdr_1aba47ac5e0af02d5668782f1fd5a7466c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>e_ident[<ref refid="elf__common_8h_1ae407130db14180c6737390604ba7c1fe" kindref="member">EI_NIDENT</ref>];<sp/></highlight><highlight class="comment">/*<sp/>File<sp/>identification.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="structElf32__Ehdr_1a49e40a791813c06e3b6ebcb53aef1bb8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1a49e40a791813c06e3b6ebcb53aef1bb8" kindref="member">e_type</ref>;<sp/></highlight><highlight class="comment">/*<sp/>File<sp/>type.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="structElf32__Ehdr_1a19bca7faba9e5573814643efc3574c7b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1a19bca7faba9e5573814643efc3574c7b" kindref="member">e_machine</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Machine<sp/>architecture.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="structElf32__Ehdr_1aa27627bda53281221325df4dd782e800" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Ehdr_1aa27627bda53281221325df4dd782e800" kindref="member">e_version</ref>;<sp/></highlight><highlight class="comment">/*<sp/>ELF<sp/>format<sp/>version.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="structElf32__Ehdr_1ab8a982696048d807017919b7d0145482" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Ehdr_1ab8a982696048d807017919b7d0145482" kindref="member">e_entry</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Entry<sp/>point.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="structElf32__Ehdr_1a25c36fc010284a928604aae005b67ad1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a655751f9b317369b93c581ea8ed84516" kindref="member">Elf32_Off</ref><sp/><ref refid="structElf32__Ehdr_1a25c36fc010284a928604aae005b67ad1" kindref="member">e_phoff</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Program<sp/>header<sp/>file<sp/>offset.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="structElf32__Ehdr_1a00601af5187a1b3f8babfe9cddd95c15" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a655751f9b317369b93c581ea8ed84516" kindref="member">Elf32_Off</ref><sp/><ref refid="structElf32__Ehdr_1a00601af5187a1b3f8babfe9cddd95c15" kindref="member">e_shoff</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Section<sp/>header<sp/>file<sp/>offset.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="structElf32__Ehdr_1a87cf481be7917fafde0c4ecf78c8e574" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Ehdr_1a87cf481be7917fafde0c4ecf78c8e574" kindref="member">e_flags</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Architecture-specific<sp/>flags.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="structElf32__Ehdr_1a04c658023e50479eed64f6d1b00a2504" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1a04c658023e50479eed64f6d1b00a2504" kindref="member">e_ehsize</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>ELF<sp/>header<sp/>in<sp/>bytes.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="structElf32__Ehdr_1afa2289f96d86fcc568a3b1f40cc8953e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1afa2289f96d86fcc568a3b1f40cc8953e" kindref="member">e_phentsize</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>program<sp/>header<sp/>entry.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="structElf32__Ehdr_1a360898812db1655f8cb8258780d9df5b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1a360898812db1655f8cb8258780d9df5b" kindref="member">e_phnum</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Number<sp/>of<sp/>program<sp/>header<sp/>entries.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="structElf32__Ehdr_1ab53c709a841960e499da68e2316ed428" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1ab53c709a841960e499da68e2316ed428" kindref="member">e_shentsize</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>section<sp/>header<sp/>entry.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="structElf32__Ehdr_1a11249bd7e61642742a68a3e7f69ac721" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1a11249bd7e61642742a68a3e7f69ac721" kindref="member">e_shnum</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Number<sp/>of<sp/>section<sp/>header<sp/>entries.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="structElf32__Ehdr_1a3b3070ccd7d971e8cb6ea58d4c6fab09" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Ehdr_1a3b3070ccd7d971e8cb6ea58d4c6fab09" kindref="member">e_shstrndx</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Section<sp/>name<sp/>strings<sp/>section.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal">}<sp/><ref refid="structElf32__Ehdr" kindref="compound">Elf32_Ehdr</ref>;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>*<sp/>Shared<sp/>object<sp/>information,<sp/>found<sp/>in<sp/>SHT_MIPS_LIBLIST.</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="structElf32__Lib" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="77" refid="structElf32__Lib_1af40827a2882aaf96d42ae60dac6551ee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Lib_1af40827a2882aaf96d42ae60dac6551ee" kindref="member">l_name</ref>;<sp/></highlight><highlight class="comment">/*<sp/>The<sp/>name<sp/>of<sp/>a<sp/>shared<sp/>object.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="structElf32__Lib_1ae7119079569dcf7ecebccc47cb6350be" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Lib_1ae7119079569dcf7ecebccc47cb6350be" kindref="member">l_time_stamp</ref>;<sp/></highlight><highlight class="comment">/*<sp/>32-bit<sp/>timestamp.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="structElf32__Lib_1a290248b0a3cecff9d43f796dd5c50b12" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Lib_1a290248b0a3cecff9d43f796dd5c50b12" kindref="member">l_checksum</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Checksum<sp/>of<sp/>visible<sp/>symbols,<sp/>sizes.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="structElf32__Lib_1ab1be8296800ef7b233adb56f1cfb901c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Lib_1ab1be8296800ef7b233adb56f1cfb901c" kindref="member">l_version</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Interface<sp/>version<sp/>string<sp/>index.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="structElf32__Lib_1a4a0feb8162591596d3653f561ee8759e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Lib_1a4a0feb8162591596d3653f561ee8759e" kindref="member">l_flags</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Flags<sp/>(LL_*).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal">}<sp/><ref refid="structElf32__Lib" kindref="compound">Elf32_Lib</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/>*<sp/>Section<sp/>header.</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="structElf32__Shdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="89" refid="structElf32__Shdr_1a6e8fd300ca473a31d0f65817ce371dfd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1a6e8fd300ca473a31d0f65817ce371dfd" kindref="member">sh_name</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Section<sp/>name<sp/>(index<sp/>into<sp/>the</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>section<sp/>header<sp/>string<sp/>table).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="structElf32__Shdr_1aab6c221dbd7e16987df41280fb915408" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1aab6c221dbd7e16987df41280fb915408" kindref="member">sh_type</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Section<sp/>type.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="structElf32__Shdr_1a27e003d8da37de3038a0065577a7743d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1a27e003d8da37de3038a0065577a7743d" kindref="member">sh_flags</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Section<sp/>flags.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="structElf32__Shdr_1a7e668a62cee74a2f9c6edabb5f45635a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Shdr_1a7e668a62cee74a2f9c6edabb5f45635a" kindref="member">sh_addr</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Address<sp/>in<sp/>memory<sp/>image.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="structElf32__Shdr_1a6e37227a5777cddc0a9dbbb3c2598ec1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a655751f9b317369b93c581ea8ed84516" kindref="member">Elf32_Off</ref><sp/><ref refid="structElf32__Shdr_1a6e37227a5777cddc0a9dbbb3c2598ec1" kindref="member">sh_offset</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Offset<sp/>in<sp/>file.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="structElf32__Shdr_1a84dc67bb0ab65880bbcd74fbee722ff1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1a84dc67bb0ab65880bbcd74fbee722ff1" kindref="member">sh_size</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>in<sp/>bytes.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="structElf32__Shdr_1ad759308388eb14c5c6e4d636c38999da" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1ad759308388eb14c5c6e4d636c38999da" kindref="member">sh_link</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Index<sp/>of<sp/>a<sp/>related<sp/>section.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="structElf32__Shdr_1aef63fe62c2c9927f374c4f987954c6e5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1aef63fe62c2c9927f374c4f987954c6e5" kindref="member">sh_info</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Depends<sp/>on<sp/>section<sp/>type.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="structElf32__Shdr_1a399f50b3591e6286d4ad819f790979ed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1a399f50b3591e6286d4ad819f790979ed" kindref="member">sh_addralign</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Alignment<sp/>in<sp/>bytes.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="structElf32__Shdr_1a10c59cecc928aae27930601fe545d3ca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Shdr_1a10c59cecc928aae27930601fe545d3ca" kindref="member">sh_entsize</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>each<sp/>entry<sp/>in<sp/>section.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal">}<sp/><ref refid="structElf32__Shdr" kindref="compound">Elf32_Shdr</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>*<sp/>Program<sp/>header.</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="structElf32__Phdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="107" refid="structElf32__Phdr_1a8b1d2942ddb9abcb85db1429b5116923" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Phdr_1a8b1d2942ddb9abcb85db1429b5116923" kindref="member">p_type</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Entry<sp/>type.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="structElf32__Phdr_1ac590d4c4b26104216e53058b5b03eef0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a655751f9b317369b93c581ea8ed84516" kindref="member">Elf32_Off</ref><sp/><ref refid="structElf32__Phdr_1ac590d4c4b26104216e53058b5b03eef0" kindref="member">p_offset</ref>;<sp/></highlight><highlight class="comment">/*<sp/>File<sp/>offset<sp/>of<sp/>contents.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="structElf32__Phdr_1a01a298ebc899bcf9c23211a7bf1155a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Phdr_1a01a298ebc899bcf9c23211a7bf1155a6" kindref="member">p_vaddr</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Virtual<sp/>address<sp/>in<sp/>memory<sp/>image.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="structElf32__Phdr_1af18f0a179a5fca09e3c04bcdce3fac2f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Phdr_1af18f0a179a5fca09e3c04bcdce3fac2f" kindref="member">p_paddr</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Physical<sp/>address<sp/>(not<sp/>used).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111" refid="structElf32__Phdr_1ac9151f2e11001284bf1c7d2d2659555c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Phdr_1ac9151f2e11001284bf1c7d2d2659555c" kindref="member">p_filesz</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>contents<sp/>in<sp/>file.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112" refid="structElf32__Phdr_1ada1cdd3d6ccb79a17bed0e3c21379c84" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Phdr_1ada1cdd3d6ccb79a17bed0e3c21379c84" kindref="member">p_memsz</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>contents<sp/>in<sp/>memory.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="structElf32__Phdr_1a35c457e6828894b7b275730593802050" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Phdr_1a35c457e6828894b7b275730593802050" kindref="member">p_flags</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Access<sp/>permission<sp/>flags.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="structElf32__Phdr_1afd09d9e4297b13fc94fd57d09f2a9f70" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Phdr_1afd09d9e4297b13fc94fd57d09f2a9f70" kindref="member">p_align</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Alignment<sp/>in<sp/>memory<sp/>and<sp/>file.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal">}<sp/><ref refid="structElf32__Phdr" kindref="compound">Elf32_Phdr</ref>;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="118"><highlight class="comment"><sp/>*<sp/>Dynamic<sp/>structure.<sp/><sp/>The<sp/>&quot;.dynamic&quot;<sp/>section<sp/>contains<sp/>an<sp/>array<sp/>of<sp/>them.</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121" refid="structElf32__Dyn" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="122" refid="structElf32__Dyn_1a0edbe45a1c49cbb352dc3e1937369180" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" kindref="member">Elf32_Sword</ref><sp/><ref refid="structElf32__Dyn_1a0edbe45a1c49cbb352dc3e1937369180" kindref="member">d_tag</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Entry<sp/>type.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="124" refid="structElf32__Dyn_1a00a89085454a384ae77fd9112b3062c7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Dyn_1a00a89085454a384ae77fd9112b3062c7" kindref="member">d_val</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Integer<sp/>value.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="structElf32__Dyn_1adcdb4fa1682c07a7e7874c99f9cbd028" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Dyn_1adcdb4fa1682c07a7e7874c99f9cbd028" kindref="member">d_ptr</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Address<sp/>value.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>d_un;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal">}<sp/><ref refid="structElf32__Dyn" kindref="compound">Elf32_Dyn</ref>;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/>*<sp/>Relocation<sp/>entries.</highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Relocations<sp/>that<sp/>don&apos;t<sp/>need<sp/>an<sp/>addend<sp/>field.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="structElf32__Rel" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="135" refid="structElf32__Rel_1addcf5ef67ababeb4940889e912c11eff" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Rel_1addcf5ef67ababeb4940889e912c11eff" kindref="member">r_offset</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Location<sp/>to<sp/>be<sp/>relocated.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136" refid="structElf32__Rel_1a81c52bb1589056c5d37d58b9bfe2a046" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Rel_1a81c52bb1589056c5d37d58b9bfe2a046" kindref="member">r_info</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Relocation<sp/>type<sp/>and<sp/>symbol<sp/>index.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal">}<sp/><ref refid="structElf32__Rel" kindref="compound">Elf32_Rel</ref>;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Relocations<sp/>that<sp/>need<sp/>an<sp/>addend<sp/>field.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="structElf32__Rela" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="141" refid="structElf32__Rela_1aa850a306ee7fa3935a9f8c3d1aae4e51" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Rela_1aa850a306ee7fa3935a9f8c3d1aae4e51" kindref="member">r_offset</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Location<sp/>to<sp/>be<sp/>relocated.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142" refid="structElf32__Rela_1ac3a79d3f04209c33ddb4c36d07e68a79" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Rela_1ac3a79d3f04209c33ddb4c36d07e68a79" kindref="member">r_info</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Relocation<sp/>type<sp/>and<sp/>symbol<sp/>index.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143" refid="structElf32__Rela_1a1952286a900648afb9029c68a8bcea4d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" kindref="member">Elf32_Sword</ref><sp/><ref refid="structElf32__Rela_1a1952286a900648afb9029c68a8bcea4d" kindref="member">r_addend</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Addend.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal">}<sp/><ref refid="structElf32__Rela" kindref="compound">Elf32_Rela</ref>;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macros<sp/>for<sp/>accessing<sp/>the<sp/>fields<sp/>of<sp/>r_info.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147" refid="elf32_8h_1af407354d17dceb417c6e79554a45b31a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_R_SYM(info)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>((info)<sp/>&gt;&gt;<sp/>8)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="elf32_8h_1aeecb1a128443aeb30505b409133fc5bf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_R_TYPE(info)<sp/><sp/><sp/><sp/><sp/><sp/>((unsigned<sp/>char)(info))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macro<sp/>for<sp/>constructing<sp/>r_info<sp/>from<sp/>field<sp/>values.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151" refid="elf32_8h_1a50353a918aa39887e701e95ece09c37f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_R_INFO(sym,<sp/>type)<sp/>(((sym)<sp/>&lt;&lt;<sp/>8)<sp/>+<sp/>(unsigned<sp/>char)(type))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="154"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Note<sp/>entry<sp/>header</highlight></codeline>
+<codeline lineno="155"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="elf32_8h_1a85d5cd3f4828c22b708f79e6de5541a9" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="structElf__Note" kindref="compound">Elf_Note</ref><sp/><ref refid="elf32_8h_1a85d5cd3f4828c22b708f79e6de5541a9" kindref="member">Elf32_Nhdr</ref>;</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="159"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Move<sp/>entry</highlight></codeline>
+<codeline lineno="160"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161" refid="structElf32__Move" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="162" refid="structElf32__Move_1a11ef0924032559a925893490fae974ab" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1ac6515aa02b362a99f0b75d7f24e1b730" kindref="member">Elf32_Lword</ref><sp/><ref refid="structElf32__Move_1a11ef0924032559a925893490fae974ab" kindref="member">m_value</ref>;<sp/></highlight><highlight class="comment">/*<sp/>symbol<sp/>value<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163" refid="structElf32__Move_1a25c402d8b1991f61f6ecc539368cd99a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Move_1a25c402d8b1991f61f6ecc539368cd99a" kindref="member">m_info</ref>;<sp/></highlight><highlight class="comment">/*<sp/>size<sp/>+<sp/>index<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164" refid="structElf32__Move_1a4b1119df05b7672effd0afb09b258f85" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Move_1a4b1119df05b7672effd0afb09b258f85" kindref="member">m_poffset</ref>;<sp/></highlight><highlight class="comment">/*<sp/>symbol<sp/>offset<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="structElf32__Move_1a84620f9a22f6a4b0f8a8a6c4e332f600" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Move_1a84620f9a22f6a4b0f8a8a6c4e332f600" kindref="member">m_repeat</ref>;<sp/></highlight><highlight class="comment">/*<sp/>repeat<sp/>count<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166" refid="structElf32__Move_1a85ca12bb9ac30146a8533fccfe601b43" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Move_1a85ca12bb9ac30146a8533fccfe601b43" kindref="member">m_stride</ref>;<sp/></highlight><highlight class="comment">/*<sp/>stride<sp/>info<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal">}<sp/><ref refid="structElf32__Move" kindref="compound">Elf32_Move</ref>;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="170"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>The<sp/>macros<sp/>compose<sp/>and<sp/>decompose<sp/>values<sp/>for<sp/>Move.r_info</highlight></codeline>
+<codeline lineno="171"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="172"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>sym<sp/>=<sp/>ELF32_M_SYM(M.m_info)</highlight></codeline>
+<codeline lineno="173"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>size<sp/>=<sp/>ELF32_M_SIZE(M.m_info)</highlight></codeline>
+<codeline lineno="174"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>M.m_info<sp/>=<sp/>ELF32_M_INFO(sym,<sp/>size)</highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176" refid="elf32_8h_1affc4f95cb4d9a0978e2e9d4561af1e10" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_M_SYM(info)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>((info)&gt;&gt;8)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177" refid="elf32_8h_1a4c1ba328268c503a908c9ff9a8bb60ae" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_M_SIZE(info)<sp/><sp/><sp/><sp/><sp/><sp/>((unsigned<sp/>char)(info))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178" refid="elf32_8h_1a8c77181c84baf40ff5a6b8be922249e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_M_INFO(sym,<sp/>size)<sp/>(((sym)&lt;&lt;8)+(unsigned<sp/>char)(size))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="181"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Hardware/Software<sp/>capabilities<sp/>entry</highlight></codeline>
+<codeline lineno="182"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183" refid="structElf32__Cap" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="184" refid="structElf32__Cap_1a99cbb38e312e8da513b80ed4f8abea91" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Cap_1a99cbb38e312e8da513b80ed4f8abea91" kindref="member">c_tag</ref>;<sp/></highlight><highlight class="comment">/*<sp/>how<sp/>to<sp/>interpret<sp/>value<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="186" refid="structElf32__Cap_1a42b71cb8452d291b2f0216f1583eabc8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Cap_1a42b71cb8452d291b2f0216f1583eabc8" kindref="member">c_val</ref>;</highlight></codeline>
+<codeline lineno="187" refid="structElf32__Cap_1a2b1ecb3ae7c040989e8ccaac30c8826e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Cap_1a2b1ecb3ae7c040989e8ccaac30c8826e" kindref="member">c_ptr</ref>;</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>c_un;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal">}<sp/><ref refid="structElf32__Cap" kindref="compound">Elf32_Cap</ref>;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="192"><highlight class="comment"><sp/>*<sp/>Symbol<sp/>table<sp/>entries.</highlight></codeline>
+<codeline lineno="193"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195" refid="structElf32__Sym" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="196" refid="structElf32__Sym_1a6a972b30868879f8a1e071e0c45e5031" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Sym_1a6a972b30868879f8a1e071e0c45e5031" kindref="member">st_name</ref>;<sp/></highlight><highlight class="comment">/*<sp/>String<sp/>table<sp/>index<sp/>of<sp/>name.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197" refid="structElf32__Sym_1abf8ff76884bc5e2acb5f7eb42f733c2e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref><sp/><ref refid="structElf32__Sym_1abf8ff76884bc5e2acb5f7eb42f733c2e" kindref="member">st_value</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Symbol<sp/>value.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198" refid="structElf32__Sym_1a1b410e69fecd2610bc7e58d2b0245053" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Sym_1a1b410e69fecd2610bc7e58d2b0245053" kindref="member">st_size</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>associated<sp/>object.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199" refid="structElf32__Sym_1a7d131c44ec48708b1c98f9b00ca9d528" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structElf32__Sym_1a7d131c44ec48708b1c98f9b00ca9d528" kindref="member">st_info</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Type<sp/>and<sp/>binding<sp/>information.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200" refid="structElf32__Sym_1a2e1bf6bedb5180f74ea8cbaf9cedfd36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structElf32__Sym_1a2e1bf6bedb5180f74ea8cbaf9cedfd36" kindref="member">st_other</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Reserved<sp/>(not<sp/>used).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201" refid="structElf32__Sym_1a46e54847ab00fbea62df8ee5dff8dec6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Sym_1a46e54847ab00fbea62df8ee5dff8dec6" kindref="member">st_shndx</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Section<sp/>index<sp/>of<sp/>symbol.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal">}<sp/><ref refid="structElf32__Sym" kindref="compound">Elf32_Sym</ref>;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macros<sp/>for<sp/>accessing<sp/>the<sp/>fields<sp/>of<sp/>st_info.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205" refid="elf32_8h_1a1ac2af28735ac82302fee2e09956b0e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_ST_BIND(info)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((info)<sp/>&gt;&gt;<sp/>4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206" refid="elf32_8h_1acde81341b366f9fa2681beec70527ad4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_ST_TYPE(info)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((info)<sp/>&amp;<sp/>0xf)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macro<sp/>for<sp/>constructing<sp/>st_info<sp/>from<sp/>field<sp/>values.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209" refid="elf32_8h_1abc4e291764a8281f7a0e2dab4b5a7a6e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_ST_INFO(bind,<sp/>type)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((bind)<sp/>&lt;&lt;<sp/>4)<sp/>+<sp/>((type)<sp/>&amp;<sp/>0xf))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macro<sp/>for<sp/>accessing<sp/>the<sp/>fields<sp/>of<sp/>st_other.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212" refid="elf32_8h_1a26951672679d9870ef20469b1fed1007" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_ST_VISIBILITY(oth)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((oth)<sp/>&amp;<sp/>0x3)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Structures<sp/>used<sp/>by<sp/>Sun<sp/>&amp;<sp/>GNU<sp/>symbol<sp/>versioning.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="215" refid="structElf32__Verdef" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="216" refid="structElf32__Verdef_1ad2f222a352ff9e2d92199811ff094822" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Verdef_1ad2f222a352ff9e2d92199811ff094822" kindref="member">vd_version</ref>;</highlight></codeline>
+<codeline lineno="217" refid="structElf32__Verdef_1a782382383f96808eeddb86e3db2737c3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Verdef_1a782382383f96808eeddb86e3db2737c3" kindref="member">vd_flags</ref>;</highlight></codeline>
+<codeline lineno="218" refid="structElf32__Verdef_1afcaa14f5175bb38ecb6ef832c2aa2232" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Verdef_1afcaa14f5175bb38ecb6ef832c2aa2232" kindref="member">vd_ndx</ref>;</highlight></codeline>
+<codeline lineno="219" refid="structElf32__Verdef_1a38c7ed683760f798e42ff3c411ea23ba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Verdef_1a38c7ed683760f798e42ff3c411ea23ba" kindref="member">vd_cnt</ref>;</highlight></codeline>
+<codeline lineno="220" refid="structElf32__Verdef_1aed64e7dede5f8150f10457c420b48416" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verdef_1aed64e7dede5f8150f10457c420b48416" kindref="member">vd_hash</ref>;</highlight></codeline>
+<codeline lineno="221" refid="structElf32__Verdef_1a3693473efde66cb13cecda2053c91f9d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verdef_1a3693473efde66cb13cecda2053c91f9d" kindref="member">vd_aux</ref>;</highlight></codeline>
+<codeline lineno="222" refid="structElf32__Verdef_1ac919bdca49dff2f3a04b1328903edb71" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verdef_1ac919bdca49dff2f3a04b1328903edb71" kindref="member">vd_next</ref>;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal">}<sp/><ref refid="structElf32__Verdef" kindref="compound">Elf32_Verdef</ref>;</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight></codeline>
+<codeline lineno="225" refid="structElf32__Verdaux" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="226" refid="structElf32__Verdaux_1a5cec12aee4339964d8956351465efa51" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verdaux_1a5cec12aee4339964d8956351465efa51" kindref="member">vda_name</ref>;</highlight></codeline>
+<codeline lineno="227" refid="structElf32__Verdaux_1ab3814a03060eab7d93f1f79d93d3fedd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verdaux_1ab3814a03060eab7d93f1f79d93d3fedd" kindref="member">vda_next</ref>;</highlight></codeline>
+<codeline lineno="228"><highlight class="normal">}<sp/><ref refid="structElf32__Verdaux" kindref="compound">Elf32_Verdaux</ref>;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230" refid="structElf32__Verneed" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="231" refid="structElf32__Verneed_1ae87cf6c64587fcf3cd80ba2f6aa6b1bb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Verneed_1ae87cf6c64587fcf3cd80ba2f6aa6b1bb" kindref="member">vn_version</ref>;</highlight></codeline>
+<codeline lineno="232" refid="structElf32__Verneed_1a8c8c56b63ee1f38cf5568fa7bd5b4f73" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Verneed_1a8c8c56b63ee1f38cf5568fa7bd5b4f73" kindref="member">vn_cnt</ref>;</highlight></codeline>
+<codeline lineno="233" refid="structElf32__Verneed_1a71c12598274c795cca809b99462e062a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verneed_1a71c12598274c795cca809b99462e062a" kindref="member">vn_file</ref>;</highlight></codeline>
+<codeline lineno="234" refid="structElf32__Verneed_1a0db7ff11ee775f27ebb1e10a6affabb8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verneed_1a0db7ff11ee775f27ebb1e10a6affabb8" kindref="member">vn_aux</ref>;</highlight></codeline>
+<codeline lineno="235" refid="structElf32__Verneed_1ae3819b6239b81ed5c8ce4f8710176870" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Verneed_1ae3819b6239b81ed5c8ce4f8710176870" kindref="member">vn_next</ref>;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal">}<sp/><ref refid="structElf32__Verneed" kindref="compound">Elf32_Verneed</ref>;</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238" refid="structElf32__Vernaux" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="239" refid="structElf32__Vernaux_1aeae097b35e2038c53eabb3fe3e0c7bf1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Vernaux_1aeae097b35e2038c53eabb3fe3e0c7bf1" kindref="member">vna_hash</ref>;</highlight></codeline>
+<codeline lineno="240" refid="structElf32__Vernaux_1a4da8f50d1625f6cf7a0c3415e94958fb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Vernaux_1a4da8f50d1625f6cf7a0c3415e94958fb" kindref="member">vna_flags</ref>;</highlight></codeline>
+<codeline lineno="241" refid="structElf32__Vernaux_1a28f6da095d6169a589ab3bad837258fc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Vernaux_1a28f6da095d6169a589ab3bad837258fc" kindref="member">vna_other</ref>;</highlight></codeline>
+<codeline lineno="242" refid="structElf32__Vernaux_1a8bf6007fe319d74753d03d0fa7977002" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Vernaux_1a8bf6007fe319d74753d03d0fa7977002" kindref="member">vna_name</ref>;</highlight></codeline>
+<codeline lineno="243" refid="structElf32__Vernaux_1acff2104085a8a54ccbb16b0f00be5375" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Vernaux_1acff2104085a8a54ccbb16b0f00be5375" kindref="member">vna_next</ref>;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal">}<sp/><ref refid="structElf32__Vernaux" kindref="compound">Elf32_Vernaux</ref>;</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246" refid="elf32_8h_1a8acefd6aa26497ad5a3fe579b0c47004" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="elf32_8h_1a8acefd6aa26497ad5a3fe579b0c47004" kindref="member">Elf32_Versym</ref>;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"></highlight></codeline>
+<codeline lineno="248" refid="structElf32__Syminfo" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="249" refid="structElf32__Syminfo_1a9d321c4cc96a0324a9b2dbe98bca2bd9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Syminfo_1a9d321c4cc96a0324a9b2dbe98bca2bd9" kindref="member">si_boundto</ref>;<sp/></highlight><highlight class="comment">/*<sp/>direct<sp/>bindings<sp/>-<sp/>symbol<sp/>bound<sp/>to<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="250" refid="structElf32__Syminfo_1a3c3931c5ff4c0681e1511987ea83649e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref><sp/><ref refid="structElf32__Syminfo_1a3c3931c5ff4c0681e1511987ea83649e" kindref="member">si_flags</ref>;<sp/></highlight><highlight class="comment">/*<sp/>per<sp/>symbol<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal">}<sp/><ref refid="structElf32__Syminfo" kindref="compound">Elf32_Syminfo</ref>;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"></highlight></codeline>
+<codeline lineno="253" refid="structElf32__Chdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="254" refid="structElf32__Chdr_1a7b78dd3e0ba865cd44c8a4f705d19954" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Chdr_1a7b78dd3e0ba865cd44c8a4f705d19954" kindref="member">ch_type</ref>;</highlight></codeline>
+<codeline lineno="255" refid="structElf32__Chdr_1afbf67385dafc8d3a35034b9c5a755d6b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Chdr_1afbf67385dafc8d3a35034b9c5a755d6b" kindref="member">ch_size</ref>;</highlight></codeline>
+<codeline lineno="256" refid="structElf32__Chdr_1a72370f6928a556d16dd0fcfae9978c60" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref><sp/><ref refid="structElf32__Chdr_1a72370f6928a556d16dd0fcfae9978c60" kindref="member">ch_addralign</ref>;</highlight></codeline>
+<codeline lineno="257"><highlight class="normal">}<sp/><ref refid="structElf32__Chdr" kindref="compound">Elf32_Chdr</ref>;</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_SYS_ELF32_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h"/>
+  </compounddef>
+</doxygen>

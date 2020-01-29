@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsFL__FILE" kind="struct" language="C++" prot="public">
+    <compoundname>sFL_FILE</compoundname>
+    <includes refid="fat__filelib_8h" local="no">fat_filelib.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsFL__FILE_1a5372bba4c822b27d1ddb0febc222ac2e" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 sFL_FILE::bytenum</definition>
+        <argsstring></argsstring>
+        <name>bytenum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="42" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1ad47438866096eaac7a444d23d28958ee" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 sFL_FILE::file_data_address</definition>
+        <argsstring></argsstring>
+        <name>file_data_address</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="59" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a1807ccadb24d1357411bff0cad0988aa" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sFL_FILE::file_data_dirty</definition>
+        <argsstring></argsstring>
+        <name>file_data_dirty</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="60" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1af18e542517b5de6fb46a267e9616fc0c" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 sFL_FILE::file_data_sector[512]</definition>
+        <argsstring>[512]</argsstring>
+        <name>file_data_sector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="58" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1ad5a244bf8c1f0fb541220cb00e924703" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 sFL_FILE::filelength</definition>
+        <argsstring></argsstring>
+        <name>filelength</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="43" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a34905208c8121f86fa55357bc6851ae4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sFL_FILE::filelength_changed</definition>
+        <argsstring></argsstring>
+        <name>filelength_changed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="44" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a555306a9493ae9b64a236bbeb43436cf" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sFL_FILE::filename[260]</definition>
+        <argsstring>[260]</argsstring>
+        <name>filename</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="46" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a0e5d3919015a115c20176536679ec28b" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 sFL_FILE::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="63" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1aff679075b139c37ebbf76a04000ae104" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcluster__lookup" kindref="compound">cluster_lookup</ref></type>
+        <definition>struct cluster_lookup sFL_FILE::last_fat_lookup</definition>
+        <argsstring></argsstring>
+        <name>last_fat_lookup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="47" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a4afab9a2b9ab00fa947083d629b5c71b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref></type>
+        <definition>struct fat_node sFL_FILE::list_node</definition>
+        <argsstring></argsstring>
+        <name>list_node</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="63" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a7100b62bd702edd8aae838b7461ddfa8" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 sFL_FILE::parentcluster</definition>
+        <argsstring></argsstring>
+        <name>parentcluster</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="40" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1ac711b022c3ad32744cf964bd27f6359c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sFL_FILE::path[260]</definition>
+        <argsstring>[260]</argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="45" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a6e5656f96e124f1c87a3eda6ec05a274" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 sFL_FILE::shortfilename[11]</definition>
+        <argsstring>[11]</argsstring>
+        <name>shortfilename</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="47" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsFL__FILE_1a6990c8cfed08794aadccb9352d2f8252" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 sFL_FILE::startcluster</definition>
+        <argsstring></argsstring>
+        <name>startcluster</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="41" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sFL_FILE</label>
+        <link refid="structsFL__FILE"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+list_node</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+last_fat_lookup</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>cluster_lookup</label>
+        <link refid="structcluster__lookup"/>
+      </node>
+      <node id="2">
+        <label>fat_node</label>
+        <link refid="structfat__node"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+previous</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" line="39" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h" bodystart="38" bodyend="72"/>
+    <listofallmembers>
+      <member refid="structsFL__FILE_1a5372bba4c822b27d1ddb0febc222ac2e" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>bytenum</name></member>
+      <member refid="structsFL__FILE_1ad47438866096eaac7a444d23d28958ee" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>file_data_address</name></member>
+      <member refid="structsFL__FILE_1a1807ccadb24d1357411bff0cad0988aa" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>file_data_dirty</name></member>
+      <member refid="structsFL__FILE_1af18e542517b5de6fb46a267e9616fc0c" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>file_data_sector</name></member>
+      <member refid="structsFL__FILE_1ad5a244bf8c1f0fb541220cb00e924703" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>filelength</name></member>
+      <member refid="structsFL__FILE_1a34905208c8121f86fa55357bc6851ae4" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>filelength_changed</name></member>
+      <member refid="structsFL__FILE_1a555306a9493ae9b64a236bbeb43436cf" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>filename</name></member>
+      <member refid="structsFL__FILE_1a0e5d3919015a115c20176536679ec28b" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>flags</name></member>
+      <member refid="structsFL__FILE_1aff679075b139c37ebbf76a04000ae104" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>last_fat_lookup</name></member>
+      <member refid="structsFL__FILE_1a4afab9a2b9ab00fa947083d629b5c71b" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>list_node</name></member>
+      <member refid="structsFL__FILE_1a7100b62bd702edd8aae838b7461ddfa8" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>parentcluster</name></member>
+      <member refid="structsFL__FILE_1ac711b022c3ad32744cf964bd27f6359c" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>path</name></member>
+      <member refid="structsFL__FILE_1a6e5656f96e124f1c87a3eda6ec05a274" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>shortfilename</name></member>
+      <member refid="structsFL__FILE_1a6990c8cfed08794aadccb9352d2f8252" prot="public" virt="non-virtual"><scope>sFL_FILE</scope><name>startcluster</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__threadsafe__apis" kind="group">
+    <compoundname>lwip_opts_threadsafe_apis</compoundname>
+    <title>Thread-safe APIs</title>
+    <innergroup refid="group__lwip__opts__netconn">Netconn</innergroup>
+    <innergroup refid="group__lwip__opts__socket">Sockets</innergroup>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

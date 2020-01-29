@@ -1,0 +1,10 @@
+digraph "follow_link"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="follow_link",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="iput",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$inode_8c.html#a378733dcbf0fb08359b9a02145ac8fc3",tooltip=" "];
+}

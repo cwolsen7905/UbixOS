@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_c3c0831de3b2f5e14fc52a7f92bdcaba" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/vfs</compoundname>
+    <innerfile refid="include_2vfs_2file_8h">file.h</innerfile>
+    <innerfile refid="inode_8h">inode.h</innerfile>
+    <innerfile refid="mount_8h">mount.h</innerfile>
+    <innerfile refid="stat_8h">stat.h</innerfile>
+    <innerfile refid="include_2vfs_2vfs_8h">vfs.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/"/>
+  </compounddef>
+</doxygen>

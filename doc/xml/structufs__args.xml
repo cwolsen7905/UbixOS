@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structufs__args" kind="struct" language="C++" prot="public">
+    <compoundname>ufs_args</compoundname>
+    <includes refid="ufsmount_8h" local="no">ufsmount.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structufs__args_1a4795e0195ffaca386828eebf658da39f" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* ufs_args::fspec</definition>
+        <argsstring></argsstring>
+        <name>fspec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="40" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>ufs_args</label>
+        <link refid="structufs__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="39" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="39" bodyend="42"/>
+    <listofallmembers>
+      <member refid="structufs__args_1a4795e0195ffaca386828eebf658da39f" prot="public" virt="non-virtual"><scope>ufs_args</scope><name>fspec</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

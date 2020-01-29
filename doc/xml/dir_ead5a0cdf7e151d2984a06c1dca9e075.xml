@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_ead5a0cdf7e151d2984a06c1dca9e075" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/boot/arm/uboot</compoundname>
+    <innerfile refid="conf_8c">conf.c</innerfile>
+    <innerfile refid="boot_2arm_2uboot_2start_8S">start.S</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/boot/arm/uboot/"/>
+  </compounddef>
+</doxygen>

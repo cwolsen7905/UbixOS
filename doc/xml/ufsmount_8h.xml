@@ -1,0 +1,438 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ufsmount_8h" kind="file" language="C++">
+    <compoundname>ufsmount.h</compoundname>
+    <innerclass refid="structufs__args" prot="public">ufs_args</innerclass>
+    <innerclass refid="structufsmount" prot="public">ufsmount</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ufsmount_8h_1a913a8748ec360435c8e65e2e4cb3318c" prot="public" static="no">
+        <name>blkptrtodb</name>
+        <param><defname>ump</defname></param>
+        <param><defname>b</defname></param>
+        <initializer>((b) &lt;&lt; (ump)-&gt;um_bptrtodb)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="138" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a86eb8637589a459928612f45fc6e80fa" prot="public" static="no">
+        <name>is_sequential</name>
+        <param><defname>ump</defname></param>
+        <param><defname>a</defname></param>
+        <param><defname>b</defname></param>
+        <initializer>((b) == (a) + ump-&gt;um_seqinc)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="139" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a42404c72db1422d0837d9fae3781538d" prot="public" static="no">
+        <name>MNINDIR</name>
+        <param><defname>ump</defname></param>
+        <initializer>((ump)-&gt;um_nindir)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="137" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a3632ca1f7860387f77093d56877cb85c" prot="public" static="no">
+        <name>QTF_64BIT</name>
+        <initializer>0x04			/* 64-bit quota <ref refid="structfile" kindref="compound">file</ref> */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="127" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a96d49cd4fb95d51b3f9f79c04fb2a5ca" prot="public" static="no">
+        <name>QTF_CLOSING</name>
+        <initializer>0x02			/* Q_QUOTAOFF in progress */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="126" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1af48b052b3cd7afd7b2c044b789689e8d" prot="public" static="no">
+        <name>QTF_OPENING</name>
+        <initializer>0x01			/* Q_QUOTAON in progress */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="125" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a4e9b665625734832f1e9d74423c3d14e" prot="public" static="no">
+        <name>UFS1</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="119" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1ad32c8660fd7a17ed68caa6ce7fccdebb" prot="public" static="no">
+        <name>UFS2</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="120" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1ab1ffb7a8b522c2a097488771cfe6260b" prot="public" static="no">
+        <name>UFS_BALLOC</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <param><defname>cc</defname></param>
+        <param><defname>dd</defname></param>
+        <param><defname>ee</defname></param>
+        <param><defname>ff</defname></param>
+        <initializer><ref refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" kindref="member">VFSTOUFS</ref>((aa)-&gt;v_mount)-&gt;um_balloc(aa, bb, cc, dd, ee, ff)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1aa471c93cf6a507440608e8b45fd9749c" prot="public" static="no">
+        <name>UFS_BLKATOFF</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <param><defname>cc</defname></param>
+        <param><defname>dd</defname></param>
+        <initializer><ref refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" kindref="member">VFSTOUFS</ref>((aa)-&gt;v_mount)-&gt;um_blkatoff(aa, bb, cc, dd)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1acce10eab727e73e002852559420e5f87" prot="public" static="no">
+        <name>UFS_IFREE</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <initializer>((aa)-&gt;um_ifree(aa, bb))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="108" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1aa0b8c506725697d8568e30147ad9323d" prot="public" static="no">
+        <name>UFS_LOCK</name>
+        <param><defname>aa</defname></param>
+        <initializer>mtx_lock(&amp;(aa)-&gt;um_lock)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="112" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a901c94ce5c87e28436c33b98c0bfe34e" prot="public" static="no">
+        <name>UFS_MTX</name>
+        <param><defname>aa</defname></param>
+        <initializer>(&amp;(aa)-&gt;um_lock)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="114" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1aa05d805f7e8df57fa7ec172b9af3cc18" prot="public" static="no">
+        <name>UFS_RDONLY</name>
+        <param><defname>aa</defname></param>
+        <initializer>(ITOUMP(aa)-&gt;um_rdonly(aa))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="109" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a55eebc9549bfafaf3a5052996f100291" prot="public" static="no">
+        <name>UFS_SNAPGONE</name>
+        <param><defname>aa</defname></param>
+        <initializer>(ITOUMP(aa)-&gt;um_snapgone(aa))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="110" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1ab37fca7a4c6cd25fdc60399d752667c1" prot="public" static="no">
+        <name>UFS_TRUNCATE</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <param><defname>cc</defname></param>
+        <param><defname>dd</defname></param>
+        <initializer><ref refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" kindref="member">VFSTOUFS</ref>((aa)-&gt;v_mount)-&gt;um_truncate(aa, bb, cc, dd)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="104" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a1197bd535da38d4751ea95f42a4ec71d" prot="public" static="no">
+        <name>UFS_UNLOCK</name>
+        <param><defname>aa</defname></param>
+        <initializer>mtx_unlock(&amp;(aa)-&gt;um_lock)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="113" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a8cf7b61a6e07c4cc1b4ff75b32b3cb8b" prot="public" static="no">
+        <name>UFS_UPDATE</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <initializer><ref refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" kindref="member">VFSTOUFS</ref>((aa)-&gt;v_mount)-&gt;um_update(aa, bb)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="105" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a6aad41928181cbdd4a02b0878cbfb661" prot="public" static="no">
+        <name>UFS_VALLOC</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <param><defname>cc</defname></param>
+        <param><defname>dd</defname></param>
+        <initializer><ref refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" kindref="member">VFSTOUFS</ref>((aa)-&gt;v_mount)-&gt;um_valloc(aa, bb, cc, dd)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="106" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a1084d90274af8ad7a01195e4167e230d" prot="public" static="no">
+        <name>UFS_VFREE</name>
+        <param><defname>aa</defname></param>
+        <param><defname>bb</defname></param>
+        <param><defname>cc</defname></param>
+        <initializer><ref refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" kindref="member">VFSTOUFS</ref>((aa)-&gt;v_mount)-&gt;um_vfree(aa, bb, cc)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="107" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a1054fb140b060ecc73499fced97d1ff4" prot="public" static="no">
+        <name>UFSTOVFS</name>
+        <param><defname>ump</defname></param>
+        <initializer>(ump)-&gt;um_mountp</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="131" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" prot="public" static="no">
+        <name>VFSTOUFS</name>
+        <param><defname>mp</defname></param>
+        <initializer>((struct <ref refid="structufsmount" kindref="compound">ufsmount</ref> *)((mp)-&gt;mnt_data))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="130" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>1982,<sp/>1986,<sp/>1989,<sp/>1993</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>The<sp/>Regents<sp/>of<sp/>the<sp/>University<sp/>of<sp/>California.<sp/><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>4.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>University<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>REGENTS<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>REGENTS<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>@(#)ufsmount.h<sp/><sp/>8.6<sp/>(Berkeley)<sp/>3/30/95</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>$FreeBSD:<sp/>releng/11.1/sys/ufs/ufs/ufsmount.h<sp/>306553<sp/>2016-10-01<sp/>09:19:43Z<sp/>kib<sp/>$</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UFS_UFS_UFSMOUNT_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UFS_UFS_UFSMOUNT_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>Arguments<sp/>to<sp/>mount<sp/>UFS-based<sp/>filesystems</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="structufs__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structufs__args" kindref="compound">ufs_args</ref><sp/>{</highlight></codeline>
+<codeline lineno="40" refid="structufs__args_1a4795e0195ffaca386828eebf658da39f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>*<ref refid="structufs__args_1a4795e0195ffaca386828eebf658da39f" kindref="member">fspec</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>block<sp/>special<sp/>device<sp/>to<sp/>mount<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//struct<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>oexport_args<sp/>export;<sp/><sp/><sp/><sp/>/*<sp/>network<sp/>export<sp/>information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>MALLOC_DECLARE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal">MALLOC_DECLARE(M_UFSMNT);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbuf" kindref="compound">buf</ref>;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">nameidata;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">taskqueue;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeval" kindref="compound">timeval</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structucred" kindref="compound">ucred</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuio" kindref="compound">uio</ref>;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ufs_extattr_per_mount;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">jblocks;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">inodedep;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">//TAILQ_HEAD(inodedeplst,<sp/>inodedep);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">//LIST_HEAD(bmsafemaphd,<sp/>bmsafemap);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>This<sp/>structure<sp/>describes<sp/>the<sp/>UFS<sp/>specific<sp/>mount<sp/>structure<sp/>data.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="structufsmount" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structufsmount" kindref="compound">ufsmount</ref><sp/>{</highlight></codeline>
+<codeline lineno="65" refid="structufsmount_1a586f8f6215a76792b01d38c99184cb58" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">mount<sp/>*<ref refid="structufsmount_1a586f8f6215a76792b01d38c99184cb58" kindref="member">um_mountp</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>vfs<sp/>structure<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="structufsmount_1afba51fd8df4d46ffb553f670984b93cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">cdev<sp/>*<ref refid="structufsmount_1afba51fd8df4d46ffb553f670984b93cb" kindref="member">um_dev</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>device<sp/>mounted<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="structufsmount_1aeb7ce24ab55e9840691f363fd855e91a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">g_consumer<sp/>*<ref refid="structufsmount_1aeb7ce24ab55e9840691f363fd855e91a" kindref="member">um_cp</ref>;</highlight></codeline>
+<codeline lineno="68" refid="structufsmount_1adb373dc5ae22f5b11b1c33ad13a6553e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">bufobj<sp/>*<ref refid="structufsmount_1adb373dc5ae22f5b11b1c33ad13a6553e" kindref="member">um_bo</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Buffer<sp/>cache<sp/>object<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="structufsmount_1a17a7d5db2778fbd5c8f995109a06cce1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">vnode<sp/>*<ref refid="structufsmount_1a17a7d5db2778fbd5c8f995109a06cce1" kindref="member">um_devvp</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>block<sp/>device<sp/>mounted<sp/>vnode<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="structufsmount_1a62be54a9fd0282690565b73c1e3a82d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref><sp/><sp/><ref refid="structufsmount_1a62be54a9fd0282690565b73c1e3a82d9" kindref="member">um_fstype</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>type<sp/>of<sp/>filesystem<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structufsmount_1ae4862a2c81e265b4cff373c338c1f45d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal"><ref refid="structfs" kindref="compound">fs</ref><sp/>*<ref refid="structufsmount_1ae4862a2c81e265b4cff373c338c1f45d" kindref="member">um_fs</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pointer<sp/>to<sp/>superblock<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//struct<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ufs_extattr_per_mount<sp/>um_extattr;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>extended<sp/>attrs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="structufsmount_1acbebc793bce6001e1af4f0aa40359a94" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref><sp/><sp/><ref refid="structufsmount_1acbebc793bce6001e1af4f0aa40359a94" kindref="member">um_nindir</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>indirect<sp/>ptrs<sp/>per<sp/>block<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="structufsmount_1a6b758facf79a3897899d8f548d62b69d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref><sp/><sp/><ref refid="structufsmount_1a6b758facf79a3897899d8f548d62b69d" kindref="member">um_bptrtodb</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>indir<sp/>ptr<sp/>to<sp/>disk<sp/>block<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="structufsmount_1a75633370da4e6801848054424fa39795" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref><sp/><sp/><ref refid="structufsmount_1a75633370da4e6801848054424fa39795" kindref="member">um_seqinc</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inc<sp/>between<sp/>seq<sp/>blocks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//struct<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mtx<sp/>um_lock;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Protects<sp/>ufsmount<sp/>&amp;<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="structufsmount_1a49663dc50b513cfa17b7cce21535eae8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref><sp/><sp/><sp/><ref refid="structufsmount_1a49663dc50b513cfa17b7cce21535eae8" kindref="member">um_fsckpid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>PID<sp/>permitted<sp/>fsck<sp/>sysctls<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="structufsmount_1a04c97f51e4d3c42ca011dd8d0bf01f3e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">mount_softdeps<sp/>*<ref refid="structufsmount_1a04c97f51e4d3c42ca011dd8d0bf01f3e" kindref="member">um_softdep</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>softdep<sp/>mgmt<sp/>structure<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="structufsmount_1a84ec6d43146862f44d054cae6370e474" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">vnode<sp/>*<ref refid="structufsmount_1a84ec6d43146862f44d054cae6370e474" kindref="member">um_quotas</ref>[MAXQUOTAS];<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pointer<sp/>to<sp/>quota<sp/>files<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="structufsmount_1a51d34633e98fa872b200bd44c59ee7e4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal"><ref refid="structucred" kindref="compound">ucred</ref><sp/>*<ref refid="structufsmount_1a51d34633e98fa872b200bd44c59ee7e4" kindref="member">um_cred</ref>[MAXQUOTAS];<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>quota<sp/>file<sp/>access<sp/>cred<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="structufsmount_1a8ef31cdf730aae447cce702d9c3ef378" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref><sp/><sp/><ref refid="structufsmount_1a8ef31cdf730aae447cce702d9c3ef378" kindref="member">um_btime</ref>[MAXQUOTAS];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>block<sp/>quota<sp/>time<sp/>limit<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82" refid="structufsmount_1aac98de61c83df2f248ad80393670f818" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref><sp/><sp/><ref refid="structufsmount_1aac98de61c83df2f248ad80393670f818" kindref="member">um_itime</ref>[MAXQUOTAS];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inode<sp/>quota<sp/>time<sp/>limit<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="structufsmount_1aee5a0e477101453777777f339a488c0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structufsmount_1aee5a0e477101453777777f339a488c0e" kindref="member">um_qflags</ref>[MAXQUOTAS];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>quota<sp/>specific<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="structufsmount_1ab2dfba610fdd2762fb3447a723c2e15a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structufsmount_1ab2dfba610fdd2762fb3447a723c2e15a" kindref="member">um_savedmaxfilesize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>XXX<sp/>-<sp/>limit<sp/>maxfilesize<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="structufsmount_1a75141a053461af780fe2e073879a4e14" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structufsmount_1a75141a053461af780fe2e073879a4e14" kindref="member">um_candelete</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>devvp<sp/>supports<sp/>TRIM<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="structufsmount_1a5c68456661f9a577b18ac127d5a3ba33" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structufsmount_1a5c68456661f9a577b18ac127d5a3ba33" kindref="member">um_writesuspended</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>suspension<sp/>in<sp/>progress<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="structufsmount_1a5447899159c0acab985f9421716c25d8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref><sp/><sp/><sp/><ref refid="structufsmount_1a5447899159c0acab985f9421716c25d8" kindref="member">um_trim_inflight</ref>;</highlight></codeline>
+<codeline lineno="88" refid="structufsmount_1a03b84ddc7f6c777d632b31b5fdd08d90" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">taskqueue<sp/>*<ref refid="structufsmount_1a03b84ddc7f6c777d632b31b5fdd08d90" kindref="member">um_trim_tq</ref>;</highlight></codeline>
+<codeline lineno="89" refid="structufsmount_1a2ae5f079a55ace7601f4c4c3f831a426" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1a2ae5f079a55ace7601f4c4c3f831a426" kindref="member">um_balloc</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>*,<sp/><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/>int,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structucred" kindref="compound">ucred</ref><sp/>*,</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbuf" kindref="compound">buf</ref><sp/>**);</highlight></codeline>
+<codeline lineno="91" refid="structufsmount_1a8df83f1a4460959055d2341e11e24d9b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1a8df83f1a4460959055d2341e11e24d9b" kindref="member">um_blkatoff</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>*,<sp/><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbuf" kindref="compound">buf</ref><sp/>**);</highlight></codeline>
+<codeline lineno="92" refid="structufsmount_1a7b6b05a37e552e5c1fed08e2107923aa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1a7b6b05a37e552e5c1fed08e2107923aa" kindref="member">um_truncate</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>*,<sp/><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/>int,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structucred" kindref="compound">ucred</ref><sp/>*);</highlight></codeline>
+<codeline lineno="93" refid="structufsmount_1aed5b38b079abd0023d51413d09893ac0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1aed5b38b079abd0023d51413d09893ac0" kindref="member">um_update</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>*,<sp/>int);</highlight></codeline>
+<codeline lineno="94" refid="structufsmount_1aa29f45574af5d5e899c9251a57678a5c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1aa29f45574af5d5e899c9251a57678a5c" kindref="member">um_valloc</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>*,<sp/>int,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structucred" kindref="compound">ucred</ref><sp/>*,</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>**);</highlight></codeline>
+<codeline lineno="96" refid="structufsmount_1aab073da298e151dcf1d1a3ae6face768" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1aab073da298e151dcf1d1a3ae6face768" kindref="member">um_vfree</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode<sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/>int);</highlight></codeline>
+<codeline lineno="97" refid="structufsmount_1a8f8d3da23b2093a861f62fc4dd897839" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>void<sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1a8f8d3da23b2093a861f62fc4dd897839" kindref="member">um_ifree</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structufsmount" kindref="compound">ufsmount</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="98" refid="structufsmount_1a252dc601abe0cd69c1837996fdec9992" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int<sp/><sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1a252dc601abe0cd69c1837996fdec9992" kindref="member">um_rdonly</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="99" refid="structufsmount_1a38fe7783afc759a4799061ec616dc96b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>void<sp/><sp/><sp/><sp/>(*<ref refid="structufsmount_1a38fe7783afc759a4799061ec616dc96b" kindref="member">um_snapgone</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="ufsmount_8h_1ab1ffb7a8b522c2a097488771cfe6260b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_BALLOC(aa,<sp/>bb,<sp/>cc,<sp/>dd,<sp/>ee,<sp/>ff)<sp/>VFSTOUFS((aa)-&gt;v_mount)-&gt;um_balloc(aa,<sp/>bb,<sp/>cc,<sp/>dd,<sp/>ee,<sp/>ff)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="ufsmount_8h_1aa471c93cf6a507440608e8b45fd9749c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_BLKATOFF(aa,<sp/>bb,<sp/>cc,<sp/>dd)<sp/>VFSTOUFS((aa)-&gt;v_mount)-&gt;um_blkatoff(aa,<sp/>bb,<sp/>cc,<sp/>dd)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104" refid="ufsmount_8h_1ab37fca7a4c6cd25fdc60399d752667c1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_TRUNCATE(aa,<sp/>bb,<sp/>cc,<sp/>dd)<sp/>VFSTOUFS((aa)-&gt;v_mount)-&gt;um_truncate(aa,<sp/>bb,<sp/>cc,<sp/>dd)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="ufsmount_8h_1a8cf7b61a6e07c4cc1b4ff75b32b3cb8b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_UPDATE(aa,<sp/>bb)<sp/>VFSTOUFS((aa)-&gt;v_mount)-&gt;um_update(aa,<sp/>bb)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="ufsmount_8h_1a6aad41928181cbdd4a02b0878cbfb661" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_VALLOC(aa,<sp/>bb,<sp/>cc,<sp/>dd)<sp/>VFSTOUFS((aa)-&gt;v_mount)-&gt;um_valloc(aa,<sp/>bb,<sp/>cc,<sp/>dd)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107" refid="ufsmount_8h_1a1084d90274af8ad7a01195e4167e230d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_VFREE(aa,<sp/>bb,<sp/>cc)<sp/>VFSTOUFS((aa)-&gt;v_mount)-&gt;um_vfree(aa,<sp/>bb,<sp/>cc)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="ufsmount_8h_1acce10eab727e73e002852559420e5f87" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_IFREE(aa,<sp/>bb)<sp/>((aa)-&gt;um_ifree(aa,<sp/>bb))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="ufsmount_8h_1aa05d805f7e8df57fa7ec172b9af3cc18" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_RDONLY(aa)<sp/>(ITOUMP(aa)-&gt;um_rdonly(aa))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="ufsmount_8h_1a55eebc9549bfafaf3a5052996f100291" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_SNAPGONE(aa)<sp/>(ITOUMP(aa)-&gt;um_snapgone(aa))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112" refid="ufsmount_8h_1aa0b8c506725697d8568e30147ad9323d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_LOCK(aa)<sp/><sp/><sp/><sp/>mtx_lock(&amp;(aa)-&gt;um_lock)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="ufsmount_8h_1a1197bd535da38d4751ea95f42a4ec71d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_UNLOCK(aa)<sp/><sp/>mtx_unlock(&amp;(aa)-&gt;um_lock)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="ufsmount_8h_1a901c94ce5c87e28436c33b98c0bfe34e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS_MTX(aa)<sp/><sp/><sp/><sp/><sp/>(&amp;(aa)-&gt;um_lock)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="117"><highlight class="comment"><sp/>*<sp/>Filesystem<sp/>types</highlight></codeline>
+<codeline lineno="118"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="ufsmount_8h_1a4e9b665625734832f1e9d74423c3d14e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS1<sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="ufsmount_8h_1ad32c8660fd7a17ed68caa6ce7fccdebb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFS2<sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="123"><highlight class="comment"><sp/>*<sp/>Flags<sp/>describing<sp/>the<sp/>state<sp/>of<sp/>quotas.</highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="ufsmount_8h_1af48b052b3cd7afd7b2c044b789689e8d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>QTF_OPENING<sp/><sp/><sp/><sp/><sp/>0x01<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Q_QUOTAON<sp/>in<sp/>progress<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126" refid="ufsmount_8h_1a96d49cd4fb95d51b3f9f79c04fb2a5ca" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>QTF_CLOSING<sp/><sp/><sp/><sp/><sp/>0x02<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Q_QUOTAOFF<sp/>in<sp/>progress<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127" refid="ufsmount_8h_1a3632ca1f7860387f77093d56877cb85c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>QTF_64BIT<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x04<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>64-bit<sp/>quota<sp/>file<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Convert<sp/>mount<sp/>ptr<sp/>to<sp/>ufsmount<sp/>ptr.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130" refid="ufsmount_8h_1a8d260fabf8d4158b89b5f913276dc73a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VFSTOUFS(mp)<sp/><sp/><sp/><sp/>((struct<sp/>ufsmount<sp/>*)((mp)-&gt;mnt_data))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131" refid="ufsmount_8h_1a1054fb140b060ecc73499fced97d1ff4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UFSTOVFS(ump)<sp/><sp/><sp/>(ump)-&gt;um_mountp</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/>*<sp/>Macros<sp/>to<sp/>access<sp/>filesystem<sp/>parameters<sp/>in<sp/>the<sp/>ufsmount<sp/>structure.</highlight></codeline>
+<codeline lineno="135"><highlight class="comment"><sp/>*<sp/>Used<sp/>by<sp/>ufs_bmap.</highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="ufsmount_8h_1a42404c72db1422d0837d9fae3781538d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MNINDIR(ump)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ump)-&gt;um_nindir)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138" refid="ufsmount_8h_1a913a8748ec360435c8e65e2e4cb3318c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>blkptrtodb(ump,<sp/>b)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((b)<sp/>&lt;&lt;<sp/>(ump)-&gt;um_bptrtodb)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139" refid="ufsmount_8h_1a86eb8637589a459928612f45fc6e80fa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>is_sequential(ump,<sp/>a,<sp/>b)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((b)<sp/>==<sp/>(a)<sp/>+<sp/>ump-&gt;um_seqinc)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h"/>
+  </compounddef>
+</doxygen>

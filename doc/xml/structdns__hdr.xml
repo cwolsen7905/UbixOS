@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdns__hdr" kind="struct" language="C++" prot="public">
+    <compoundname>dns_hdr</compoundname>
+    <includes refid="prot_2dns_8h" local="no">dns.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t id)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="104" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdns__hdr_1a1a60f9cf407afac55fb2393de035631a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t numanswers)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>numanswers</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="108" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdns__hdr_1a1e8e140a3bd35c19f06dfe9fcad28433" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t numauthrr)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>numauthrr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="109" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdns__hdr_1a2ddbadfcc88e8f723b4e8642a4ca41aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t numextrarr)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>numextrarr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="110" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdns__hdr_1a0bf88a5adeed993df4cea62455bb4f64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t numquestions)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>numquestions</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="107" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdns__hdr_1aefcc5153f7570d6a1b1fdaf5a3b047e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t flags1)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>flags1</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="105" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structdns__hdr_1a71f03749419be4022deadc6c6a329093" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>dns_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t flags2)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>flags2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="106" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>DNS message header </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>dns_hdr</label>
+        <link refid="structdns__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="103" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="103" bodyend="111"/>
+    <listofallmembers>
+      <member refid="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdns__hdr_1a0bf88a5adeed993df4cea62455bb4f64" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdns__hdr_1a1a60f9cf407afac55fb2393de035631a" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdns__hdr_1a1e8e140a3bd35c19f06dfe9fcad28433" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdns__hdr_1a2ddbadfcc88e8f723b4e8642a4ca41aa" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structdns__hdr_1aefcc5153f7570d6a1b1fdaf5a3b047e6" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structdns__hdr_1a71f03749419be4022deadc6c6a329093" prot="public" virt="non-virtual"><scope>dns_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

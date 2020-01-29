@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_7cfe3bd2b3df018c2164a910f0a92e34" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/init</compoundname>
+    <innerfile refid="main_8c">main.c</innerfile>
+    <innerfile refid="init_2start_8S">start.S</innerfile>
+    <innerfile refid="static_8c">static.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/init/"/>
+  </compounddef>
+</doxygen>

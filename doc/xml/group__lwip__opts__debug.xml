@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__debug" kind="group">
+    <compoundname>lwip_opts_debug</compoundname>
+    <title>Debugging</title>
+    <innergroup refid="group__lwip__assertions">Assertion handling</innergroup>
+    <innergroup refid="group__lwip__opts__stats">Statistics</innergroup>
+    <innergroup refid="group__lwip__opts__debugmsg">Debug messages</innergroup>
+    <innergroup refid="group__lwip__opts__perf">Performance</innergroup>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

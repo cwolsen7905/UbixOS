@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Rela" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Rela</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Rela_1a04358b55027a7dcc414e221d916aac64" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5b450442210b3d21567662fb96ac9a02" kindref="member">Elf64_Sxword</ref></type>
+        <definition>Elf64_Sxword Elf64_Rela::r_addend</definition>
+        <argsstring></argsstring>
+        <name>r_addend</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="152" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Rela_1aeab8bc0f9035184127ec02d947bf2c76" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Rela::r_info</definition>
+        <argsstring></argsstring>
+        <name>r_info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="151" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Rela_1a9ea7e07ec6e0d57bf4bcd53b89de7948" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Rela::r_offset</definition>
+        <argsstring></argsstring>
+        <name>r_offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="150" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Rela</label>
+        <link refid="structElf64__Rela"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="149" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="149" bodyend="153"/>
+    <listofallmembers>
+      <member refid="structElf64__Rela_1a04358b55027a7dcc414e221d916aac64" prot="public" virt="non-virtual"><scope>Elf64_Rela</scope><name>r_addend</name></member>
+      <member refid="structElf64__Rela_1aeab8bc0f9035184127ec02d947bf2c76" prot="public" virt="non-virtual"><scope>Elf64_Rela</scope><name>r_info</name></member>
+      <member refid="structElf64__Rela_1a9ea7e07ec6e0d57bf4bcd53b89de7948" prot="public" virt="non-virtual"><scope>Elf64_Rela</scope><name>r_offset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

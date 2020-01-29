@@ -1,0 +1,12 @@
+digraph "fatfs"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{fatfs\n|+ cluster_begin_lba\l+ fat_begin_lba\l+ fat_sectors\l+ fat_type\l+ fl_lock\l+ fl_unlock\l+ fs_info_sector\l+ lba_begin\l+ next_free_cluster\l+ num_of_fats\land 6 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +disk_io" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{disk_if\n|+ read_media\l+ write_media\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structdisk__if.html",tooltip=" "];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +currentsector\n+fat_buffer_head\n+fat_buffers" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{fat_buffer\n|+ address\l+ dirty\l+ ptr\l+ sector\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfat__buffer.html",tooltip=" "];
+  Node3 -> Node3 [color="grey25",fontsize="10",style="solid",label=" +next" ,arrowhead="odiamond",fontname="Helvetica"];
+}

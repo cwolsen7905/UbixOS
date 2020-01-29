@@ -1,0 +1,17 @@
+digraph "OS abstraction layer"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node5 [label="Mailboxes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__sys__mbox.html",tooltip=" "];
+  Node4 [label="Mutexes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__sys__mutex.html",tooltip=" "];
+  Node2 [label="Porting (system abstraction\l layer)",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__sys__layer.html",tooltip=" "];
+  Node1 [label="OS abstraction layer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node3 [label="Semaphores",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__sys__sem.html",tooltip=" "];
+  Node6 [label="Misc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__sys__misc.html",tooltip=" "];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node6 [shape=plaintext, dir="back", style="solid"];
+}

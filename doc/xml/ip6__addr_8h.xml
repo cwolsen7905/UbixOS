@@ -1,0 +1,942 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ip6__addr_8h" kind="file" language="C++">
+    <compoundname>ip6_addr.h</compoundname>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includes refid="def_8h" local="no">net/def.h</includes>
+    <includedby refid="icmp6_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/icmp6.h</includedby>
+    <includedby refid="inet_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/inet.h</includedby>
+    <includedby refid="ip6__frag_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/ip6_frag.h</includedby>
+    <includedby refid="ip__addr_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/ip_addr.h</includedby>
+    <includedby refid="netif_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/netif.c</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/include/net/igmp.h</label>
+        <link refid="igmp_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
+        <link refid="block_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</label>
+        <link refid="inet__chksum_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/slipif.h</label>
+        <link refid="slipif_8h"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/include/net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp.h</label>
+        <link refid="icmp_8h"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet.h</label>
+        <link refid="inet_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp6.h</label>
+        <link refid="icmp6_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/include/net/snmp.h</label>
+        <link refid="snmp_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/include/vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_frag.h</label>
+        <link refid="ip6__frag_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</label>
+        <link refid="ip4__frag_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</label>
+        <link refid="f_2ethernet_8h"/>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/etharp.h</label>
+        <link refid="f_2etharp_8h"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet_chksum.h</label>
+        <link refid="inet__chksum_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+    </invincdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IPv6 addresses. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="7"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2010<sp/>Inico<sp/>Technologies<sp/>Ltd.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Ivan<sp/>Delamer<sp/>&lt;delamer@inicotech.com&gt;</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>Structs<sp/>and<sp/>macros<sp/>for<sp/>handling<sp/>IPv6<sp/>addresses.</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*<sp/>Please<sp/>coordinate<sp/>changes<sp/>and<sp/>requests<sp/>with<sp/>Ivan<sp/>Delamer</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/>&lt;delamer@inicotech.com&gt;</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_IP6_ADDR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_IP6_ADDR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="def_8h" kindref="compound">net/def.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV6<sp/><sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ip6_addr<sp/>{</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>addr[4];</highlight></codeline>
+<codeline lineno="60"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ip6_addr<sp/>ip6_addr_t;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor">#define<sp/>IP6_ADDR_PART(ip6addr,<sp/>index,<sp/>a,b,c,d)<sp/>\</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"><sp/><sp/>(ip6addr)-&gt;addr[index]<sp/>=<sp/>PP_HTONL(LWIP_MAKEU32(a,b,c,d))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor">#define<sp/>IP6_ADDR(ip6addr,<sp/>idx0,<sp/>idx1,<sp/>idx2,<sp/>idx3)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"><sp/><sp/>(ip6addr)-&gt;addr[0]<sp/>=<sp/>idx0;<sp/>\</highlight></codeline>
+<codeline lineno="73"><highlight class="preprocessor"><sp/><sp/>(ip6addr)-&gt;addr[1]<sp/>=<sp/>idx1;<sp/>\</highlight></codeline>
+<codeline lineno="74"><highlight class="preprocessor"><sp/><sp/>(ip6addr)-&gt;addr[2]<sp/>=<sp/>idx2;<sp/>\</highlight></codeline>
+<codeline lineno="75"><highlight class="preprocessor"><sp/><sp/>(ip6addr)-&gt;addr[3]<sp/>=<sp/>idx3;<sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK1(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[0])<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK2(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[0]))<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK3(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[1])<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK4(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[1]))<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK5(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[2])<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK6(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[2]))<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK7(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[3])<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="preprocessor">#define<sp/>IP6_ADDR_BLOCK8(ip6addr)<sp/>((u16_t)((lwip_htonl((ip6addr)-&gt;addr[3]))<sp/>&amp;<sp/>0xffff))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor">#define<sp/>ip6_addr_copy(dest,<sp/>src)<sp/>do{(dest).addr[0]<sp/>=<sp/>(src).addr[0];<sp/>\</highlight></codeline>
+<codeline lineno="96"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest).addr[1]<sp/>=<sp/>(src).addr[1];<sp/>\</highlight></codeline>
+<codeline lineno="97"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest).addr[2]<sp/>=<sp/>(src).addr[2];<sp/>\</highlight></codeline>
+<codeline lineno="98"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest).addr[3]<sp/>=<sp/>(src).addr[3];}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="preprocessor">#define<sp/>ip6_addr_set(dest,<sp/>src)<sp/>do{(dest)-&gt;addr[0]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>(src)-&gt;addr[0];<sp/>\</highlight></codeline>
+<codeline lineno="101"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest)-&gt;addr[1]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>(src)-&gt;addr[1];<sp/>\</highlight></codeline>
+<codeline lineno="102"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest)-&gt;addr[2]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>(src)-&gt;addr[2];<sp/>\</highlight></codeline>
+<codeline lineno="103"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest)-&gt;addr[3]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>(src)-&gt;addr[3];}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="preprocessor">#define<sp/>ip6_addr_set_zero(ip6addr)<sp/><sp/><sp/><sp/>do{(ip6addr)-&gt;addr[0]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="107"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[1]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="108"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[2]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="109"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[3]<sp/>=<sp/>0;}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="preprocessor">#define<sp/>ip6_addr_set_any(ip6addr)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_addr_set_zero(ip6addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="preprocessor">#define<sp/>ip6_addr_set_loopback(ip6addr)<sp/>do{(ip6addr)-&gt;addr[0]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="115"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[1]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="116"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[2]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="117"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[3]<sp/>=<sp/>PP_HTONL(0x00000001UL);}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="preprocessor">#define<sp/>ip6_addr_set_hton(dest,<sp/>src)<sp/>do{(dest)-&gt;addr[0]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>lwip_htonl((src)-&gt;addr[0]);<sp/>\</highlight></codeline>
+<codeline lineno="121"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest)-&gt;addr[1]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>lwip_htonl((src)-&gt;addr[1]);<sp/>\</highlight></codeline>
+<codeline lineno="122"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest)-&gt;addr[2]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>lwip_htonl((src)-&gt;addr[2]);<sp/>\</highlight></codeline>
+<codeline lineno="123"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(dest)-&gt;addr[3]<sp/>=<sp/>(src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>lwip_htonl((src)-&gt;addr[3]);}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="preprocessor">#define<sp/>ip6_addr_netcmp(addr1,<sp/>addr2)<sp/>(((addr1)-&gt;addr[0]<sp/>==<sp/>(addr2)-&gt;addr[0])<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="134"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((addr1)-&gt;addr[1]<sp/>==<sp/>(addr2)-&gt;addr[1]))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_cmp(addr1,<sp/>addr2)<sp/>(((addr1)-&gt;addr[0]<sp/>==<sp/>(addr2)-&gt;addr[0])<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="137"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((addr1)-&gt;addr[1]<sp/>==<sp/>(addr2)-&gt;addr[1])<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="138"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((addr1)-&gt;addr[2]<sp/>==<sp/>(addr2)-&gt;addr[2])<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="139"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((addr1)-&gt;addr[3]<sp/>==<sp/>(addr2)-&gt;addr[3]))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_get_subnet_id(ip6addr)<sp/><sp/><sp/>(lwip_htonl((ip6addr)-&gt;addr[2])<sp/>&amp;<sp/>0x0000ffffUL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isany_val(ip6addr)<sp/>(((ip6addr).addr[0]<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="144"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr).addr[1]<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="145"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr).addr[2]<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="146"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr).addr[3]<sp/>==<sp/>0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isany(ip6addr)<sp/>(((ip6addr)<sp/>==<sp/>NULL)<sp/>||<sp/>ip6_addr_isany_val(*(ip6addr)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isloopback(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="150"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[1]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="151"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[2]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="152"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[3]<sp/>==<sp/>PP_HTONL(0x00000001UL)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isglobal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xe0000000UL))<sp/>==<sp/>PP_HTONL(0x20000000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_islinklocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xffc00000UL))<sp/>==<sp/>PP_HTONL(0xfe800000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_issitelocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xffc00000UL))<sp/>==<sp/>PP_HTONL(0xfec00000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isuniquelocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xfe000000UL))<sp/>==<sp/>PP_HTONL(0xfc000000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isipv4mappedipv6(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>((ip6addr)-&gt;addr[1]<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>(((ip6addr)-&gt;addr[2])<sp/>==<sp/>PP_HTONL(0x0000FFFFUL)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff000000UL))<sp/>==<sp/>PP_HTONL(0xff000000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_multicast_transient_flag(ip6addr)<sp/><sp/>((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0x00100000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_multicast_prefix_flag(ip6addr)<sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0x00200000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_multicast_rendezvous_flag(ip6addr)<sp/>((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0x00400000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_multicast_scope(ip6addr)<sp/>((lwip_htonl((ip6addr)-&gt;addr[0])<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xf)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_RESERVED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_RESERVED0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_INTERFACE_LOCAL<sp/><sp/><sp/><sp/><sp/>0x1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_LINK_LOCAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_RESERVED3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_ADMIN_LOCAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_SITE_LOCAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_ORGANIZATION_LOCAL<sp/><sp/>0x8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_GLOBAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xe</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_MULTICAST_SCOPE_RESERVEDF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xf</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast_iflocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff8f0000UL))<sp/>==<sp/>PP_HTONL(0xff010000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast_linklocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff8f0000UL))<sp/>==<sp/>PP_HTONL(0xff020000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast_adminlocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff8f0000UL))<sp/>==<sp/>PP_HTONL(0xff040000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast_sitelocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff8f0000UL))<sp/>==<sp/>PP_HTONL(0xff050000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast_orglocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff8f0000UL))<sp/>==<sp/>PP_HTONL(0xff080000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ismulticast_global(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>&amp;<sp/>PP_HTONL(0xff8f0000UL))<sp/>==<sp/>PP_HTONL(0xff0e0000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>@todo<sp/>define<sp/>get/set<sp/>for<sp/>well-know<sp/>multicast<sp/>addresses,<sp/>e.g.<sp/>ff02::1<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isallnodes_iflocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>==<sp/>PP_HTONL(0xff010000UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="188"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[1]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="189"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[2]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="190"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[3]<sp/>==<sp/>PP_HTONL(0x00000001UL)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isallnodes_linklocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>==<sp/>PP_HTONL(0xff020000UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="193"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[1]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="194"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[2]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="195"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[3]<sp/>==<sp/>PP_HTONL(0x00000001UL)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_set_allnodes_linklocal(ip6addr)<sp/>do{(ip6addr)-&gt;addr[0]<sp/>=<sp/>PP_HTONL(0xff020000UL);<sp/>\</highlight></codeline>
+<codeline lineno="197"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[1]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="198"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[2]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="199"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[3]<sp/>=<sp/>PP_HTONL(0x00000001UL);}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isallrouters_linklocal(ip6addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>==<sp/>PP_HTONL(0xff020000UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="202"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[1]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="203"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[2]<sp/>==<sp/>0UL)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="204"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[3]<sp/>==<sp/>PP_HTONL(0x00000002UL)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_set_allrouters_linklocal(ip6addr)<sp/>do{(ip6addr)-&gt;addr[0]<sp/>=<sp/>PP_HTONL(0xff020000UL);<sp/>\</highlight></codeline>
+<codeline lineno="206"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[1]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="207"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[2]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="208"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[3]<sp/>=<sp/>PP_HTONL(0x00000002UL);}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_issolicitednode(ip6addr)<sp/>(<sp/>((ip6addr)-&gt;addr[0]<sp/>==<sp/>PP_HTONL(0xff020000UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="211"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[2]<sp/>==<sp/>PP_HTONL(0x00000001UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="212"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((ip6addr)-&gt;addr[3]<sp/>&amp;<sp/>PP_HTONL(0xff000000UL))<sp/>==<sp/>PP_HTONL(0xff000000UL))<sp/>)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_set_solicitednode(ip6addr,<sp/>if_id)<sp/>do{(ip6addr)-&gt;addr[0]<sp/>=<sp/>PP_HTONL(0xff020000UL);<sp/>\</highlight></codeline>
+<codeline lineno="215"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[1]<sp/>=<sp/>0;<sp/>\</highlight></codeline>
+<codeline lineno="216"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[2]<sp/>=<sp/>PP_HTONL(0x00000001UL);<sp/>\</highlight></codeline>
+<codeline lineno="217"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6addr)-&gt;addr[3]<sp/>=<sp/>(PP_HTONL(0xff000000UL)<sp/>|<sp/>(if_id));}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_cmp_solicitednode(ip6addr,<sp/>sn_addr)<sp/>(((ip6addr)-&gt;addr[0]<sp/>==<sp/>PP_HTONL(0xff020000UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="220"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[1]<sp/>==<sp/>0)<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="221"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[2]<sp/>==<sp/>PP_HTONL(0x00000001UL))<sp/>&amp;&amp;<sp/>\</highlight></codeline>
+<codeline lineno="222"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ip6addr)-&gt;addr[3]<sp/>==<sp/>(PP_HTONL(0xff000000UL)<sp/>|<sp/>(sn_addr)-&gt;addr[3])))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>IPv6<sp/>address<sp/>states.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_INVALID<sp/><sp/><sp/><sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE<sp/><sp/><sp/><sp/>0x08</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_1<sp/><sp/>0x09<sp/></highlight><highlight class="comment">/*<sp/>1<sp/>probe<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_2<sp/><sp/>0x0a<sp/></highlight><highlight class="comment">/*<sp/>2<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_3<sp/><sp/>0x0b<sp/></highlight><highlight class="comment">/*<sp/>3<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_4<sp/><sp/>0x0c<sp/></highlight><highlight class="comment">/*<sp/>4<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_5<sp/><sp/>0x0d<sp/></highlight><highlight class="comment">/*<sp/>5<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_6<sp/><sp/>0x0e<sp/></highlight><highlight class="comment">/*<sp/>6<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_7<sp/><sp/>0x0f<sp/></highlight><highlight class="comment">/*<sp/>7<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_VALID<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x10<sp/></highlight><highlight class="comment">/*<sp/>This<sp/>bit<sp/>marks<sp/>an<sp/>address<sp/>as<sp/>valid<sp/>(preferred<sp/>or<sp/>deprecated)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_PREFERRED<sp/><sp/><sp/><sp/>0x30</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_DEPRECATED<sp/><sp/><sp/>0x10<sp/></highlight><highlight class="comment">/*<sp/>Same<sp/>as<sp/>VALID<sp/>(valid<sp/>but<sp/>not<sp/>preferred)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ADDR_TENTATIVE_COUNT_MASK<sp/>0x07<sp/></highlight><highlight class="comment">/*<sp/>1-7<sp/>probes<sp/>sent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isinvalid(addr_state)<sp/>(addr_state<sp/>==<sp/>IP6_ADDR_INVALID)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_istentative(addr_state)<sp/>(addr_state<sp/>&amp;<sp/>IP6_ADDR_TENTATIVE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isvalid(addr_state)<sp/>(addr_state<sp/>&amp;<sp/>IP6_ADDR_VALID)<sp/></highlight><highlight class="comment">/*<sp/>Include<sp/>valid,<sp/>preferred,<sp/>and<sp/>deprecated.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_ispreferred(addr_state)<sp/>(addr_state<sp/>==<sp/>IP6_ADDR_PREFERRED)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_isdeprecated(addr_state)<sp/>(addr_state<sp/>==<sp/>IP6_ADDR_DEPRECATED)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_debug_print_parts(debug,<sp/>a,<sp/>b,<sp/>c,<sp/>d,<sp/>e,<sp/>f,<sp/>g,<sp/>h)<sp/>\</highlight></codeline>
+<codeline lineno="247"><highlight class="preprocessor"><sp/><sp/>LWIP_DEBUGF(debug,<sp/>(&quot;%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F<sp/>&quot;:%&quot;<sp/>X16_F,<sp/>\</highlight></codeline>
+<codeline lineno="248"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>a,<sp/>b,<sp/>c,<sp/>d,<sp/>e,<sp/>f,<sp/>g,<sp/>h))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_debug_print(debug,<sp/>ipaddr)<sp/>\</highlight></codeline>
+<codeline lineno="250"><highlight class="preprocessor"><sp/><sp/>ip6_addr_debug_print_parts(debug,<sp/>\</highlight></codeline>
+<codeline lineno="251"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK1(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="252"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK2(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="253"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK3(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="254"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK4(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="255"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK5(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="256"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK6(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="257"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK7(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="258"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>IP6_ADDR_BLOCK8(ipaddr)<sp/>:<sp/>0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip6_addr_debug_print_val(debug,<sp/>ipaddr)<sp/>\</highlight></codeline>
+<codeline lineno="260"><highlight class="preprocessor"><sp/><sp/>ip6_addr_debug_print_parts(debug,<sp/>\</highlight></codeline>
+<codeline lineno="261"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK1(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="262"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK2(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="263"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK3(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="264"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK4(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="265"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK5(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="266"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK6(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="267"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK7(&amp;(ipaddr)),<sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="268"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6_ADDR_BLOCK8(&amp;(ipaddr)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6ADDR_STRLEN_MAX<sp/><sp/><sp/><sp/>46</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ip6addr_aton(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*cp,<sp/>ip6_addr_t<sp/>*addr);</highlight></codeline>
+<codeline lineno="274"><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*ip6addr_ntoa(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip6_addr_t<sp/>*addr);</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*ip6addr_ntoa_r(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip6_addr_t<sp/>*addr,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>buflen);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_IP6_ADDR_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/ip6_addr.h"/>
+  </compounddef>
+</doxygen>

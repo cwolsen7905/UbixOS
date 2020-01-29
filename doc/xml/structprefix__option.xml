@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structprefix__option" kind="struct" language="C++" prot="public">
+    <compoundname>prefix_option</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structprefix__option_1af27757a8a9e79844a699e1eb2606ede0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t preferred_lifetime)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>preferred_lifetime</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="186" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1a8bfd7d4926736aff4341d8e0ba33c0b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t valid_lifetime)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>valid_lifetime</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="185" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1af3e1819af70794506353f4f11917bdc6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t flags)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>flags</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="184" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1a369958e2e19137983f88a7d9215fe900" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="182" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1a8bc543befbc747de291207bdbde01a43" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t prefix_length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>prefix_length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="183" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1ae0d48fe0e638ebe7362bd6facef5a9c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t reserved2[3])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>reserved2</declname>
+          <array>[3]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="187" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1a6bdb5fcd055a66f99cdc03c4e1cfe065" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t site_prefix_length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>site_prefix_length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="188" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1a1f15126a26af6b1ef1c60774e8df6e8f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="181" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structprefix__option_1a2976a36b68004e8b0ca1087252441883" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>prefix_option::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip6_addr_p_t prefix)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref></type>
+          <declname>prefix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="189" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>prefix_option</label>
+        <link refid="structprefix__option"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="180" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="180" bodyend="190"/>
+    <listofallmembers>
+      <member refid="structprefix__option_1a8bfd7d4926736aff4341d8e0ba33c0b2" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structprefix__option_1af27757a8a9e79844a699e1eb2606ede0" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structprefix__option_1a1f15126a26af6b1ef1c60774e8df6e8f" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structprefix__option_1a369958e2e19137983f88a7d9215fe900" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structprefix__option_1a8bc543befbc747de291207bdbde01a43" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structprefix__option_1af3e1819af70794506353f4f11917bdc6" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structprefix__option_1ae0d48fe0e638ebe7362bd6facef5a9c0" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structprefix__option_1a6bdb5fcd055a66f99cdc03c4e1cfe065" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structprefix__option_1a2976a36b68004e8b0ca1087252441883" prot="public" virt="non-virtual"><scope>prefix_option</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,341 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="net_2errno_8h" kind="file" language="C++">
+    <compoundname>errno.h</compoundname>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includedby refid="err_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/err.c</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/errno.h</label>
+        <link refid="net_2errno_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/errno.h</label>
+        <link refid="net_2errno_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+    </invincdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Posix Errno defines </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_ERRNO_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_ERRNO_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_PROVIDE_ERRNO</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EPERM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/></highlight><highlight class="comment">/*<sp/>Operation<sp/>not<sp/>permitted<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOENT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>such<sp/>file<sp/>or<sp/>directory<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESRCH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>such<sp/>process<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EINTR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/><sp/></highlight><highlight class="comment">/*<sp/>Interrupted<sp/>system<sp/>call<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EIO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5<sp/><sp/></highlight><highlight class="comment">/*<sp/>I/O<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENXIO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>such<sp/>device<sp/>or<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>E2BIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7<sp/><sp/></highlight><highlight class="comment">/*<sp/>Arg<sp/>list<sp/>too<sp/>long<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOEXEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8<sp/><sp/></highlight><highlight class="comment">/*<sp/>Exec<sp/>format<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/></highlight><highlight class="comment">/*<sp/>Bad<sp/>file<sp/>number<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ECHILD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>child<sp/>processes<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EAGAIN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>11<sp/><sp/></highlight><highlight class="comment">/*<sp/>Try<sp/>again<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOMEM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>12<sp/><sp/></highlight><highlight class="comment">/*<sp/>Out<sp/>of<sp/>memory<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EACCES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>13<sp/><sp/></highlight><highlight class="comment">/*<sp/>Permission<sp/>denied<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EFAULT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>14<sp/><sp/></highlight><highlight class="comment">/*<sp/>Bad<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTBLK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>15<sp/><sp/></highlight><highlight class="comment">/*<sp/>Block<sp/>device<sp/>required<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBUSY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>16<sp/><sp/></highlight><highlight class="comment">/*<sp/>Device<sp/>or<sp/>resource<sp/>busy<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EEXIST<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>17<sp/><sp/></highlight><highlight class="comment">/*<sp/>File<sp/>exists<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EXDEV<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>18<sp/><sp/></highlight><highlight class="comment">/*<sp/>Cross-device<sp/>link<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENODEV<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>19<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>such<sp/>device<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTDIR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>20<sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>a<sp/>directory<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EISDIR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>21<sp/><sp/></highlight><highlight class="comment">/*<sp/>Is<sp/>a<sp/>directory<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EINVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>22<sp/><sp/></highlight><highlight class="comment">/*<sp/>Invalid<sp/>argument<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENFILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>23<sp/><sp/></highlight><highlight class="comment">/*<sp/>File<sp/>table<sp/>overflow<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EMFILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>24<sp/><sp/></highlight><highlight class="comment">/*<sp/>Too<sp/>many<sp/>open<sp/>files<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTTY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>25<sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>a<sp/>typewriter<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ETXTBSY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>26<sp/><sp/></highlight><highlight class="comment">/*<sp/>Text<sp/>file<sp/>busy<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EFBIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>27<sp/><sp/></highlight><highlight class="comment">/*<sp/>File<sp/>too<sp/>large<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOSPC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>28<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>space<sp/>left<sp/>on<sp/>device<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESPIPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>29<sp/><sp/></highlight><highlight class="comment">/*<sp/>Illegal<sp/>seek<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EROFS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>30<sp/><sp/></highlight><highlight class="comment">/*<sp/>Read-only<sp/>file<sp/>system<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EMLINK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>31<sp/><sp/></highlight><highlight class="comment">/*<sp/>Too<sp/>many<sp/>links<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EPIPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>32<sp/><sp/></highlight><highlight class="comment">/*<sp/>Broken<sp/>pipe<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EDOM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>33<sp/><sp/></highlight><highlight class="comment">/*<sp/>Math<sp/>argument<sp/>out<sp/>of<sp/>domain<sp/>of<sp/>func<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ERANGE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>34<sp/><sp/></highlight><highlight class="comment">/*<sp/>Math<sp/>result<sp/>not<sp/>representable<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EDEADLK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>35<sp/><sp/></highlight><highlight class="comment">/*<sp/>Resource<sp/>deadlock<sp/>would<sp/>occur<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENAMETOOLONG<sp/><sp/><sp/><sp/>36<sp/><sp/></highlight><highlight class="comment">/*<sp/>File<sp/>name<sp/>too<sp/>long<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOLCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>37<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>record<sp/>locks<sp/>available<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOSYS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>38<sp/><sp/></highlight><highlight class="comment">/*<sp/>Function<sp/>not<sp/>implemented<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTEMPTY<sp/><sp/><sp/><sp/><sp/><sp/><sp/>39<sp/><sp/></highlight><highlight class="comment">/*<sp/>Directory<sp/>not<sp/>empty<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELOOP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>40<sp/><sp/></highlight><highlight class="comment">/*<sp/>Too<sp/>many<sp/>symbolic<sp/>links<sp/>encountered<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EWOULDBLOCK<sp/><sp/><sp/><sp/><sp/>EAGAIN<sp/><sp/></highlight><highlight class="comment">/*<sp/>Operation<sp/>would<sp/>block<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOMSG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>42<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>message<sp/>of<sp/>desired<sp/>type<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EIDRM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>43<sp/><sp/></highlight><highlight class="comment">/*<sp/>Identifier<sp/>removed<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ECHRNG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>44<sp/><sp/></highlight><highlight class="comment">/*<sp/>Channel<sp/>number<sp/>out<sp/>of<sp/>range<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EL2NSYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>45<sp/><sp/></highlight><highlight class="comment">/*<sp/>Level<sp/>2<sp/>not<sp/>synchronized<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EL3HLT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>46<sp/><sp/></highlight><highlight class="comment">/*<sp/>Level<sp/>3<sp/>halted<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EL3RST<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>47<sp/><sp/></highlight><highlight class="comment">/*<sp/>Level<sp/>3<sp/>reset<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELNRNG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>48<sp/><sp/></highlight><highlight class="comment">/*<sp/>Link<sp/>number<sp/>out<sp/>of<sp/>range<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EUNATCH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>49<sp/><sp/></highlight><highlight class="comment">/*<sp/>Protocol<sp/>driver<sp/>not<sp/>attached<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOCSI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>50<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>CSI<sp/>structure<sp/>available<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EL2HLT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>51<sp/><sp/></highlight><highlight class="comment">/*<sp/>Level<sp/>2<sp/>halted<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>52<sp/><sp/></highlight><highlight class="comment">/*<sp/>Invalid<sp/>exchange<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>53<sp/><sp/></highlight><highlight class="comment">/*<sp/>Invalid<sp/>request<sp/>descriptor<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EXFULL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>54<sp/><sp/></highlight><highlight class="comment">/*<sp/>Exchange<sp/>full<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOANO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>55<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>anode<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADRQC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>56<sp/><sp/></highlight><highlight class="comment">/*<sp/>Invalid<sp/>request<sp/>code<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADSLT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>57<sp/><sp/></highlight><highlight class="comment">/*<sp/>Invalid<sp/>slot<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EDEADLOCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/>EDEADLK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBFONT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>59<sp/><sp/></highlight><highlight class="comment">/*<sp/>Bad<sp/>font<sp/>file<sp/>format<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOSTR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>60<sp/><sp/></highlight><highlight class="comment">/*<sp/>Device<sp/>not<sp/>a<sp/>stream<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENODATA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>61<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>data<sp/>available<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ETIME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>62<sp/><sp/></highlight><highlight class="comment">/*<sp/>Timer<sp/>expired<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOSR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>63<sp/><sp/></highlight><highlight class="comment">/*<sp/>Out<sp/>of<sp/>streams<sp/>resources<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENONET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>64<sp/><sp/></highlight><highlight class="comment">/*<sp/>Machine<sp/>is<sp/>not<sp/>on<sp/>the<sp/>network<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOPKG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>65<sp/><sp/></highlight><highlight class="comment">/*<sp/>Package<sp/>not<sp/>installed<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EREMOTE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>66<sp/><sp/></highlight><highlight class="comment">/*<sp/>Object<sp/>is<sp/>remote<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOLINK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>67<sp/><sp/></highlight><highlight class="comment">/*<sp/>Link<sp/>has<sp/>been<sp/>severed<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EADV<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>68<sp/><sp/></highlight><highlight class="comment">/*<sp/>Advertise<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESRMNT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>69<sp/><sp/></highlight><highlight class="comment">/*<sp/>Srmount<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ECOMM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>70<sp/><sp/></highlight><highlight class="comment">/*<sp/>Communication<sp/>error<sp/>on<sp/>send<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EPROTO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>71<sp/><sp/></highlight><highlight class="comment">/*<sp/>Protocol<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EMULTIHOP<sp/><sp/><sp/><sp/><sp/><sp/><sp/>72<sp/><sp/></highlight><highlight class="comment">/*<sp/>Multihop<sp/>attempted<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EDOTDOT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>73<sp/><sp/></highlight><highlight class="comment">/*<sp/>RFS<sp/>specific<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADMSG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>74<sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>a<sp/>data<sp/>message<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EOVERFLOW<sp/><sp/><sp/><sp/><sp/><sp/><sp/>75<sp/><sp/></highlight><highlight class="comment">/*<sp/>Value<sp/>too<sp/>large<sp/>for<sp/>defined<sp/>data<sp/>type<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTUNIQ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>76<sp/><sp/></highlight><highlight class="comment">/*<sp/>Name<sp/>not<sp/>unique<sp/>on<sp/>network<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EBADFD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>77<sp/><sp/></highlight><highlight class="comment">/*<sp/>File<sp/>descriptor<sp/>in<sp/>bad<sp/>state<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EREMCHG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>78<sp/><sp/></highlight><highlight class="comment">/*<sp/>Remote<sp/>address<sp/>changed<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELIBACC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>79<sp/><sp/></highlight><highlight class="comment">/*<sp/>Can<sp/>not<sp/>access<sp/>a<sp/>needed<sp/>shared<sp/>library<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELIBBAD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>80<sp/><sp/></highlight><highlight class="comment">/*<sp/>Accessing<sp/>a<sp/>corrupted<sp/>shared<sp/>library<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELIBSCN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>81<sp/><sp/></highlight><highlight class="comment">/*<sp/>.lib<sp/>section<sp/>in<sp/>a.out<sp/>corrupted<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELIBMAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>82<sp/><sp/></highlight><highlight class="comment">/*<sp/>Attempting<sp/>to<sp/>link<sp/>in<sp/>too<sp/>many<sp/>shared<sp/>libraries<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ELIBEXEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>83<sp/><sp/></highlight><highlight class="comment">/*<sp/>Cannot<sp/>exec<sp/>a<sp/>shared<sp/>library<sp/>directly<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EILSEQ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>84<sp/><sp/></highlight><highlight class="comment">/*<sp/>Illegal<sp/>byte<sp/>sequence<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ERESTART<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>85<sp/><sp/></highlight><highlight class="comment">/*<sp/>Interrupted<sp/>system<sp/>call<sp/>should<sp/>be<sp/>restarted<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESTRPIPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>86<sp/><sp/></highlight><highlight class="comment">/*<sp/>Streams<sp/>pipe<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EUSERS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>87<sp/><sp/></highlight><highlight class="comment">/*<sp/>Too<sp/>many<sp/>users<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTSOCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>88<sp/><sp/></highlight><highlight class="comment">/*<sp/>Socket<sp/>operation<sp/>on<sp/>non-socket<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EDESTADDRREQ<sp/><sp/><sp/><sp/>89<sp/><sp/></highlight><highlight class="comment">/*<sp/>Destination<sp/>address<sp/>required<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EMSGSIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>90<sp/><sp/></highlight><highlight class="comment">/*<sp/>Message<sp/>too<sp/>long<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EPROTOTYPE<sp/><sp/><sp/><sp/><sp/><sp/>91<sp/><sp/></highlight><highlight class="comment">/*<sp/>Protocol<sp/>wrong<sp/>type<sp/>for<sp/>socket<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOPROTOOPT<sp/><sp/><sp/><sp/><sp/>92<sp/><sp/></highlight><highlight class="comment">/*<sp/>Protocol<sp/>not<sp/>available<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EPROTONOSUPPORT<sp/>93<sp/><sp/></highlight><highlight class="comment">/*<sp/>Protocol<sp/>not<sp/>supported<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESOCKTNOSUPPORT<sp/>94<sp/><sp/></highlight><highlight class="comment">/*<sp/>Socket<sp/>type<sp/>not<sp/>supported<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EOPNOTSUPP<sp/><sp/><sp/><sp/><sp/><sp/>95<sp/><sp/></highlight><highlight class="comment">/*<sp/>Operation<sp/>not<sp/>supported<sp/>on<sp/>transport<sp/>endpoint<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EPFNOSUPPORT<sp/><sp/><sp/><sp/>96<sp/><sp/></highlight><highlight class="comment">/*<sp/>Protocol<sp/>family<sp/>not<sp/>supported<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EAFNOSUPPORT<sp/><sp/><sp/><sp/>97<sp/><sp/></highlight><highlight class="comment">/*<sp/>Address<sp/>family<sp/>not<sp/>supported<sp/>by<sp/>protocol<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EADDRINUSE<sp/><sp/><sp/><sp/><sp/><sp/>98<sp/><sp/></highlight><highlight class="comment">/*<sp/>Address<sp/>already<sp/>in<sp/>use<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EADDRNOTAVAIL<sp/><sp/><sp/>99<sp/><sp/></highlight><highlight class="comment">/*<sp/>Cannot<sp/>assign<sp/>requested<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENETDOWN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>100<sp/><sp/></highlight><highlight class="comment">/*<sp/>Network<sp/>is<sp/>down<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENETUNREACH<sp/><sp/><sp/><sp/>101<sp/><sp/></highlight><highlight class="comment">/*<sp/>Network<sp/>is<sp/>unreachable<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENETRESET<sp/><sp/><sp/><sp/><sp/><sp/>102<sp/><sp/></highlight><highlight class="comment">/*<sp/>Network<sp/>dropped<sp/>connection<sp/>because<sp/>of<sp/>reset<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ECONNABORTED<sp/><sp/><sp/>103<sp/><sp/></highlight><highlight class="comment">/*<sp/>Software<sp/>caused<sp/>connection<sp/>abort<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ECONNRESET<sp/><sp/><sp/><sp/><sp/>104<sp/><sp/></highlight><highlight class="comment">/*<sp/>Connection<sp/>reset<sp/>by<sp/>peer<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOBUFS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>105<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>buffer<sp/>space<sp/>available<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EISCONN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>106<sp/><sp/></highlight><highlight class="comment">/*<sp/>Transport<sp/>endpoint<sp/>is<sp/>already<sp/>connected<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTCONN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>107<sp/><sp/></highlight><highlight class="comment">/*<sp/>Transport<sp/>endpoint<sp/>is<sp/>not<sp/>connected<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESHUTDOWN<sp/><sp/><sp/><sp/><sp/><sp/>108<sp/><sp/></highlight><highlight class="comment">/*<sp/>Cannot<sp/>send<sp/>after<sp/>transport<sp/>endpoint<sp/>shutdown<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ETOOMANYREFS<sp/><sp/><sp/>109<sp/><sp/></highlight><highlight class="comment">/*<sp/>Too<sp/>many<sp/>references:<sp/>cannot<sp/>splice<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ETIMEDOUT<sp/><sp/><sp/><sp/><sp/><sp/>110<sp/><sp/></highlight><highlight class="comment">/*<sp/>Connection<sp/>timed<sp/>out<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ECONNREFUSED<sp/><sp/><sp/>111<sp/><sp/></highlight><highlight class="comment">/*<sp/>Connection<sp/>refused<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EHOSTDOWN<sp/><sp/><sp/><sp/><sp/><sp/>112<sp/><sp/></highlight><highlight class="comment">/*<sp/>Host<sp/>is<sp/>down<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EHOSTUNREACH<sp/><sp/><sp/>113<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>route<sp/>to<sp/>host<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EALREADY<sp/><sp/><sp/><sp/><sp/><sp/><sp/>114<sp/><sp/></highlight><highlight class="comment">/*<sp/>Operation<sp/>already<sp/>in<sp/>progress<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EINPROGRESS<sp/><sp/><sp/><sp/>115<sp/><sp/></highlight><highlight class="comment">/*<sp/>Operation<sp/>now<sp/>in<sp/>progress<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ESTALE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>116<sp/><sp/></highlight><highlight class="comment">/*<sp/>Stale<sp/>NFS<sp/>file<sp/>handle<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EUCLEAN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>117<sp/><sp/></highlight><highlight class="comment">/*<sp/>Structure<sp/>needs<sp/>cleaning<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOTNAM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>118<sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>a<sp/>XENIX<sp/>named<sp/>type<sp/>file<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENAVAIL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>119<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>XENIX<sp/>semaphores<sp/>available<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EISNAM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>120<sp/><sp/></highlight><highlight class="comment">/*<sp/>Is<sp/>a<sp/>named<sp/>type<sp/>file<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EREMOTEIO<sp/><sp/><sp/><sp/><sp/><sp/>121<sp/><sp/></highlight><highlight class="comment">/*<sp/>Remote<sp/>I/O<sp/>error<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EDQUOT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>122<sp/><sp/></highlight><highlight class="comment">/*<sp/>Quota<sp/>exceeded<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ENOMEDIUM<sp/><sp/><sp/><sp/><sp/><sp/>123<sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>medium<sp/>found<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EMEDIUMTYPE<sp/><sp/><sp/><sp/>124<sp/><sp/></highlight><highlight class="comment">/*<sp/>Wrong<sp/>medium<sp/>type<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>errno</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubixos_2errno_8h_1ad65a8842cc674e3ddf69355898c0ecbf" kindref="member">errno</ref>;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_PROVIDE_ERRNO<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Define<sp/>LWIP_ERRNO_INCLUDE<sp/>to<sp/>&lt;errno.h&gt;<sp/>to<sp/>include<sp/>the<sp/>error<sp/>defines<sp/>here<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_ERRNO_INCLUDE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>LWIP_ERRNO_INCLUDE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ERRNO_INCLUDE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_PROVIDE_ERRNO<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_ERRNO_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/errno.h"/>
+  </compounddef>
+</doxygen>

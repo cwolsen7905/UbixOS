@@ -1,0 +1,9 @@
+digraph "driveInfo"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{driveInfo\n|+ diskLabel\l+ hdCalc\l+ hdDev\l+ hdEnable\l+ hdFlags\l+ hdMask\l+ hdMulti\l+ hdPort\l+ hdShift\l+ hdSize\land 7 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +ata_identify" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{ata_identify_data\n|+ acoustic_test_interseek\l_delay\l+ additional_supported\l+ capabilities1\l+ capabilities2\l+ cfa_power_mode1\l+ command_set_default\l+ command_set_enabled0\l+ command_set_enabled1\l+ command_set_supported0\l+ command_set_supported1\land 75 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structata__identify__data.html",tooltip=" "];
+}

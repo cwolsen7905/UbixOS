@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="boot_2arm_2uboot_2start_8S" kind="file" language="C++">
+    <compoundname>start.S</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/*-</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2008<sp/>Semihalf,<sp/>Rafal<sp/>Czubak</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>$FreeBSD:<sp/>releng/10.2/sys/boot/arm/uboot/start.S<sp/>283505<sp/>2015-05-25<sp/>01:06:55Z<sp/>ian<sp/>$</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;machine/asm.h&gt;</highlight></codeline>
+<codeline><highlight class="normal">#include<sp/>&lt;machine/armreg.h&gt;</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.text</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.extern<sp/>_C_LABEL(self_reloc),<sp/>_C_LABEL(main)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.weak<sp/><sp/><sp/>_DYNAMIC</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Entry<sp/>point<sp/>to<sp/>the<sp/>loader<sp/>that<sp/>U-Boot<sp/>passes<sp/>control<sp/>to.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.globl<sp/><sp/>_start</highlight></codeline>
+<codeline><highlight class="normal">_start:</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#ifdef<sp/>_ARM_ARCH_6</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mrc<sp/><sp/><sp/><sp/><sp/>p15,<sp/>0,<sp/>ip,<sp/>c1,<sp/>c0,<sp/>0</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>orr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>ip,<sp/>#(CPU_CONTROL_UNAL_ENABLE)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>orr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>ip,<sp/>#(CPU_CONTROL_AFLT_ENABLE)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mcr<sp/><sp/><sp/><sp/><sp/>p15,<sp/>0,<sp/>ip,<sp/>c1,<sp/>c0,<sp/>0</highlight></codeline>
+<codeline><highlight class="normal">#endif</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Do<sp/>self-relocation<sp/>when<sp/>the<sp/>weak<sp/>external<sp/>symbol<sp/>_DYNAMIC<sp/>is<sp/>non-NULL.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>When<sp/>linked<sp/>as<sp/>a<sp/>dynamic<sp/>relocatable<sp/>file,<sp/>the<sp/>linker<sp/>automatically</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>defines<sp/>_DYNAMIC<sp/>with<sp/>a<sp/>value<sp/>that<sp/>is<sp/>the<sp/>offset<sp/>of<sp/>the<sp/>dynamic</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>relocation<sp/>info<sp/>section.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Note<sp/>that<sp/>we&apos;re<sp/>still<sp/>on<sp/>u-boot&apos;s<sp/>stack<sp/>here,<sp/>but<sp/>the<sp/>self_reloc<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>code<sp/>uses<sp/>only<sp/>a<sp/>couple<sp/>dozen<sp/>bytes<sp/>of<sp/>stack<sp/>space.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>adr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>.here_off<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>.here_off<sp/>is<sp/>a<sp/>symbol<sp/>whose<sp/>value<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>r0,<sp/>[ip]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>is<sp/>its<sp/>own<sp/>offset<sp/>in<sp/>the<sp/>text<sp/>seg.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sub<sp/><sp/><sp/><sp/><sp/>r0,<sp/>ip,<sp/>r0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Get<sp/>its<sp/>pc-relative<sp/>address<sp/>and<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>r1,<sp/>.dynamic_off<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>subtract<sp/>its<sp/>value<sp/>and<sp/>we<sp/>get<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>teq<sp/><sp/><sp/><sp/><sp/>r1,<sp/>#0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>r0<sp/>=<sp/>physaddr<sp/>we<sp/>were<sp/>loaded<sp/>at.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>addne<sp/><sp/><sp/>r1,<sp/>r1,<sp/>r0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>r1<sp/>=<sp/>dynamic<sp/>section<sp/>physaddr.<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>blne<sp/><sp/><sp/><sp/>_C_LABEL(self_reloc)<sp/><sp/><sp/><sp/>/*<sp/>Do<sp/>reloc<sp/>if<sp/>_DYNAMIC<sp/>is<sp/>non-NULL.<sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Hint<sp/>where<sp/>to<sp/>look<sp/>for<sp/>the<sp/>API<sp/>signature<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>=uboot_address</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>str<sp/><sp/><sp/><sp/><sp/>sp,<sp/>[ip]</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Save<sp/>U-Boot&apos;s<sp/>r8<sp/>and<sp/>r9<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>=saved_regs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>str<sp/><sp/><sp/><sp/><sp/>r8,<sp/>[ip,<sp/>#0]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>str<sp/><sp/><sp/><sp/><sp/>r9,<sp/>[ip,<sp/>#4]</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Start<sp/>loader.<sp/><sp/>This<sp/>is<sp/>basically<sp/>a<sp/>tail-recursion<sp/>call;<sp/>if<sp/>main()</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>returns,<sp/>it<sp/>returns<sp/>to<sp/>u-boot<sp/>(which<sp/>reports<sp/>the<sp/>value<sp/>returned<sp/>r0).</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>b<sp/><sp/><sp/><sp/><sp/><sp/><sp/>main</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Data<sp/>for<sp/>self-relocation,<sp/>in<sp/>the<sp/>text<sp/>segment<sp/>for<sp/>pc-rel<sp/>access.</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">.here_off:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.word<sp/><sp/><sp/>.</highlight></codeline>
+<codeline><highlight class="normal">.dynamic_off:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.word<sp/><sp/><sp/>_DYNAMIC</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>syscall()</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">ENTRY(syscall)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Save<sp/>caller&apos;s<sp/>lr,<sp/>r8<sp/>and<sp/>r9<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>=saved_regs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>str<sp/><sp/><sp/><sp/><sp/>r8,<sp/>[ip,<sp/>#8]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>str<sp/><sp/><sp/><sp/><sp/>r9,<sp/>[ip,<sp/>#12]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>str<sp/><sp/><sp/><sp/><sp/>lr,<sp/>[ip,<sp/>#16]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Restore<sp/>U-Boot&apos;s<sp/>r8<sp/>and<sp/>r9<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>r8,<sp/>[ip,<sp/>#0]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>r9,<sp/>[ip,<sp/>#4]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Call<sp/>into<sp/>U-Boot<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>lr,<sp/>=return_from_syscall</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>=syscall_ptr</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>pc,<sp/>[ip]</highlight></codeline>
+<codeline><highlight class="normal">return_from_syscall:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Restore<sp/>loader&apos;s<sp/>r8,<sp/>r9<sp/>and<sp/>lr<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>ip,<sp/>=saved_regs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>lr,<sp/>[ip,<sp/>#16]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>r9,<sp/>[ip,<sp/>#12]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ldr<sp/><sp/><sp/><sp/><sp/>r8,<sp/>[ip,<sp/>#8]</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Return<sp/>to<sp/>caller<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>pc,<sp/>lr</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Data<sp/>section</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.data</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.align<sp/><sp/>4</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.globl<sp/><sp/>syscall_ptr</highlight></codeline>
+<codeline><highlight class="normal">syscall_ptr:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.globl<sp/><sp/>uboot_address</highlight></codeline>
+<codeline><highlight class="normal">uboot_address:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">saved_regs:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>U-Boot&apos;s<sp/>r8<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>U-Boot&apos;s<sp/>r9<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Loader&apos;s<sp/>r8<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Loader&apos;s<sp/>r9<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>Loader&apos;s<sp/>lr<sp/>*/</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/boot/arm/uboot/start.S"/>
+  </compounddef>
+</doxygen>

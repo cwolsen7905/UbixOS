@@ -1,0 +1,7 @@
+digraph "ufs2_dinode"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{ufs2_dinode\n|+ di_atime\l+ di_atimensec\l+ di_birthnsec\l+ di_birthtime\l+ di_blksize\l+ di_blocks\l+ di_ctime\l+ di_ctimensec\l+ di_db\l+ di_extb\land 13 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

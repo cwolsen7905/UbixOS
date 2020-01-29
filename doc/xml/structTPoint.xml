@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structTPoint" kind="struct" language="C++" prot="public">
+    <compoundname>TPoint</compoundname>
+    <includes refid="objgfx30_8h" local="no">objgfx30.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structTPoint_1aee10d7be0f69306a9f98c80dd3a5afc1" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        <definition>Int32 TPoint::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="122" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTPoint_1a4ef36d6892872531da8abaa98a81cb76" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        <definition>Int32 TPoint::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="123" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>TPoint</label>
+        <link refid="structTPoint"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="121" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="121" bodyend="124"/>
+    <listofallmembers>
+      <member refid="structTPoint_1aee10d7be0f69306a9f98c80dd3a5afc1" prot="public" virt="non-virtual"><scope>TPoint</scope><name>x</name></member>
+      <member refid="structTPoint_1a4ef36d6892872531da8abaa98a81cb76" prot="public" virt="non-virtual"><scope>TPoint</scope><name>y</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmqtt__ringbuf__t" kind="struct" language="C++" prot="public">
+    <compoundname>mqtt_ringbuf_t</compoundname>
+    <includes refid="mqtt_8h" local="no">mqtt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmqtt__ringbuf__t_1a75775a25a3dfd83b66775041d6c10c09" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t mqtt_ringbuf_t::buf[MQTT_OUTPUT_RINGBUF_SIZE]</definition>
+        <argsstring>[MQTT_OUTPUT_RINGBUF_SIZE]</argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="173" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__ringbuf__t_1aa403cea9ffc2f3a780591bf8d5482054" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t mqtt_ringbuf_t::get</definition>
+        <argsstring></argsstring>
+        <name>get</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="172" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__ringbuf__t_1af2d228ca682741a29621e9592536fa39" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t mqtt_ringbuf_t::put</definition>
+        <argsstring></argsstring>
+        <name>put</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="171" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Ring buffer </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>mqtt_ringbuf_t</label>
+        <link refid="structmqtt__ringbuf__t"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="170" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="170" bodyend="174"/>
+    <listofallmembers>
+      <member refid="structmqtt__ringbuf__t_1a75775a25a3dfd83b66775041d6c10c09" prot="public" virt="non-virtual"><scope>mqtt_ringbuf_t</scope><name>buf</name></member>
+      <member refid="structmqtt__ringbuf__t_1aa403cea9ffc2f3a780591bf8d5482054" prot="public" virt="non-virtual"><scope>mqtt_ringbuf_t</scope><name>get</name></member>
+      <member refid="structmqtt__ringbuf__t_1af2d228ca682741a29621e9592536fa39" prot="public" virt="non-virtual"><scope>mqtt_ringbuf_t</scope><name>put</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

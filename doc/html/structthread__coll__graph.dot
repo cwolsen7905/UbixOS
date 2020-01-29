@@ -1,0 +1,16 @@
+digraph "thread"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{thread\n|+ abi\l+ o_files\l+ td_retval\l+ vm_daddr\l+ vm_dsize\l+ vm_taddr\l+ vm_tsize\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +frame" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{trapframe\n|+ tf_cs\l+ tf_ds\l+ tf_eax\l+ tf_ebp\l+ tf_ebx\l+ tf_ecx\l+ tf_edi\l+ tf_edx\l+ tf_eflags\l+ tf_eip\land 9 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structtrapframe.html",tooltip=" "];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +sigmask" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{__sigset\n|+ __bits\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$struct____sigset.html",tooltip=" "];
+  Node4 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rlim" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node4 [label="{rlimit\n|+ rlim_cur\l+ rlim_max\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structrlimit.html",tooltip=" "];
+  Node5 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +sigact" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node5 [label="{sigaction\n|+ __sa_handler\l+ __sa_sigaction\l+ __sigaction_u\l+ sa_flags\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structsigaction.html",tooltip=" "];
+  Node3 -> Node5 [color="grey25",fontsize="10",style="solid",label=" +sa_mask" ,arrowhead="odiamond",fontname="Helvetica"];
+}

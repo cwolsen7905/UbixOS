@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__netconn" kind="group">
+    <compoundname>netconn</compoundname>
+    <title>Netconn API</title>
+    <innergroup refid="group__netconn__common">Common functions</innergroup>
+    <innergroup refid="group__netconn__tcp">TCP only</innergroup>
+    <innergroup refid="group__netconn__udp">UDP only</innergroup>
+    <innergroup refid="group__netbuf">Network buffers</innergroup>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Thread-safe, to be called from non-TCPIP threads only. TX/RX handling based on <ref refid="group__netbuf" kindref="compound">Network buffers</ref> (containing <ref refid="group__pbuf" kindref="compound">Packet buffers (PBUF)</ref>) to avoid copying data around. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

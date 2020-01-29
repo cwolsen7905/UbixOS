@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__stats" kind="group">
+    <compoundname>lwip_opts_stats</compoundname>
+    <title>Statistics</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga3a8359abf4fff8ffdc449e5007f93275" prot="public" static="no">
+        <name>ETHARP_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__arp_1ga9609a014bba4638cc191d6a8f9556c87" kindref="member">LWIP_ARP</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ETHARP_STATS==1: Enable etharp stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1861" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1861" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga714006cd5c5b0eb333159d0f677616a0" prot="public" static="no">
+        <name>ICMP6_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref> &amp;&amp; <ref refid="group__lwip__opts__icmp6_1ga65ac8bcbad242cba3a2b557e1574b21f" kindref="member">LWIP_ICMP6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP6_STATS==1: Enable ICMP for IPv6 stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1941" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1941" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga472ad3f6da741f5b287d66ad3051242b" prot="public" static="no">
+        <name>ICMP_STATS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP_STATS==1: Enable ICMP stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1883" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1883" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga4d12af1356b9fd60717984be51e27740" prot="public" static="no">
+        <name>IGMP_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__igmp_1gadaf25915ae1fd69c0943ef68cbb38923" kindref="member">LWIP_IGMP</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IGMP_STATS==1: Enable IGMP stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1890" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1890" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gaaa08a181c11ff8b471549e8f52c9939b" prot="public" static="no">
+        <name>IP6_FRAG_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref> &amp;&amp; (<ref refid="group__lwip__opts__ipv6_1ga9ab6269f3087f6d9f7b2c7181ef043c3" kindref="member">LWIP_IPV6_FRAG</ref> || <ref refid="group__lwip__opts__ipv6_1gad0ef160d72e63b02c5e875b06ec53864" kindref="member">LWIP_IPV6_REASS</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP6_FRAG_STATS==1: Enable IPv6 fragmentation stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1948" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1948" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga6a211b787c97bce3af4273b29c95d9c2" prot="public" static="no">
+        <name>IP6_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP6_STATS==1: Enable IPv6 stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1934" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1934" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gaf50575a4895e26ea2c01d1f2269487be" prot="public" static="no">
+        <name>IP_STATS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP_STATS==1: Enable IP stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1868" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1868" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gac9a4fbb46df3c0f479a334d0e34fb74f" prot="public" static="no">
+        <name>IPFRAG_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv4_1ga1a31ab0e0f37b17d40fa7c35bc2c4f69" kindref="member">IP_REASSEMBLY</ref> || <ref refid="group__lwip__opts__ipv4_1gaf85c8bdd5035b6cada790b4cc2a209a4" kindref="member">IP_FRAG</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IPFRAG_STATS==1: Enable IP fragmentation stats. Default is on if using either frag or reass. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1876" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1876" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gae58b452782d0327ae728192686c5a84a" prot="public" static="no">
+        <name>LINK_STATS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LINK_STATS==1: Enable link stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1854" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1854" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga542b58734cc01902c5e099f6efdc5f1b" prot="public" static="no">
+        <name>LWIP_STATS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_STATS==1: Enable statistics collection in lwip_stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1838" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1838" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gacdc38ed58d1900b5d3d109a65be1c3d1" prot="public" static="no">
+        <name>LWIP_STATS_DISPLAY</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_STATS_DISPLAY==1: Compile in the statistics output functions. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1847" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1847" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga61ec04a08c4fde690d10819e582656a7" prot="public" static="no">
+        <name>MEM_STATS</name>
+        <initializer>((<ref refid="group__lwip__opts__mem_1ga4ef345cc270912bd2230b1c5ec51dfc8" kindref="member">MEM_LIBC_MALLOC</ref> == 0) &amp;&amp; (<ref refid="group__lwip__opts__mem_1gaddca3141bc7037241769eb152b6f89ba" kindref="member">MEM_USE_POOLS</ref> == 0))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEM_STATS==1: Enable <ref refid="mem_8c" kindref="compound">mem.c</ref> stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1913" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1913" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gab8c2430be0e567a7499a95454aaa6041" prot="public" static="no">
+        <name>MEMP_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__mem_1gae93af697d27bbcefa6a28052d90f2f38" kindref="member">MEMP_MEM_MALLOC</ref> == 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_STATS==1: Enable <ref refid="memp_8c" kindref="compound">memp.c</ref> pool stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1920" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1920" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga5b01047eeb149a0b0ffe33d760d8370f" prot="public" static="no">
+        <name>MIB2_STATS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MIB2_STATS==1: Stats for SNMP MIB2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1969" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1969" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gaf263df10b63b38201cae3d2dd5fb0b9e" prot="public" static="no">
+        <name>MLD6_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref> &amp;&amp; <ref refid="group__lwip__opts__mld6_1ga44d8f24eaebbc50221ac1336212a3528" kindref="member">LWIP_IPV6_MLD</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MLD6_STATS==1: Enable MLD for IPv6 stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1955" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1955" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga753161114df60299a28d51c092c756cf" prot="public" static="no">
+        <name>ND6_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ND6_STATS==1: Enable Neighbor discovery for IPv6 stats. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1962" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1962" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1ga0173549afa76553583e5a02c6a791218" prot="public" static="no">
+        <name>SYS_STATS</name>
+        <initializer>(<ref refid="opt_8h_1ae00ba99de94a5bf84d832be8976df59b" kindref="member">NO_SYS</ref> == 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SYS_STATS==1: Enable system stats (sem and mbox counts, etc). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1927" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1927" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gaa02ec5c5bc0edebe418680c54d044f58" prot="public" static="no">
+        <name>TCP_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__tcp_1gaa4ed98deb97b77c633cb8870f34c71e9" kindref="member">LWIP_TCP</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_STATS==1: Enable TCP stats. Default is on if TCP enabled, otherwise off. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1906" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1906" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__stats_1gaef64b11bf71f0d6d5bafaf6092462276" prot="public" static="no">
+        <name>UDP_STATS</name>
+        <initializer>(<ref refid="group__lwip__opts__udp_1gab6030e96e72df649d2650fd32d7a67b3" kindref="member">LWIP_UDP</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>UDP_STATS==1: Enable UDP stats. Default is on if UDP enabled, otherwise off. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1898" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1898" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

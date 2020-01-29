@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structin6__addr" kind="struct" language="C++" prot="public">
+    <compoundname>in6_addr</compoundname>
+    <includes refid="inet_8h" local="no">inet.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structin6__addr_1a5a2ca960bb7ff446cb8ca70478843cdd" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+        <definition>u32_t in6_addr::u32_addr[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>u32_addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="64" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structin6__addr_1abfef295d9dd6db109a1f1f95eacdb5f6" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t in6_addr::u8_addr[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>u8_addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="65" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structin6__addr_1a498c500ad25a20b2b8a95898ffa8f052" prot="public" static="no" mutable="no">
+        <type>union in6_addr::@2</type>
+        <definition>union in6_addr::@2  in6_addr::un</definition>
+        <argsstring></argsstring>
+        <name>un</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="66" column="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>in6_addr</label>
+        <link refid="structin6__addr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/inet.h" line="62" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/net/inet.h" bodystart="62" bodyend="68"/>
+    <listofallmembers>
+      <member refid="structin6__addr_1a5a2ca960bb7ff446cb8ca70478843cdd" prot="public" virt="non-virtual"><scope>in6_addr</scope><name>u32_addr</name></member>
+      <member refid="structin6__addr_1abfef295d9dd6db109a1f1f95eacdb5f6" prot="public" virt="non-virtual"><scope>in6_addr</scope><name>u8_addr</name></member>
+      <member refid="structin6__addr_1a498c500ad25a20b2b8a95898ffa8f052" prot="public" virt="non-virtual"><scope>in6_addr</scope><name>un</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

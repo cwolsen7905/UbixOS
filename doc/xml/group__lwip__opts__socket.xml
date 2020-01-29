@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__socket" kind="group">
+    <compoundname>lwip_opts_socket</compoundname>
+    <title>Sockets</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__socket_1gafed2811f031822ec5afa1ee211fb7447" prot="public" static="no">
+        <name>LWIP_COMPAT_SOCKETS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_COMPAT_SOCKETS==1: Enable BSD-style sockets functions names through defines. LWIP_COMPAT_SOCKETS==2: Same as ==1 but correctly named functions are created. While this helps code completion, it might conflict with existing libraries. (only used if you use <ref refid="sockets_8c" kindref="compound">sockets.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1709" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1709" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga0543eea2abe390d0bdc843c33debd762" prot="public" static="no">
+        <name>LWIP_FIONREAD_LINUXMODE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_FIONREAD_LINUXMODE==0 (default): ioctl/FIONREAD returns the amount of pending data in the network buffer. This is the way windows does it. It&apos;s the default for lwIP since it is smaller. LWIP_FIONREAD_LINUXMODE==1: ioctl/FIONREAD returns the size of the next pending datagram in bytes. This is the way linux does it. This code is only here for compatibility. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1818" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1818" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga484c38ab08f60d5b3335d23d31f9a402" prot="public" static="no">
+        <name>LWIP_POSIX_SOCKETS_IO_NAMES</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_POSIX_SOCKETS_IO_NAMES==1: Enable POSIX-style sockets functions names. Disable this option if you use a POSIX operating system that uses the same names (read, write &amp; close). (only used if you use <ref refid="sockets_8c" kindref="compound">sockets.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1718" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1718" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1gaa91292d5d014dc1c6f1c1f4166269a1d" prot="public" static="no">
+        <name>LWIP_SO_LINGER</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SO_LINGER==1: Enable SO_LINGER processing. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1776" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1776" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga06390cebcf4d13d3d47a11365e5fcd28" prot="public" static="no">
+        <name>LWIP_SO_RCVBUF</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SO_RCVBUF==1: Enable SO_RCVBUF processing. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1769" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1769" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga91af3ade95b20b9a60c65ed0380fa0ed" prot="public" static="no">
+        <name>LWIP_SO_RCVTIMEO</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SO_RCVTIMEO==1: Enable receive timeout for sockets/netconns and SO_RCVTIMEO processing. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1754" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1754" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga5b115bacb569763d8a3889a12229e942" prot="public" static="no">
+        <name>LWIP_SO_SNDRCVTIMEO_NONSTANDARD</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SO_SNDRCVTIMEO_NONSTANDARD==1: SO_RCVTIMEO/SO_SNDTIMEO take an int (milliseconds, much like winsock does) instead of a struct timeval (default). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1762" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1762" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga1162cb685f202d9b21c11344b8209a58" prot="public" static="no">
+        <name>LWIP_SO_SNDTIMEO</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SO_SNDTIMEO==1: Enable send timeout for sockets/netconns and SO_SNDTIMEO processing. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1746" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1746" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga1cb62ce61ac39d7d6728ae5d3d3b927f" prot="public" static="no">
+        <name>LWIP_SOCKET</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SOCKET==1: Enable Socket API (require to use <ref refid="sockets_8c" kindref="compound">sockets.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1692" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1692" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1gad0197c845fbb44c920b272f0fef3b57e" prot="public" static="no">
+        <name>LWIP_SOCKET_OFFSET</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_SOCKET_OFFSET==n: Increases the file descriptor number created by LwIP with n. This can be useful when there are multiple APIs which create file descriptors. When they all start with a different offset and you won&apos;t make them overlap you can re implement read/write/close/ioctl/fnctl to send the requested action to the right library (sharing select will need more work though). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1729" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1729" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga7222c197f4ad4eb4f6c96bec865297a8" prot="public" static="no">
+        <name>LWIP_SOCKET_SET_ERRNO</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1699" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1699" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga3e7498d5d2921f0df3792de72f384d36" prot="public" static="no">
+        <name>LWIP_TCP_CLOSE_TIMEOUT_MS_DEFAULT</name>
+        <initializer>20000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>By default, TCP socket/netconn close waits 20 seconds max to send the FIN </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1790" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1790" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga8b9369ab260f032686a81c77c5b4db77" prot="public" static="no">
+        <name>LWIP_TCP_KEEPALIVE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_TCP_KEEPALIVE==1: Enable TCP_KEEPIDLE, TCP_KEEPINTVL and TCP_KEEPCNT options processing. Note that TCP_KEEPIDLE and TCP_KEEPINTVL have to be set in seconds. (does not require <ref refid="sockets_8c" kindref="compound">sockets.c</ref>, and will affect <ref refid="tcp_8c" kindref="compound">tcp.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1738" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1738" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1ga5dbd0a61f30ae6c6bfbda635095f138d" prot="public" static="no">
+        <name>RECV_BUFSIZE_DEFAULT</name>
+        <initializer>INT_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If LWIP_SO_RCVBUF is used, this is the default value for recv_bufsize. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1783" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1783" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1gaf3822feed320cf8439b083ee525e4942" prot="public" static="no">
+        <name>SO_REUSE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SO_REUSE==1: Enable SO_REUSEADDR option. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1797" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1797" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__socket_1gae9395d83af89002343e5782130f52f44" prot="public" static="no">
+        <name>SO_REUSE_RXTOALL</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SO_REUSE_RXTOALL==1: Pass a copy of incoming broadcast/multicast packets to all local matches if SO_REUSEADDR is turned on. WARNING: Adds a memcpy for every packet if passing to more than one pcb! </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1806" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1806" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structrlimit" kind="struct" language="C++" prot="public">
+    <compoundname>rlimit</compoundname>
+    <includes refid="resource_8h" local="no">resource.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structrlimit_1afb303c82ed3027a353e423a555b944b4" prot="public" static="no" mutable="no">
+        <type><ref refid="resource_8h_1ae65eae70522c07cfb230620a6f4afdec" kindref="member">rlim_t</ref></type>
+        <definition>rlim_t rlimit::rlim_cur</definition>
+        <argsstring></argsstring>
+        <name>rlim_cur</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/resource.h" line="87" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/resource.h" bodystart="87" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1abe3341acee6fc13d0806e33bf4950cc0" compoundref="gen__calls_8c" startline="376" endline="448">sys_getrlimit</referencedby>
+        <referencedby refid="gen__calls_8c_1a77e27dec9ce3825037f7b1916f131765" compoundref="gen__calls_8c" startline="450" endline="520">sys_setrlimit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structrlimit_1ab24ab4934cab539abf45b259f5db7639" prot="public" static="no" mutable="no">
+        <type><ref refid="resource_8h_1ae65eae70522c07cfb230620a6f4afdec" kindref="member">rlim_t</ref></type>
+        <definition>rlim_t rlimit::rlim_max</definition>
+        <argsstring></argsstring>
+        <name>rlim_max</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/resource.h" line="88" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/resource.h" bodystart="88" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1abe3341acee6fc13d0806e33bf4950cc0" compoundref="gen__calls_8c" startline="376" endline="448">sys_getrlimit</referencedby>
+        <referencedby refid="gen__calls_8c_1a77e27dec9ce3825037f7b1916f131765" compoundref="gen__calls_8c" startline="450" endline="520">sys_setrlimit</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/resource.h" line="86" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/resource.h" bodystart="86" bodyend="89"/>
+    <listofallmembers>
+      <member refid="structrlimit_1afb303c82ed3027a353e423a555b944b4" prot="public" virt="non-virtual"><scope>rlimit</scope><name>rlim_cur</name></member>
+      <member refid="structrlimit_1ab24ab4934cab539abf45b259f5db7639" prot="public" virt="non-virtual"><scope>rlimit</scope><name>rlim_max</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

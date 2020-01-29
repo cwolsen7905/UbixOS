@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__misc" kind="group">
+    <compoundname>sys_misc</compoundname>
+    <title>Misc</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_msleep</definition>
+        <argsstring>(u32_t ms)</argsstring>
+        <name>sys_msleep</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>ms</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sleep for specified number of ms</para>
+<para>Sleep for some ms. Timeouts are NOT processed while sleeping.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ms</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>number of milliseconds to sleep </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="191" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/core/sys.c" bodystart="93" bodyend="103" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="191" declcolumn="6"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" compoundref="sys__arch_8c" startline="105" endline="130">sys_arch_sem_wait</references>
+        <references refid="group__sys__sem_1ga4d02e29e5dfa092559efc04dee985822" compoundref="sys__arch_8c" startline="75" endline="86">sys_sem_free</references>
+        <references refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="sys__arch_8h_1a2930394713e07b1b46b0b5396708d911" kindref="member">sys_thread_t</ref></type>
+        <definition>sys_thread_t sys_thread_new</definition>
+        <argsstring>(const char *name, lwip_thread_fn thread, void *arg, int stacksize, int prio)</argsstring>
+        <name>sys_thread_new</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type><ref refid="sys_8h_1ae30a77bf6bd69bfcc5f235eaad54f2b9" kindref="member">lwip_thread_fn</ref></type>
+          <declname>thread</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>stacksize</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>prio</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The only thread function: Creates a new thread ATTENTION: although this function returns a value, it MUST NOT FAIL (ports have to assert this!) <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>human-readable name for the thread (used for debugging purposes) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>thread</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>thread-function </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>arg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>parameter passed to &apos;thread&apos; </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>stacksize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>stack size in bytes for the new thread (may be ignored by ports) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>prio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>priority of the new thread (may be ignored by ports) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="291" column="14" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="379" bodyend="408" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="291" declcolumn="14"/>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="bot_8c_1ae5e17afd28772b096c68d413334b257a" compoundref="bot_8c" startline="83" endline="85">bot_init</referencedby>
+        <referencedby refid="net_2init_8c_1a22b2914249628f6cba7d4e1f138c969f" compoundref="net_2init_8c" startline="52" endline="70">net_init</referencedby>
+        <referencedby refid="udpecho_8h_1ab288cc2f0b684d8cffe7f074724127e2" compoundref="udpecho_8c" startline="64" endline="66">udpecho_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

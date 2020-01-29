@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Sym" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Sym</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Sym_1a9bbd53b13b0f1403d8369cbdd15df08c" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Elf64_Sym::st_info</definition>
+        <argsstring></argsstring>
+        <name>st_info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="204" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="204" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Sym_1a4069f9db0c91ecc40bc2f4ddbdf28aff" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Sym::st_name</definition>
+        <argsstring></argsstring>
+        <name>st_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="203" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="203" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Sym_1adba66dcdbe19ab3ecc24830a58549230" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char Elf64_Sym::st_other</definition>
+        <argsstring></argsstring>
+        <name>st_other</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="205" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="205" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Sym_1a3bd895ed278935218da81c754460d8d2" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Sym::st_shndx</definition>
+        <argsstring></argsstring>
+        <name>st_shndx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="206" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="206" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Sym_1af5c72e0a09802b81e8087b303ec4d29f" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Sym::st_size</definition>
+        <argsstring></argsstring>
+        <name>st_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="208" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="208" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Sym_1a9601295da4c2e81cc18c1f777609e1bf" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Sym::st_value</definition>
+        <argsstring></argsstring>
+        <name>st_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="207" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="207" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Sym</label>
+        <link refid="structElf64__Sym"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="202" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="202" bodyend="209"/>
+    <listofallmembers>
+      <member refid="structElf64__Sym_1a9bbd53b13b0f1403d8369cbdd15df08c" prot="public" virt="non-virtual"><scope>Elf64_Sym</scope><name>st_info</name></member>
+      <member refid="structElf64__Sym_1a4069f9db0c91ecc40bc2f4ddbdf28aff" prot="public" virt="non-virtual"><scope>Elf64_Sym</scope><name>st_name</name></member>
+      <member refid="structElf64__Sym_1adba66dcdbe19ab3ecc24830a58549230" prot="public" virt="non-virtual"><scope>Elf64_Sym</scope><name>st_other</name></member>
+      <member refid="structElf64__Sym_1a3bd895ed278935218da81c754460d8d2" prot="public" virt="non-virtual"><scope>Elf64_Sym</scope><name>st_shndx</name></member>
+      <member refid="structElf64__Sym_1af5c72e0a09802b81e8087b303ec4d29f" prot="public" virt="non-virtual"><scope>Elf64_Sym</scope><name>st_size</name></member>
+      <member refid="structElf64__Sym_1a9601295da4c2e81cc18c1f777609e1bf" prot="public" virt="non-virtual"><scope>Elf64_Sym</scope><name>st_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

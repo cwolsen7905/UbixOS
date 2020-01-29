@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structip__globals" kind="struct" language="C++" prot="public">
+    <compoundname>ip_globals</compoundname>
+    <includes refid="ip_8h" local="no">ip.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structip__globals_1a7da899c663b1d560b61d92ba6d544701" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+        <definition>struct netif* ip_globals::current_input_netif</definition>
+        <argsstring></argsstring>
+        <name>current_input_netif</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The interface that received the packet for the current callback invocation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="110" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structip__globals_1a17004526e6f1a164c0bab01aeac5e34a" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t ip_globals::current_ip_header_tot_len</definition>
+        <argsstring></argsstring>
+        <name>current_ip_header_tot_len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Total header length of current_ip4/6_header (i.e. after this, the UDP/TCP header starts) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="120" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structip__globals_1a0b4e54250c692c638408de54593d2aa1" prot="public" static="no" mutable="no">
+        <type><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref></type>
+        <definition>ip_addr_t ip_globals::current_iphdr_dest</definition>
+        <argsstring></argsstring>
+        <name>current_iphdr_dest</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Destination IP address of current_header </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="124" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structip__globals_1a04d85a3dc2c417050b3e088fa58a74b0" prot="public" static="no" mutable="no">
+        <type><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref></type>
+        <definition>ip_addr_t ip_globals::current_iphdr_src</definition>
+        <argsstring></argsstring>
+        <name>current_iphdr_src</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Source IP address of current_header </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="122" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structip__globals_1a7803dc5950d143e4433a0df689989bab" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+        <definition>struct netif* ip_globals::current_netif</definition>
+        <argsstring></argsstring>
+        <name>current_netif</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The interface that accepted the packet for the current callback invocation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="108" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Global variables of this module, kept in a struct for efficient access using base+index. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>ip_globals</label>
+        <link refid="structip__globals"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+current_netif</edgelabel>
+          <edgelabel>+current_input_netif</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>netif</label>
+        <link refid="structnetif"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+linkoutput</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+input</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="106" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="105" bodyend="125"/>
+    <listofallmembers>
+      <member refid="structip__globals_1a7da899c663b1d560b61d92ba6d544701" prot="public" virt="non-virtual"><scope>ip_globals</scope><name>current_input_netif</name></member>
+      <member refid="structip__globals_1a17004526e6f1a164c0bab01aeac5e34a" prot="public" virt="non-virtual"><scope>ip_globals</scope><name>current_ip_header_tot_len</name></member>
+      <member refid="structip__globals_1a0b4e54250c692c638408de54593d2aa1" prot="public" virt="non-virtual"><scope>ip_globals</scope><name>current_iphdr_dest</name></member>
+      <member refid="structip__globals_1a04d85a3dc2c417050b3e088fa58a74b0" prot="public" virt="non-virtual"><scope>ip_globals</scope><name>current_iphdr_src</name></member>
+      <member refid="structip__globals_1a7803dc5950d143e4433a0df689989bab" prot="public" virt="non-virtual"><scope>ip_globals</scope><name>current_netif</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

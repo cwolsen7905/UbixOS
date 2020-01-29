@@ -1,0 +1,367 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="signal_8c" kind="file" language="C++">
+    <compoundname>signal.c</compoundname>
+    <includes refid="sys_2signal_8h" local="no">sys/signal.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sys/sysproto_posix.h</includes>
+    <includes refid="thread_8h" local="no">sys/thread.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <incdepgraph>
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="13">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="26">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="2">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="24">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/signal.c</label>
+        <link refid="signal_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="signal_8c_1add3795da6dd256853821910f6fde5569" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_sigaction</definition>
+        <argsstring>(struct thread *td, struct sys_sigaction_args *args)</argsstring>
+        <name>sys_sigaction</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__sigaction__args" kindref="compound">sys_sigaction_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/signal.c" line="80" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/signal.c" bodystart="80" bodyend="94"/>
+        <references refid="structsys__sigaction__args_1a4502042a0ee83f26b999497b5f0d60a8" compoundref="sysproto__posix_8h" startline="568">sys_sigaction_args::act</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structsys__sigaction__args_1a2d1efc69484f943c9ad01fa45e3d39e0" compoundref="sysproto__posix_8h" startline="571">sys_sigaction_args::oact</references>
+        <references refid="structsys__sigaction__args_1a44a3fc57e54e0246d29c8fb6422e26c5" compoundref="sysproto__posix_8h" startline="565">sys_sigaction_args::sig</references>
+        <references refid="structthread_1aa0041bdd41da4a43a6c69327e866336e" compoundref="thread_8h" startline="50">thread::sigact</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="signal_8c_1adb0dc568dd674705e372495140616236" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_sigprocmask</definition>
+        <argsstring>(struct thread *td, struct sys_sigprocmask_args *args)</argsstring>
+        <name>sys_sigprocmask</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__sigprocmask__args" kindref="compound">sys_sigprocmask_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/signal.c" line="35" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/signal.c" bodystart="35" bodyend="78"/>
+        <references refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" compoundref="__sigset_8h" startline="43">__sigset::__bits</references>
+        <references refid="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" compoundref="sysproto__posix_8h" startline="553">sys_sigprocmask_args::how</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structsys__sigprocmask__args_1a3b15609df6042f96a0fb6354b27d318e" compoundref="sysproto__posix_8h" startline="559">sys_sigprocmask_args::oset</references>
+        <references refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" compoundref="sysproto__posix_8h" startline="556">sys_sigprocmask_args::set</references>
+        <references refid="sys_2signal_8h_1a927f6ae16379576d638006c7498ac5d7" compoundref="sys_2signal_8h" startline="42">SIG_BLOCK</references>
+        <references refid="sys_2signal_8h_1a37750b78b7ae75fe02ad26e70f6cc845" compoundref="sys_2signal_8h" startline="44">SIG_SETMASK</references>
+        <references refid="sys_2signal_8h_1a5fcd73313a63dac2cc7eb3b654215250" compoundref="sys_2signal_8h" startline="43">SIG_UNBLOCK</references>
+        <references refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" compoundref="thread_8h" startline="49">thread::sigmask</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_2signal_8h" kindref="compound">sys/signal.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto__posix_8h" kindref="compound">sys/sysproto_posix.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="signal_8c_1adb0dc568dd674705e372495140616236" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="signal_8c_1adb0dc568dd674705e372495140616236" kindref="member">sys_sigprocmask</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sigprocmask__args" kindref="compound">sys_sigprocmask_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1a3b15609df6042f96a0fb6354b27d318e" kindref="member">oset</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(args-&gt;<ref refid="structsys__sigprocmask__args_1a3b15609df6042f96a0fb6354b27d318e" kindref="member">oset</ref>,<sp/>&amp;td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="struct____sigset" kindref="compound">sigset_t</ref>));</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" kindref="member">how</ref><sp/>==<sp/><ref refid="sys_2signal_8h_1a37750b78b7ae75fe02ad26e70f6cc845" kindref="member">SIG_SETMASK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(&amp;td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>,<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="struct____sigset" kindref="compound">sigset_t</ref>));</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" kindref="member">how</ref><sp/>==<sp/><ref refid="sys_2signal_8h_1a927f6ae16379576d638006c7498ac5d7" kindref="member">SIG_BLOCK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[0]<sp/>&amp;=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[0];</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[1]<sp/>&amp;=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[1];</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[2]<sp/>&amp;=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[2];</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[3]<sp/>&amp;=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[3];</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" kindref="member">how</ref><sp/>==<sp/><ref refid="sys_2signal_8h_1a5fcd73313a63dac2cc7eb3b654215250" kindref="member">SIG_UNBLOCK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[0]<sp/>|=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[0];</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[1]<sp/>|=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[1];</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[2]<sp/>|=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[2];</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" kindref="member">sigmask</ref>.<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[3]<sp/>|=<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" kindref="member">set</ref>-&gt;<ref refid="struct____sigset_1af82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[3];</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;SPM:<sp/>0x%X&quot;</highlight><highlight class="normal">,<sp/>args-&gt;<ref refid="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" kindref="member">how</ref>);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="signal_8c_1add3795da6dd256853821910f6fde5569" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="signal_8c_1add3795da6dd256853821910f6fde5569" kindref="member">sys_sigaction</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sigaction__args" kindref="compound">sys_sigaction_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigaction__args_1a2d1efc69484f943c9ad01fa45e3d39e0" kindref="member">oact</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(args-&gt;<ref refid="structsys__sigaction__args_1a2d1efc69484f943c9ad01fa45e3d39e0" kindref="member">oact</ref>,<sp/>&amp;td-&gt;<ref refid="structthread_1aa0041bdd41da4a43a6c69327e866336e" kindref="member">sigact</ref>[args-&gt;<ref refid="structsys__sigaction__args_1a44a3fc57e54e0246d29c8fb6422e26c5" kindref="member">sig</ref>],<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsigaction" kindref="compound">sigaction</ref>));</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sigaction__args_1a4502042a0ee83f26b999497b5f0d60a8" kindref="member">act</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;SA:<sp/>%i&quot;,<sp/>args-&gt;sig);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(&amp;td-&gt;<ref refid="structthread_1aa0041bdd41da4a43a6c69327e866336e" kindref="member">sigact</ref>[args-&gt;<ref refid="structsys__sigaction__args_1a44a3fc57e54e0246d29c8fb6422e26c5" kindref="member">sig</ref>],<sp/>args-&gt;<ref refid="structsys__sigaction__args_1a4502042a0ee83f26b999497b5f0d60a8" kindref="member">act</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsigaction" kindref="compound">sigaction</ref>));</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/signal.c"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structgpt__hdr" kind="struct" language="C++" prot="public">
+    <compoundname>gpt_hdr</compoundname>
+    <includes refid="gpt_8h" local="no">gpt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgpt__hdr_1a1cfbcb2d21c2897ecc9f60d0964498b4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::__reserved</definition>
+        <argsstring></argsstring>
+        <name>__reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="51" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::hdr_crc_self</definition>
+        <argsstring></argsstring>
+        <name>hdr_crc_self</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="50" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::hdr_crc_table</definition>
+        <argsstring></argsstring>
+        <name>hdr_crc_table</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="60" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::hdr_entries</definition>
+        <argsstring></argsstring>
+        <name>hdr_entries</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="58" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::hdr_entsz</definition>
+        <argsstring></argsstring>
+        <name>hdr_entsz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="59" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a01b0300a7ae49715b8de1b8f12abfc6a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_hdr::hdr_lba_alt</definition>
+        <argsstring></argsstring>
+        <name>hdr_lba_alt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="53" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a84f46fabd9a32262e5d41b5ce3f421d2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_hdr::hdr_lba_end</definition>
+        <argsstring></argsstring>
+        <name>hdr_lba_end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="55" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_hdr::hdr_lba_self</definition>
+        <argsstring></argsstring>
+        <name>hdr_lba_self</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="52" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a0f4c4d40e0d8f3bff99af8b7d96e2fa0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_hdr::hdr_lba_start</definition>
+        <argsstring></argsstring>
+        <name>hdr_lba_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="54" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_hdr::hdr_lba_table</definition>
+        <argsstring></argsstring>
+        <name>hdr_lba_table</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="57" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1ab53c14f9782599554f537561436a62a5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::hdr_revision</definition>
+        <argsstring></argsstring>
+        <name>hdr_revision</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="47" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1ade065292c6cb9b65da111255cc5c88f8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char gpt_hdr::hdr_sig[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>hdr_sig</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="45" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::hdr_size</definition>
+        <argsstring></argsstring>
+        <name>hdr_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="49" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1ade124d7df95c12543991b6d0c371d000" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structuuid" kindref="compound">uuid</ref></type>
+        <definition>struct uuid gpt_hdr::hdr_uuid</definition>
+        <argsstring></argsstring>
+        <name>hdr_uuid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="55" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__hdr_1a6a0294343cc038dce49e9533c943d0cc" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t gpt_hdr::padding</definition>
+        <argsstring></argsstring>
+        <name>padding</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="68" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>gpt_hdr</label>
+        <link refid="structgpt__hdr"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+hdr_uuid</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>uuid</label>
+        <link refid="structuuid"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="44" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="44" bodyend="69"/>
+    <listofallmembers>
+      <member refid="structgpt__hdr_1a1cfbcb2d21c2897ecc9f60d0964498b4" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>__reserved</name></member>
+      <member refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_crc_self</name></member>
+      <member refid="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_crc_table</name></member>
+      <member refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_entries</name></member>
+      <member refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_entsz</name></member>
+      <member refid="structgpt__hdr_1a01b0300a7ae49715b8de1b8f12abfc6a" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_lba_alt</name></member>
+      <member refid="structgpt__hdr_1a84f46fabd9a32262e5d41b5ce3f421d2" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_lba_end</name></member>
+      <member refid="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_lba_self</name></member>
+      <member refid="structgpt__hdr_1a0f4c4d40e0d8f3bff99af8b7d96e2fa0" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_lba_start</name></member>
+      <member refid="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_lba_table</name></member>
+      <member refid="structgpt__hdr_1ab53c14f9782599554f537561436a62a5" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_revision</name></member>
+      <member refid="structgpt__hdr_1ade065292c6cb9b65da111255cc5c88f8" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_sig</name></member>
+      <member refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_size</name></member>
+      <member refid="structgpt__hdr_1ade124d7df95c12543991b6d0c371d000" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>hdr_uuid</name></member>
+      <member refid="structgpt__hdr_1a6a0294343cc038dce49e9533c943d0cc" prot="public" virt="non-virtual"><scope>gpt_hdr</scope><name>padding</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

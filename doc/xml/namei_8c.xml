@@ -1,0 +1,806 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="namei_8c" kind="file" language="C++">
+    <compoundname>namei.c</compoundname>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="ubixos_2errno_8h" local="no">ubixos/errno.h</includes>
+    <includes refid="include_2vfs_2vfs_8h" local="no">vfs/vfs.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <incdepgraph>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="37">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="51">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="43">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="50">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="42">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="33">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="38">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="namei_8c_1a43adbadeabf90e4889f4c483f9afbc0a" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int dir_namei</definition>
+        <argsstring>(const char *pathname, int *namelen, const char **name, struct inode *base, struct inode **res_inode)</argsstring>
+        <name>dir_namei</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>pathname</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>namelen</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char **</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+          <declname>base</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> **</type>
+          <declname>res_inode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" line="117" column="12" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" bodystart="117" bodyend="170"/>
+      </memberdef>
+      <memberdef kind="function" id="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int follow_link</definition>
+        <argsstring>(struct inode *dir, struct inode *inode, int flag, int mode, struct inode **res_inode)</argsstring>
+        <name>follow_link</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+          <declname>dir</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+          <declname>inode</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>flag</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>mode</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> **</type>
+          <declname>res_inode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" line="34" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" bodystart="34" bodyend="50"/>
+        <references refid="sys_2errno_8h_1a03e689f378f643d16ea7537918528a48" compoundref="sys_2errno_8h" startline="33">ENOENT</references>
+        <references refid="structinode__operations_1aa35664261988a830d4bffcbf13743684" compoundref="include_2vfs_2vfs_8h" startline="85">inode_operations::follow_link</references>
+        <references refid="structinode_1a141e71619963d0d497eca9952e74b705" compoundref="inode_8h" startline="54">inode::i_op</references>
+        <references refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" compoundref="inode_8c" startline="47" endline="94">iput</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lookup</definition>
+        <argsstring>(struct inode *dir, const char *name, int len, struct inode **result)</argsstring>
+        <name>lookup</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+          <declname>dir</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> **</type>
+          <declname>result</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" line="68" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" bodystart="68" bodyend="115"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="sys_2errno_8h_1ac2a2e9fa555401f94478f74e01868032" compoundref="sys_2errno_8h" startline="45">EACCES</references>
+        <references refid="sys_2errno_8h_1a03e689f378f643d16ea7537918528a48" compoundref="sys_2errno_8h" startline="33">ENOENT</references>
+        <references refid="sys_2errno_8h_1a9262fb92f7ef662d0bdd577912a5b101" compoundref="sys_2errno_8h" startline="53">ENOTDIR</references>
+        <references refid="structinode_1af6da47fa3f89db802bc7039589bbe982" compoundref="inode_8h" startline="64">inode::i_count</references>
+        <references refid="structinode_1a141e71619963d0d497eca9952e74b705" compoundref="inode_8h" startline="54">inode::i_op</references>
+        <references refid="structinode_1a8e3ca37fd8f709720380afd9f60d0e71" compoundref="inode_8h" startline="55">inode::i_sb</references>
+        <references refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" compoundref="inode_8c" startline="47" endline="94">iput</references>
+        <references refid="structinode__operations_1ae2d0cd46daad5f8edbbc6bf272f5f6ef" compoundref="include_2vfs_2vfs_8h" startline="76">inode_operations::lookup</references>
+        <references refid="include_2vfs_2vfs_8h_1a62208fd94f08131f925ce4211733feba" compoundref="include_2vfs_2vfs_8h" startline="39">MAY_EXEC</references>
+        <references refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="37">name</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</references>
+        <references refid="structtaskStruct_1aa3610b89866c904ca5531b91ae17c875" compoundref="sched_8h" startline="81">taskStruct::root</references>
+        <references refid="structsuper__block_1a161369fc3cb8cda6c26818b9642508f6" compoundref="include_2vfs_2vfs_8h" startline="118">super_block::s_covered</references>
+        <references refid="structsuper__block_1ab512ca6a0a83eecffe89740646927228" compoundref="include_2vfs_2vfs_8h" startline="119">super_block::s_mounted</references>
+      </memberdef>
+      <memberdef kind="function" id="namei_8c_1a9c6a1c44b765a6d5c2b1b1d45485f905" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int namei</definition>
+        <argsstring>(const char *pathname, struct inode *base, int follow_links, struct inode **res_inode)</argsstring>
+        <name>namei</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>pathname</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+          <declname>base</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>follow_links</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> **</type>
+          <declname>res_inode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" line="172" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" bodystart="172" bodyend="203"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int permission</definition>
+        <argsstring>(struct inode *inode, int mask)</argsstring>
+        <name>permission</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+          <declname>inode</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>mask</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" line="52" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c" bodystart="52" bodyend="66"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structtaskStruct_1a5978d69d1b59cc1b731c8a0bf51cf4d8" compoundref="sched_8h" startline="74">taskStruct::euid</references>
+        <references refid="structinode_1a0c14ee3e0c6392287359562051162885" compoundref="inode_8h" startline="45">inode::i_gid</references>
+        <references refid="structinode_1aceb810156528818f5f17fd1918d58456" compoundref="inode_8h" startline="42">inode::i_mode</references>
+        <references refid="structinode_1a141e71619963d0d497eca9952e74b705" compoundref="inode_8h" startline="54">inode::i_op</references>
+        <references refid="structinode_1a9661c7379438c25c6cc91c3239f54a85" compoundref="inode_8h" startline="44">inode::i_uid</references>
+        <references refid="access_8c_1a0e5f21be079a3e8f83618c8c6e062c5a" compoundref="access_8c" startline="76" endline="89">in_group_p</references>
+        <references refid="structinode__operations_1a9498ad8187220a0751acc29b725f1fe3" compoundref="include_2vfs_2vfs_8h" startline="88">inode_operations::permission</references>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubixos_2errno_8h" kindref="compound">ubixos/errno.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2vfs_8h" kindref="compound">vfs/vfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" kindref="member">follow_link</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*<sp/>dir,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*<sp/><ref refid="structinode" kindref="compound">inode</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flag,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>mode,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>**<sp/>res_inode)<sp/>{</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!dir<sp/>||<sp/>!<ref refid="structinode" kindref="compound">inode</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(dir);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(<ref refid="structinode" kindref="compound">inode</ref>);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>*res_inode<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-<ref refid="sys_2errno_8h_1a03e689f378f643d16ea7537918528a48" kindref="member">ENOENT</ref>;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref><sp/>||<sp/>!<ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1aa35664261988a830d4bffcbf13743684" kindref="member">follow_link</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(dir);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>*res_inode<sp/>=<sp/><ref refid="structinode" kindref="compound">inode</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1aa35664261988a830d4bffcbf13743684" kindref="member">follow_link</ref>(dir,<sp/><ref refid="structinode" kindref="compound">inode</ref>,<sp/>flag,<sp/>mode,<sp/>res_inode);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" kindref="member">permission</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*<sp/><ref refid="structinode" kindref="compound">inode</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>mask)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>mode<sp/>=<sp/><ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1aceb810156528818f5f17fd1918d58456" kindref="member">i_mode</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref><sp/>&amp;&amp;<sp/><ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1a9498ad8187220a0751acc29b725f1fe3" kindref="member">permission</ref>)</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1a9498ad8187220a0751acc29b725f1fe3" kindref="member">permission</ref>(<ref refid="structinode" kindref="compound">inode</ref>,<sp/>mask);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a5978d69d1b59cc1b731c8a0bf51cf4d8" kindref="member">euid</ref><sp/>==<sp/><ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a9661c7379438c25c6cc91c3239f54a85" kindref="member">i_uid</ref>)</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/>mode<sp/>&gt;&gt;=<sp/>6;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="access_8c_1a0e5f21be079a3e8f83618c8c6e062c5a" kindref="member">in_group_p</ref>(<ref refid="structinode" kindref="compound">inode</ref>-&gt;<ref refid="structinode_1a0c14ee3e0c6392287359562051162885" kindref="member">i_gid</ref>))</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>mode<sp/>&gt;&gt;=<sp/>3;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(((mode<sp/>&amp;<sp/>mask<sp/>&amp;<sp/>0007)<sp/>==<sp/>mask))<sp/></highlight><highlight class="comment">//<sp/>||<sp/>suser())</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" kindref="member">lookup</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*<sp/>dir,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>len,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>**<sp/>result)<sp/>{</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsuper__block" kindref="compound">super_block</ref><sp/>*<sp/>sb;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>perm;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>*result<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!dir)</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-<ref refid="sys_2errno_8h_1a03e689f378f643d16ea7537918528a48" kindref="member">ENOENT</ref>;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>check<sp/>permissions<sp/>before<sp/>traversing<sp/>mount-points<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/>perm<sp/>=<sp/><ref refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" kindref="member">permission</ref>(dir,<sp/><ref refid="include_2vfs_2vfs_8h_1a62208fd94f08131f925ce4211733feba" kindref="member">MAY_EXEC</ref>);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(len<sp/>==<sp/>2<sp/>&amp;&amp;<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[0]<sp/>==<sp/></highlight><highlight class="charliteral">&apos;.&apos;</highlight><highlight class="normal"><sp/>&amp;&amp;<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[1]<sp/>==<sp/></highlight><highlight class="charliteral">&apos;.&apos;</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_IGNORE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(dir<sp/>==<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1aa3610b89866c904ca5531b91ae17c875" kindref="member">root</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*result<sp/>=<sp/>dir;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((sb<sp/>=<sp/>dir-&gt;<ref refid="structinode_1a8e3ca37fd8f709720380afd9f60d0e71" kindref="member">i_sb</ref>)<sp/>&amp;&amp;<sp/>(dir<sp/>==<sp/>sb-&gt;<ref refid="structsuper__block_1ab512ca6a0a83eecffe89740646927228" kindref="member">s_mounted</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sb<sp/>=<sp/>dir-&gt;<ref refid="structinode_1a8e3ca37fd8f709720380afd9f60d0e71" kindref="member">i_sb</ref>;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(dir);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>dir<sp/>=<sp/>sb-&gt;<ref refid="structsuper__block_1a161369fc3cb8cda6c26818b9642508f6" kindref="member">s_covered</ref>;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!dir)</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-<ref refid="sys_2errno_8h_1a03e689f378f643d16ea7537918528a48" kindref="member">ENOENT</ref>;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>dir-&gt;<ref refid="structinode_1af6da47fa3f89db802bc7039589bbe982" kindref="member">i_count</ref>++;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!dir-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref><sp/>||<sp/>!dir-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1ae2d0cd46daad5f8edbbc6bf272f5f6ef" kindref="member">lookup</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(dir);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-<ref refid="sys_2errno_8h_1a9262fb92f7ef662d0bdd577912a5b101" kindref="member">ENOTDIR</ref>;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!perm)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(dir);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-<ref refid="sys_2errno_8h_1ac2a2e9fa555401f94478f74e01868032" kindref="member">EACCES</ref>;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!len)<sp/>{</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>*result<sp/>=<sp/>dir;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>dir-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1ae2d0cd46daad5f8edbbc6bf272f5f6ef" kindref="member">lookup</ref>(dir,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/>len,<sp/>result);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dir_namei(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>pathname,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*<sp/>namelen,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*<sp/>base,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>**<sp/>res_inode)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>c;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*thisname;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>len;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref><sp/>*<ref refid="structinode" kindref="compound">inode</ref>;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>*res_inode<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_IGNORE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!base)<sp/>{</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>base<sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1af4443906fe46d7ba14818177943ac02f" kindref="member">pwd</ref>;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>base-&gt;<ref refid="structinode_1af6da47fa3f89db802bc7039589bbe982" kindref="member">i_count</ref>++;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!base)<sp/>{</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;BASE<sp/>==<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((c<sp/>=<sp/>*pathname)<sp/>==<sp/></highlight><highlight class="charliteral">&apos;/&apos;</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(base);</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_IGNORE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>base<sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1aa3610b89866c904ca5531b91ae17c875" kindref="member">root</ref>;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>pathname++;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>base-&gt;<ref refid="structinode_1af6da47fa3f89db802bc7039589bbe982" kindref="member">i_count</ref>++;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1)<sp/>{</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/>thisname<sp/>=<sp/>pathname;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(len<sp/>=<sp/>0;<sp/>(c<sp/>=<sp/>*(pathname++))<sp/>&amp;&amp;<sp/>(c<sp/>!=<sp/></highlight><highlight class="charliteral">&apos;/&apos;</highlight><highlight class="normal">);<sp/>len++)</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>nothing<sp/>*/</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!c)</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>base-&gt;<ref refid="structinode_1af6da47fa3f89db802bc7039589bbe982" kindref="member">i_count</ref>++;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/><ref refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" kindref="member">lookup</ref>(base,<sp/>thisname,<sp/>len,<sp/>&amp;<ref refid="structinode" kindref="compound">inode</ref>);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(error)<sp/>{</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(base);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>error;</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/><ref refid="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" kindref="member">follow_link</ref>(base,<sp/><ref refid="structinode" kindref="compound">inode</ref>,<sp/>0,<sp/>0,<sp/>&amp;base);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(error)</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>error;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!base-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref><sp/>||<sp/>!base-&gt;<ref refid="structinode_1a141e71619963d0d497eca9952e74b705" kindref="member">i_op</ref>-&gt;<ref refid="structinode__operations_1ae2d0cd46daad5f8edbbc6bf272f5f6ef" kindref="member">lookup</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(base);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-<ref refid="sys_2errno_8h_1a9262fb92f7ef662d0bdd577912a5b101" kindref="member">ENOTDIR</ref>;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref><sp/>=<sp/>thisname;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/>*namelen<sp/>=<sp/>len;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/>*res_inode<sp/>=<sp/>base;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172" refid="namei_8c_1a9c6a1c44b765a6d5c2b1b1d45485f905" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="namei_8c_1a9c6a1c44b765a6d5c2b1b1d45485f905" kindref="member">namei</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>pathname,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*<sp/>base,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>follow_links,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>**<sp/>res_inode)<sp/>{</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*basename;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>namelen,<sp/>error;</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref><sp/>*<ref refid="structinode" kindref="compound">inode</ref>;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/>*res_inode<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/>error<sp/>=<sp/>dir_namei(pathname,<sp/>&amp;namelen,<sp/>&amp;basename,<sp/>base,<sp/>&amp;base);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(error)</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>error;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/>base-&gt;<ref refid="structinode_1af6da47fa3f89db802bc7039589bbe982" kindref="member">i_count</ref>++;<sp/></highlight><highlight class="comment">/*<sp/>lookup<sp/>uses<sp/>up<sp/>base<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/>error<sp/>=<sp/><ref refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" kindref="member">lookup</ref>(base,<sp/>basename,<sp/>namelen,<sp/>&amp;<ref refid="structinode" kindref="compound">inode</ref>);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(error)<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(base);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>error;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(follow_links)<sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/><ref refid="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" kindref="member">follow_link</ref>(base,<sp/><ref refid="structinode" kindref="compound">inode</ref>,<sp/>0,<sp/>0,<sp/>&amp;<ref refid="structinode" kindref="compound">inode</ref>);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(error)</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>error;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="inode_8c_1a378733dcbf0fb08359b9a02145ac8fc3" kindref="member">iput</ref>(base);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/>*res_inode<sp/>=<sp/><ref refid="structinode" kindref="compound">inode</ref>;</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/vfs/namei.c"/>
+  </compounddef>
+</doxygen>

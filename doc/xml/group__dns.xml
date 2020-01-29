@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__dns" kind="group">
+    <compoundname>dns</compoundname>
+    <title>DNS</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Implements a DNS host name to IP address resolver.</para>
+<para>The lwIP DNS resolver functions are used to lookup a host name and map it to a numerical IP address. It maintains a list of resolved hostnames that can be queried with the dns_lookup() function. New hostnames can be resolved using the dns_query() function.</para>
+<para>The lwIP version of the resolver also adds a non-blocking version of gethostbyname() that will work with a raw API application. This function checks for an IP address string first and converts it if it is valid. gethostbyname() then does a dns_lookup() to see if the name is already in the table. If so, the IP is returned. If not, a query is issued and the function returns with a ERR_INPROGRESS status. The app using the dns client must then go into a waiting state.</para>
+<para>Once a hostname has been resolved (or found to be non-existent), the resolver code calls a specified callback function (which must be implemented by the module that uses the resolver).</para>
+<para>Multicast DNS queries are supported for names ending on &quot;.local&quot;. However, only &quot;One-Shot Multicast DNS Queries&quot; are supported (RFC 6762 chapter 5.1), this is not a fully compliant implementation of continuous mDNS querying!</para>
+<para>All functions must be called from TCPIP thread.</para>
+<para><simplesect kind="see"><para><ref refid="group__netconn__common" kindref="compound">Common functions</ref> for thread-safe <ref refid="gen__calls_8c_1a5e545f93bf6f37890415be1fc90815dd" kindref="member">access</ref>. </para>
+</simplesect>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

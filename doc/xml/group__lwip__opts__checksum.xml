@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__checksum" kind="group">
+    <compoundname>lwip_opts_checksum</compoundname>
+    <title>Checksum</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga79807171be8c20b69a5cd8de83566d25" prot="public" static="no">
+        <name>CHECKSUM_CHECK_ICMP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_CHECK_ICMP==1: Check checksums in software for incoming ICMP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2077" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2077" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1gaf466a10b093489910a773fd1cec74c2d" prot="public" static="no">
+        <name>CHECKSUM_CHECK_ICMP6</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_CHECK_ICMP6==1: Check checksums in software for incoming ICMPv6 packets </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2084" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2084" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga005b1b9988b84a2cb844144cef22c11e" prot="public" static="no">
+        <name>CHECKSUM_CHECK_IP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_CHECK_IP==1: Check checksums in software for incoming IP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2056" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2056" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1gab676cc29571b7ffda12336482ad97699" prot="public" static="no">
+        <name>CHECKSUM_CHECK_TCP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_CHECK_TCP==1: Check checksums in software for incoming TCP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2070" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2070" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga6747f7b72abe544fd4dc184cc7fcad37" prot="public" static="no">
+        <name>CHECKSUM_CHECK_UDP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_CHECK_UDP==1: Check checksums in software for incoming UDP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2063" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2063" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga2291ec5bec0a551545da6d5f9f9316b2" prot="public" static="no">
+        <name>CHECKSUM_GEN_ICMP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_GEN_ICMP==1: Generate checksums in software for outgoing ICMP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2042" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2042" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga7cd47a55af03b1048c5a4a5fe0e76013" prot="public" static="no">
+        <name>CHECKSUM_GEN_ICMP6</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_GEN_ICMP6==1: Generate checksums in software for outgoing ICMP6 packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2049" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2049" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga8ddad81fc26268a13b35091781da2265" prot="public" static="no">
+        <name>CHECKSUM_GEN_IP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_GEN_IP==1: Generate checksums in software for outgoing IP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2021" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2021" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga800069963cc4552b99235237c22f00bb" prot="public" static="no">
+        <name>CHECKSUM_GEN_TCP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_GEN_TCP==1: Generate checksums in software for outgoing TCP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2035" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2035" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga98d460f8c2baed8bf62d5473831c0b2c" prot="public" static="no">
+        <name>CHECKSUM_GEN_UDP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>CHECKSUM_GEN_UDP==1: Generate checksums in software for outgoing UDP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2028" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2028" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga3ecc5246a0c6ca5aed56c2d7899c1004" prot="public" static="no">
+        <name>LWIP_CHECKSUM_CTRL_PER_NETIF</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_CHECKSUM_CTRL_PER_NETIF==1: Checksum generation/check can be enabled/disabled per netif. ATTENTION: if enabled, the CHECKSUM_GEN_* and CHECKSUM_CHECK_* defines must be enabled! </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2014" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2014" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__checksum_1ga9f60183f0442bdbeefd6b395c6647613" prot="public" static="no">
+        <name>LWIP_CHECKSUM_ON_COPY</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_CHECKSUM_ON_COPY==1: Calculate checksum when copying data from application buffers to pbufs. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2092" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2092" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__sigaction__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_sigaction_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__sigaction__args_1a4502042a0ee83f26b999497b5f0d60a8" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structsigaction" kindref="compound">sigaction</ref> *</type>
+        <definition>const struct sigaction* sys_sigaction_args::act</definition>
+        <argsstring></argsstring>
+        <name>act</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="568" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="568" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1add3795da6dd256853821910f6fde5569" compoundref="gen__calls_8c" startline="294" endline="308">sys_sigaction</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1a67a5ec94848f95fe5e8c7ba3e08c0f47" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigaction_args::act_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>act_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="567" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="567" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1aa616749f07942ab9da0cea98e27dbeba" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigaction_args::act_r_[(sizeof(register_t)&lt;=sizeof(const struct sigaction *) ? 0 :sizeof(register_t) - sizeof(const struct sigaction *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const struct sigaction *) ? 0 :sizeof(register_t) - sizeof(const struct sigaction *))]</argsstring>
+        <name>act_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="569" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="569" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1a2d1efc69484f943c9ad01fa45e3d39e0" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsigaction" kindref="compound">sigaction</ref> *</type>
+        <definition>struct sigaction* sys_sigaction_args::oact</definition>
+        <argsstring></argsstring>
+        <name>oact</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="571" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="571" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1add3795da6dd256853821910f6fde5569" compoundref="gen__calls_8c" startline="294" endline="308">sys_sigaction</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1a6ebf4881eb8f41f6f0a6ce9fce36a0ab" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigaction_args::oact_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>oact_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="570" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="570" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1a0eb24cc845d250dbd11fc48be21ff137" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigaction_args::oact_r_[(sizeof(register_t)&lt;=sizeof(struct sigaction *) ? 0 :sizeof(register_t) - sizeof(struct sigaction *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct sigaction *) ? 0 :sizeof(register_t) - sizeof(struct sigaction *))]</argsstring>
+        <name>oact_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="572" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="572" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1a44a3fc57e54e0246d29c8fb6422e26c5" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_sigaction_args::sig</definition>
+        <argsstring></argsstring>
+        <name>sig</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="565" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="565" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1add3795da6dd256853821910f6fde5569" compoundref="gen__calls_8c" startline="294" endline="308">sys_sigaction</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1a6d8a759ac2100ab34d9ad65508d53f8b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigaction_args::sig_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>sig_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="564" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="564" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigaction__args_1ada5eca1ef6e79443f56a84539d66b405" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigaction_args::sig_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>sig_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="566" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="566" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_sigaction_args</label>
+        <link refid="structsys__sigaction__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+act</edgelabel>
+          <edgelabel>+oact</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="563" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="563" bodyend="573"/>
+    <listofallmembers>
+      <member refid="structsys__sigaction__args_1a4502042a0ee83f26b999497b5f0d60a8" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>act</name></member>
+      <member refid="structsys__sigaction__args_1a67a5ec94848f95fe5e8c7ba3e08c0f47" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>act_l_</name></member>
+      <member refid="structsys__sigaction__args_1aa616749f07942ab9da0cea98e27dbeba" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>act_r_</name></member>
+      <member refid="structsys__sigaction__args_1a2d1efc69484f943c9ad01fa45e3d39e0" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>oact</name></member>
+      <member refid="structsys__sigaction__args_1a6ebf4881eb8f41f6f0a6ce9fce36a0ab" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>oact_l_</name></member>
+      <member refid="structsys__sigaction__args_1a0eb24cc845d250dbd11fc48be21ff137" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>oact_r_</name></member>
+      <member refid="structsys__sigaction__args_1a44a3fc57e54e0246d29c8fb6422e26c5" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>sig</name></member>
+      <member refid="structsys__sigaction__args_1a6d8a759ac2100ab34d9ad65508d53f8b" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>sig_l_</name></member>
+      <member refid="structsys__sigaction__args_1ada5eca1ef6e79443f56a84539d66b405" prot="public" virt="non-virtual"><scope>sys_sigaction_args</scope><name>sig_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

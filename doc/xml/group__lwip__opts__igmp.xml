@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__igmp" kind="group">
+    <compoundname>lwip_opts_igmp</compoundname>
+    <title>IGMP</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__igmp_1gadaf25915ae1fd69c0943ef68cbb38923" prot="public" static="no">
+        <name>LWIP_IGMP</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_IGMP==1: Turn on IGMP module. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="938" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="938" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__igmp_1gab8d7d53247cc62caa76f54b2c5a5df30" prot="public" static="no">
+        <name>LWIP_MULTICAST_TX_OPTIONS</name>
+        <initializer>(<ref refid="group__lwip__opts__igmp_1gadaf25915ae1fd69c0943ef68cbb38923" kindref="member">LWIP_IGMP</ref> &amp;&amp; <ref refid="group__lwip__opts__udp_1gab6030e96e72df649d2650fd32d7a67b3" kindref="member">LWIP_UDP</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_MULTICAST_TX_OPTIONS==1: Enable multicast TX support like the socket options IP_MULTICAST_TTL/IP_MULTICAST_IF/IP_MULTICAST_LOOP </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="950" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="950" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

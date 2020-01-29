@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="__null_8h" kind="file" language="C++">
+    <compoundname>_null.h</compoundname>
+    <includedby refid="i386_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</includedby>
+    <includedby refid="i386__exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</includedby>
+    <includedby refid="i386_2kpanic_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/kpanic.c</includedby>
+    <includedby refid="i386_2sched_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/sched.c</includedby>
+    <includedby refid="i386_2spinlock_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</includedby>
+    <invincdepgraph>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</label>
+        <link refid="i386_2spinlock_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/_null.h</label>
+        <link refid="__null_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/kpanic.c</label>
+        <link refid="i386_2kpanic_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="__null_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" prot="public" static="no">
+        <name>NULL</name>
+        <initializer>((void *)0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/_null.h" line="4" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/_null.h" bodystart="4" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined(__cplusplus)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="__null_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NULL<sp/><sp/><sp/><sp/>((void<sp/>*)0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>__cplusplus<sp/>&gt;=<sp/>201103L</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NULL<sp/><sp/><sp/><sp/>nullptr</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>defined(__GNUG__)<sp/>&amp;&amp;<sp/>defined(__GNUC__)<sp/>&amp;&amp;<sp/>__GNUC__<sp/>&gt;=<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NULL<sp/><sp/><sp/><sp/>__null</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__LP64__)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NULL<sp/><sp/><sp/><sp/>(0L)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NULL<sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">/*<sp/>__LP64__<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">/*<sp/>__GNUG__<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">/*<sp/>!__cplusplus<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/_null.h"/>
+  </compounddef>
+</doxygen>

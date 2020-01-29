@@ -1,0 +1,566 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="gpt_8h" kind="file" language="C++">
+    <compoundname>gpt.h</compoundname>
+    <includes refid="uuid_8h" local="no">sys/uuid.h</includes>
+    <includes refid="include_2sys_2device_8h" local="no">sys/device.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includedby refid="gpt_8c" local="no">C:/Dev/git/UbixOS/sys/fs/common/gpt.c</includedby>
+    <includedby refid="hd_8c" local="no">C:/Dev/git/UbixOS/sys/pci/hd.c</includedby>
+    <incdepgraph>
+      <node id="12">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/uuid.h</label>
+        <link refid="uuid_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</label>
+        <link refid="gpt_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</label>
+        <link refid="gpt_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structgpt__ent" prot="public">gpt_ent</innerclass>
+    <innerclass refid="structgpt__hdr" prot="public">gpt_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" prot="public" static="no">
+        <name>bcmp</name>
+        <param><defname>b1</defname></param>
+        <param><defname>b2</defname></param>
+        <param><defname>len</defname></param>
+        <initializer>(<ref refid="string_8h_1a3ecfabf29de8f914413abc2da01f5ca5" kindref="member">memcmp</ref>((b1), (b2), (len)) != 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" prot="public" static="no">
+        <name>bcopy</name>
+        <param><defname>src</defname></param>
+        <param><defname>dst</defname></param>
+        <param><defname>len</defname></param>
+        <initializer><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>((dst), (src), (len))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" prot="public" static="no">
+        <name>bzero</name>
+        <param><defname>buf</defname></param>
+        <param><defname>size</defname></param>
+        <initializer><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>((<ref refid="structbuf" kindref="compound">buf</ref>), 0, (size))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a9734470bf89968d142073fd334bf9cb6" prot="public" static="no">
+        <name>DEV_BSHIFT</name>
+        <initializer>9               /* log2(<ref refid="include_2vfs_2file_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref>) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="41" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" prot="public" static="no">
+        <name>DEV_BSIZE</name>
+        <initializer>(1&lt;&lt;<ref refid="include_2vfs_2file_8h_1a9734470bf89968d142073fd334bf9cb6" kindref="member">DEV_BSHIFT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="42" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1ac6c4c02ed0dc6857296da1c23659d66d" prot="public" static="no">
+        <name>GPT_ENT_ATTR_BOOTFAILED</name>
+        <initializer>(1ULL &lt;&lt; 57)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" prot="public" static="no">
+        <name>GPT_ENT_ATTR_BOOTME</name>
+        <initializer>(1ULL &lt;&lt; 59)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="78" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" prot="public" static="no">
+        <name>GPT_ENT_ATTR_BOOTONCE</name>
+        <initializer>(1ULL &lt;&lt; 58)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="79" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a90e14a842bab87d79a296764cb740090" prot="public" static="no">
+        <name>GPT_ENT_ATTR_PLATFORM</name>
+        <initializer>(1ULL &lt;&lt; 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="77" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a3cc5cdcc1e7d728b13e4a4f233efe5f9" prot="public" static="no">
+        <name>GPT_ENT_TYPE_EFI</name>
+        <initializer>{0xc12a7328,0xf81f,0x11d2,0xba,0x4b,{0x00,0xa0,0xc9,0x3e,0xc9,0x3b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="86" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a4f1d6209928b965951d0d7ed657efda8" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD</name>
+        <initializer>{0x516e7cb4,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="90" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a2c3b5ef19ed7950e024869858bacd47c" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD_BOOT</name>
+        <initializer>{0x83bd6b9d,0x7f41,0x11dc,0xbe,0x0b,{0x00,0x15,0x60,0xb8,0x4f,0x0f}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="92" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1abe18bd4e05f656ecad038767d7162d80" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD_NANDFS</name>
+        <initializer>{0x74ba7dd9,0xa689,0x11e1,0xbd,0x04,{0x00,0xe0,0x81,0x28,0x6a,0xcf}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="94" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a380df3c0d3bb8a29e837cff04aba4c44" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD_SWAP</name>
+        <initializer>{0x516e7cb5,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="96" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1ae2f7ecd5eab0dec1e2c4036b4106c636" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD_UFS</name>
+        <initializer>{0x516e7cb6,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a1affb78363e72ba3bec94b7023c94c6f" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD_VINUM</name>
+        <initializer>{0x516e7cb8,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="100" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1ac28011cf740b914519419838258afcbc" prot="public" static="no">
+        <name>GPT_ENT_TYPE_FREEBSD_ZFS</name>
+        <initializer>{0x516e7cba,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1adec20904a7a15e9ee8159eda4613ecab" prot="public" static="no">
+        <name>GPT_ENT_TYPE_MBR</name>
+        <initializer>{0x024dee41,0x33e7,0x11d3,0x9d,0x69,{0x00,0x08,0xc7,0x81,0xf3,0x9f}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="88" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a8d74cb67986dfad650c6a274467268e5" prot="public" static="no">
+        <name>GPT_ENT_TYPE_PREP_BOOT</name>
+        <initializer>{0x9e1a2d38,0xc612,0x4316,0xaa,0x26,{0x8b,0x49,0x52,0x1e,0x5a,0x8b}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="104" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1ac5d7bba939de1608a1d7cd32cb899c45" prot="public" static="no">
+        <name>GPT_ENT_TYPE_UNUSED</name>
+        <initializer>{0x00000000,0x0000,0x0000,0x00,0x00,{0x00,0x00,0x00,0x00,0x00,0x00}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1a5de6f4d5870d08226549fb4cd13efe63" prot="public" static="no">
+        <name>GPT_HDR_REVISION</name>
+        <initializer>0x00010000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8h_1ab937750fddd753950c4a4061a509fc46" prot="public" static="no">
+        <name>GPT_HDR_SIG</name>
+        <initializer>&quot;EFI PART&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="gpt_8h_1a5653b9fc16d888d9ebcc76f33850ffab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gptbootfailed</definition>
+        <argsstring>(struct device_interface *devInfo)</argsstring>
+        <name>gptbootfailed</name>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="115" column="7" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="216" bodyend="231" declfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" declline="115" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8h_1a08130ab1aa44989d74341a21057b62c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gptfind</definition>
+        <argsstring>(const uuid_t *uuid, struct device_interface *devInfo, int part)</argsstring>
+        <name>gptfind</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" kindref="member">uuid_t</ref> *</type>
+          <declname>uuid</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>part</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="114" column="6" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="99" bodyend="188" declfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" declline="114" declcolumn="6"/>
+        <references refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" compoundref="include_2sys_2device_8h" startline="51">device_interface::info</references>
+        <references refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" compoundref="hd_8h" startline="180">driveInfo::part</references>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8h_1a70a0e368efe25cb0dacb3fb445466da2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gptread</definition>
+        <argsstring>(const uuid_t *uuid, struct device_interface *devInfo, char *buf)</argsstring>
+        <name>gptread</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" kindref="member">uuid_t</ref> *</type>
+          <declname>uuid</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>buf</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="113" column="6" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="305" bodyend="369" declfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" declline="113" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2010<sp/>Pawel<sp/>Jakub<sp/>Dawidek<sp/>&lt;pjd@FreeBSD.org&gt;</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHORS<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>AUTHORS<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>$FreeBSD:<sp/>releng/10.2/sys/boot/common/gpt.h<sp/>213136<sp/>2010-09-24<sp/>19:49:12Z<sp/>pjd<sp/>$</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_GPT_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_GPT_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="uuid_8h" kindref="compound">sys/uuid.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>bcopy(src,<sp/>dst,<sp/>len)<sp/><sp/><sp/><sp/>memcpy((dst),<sp/>(src),<sp/>(len))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>bzero(buf,<sp/>size)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>memset((buf),<sp/>0,<sp/>(size))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>bcmp(b1,<sp/>b2,<sp/>len)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(memcmp((b1),<sp/>(b2),<sp/>(len))<sp/>!=<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">//MrOlsen<sp/>(2016-01-11)<sp/>NOTE:<sp/>Fix<sp/>This<sp/>Temm<sp/>Place<sp/>To<sp/>Store<sp/>These<sp/>Defines</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="gpt_8h_1a9734470bf89968d142073fd334bf9cb6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DEV_BSHIFT<sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>log2(DEV_BSIZE)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DEV_BSIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1&lt;&lt;DEV_BSHIFT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="structgpt__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="45" refid="structgpt__hdr_1ade065292c6cb9b65da111255cc5c88f8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structgpt__hdr_1ade065292c6cb9b65da111255cc5c88f8" kindref="member">hdr_sig</ref>[8];</highlight></codeline>
+<codeline lineno="46" refid="gpt_8h_1ab937750fddd753950c4a4061a509fc46" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_HDR_SIG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;EFI<sp/>PART&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="structgpt__hdr_1ab53c14f9782599554f537561436a62a5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1ab53c14f9782599554f537561436a62a5" kindref="member">hdr_revision</ref>;</highlight></codeline>
+<codeline lineno="48" refid="gpt_8h_1a5de6f4d5870d08226549fb4cd13efe63" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_HDR_REVISION<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00010000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" kindref="member">hdr_size</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structgpt__hdr_1a1cfbcb2d21c2897ecc9f60d0964498b4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1a1cfbcb2d21c2897ecc9f60d0964498b4" kindref="member">__reserved</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" kindref="member">hdr_lba_self</ref>;</highlight></codeline>
+<codeline lineno="53" refid="structgpt__hdr_1a01b0300a7ae49715b8de1b8f12abfc6a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__hdr_1a01b0300a7ae49715b8de1b8f12abfc6a" kindref="member">hdr_lba_alt</ref>;</highlight></codeline>
+<codeline lineno="54" refid="structgpt__hdr_1a0f4c4d40e0d8f3bff99af8b7d96e2fa0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__hdr_1a0f4c4d40e0d8f3bff99af8b7d96e2fa0" kindref="member">hdr_lba_start</ref>;</highlight></codeline>
+<codeline lineno="55" refid="structgpt__hdr_1a84f46fabd9a32262e5d41b5ce3f421d2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__hdr_1a84f46fabd9a32262e5d41b5ce3f421d2" kindref="member">hdr_lba_end</ref>;</highlight></codeline>
+<codeline lineno="56" refid="structgpt__hdr_1ade124d7df95c12543991b6d0c371d000" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuuid" kindref="compound">uuid</ref><sp/><ref refid="structgpt__hdr_1ade124d7df95c12543991b6d0c371d000" kindref="member">hdr_uuid</ref>;</highlight></codeline>
+<codeline lineno="57" refid="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" kindref="member">hdr_lba_table</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref>;</highlight></codeline>
+<codeline lineno="59" refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref>;</highlight></codeline>
+<codeline lineno="60" refid="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" kindref="member">hdr_crc_table</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/><sp/><sp/>*<sp/>The<sp/>header<sp/>as<sp/>defined<sp/>in<sp/>the<sp/>EFI<sp/>spec<sp/>is<sp/>not<sp/>a<sp/>multiple<sp/>of<sp/>8<sp/>bytes</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/><sp/><sp/>*<sp/>and<sp/>given<sp/>that<sp/>the<sp/>alignment<sp/>requirement<sp/>is<sp/>on<sp/>an<sp/>8<sp/>byte<sp/>boundary,</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/>*<sp/>padding<sp/>will<sp/>happen.<sp/>We<sp/>make<sp/>the<sp/>padding<sp/>explicit<sp/>so<sp/>that<sp/>we<sp/>can</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/>*<sp/>correct<sp/>the<sp/>value<sp/>returned<sp/>by<sp/>sizeof()<sp/>when<sp/>we<sp/>put<sp/>the<sp/>size<sp/>of<sp/>the</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/><sp/><sp/>*<sp/>header<sp/>in<sp/>field<sp/>hdr_size,<sp/>or<sp/>otherwise<sp/>use<sp/>offsetof().</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="structgpt__hdr_1a6a0294343cc038dce49e9533c943d0cc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structgpt__hdr_1a6a0294343cc038dce49e9533c943d0cc" kindref="member">padding</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structgpt__ent" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>{</highlight></codeline>
+<codeline lineno="72" refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuuid" kindref="compound">uuid</ref><sp/><ref refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" kindref="member">ent_type</ref>;</highlight></codeline>
+<codeline lineno="73" refid="structgpt__ent_1ab52b574cff55355da24f6c1549c4860c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structuuid" kindref="compound">uuid</ref><sp/><ref refid="structgpt__ent_1ab52b574cff55355da24f6c1549c4860c" kindref="member">ent_uuid</ref>;</highlight></codeline>
+<codeline lineno="74" refid="structgpt__ent_1af5ea55d2628bb832d0a52ae17af37d23" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__ent_1af5ea55d2628bb832d0a52ae17af37d23" kindref="member">ent_lba_start</ref>;</highlight></codeline>
+<codeline lineno="75" refid="structgpt__ent_1ae8795717e6738ab602b9ea6b84353e46" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__ent_1ae8795717e6738ab602b9ea6b84353e46" kindref="member">ent_lba_end</ref>;</highlight></codeline>
+<codeline lineno="76" refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref>;</highlight></codeline>
+<codeline lineno="77" refid="gpt_8h_1a90e14a842bab87d79a296764cb740090" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_ATTR_PLATFORM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1ULL<sp/>&lt;&lt;<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_ATTR_BOOTME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1ULL<sp/>&lt;&lt;<sp/>59)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_ATTR_BOOTONCE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1ULL<sp/>&lt;&lt;<sp/>58)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="gpt_8h_1ac6c4c02ed0dc6857296da1c23659d66d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_ATTR_BOOTFAILED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1ULL<sp/>&lt;&lt;<sp/>57)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="structgpt__ent_1a533b15115decd66be96103f64f505db0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structgpt__ent_1a533b15115decd66be96103f64f505db0" kindref="member">ent_name</ref>[36];<sp/></highlight><highlight class="comment">/*<sp/>UTF-16.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="gpt_8h_1ac5d7bba939de1608a1d7cd32cb899c45" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_UNUSED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x00000000,0x0000,0x0000,0x00,0x00,{0x00,0x00,0x00,0x00,0x00,0x00}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="gpt_8h_1a3cc5cdcc1e7d728b13e4a4f233efe5f9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_EFI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="87"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0xc12a7328,0xf81f,0x11d2,0xba,0x4b,{0x00,0xa0,0xc9,0x3e,0xc9,0x3b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="gpt_8h_1adec20904a7a15e9ee8159eda4613ecab" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_MBR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="89"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x024dee41,0x33e7,0x11d3,0x9d,0x69,{0x00,0x08,0xc7,0x81,0xf3,0x9f}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="gpt_8h_1a4f1d6209928b965951d0d7ed657efda8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="91"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x516e7cb4,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="gpt_8h_1a2c3b5ef19ed7950e024869858bacd47c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD_BOOT<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="93"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x83bd6b9d,0x7f41,0x11dc,0xbe,0x0b,{0x00,0x15,0x60,0xb8,0x4f,0x0f}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="gpt_8h_1abe18bd4e05f656ecad038767d7162d80" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD_NANDFS<sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x74ba7dd9,0xa689,0x11e1,0xbd,0x04,{0x00,0xe0,0x81,0x28,0x6a,0xcf}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="gpt_8h_1a380df3c0d3bb8a29e837cff04aba4c44" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD_SWAP<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="97"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x516e7cb5,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="gpt_8h_1ae2f7ecd5eab0dec1e2c4036b4106c636" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD_UFS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="99"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x516e7cb6,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="gpt_8h_1a1affb78363e72ba3bec94b7023c94c6f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD_VINUM<sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="101"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x516e7cb8,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="gpt_8h_1ac28011cf740b914519419838258afcbc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_FREEBSD_ZFS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="103"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x516e7cba,0x6ecf,0x11d6,0x8f,0xf8,{0x00,0x02,0x2d,0x09,0x71,0x2b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104" refid="gpt_8h_1a8d74cb67986dfad650c6a274467268e5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GPT_ENT_TYPE_PREP_BOOT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="105"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{0x9e1a2d38,0xc612,0x4316,0xaa,0x26,{0x8b,0x49,0x52,0x1e,0x5a,0x8b}}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"></highlight></codeline>
+<codeline lineno="110"><highlight class="comment"><sp/>#include<sp/>&lt;drv.h&gt;</highlight></codeline>
+<codeline lineno="111"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="gpt_8h_1a70a0e368efe25cb0dacb3fb445466da2" kindref="member">gptread</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid_t</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>);</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="gpt_8h_1a08130ab1aa44989d74341a21057b62c9" kindref="member">gptfind</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid_t</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>part);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="gpt_8h_1a5653b9fc16d888d9ebcc76f33850ffab" kindref="member">gptbootfailed</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">/*<sp/>!_GPT_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h"/>
+  </compounddef>
+</doxygen>

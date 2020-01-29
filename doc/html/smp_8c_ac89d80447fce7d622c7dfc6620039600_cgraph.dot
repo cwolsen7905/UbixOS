@@ -1,0 +1,14 @@
+digraph "cpuidDetect"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="cpuidDetect",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="getEflags",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$smp_8c.html#aabe8182d15984977e87831f32527ff78",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="kpanic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2kpanic_8c.html#adb9a182aa071791a306163d50d653deb",tooltip="print panic message and halt system"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="setEflags",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$smp_8c.html#a133d6aaf4635e4585ee54a0438d0bf36",tooltip=" "];
+}

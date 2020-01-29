@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_63d032512ea6b67a4623bc739c35248b" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/kernel</compoundname>
+    <innerfile refid="access_8c">access.c</innerfile>
+    <innerfile refid="descrip_8c">descrip.c</innerfile>
+    <innerfile refid="kernel_2elf_8c">elf.c</innerfile>
+    <innerfile refid="endtask_8c">endtask.c</innerfile>
+    <innerfile refid="execve_8c">execve.c</innerfile>
+    <innerfile refid="gen__calls_8c">gen_calls.c</innerfile>
+    <innerfile refid="kern__execve_8c">kern_execve.c</innerfile>
+    <innerfile refid="kern__pipe_8c">kern_pipe.c</innerfile>
+    <innerfile refid="kern__sig_8c">kern_sig.c</innerfile>
+    <innerfile refid="kern__sysctl_8c">kern_sysctl.c</innerfile>
+    <innerfile refid="ld_8c">ld.c</innerfile>
+    <innerfile refid="pipe_8c">pipe.c</innerfile>
+    <innerfile refid="sem_8c">sem.c</innerfile>
+    <innerfile refid="signal_8c">signal.c</innerfile>
+    <innerfile refid="smp_8c">smp.c</innerfile>
+    <innerfile refid="kernel_2syscall_8c">syscall.c</innerfile>
+    <innerfile refid="syscall__posix_8c">syscall_posix.c</innerfile>
+    <innerfile refid="syscalls_8c">syscalls.c</innerfile>
+    <innerfile refid="syscalls__posix_8c">syscalls_posix.c</innerfile>
+    <innerfile refid="time_8c">time.c</innerfile>
+    <innerfile refid="tty_8c">tty.c</innerfile>
+    <innerfile refid="ubthread_8c">ubthread.c</innerfile>
+    <innerfile refid="vfs__calls_8c">vfs_calls.c</innerfile>
+    <innerfile refid="vitals_8c">vitals.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/"/>
+  </compounddef>
+</doxygen>

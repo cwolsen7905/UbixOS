@@ -1,0 +1,1305 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ufs__extern_8h" kind="file" language="C++">
+    <compoundname>ufs_extern.h</compoundname>
+    <includes refid="kern__sysctl_8h" local="no">sys/kern_sysctl.h</includes>
+    <incdepgraph>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h</label>
+        <link refid="ufs__extern_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ufs__extern_8h_1acb5c2c558e6b9726f11b864282e0e228" prot="public" static="no">
+        <name>BA_CLRBUF</name>
+        <initializer>0x00010000	/* Clear invalid areas of buffer. */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="120" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs__extern_8h_1ad8b107c1878c2604e4a31eca22eae6ec" prot="public" static="no">
+        <name>BA_METAONLY</name>
+        <initializer>0x00020000	/* Return indirect block buffer. */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="121" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs__extern_8h_1a46407f9fa3f9faac8f2970acda55c324" prot="public" static="no">
+        <name>BA_SEQMASK</name>
+        <initializer>0x7F000000	/* Bits holding seq heuristic. */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="123" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs__extern_8h_1a7e184ed5e3dd93f457d2a7fbae718ae5" prot="public" static="no">
+        <name>BA_SEQMAX</name>
+        <initializer>0x7F</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="125" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs__extern_8h_1a83f42879372ac90810c95bf95c91fee8" prot="public" static="no">
+        <name>BA_SEQSHIFT</name>
+        <initializer>24</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="124" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs__extern_8h_1ad55d9dc7ac4e9e3a33b00a4799be06fe" prot="public" static="no">
+        <name>BA_UNMAPPED</name>
+        <initializer>0x00040000	/* Do not <ref refid="paging_8h_1a0d45ce836c8a731beef7b3fd972d16fd" kindref="member">mmap</ref> resulted buffer. */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="122" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="ufs__extern_8h_1ada47a443e617eb4e6fedfcbc21d1c3dc" prot="public" static="no" mutable="no">
+        <type>struct vop_vector</type>
+        <definition>struct vop_vector ufs_fifoops</definition>
+        <argsstring></argsstring>
+        <name>ufs_fifoops</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="36" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="36" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="variable" id="ufs__extern_8h_1a56dcdd05473bfd1fe5b87cfe70c193d4" prot="public" static="no" mutable="no">
+        <type>vfs_root_t</type>
+        <definition>vfs_root_t ufs_root</definition>
+        <argsstring></argsstring>
+        <name>ufs_root</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="83" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="ufs__extern_8h_1a8155356d23e070448aea5e991152b118" prot="public" static="no" mutable="no">
+        <type>struct vop_vector</type>
+        <definition>struct vop_vector ufs_vnodeops</definition>
+        <argsstring></argsstring>
+        <name>ufs_vnodeops</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="36" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="36" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ufs__extern_8h_1a41964469cbcd8acac3e5a0121a1ccb5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ffs_snapgone</definition>
+        <argsstring>(struct inode *)</argsstring>
+        <name>ffs_snapgone</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="82" column="6" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="82" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a2f3cd6cdffb6a232cd77e98a311aef32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_change_directoryentry_offset</definition>
+        <argsstring>(struct buf *, struct inode *, caddr_t, caddr_t, caddr_t, int)</argsstring>
+        <name>softdep_change_directoryentry_offset</name>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="95" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="95" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a4742973311bcb9daca5274f5dd306e50" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_change_linkcnt</definition>
+        <argsstring>(struct inode *)</argsstring>
+        <name>softdep_change_linkcnt</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="100" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="100" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1adaecbda6cc810556733ff172a60f6405" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_revert_create</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_revert_create</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="108" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="108" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a43f9f06a80a3722d45015e2dcc5bc8a9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_revert_link</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_revert_link</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="109" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="109" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a83a23cb06f03e161d09322c011f3c5aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_revert_mkdir</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_revert_mkdir</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="110" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="110" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a0cd7874944e64470a06d2b784b509b1a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_revert_rmdir</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_revert_rmdir</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="111" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="111" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a8b6d6e729792086cb9acc5d0279765ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_create</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_setup_create</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="102" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="102" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1aabc74d5cf3e943b0c8e91a5f5eb18a20" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int softdep_setup_directory_add</definition>
+        <argsstring>(struct buf *, struct inode *, off_t, ino_t, struct buf *, int)</argsstring>
+        <name>softdep_setup_directory_add</name>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+        </param>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="93" column="4" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="93" declcolumn="4"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a586b46d62771cce6ebd8432a04131397" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_directory_change</definition>
+        <argsstring>(struct buf *, struct inode *, struct inode *, ino_t, int)</argsstring>
+        <name>softdep_setup_directory_change</name>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="98" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="98" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1afa98828d9acf3bb6303d3a29169b2583" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_dotdot_link</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_setup_dotdot_link</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="103" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="103" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a9c358ab17f78073c17a799fc435a558e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_link</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_setup_link</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="104" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="104" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a50903c064f35363ad5aecdcc1fd2a0a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_mkdir</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_setup_mkdir</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="105" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="105" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a85ba2a72fe731a3eb30f5c4055910588" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_remove</definition>
+        <argsstring>(struct buf *, struct inode *, struct inode *, int)</argsstring>
+        <name>softdep_setup_remove</name>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="97" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="97" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1aa1216d604b04db68fc21d2ec5306518f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_rmdir</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_setup_rmdir</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="106" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="106" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a8902459658def3b44546b6af7f339fc7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void softdep_setup_unlink</definition>
+        <argsstring>(struct inode *, struct inode *)</argsstring>
+        <name>softdep_setup_unlink</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="107" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="107" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a04c54c6e3d41452bd504db7f71c5ce5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int softdep_slowdown</definition>
+        <argsstring>(struct vnode *)</argsstring>
+        <name>softdep_slowdown</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="101" column="4" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="101" declcolumn="4"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1adf9cf4ddc429907c08ce5f493be121bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>SYSCTL_DECL</definition>
+        <argsstring>(_vfs_ufs)</argsstring>
+        <name>SYSCTL_DECL</name>
+        <param>
+          <type>_vfs_ufs</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="88" column="1" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="88" declcolumn="1"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1aa6134edeb119bc732a52d30ea42b941d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_bmap</definition>
+        <argsstring>(struct vop_bmap_args *)</argsstring>
+        <name>ufs_bmap</name>
+        <param>
+          <type>struct vop_bmap_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="56" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="56" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a0e54c9e03e97c7e8b213b5ec8da0e128" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_bmaparray</definition>
+        <argsstring>(struct vnode *, ufs2_daddr_t, ufs2_daddr_t *, struct buf *, int *, int *)</argsstring>
+        <name>ufs_bmaparray</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>int *</type>
+        </param>
+        <param>
+          <type>int *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="57" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="57" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1ae8f553d277277ac36e459692723929d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_checkpath</definition>
+        <argsstring>(ino_t, ino_t, struct inode *, struct ucred *, ino_t *)</argsstring>
+        <name>ufs_checkpath</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structucred" kindref="compound">ucred</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="60" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="60" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1ad469bc74734c793b983315fcd979afb1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ufs_dirbad</definition>
+        <argsstring>(struct inode *, doff_t, char *)</argsstring>
+        <name>ufs_dirbad</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>doff_t</type>
+        </param>
+        <param>
+          <type>char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="61" column="6" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="61" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a383d263ad713c972f7477a7480aaf98d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_dirbadentry</definition>
+        <argsstring>(struct vnode *, struct direct *, int)</argsstring>
+        <name>ufs_dirbadentry</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type>struct direct *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="62" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="62" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a232d0968a90f448aa8df95a43264894b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_dirempty</definition>
+        <argsstring>(struct inode *, ino_t, struct ucred *)</argsstring>
+        <name>ufs_dirempty</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+        </param>
+        <param>
+          <type>struct <ref refid="structucred" kindref="compound">ucred</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="63" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="63" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1af941bbd2aea865b368bbeff8a9a04c45" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_direnter</definition>
+        <argsstring>(struct vnode *, struct vnode *, struct direct *, struct componentname *, struct buf *, int)</argsstring>
+        <name>ufs_direnter</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type>struct direct *</type>
+        </param>
+        <param>
+          <type>struct componentname *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structbuf" kindref="compound">buf</ref> *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="68" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="68" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a1198dbf9c299234038eddec957ad84b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_dirremove</definition>
+        <argsstring>(struct vnode *, struct inode *, int, int)</argsstring>
+        <name>ufs_dirremove</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="70" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="70" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a2943c1d770190a938e4b8977b214e161" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_dirrewrite</definition>
+        <argsstring>(struct inode *, struct inode *, ino_t, int, int)</argsstring>
+        <name>ufs_dirrewrite</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="71" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="71" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a7ec5a463bd2e6e3d0a297dbebc7b6281" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_extread</definition>
+        <argsstring>(struct vop_read_args *)</argsstring>
+        <name>ufs_extread</name>
+        <param>
+          <type>struct vop_read_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="64" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="64" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a3f2d027df56801514f98f5e192ad0633" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_extwrite</definition>
+        <argsstring>(struct vop_write_args *)</argsstring>
+        <name>ufs_extwrite</name>
+        <param>
+          <type>struct vop_write_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="65" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="65" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a10c4958ba78d63b9ea34959b7537afbe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_fhtovp</definition>
+        <argsstring>(struct mount *, struct ufid *, int, struct vnode **)</argsstring>
+        <name>ufs_fhtovp</name>
+        <param>
+          <type>struct mount *</type>
+        </param>
+        <param>
+          <type>struct ufid *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type>struct vnode **</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="59" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="59" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a14bf920afb956f16f2ed495841372330" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_getlbns</definition>
+        <argsstring>(struct vnode *, ufs2_daddr_t, struct indir *, int *)</argsstring>
+        <name>ufs_getlbns</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref></type>
+        </param>
+        <param>
+          <type>struct indir *</type>
+        </param>
+        <param>
+          <type>int *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="74" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="74" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1adafbdf2b515ef29fb47ee4472408283a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_inactive</definition>
+        <argsstring>(struct vop_inactive_args *)</argsstring>
+        <name>ufs_inactive</name>
+        <param>
+          <type>struct vop_inactive_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="75" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="75" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a0e742cb6b351c7a1b01a320a9be9d99b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_init</definition>
+        <argsstring>(struct vfsconf *)</argsstring>
+        <name>ufs_init</name>
+        <param>
+          <type>struct vfsconf *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="76" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="76" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1ab814a762ce14ba119ab5fc19a1fc1832" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ufs_itimes</definition>
+        <argsstring>(struct vnode *vp)</argsstring>
+        <name>ufs_itimes</name>
+        <param>
+          <type>struct vnode *</type>
+          <declname>vp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="77" column="6" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="77" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1afdad4485752ca95c8806480ea1149c60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_lookup</definition>
+        <argsstring>(struct vop_cachedlookup_args *)</argsstring>
+        <name>ufs_lookup</name>
+        <param>
+          <type>struct vop_cachedlookup_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="78" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="78" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a05a6baefbdf838cf01229d798e709461" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_lookup_ino</definition>
+        <argsstring>(struct vnode *, struct vnode **, struct componentname *, ino_t *)</argsstring>
+        <name>ufs_lookup_ino</name>
+        <param>
+          <type>struct vnode *</type>
+        </param>
+        <param>
+          <type>struct vnode **</type>
+        </param>
+        <param>
+          <type>struct componentname *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="72" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="72" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a94c226f114e08c0402cfdb4d6b510e5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ufs_makedirentry</definition>
+        <argsstring>(struct inode *, struct componentname *, struct direct *)</argsstring>
+        <name>ufs_makedirentry</name>
+        <param>
+          <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        </param>
+        <param>
+          <type>struct componentname *</type>
+        </param>
+        <param>
+          <type>struct direct *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="66" column="6" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="66" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1abd571327abfb9241aca1a04087fe29ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ufs_prepare_reclaim</definition>
+        <argsstring>(struct vnode *vp)</argsstring>
+        <name>ufs_prepare_reclaim</name>
+        <param>
+          <type>struct vnode *</type>
+          <declname>vp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="79" column="6" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="79" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1aa6b3412cc5811c83d153e812d7f9c736" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_readdir</definition>
+        <argsstring>(struct vop_readdir_args *)</argsstring>
+        <name>ufs_readdir</name>
+        <param>
+          <type>struct vop_readdir_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="80" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="80" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a66064d210c47a4a4089c01fe0172430d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_reclaim</definition>
+        <argsstring>(struct vop_reclaim_args *)</argsstring>
+        <name>ufs_reclaim</name>
+        <param>
+          <type>struct vop_reclaim_args *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="81" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="81" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1a56b1bacd39bfd673938f86892ca6c8e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_uninit</definition>
+        <argsstring>(struct vfsconf *)</argsstring>
+        <name>ufs_uninit</name>
+        <param>
+          <type>struct vfsconf *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="84" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="84" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ufs__extern_8h_1af12d21231632f9a911bc9e2442c539c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_vinit</definition>
+        <argsstring>(struct mount *, struct vop_vector *, struct vnode **)</argsstring>
+        <name>ufs_vinit</name>
+        <param>
+          <type>struct mount *</type>
+        </param>
+        <param>
+          <type>struct vop_vector *</type>
+        </param>
+        <param>
+          <type>struct vnode **</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" line="85" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h" declline="85" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>1991,<sp/>1993,<sp/>1994</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>The<sp/>Regents<sp/>of<sp/>the<sp/>University<sp/>of<sp/>California.<sp/><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>4.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>University<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>REGENTS<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>REGENTS<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>@(#)ufs_extern.h<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8.10<sp/>(Berkeley)<sp/>5/14/95</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>$FreeBSD:<sp/>releng/11.1/sys/ufs/ufs/ufs_extern.h<sp/>262678<sp/>2014-03-02<sp/>02:52:34Z<sp/>pfg<sp/>$</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UFS_UFS_EXTERN_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UFS_UFS_EXTERN_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">componentname;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">direct;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">indir;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinode" kindref="compound">inode</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">mount;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structthread" kindref="compound">thread</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sockaddr;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structucred" kindref="compound">ucred</ref>;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ufid;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vfsconf;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vnode;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_bmap_args;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_cachedlookup_args;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_generic_args;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_inactive_args;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_reclaim_args;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_vector<sp/><ref refid="ufs__extern_8h_1ada47a443e617eb4e6fedfcbc21d1c3dc" kindref="member">ufs_fifoops</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vop_vector<sp/><ref refid="ufs__extern_8h_1a8155356d23e070448aea5e991152b118" kindref="member">ufs_vnodeops</ref>;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1aa6134edeb119bc732a52d30ea42b941d" kindref="member">ufs_bmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_bmap_args<sp/>*);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a0e54c9e03e97c7e8b213b5ec8da0e128" kindref="member">ufs_bmaparray</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref>,<sp/><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref><sp/>*,</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a10c4958ba78d63b9ea34959b7537afbe" kindref="member">ufs_fhtovp</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>mount<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>ufid<sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>**);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1ae8f553d277277ac36e459692723929d1" kindref="member">ufs_checkpath</ref>(<ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structucred" kindref="compound">ucred</ref><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1ad469bc74734c793b983315fcd979afb1" kindref="member">ufs_dirbad</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/>doff_t,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a383d263ad713c972f7477a7480aaf98d" kindref="member">ufs_dirbadentry</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>direct<sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a232d0968a90f448aa8df95a43264894b" kindref="member">ufs_dirempty</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structucred" kindref="compound">ucred</ref><sp/>*);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a7ec5a463bd2e6e3d0a297dbebc7b6281" kindref="member">ufs_extread</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_read_args<sp/>*);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a3f2d027df56801514f98f5e192ad0633" kindref="member">ufs_extwrite</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_write_args<sp/>*);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a94c226f114e08c0402cfdb4d6b510e5c" kindref="member">ufs_makedirentry</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>componentname<sp/>*,</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>direct<sp/>*);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1af941bbd2aea865b368bbeff8a9a04c45" kindref="member">ufs_direnter</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>direct<sp/>*,</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>componentname<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a1198dbf9c299234038eddec957ad84b5" kindref="member">ufs_dirremove</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a2943c1d770190a938e4b8977b214e161" kindref="member">ufs_dirrewrite</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a05a6baefbdf838cf01229d798e709461" kindref="member">ufs_lookup_ino</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>**,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>componentname<sp/>*,</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a14bf920afb956f16f2ed495841372330" kindref="member">ufs_getlbns</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*,<sp/><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>indir<sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1adafbdf2b515ef29fb47ee4472408283a" kindref="member">ufs_inactive</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_inactive_args<sp/>*);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a0e742cb6b351c7a1b01a320a9be9d99b" kindref="member">ufs_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vfsconf<sp/>*);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1ab814a762ce14ba119ab5fc19a1fc1832" kindref="member">ufs_itimes</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*vp);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1afdad4485752ca95c8806480ea1149c60" kindref="member">ufs_lookup</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_cachedlookup_args<sp/>*);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1abd571327abfb9241aca1a04087fe29ed" kindref="member">ufs_prepare_reclaim</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*vp);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1aa6b3412cc5811c83d153e812d7f9c736" kindref="member">ufs_readdir</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_readdir_args<sp/>*);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a66064d210c47a4a4089c01fe0172430d" kindref="member">ufs_reclaim</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_reclaim_args<sp/>*);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a41964469cbcd8acac3e5a0121a1ccb5e" kindref="member">ffs_snapgone</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="83" refid="ufs__extern_8h_1a56dcdd05473bfd1fe5b87cfe70c193d4" refkind="member"><highlight class="normal">vfs_root_t<sp/><ref refid="ufs__extern_8h_1a56dcdd05473bfd1fe5b87cfe70c193d4" kindref="member">ufs_root</ref>;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a56b1bacd39bfd673938f86892ca6c8e1" kindref="member">ufs_uninit</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vfsconf<sp/>*);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1af12d21231632f9a911bc9e2442c539c1" kindref="member">ufs_vinit</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>mount<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vop_vector<sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>**);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kern__sysctl_8h" kindref="compound">sys/kern_sysctl.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><ref refid="ufs__extern_8h_1adf9cf4ddc429907c08ce5f493be121bc" kindref="member">SYSCTL_DECL</ref>(_vfs_ufs);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>*<sp/>Soft<sp/>update<sp/>function<sp/>prototypes.</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1aabc74d5cf3e943b0c8e91a5f5eb18a20" kindref="member">softdep_setup_directory_add</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a2f3cd6cdffb6a232cd77e98a311aef32" kindref="member">softdep_change_directoryentry_offset</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a85ba2a72fe731a3eb30f5c4055910588" kindref="member">softdep_setup_remove</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a586b46d62771cce6ebd8432a04131397" kindref="member">softdep_setup_directory_change</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a4742973311bcb9daca5274f5dd306e50" kindref="member">softdep_change_linkcnt</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a04c54c6e3d41452bd504db7f71c5ce5d" kindref="member">softdep_slowdown</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vnode<sp/>*);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a8b6d6e729792086cb9acc5d0279765ba" kindref="member">softdep_setup_create</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1afa98828d9acf3bb6303d3a29169b2583" kindref="member">softdep_setup_dotdot_link</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a9c358ab17f78073c17a799fc435a558e" kindref="member">softdep_setup_link</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a50903c064f35363ad5aecdcc1fd2a0a7" kindref="member">softdep_setup_mkdir</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1aa1216d604b04db68fc21d2ec5306518f" kindref="member">softdep_setup_rmdir</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a8902459658def3b44546b6af7f339fc7" kindref="member">softdep_setup_unlink</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1adaecbda6cc810556733ff172a60f6405" kindref="member">softdep_revert_create</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a43f9f06a80a3722d45015e2dcc5bc8a9" kindref="member">softdep_revert_link</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a83a23cb06f03e161d09322c011f3c5aa" kindref="member">softdep_revert_mkdir</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ufs__extern_8h_1a0cd7874944e64470a06d2b784b509b1a" kindref="member">softdep_revert_rmdir</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structinode" kindref="compound">inode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="114"><highlight class="comment"><sp/>*<sp/>Flags<sp/>to<sp/>low-level<sp/>allocation<sp/>routines.<sp/><sp/>The<sp/>low<sp/>16-bits<sp/>are<sp/>reserved</highlight></codeline>
+<codeline lineno="115"><highlight class="comment"><sp/>*<sp/>for<sp/>IO_<sp/>flags<sp/>from<sp/>vnode.h.</highlight></codeline>
+<codeline lineno="116"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="117"><highlight class="comment"><sp/>*<sp/>Note:<sp/>The<sp/>general<sp/>vfs<sp/>code<sp/>typically<sp/>limits<sp/>the<sp/>sequential<sp/>heuristic</highlight></codeline>
+<codeline lineno="118"><highlight class="comment"><sp/>*<sp/>count<sp/>to<sp/>127.<sp/><sp/>See<sp/>sequential_heuristic()<sp/>in<sp/>kern/vfs_vnops.c</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="ufs__extern_8h_1acb5c2c558e6b9726f11b864282e0e228" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BA_CLRBUF<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00010000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Clear<sp/>invalid<sp/>areas<sp/>of<sp/>buffer.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121" refid="ufs__extern_8h_1ad8b107c1878c2604e4a31eca22eae6ec" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BA_METAONLY<sp/><sp/><sp/><sp/><sp/>0x00020000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>indirect<sp/>block<sp/>buffer.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="ufs__extern_8h_1ad55d9dc7ac4e9e3a33b00a4799be06fe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BA_UNMAPPED<sp/><sp/><sp/><sp/><sp/>0x00040000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Do<sp/>not<sp/>mmap<sp/>resulted<sp/>buffer.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123" refid="ufs__extern_8h_1a46407f9fa3f9faac8f2970acda55c324" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BA_SEQMASK<sp/><sp/><sp/><sp/><sp/><sp/>0x7F000000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Bits<sp/>holding<sp/>seq<sp/>heuristic.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124" refid="ufs__extern_8h_1a83f42879372ac90810c95bf95c91fee8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BA_SEQSHIFT<sp/><sp/><sp/><sp/><sp/>24</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="ufs__extern_8h_1a7e184ed5e3dd93f457d2a7fbae718ae5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BA_SEQMAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x7F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!_UFS_UFS_EXTERN_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h"/>
+  </compounddef>
+</doxygen>

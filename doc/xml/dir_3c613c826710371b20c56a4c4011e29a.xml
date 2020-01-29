@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_3c613c826710371b20c56a4c4011e29a" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/pci</compoundname>
+    <innerfile refid="hd_8h">hd.h</innerfile>
+    <innerfile refid="lnc_8h">lnc.h</innerfile>
+    <innerfile refid="pci_8h">pci.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/"/>
+  </compounddef>
+</doxygen>

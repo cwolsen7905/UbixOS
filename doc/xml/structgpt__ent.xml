@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structgpt__ent" kind="struct" language="C++" prot="public">
+    <compoundname>gpt_ent</compoundname>
+    <includes refid="gpt_8h" local="no">gpt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_ent::ent_attr</definition>
+        <argsstring></argsstring>
+        <name>ent_attr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="76" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__ent_1ae8795717e6738ab602b9ea6b84353e46" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_ent::ent_lba_end</definition>
+        <argsstring></argsstring>
+        <name>ent_lba_end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="75" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__ent_1af5ea55d2628bb832d0a52ae17af37d23" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t gpt_ent::ent_lba_start</definition>
+        <argsstring></argsstring>
+        <name>ent_lba_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="74" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__ent_1a533b15115decd66be96103f64f505db0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+        <definition>u_int16_t gpt_ent::ent_name[36]</definition>
+        <argsstring>[36]</argsstring>
+        <name>ent_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="81" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structuuid" kindref="compound">uuid</ref></type>
+        <definition>struct uuid gpt_ent::ent_type</definition>
+        <argsstring></argsstring>
+        <name>ent_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="68" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgpt__ent_1ab52b574cff55355da24f6c1549c4860c" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structuuid" kindref="compound">uuid</ref></type>
+        <definition>struct uuid gpt_ent::ent_uuid</definition>
+        <argsstring></argsstring>
+        <name>ent_uuid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="68" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>uuid</label>
+        <link refid="structuuid"/>
+      </node>
+      <node id="1">
+        <label>gpt_ent</label>
+        <link refid="structgpt__ent"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+ent_type</edgelabel>
+          <edgelabel>+ent_uuid</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" line="71" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h" bodystart="71" bodyend="82"/>
+    <listofallmembers>
+      <member refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" prot="public" virt="non-virtual"><scope>gpt_ent</scope><name>ent_attr</name></member>
+      <member refid="structgpt__ent_1ae8795717e6738ab602b9ea6b84353e46" prot="public" virt="non-virtual"><scope>gpt_ent</scope><name>ent_lba_end</name></member>
+      <member refid="structgpt__ent_1af5ea55d2628bb832d0a52ae17af37d23" prot="public" virt="non-virtual"><scope>gpt_ent</scope><name>ent_lba_start</name></member>
+      <member refid="structgpt__ent_1a533b15115decd66be96103f64f505db0" prot="public" virt="non-virtual"><scope>gpt_ent</scope><name>ent_name</name></member>
+      <member refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" prot="public" virt="non-virtual"><scope>gpt_ent</scope><name>ent_type</name></member>
+      <member refid="structgpt__ent_1ab52b574cff55355da24f6c1549c4860c" prot="public" virt="non-virtual"><scope>gpt_ent</scope><name>ent_uuid</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

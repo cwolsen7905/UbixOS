@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__sem" kind="group">
+    <compoundname>sys_sem</compoundname>
+    <title>Semaphores</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_arch_sem_wait</definition>
+        <argsstring>(struct sys_sem **s, uint32_t timeout)</argsstring>
+        <name>sys_arch_sem_wait</name>
+        <param>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+          <declname>timeout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Wait for a semaphore for the specified timeout <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the semaphore to wait for </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>timeout in milliseconds to wait (0 = wait forever) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>time (in milliseconds) waited for the semaphore or SYS_ARCH_TIMEOUT on timeout </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="150" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="105" bodyend="130" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="150" declcolumn="10"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" compoundref="sem_8h" startline="39">mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" compoundref="sem_8h" startline="37">signaled</references>
+        <references refid="ubthread_8h_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</references>
+        <referencedby refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" compoundref="sys_8c" startline="93" endline="103">sys_msleep</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1ga4d02e29e5dfa092559efc04dee985822" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_sem_free</definition>
+        <argsstring>(sys_sem_t **sem)</argsstring>
+        <name>sys_sem_free</name>
+        <param>
+          <type><ref refid="sem_8h_1a900e36da93bb688c29fc8148f2f44e04" kindref="member">sys_sem_t</ref> **</type>
+          <declname>sem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Delete a semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>semaphore to delete </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="156" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="75" bodyend="86" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="156" declcolumn="6"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="sem_8h_1adcce987e1dbe6b3740a4b8f1a49c680f" compoundref="sem_8c" startline="87" endline="100">sem_destroy</references>
+        <references refid="sys__arch_8h_1ac66fcad3bfe79589054eb31765031544" compoundref="sys__arch_8h" startline="8">SYS_SEM_NULL</references>
+        <referencedby refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" compoundref="sys_8c" startline="93" endline="103">sys_msleep</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_sem_new</definition>
+        <argsstring>(sys_sem_t **sem, u8_t count)</argsstring>
+        <name>sys_sem_new</name>
+        <param>
+          <type><ref refid="sem_8h_1a900e36da93bb688c29fc8148f2f44e04" kindref="member">sys_sem_t</ref> **</type>
+          <declname>sem</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create a new semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to the semaphore to create </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>initial count of the semaphore </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, another err_t otherwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="135" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="52" bodyend="72" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="135" declcolumn="7"/>
+        <references refid="structsys__sem_1aa758e52262d23c22a40204e410b5f8c4" compoundref="sem_8h" startline="38">cond</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" compoundref="sem_8h" startline="39">mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="sem_8h_1a741be298cbcc3eab1747e8b9b239d5f0" compoundref="sem_8c" startline="56" endline="73">sem_init</references>
+        <references refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" compoundref="sem_8h" startline="37">signaled</references>
+        <references refid="ubthread_8h_1acbb7170a68758468ab5b02512a320112">ubthread_cond_init</references>
+        <references refid="ubthread_8h_1ab6bfc2169b55532821582f24b68dc855">ubthread_mutex_init</references>
+        <referencedby refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" compoundref="sys_8c" startline="93" endline="103">sys_msleep</referencedby>
+        <referencedby refid="tcpip_8c_1a3d42b0c46607f91aedcc7745ed466b08" compoundref="tcpip_8c" startline="356" endline="394">tcpip_api_call</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1ga6b618ddf0c8e73302f1dae7821661457" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_sem_set_invalid</definition>
+        <argsstring>(struct sys_sem **s)</argsstring>
+        <name>sys_sem_set_invalid</name>
+        <param>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set a semaphore invalid so that sys_sem_valid returns 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="171" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="140" bodyend="142" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="171" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1gaff1dd2af219b75ae812e0b1660bd7455" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_sem_signal</definition>
+        <argsstring>(struct sys_sem **s)</argsstring>
+        <name>sys_sem_signal</name>
+        <param>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Signals a semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the semaphore to signal </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="141" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="89" bodyend="103" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="141" declcolumn="6"/>
+        <references refid="structsys__sem_1aa758e52262d23c22a40204e410b5f8c4" compoundref="sem_8h" startline="38">cond</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" compoundref="sem_8h" startline="39">mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" compoundref="sem_8h" startline="37">signaled</references>
+        <references refid="ubthread_8h_1aeb2f756a095ecfddad31354f819623ee" compoundref="ubthread_8c" startline="164" endline="169">ubthread_cond_broadcast</references>
+        <references refid="ubthread_8h_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</references>
+        <references refid="ubthread_8h_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1gac7ff314270976b80559d043f6098817b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_sem_valid</definition>
+        <argsstring>(struct sys_sem **s)</argsstring>
+        <name>sys_sem_valid</name>
+        <param>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Check if a semaphore is valid/allocated: return 1 for valid, 0 for invalid </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="164" column="5" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="132" bodyend="138" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="164" declcolumn="5"/>
+        <referencedby refid="tcpip_8c_1a12bdf37eddcd72c4178e3ea7d370395d" compoundref="tcpip_8c" startline="322" endline="344">tcpip_send_msg_wait_sem</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

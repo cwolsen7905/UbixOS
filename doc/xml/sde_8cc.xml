@@ -1,0 +1,713 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="sde_8cc" kind="file" language="C++">
+    <compoundname>sde.cc</compoundname>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="video_8h" local="no">sys/video.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="vitals_8h" local="no">ubixos/vitals.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="sde_8h" local="no">sde/sde.h</includes>
+    <includes refid="ogDisplay__UbixOS_8h" local="no">sde/ogDisplay_UbixOS.h</includes>
+    <includes local="no">objgfx40/objgfx40.h</includes>
+    <incdepgraph>
+      <node id="9">
+        <label>sys/video.h</label>
+        <link refid="video_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="42">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>sde/ogDisplay_UbixOS.h</label>
+        <link refid="ogDisplay__UbixOS_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>objgfx40/objgfx40.h</label>
+      </node>
+      <node id="54">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="47">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>sde/sde.h</label>
+        <link refid="sde_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="38">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="43">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
+        <definition>struct sdeWindows* windows</definition>
+        <argsstring></argsstring>
+        <name>windows</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/sde/sde.cc" line="43" column="17" bodyfile="C:/Dev/git/UbixOS/sys/sde/sde.cc" bodystart="43" bodyend="-1"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysSDE</definition>
+        <argsstring>(struct thread *td, struct sys_sde_args *args)</argsstring>
+        <name>sysSDE</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__sde__args" kindref="compound">sys_sde_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/sde/sde.cc" line="45" column="16" bodyfile="C:/Dev/git/UbixOS/sys/sde/sde.cc" bodystart="45" bodyend="145"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" compoundref="sysproto_8h" startline="82">sys_sde_args::cmd</references>
+        <references refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" compoundref="sde_8h" startline="40">drawWindow</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" compoundref="sde_8h" startline="41">killWindow</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" compoundref="sde_8h" startline="49">sdeWindows::next</references>
+        <references refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" compoundref="sde_8h" startline="50">sdeWindows::prev</references>
+        <references refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" compoundref="sysproto_8h" startline="85">sys_sde_args::ptr</references>
+        <references refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" compoundref="sde_8h" startline="38">registerWindow</references>
+        <references refid="structvitalsStruct_1ae329bdf1a2ce69044a962e612a9eb1e6" compoundref="vitals_8h" startline="47">vitalsStruct::screen</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" compoundref="sde_8h" startline="39">windowReady</references>
+        <references refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" compoundref="sde_8cc" startline="43">windows</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="video_8h" kindref="compound">sys/video.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sde_8h" kindref="compound">sde/sde.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ogDisplay__UbixOS_8h" kindref="compound">sde/ogDisplay_UbixOS.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;objgfx40/objgfx40.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" kindref="member">sysSDE</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sde__args" kindref="compound">sys_sde_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>ogSurface<sp/>*newBuf<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/>ogSurface<sp/>*oldBuf<sp/>=<sp/>(ogSurface<sp/>*)args-&gt;<ref refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" kindref="member">ptr</ref>;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>ogSurface<sp/>*screen<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*tmp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>screen<sp/>=<sp/>(<ref refid="classogDisplay__UbixOS" kindref="compound">ogDisplay_UbixOS</ref><sp/>*)<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1ae329bdf1a2ce69044a962e612a9eb1e6" kindref="member">screen</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmp<sp/>=<sp/><ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref>;<sp/>tmp;<sp/>tmp<sp/>=<sp/>tmp-&gt;<ref refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmp-&gt;pid<sp/>==<sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>)</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmp<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(tmp-&gt;status<sp/>!=<sp/><ref refid="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" kindref="member">windowReady</ref>)</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;hlt&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmp<sp/>==<sp/>0x0<sp/>&amp;&amp;<sp/>args-&gt;<ref refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" kindref="member">cmd</ref><sp/>!=<sp/><ref refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" kindref="member">registerWindow</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" kindref="member">cmd</ref><sp/>==<sp/><ref refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" kindref="member">drawWindow</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//screen-&gt;ogCopyBuf(screen-&gt;ogGetMaxX()<sp/>-<sp/>oldBuf-&gt;ogGetMaxX(),<sp/>screen-&gt;ogGetMaxY()<sp/>-<sp/>oldBuf-&gt;ogGetMaxY(),<sp/>*oldBuf,<sp/>0,<sp/>0,<sp/>oldBuf-&gt;ogGetMaxX(),<sp/>oldBuf-&gt;ogGetMaxY());</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;Invalid<sp/>Window\n&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" kindref="member">cmd</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" kindref="member">drawWindow</ref>:</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogCopyBuf(screen-&gt;ogGetMaxX()<sp/>-<sp/>oldBuf-&gt;ogGetMaxX(),<sp/>screen-&gt;ogGetMaxY()<sp/>-<sp/>oldBuf-&gt;ogGetMaxY(),<sp/>*oldBuf,<sp/>0,<sp/>0,<sp/>oldBuf-&gt;ogGetMaxX(),<sp/>oldBuf-&gt;ogGetMaxY());</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>kprintf(&quot;Draw<sp/>Window\n&quot;);</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>while(1)<sp/>asm(&quot;nop&quot;);</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;status<sp/>=<sp/><ref refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" kindref="member">drawWindow</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(tmp-&gt;status<sp/>!=<sp/><ref refid="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" kindref="member">windowReady</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//asm(&quot;hlt&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" kindref="member">killWindow</ref>:</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;status<sp/>=<sp/><ref refid="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" kindref="member">killWindow</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" kindref="member">registerWindow</ref>:</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(oldBuf-&gt;buffer<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/>ogSurface();</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;version<sp/>=<sp/>oldBuf-&gt;version;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;buffer<sp/>=<sp/>oldBuf-&gt;buffer;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;owner<sp/>=<sp/>oldBuf-&gt;owner;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;lineOfs<sp/>=<sp/>oldBuf-&gt;lineOfs;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;pal<sp/>=<sp/>oldBuf-&gt;pal;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;attributes<sp/>=<sp/>oldBuf-&gt;attributes;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;xRes<sp/>=<sp/>oldBuf-&gt;xRes;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;yRes<sp/>=<sp/>oldBuf-&gt;yRes;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;maxX<sp/>=<sp/>oldBuf-&gt;maxX;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;maxY<sp/>=<sp/>oldBuf-&gt;maxY;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;bSize<sp/>=<sp/>oldBuf-&gt;bSize;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;lSize<sp/>=<sp/>oldBuf-&gt;lSize;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;BPP<sp/>=<sp/>oldBuf-&gt;BPP;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;bytesPerPix<sp/>=<sp/>oldBuf-&gt;bytesPerPix;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;pixFmtID<sp/>=<sp/>oldBuf-&gt;pixFmtID;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;redFieldPosition<sp/>=<sp/>oldBuf-&gt;redFieldPosition;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;greenFieldPosition<sp/>=<sp/>oldBuf-&gt;greenFieldPosition;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;blueFieldPosition<sp/>=<sp/>oldBuf-&gt;blueFieldPosition;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;alphaFieldPosition<sp/>=<sp/>oldBuf-&gt;alphaFieldPosition;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;redShifter<sp/>=<sp/>oldBuf-&gt;redShifter;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;greenShifter<sp/>=<sp/>oldBuf-&gt;greenShifter;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;blueShifter<sp/>=<sp/>oldBuf-&gt;blueShifter;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;alphaShifter<sp/>=<sp/>oldBuf-&gt;alphaShifter;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;lastError<sp/>=<sp/>oldBuf-&gt;lastError;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newBuf-&gt;dataState<sp/>=<sp/>oldBuf-&gt;dataState;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref>));</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;buf<sp/>=<sp/>newBuf;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;status<sp/>=<sp/><ref refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" kindref="member">registerWindow</ref>;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;pid<sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;prev<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref><sp/>=<sp/>tmp;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;<ref refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;<ref refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" kindref="member">next</ref><sp/>=<sp/><ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref>-&gt;<ref refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" kindref="member">prev</ref><sp/>=<sp/>tmp;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref><sp/>=<sp/>tmp;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>Window\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>SDE<sp/>Command<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>args-&gt;<ref refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" kindref="member">ptr</ref>);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0);</highlight></codeline>
+<codeline lineno="145"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="148"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="149"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/sde/sde.cc"/>
+  </compounddef>
+</doxygen>

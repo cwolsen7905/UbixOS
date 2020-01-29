@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structip6__addr__packed" kind="struct" language="C++" prot="public">
+    <compoundname>ip6_addr_packed</compoundname>
+    <includes refid="prot_2ip6_8h" local="no">ip6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structip6__addr__packed_1a9d7cd2a55e5e416dec8a98f4cd495a55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip6_addr_packed::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t addr[4])</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>addr</declname>
+          <array>[4]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="54" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>This is the packed version of ip6_addr_t, used in network headers that are itself packed </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>ip6_addr_packed</label>
+        <link refid="structip6__addr__packed"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="53" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="53" bodyend="55"/>
+    <listofallmembers>
+      <member refid="structip6__addr__packed_1a9d7cd2a55e5e416dec8a98f4cd495a55" prot="public" virt="non-virtual"><scope>ip6_addr_packed</scope><name>PACK_STRUCT_FIELD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

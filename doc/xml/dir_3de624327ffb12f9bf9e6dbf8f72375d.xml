@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_3de624327ffb12f9bf9e6dbf8f72375d" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/ubixfs</compoundname>
+    <innerfile refid="dirCache_8h">dirCache.h</innerfile>
+    <innerfile refid="include_2ubixfs_2ubixfs_8h">ubixfs.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/"/>
+  </compounddef>
+</doxygen>

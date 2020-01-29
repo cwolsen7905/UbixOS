@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__lstat__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_lstat_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__lstat__args_1ab050ec2828eff5280e99c48586804831" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_lstat_args::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="410" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="410" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a5904b4cf0404c2843cffcc05ff2182e8" compoundref="stat_8c" startline="297" endline="300">sys_lstat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lstat__args_1a450f4f00935968cee1515191f7b1afeb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lstat_args::path_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>path_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="409" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="409" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lstat__args_1a665f6cf23516958928dc90a3136289ed" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lstat_args::path_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>path_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="411" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="411" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lstat__args_1a4e9db6132a7aa2f77d1231eaa3b7593d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structstat" kindref="compound">stat</ref> *</type>
+        <definition>struct stat* sys_lstat_args::sb</definition>
+        <argsstring></argsstring>
+        <name>sb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="413" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="413" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a5904b4cf0404c2843cffcc05ff2182e8" compoundref="stat_8c" startline="297" endline="300">sys_lstat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lstat__args_1a02e7570f80b2f401072119e27b6e669c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lstat_args::sb_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>sb_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="412" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="412" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__lstat__args_1abb02363b247b38887961220db6589458" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_lstat_args::sb_r_[(sizeof(register_t)&lt;=sizeof(struct stat *) ? 0 :sizeof(register_t) - sizeof(struct stat *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct stat *) ? 0 :sizeof(register_t) - sizeof(struct stat *))]</argsstring>
+        <name>sb_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="414" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="414" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_lstat_args</label>
+        <link refid="structsys__lstat__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+sb</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>stat</label>
+        <link refid="structstat"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="408" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="408" bodyend="415"/>
+    <listofallmembers>
+      <member refid="structsys__lstat__args_1ab050ec2828eff5280e99c48586804831" prot="public" virt="non-virtual"><scope>sys_lstat_args</scope><name>path</name></member>
+      <member refid="structsys__lstat__args_1a450f4f00935968cee1515191f7b1afeb" prot="public" virt="non-virtual"><scope>sys_lstat_args</scope><name>path_l_</name></member>
+      <member refid="structsys__lstat__args_1a665f6cf23516958928dc90a3136289ed" prot="public" virt="non-virtual"><scope>sys_lstat_args</scope><name>path_r_</name></member>
+      <member refid="structsys__lstat__args_1a4e9db6132a7aa2f77d1231eaa3b7593d" prot="public" virt="non-virtual"><scope>sys_lstat_args</scope><name>sb</name></member>
+      <member refid="structsys__lstat__args_1a02e7570f80b2f401072119e27b6e669c" prot="public" virt="non-virtual"><scope>sys_lstat_args</scope><name>sb_l_</name></member>
+      <member refid="structsys__lstat__args_1abb02363b247b38887961220db6589458" prot="public" virt="non-virtual"><scope>sys_lstat_args</scope><name>sb_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

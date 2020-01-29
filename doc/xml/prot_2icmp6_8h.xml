@@ -1,0 +1,645 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2icmp6_8h" kind="file" language="C++">
+    <compoundname>icmp6.h</compoundname>
+    <includes refid="arch_8h" local="yes">net/arch.h</includes>
+    <includedby refid="icmp6_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/icmp6.h</includedby>
+    <incdepgraph>
+      <node id="14">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="15">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h</label>
+        <link refid="prot_2icmp6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="11">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h</label>
+        <link refid="prot_2icmp6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp6.h</label>
+        <link refid="icmp6_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structicmp6__echo__hdr" prot="public">icmp6_echo_hdr</innerclass>
+    <innerclass refid="structicmp6__hdr" prot="public">icmp6_hdr</innerclass>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccf" prot="public" static="no" strong="no">
+        <type></type>
+        <name>icmp6_dur_code</name>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa695bb4d92f32b504a9483ff137235a78" prot="public">
+          <name>ICMP6_DUR_NO_ROUTE</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>No route to destination </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa251961b990d0fbaf2c643f047c4f2532" prot="public">
+          <name>ICMP6_DUR_PROHIBITED</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Communication with destination administratively prohibited </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfabdb01a67c61da588872f5799ef75aa6e" prot="public">
+          <name>ICMP6_DUR_SCOPE</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Beyond scope of source address </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa789ef8158d8750b0fa5a14ec9ecaa23a" prot="public">
+          <name>ICMP6_DUR_ADDRESS</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Address unreachable </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa28cc924ec6eaa761acb76ccef4adcba0" prot="public">
+          <name>ICMP6_DUR_PORT</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Port unreachable </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfac3c255282e0b49b5bbb3cd8f435bb763" prot="public">
+          <name>ICMP6_DUR_POLICY</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Source address failed ingress/egress policy </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa2aeed278149fb071a34beec89df03b5c" prot="public">
+          <name>ICMP6_DUR_REJECT_ROUTE</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Reject route to destination </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP destination unreachable codes </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="98" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" bodystart="98" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="enum" id="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023" prot="public" static="no" strong="no">
+        <type></type>
+        <name>icmp6_pp_code</name>
+        <enumvalue id="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023a4aa4a79306a69fd4f60ad445cde4c2a9" prot="public">
+          <name>ICMP6_PP_FIELD</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Erroneous header field encountered </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023acbcc58901e2345ffc31df4098de60ff8" prot="public">
+          <name>ICMP6_PP_HEADER</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Unrecognized next header type encountered </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023a53884832d00d3c8f8de62cfdb4646932" prot="public">
+          <name>ICMP6_PP_OPTION</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Unrecognized IPv6 option encountered </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP parameter code </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="124" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" bodystart="124" bodyend="131"/>
+      </memberdef>
+      <memberdef kind="enum" id="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869e" prot="public" static="no" strong="no">
+        <type></type>
+        <name>icmp6_te_code</name>
+        <enumvalue id="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869eacccbb5e776df1b35af4149e593240880" prot="public">
+          <name>ICMP6_TE_HL</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Hop limit exceeded in transit </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869eaec493420d61c80a21981b1aa32befe1f" prot="public">
+          <name>ICMP6_TE_FRAG</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Fragment reassembly time exceeded </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP time exceeded codes </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="116" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" bodystart="116" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="enum" id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858" prot="public" static="no" strong="no">
+        <type></type>
+        <name>icmp6_type</name>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858aad9d4f207459e4bbd0c33a25adf6fdd7" prot="public">
+          <name>ICMP6_TYPE_DUR</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Destination unreachable </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a1d52ef5024a5822bd622bcb0b9da323d" prot="public">
+          <name>ICMP6_TYPE_PTB</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Packet too big </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858afae9848904bc4b4b4aa716a7a9a2d7fe" prot="public">
+          <name>ICMP6_TYPE_TE</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Time exceeded </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a63114feac8140031b74424d4a7cf6b26" prot="public">
+          <name>ICMP6_TYPE_PP</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Parameter problem </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ac7020c08a7b03ae2a198e4a8dcd31bd4" prot="public">
+          <name>ICMP6_TYPE_PE1</name>
+          <initializer>= 100</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Private experimentation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858aed14d280e5911098af914a94bd3ab22b" prot="public">
+          <name>ICMP6_TYPE_PE2</name>
+          <initializer>= 101</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Private experimentation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858abe61415e020b996220337f0cd002a28f" prot="public">
+          <name>ICMP6_TYPE_RSV_ERR</name>
+          <initializer>= 127</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Reserved for expansion of error messages </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ae649aa45c97b885f28771688957528a3" prot="public">
+          <name>ICMP6_TYPE_EREQ</name>
+          <initializer>= 128</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Echo request </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ac6b91695c06bfc7fb2360310d7b8e78a" prot="public">
+          <name>ICMP6_TYPE_EREP</name>
+          <initializer>= 129</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Echo reply </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ad9794ae12b9ca196cc4fafaf6d834375" prot="public">
+          <name>ICMP6_TYPE_MLQ</name>
+          <initializer>= 130</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multicast listener query </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a906dd689f0aa9b4796f49f299d4e3eb0" prot="public">
+          <name>ICMP6_TYPE_MLR</name>
+          <initializer>= 131</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multicast listener report </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a04228a1d11f9f88bd165f3430188bfe7" prot="public">
+          <name>ICMP6_TYPE_MLD</name>
+          <initializer>= 132</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multicast listener done </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a670d95494c9282f646ac442d81d9a780" prot="public">
+          <name>ICMP6_TYPE_RS</name>
+          <initializer>= 133</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Router solicitation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ae4ae04be7df3a2cce614af0a5cdae951" prot="public">
+          <name>ICMP6_TYPE_RA</name>
+          <initializer>= 134</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Router advertisement </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a0d8d8717c6c34053d1101932c23929fe" prot="public">
+          <name>ICMP6_TYPE_NS</name>
+          <initializer>= 135</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Neighbor solicitation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a1f99d333f425c28d3840e029cc9c46f3" prot="public">
+          <name>ICMP6_TYPE_NA</name>
+          <initializer>= 136</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Neighbor advertisement </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a0f6702d62de5f873e0afe7431d878207" prot="public">
+          <name>ICMP6_TYPE_RD</name>
+          <initializer>= 137</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Redirect </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a29281016d3bb58e3bfd90417bbce7aa0" prot="public">
+          <name>ICMP6_TYPE_MRA</name>
+          <initializer>= 151</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multicast router advertisement </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a425f4e64a7d1570228adbbe450650ab4" prot="public">
+          <name>ICMP6_TYPE_MRS</name>
+          <initializer>= 152</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multicast router solicitation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858afb12a9d774f53deb15ec23041548f6fc" prot="public">
+          <name>ICMP6_TYPE_MRT</name>
+          <initializer>= 153</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Multicast router termination </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a9c9c358ebd5eb683a66819fd9ecf98c6" prot="public">
+          <name>ICMP6_TYPE_PE3</name>
+          <initializer>= 200</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Private experimentation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858af8ebe97c4f68b54c9ef0c43e98211df5" prot="public">
+          <name>ICMP6_TYPE_PE4</name>
+          <initializer>= 201</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Private experimentation </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a2c12d3244d837bd243ea647ec530600d" prot="public">
+          <name>ICMP6_TYPE_RSV_INF</name>
+          <initializer>= 255</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Reserved for expansion of informational messages </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP type </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="47" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" bodystart="47" bodyend="95"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2icmp6_8h_1a78cd5496526f3de09831880d2f09db80" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structicmp6__hdr" kindref="compound">icmp6_hdr</ref></type>
+        <definition>PACK_STRUCT_END PACK_STRUCT_BEGIN struct icmp6_echo_hdr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h" line="143" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>ICMP6 protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_ICMP6_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_ICMP6_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858" kindref="member">icmp6_type</ref><sp/>{</highlight></codeline>
+<codeline lineno="49" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858aad9d4f207459e4bbd0c33a25adf6fdd7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858aad9d4f207459e4bbd0c33a25adf6fdd7" kindref="member">ICMP6_TYPE_DUR</ref><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="51" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a1d52ef5024a5822bd622bcb0b9da323d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a1d52ef5024a5822bd622bcb0b9da323d" kindref="member">ICMP6_TYPE_PTB</ref><sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="53" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858afae9848904bc4b4b4aa716a7a9a2d7fe" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858afae9848904bc4b4b4aa716a7a9a2d7fe" kindref="member">ICMP6_TYPE_TE</ref><sp/>=<sp/>3,</highlight></codeline>
+<codeline lineno="55" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a63114feac8140031b74424d4a7cf6b26" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a63114feac8140031b74424d4a7cf6b26" kindref="member">ICMP6_TYPE_PP</ref><sp/>=<sp/>4,</highlight></codeline>
+<codeline lineno="57" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ac7020c08a7b03ae2a198e4a8dcd31bd4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ac7020c08a7b03ae2a198e4a8dcd31bd4" kindref="member">ICMP6_TYPE_PE1</ref><sp/>=<sp/>100,</highlight></codeline>
+<codeline lineno="59" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858aed14d280e5911098af914a94bd3ab22b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858aed14d280e5911098af914a94bd3ab22b" kindref="member">ICMP6_TYPE_PE2</ref><sp/>=<sp/>101,</highlight></codeline>
+<codeline lineno="61" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858abe61415e020b996220337f0cd002a28f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858abe61415e020b996220337f0cd002a28f" kindref="member">ICMP6_TYPE_RSV_ERR</ref><sp/>=<sp/>127,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ae649aa45c97b885f28771688957528a3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ae649aa45c97b885f28771688957528a3" kindref="member">ICMP6_TYPE_EREQ</ref><sp/>=<sp/>128,</highlight></codeline>
+<codeline lineno="66" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ac6b91695c06bfc7fb2360310d7b8e78a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ac6b91695c06bfc7fb2360310d7b8e78a" kindref="member">ICMP6_TYPE_EREP</ref><sp/>=<sp/>129,</highlight></codeline>
+<codeline lineno="68" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ad9794ae12b9ca196cc4fafaf6d834375" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ad9794ae12b9ca196cc4fafaf6d834375" kindref="member">ICMP6_TYPE_MLQ</ref><sp/>=<sp/>130,</highlight></codeline>
+<codeline lineno="70" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a906dd689f0aa9b4796f49f299d4e3eb0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a906dd689f0aa9b4796f49f299d4e3eb0" kindref="member">ICMP6_TYPE_MLR</ref><sp/>=<sp/>131,</highlight></codeline>
+<codeline lineno="72" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a04228a1d11f9f88bd165f3430188bfe7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a04228a1d11f9f88bd165f3430188bfe7" kindref="member">ICMP6_TYPE_MLD</ref><sp/>=<sp/>132,</highlight></codeline>
+<codeline lineno="74" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a670d95494c9282f646ac442d81d9a780" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a670d95494c9282f646ac442d81d9a780" kindref="member">ICMP6_TYPE_RS</ref><sp/>=<sp/>133,</highlight></codeline>
+<codeline lineno="76" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ae4ae04be7df3a2cce614af0a5cdae951" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858ae4ae04be7df3a2cce614af0a5cdae951" kindref="member">ICMP6_TYPE_RA</ref><sp/>=<sp/>134,</highlight></codeline>
+<codeline lineno="78" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a0d8d8717c6c34053d1101932c23929fe" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a0d8d8717c6c34053d1101932c23929fe" kindref="member">ICMP6_TYPE_NS</ref><sp/>=<sp/>135,</highlight></codeline>
+<codeline lineno="80" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a1f99d333f425c28d3840e029cc9c46f3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a1f99d333f425c28d3840e029cc9c46f3" kindref="member">ICMP6_TYPE_NA</ref><sp/>=<sp/>136,</highlight></codeline>
+<codeline lineno="82" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a0f6702d62de5f873e0afe7431d878207" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a0f6702d62de5f873e0afe7431d878207" kindref="member">ICMP6_TYPE_RD</ref><sp/>=<sp/>137,</highlight></codeline>
+<codeline lineno="84" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a29281016d3bb58e3bfd90417bbce7aa0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a29281016d3bb58e3bfd90417bbce7aa0" kindref="member">ICMP6_TYPE_MRA</ref><sp/>=<sp/>151,</highlight></codeline>
+<codeline lineno="86" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a425f4e64a7d1570228adbbe450650ab4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a425f4e64a7d1570228adbbe450650ab4" kindref="member">ICMP6_TYPE_MRS</ref><sp/>=<sp/>152,</highlight></codeline>
+<codeline lineno="88" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858afb12a9d774f53deb15ec23041548f6fc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858afb12a9d774f53deb15ec23041548f6fc" kindref="member">ICMP6_TYPE_MRT</ref><sp/>=<sp/>153,</highlight></codeline>
+<codeline lineno="90" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a9c9c358ebd5eb683a66819fd9ecf98c6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a9c9c358ebd5eb683a66819fd9ecf98c6" kindref="member">ICMP6_TYPE_PE3</ref><sp/>=<sp/>200,</highlight></codeline>
+<codeline lineno="92" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858af8ebe97c4f68b54c9ef0c43e98211df5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858af8ebe97c4f68b54c9ef0c43e98211df5" kindref="member">ICMP6_TYPE_PE4</ref><sp/>=<sp/>201,</highlight></codeline>
+<codeline lineno="94" refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a2c12d3244d837bd243ea647ec530600d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a6e10428d8f6102013b30013065716858a2c12d3244d837bd243ea647ec530600d" kindref="member">ICMP6_TYPE_RSV_INF</ref><sp/>=<sp/>255</highlight></codeline>
+<codeline lineno="95"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccf" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccf" kindref="member">icmp6_dur_code</ref><sp/>{</highlight></codeline>
+<codeline lineno="100" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa695bb4d92f32b504a9483ff137235a78" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa695bb4d92f32b504a9483ff137235a78" kindref="member">ICMP6_DUR_NO_ROUTE</ref><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="102" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa251961b990d0fbaf2c643f047c4f2532" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa251961b990d0fbaf2c643f047c4f2532" kindref="member">ICMP6_DUR_PROHIBITED</ref><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="104" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfabdb01a67c61da588872f5799ef75aa6e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfabdb01a67c61da588872f5799ef75aa6e" kindref="member">ICMP6_DUR_SCOPE</ref><sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="106" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa789ef8158d8750b0fa5a14ec9ecaa23a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa789ef8158d8750b0fa5a14ec9ecaa23a" kindref="member">ICMP6_DUR_ADDRESS</ref><sp/>=<sp/>3,</highlight></codeline>
+<codeline lineno="108" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa28cc924ec6eaa761acb76ccef4adcba0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa28cc924ec6eaa761acb76ccef4adcba0" kindref="member">ICMP6_DUR_PORT</ref><sp/>=<sp/>4,</highlight></codeline>
+<codeline lineno="110" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfac3c255282e0b49b5bbb3cd8f435bb763" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfac3c255282e0b49b5bbb3cd8f435bb763" kindref="member">ICMP6_DUR_POLICY</ref><sp/>=<sp/>5,</highlight></codeline>
+<codeline lineno="112" refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa2aeed278149fb071a34beec89df03b5c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a11fe21b0a8c1bc73ee887a96bf416ccfa2aeed278149fb071a34beec89df03b5c" kindref="member">ICMP6_DUR_REJECT_ROUTE</ref><sp/>=<sp/>6</highlight></codeline>
+<codeline lineno="113"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869e" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869e" kindref="member">icmp6_te_code</ref><sp/>{</highlight></codeline>
+<codeline lineno="118" refid="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869eacccbb5e776df1b35af4149e593240880" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869eacccbb5e776df1b35af4149e593240880" kindref="member">ICMP6_TE_HL</ref><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="120" refid="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869eaec493420d61c80a21981b1aa32befe1f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1ad06bbf4ee72635ece968db41cbe6869eaec493420d61c80a21981b1aa32befe1f" kindref="member">ICMP6_TE_FRAG</ref><sp/>=<sp/>1</highlight></codeline>
+<codeline lineno="121"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124" refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023" kindref="member">icmp6_pp_code</ref><sp/>{</highlight></codeline>
+<codeline lineno="126" refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023a4aa4a79306a69fd4f60ad445cde4c2a9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023a4aa4a79306a69fd4f60ad445cde4c2a9" kindref="member">ICMP6_PP_FIELD</ref><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="128" refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023acbcc58901e2345ffc31df4098de60ff8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023acbcc58901e2345ffc31df4098de60ff8" kindref="member">ICMP6_PP_HEADER</ref><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="130" refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023a53884832d00d3c8f8de62cfdb4646932" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2icmp6_8h_1a3a817e777ebcfd705e8e5a1b4c5ae023a53884832d00d3c8f8de62cfdb4646932" kindref="member">ICMP6_PP_OPTION</ref><sp/>=<sp/>2</highlight></codeline>
+<codeline lineno="131"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="138" refid="structicmp6__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp6__hdr" kindref="compound">icmp6_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__hdr_1a241eb135b2da203981f4bf063646e44c" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__hdr_1a241eb135b2da203981f4bf063646e44c" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>code);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__hdr_1aa4cf809bfbcc5fd3499f8ebef171d694" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>chksum);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__hdr_1aa4cf809bfbcc5fd3499f8ebef171d694" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>data);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal">}<sp/><ref refid="prot_2icmp6_8h_1a78cd5496526f3de09831880d2f09db80" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="154" refid="structicmp6__echo__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp6__echo__hdr" kindref="compound">icmp6_echo_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__echo__hdr_1a279c091f6e223e301974e61ae47af90d" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__echo__hdr_1a279c091f6e223e301974e61ae47af90d" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>code);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__echo__hdr_1a64bd94a5426b0aff92ce461739346692" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>chksum);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__echo__hdr_1a64bd94a5426b0aff92ce461739346692" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><ref refid="structicmp6__echo__hdr_1a64bd94a5426b0aff92ce461739346692" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>seqno);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">}<sp/><ref refid="prot_2icmp6_8h_1a78cd5496526f3de09831880d2f09db80" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_ICMP6_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h"/>
+  </compounddef>
+</doxygen>

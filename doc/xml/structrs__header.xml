@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structrs__header" kind="struct" language="C++" prot="public">
+    <compoundname>rs_header</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structrs__header_1a90e37b6c47a027b0a312d093180498ea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rs_header::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t chksum)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>chksum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="96" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrs__header_1a215d60e7c8f0c9906d437f394ab4b66c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rs_header::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t reserved)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>reserved</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="97" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrs__header_1af17d7ef3813c8b32b7d4ba2bdb953e74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rs_header::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t code)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="95" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structrs__header_1a54291223dd1e7501f4e252399eac6d4a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>rs_header::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="94" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Router solicitation message header. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>rs_header</label>
+        <link refid="structrs__header"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="93" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="93" bodyend="99"/>
+    <listofallmembers>
+      <member refid="structrs__header_1a90e37b6c47a027b0a312d093180498ea" prot="public" virt="non-virtual"><scope>rs_header</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structrs__header_1a215d60e7c8f0c9906d437f394ab4b66c" prot="public" virt="non-virtual"><scope>rs_header</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structrs__header_1a54291223dd1e7501f4e252399eac6d4a" prot="public" virt="non-virtual"><scope>rs_header</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structrs__header_1af17d7ef3813c8b32b7d4ba2bdb953e74" prot="public" virt="non-virtual"><scope>rs_header</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfsck__cmd" kind="struct" language="C++" prot="public">
+    <compoundname>fsck_cmd</compoundname>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfsck__cmd_1ae5e77c2532806fbbdf84f22a4beb1acd" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fsck_cmd::handle</definition>
+        <argsstring></argsstring>
+        <name>handle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="230" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="230" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfsck__cmd_1ae25303126aeff4fa5fa837146d210186" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fsck_cmd::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="232" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="232" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfsck__cmd_1a61850225bd7e885356aee009319100a0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fsck_cmd::spare</definition>
+        <argsstring></argsstring>
+        <name>spare</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="233" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="233" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfsck__cmd_1ac57cfd510bb1787c63f08b54ed3280cd" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fsck_cmd::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="231" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="231" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfsck__cmd_1afecc79b8563530b01494949d6ab04f71" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fsck_cmd::version</definition>
+        <argsstring></argsstring>
+        <name>version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="229" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fsck_cmd</label>
+        <link refid="structfsck__cmd"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="228" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="228" bodyend="234"/>
+    <listofallmembers>
+      <member refid="structfsck__cmd_1ae5e77c2532806fbbdf84f22a4beb1acd" prot="public" virt="non-virtual"><scope>fsck_cmd</scope><name>handle</name></member>
+      <member refid="structfsck__cmd_1ae25303126aeff4fa5fa837146d210186" prot="public" virt="non-virtual"><scope>fsck_cmd</scope><name>size</name></member>
+      <member refid="structfsck__cmd_1a61850225bd7e885356aee009319100a0" prot="public" virt="non-virtual"><scope>fsck_cmd</scope><name>spare</name></member>
+      <member refid="structfsck__cmd_1ac57cfd510bb1787c63f08b54ed3280cd" prot="public" virt="non-virtual"><scope>fsck_cmd</scope><name>value</name></member>
+      <member refid="structfsck__cmd_1afecc79b8563530b01494949d6ab04f71" prot="public" virt="non-virtual"><scope>fsck_cmd</scope><name>version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

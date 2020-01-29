@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="unionjrec" kind="union" language="C++" prot="public">
+    <compoundname>jrec</compoundname>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="unionjrec_1a39310a4de1f1230cd25ed6d748b9e1ec" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structjblkrec" kindref="compound">jblkrec</ref></type>
+        <definition>struct jblkrec jrec::rec_jblkrec</definition>
+        <argsstring></argsstring>
+        <name>rec_jblkrec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="749" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="756" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionjrec_1a271af649dc0e887bba8d54e75d4bb2e4" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structjmvrec" kindref="compound">jmvrec</ref></type>
+        <definition>struct jmvrec jrec::rec_jmvrec</definition>
+        <argsstring></argsstring>
+        <name>rec_jmvrec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="749" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="755" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionjrec_1a1d52e1b5425be5182c03d46f97a0c2e1" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structjrefrec" kindref="compound">jrefrec</ref></type>
+        <definition>struct jrefrec jrec::rec_jrefrec</definition>
+        <argsstring></argsstring>
+        <name>rec_jrefrec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="749" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="754" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionjrec_1a40d605d9d09cc571a962597339bc0f95" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structjsegrec" kindref="compound">jsegrec</ref></type>
+        <definition>struct jsegrec jrec::rec_jsegrec</definition>
+        <argsstring></argsstring>
+        <name>rec_jsegrec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="749" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="753" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionjrec_1a6a20b64e3b9ae832c62c7778ac984d47" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structjtrncrec" kindref="compound">jtrncrec</ref></type>
+        <definition>struct jtrncrec jrec::rec_jtrncrec</definition>
+        <argsstring></argsstring>
+        <name>rec_jtrncrec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="749" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="757" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>jsegrec</label>
+        <link refid="structjsegrec"/>
+      </node>
+      <node id="5">
+        <label>jblkrec</label>
+        <link refid="structjblkrec"/>
+      </node>
+      <node id="2">
+        <label>jtrncrec</label>
+        <link refid="structjtrncrec"/>
+      </node>
+      <node id="4">
+        <label>jrefrec</label>
+        <link refid="structjrefrec"/>
+      </node>
+      <node id="1">
+        <label>jrec</label>
+        <link refid="unionjrec"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+rec_jtrncrec</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+rec_jsegrec</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+rec_jrefrec</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+rec_jblkrec</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+rec_jmvrec</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>jmvrec</label>
+        <link refid="structjmvrec"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="752" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="752" bodyend="758"/>
+    <listofallmembers>
+      <member refid="unionjrec_1a39310a4de1f1230cd25ed6d748b9e1ec" prot="public" virt="non-virtual"><scope>jrec</scope><name>rec_jblkrec</name></member>
+      <member refid="unionjrec_1a271af649dc0e887bba8d54e75d4bb2e4" prot="public" virt="non-virtual"><scope>jrec</scope><name>rec_jmvrec</name></member>
+      <member refid="unionjrec_1a1d52e1b5425be5182c03d46f97a0c2e1" prot="public" virt="non-virtual"><scope>jrec</scope><name>rec_jrefrec</name></member>
+      <member refid="unionjrec_1a40d605d9d09cc571a962597339bc0f95" prot="public" virt="non-virtual"><scope>jrec</scope><name>rec_jsegrec</name></member>
+      <member refid="unionjrec_1a6a20b64e3b9ae832c62c7778ac984d47" prot="public" virt="non-virtual"><scope>jrec</scope><name>rec_jtrncrec</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

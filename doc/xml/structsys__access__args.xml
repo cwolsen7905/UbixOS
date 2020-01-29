@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__access__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_access_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__access__args_1a68c5a73d4ebc34fb778417738b958b74" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_access_args::amode</definition>
+        <argsstring></argsstring>
+        <name>amode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="592" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="592" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__access__args_1a9486c7964f8802c704b4aea5a7c08303" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_access_args::amode_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>amode_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="591" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="591" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__access__args_1abafe745c1b71a2eeb607c6b9318dbebe" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_access_args::amode_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>amode_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="593" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="593" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__access__args_1a7b887cbc3c7e11edde3982c72fe83312" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_access_args::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="589" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="589" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__access__args_1a06ee26b8f2a406fa19c5210d85aa8606" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_access_args::path_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>path_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="588" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="588" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__access__args_1ac196984bee7cf198e1e96251377862b5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_access_args::path_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>path_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="590" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="590" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_access_args</label>
+        <link refid="structsys__access__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="587" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="587" bodyend="594"/>
+    <listofallmembers>
+      <member refid="structsys__access__args_1a68c5a73d4ebc34fb778417738b958b74" prot="public" virt="non-virtual"><scope>sys_access_args</scope><name>amode</name></member>
+      <member refid="structsys__access__args_1a9486c7964f8802c704b4aea5a7c08303" prot="public" virt="non-virtual"><scope>sys_access_args</scope><name>amode_l_</name></member>
+      <member refid="structsys__access__args_1abafe745c1b71a2eeb607c6b9318dbebe" prot="public" virt="non-virtual"><scope>sys_access_args</scope><name>amode_r_</name></member>
+      <member refid="structsys__access__args_1a7b887cbc3c7e11edde3982c72fe83312" prot="public" virt="non-virtual"><scope>sys_access_args</scope><name>path</name></member>
+      <member refid="structsys__access__args_1a06ee26b8f2a406fa19c5210d85aa8606" prot="public" virt="non-virtual"><scope>sys_access_args</scope><name>path_l_</name></member>
+      <member refid="structsys__access__args_1ac196984bee7cf198e1e96251377862b5" prot="public" virt="non-virtual"><scope>sys_access_args</scope><name>path_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

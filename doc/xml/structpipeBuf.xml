@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structpipeBuf" kind="struct" language="C++" prot="public">
+    <compoundname>pipeBuf</compoundname>
+    <includes refid="pipe_8h" local="no">pipe.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpipeBuf_1aa910cff72b25f70395e2cc68ecc9a18d" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* pipeBuf::buffer</definition>
+        <argsstring></argsstring>
+        <name>buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="39" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeBuf_1aeec091b287e397899ae81495cd80f464" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t pipeBuf::nbytes</definition>
+        <argsstring></argsstring>
+        <name>nbytes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="40" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeBuf_1ad9a3f124f1d677ea353fcc8cfc76a46d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structpipeBuf" kindref="compound">pipeBuf</ref> *</type>
+        <definition>struct pipeBuf* pipeBuf::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="38" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeBuf_1a117747ee40ba0c3fbb36e1b81d01bd61" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t pipeBuf::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="41" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>pipeBuf</label>
+        <link refid="structpipeBuf"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="37" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="37" bodyend="43"/>
+    <listofallmembers>
+      <member refid="structpipeBuf_1aa910cff72b25f70395e2cc68ecc9a18d" prot="public" virt="non-virtual"><scope>pipeBuf</scope><name>buffer</name></member>
+      <member refid="structpipeBuf_1aeec091b287e397899ae81495cd80f464" prot="public" virt="non-virtual"><scope>pipeBuf</scope><name>nbytes</name></member>
+      <member refid="structpipeBuf_1ad9a3f124f1d677ea353fcc8cfc76a46d" prot="public" virt="non-virtual"><scope>pipeBuf</scope><name>next</name></member>
+      <member refid="structpipeBuf_1a117747ee40ba0c3fbb36e1b81d01bd61" prot="public" virt="non-virtual"><scope>pipeBuf</scope><name>offset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

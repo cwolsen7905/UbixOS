@@ -1,0 +1,10 @@
+digraph "sys_fread"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="sys_fread",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="fread",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$file_8c.html#ac539f57edd90fcd088fd3baa10319166",tooltip=" "];
+}

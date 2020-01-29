@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structlladdr__option" kind="struct" language="C++" prot="public">
+    <compoundname>lladdr_option</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structlladdr__option_1a3c02a918fb1c9d552c2c7c819f41fbf2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>lladdr_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t addr[NETIF_MAX_HWADDR_LEN])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>addr</declname>
+          <array>[NETIF_MAX_HWADDR_LEN]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="163" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structlladdr__option_1a9e010383f6579c4dcfe345ba951f7f2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>lladdr_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="162" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structlladdr__option_1aafa5153a25930db33c5a8325a6b1d582" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>lladdr_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="161" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>lladdr_option</label>
+        <link refid="structlladdr__option"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="160" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="160" bodyend="164"/>
+    <listofallmembers>
+      <member refid="structlladdr__option_1aafa5153a25930db33c5a8325a6b1d582" prot="public" virt="non-virtual"><scope>lladdr_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structlladdr__option_1a9e010383f6579c4dcfe345ba951f7f2f" prot="public" virt="non-virtual"><scope>lladdr_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structlladdr__option_1a3c02a918fb1c9d552c2c7c819f41fbf2" prot="public" virt="non-virtual"><scope>lladdr_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

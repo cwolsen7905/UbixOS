@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="bios16code_8S" kind="file" language="C++">
+    <compoundname>bios16code.S</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">.globl<sp/>bios16Code</highlight></codeline>
+<codeline><highlight class="normal">bios16Code:</highlight></codeline>
+<codeline><highlight class="normal">.code16</highlight></codeline>
+<codeline><highlight class="normal">int<sp/>$0x10</highlight></codeline>
+<codeline><highlight class="normal">int<sp/>$0x69</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/arch/i386/bios16code.S"/>
+  </compounddef>
+</doxygen>

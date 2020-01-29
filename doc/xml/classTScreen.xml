@@ -1,0 +1,1589 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="classTScreen" kind="class" language="C++" prot="public">
+    <compoundname>TScreen</compoundname>
+    <basecompoundref refid="classTGfx0" prot="public" virt="non-virtual">TGfx0</basecompoundref>
+    <includes refid="objgfx30_8h" local="no">objgfx30.h</includes>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classTGfx0_1a78cc68d207e2742dc4742ddfa65ed580" prot="protected" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::AntiAlias</definition>
+        <argsstring></argsstring>
+        <name>AntiAlias</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="168" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1acb051caed2a384a770f37698cf941a05" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::BlueFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>BlueFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="162" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1af973497d9581ec5990dd7e2a7c32a941" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::BlueShifter</definition>
+        <argsstring></argsstring>
+        <name>BlueShifter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="166" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a93c1df656df3deb3f1464ea8b42fd66f" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::BPP</definition>
+        <argsstring></argsstring>
+        <name>BPP</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="159" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a1eced7c241fa3cbc4c1a3fa6f643c1da" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::bSize</definition>
+        <argsstring></argsstring>
+        <name>bSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="155" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1aa47b7d1266341b92bddeed6637919164" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" kindref="member">ogDataState</ref></type>
+        <definition>ogDataState TGfx0::DataState</definition>
+        <argsstring></argsstring>
+        <name>DataState</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="158" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1af9023f5a6a3decc2e316d299f3fa3a0c" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::GreenFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>GreenFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="161" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1af7de50ef072a87c992395661a0464242" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::GreenShifter</definition>
+        <argsstring></argsstring>
+        <name>GreenShifter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="165" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTScreen_1a46e7909ee6ecc88047ea8491ca99853c" prot="protected" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TScreen::InGraphics</definition>
+        <argsstring></argsstring>
+        <name>InGraphics</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="228" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="228" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a063c0df0c3532a740de39c670cd19b82" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::lSize</definition>
+        <argsstring></argsstring>
+        <name>lSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="156" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a502650cb072e21052fbaddbbd3435ced" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::MaxX</definition>
+        <argsstring></argsstring>
+        <name>MaxX</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="154" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a1b0c7a2fb757986a97320ee684f2d0cb" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::MaxY</definition>
+        <argsstring></argsstring>
+        <name>MaxY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="154" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTScreen_1a852c621313692028ee0b114070865cbc" prot="protected" static="no" mutable="no">
+        <type><ref refid="structTMode__Rec" kindref="compound">TMode_Rec</ref> *</type>
+        <definition>TMode_Rec* TScreen::ModeRec</definition>
+        <argsstring></argsstring>
+        <name>ModeRec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="227" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="227" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a59c264f41f08a8626bb21b1b8ea5f123" prot="protected" static="no" mutable="no">
+        <type><ref refid="classTGfx0" kindref="compound">TGfx0</ref> *</type>
+        <definition>TGfx0* TGfx0::Owner</definition>
+        <argsstring></argsstring>
+        <name>Owner</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="152" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1ad6c3ae24d482cb73d699d7c75b102c51" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::RedFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>RedFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="160" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1ac992f15cb95c84257efa9db47767aff0" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::RedShifter</definition>
+        <argsstring></argsstring>
+        <name>RedShifter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="164" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a820b6636804eb064a493dcdc27d9a981" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::TransparentColor</definition>
+        <argsstring></argsstring>
+        <name>TransparentColor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="157" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a120ab8833470adf2655196a86861315a" prot="protected" static="no" mutable="no">
+        <type></type>
+        <definition>TGfx0::uInt8AlphaFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>uInt8AlphaFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="163" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a46c8fc590ff1c40b6795294911140c84" prot="protected" static="no" mutable="no">
+        <type></type>
+        <definition>TGfx0::uInt8AlphaShifter</definition>
+        <argsstring></argsstring>
+        <name>uInt8AlphaShifter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="167" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTScreen_1a18091a36725045a627e7f31f73885ec2" prot="protected" static="no" mutable="no">
+        <type><ref refid="structTVESA__Rec" kindref="compound">TVESA_Rec</ref> *</type>
+        <definition>TVESA_Rec* TScreen::VESARec</definition>
+        <argsstring></argsstring>
+        <name>VESARec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="226" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="226" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1abe0efc0848201c25630dfb652161ed72" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::xRes</definition>
+        <argsstring></argsstring>
+        <name>xRes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="153" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a5a519d7a8cfcef2c8ab24d9e0ccba0b4" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::yRes</definition>
+        <argsstring></argsstring>
+        <name>yRes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="153" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classTGfx0_1aa1a3d766d828289bde3ff9f4a68c7eae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::ogAlias</definition>
+        <argsstring>(TGfx0 &amp;, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>ogAlias</name>
+        <param>
+          <type><ref refid="classTGfx0" kindref="compound">TGfx0</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="177" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a29f234c3fbc13a3a2b9420e7ffaf66f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogArc</definition>
+        <argsstring>(Int32, Int32, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>ogArc</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="178" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a27e34894eb8b4420020e672afb5fe5fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogBSpline</definition>
+        <argsstring>(uInt32, TPoint *, uInt32, uInt32)</argsstring>
+        <name>ogBSpline</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="structTPoint" kindref="compound">TPoint</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="179" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ac7ceb6f0684c426f1f4aa6991823c931" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogCircle</definition>
+        <argsstring>(Int32, Int32, uInt32, uInt32)</argsstring>
+        <name>ogCircle</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="180" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1af5e61dab8ddc935fbc33f3abafc4881a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogClear</definition>
+        <argsstring>(uInt32)</argsstring>
+        <name>ogClear</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="181" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1aded39fd47cee6bde9135bc03f34fc52a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::ogClone</definition>
+        <argsstring>(TGfx0 &amp;)</argsstring>
+        <name>ogClone</name>
+        <param>
+          <type><ref refid="classTGfx0" kindref="compound">TGfx0</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="182" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1aa03f3d9137a783ad6e9434e2deadecda" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogCopy</definition>
+        <argsstring>(TGfx0 &amp;)</argsstring>
+        <name>ogCopy</name>
+        <param>
+          <type><ref refid="classTGfx0" kindref="compound">TGfx0</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="183" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ab82405bdce96235a0462d6b4f10ebe5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogCopyBuf</definition>
+        <argsstring>(Int32, Int32, TGfx0 &amp;, Int32, Int32, Int32, Int32)</argsstring>
+        <name>ogCopyBuf</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classTGfx0" kindref="compound">TGfx0</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="184" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a3c1c2552e15719ecdf03aa33a88078d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::ogCreate</definition>
+        <argsstring>(uInt32, uInt32, TPixelFmt)</argsstring>
+        <name>ogCreate</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="185" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1aec99fe0773db7377faea0bb8b9114abe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogCubicBezierCurve</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, uInt32, uInt32)</argsstring>
+        <name>ogCubicBezierCurve</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="186" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1aa233f3f5170efebbcbf8ccba1c301ef2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogCurve</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, Int32, Int32, uInt32, uInt32)</argsstring>
+        <name>ogCurve</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="187" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ab869fe252f4cf79a9210f4d0b39b36af" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogFillCircle</definition>
+        <argsstring>(Int32, Int32, uInt32, uInt32)</argsstring>
+        <name>ogFillCircle</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="188" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a35a3dde4b236d161d516a0b7f02e17d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogFillConvexPolygon</definition>
+        <argsstring>(uInt32, TPoint *, uInt32)</argsstring>
+        <name>ogFillConvexPolygon</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="structTPoint" kindref="compound">TPoint</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="189" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a9f239b7cfd4215a2adccb2f5a9b3e1bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogFillPolygon</definition>
+        <argsstring>(uInt32, TPoint *, uInt32)</argsstring>
+        <name>ogFillPolygon</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="structTPoint" kindref="compound">TPoint</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="190" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a018cdefc109e5273cf38bb216c44ba57" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogFillRect</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogFillRect</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="191" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a992619f2b3490a3973c910d83f1f5475" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogFillTriangle</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogFillTriangle</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="192" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ae7458dffe0443434bf0f4a70760ac827" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::ogGetAntiAlias</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetAntiAlias</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="193" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a8d65fe8297d6b8f342213415838db371" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TGfx0::ogGetBPP</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetBPP</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="194" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a1cb20fb2753e02f14aa5e389fe232e12" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" kindref="member">ogDataState</ref></type>
+        <definition>ogDataState TGfx0::ogGetDataState</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetDataState</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="195" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a64b0d472d56712b5d92756bb98ce9286" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::ogGetMaxX</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetMaxX</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="196" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1afae719e4d9255cc21d763b817ac0d7d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::ogGetMaxY</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetMaxY</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="197" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a2f5cc9ef42b5377024b81271c7dd9e63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogGetPal</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetPal</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="198" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a42281e8f32e5459dfba006a2201cfcab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::ogGetPixel</definition>
+        <argsstring>(Int32, Int32)</argsstring>
+        <name>ogGetPixel</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="200" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a2343a53d699b2e94ca83fd32a464f5b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogGetPixFmt</definition>
+        <argsstring>(TPixelFmt &amp;)</argsstring>
+        <name>ogGetPixFmt</name>
+        <param>
+          <type><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="199" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1aaaacdda37ac782492277ebcf1986fd97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::ogGetTransparentColor</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogGetTransparentColor</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="201" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a0867cd3d1e77053802beaed51cc89865" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogHFlip</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogHFlip</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="202" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1acc3f77c5297734fab2d47bf7dcf9e094" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogHLine</definition>
+        <argsstring>(Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogHLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="203" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ac60359a77047dfdede8c1fb4a82d6f5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogLine</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="204" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a3221e7bcfc1f4804a375e118fe84cfe7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogLoadPal</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>ogLoadPal</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="205" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a7d5b0589724c42418e140c56c1eae8a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogPolygon</definition>
+        <argsstring>(uInt32, TPoint *, uInt32)</argsstring>
+        <name>ogPolygon</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="structTPoint" kindref="compound">TPoint</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="206" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a28aeb576aef53a0988fd96000e70e969" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogRect</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogRect</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="207" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ad838d0d70b6cc833d5eaf2e07fb18e9d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::ogRGB</definition>
+        <argsstring>(uInt8, uInt8, uInt8)</argsstring>
+        <name>ogRGB</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="208" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1af00f32ca6bab8cbb83baa0507137dc0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogSavePal</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>ogSavePal</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="209" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a08b171a2f918a7b605780470990995f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogScaleBuf</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, TGfx0 &amp;, Int32, Int32, Int32, Int32)</argsstring>
+        <name>ogScaleBuf</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="classTGfx0" kindref="compound">TGfx0</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="210" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a00490fc4053f1b1b64538dcb21f4bfd1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::ogSetAntiAlias</definition>
+        <argsstring>(bool)</argsstring>
+        <name>ogSetAntiAlias</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="211" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ae790f36e15b95cfdce164deaa212f287" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogSetPixel</definition>
+        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
+        <name>ogSetPixel</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="212" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1af49b13b73dd2bdab866fdbc9f7f28729" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogSetRGBPalette</definition>
+        <argsstring>(uInt8, uInt8, uInt8, uInt8)</argsstring>
+        <name>ogSetRGBPalette</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="213" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a2cd624dc55efef0b3dcc7108d169c572" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TGfx0::ogSetTransparentColor</definition>
+        <argsstring>(uInt32)</argsstring>
+        <name>ogSetTransparentColor</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="214" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1af20945fa17d2b3147262a7e6e429dab0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogSpline</definition>
+        <argsstring>(uInt32, TPoint *, uInt32, uInt32)</argsstring>
+        <name>ogSpline</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="structTPoint" kindref="compound">TPoint</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="215" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ab7bc50f1a726c1484b7db5e53422d816" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogTriangle</definition>
+        <argsstring>(Int32, Int32, Int32, Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogTriangle</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="216" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a6863598395ed814db4b95a37014ac275" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogUnpackRGB</definition>
+        <argsstring>(uInt32, uInt8 &amp;, uInt8 &amp;, uInt8 &amp;)</argsstring>
+        <name>ogUnpackRGB</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="217" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a870915ea287827566edd5fa2a0d164f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogVFlip</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogVFlip</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="218" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1ad7ec44c3504c7f11c101b130490af29f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::ogVLine</definition>
+        <argsstring>(Int32, Int32, Int32, uInt32)</argsstring>
+        <name>ogVLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="219" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTScreen_1a9b83cc539a124a7f14b02ddd04b9de72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TScreen::setupMode</definition>
+        <argsstring>(uInt16)</argsstring>
+        <name>setupMode</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="231" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTScreen_1a94de7b7f7eab5bd744333967d3a376b3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>TScreen::TScreen</definition>
+        <argsstring>(void)</argsstring>
+        <name>TScreen</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="230" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classTScreen_1a6679aeb2b33e28a983b0327a0482c394" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>TScreen::~TScreen</definition>
+        <argsstring>(void)</argsstring>
+        <name>~TScreen</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="232" column="5"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classTGfx0_1a13f1379d8663907360596eaf3ec0874d" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* TGfx0::Buffer</definition>
+        <argsstring></argsstring>
+        <name>Buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="173" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a08505b7f34eefb5ce02392301dff97b0" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> *</type>
+        <definition>uInt32* TGfx0::LineOfs</definition>
+        <argsstring></argsstring>
+        <name>LineOfs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="174" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classTGfx0_1a98a72ea99a45c5ae0fa2d6291fb82ea0" prot="public" static="no" mutable="no">
+        <type><ref refid="structTRGB" kindref="compound">TRGB</ref> *</type>
+        <definition>TRGB* TGfx0::pal</definition>
+        <argsstring></argsstring>
+        <name>pal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="175" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classTGfx0_1a23ef525f10399416f9c8f434969ea9d4" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::aaRawLine</definition>
+        <argsstring>(uInt32, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>aaRawLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="171" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a7b696d5a26692e7907a496e9bd3e6096" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool TGfx0::clipLine</definition>
+        <argsstring>(Int32 &amp;, Int32 &amp;, Int32 &amp;, Int32 &amp;)</argsstring>
+        <name>clipLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref> &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="169" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classTGfx0_1a5984d0d4c8a8c93f527a22a79aead5bd" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void TGfx0::rawLine</definition>
+        <argsstring>(uInt32, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>rawLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="170" column="10"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>TScreen</label>
+        <link refid="classTScreen"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>TGfx0</label>
+        <link refid="classTGfx0"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="4">
+        <label>TMode_Rec</label>
+        <link refid="structTMode__Rec"/>
+      </node>
+      <node id="1">
+        <label>TScreen</label>
+        <link refid="classTScreen"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>#ModeRec</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>#VESARec</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>TVESA_Rec</label>
+        <link refid="structTVESA__Rec"/>
+      </node>
+      <node id="2">
+        <label>TGfx0</label>
+        <link refid="classTGfx0"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>#Owner</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+pal</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>TRGB</label>
+        <link refid="structTRGB"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="224" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="224" bodyend="233"/>
+    <listofallmembers>
+      <member refid="classTGfx0_1a23ef525f10399416f9c8f434969ea9d4" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>aaRawLine</name></member>
+      <member refid="classTGfx0_1a78cc68d207e2742dc4742ddfa65ed580" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>AntiAlias</name></member>
+      <member refid="classTGfx0_1acb051caed2a384a770f37698cf941a05" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>BlueFieldPosition</name></member>
+      <member refid="classTGfx0_1af973497d9581ec5990dd7e2a7c32a941" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>BlueShifter</name></member>
+      <member refid="classTGfx0_1a93c1df656df3deb3f1464ea8b42fd66f" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>BPP</name></member>
+      <member refid="classTGfx0_1a1eced7c241fa3cbc4c1a3fa6f643c1da" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>bSize</name></member>
+      <member refid="classTGfx0_1a13f1379d8663907360596eaf3ec0874d" prot="public" virt="non-virtual"><scope>TScreen</scope><name>Buffer</name></member>
+      <member refid="classTGfx0_1a7b696d5a26692e7907a496e9bd3e6096" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>clipLine</name></member>
+      <member refid="classTGfx0_1aa47b7d1266341b92bddeed6637919164" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>DataState</name></member>
+      <member refid="classTGfx0_1af9023f5a6a3decc2e316d299f3fa3a0c" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>GreenFieldPosition</name></member>
+      <member refid="classTGfx0_1af7de50ef072a87c992395661a0464242" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>GreenShifter</name></member>
+      <member refid="classTScreen_1a46e7909ee6ecc88047ea8491ca99853c" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>InGraphics</name></member>
+      <member refid="classTGfx0_1a08505b7f34eefb5ce02392301dff97b0" prot="public" virt="non-virtual"><scope>TScreen</scope><name>LineOfs</name></member>
+      <member refid="classTGfx0_1a063c0df0c3532a740de39c670cd19b82" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>lSize</name></member>
+      <member refid="classTGfx0_1a502650cb072e21052fbaddbbd3435ced" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>MaxX</name></member>
+      <member refid="classTGfx0_1a1b0c7a2fb757986a97320ee684f2d0cb" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>MaxY</name></member>
+      <member refid="classTScreen_1a852c621313692028ee0b114070865cbc" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>ModeRec</name></member>
+      <member refid="classTGfx0_1aa1a3d766d828289bde3ff9f4a68c7eae" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogAlias</name></member>
+      <member refid="classTGfx0_1a29f234c3fbc13a3a2b9420e7ffaf66f9" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogArc</name></member>
+      <member refid="classTGfx0_1a27e34894eb8b4420020e672afb5fe5fc" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogBSpline</name></member>
+      <member refid="classTGfx0_1ac7ceb6f0684c426f1f4aa6991823c931" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogCircle</name></member>
+      <member refid="classTGfx0_1af5e61dab8ddc935fbc33f3abafc4881a" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogClear</name></member>
+      <member refid="classTGfx0_1aded39fd47cee6bde9135bc03f34fc52a" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogClone</name></member>
+      <member refid="classTGfx0_1aa03f3d9137a783ad6e9434e2deadecda" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogCopy</name></member>
+      <member refid="classTGfx0_1ab82405bdce96235a0462d6b4f10ebe5e" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogCopyBuf</name></member>
+      <member refid="classTGfx0_1a3c1c2552e15719ecdf03aa33a88078d8" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogCreate</name></member>
+      <member refid="classTGfx0_1aec99fe0773db7377faea0bb8b9114abe" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogCubicBezierCurve</name></member>
+      <member refid="classTGfx0_1aa233f3f5170efebbcbf8ccba1c301ef2" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogCurve</name></member>
+      <member refid="classTGfx0_1ab869fe252f4cf79a9210f4d0b39b36af" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogFillCircle</name></member>
+      <member refid="classTGfx0_1a35a3dde4b236d161d516a0b7f02e17d5" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogFillConvexPolygon</name></member>
+      <member refid="classTGfx0_1a9f239b7cfd4215a2adccb2f5a9b3e1bf" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogFillPolygon</name></member>
+      <member refid="classTGfx0_1a018cdefc109e5273cf38bb216c44ba57" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogFillRect</name></member>
+      <member refid="classTGfx0_1a992619f2b3490a3973c910d83f1f5475" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogFillTriangle</name></member>
+      <member refid="classTGfx0_1ae7458dffe0443434bf0f4a70760ac827" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetAntiAlias</name></member>
+      <member refid="classTGfx0_1a8d65fe8297d6b8f342213415838db371" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetBPP</name></member>
+      <member refid="classTGfx0_1a1cb20fb2753e02f14aa5e389fe232e12" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetDataState</name></member>
+      <member refid="classTGfx0_1a64b0d472d56712b5d92756bb98ce9286" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetMaxX</name></member>
+      <member refid="classTGfx0_1afae719e4d9255cc21d763b817ac0d7d5" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetMaxY</name></member>
+      <member refid="classTGfx0_1a2f5cc9ef42b5377024b81271c7dd9e63" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetPal</name></member>
+      <member refid="classTGfx0_1a42281e8f32e5459dfba006a2201cfcab" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetPixel</name></member>
+      <member refid="classTGfx0_1a2343a53d699b2e94ca83fd32a464f5b4" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetPixFmt</name></member>
+      <member refid="classTGfx0_1aaaacdda37ac782492277ebcf1986fd97" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogGetTransparentColor</name></member>
+      <member refid="classTGfx0_1a0867cd3d1e77053802beaed51cc89865" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogHFlip</name></member>
+      <member refid="classTGfx0_1acc3f77c5297734fab2d47bf7dcf9e094" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogHLine</name></member>
+      <member refid="classTGfx0_1ac60359a77047dfdede8c1fb4a82d6f5e" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogLine</name></member>
+      <member refid="classTGfx0_1a3221e7bcfc1f4804a375e118fe84cfe7" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogLoadPal</name></member>
+      <member refid="classTGfx0_1a7d5b0589724c42418e140c56c1eae8a6" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogPolygon</name></member>
+      <member refid="classTGfx0_1a28aeb576aef53a0988fd96000e70e969" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogRect</name></member>
+      <member refid="classTGfx0_1ad838d0d70b6cc833d5eaf2e07fb18e9d" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogRGB</name></member>
+      <member refid="classTGfx0_1af00f32ca6bab8cbb83baa0507137dc0a" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogSavePal</name></member>
+      <member refid="classTGfx0_1a08b171a2f918a7b605780470990995f0" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogScaleBuf</name></member>
+      <member refid="classTGfx0_1a00490fc4053f1b1b64538dcb21f4bfd1" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogSetAntiAlias</name></member>
+      <member refid="classTGfx0_1ae790f36e15b95cfdce164deaa212f287" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogSetPixel</name></member>
+      <member refid="classTGfx0_1af49b13b73dd2bdab866fdbc9f7f28729" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogSetRGBPalette</name></member>
+      <member refid="classTGfx0_1a2cd624dc55efef0b3dcc7108d169c572" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogSetTransparentColor</name></member>
+      <member refid="classTGfx0_1af20945fa17d2b3147262a7e6e429dab0" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogSpline</name></member>
+      <member refid="classTGfx0_1ab7bc50f1a726c1484b7db5e53422d816" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogTriangle</name></member>
+      <member refid="classTGfx0_1a6863598395ed814db4b95a37014ac275" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogUnpackRGB</name></member>
+      <member refid="classTGfx0_1a870915ea287827566edd5fa2a0d164f9" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogVFlip</name></member>
+      <member refid="classTGfx0_1ad7ec44c3504c7f11c101b130490af29f" prot="public" virt="non-virtual"><scope>TScreen</scope><name>ogVLine</name></member>
+      <member refid="classTGfx0_1a59c264f41f08a8626bb21b1b8ea5f123" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>Owner</name></member>
+      <member refid="classTGfx0_1a98a72ea99a45c5ae0fa2d6291fb82ea0" prot="public" virt="non-virtual"><scope>TScreen</scope><name>pal</name></member>
+      <member refid="classTGfx0_1a5984d0d4c8a8c93f527a22a79aead5bd" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>rawLine</name></member>
+      <member refid="classTGfx0_1ad6c3ae24d482cb73d699d7c75b102c51" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>RedFieldPosition</name></member>
+      <member refid="classTGfx0_1ac992f15cb95c84257efa9db47767aff0" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>RedShifter</name></member>
+      <member refid="classTScreen_1a9b83cc539a124a7f14b02ddd04b9de72" prot="public" virt="non-virtual"><scope>TScreen</scope><name>setupMode</name></member>
+      <member refid="classTGfx0_1a227fa6ec50dfe445c162c7e1c5722f0b" prot="public" virt="non-virtual"><scope>TScreen</scope><name>TGfx0</name></member>
+      <member refid="classTGfx0_1a820b6636804eb064a493dcdc27d9a981" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>TransparentColor</name></member>
+      <member refid="classTScreen_1a94de7b7f7eab5bd744333967d3a376b3" prot="public" virt="non-virtual"><scope>TScreen</scope><name>TScreen</name></member>
+      <member refid="classTGfx0_1a120ab8833470adf2655196a86861315a" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>uInt8AlphaFieldPosition</name></member>
+      <member refid="classTGfx0_1a46c8fc590ff1c40b6795294911140c84" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>uInt8AlphaShifter</name></member>
+      <member refid="classTScreen_1a18091a36725045a627e7f31f73885ec2" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>VESARec</name></member>
+      <member refid="classTGfx0_1abe0efc0848201c25630dfb652161ed72" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>xRes</name></member>
+      <member refid="classTGfx0_1a5a519d7a8cfcef2c8ab24d9e0ccba0b4" prot="protected" virt="non-virtual"><scope>TScreen</scope><name>yRes</name></member>
+      <member refid="classTGfx0_1a6088c85e1fd371db3fb9dff1450be3ea" prot="public" virt="non-virtual"><scope>TScreen</scope><name>~TGfx0</name></member>
+      <member refid="classTScreen_1a6679aeb2b33e28a983b0327a0482c394" prot="public" virt="non-virtual"><scope>TScreen</scope><name>~TScreen</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdisk__if" kind="struct" language="C++" prot="public">
+    <compoundname>disk_if</compoundname>
+    <includes refid="fat__access_8h" local="no">fat_access.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdisk__if_1a70c0bb1beb23681d5dd78fb40f78454b" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__access_8h_1aaf031f5384342c34f5a446c5dd5b5ed3" kindref="member">fn_diskio_read</ref></type>
+        <definition>fn_diskio_read disk_if::read_media</definition>
+        <argsstring></argsstring>
+        <name>read_media</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="33" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdisk__if_1a94687066cd6e4df9e905358b73c67603" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__access_8h_1a8532f8239b515a20628a74e37d5a598e" kindref="member">fn_diskio_write</ref></type>
+        <definition>fn_diskio_write disk_if::write_media</definition>
+        <argsstring></argsstring>
+        <name>write_media</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="34" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>disk_if</label>
+        <link refid="structdisk__if"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="31" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="30" bodyend="35"/>
+    <listofallmembers>
+      <member refid="structdisk__if_1a70c0bb1beb23681d5dd78fb40f78454b" prot="public" virt="non-virtual"><scope>disk_if</scope><name>read_media</name></member>
+      <member refid="structdisk__if_1a94687066cd6e4df9e905358b73c67603" prot="public" virt="non-virtual"><scope>disk_if</scope><name>write_media</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

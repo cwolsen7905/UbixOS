@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf__GNU__Hash__Header" kind="struct" language="C++" prot="public">
+    <compoundname>Elf_GNU_Hash_Header</compoundname>
+    <includes refid="elf__common_8h" local="no">elf_common.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf__GNU__Hash__Header_1a0184f6ba61363afad50329259a4687e5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t Elf_GNU_Hash_Header::gh_maskwords</definition>
+        <argsstring></argsstring>
+        <name>gh_maskwords</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" line="113" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf__GNU__Hash__Header_1abb44788f90bfe6b81e54716dcc16a7ec" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t Elf_GNU_Hash_Header::gh_nbuckets</definition>
+        <argsstring></argsstring>
+        <name>gh_nbuckets</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" line="111" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf__GNU__Hash__Header_1aad9ee02e3fc3d5ed85afd8a46f1291b6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t Elf_GNU_Hash_Header::gh_shift2</definition>
+        <argsstring></argsstring>
+        <name>gh_shift2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" line="114" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf__GNU__Hash__Header_1ae9573901a181a8155acede719f72856d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t Elf_GNU_Hash_Header::gh_symndx</definition>
+        <argsstring></argsstring>
+        <name>gh_symndx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" line="112" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf_GNU_Hash_Header</label>
+        <link refid="structElf__GNU__Hash__Header"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" line="110" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf_common.h" bodystart="110" bodyend="115"/>
+    <listofallmembers>
+      <member refid="structElf__GNU__Hash__Header_1a0184f6ba61363afad50329259a4687e5" prot="public" virt="non-virtual"><scope>Elf_GNU_Hash_Header</scope><name>gh_maskwords</name></member>
+      <member refid="structElf__GNU__Hash__Header_1abb44788f90bfe6b81e54716dcc16a7ec" prot="public" virt="non-virtual"><scope>Elf_GNU_Hash_Header</scope><name>gh_nbuckets</name></member>
+      <member refid="structElf__GNU__Hash__Header_1aad9ee02e3fc3d5ed85afd8a46f1291b6" prot="public" virt="non-virtual"><scope>Elf_GNU_Hash_Header</scope><name>gh_shift2</name></member>
+      <member refid="structElf__GNU__Hash__Header_1ae9573901a181a8155acede719f72856d" prot="public" virt="non-virtual"><scope>Elf_GNU_Hash_Header</scope><name>gh_symndx</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__mempool" kind="group">
+    <compoundname>mempool</compoundname>
+    <title>Memory pools</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__mempool_1ga5e2498f6c17746c1fe7153de5f7f275a" prot="public" static="no">
+        <name>LWIP_MEMPOOL_ALLOC</name>
+        <param><defname>name</defname></param>
+        <initializer><ref refid="memp_8c_1a348c83ee972f1edf7296a1cdf1d75f22" kindref="member">memp_malloc_pool</ref>(&amp;memp_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Allocate from a private memory pool </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/memp.h" line="122" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/memp.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mempool_1ga5b1fb3ce7942432d87cc948b1c5ed6cb" prot="public" static="no">
+        <name>LWIP_MEMPOOL_DECLARE</name>
+        <param><defname>name</defname></param>
+        <param><defname>num</defname></param>
+        <param><defname>size</defname></param>
+        <param><defname>desc</defname></param>
+        <initializer><ref refid="mem_8c_1aa33f9b7cf221a9cde8fa715a51d3bfc7" kindref="member">LWIP_DECLARE_MEMORY_ALIGNED</ref>(memp_memory_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> ## _base, ((num) * (<ref refid="memp__priv_8h_1a7f8c378e0581aa2dc491cff52ae4fce2" kindref="member">MEMP_SIZE</ref> + <ref refid="memp__std_8h_1a561ce9de860eb47d034ceeb7eff3b20c" kindref="member">MEMP_ALIGN_SIZE</ref>(size)))); \
+    \
+  <ref refid="memp__priv_8h_1a9373cb7cc6e658a60cec6ca57173a72d" kindref="member">LWIP_MEMPOOL_DECLARE_STATS_INSTANCE</ref>(memp_stats_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>) \
+    \
+  static struct <ref refid="structmemp" kindref="compound">memp</ref> *memp_tab_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>; \
+    \
+  <ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structmemp__desc" kindref="compound">memp_desc</ref> memp_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> = { \
+    <ref refid="memp__priv_8h_1aabec8ab3418486aed704fb8bb933da42" kindref="member">DECLARE_LWIP_MEMPOOL_DESC</ref>(desc) \
+    <ref refid="memp__priv_8h_1a46723c1d1d900d5f23e5bde91d22d8be" kindref="member">LWIP_MEMPOOL_DECLARE_STATS_REFERENCE</ref>(memp_stats_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>) \
+    <ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(size), \
+    (num), \
+    memp_memory_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> ## _base, \
+    &amp;memp_tab_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> \
+  };</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Declare a private memory pool Private mempools example: .h: only when pool is used in multiple .c files: <ref refid="group__mempool_1ga92fc8c29d0e2654f2a2ecc43b2b7fb13" kindref="member">LWIP_MEMPOOL_PROTOTYPE(my_private_pool)</ref>; .c:<itemizedlist>
+<listitem><para>in global variables section: LWIP_MEMPOOL_DECLARE(my_private_pool, 10, sizeof(foo), &quot;Some description&quot;)</para>
+</listitem><listitem><para>call ONCE before using pool (e.g. in some init() function): <ref refid="group__mempool_1ga60b51c06d276f525b35d8b7abd4dcb41" kindref="member">LWIP_MEMPOOL_INIT(my_private_pool)</ref>;</para>
+</listitem><listitem><para>allocate: void* my_new_mem = <ref refid="group__mempool_1ga5e2498f6c17746c1fe7153de5f7f275a" kindref="member">LWIP_MEMPOOL_ALLOC(my_private_pool)</ref>;</para>
+</listitem><listitem><para>free: <ref refid="group__mempool_1gaa43d114dd702fbd8f1db18474ea93a04" kindref="member">LWIP_MEMPOOL_FREE(my_private_pool, my_new_mem)</ref>;</para>
+</listitem></itemizedlist>
+</para>
+<para>To relocate a pool, declare it as extern in <ref refid="cc_8h" kindref="compound">cc.h</ref>. Example for GCC: extern u8_t <bold>attribute</bold>((section(&quot;.onchip_mem&quot;))) memp_memory_my_private_pool[]; </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/memp.h" line="95" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/memp.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mempool_1gaa43d114dd702fbd8f1db18474ea93a04" prot="public" static="no">
+        <name>LWIP_MEMPOOL_FREE</name>
+        <param><defname>name</defname></param>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="memp_8c_1a62f8c3c907743e34eee3cdac7fa1eaa5" kindref="member">memp_free_pool</ref>(&amp;memp_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>, (x))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Free element from a private memory pool </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/memp.h" line="127" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/memp.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mempool_1ga60b51c06d276f525b35d8b7abd4dcb41" prot="public" static="no">
+        <name>LWIP_MEMPOOL_INIT</name>
+        <param><defname>name</defname></param>
+        <initializer><ref refid="memp_8c_1a6416303426d05526bed33f241fa6ecd7" kindref="member">memp_init_pool</ref>(&amp;memp_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialize a private memory pool </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/memp.h" line="117" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/memp.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mempool_1ga92fc8c29d0e2654f2a2ecc43b2b7fb13" prot="public" static="no">
+        <name>LWIP_MEMPOOL_PROTOTYPE</name>
+        <param><defname>name</defname></param>
+        <initializer>extern <ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structmemp__desc" kindref="compound">memp_desc</ref> memp_ ## <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Declare prototype for private memory pool if it is used in multiple files </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/memp.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/memp.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Custom memory pools </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

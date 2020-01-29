@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmqtt__connect__client__info__t" kind="struct" language="C++" prot="public">
+    <compoundname>mqtt_connect_client_info_t</compoundname>
+    <includes refid="mqtt_8h" local="no">mqtt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1ad35f7850df21f001d5c5ffaa1a18c05a" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        <definition>const char* mqtt_connect_client_info_t::client_id</definition>
+        <argsstring></argsstring>
+        <name>client_id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Client identifier, must be set by caller </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="62" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1a8f68efe91c5311418151256c96102d4b" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        <definition>const char* mqtt_connect_client_info_t::client_pass</definition>
+        <argsstring></argsstring>
+        <name>client_pass</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="65" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1aec961673d5c3e8dc853c91f30d9333b5" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        <definition>const char* mqtt_connect_client_info_t::client_user</definition>
+        <argsstring></argsstring>
+        <name>client_user</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>User name and password, set to NULL if not used </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="64" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1ac80262a7456812e9eefffd8c3b9ac21a" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t mqtt_connect_client_info_t::keep_alive</definition>
+        <argsstring></argsstring>
+        <name>keep_alive</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>keep alive time in seconds, 0 to disable keep alive functionality </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1a925fcebd15555afdc0820e196e2fd3a7" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        <definition>const char* mqtt_connect_client_info_t::will_msg</definition>
+        <argsstring></argsstring>
+        <name>will_msg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="71" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1a07954934f4fecf54fa190997848229d9" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t mqtt_connect_client_info_t::will_qos</definition>
+        <argsstring></argsstring>
+        <name>will_qos</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="72" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1a49c10873f44d7534140a63eef2a6a4e3" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t mqtt_connect_client_info_t::will_retain</definition>
+        <argsstring></argsstring>
+        <name>will_retain</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="73" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__connect__client__info__t_1a32e77415460752ba0484eb3ba0faf0c8" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+        <definition>const char* mqtt_connect_client_info_t::will_topic</definition>
+        <argsstring></argsstring>
+        <name>will_topic</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>will topic, set to NULL if will is not to be used, will_msg, will_qos and will retain are then ignored </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="70" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Client information and connection parameters </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>mqtt_connect_client_info_t</label>
+        <link refid="structmqtt__connect__client__info__t"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="60" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="60" bodyend="74"/>
+    <listofallmembers>
+      <member refid="structmqtt__connect__client__info__t_1ad35f7850df21f001d5c5ffaa1a18c05a" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>client_id</name></member>
+      <member refid="structmqtt__connect__client__info__t_1a8f68efe91c5311418151256c96102d4b" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>client_pass</name></member>
+      <member refid="structmqtt__connect__client__info__t_1aec961673d5c3e8dc853c91f30d9333b5" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>client_user</name></member>
+      <member refid="structmqtt__connect__client__info__t_1ac80262a7456812e9eefffd8c3b9ac21a" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>keep_alive</name></member>
+      <member refid="structmqtt__connect__client__info__t_1a925fcebd15555afdc0820e196e2fd3a7" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>will_msg</name></member>
+      <member refid="structmqtt__connect__client__info__t_1a07954934f4fecf54fa190997848229d9" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>will_qos</name></member>
+      <member refid="structmqtt__connect__client__info__t_1a49c10873f44d7534140a63eef2a6a4e3" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>will_retain</name></member>
+      <member refid="structmqtt__connect__client__info__t_1a32e77415460752ba0484eb3ba0faf0c8" prot="public" virt="non-virtual"><scope>mqtt_connect_client_info_t</scope><name>will_topic</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="i386_2atkbd_8h" kind="file" language="C++">
+    <compoundname>atkbd.h</compoundname>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="i386_2atkbd_8h_1ae9291beaadb484f309dfccff3dce69ac" prot="public" static="no">
+        <name>altKey</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2atkbd_8h_1a08ce9ab0c3080d42109d5ed31d91e661" prot="public" static="no">
+        <name>controlKey</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="33" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2atkbd_8h_1a71457dc5a79f320c24ad5e6c4c44c697" prot="public" static="no">
+        <name>ledCapslock</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2atkbd_8h_1a6ae8c35d97c9e5d6103564f33c65aa69" prot="public" static="no">
+        <name>ledNumlock</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2atkbd_8h_1a503a751afb3f4f69cb56e86c2ca6c2fb" prot="public" static="no">
+        <name>ledScrolllock</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="i386_2atkbd_8h_1aac3515cd6c932a4ee8b51f00262dbd2d" prot="public" static="no">
+        <name>shiftKey</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="32" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="i386_2atkbd_8h_1ad67d988f6347d52a6dc9f28992521e37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int atkbd_init</definition>
+        <argsstring>()</argsstring>
+        <name>atkbd_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="39" column="5" bodyfile="C:/Dev/git/UbixOS/sys/isa/atkbd.c" bodystart="153" bodyend="172" declfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" declline="39" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="i386_2atkbd_8h_1a583a241acfdbcbe82f25db0f95b0c92d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void atkbd_isr</definition>
+        <argsstring>()</argsstring>
+        <name>atkbd_isr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="40" column="6" declfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" declline="40" declcolumn="6"/>
+        <referencedby refid="atkbd_8c_1ad67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="153" endline="172">atkbd_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="i386_2atkbd_8h_1a0a638d89ef3b126799ec1503c743a723" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void keyboardHandler</definition>
+        <argsstring>()</argsstring>
+        <name>keyboardHandler</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="42" column="6" declfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" declline="42" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="i386_2atkbd_8h_1a75680b4d84b721b03a3454677758a21e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setLED</definition>
+        <argsstring>()</argsstring>
+        <name>setLED</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" line="43" column="6" bodyfile="C:/Dev/git/UbixOS/sys/isa/atkbd.c" bodystart="336" bodyend="343" declfile="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h" declline="43" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_ISA_ATKBD_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_ISA_ATKBD_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="i386_2atkbd_8h_1aac3515cd6c932a4ee8b51f00262dbd2d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>shiftKey<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="i386_2atkbd_8h_1a08ce9ab0c3080d42109d5ed31d91e661" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>controlKey<sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="i386_2atkbd_8h_1ae9291beaadb484f309dfccff3dce69ac" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>altKey<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="i386_2atkbd_8h_1a6ae8c35d97c9e5d6103564f33c65aa69" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ledNumlock<sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="i386_2atkbd_8h_1a503a751afb3f4f69cb56e86c2ca6c2fb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ledScrolllock<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="i386_2atkbd_8h_1a71457dc5a79f320c24ad5e6c4c44c697" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ledCapslock<sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="i386_2atkbd_8h_1ad67d988f6347d52a6dc9f28992521e37" kindref="member">atkbd_init</ref>();</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="i386_2atkbd_8h_1a583a241acfdbcbe82f25db0f95b0c92d" kindref="member">atkbd_isr</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="i386_2atkbd_8h_1a0a638d89ef3b126799ec1503c743a723" kindref="member">keyboardHandler</ref>();</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="i386_2atkbd_8h_1a75680b4d84b721b03a3454677758a21e" kindref="member">setLED</ref>();</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>$Log:<sp/>atkbd.h,v<sp/>$</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"></highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"></highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:39<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"></highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/29<sp/>21:32:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>My<sp/>quick<sp/>lunchs<sp/>breaks<sp/>worth<sp/>of<sp/>updates....</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"></highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/07/09<sp/>13:34:51<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>keyboard:<sp/>keyboardInit<sp/>to<sp/>atkbd_init</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>Adjusted<sp/>initialization<sp/>routines</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"></highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>14:57:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"></highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/i386/atkbd.h"/>
+  </compounddef>
+</doxygen>

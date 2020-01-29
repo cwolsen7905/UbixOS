@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmprotect__args" kind="struct" language="C++" prot="public">
+    <compoundname>mprotect_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmprotect__args_1ae8c8335a3b9b90e3968d9105ea2f280d" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+        <definition>const void* mprotect_args::addr</definition>
+        <argsstring></argsstring>
+        <name>addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="298" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="298" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1afd7dfb11f5876e3a32af44bc6ca4c49f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mprotect_args::addr_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>addr_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="297" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="297" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a4cddc46145796374b69a19274a93ddf1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mprotect_args::addr_r_[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const void *) ? 0 :sizeof(register_t) - sizeof(const void *))]</argsstring>
+        <name>addr_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="299" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="299" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a23173f4051368c4773200b6e1f135f49" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t mprotect_args::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="301" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="301" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a9bfa58f49f7be91d1fd48b868228b180" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mprotect_args::len_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>len_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="300" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="300" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a726eeee2fafae3f286d068b8edfb6552" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mprotect_args::len_r_[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</argsstring>
+        <name>len_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="302" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="302" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a9f0a2d7ff6e4f715b3c1d4321cd1d487" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mprotect_args::prot</definition>
+        <argsstring></argsstring>
+        <name>prot</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="304" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="304" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a6b327d1d0fa228cff5766b893895295d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mprotect_args::prot_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>prot_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="303" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="303" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmprotect__args_1a0a2d84f1991ed8a19de1c5d1816cd264" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mprotect_args::prot_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>prot_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="305" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="305" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>mprotect_args</label>
+        <link refid="structmprotect__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="296" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="296" bodyend="306"/>
+    <listofallmembers>
+      <member refid="structmprotect__args_1ae8c8335a3b9b90e3968d9105ea2f280d" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>addr</name></member>
+      <member refid="structmprotect__args_1afd7dfb11f5876e3a32af44bc6ca4c49f" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>addr_l_</name></member>
+      <member refid="structmprotect__args_1a4cddc46145796374b69a19274a93ddf1" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>addr_r_</name></member>
+      <member refid="structmprotect__args_1a23173f4051368c4773200b6e1f135f49" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>len</name></member>
+      <member refid="structmprotect__args_1a9bfa58f49f7be91d1fd48b868228b180" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>len_l_</name></member>
+      <member refid="structmprotect__args_1a726eeee2fafae3f286d068b8edfb6552" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>len_r_</name></member>
+      <member refid="structmprotect__args_1a9f0a2d7ff6e4f715b3c1d4321cd1d487" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>prot</name></member>
+      <member refid="structmprotect__args_1a6b327d1d0fa228cff5766b893895295d" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>prot_l_</name></member>
+      <member refid="structmprotect__args_1a0a2d84f1991ed8a19de1c5d1816cd264" prot="public" virt="non-virtual"><scope>mprotect_args</scope><name>prot_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,808 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ppp__opts_8h" kind="file" language="C++">
+    <compoundname>ppp_opts.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includedby refid="ccp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/ccp.h</includedby>
+    <includedby refid="chap-md5_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/chap-md5.h</includedby>
+    <includedby refid="chap-new_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/chap-new.h</includedby>
+    <includedby refid="chap__ms_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/chap_ms.h</includedby>
+    <includedby refid="eap_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/eap.h</includedby>
+    <includedby refid="ecp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/ecp.h</includedby>
+    <includedby refid="eui64_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/eui64.h</includedby>
+    <includedby refid="fsm_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/fsm.h</includedby>
+    <includedby refid="ipcp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/ipcp.h</includedby>
+    <includedby refid="ipv6cp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/ipv6cp.h</includedby>
+    <includedby refid="lcp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/lcp.h</includedby>
+    <includedby refid="magic_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/magic.h</includedby>
+    <includedby refid="mppe_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/mppe.h</includedby>
+    <includedby refid="arc4_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/arc4.h</includedby>
+    <includedby refid="des_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/des.h</includedby>
+    <includedby refid="md4_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/md4.h</includedby>
+    <includedby refid="md5_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/md5.h</includedby>
+    <includedby refid="sha1_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/sha1.h</includedby>
+    <includedby refid="ppp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp.h</includedby>
+    <includedby refid="ppp__impl_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_impl.h</includedby>
+    <includedby refid="pppapi_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/pppapi.h</includedby>
+    <includedby refid="pppcrypt_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/pppcrypt.h</includedby>
+    <includedby refid="pppdebug_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/pppdebug.h</includedby>
+    <includedby refid="pppoe_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/pppoe.h</includedby>
+    <includedby refid="pppol2tp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/pppol2tp.h</includedby>
+    <includedby refid="pppos_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/pppos.h</includedby>
+    <includedby refid="upap_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/upap.h</includedby>
+    <includedby refid="vj_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ppp/vj.h</includedby>
+    <includedby refid="core_2init_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/init.c</includedby>
+    <includedby refid="memp_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/memp.c</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h</label>
+        <link refid="ppp__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/fsm.h</label>
+        <link refid="fsm_8h"/>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppol2tp.h</label>
+        <link refid="pppol2tp_8h"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppoe.h</label>
+        <link refid="pppoe_8h"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppapi.h</label>
+        <link refid="pppapi_8h"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ipcp.h</label>
+        <link refid="ipcp_8h"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/chap-md5.h</label>
+        <link refid="chap-md5_8h"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/md5.h</label>
+        <link refid="md5_8h"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/chap_ms.h</label>
+        <link refid="chap__ms_8h"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/sha1.h</label>
+        <link refid="sha1_8h"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ipv6cp.h</label>
+        <link refid="ipv6cp_8h"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppcrypt.h</label>
+        <link refid="pppcrypt_8h"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/lcp.h</label>
+        <link refid="lcp_8h"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp.h</label>
+        <link refid="ppp_8h"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppos.h</label>
+        <link refid="pppos_8h"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/eui64.h</label>
+        <link refid="eui64_8h"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/md4.h</label>
+        <link refid="md4_8h"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/eap.h</label>
+        <link refid="eap_8h"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/upap.h</label>
+        <link refid="upap_8h"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ccp.h</label>
+        <link refid="ccp_8h"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/chap-new.h</label>
+        <link refid="chap-new_8h"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ecp.h</label>
+        <link refid="ecp_8h"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppdebug.h</label>
+        <link refid="pppdebug_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h</label>
+        <link refid="ppp__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_impl.h</label>
+        <link refid="ppp__impl_8h"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/mppe.h</label>
+        <link refid="mppe_8h"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/vj.h</label>
+        <link refid="vj_8h"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/magic.h</label>
+        <link refid="magic_8h"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/arc4.h</label>
+        <link refid="arc4_8h"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/des.h</label>
+        <link refid="des_8h"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ppp__opts_8h_1a5a03fca0248c5e630f89afb39d2f0065" prot="public" static="no">
+        <name>LWIP_PPP_API</name>
+        <initializer>(<ref refid="ppp__opts_8h_1a746c0ebaef5399987d53a1426eba6273" kindref="member">PPP_SUPPORT</ref> &amp;&amp; (<ref refid="opt_8h_1ae00ba99de94a5bf84d832be8976df59b" kindref="member">NO_SYS</ref> == 0))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_PPP_API==1: Enable PPP API (in pppapi.c) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ppp__opts_8h_1a6721ea95cbd6afd6968470c2423b6482" prot="public" static="no">
+        <name>MEMP_NUM_PPP_PCB</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_PPP_PCB: the number of simultaneously active PPP connections (requires the PPP_SUPPORT option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ppp__opts_8h_1a746c0ebaef5399987d53a1426eba6273" prot="public" static="no">
+        <name>PPP_SUPPORT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PPP_SUPPORT==1: Enable PPP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ppp__opts_8h_1a71adab1a13b02856a922cf3edbda71b1" prot="public" static="no">
+        <name>PPPOE_SUPPORT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PPPOE_SUPPORT==1: Enable PPP Over Ethernet </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ppp__opts_8h_1a07cb038932116ecff7f0533d2cacc2b9" prot="public" static="no">
+        <name>PPPOL2TP_AUTH_SUPPORT</name>
+        <initializer><ref refid="ppp__opts_8h_1a65f133dc4016cc42044f1bd2b941038f" kindref="member">PPPOL2TP_SUPPORT</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PPPOL2TP_AUTH_SUPPORT==1: Enable PPP Over L2TP Auth (enable MD5 support) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ppp__opts_8h_1a65f133dc4016cc42044f1bd2b941038f" prot="public" static="no">
+        <name>PPPOL2TP_SUPPORT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PPPOL2TP_SUPPORT==1: Enable PPP Over L2TP </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ppp__opts_8h_1ade11e60136d3d55e35f917f155dc13b9" prot="public" static="no">
+        <name>PPPOS_SUPPORT</name>
+        <initializer><ref refid="ppp__opts_8h_1a746c0ebaef5399987d53a1426eba6273" kindref="member">PPP_SUPPORT</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PPPOS_SUPPORT==1: Enable PPP Over Serial </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_PPP_OPTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_PPP_OPTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor">#ifndef<sp/>PPP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="ppp__opts_8h_1a746c0ebaef5399987d53a1426eba6273" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="preprocessor">#ifndef<sp/>PPPOE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="ppp__opts_8h_1a71adab1a13b02856a922cf3edbda71b1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPPOE_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="preprocessor">#ifndef<sp/>PPPOL2TP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="ppp__opts_8h_1a65f133dc4016cc42044f1bd2b941038f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPPOL2TP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="preprocessor">#ifndef<sp/>PPPOL2TP_AUTH_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="ppp__opts_8h_1a07cb038932116ecff7f0533d2cacc2b9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPPOL2TP_AUTH_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PPPOL2TP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="preprocessor">#ifndef<sp/>PPPOS_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="ppp__opts_8h_1ade11e60136d3d55e35f917f155dc13b9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPPOS_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PPP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor">#ifndef<sp/>LWIP_PPP_API</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="ppp__opts_8h_1a5a03fca0248c5e630f89afb39d2f0065" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_PPP_API<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PPP_SUPPORT<sp/>&amp;&amp;<sp/>(NO_SYS<sp/>==<sp/>0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor">#ifndef<sp/>MEMP_NUM_PPP_PCB</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="ppp__opts_8h_1a6721ea95cbd6afd6968470c2423b6482" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_PPP_PCB<sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="preprocessor">#ifndef<sp/>MEMP_NUM_PPPOS_INTERFACES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_PPPOS_INTERFACES<sp/><sp/><sp/><sp/><sp/><sp/><sp/>MEMP_NUM_PPP_PCB</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="preprocessor">#ifndef<sp/>MEMP_NUM_PPPOE_INTERFACES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_PPPOE_INTERFACES<sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="preprocessor">#ifndef<sp/>MEMP_NUM_PPPOL2TP_INTERFACES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_PPPOL2TP_INTERFACES<sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="preprocessor">#ifndef<sp/>MEMP_NUM_PPP_API_MSG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_PPP_API_MSG<sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="preprocessor">#ifndef<sp/>PPP_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LWIP_DBG_OFF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="preprocessor">#ifndef<sp/>PPP_INPROC_IRQ_SAFE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_INPROC_IRQ_SAFE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="preprocessor">#ifndef<sp/>PRINTPKT_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PRINTPKT_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="preprocessor">#ifndef<sp/>PPP_IPV4_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_IPV4_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(LWIP_IPV4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="preprocessor">#ifndef<sp/>PPP_IPV6_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_IPV6_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(LWIP_IPV6)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="preprocessor">#ifndef<sp/>PPP_NOTIFY_PHASE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_NOTIFY_PHASE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="preprocessor">#ifndef<sp/>PPP_USE_PBUF_RAM</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_USE_PBUF_RAM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="preprocessor">#ifndef<sp/>PPP_FCS_TABLE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_FCS_TABLE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="preprocessor">#ifndef<sp/>PAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="preprocessor">#ifndef<sp/>CHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="preprocessor">#ifndef<sp/>MSCHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MSCHAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MSCHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MSCHAP<sp/>requires<sp/>CHAP<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight><highlight class="preprocessor">#undef<sp/>CHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MSCHAP_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="preprocessor">#ifndef<sp/>EAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="preprocessor">#ifndef<sp/>CCP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CCP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="preprocessor">#ifndef<sp/>MPPE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MPPE_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MPPE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MPPE<sp/>requires<sp/>CCP<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="preprocessor">#undef<sp/>CCP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CCP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MPPE<sp/>requires<sp/>MSCHAP<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight><highlight class="preprocessor">#undef<sp/>MSCHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MSCHAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MSCHAP<sp/>requires<sp/>CHAP<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight><highlight class="preprocessor">#undef<sp/>CHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MPPE_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="preprocessor">#ifndef<sp/>CBCP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CBCP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="252"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="preprocessor">#ifndef<sp/>ECP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ECP_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="preprocessor">#ifndef<sp/>DEMAND_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEMAND_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="preprocessor">#ifndef<sp/>LQR_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LQR_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="preprocessor">#ifndef<sp/>PPP_SERVER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_SERVER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SERVER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="286"><highlight class="comment"><sp/>*<sp/>PPP_OUR_NAME:<sp/>Our<sp/>name<sp/>for<sp/>authentication<sp/>purposes</highlight></codeline>
+<codeline lineno="287"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>PPP_OUR_NAME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_OUR_NAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;lwIP&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPP_SERVER<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="preprocessor">#ifndef<sp/>VJ_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="297"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VJ_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>VJ<sp/>compression<sp/>is<sp/>only<sp/>supported<sp/>for<sp/>TCP<sp/>over<sp/>IPv4<sp/>over<sp/>PPPoS.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!PPPOS_SUPPORT<sp/>||<sp/>!PPP_IPV4_SUPPORT<sp/>||<sp/>!LWIP_TCP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="301"><highlight class="normal"></highlight><highlight class="preprocessor">#undef<sp/>VJ_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VJ_SUPPORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!PPPOS_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight></codeline>
+<codeline lineno="309"><highlight class="preprocessor">#ifndef<sp/>PPP_MD5_RANDM</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_MD5_RANDM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(CHAP_SUPPORT<sp/>||<sp/>EAP_SUPPORT<sp/>||<sp/>PPPOL2TP_AUTH_SUPPORT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"></highlight></codeline>
+<codeline lineno="338"><highlight class="preprocessor">#ifndef<sp/>LWIP_USE_EXTERNAL_POLARSSL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="339"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_USE_EXTERNAL_POLARSSL<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="340"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="341"><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="preprocessor">#ifndef<sp/>LWIP_USE_EXTERNAL_MBEDTLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="346"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_USE_EXTERNAL_MBEDTLS<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="347"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="348"><highlight class="normal"></highlight></codeline>
+<codeline lineno="349"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="350"><highlight class="comment"><sp/>*<sp/>PPP<sp/>Timeouts</highlight></codeline>
+<codeline lineno="351"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="352"><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="preprocessor">#ifndef<sp/>FSM_DEFTIMEOUT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="357"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FSM_DEFTIMEOUT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="358"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal"></highlight></codeline>
+<codeline lineno="363"><highlight class="preprocessor">#ifndef<sp/>FSM_DEFMAXTERMREQS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="364"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FSM_DEFMAXTERMREQS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="366"><highlight class="normal"></highlight></codeline>
+<codeline lineno="370"><highlight class="preprocessor">#ifndef<sp/>FSM_DEFMAXCONFREQS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="371"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FSM_DEFMAXCONFREQS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="372"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"></highlight></codeline>
+<codeline lineno="377"><highlight class="preprocessor">#ifndef<sp/>FSM_DEFMAXNAKLOOPS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="378"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FSM_DEFMAXNAKLOOPS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="379"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="380"><highlight class="normal"></highlight></codeline>
+<codeline lineno="384"><highlight class="preprocessor">#ifndef<sp/>UPAP_DEFTIMEOUT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="385"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UPAP_DEFTIMEOUT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="386"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="387"><highlight class="normal"></highlight></codeline>
+<codeline lineno="391"><highlight class="preprocessor">#ifndef<sp/>UPAP_DEFTRANSMITS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="392"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UPAP_DEFTRANSMITS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="393"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="394"><highlight class="normal"></highlight></codeline>
+<codeline lineno="395"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SERVER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="396"><highlight class="normal"></highlight></codeline>
+<codeline lineno="399"><highlight class="preprocessor">#ifndef<sp/>UPAP_DEFREQTIME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="400"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UPAP_DEFREQTIME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>30</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="401"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="402"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPP_SERVER<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="403"><highlight class="normal"></highlight></codeline>
+<codeline lineno="407"><highlight class="preprocessor">#ifndef<sp/>CHAP_DEFTIMEOUT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="408"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAP_DEFTIMEOUT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="409"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="410"><highlight class="normal"></highlight></codeline>
+<codeline lineno="414"><highlight class="preprocessor">#ifndef<sp/>CHAP_DEFTRANSMITS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="415"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAP_DEFTRANSMITS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="416"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="417"><highlight class="normal"></highlight></codeline>
+<codeline lineno="418"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SERVER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="419"><highlight class="normal"></highlight></codeline>
+<codeline lineno="422"><highlight class="preprocessor">#ifndef<sp/>CHAP_DEFRECHALLENGETIME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="423"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHAP_DEFRECHALLENGETIME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="424"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="425"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPP_SERVER<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="426"><highlight class="normal"></highlight></codeline>
+<codeline lineno="430"><highlight class="preprocessor">#ifndef<sp/>EAP_DEFREQTIME</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="431"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EAP_DEFREQTIME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="432"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="433"><highlight class="normal"></highlight></codeline>
+<codeline lineno="437"><highlight class="preprocessor">#ifndef<sp/>EAP_DEFALLOWREQ</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="438"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EAP_DEFALLOWREQ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="439"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="440"><highlight class="normal"></highlight></codeline>
+<codeline lineno="441"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SERVER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="442"><highlight class="normal"></highlight></codeline>
+<codeline lineno="445"><highlight class="preprocessor">#ifndef<sp/>EAP_DEFTIMEOUT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="446"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EAP_DEFTIMEOUT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="447"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="448"><highlight class="normal"></highlight></codeline>
+<codeline lineno="452"><highlight class="preprocessor">#ifndef<sp/>EAP_DEFTRANSMITS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="453"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EAP_DEFTRANSMITS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="454"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="455"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPP_SERVER<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="456"><highlight class="normal"></highlight></codeline>
+<codeline lineno="461"><highlight class="preprocessor">#ifndef<sp/>LCP_DEFLOOPBACKFAIL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="462"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LCP_DEFLOOPBACKFAIL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="463"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="464"><highlight class="normal"></highlight></codeline>
+<codeline lineno="468"><highlight class="preprocessor">#ifndef<sp/>LCP_ECHOINTERVAL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="469"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LCP_ECHOINTERVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="470"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="471"><highlight class="normal"></highlight></codeline>
+<codeline lineno="475"><highlight class="preprocessor">#ifndef<sp/>LCP_MAXECHOFAILS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="476"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LCP_MAXECHOFAILS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="477"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="478"><highlight class="normal"></highlight></codeline>
+<codeline lineno="482"><highlight class="preprocessor">#ifndef<sp/>PPP_MAXIDLEFLAG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="483"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_MAXIDLEFLAG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>100</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="484"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="485"><highlight class="normal"></highlight></codeline>
+<codeline lineno="493"><highlight class="preprocessor">#ifndef<sp/>PPP_MRU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="494"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_MRU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1500</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="495"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="496"><highlight class="normal"></highlight></codeline>
+<codeline lineno="500"><highlight class="preprocessor">#ifndef<sp/>PPP_DEFMRU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="501"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_DEFMRU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1500</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="502"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="503"><highlight class="normal"></highlight></codeline>
+<codeline lineno="507"><highlight class="preprocessor">#ifndef<sp/>PPP_MAXMRU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="508"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_MAXMRU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1500</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="509"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="510"><highlight class="normal"></highlight></codeline>
+<codeline lineno="514"><highlight class="preprocessor">#ifndef<sp/>PPP_MINMRU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="515"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPP_MINMRU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="516"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="517"><highlight class="normal"></highlight></codeline>
+<codeline lineno="523"><highlight class="preprocessor">#if<sp/>PPPOL2TP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="524"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>PPPOL2TP_DEFMRU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="525"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PPPOL2TP_DEFMRU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1450</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="526"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="527"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPPOL2TP_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="528"><highlight class="normal"></highlight></codeline>
+<codeline lineno="532"><highlight class="preprocessor">#ifndef<sp/>MAXNAMELEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="533"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAXNAMELEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>256</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="534"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="535"><highlight class="normal"></highlight></codeline>
+<codeline lineno="539"><highlight class="preprocessor">#ifndef<sp/>MAXSECRETLEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="540"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAXSECRETLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>256</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="541"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="542"><highlight class="normal"></highlight></codeline>
+<codeline lineno="543"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>-------------------------------------------------------------------------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="544"><highlight class="normal"></highlight></codeline>
+<codeline lineno="545"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="546"><highlight class="comment"><sp/>*<sp/>Build<sp/>triggers<sp/>for<sp/>embedded<sp/>PolarSSL</highlight></codeline>
+<codeline lineno="547"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="548"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!LWIP_USE_EXTERNAL_POLARSSL<sp/>&amp;&amp;<sp/>!LWIP_USE_EXTERNAL_MBEDTLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="549"><highlight class="normal"></highlight></codeline>
+<codeline lineno="550"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>CHAP,<sp/>EAP,<sp/>L2TP<sp/>AUTH<sp/>and<sp/>MD5<sp/>Random<sp/>require<sp/>MD5<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="551"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>CHAP_SUPPORT<sp/>||<sp/>EAP_SUPPORT<sp/>||<sp/>PPPOL2TP_AUTH_SUPPORT<sp/>||<sp/>PPP_MD5_RANDM</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="552"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_MD5<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="553"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>CHAP_SUPPORT<sp/>||<sp/>EAP_SUPPORT<sp/>||<sp/>PPPOL2TP_AUTH_SUPPORT<sp/>||<sp/>PPP_MD5_RANDM<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="554"><highlight class="normal"></highlight></codeline>
+<codeline lineno="555"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MSCHAP_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="556"><highlight class="normal"></highlight></codeline>
+<codeline lineno="557"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MSCHAP<sp/>require<sp/>MD4<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="558"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_MD4<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="559"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MSCHAP<sp/>require<sp/>SHA1<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="560"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_SHA1<sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="561"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MSCHAP<sp/>require<sp/>DES<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="562"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_DES<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="563"><highlight class="normal"></highlight></codeline>
+<codeline lineno="564"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MS-CHAP<sp/>support<sp/>is<sp/>required<sp/>for<sp/>MPPE<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="565"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MPPE_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="566"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MPPE<sp/>require<sp/>ARC4<sp/>support<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="567"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_ARC4<sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="568"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MPPE_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="569"><highlight class="normal"></highlight></codeline>
+<codeline lineno="570"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MSCHAP_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="571"><highlight class="normal"></highlight></codeline>
+<codeline lineno="572"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!LWIP_USE_EXTERNAL_POLARSSL<sp/>&amp;&amp;<sp/>!LWIP_USE_EXTERNAL_MBEDTLS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="573"><highlight class="normal"></highlight></codeline>
+<codeline lineno="574"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Default<sp/>value<sp/>if<sp/>unset<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="575"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_INCLUDED_POLARSSL_MD4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="576"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_MD4<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="577"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_INCLUDED_POLARSSL_MD4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="578"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_INCLUDED_POLARSSL_MD5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="579"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_MD5<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="580"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_INCLUDED_POLARSSL_MD5<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="581"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_INCLUDED_POLARSSL_SHA1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="582"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_SHA1<sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="583"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_INCLUDED_POLARSSL_SHA1<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="584"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_INCLUDED_POLARSSL_DES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="585"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_DES<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="586"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_INCLUDED_POLARSSL_DES<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="587"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_INCLUDED_POLARSSL_ARC4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="588"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_INCLUDED_POLARSSL_ARC4<sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="589"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_INCLUDED_POLARSSL_ARC4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="590"><highlight class="normal"></highlight></codeline>
+<codeline lineno="591"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPP_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="592"><highlight class="normal"></highlight></codeline>
+<codeline lineno="593"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_PPP_OPTS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h"/>
+  </compounddef>
+</doxygen>

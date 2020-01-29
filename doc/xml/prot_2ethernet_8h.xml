@@ -1,0 +1,621 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2ethernet_8h" kind="file" language="C++">
+    <compoundname>ethernet.h</compoundname>
+    <includes refid="arch_8h" local="yes">net/arch.h</includes>
+    <includedby refid="prot_2etharp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h</includedby>
+    <includedby refid="f_2ethernet_8h" local="yes">C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</includedby>
+    <incdepgraph>
+      <node id="14">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="15">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h</label>
+        <link refid="prot_2ethernet_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="11">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h</label>
+        <link refid="prot_2etharp_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h</label>
+        <link refid="prot_2ethernet_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</label>
+        <link refid="f_2ethernet_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/etharp.h</label>
+        <link refid="f_2etharp_8h"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structeth__addr" prot="public">eth_addr</innerclass>
+    <innerclass refid="structeth__hdr" prot="public">eth_hdr</innerclass>
+    <innerclass refid="structeth__vlan__hdr" prot="public">eth_vlan_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2ethernet_8h_1aa19e3e4c174d49c6062f463dfa68bbbc" prot="public" static="no">
+        <name>eth_addr_cmp</name>
+        <param><defname>addr1</defname></param>
+        <param><defname>addr2</defname></param>
+        <initializer>(<ref refid="string_8h_1a3ecfabf29de8f914413abc2da01f5ca5" kindref="member">memcmp</ref>((addr1)-&gt;addr, (addr2)-&gt;addr, <ref refid="prot_2ethernet_8h_1ac9426049770b40fcd9556ffbd7e56907" kindref="member">ETH_HWADDR_LEN</ref>) == 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="164" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1ac9426049770b40fcd9556ffbd7e56907" prot="public" static="no">
+        <name>ETH_HWADDR_LEN</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="50" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1a10cbd9cd91e7e0ebed3a1159e385c037" prot="public" static="no">
+        <name>ETHADDR16_COPY</name>
+        <param><defname>dst</defname></param>
+        <param><defname>src</defname></param>
+        <initializer><ref refid="opt_8h_1a8c6e3c1e4f74acb16376188dbf8909ec" kindref="member">SMEMCPY</ref>(dst, src, <ref refid="prot_2ethernet_8h_1ac9426049770b40fcd9556ffbd7e56907" kindref="member">ETH_HWADDR_LEN</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMCPY-like macro to copy to/from struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref>&apos;s that are no local variables and known to be 16-bit aligned within the protocol header. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="161" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1a0622da8fb6eb72cd4cd7c3ea4f5a5b79" prot="public" static="no">
+        <name>ETHADDR32_COPY</name>
+        <param><defname>dst</defname></param>
+        <param><defname>src</defname></param>
+        <initializer><ref refid="opt_8h_1a8c6e3c1e4f74acb16376188dbf8909ec" kindref="member">SMEMCPY</ref>(dst, src, <ref refid="prot_2ethernet_8h_1ac9426049770b40fcd9556ffbd7e56907" kindref="member">ETH_HWADDR_LEN</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMCPY-like macro to copy to/from struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref>&apos;s that are local variables or known to be 32-bit aligned within the protocol header. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="155" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1afaf6cbccf9477c3505660e3a17860e07" prot="public" static="no">
+        <name>LL_IP4_MULTICAST_ADDR_0</name>
+        <initializer>0x01</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The 24-bit IANA IPv4-multicast OUI is 01-00-5e: </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="144" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1ac08b2a99f6ff9cbafaa1cb5a6405d225" prot="public" static="no">
+        <name>LL_IP4_MULTICAST_ADDR_1</name>
+        <initializer>0x00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="145" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1a98285b6f76c2eb6b6c738da62176bce0" prot="public" static="no">
+        <name>LL_IP4_MULTICAST_ADDR_2</name>
+        <initializer>0x5e</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="146" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1a8ebe93c6ad2d743e6c952539257679b6" prot="public" static="no">
+        <name>LL_IP6_MULTICAST_ADDR_0</name>
+        <initializer>0x33</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IPv6 multicast uses this prefix </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="149" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1acf77751aed309653aaa33032732dd243" prot="public" static="no">
+        <name>LL_IP6_MULTICAST_ADDR_1</name>
+        <initializer>0x33</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="150" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1a85d254d78726c038270fe87905845e75" prot="public" static="no">
+        <name>SIZEOF_ETH_HDR</name>
+        <initializer>(14 + <ref refid="group__lwip__opts__arp_1gad7fa3b356ca7e603e848b069c4cc6276" kindref="member">ETH_PAD_SIZE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1a2443b91084b01e4f22423d74d3ae19fe" prot="public" static="no">
+        <name>SIZEOF_VLAN_HDR</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ethernet_8h_1aa36e5e552e17cea1828f0a6792eb29d4" prot="public" static="no">
+        <name>VLAN_ID</name>
+        <param><defname>vlan_hdr</defname></param>
+        <initializer>(<ref refid="def_8c_1ad637280639de4066392e6b5614fa3e56" kindref="member">lwip_htons</ref>((vlan_hdr)-&gt;prio_vid) &amp; 0xFFF)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__ethernet_1ga4f8559808037803168499a3803900339" prot="public" static="no" strong="no">
+        <type></type>
+        <name>eth_type</name>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ac95756b20fde70b868ef4185dd221c79" prot="public">
+          <name>ETHTYPE_IP</name>
+          <initializer>= 0x0800U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Internet protocol v4 </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a41217db03576ea59c44b28b248c39be5" prot="public">
+          <name>ETHTYPE_ARP</name>
+          <initializer>= 0x0806U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Address resolution protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a530a30feb9b87fd993da2bf83776cf9b" prot="public">
+          <name>ETHTYPE_WOL</name>
+          <initializer>= 0x0842U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Wake on lan </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a14292184cb41b279249319896d0e2b1f" prot="public">
+          <name>ETHTYPE_RARP</name>
+          <initializer>= 0x8035U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>RARP </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ad8f84826d52d92ac24a477d1f03e7903" prot="public">
+          <name>ETHTYPE_VLAN</name>
+          <initializer>= 0x8100U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Virtual local area network </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339aab26004eed559217be5dd466a79b1383" prot="public">
+          <name>ETHTYPE_IPV6</name>
+          <initializer>= 0x86DDU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Internet protocol v6 </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a58c6f40d7cc3edb9455762938f3f6569" prot="public">
+          <name>ETHTYPE_PPPOEDISC</name>
+          <initializer>= 0x8863U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>PPP Over Ethernet Discovery Stage </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a8c0e8f68b90134eb4f1f17d3d2eb6f8c" prot="public">
+          <name>ETHTYPE_PPPOE</name>
+          <initializer>= 0x8864U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>PPP Over Ethernet Session Stage </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a2511e8a31961bd742363b11b274b9dd1" prot="public">
+          <name>ETHTYPE_JUMBO</name>
+          <initializer>= 0x8870U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Jumbo Frames </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a889eb8f716238d16ee3408f16a5cf19d" prot="public">
+          <name>ETHTYPE_PROFINET</name>
+          <initializer>= 0x8892U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Process field network </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a5085a5fd5f9c9506124e93ea43ad2d7c" prot="public">
+          <name>ETHTYPE_ETHERCAT</name>
+          <initializer>= 0x88A4U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Ethernet for control automation technology </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a02eab0dd87f222a2d555ca38b1b8afcc" prot="public">
+          <name>ETHTYPE_LLDP</name>
+          <initializer>= 0x88CCU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Link layer discovery protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ab93419f8edf5692e91629ab92fce8a14" prot="public">
+          <name>ETHTYPE_SERCOS</name>
+          <initializer>= 0x88CDU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Serial real-time communication system </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ad36caec44d8db59ff433a8bd3e92ad3e" prot="public">
+          <name>ETHTYPE_MRP</name>
+          <initializer>= 0x88E3U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Media redundancy protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339aa3e9e834eef932d073028e28eb8793dc" prot="public">
+          <name>ETHTYPE_PTP</name>
+          <initializer>= 0x88F7U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Precision time protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a39a18006412cbb57536535bd9d378394" prot="public">
+          <name>ETHTYPE_QINQ</name>
+          <initializer>= 0x9100U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Q-in-Q, 802.1ad </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>A list of often ethtypes (although lwIP does not use all of them): </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="108" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="108" bodyend="141"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2ethernet_8h_1aafd4aa713559fd4dfdeaa60f9c7b6c2d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct eth_vlan_hdr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="60" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Ethernet protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_ETHERNET_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_ETHERNET_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>ETH_HWADDR_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>ETHARP_HWADDR_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ETH_HWADDR_LEN<sp/><sp/><sp/><sp/>ETHARP_HWADDR_LEN<sp/></highlight><highlight class="comment">/*<sp/>compatibility<sp/>mode<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="prot_2ethernet_8h_1ac9426049770b40fcd9556ffbd7e56907" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ETH_HWADDR_LEN<sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="58" refid="structeth__addr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>{</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="structeth__addr_1a711ab57c326e3ba928a4e4e83bc17f6f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>addr[<ref refid="prot_2ethernet_8h_1ac9426049770b40fcd9556ffbd7e56907" kindref="member">ETH_HWADDR_LEN</ref>]);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal">}<sp/><ref refid="prot_2ethernet_8h_1aafd4aa713559fd4dfdeaa60f9c7b6c2d" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="71" refid="structeth__hdr" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__hdr" kindref="compound">eth_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>ETH_PAD_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1gaa8f75e4117374c2d09fbda5566e40b62" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>padding[<ref refid="lwipopts_8h_1ad7fa3b356ca7e603e848b069c4cc6276" kindref="member">ETH_PAD_SIZE</ref>]);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="structeth__hdr_1a470b31b8c1c65f87c113e1f8e64f4447" kindref="member">PACK_STRUCT_FLD_S</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>dest);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="structeth__hdr_1a470b31b8c1c65f87c113e1f8e64f4447" kindref="member">PACK_STRUCT_FLD_S</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>src);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="structeth__hdr_1ad2e925f8266824a05f42d77d0f4293c6" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal">}<sp/><ref refid="prot_2ethernet_8h_1aafd4aa713559fd4dfdeaa60f9c7b6c2d" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="prot_2ethernet_8h_1a85d254d78726c038270fe87905845e75" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIZEOF_ETH_HDR<sp/>(14<sp/>+<sp/>ETH_PAD_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="93" refid="structeth__vlan__hdr" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__vlan__hdr" kindref="compound">eth_vlan_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="structeth__vlan__hdr_1a8e6e8760f4fbbab94d0ea20f38c90261" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>prio_vid);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="structeth__vlan__hdr_1a8e6e8760f4fbbab94d0ea20f38c90261" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>tpid);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal">}<sp/><ref refid="prot_2ethernet_8h_1aafd4aa713559fd4dfdeaa60f9c7b6c2d" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="prot_2ethernet_8h_1a2443b91084b01e4f22423d74d3ae19fe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIZEOF_VLAN_HDR<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="prot_2ethernet_8h_1aa36e5e552e17cea1828f0a6792eb29d4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VLAN_ID(vlan_hdr)<sp/>(lwip_htons((vlan_hdr)-&gt;prio_vid)<sp/>&amp;<sp/>0xFFF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="group__ethernet_1ga4f8559808037803168499a3803900339" refkind="member"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__ethernet_1ga4f8559808037803168499a3803900339" kindref="member">eth_type</ref><sp/>{</highlight></codeline>
+<codeline lineno="110" refid="group__ethernet_1gga4f8559808037803168499a3803900339ac95756b20fde70b868ef4185dd221c79" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339ac95756b20fde70b868ef4185dd221c79" kindref="member">ETHTYPE_IP</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0800U,</highlight></codeline>
+<codeline lineno="112" refid="group__ethernet_1gga4f8559808037803168499a3803900339a41217db03576ea59c44b28b248c39be5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a41217db03576ea59c44b28b248c39be5" kindref="member">ETHTYPE_ARP</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0806U,<sp/></highlight></codeline>
+<codeline lineno="114" refid="group__ethernet_1gga4f8559808037803168499a3803900339a530a30feb9b87fd993da2bf83776cf9b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a530a30feb9b87fd993da2bf83776cf9b" kindref="member">ETHTYPE_WOL</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0842U,</highlight></codeline>
+<codeline lineno="116" refid="group__ethernet_1gga4f8559808037803168499a3803900339a14292184cb41b279249319896d0e2b1f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a14292184cb41b279249319896d0e2b1f" kindref="member">ETHTYPE_RARP</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8035U,</highlight></codeline>
+<codeline lineno="118" refid="group__ethernet_1gga4f8559808037803168499a3803900339ad8f84826d52d92ac24a477d1f03e7903" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339ad8f84826d52d92ac24a477d1f03e7903" kindref="member">ETHTYPE_VLAN</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8100U,</highlight></codeline>
+<codeline lineno="120" refid="group__ethernet_1gga4f8559808037803168499a3803900339aab26004eed559217be5dd466a79b1383" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339aab26004eed559217be5dd466a79b1383" kindref="member">ETHTYPE_IPV6</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x86DDU,</highlight></codeline>
+<codeline lineno="122" refid="group__ethernet_1gga4f8559808037803168499a3803900339a58c6f40d7cc3edb9455762938f3f6569" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a58c6f40d7cc3edb9455762938f3f6569" kindref="member">ETHTYPE_PPPOEDISC</ref><sp/>=<sp/>0x8863U,</highlight></codeline>
+<codeline lineno="124" refid="group__ethernet_1gga4f8559808037803168499a3803900339a8c0e8f68b90134eb4f1f17d3d2eb6f8c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a8c0e8f68b90134eb4f1f17d3d2eb6f8c" kindref="member">ETHTYPE_PPPOE</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8864U,</highlight></codeline>
+<codeline lineno="126" refid="group__ethernet_1gga4f8559808037803168499a3803900339a2511e8a31961bd742363b11b274b9dd1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a2511e8a31961bd742363b11b274b9dd1" kindref="member">ETHTYPE_JUMBO</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8870U,</highlight></codeline>
+<codeline lineno="128" refid="group__ethernet_1gga4f8559808037803168499a3803900339a889eb8f716238d16ee3408f16a5cf19d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a889eb8f716238d16ee3408f16a5cf19d" kindref="member">ETHTYPE_PROFINET</ref><sp/><sp/>=<sp/>0x8892U,</highlight></codeline>
+<codeline lineno="130" refid="group__ethernet_1gga4f8559808037803168499a3803900339a5085a5fd5f9c9506124e93ea43ad2d7c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a5085a5fd5f9c9506124e93ea43ad2d7c" kindref="member">ETHTYPE_ETHERCAT</ref><sp/><sp/>=<sp/>0x88A4U,</highlight></codeline>
+<codeline lineno="132" refid="group__ethernet_1gga4f8559808037803168499a3803900339a02eab0dd87f222a2d555ca38b1b8afcc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a02eab0dd87f222a2d555ca38b1b8afcc" kindref="member">ETHTYPE_LLDP</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x88CCU,</highlight></codeline>
+<codeline lineno="134" refid="group__ethernet_1gga4f8559808037803168499a3803900339ab93419f8edf5692e91629ab92fce8a14" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339ab93419f8edf5692e91629ab92fce8a14" kindref="member">ETHTYPE_SERCOS</ref><sp/><sp/><sp/><sp/>=<sp/>0x88CDU,</highlight></codeline>
+<codeline lineno="136" refid="group__ethernet_1gga4f8559808037803168499a3803900339ad36caec44d8db59ff433a8bd3e92ad3e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339ad36caec44d8db59ff433a8bd3e92ad3e" kindref="member">ETHTYPE_MRP</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x88E3U,</highlight></codeline>
+<codeline lineno="138" refid="group__ethernet_1gga4f8559808037803168499a3803900339aa3e9e834eef932d073028e28eb8793dc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339aa3e9e834eef932d073028e28eb8793dc" kindref="member">ETHTYPE_PTP</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x88F7U,</highlight></codeline>
+<codeline lineno="140" refid="group__ethernet_1gga4f8559808037803168499a3803900339a39a18006412cbb57536535bd9d378394" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__ethernet_1gga4f8559808037803168499a3803900339a39a18006412cbb57536535bd9d378394" kindref="member">ETHTYPE_QINQ</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x9100U</highlight></codeline>
+<codeline lineno="141"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="prot_2ethernet_8h_1afaf6cbccf9477c3505660e3a17860e07" refkind="member"><highlight class="preprocessor">#define<sp/>LL_IP4_MULTICAST_ADDR_0<sp/>0x01</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="prot_2ethernet_8h_1ac08b2a99f6ff9cbafaa1cb5a6405d225" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LL_IP4_MULTICAST_ADDR_1<sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146" refid="prot_2ethernet_8h_1a98285b6f76c2eb6b6c738da62176bce0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LL_IP4_MULTICAST_ADDR_2<sp/>0x5e</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149" refid="prot_2ethernet_8h_1a8ebe93c6ad2d743e6c952539257679b6" refkind="member"><highlight class="preprocessor">#define<sp/>LL_IP6_MULTICAST_ADDR_0<sp/>0x33</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="prot_2ethernet_8h_1acf77751aed309653aaa33032732dd243" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LL_IP6_MULTICAST_ADDR_1<sp/>0x33</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="preprocessor">#ifndef<sp/>ETHADDR32_COPY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="prot_2ethernet_8h_1a0622da8fb6eb72cd4cd7c3ea4f5a5b79" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ETHADDR32_COPY(dst,<sp/>src)<sp/><sp/>SMEMCPY(dst,<sp/>src,<sp/>ETH_HWADDR_LEN)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="preprocessor">#ifndef<sp/>ETHADDR16_COPY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161" refid="prot_2ethernet_8h_1a10cbd9cd91e7e0ebed3a1159e385c037" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ETHADDR16_COPY(dst,<sp/>src)<sp/><sp/>SMEMCPY(dst,<sp/>src,<sp/>ETH_HWADDR_LEN)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164" refid="prot_2ethernet_8h_1aa19e3e4c174d49c6062f463dfa68bbbc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>eth_addr_cmp(addr1,<sp/>addr2)<sp/>(memcmp((addr1)-&gt;addr,<sp/>(addr2)-&gt;addr,<sp/>ETH_HWADDR_LEN)<sp/>==<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_ETHERNET_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h"/>
+  </compounddef>
+</doxygen>

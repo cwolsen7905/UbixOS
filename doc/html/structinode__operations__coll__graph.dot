@@ -1,0 +1,7 @@
+digraph "inode_operations"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{inode_operations\n|+ bmap\l+ create\l+ default_file_ops\l+ follow_link\l+ link\l+ lookup\l+ mkdir\l+ mknod\l+ permission\l+ readlink\l+ rename\l+ rmdir\l+ symlink\l+ truncate\l+ unlink\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

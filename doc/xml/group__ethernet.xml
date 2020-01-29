@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__ethernet" kind="group">
+    <compoundname>ethernet</compoundname>
+    <title>Ethernet</title>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__ethernet_1ga4f8559808037803168499a3803900339" prot="public" static="no" strong="no">
+        <type></type>
+        <name>eth_type</name>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ac95756b20fde70b868ef4185dd221c79" prot="public">
+          <name>ETHTYPE_IP</name>
+          <initializer>= 0x0800U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Internet protocol v4 </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a41217db03576ea59c44b28b248c39be5" prot="public">
+          <name>ETHTYPE_ARP</name>
+          <initializer>= 0x0806U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Address resolution protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a530a30feb9b87fd993da2bf83776cf9b" prot="public">
+          <name>ETHTYPE_WOL</name>
+          <initializer>= 0x0842U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Wake on lan </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a14292184cb41b279249319896d0e2b1f" prot="public">
+          <name>ETHTYPE_RARP</name>
+          <initializer>= 0x8035U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>RARP </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ad8f84826d52d92ac24a477d1f03e7903" prot="public">
+          <name>ETHTYPE_VLAN</name>
+          <initializer>= 0x8100U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Virtual local area network </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339aab26004eed559217be5dd466a79b1383" prot="public">
+          <name>ETHTYPE_IPV6</name>
+          <initializer>= 0x86DDU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Internet protocol v6 </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a58c6f40d7cc3edb9455762938f3f6569" prot="public">
+          <name>ETHTYPE_PPPOEDISC</name>
+          <initializer>= 0x8863U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>PPP Over Ethernet Discovery Stage </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a8c0e8f68b90134eb4f1f17d3d2eb6f8c" prot="public">
+          <name>ETHTYPE_PPPOE</name>
+          <initializer>= 0x8864U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>PPP Over Ethernet Session Stage </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a2511e8a31961bd742363b11b274b9dd1" prot="public">
+          <name>ETHTYPE_JUMBO</name>
+          <initializer>= 0x8870U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Jumbo Frames </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a889eb8f716238d16ee3408f16a5cf19d" prot="public">
+          <name>ETHTYPE_PROFINET</name>
+          <initializer>= 0x8892U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Process field network </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a5085a5fd5f9c9506124e93ea43ad2d7c" prot="public">
+          <name>ETHTYPE_ETHERCAT</name>
+          <initializer>= 0x88A4U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Ethernet for control automation technology </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a02eab0dd87f222a2d555ca38b1b8afcc" prot="public">
+          <name>ETHTYPE_LLDP</name>
+          <initializer>= 0x88CCU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Link layer discovery protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ab93419f8edf5692e91629ab92fce8a14" prot="public">
+          <name>ETHTYPE_SERCOS</name>
+          <initializer>= 0x88CDU</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Serial real-time communication system </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339ad36caec44d8db59ff433a8bd3e92ad3e" prot="public">
+          <name>ETHTYPE_MRP</name>
+          <initializer>= 0x88E3U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Media redundancy protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339aa3e9e834eef932d073028e28eb8793dc" prot="public">
+          <name>ETHTYPE_PTP</name>
+          <initializer>= 0x88F7U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Precision time protocol </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ethernet_1gga4f8559808037803168499a3803900339a39a18006412cbb57536535bd9d378394" prot="public">
+          <name>ETHTYPE_QINQ</name>
+          <initializer>= 0x9100U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Q-in-Q, 802.1ad </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>A list of often ethtypes (although lwIP does not use all of them): </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="108" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="108" bodyend="141"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

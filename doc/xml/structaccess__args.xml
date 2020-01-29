@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structaccess__args" kind="struct" language="C++" prot="public">
+    <compoundname>access_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structaccess__args_1a63e640ae097ff37189d18422cded2e67" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int access_args::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="283" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="283" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structaccess__args_1a33c613745e26753612cf97355fc38819" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char access_args::flags_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>flags_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="282" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="282" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structaccess__args_1af2e1fa85fb8bc6ff9ca86e4c3b9602d1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char access_args::flags_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>flags_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="284" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="284" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structaccess__args_1afac3aafb19d6982fffa8cc5a90524ffb" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* access_args::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="280" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="280" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1a5e545f93bf6f37890415be1fc90815dd" compoundref="gen__calls_8c" startline="130" endline="134">access</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structaccess__args_1ae38e301086e3faeaf3efd552641f721b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char access_args::path_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>path_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="279" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="279" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structaccess__args_1ab1126e06dc4b927435db9e3b33ac5f66" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char access_args::path_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>path_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="281" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>access_args</label>
+        <link refid="structaccess__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="278" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="278" bodyend="285"/>
+    <listofallmembers>
+      <member refid="structaccess__args_1a63e640ae097ff37189d18422cded2e67" prot="public" virt="non-virtual"><scope>access_args</scope><name>flags</name></member>
+      <member refid="structaccess__args_1a33c613745e26753612cf97355fc38819" prot="public" virt="non-virtual"><scope>access_args</scope><name>flags_l_</name></member>
+      <member refid="structaccess__args_1af2e1fa85fb8bc6ff9ca86e4c3b9602d1" prot="public" virt="non-virtual"><scope>access_args</scope><name>flags_r_</name></member>
+      <member refid="structaccess__args_1afac3aafb19d6982fffa8cc5a90524ffb" prot="public" virt="non-virtual"><scope>access_args</scope><name>path</name></member>
+      <member refid="structaccess__args_1ae38e301086e3faeaf3efd552641f721b" prot="public" virt="non-virtual"><scope>access_args</scope><name>path_l_</name></member>
+      <member refid="structaccess__args_1ab1126e06dc4b927435db9e3b33ac5f66" prot="public" virt="non-virtual"><scope>access_args</scope><name>path_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

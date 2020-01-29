@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__sde__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_sde_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_sde_args::cmd</definition>
+        <argsstring></argsstring>
+        <name>cmd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="82" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="82" bodyend="-1"/>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sde__args_1a6f8f157f148c61ebe88186a6e2cbae2c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sde_args::cmd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>cmd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="81" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sde__args_1a31db2abaf18830b67c8b739bfc8612a1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sde_args::cmd_r_[(sizeof(register_t)&lt;=sizeof(uint32_t) ? 0 :sizeof(register_t) - sizeof(uint32_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(uint32_t) ? 0 :sizeof(register_t) - sizeof(uint32_t))]</argsstring>
+        <name>cmd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="83" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_sde_args::ptr</definition>
+        <argsstring></argsstring>
+        <name>ptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="85" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sde__args_1acc2f0aec6e28e4db4971f152303835a8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sde_args::ptr_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>ptr_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="84" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sde__args_1a96682fc2e8912c42d67f7f76399094b2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sde_args::ptr_r_[(sizeof(register_t)&lt;=sizeof(uint32_t) ? 0 :sizeof(register_t) - sizeof(uint32_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(uint32_t) ? 0 :sizeof(register_t) - sizeof(uint32_t))]</argsstring>
+        <name>ptr_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="86" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_sde_args</label>
+        <link refid="structsys__sde__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="80" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="80" bodyend="87"/>
+    <listofallmembers>
+      <member refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" prot="public" virt="non-virtual"><scope>sys_sde_args</scope><name>cmd</name></member>
+      <member refid="structsys__sde__args_1a6f8f157f148c61ebe88186a6e2cbae2c" prot="public" virt="non-virtual"><scope>sys_sde_args</scope><name>cmd_l_</name></member>
+      <member refid="structsys__sde__args_1a31db2abaf18830b67c8b739bfc8612a1" prot="public" virt="non-virtual"><scope>sys_sde_args</scope><name>cmd_r_</name></member>
+      <member refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" prot="public" virt="non-virtual"><scope>sys_sde_args</scope><name>ptr</name></member>
+      <member refid="structsys__sde__args_1acc2f0aec6e28e4db4971f152303835a8" prot="public" virt="non-virtual"><scope>sys_sde_args</scope><name>ptr_l_</name></member>
+      <member refid="structsys__sde__args_1a96682fc2e8912c42d67f7f76399094b2" prot="public" virt="non-virtual"><scope>sys_sde_args</scope><name>ptr_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

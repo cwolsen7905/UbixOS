@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__infrastructure__errors" kind="group">
+    <compoundname>infrastructure_errors</compoundname>
+    <title>Error codes</title>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__infrastructure__errors_1gae2e66c7d13afc90ffecd6151680fbadc" prot="public" static="no" strong="no">
+        <type></type>
+        <name>err_enum_t</name>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" prot="public">
+          <name>ERR_OK</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>No error, everything OK. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaaaeafdbf3aecc46864daa3cd829c7e05" prot="public">
+          <name>ERR_MEM</name>
+          <initializer>= -1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Out of memory error. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca05c91366f1b5203a5db9a241b415cd63" prot="public">
+          <name>ERR_BUF</name>
+          <initializer>= -2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Buffer error. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcac568baeb6407ef5e2630084ccbc34be8" prot="public">
+          <name>ERR_TIMEOUT</name>
+          <initializer>= -3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Timeout. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca9448893187313c0c5a502ca9a9ad1c2a" prot="public">
+          <name>ERR_RTE</name>
+          <initializer>= -4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Routing problem. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca13e1dd0edca8a27b6abdf1524bde7929" prot="public">
+          <name>ERR_INPROGRESS</name>
+          <initializer>= -5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Operation in progress <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa9a1c5a6fdeed0aad7fe41d538482bbd" prot="public">
+          <name>ERR_VAL</name>
+          <initializer>= -6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Illegal value. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab9dcf89d46668b072192278fb907b7ad" prot="public">
+          <name>ERR_WOULDBLOCK</name>
+          <initializer>= -7</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Operation would block. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca4ebdc2aa1dbd75f927845733a3fb1f8b" prot="public">
+          <name>ERR_USE</name>
+          <initializer>= -8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Address in use. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcae6f9c1e4c18ca844f7934307d4cc30e5" prot="public">
+          <name>ERR_ALREADY</name>
+          <initializer>= -9</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Already connecting. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca8543e1d6422fed7b318d97e08dcbaa33" prot="public">
+          <name>ERR_ISCONN</name>
+          <initializer>= -10</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Conn already established. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab0036c51817b5200bfe8157cc4115b27" prot="public">
+          <name>ERR_CONN</name>
+          <initializer>= -11</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Not connected. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca7d61d90449ae6788575e8e46d5d3bbc6" prot="public">
+          <name>ERR_IF</name>
+          <initializer>= -12</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Low-level netif error <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaf316b2c5eee4079820f7100849115142" prot="public">
+          <name>ERR_ABRT</name>
+          <initializer>= -13</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Connection aborted. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca759030525f1768a23dc086a5fd45b4e5" prot="public">
+          <name>ERR_RST</name>
+          <initializer>= -14</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Connection reset. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa5176d9fecf8ec43d3bc49f4e6c3f7f5" prot="public">
+          <name>ERR_CLSD</name>
+          <initializer>= -15</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Connection closed. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab508ce0ebdf3ca735208b00a80a45c91" prot="public">
+          <name>ERR_ARG</name>
+          <initializer>= -16</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Illegal argument. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Definitions for error constants. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="61" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="61" bodyend="97"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" prot="public" static="no">
+        <type><ref refid="group__compiler__abstraction_1ga9cd1d7891fe315de1201e2c6e45f4f57" kindref="member">s8_t</ref></type>
+        <definition>typedef s8_t err_t</definition>
+        <argsstring></argsstring>
+        <name>err_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define LWIP_ERR_T in <ref refid="cc_8h" kindref="compound">cc.h</ref> if you want to use a different type for your platform (must be signed). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="57" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__infrastructure__errors_1gac36f9cda08ffce1f67529a432a046248" prot="public" static="no">
+        <name>ERR_IS_FATAL</name>
+        <param><defname>e</defname></param>
+        <initializer>((e) &lt;= <ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaf316b2c5eee4079820f7100849115142" kindref="member">ERR_ABRT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

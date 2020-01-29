@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_cd4906596c0f2eb6dae79633ab001247" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/net/core</compoundname>
+    <innerdir refid="dir_7d19584ba3522c8c0d9aaed071b8ceac">C:/Dev/git/UbixOS/sys/net/core/ipv4</innerdir>
+    <innerdir refid="dir_55dd03b94777b988453988bedf92c9ac">C:/Dev/git/UbixOS/sys/net/core/ipv6</innerdir>
+    <innerfile refid="def_8c">def.c</innerfile>
+    <innerfile refid="dns_8c">dns.c</innerfile>
+    <innerfile refid="inet__chksum_8c">inet_chksum.c</innerfile>
+    <innerfile refid="core_2init_8c">init.c</innerfile>
+    <innerfile refid="ip_8c">ip.c</innerfile>
+    <innerfile refid="mem_8c">mem.c</innerfile>
+    <innerfile refid="memp_8c">memp.c</innerfile>
+    <innerfile refid="netif_8c">netif.c</innerfile>
+    <innerfile refid="pbuf_8c">pbuf.c</innerfile>
+    <innerfile refid="raw_8c">raw.c</innerfile>
+    <innerfile refid="stats_8c">stats.c</innerfile>
+    <innerfile refid="sys_8c">sys.c</innerfile>
+    <innerfile refid="tcp_8c">tcp.c</innerfile>
+    <innerfile refid="tcp__in_8c">tcp_in.c</innerfile>
+    <innerfile refid="tcp__out_8c">tcp_out.c</innerfile>
+    <innerfile refid="timeouts_8c">timeouts.c</innerfile>
+    <innerfile refid="udp_8c">udp.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/"/>
+  </compounddef>
+</doxygen>

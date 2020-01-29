@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structroute__option" kind="struct" language="C++" prot="public">
+    <compoundname>route_option</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structroute__option_1a3c7f14b8aa9b7c77d049290dc5f10e23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>route_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t route_lifetime)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>route_lifetime</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="242" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structroute__option_1af3ca4a718e74e5396d60c702c6a32435" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>route_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="239" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structroute__option_1ae47a4d03156b8d1a5f7d704017a6a4be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>route_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t preference)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>preference</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="241" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structroute__option_1a885d588119c61e2c333abd731607fdce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>route_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t prefix_length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>prefix_length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="240" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structroute__option_1a87552d0d60ff1d73fbf2527c4023d257" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>route_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="238" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structroute__option_1a0f9b4787aa99b5f9395b68f1ab55f8d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>route_option::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip6_addr_p_t prefix)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref></type>
+          <declname>prefix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="243" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>route_option</label>
+        <link refid="structroute__option"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="237" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="237" bodyend="244"/>
+    <listofallmembers>
+      <member refid="structroute__option_1a3c7f14b8aa9b7c77d049290dc5f10e23" prot="public" virt="non-virtual"><scope>route_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structroute__option_1a87552d0d60ff1d73fbf2527c4023d257" prot="public" virt="non-virtual"><scope>route_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structroute__option_1af3ca4a718e74e5396d60c702c6a32435" prot="public" virt="non-virtual"><scope>route_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structroute__option_1a885d588119c61e2c333abd731607fdce" prot="public" virt="non-virtual"><scope>route_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structroute__option_1ae47a4d03156b8d1a5f7d704017a6a4be" prot="public" virt="non-virtual"><scope>route_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structroute__option_1a0f9b4787aa99b5f9395b68f1ab55f8d5" prot="public" virt="non-virtual"><scope>route_option</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

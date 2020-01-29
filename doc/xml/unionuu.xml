@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="unionuu" kind="union" language="C++" prot="public">
+    <compoundname>uu</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="unionuu_1a3ce40dca10fdac763f032c2062fcb310" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref></type>
+        <definition>quad_t uu::q</definition>
+        <argsstring></argsstring>
+        <name>q</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/kprintf.c" line="41" column="10" bodyfile="C:/Dev/git/UbixOS/sys/lib/kprintf.c" bodystart="41" bodyend="-1"/>
+        <referencedby refid="kprintf_8c_1a19096e3df18062999062c914a569c7d6" compoundref="kprintf_8c" startline="56" endline="246">__qdivrem</referencedby>
+        <referencedby refid="kprintf_8c_1a3093cdac4668a4ccffdd7f77270888b7" compoundref="kprintf_8c" startline="315" endline="660">kvprintf</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="unionuu_1a4bbc7e0aa9ab9f1880dd21e72d04843e" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long uu::sl[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>sl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/kprintf.c" line="43" column="8" bodyfile="C:/Dev/git/UbixOS/sys/lib/kprintf.c" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionuu_1a8f74169d11a6ab4a569ec546a1704313" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long uu::ul[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>ul</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/kprintf.c" line="44" column="10" bodyfile="C:/Dev/git/UbixOS/sys/lib/kprintf.c" bodystart="44" bodyend="-1"/>
+        <referencedby refid="kprintf_8c_1a19096e3df18062999062c914a569c7d6" compoundref="kprintf_8c" startline="56" endline="246">__qdivrem</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="unionuu_1a1acb113b0a5af8871b5634516981d300" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref></type>
+        <definition>quad_t uu::uq</definition>
+        <argsstring></argsstring>
+        <name>uq</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/kprintf.c" line="42" column="10" bodyfile="C:/Dev/git/UbixOS/sys/lib/kprintf.c" bodystart="42" bodyend="-1"/>
+        <referencedby refid="kprintf_8c_1a19096e3df18062999062c914a569c7d6" compoundref="kprintf_8c" startline="56" endline="246">__qdivrem</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>uu</label>
+        <link refid="unionuu"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/lib/kprintf.c" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/lib/kprintf.c" bodystart="40" bodyend="45"/>
+    <listofallmembers>
+      <member refid="unionuu_1a3ce40dca10fdac763f032c2062fcb310" prot="public" virt="non-virtual"><scope>uu</scope><name>q</name></member>
+      <member refid="unionuu_1a4bbc7e0aa9ab9f1880dd21e72d04843e" prot="public" virt="non-virtual"><scope>uu</scope><name>sl</name></member>
+      <member refid="unionuu_1a8f74169d11a6ab4a569ec546a1704313" prot="public" virt="non-virtual"><scope>uu</scope><name>ul</name></member>
+      <member refid="unionuu_1a1acb113b0a5af8871b5634516981d300" prot="public" virt="non-virtual"><scope>uu</scope><name>uq</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

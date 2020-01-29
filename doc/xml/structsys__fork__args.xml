@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__fork__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_fork_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__fork__args_1a23e0589b7fd426cad643c8df24906756" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_fork_args::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fork__args_1a732a4680f15d88c0fb767d4319256a23" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fork_args::status_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>status_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="57" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fork__args_1abab82e1c14594018410e21b4c8136bf6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fork_args::status_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>status_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="59" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_fork_args</label>
+        <link refid="structsys__fork__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="56" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="56" bodyend="60"/>
+    <listofallmembers>
+      <member refid="structsys__fork__args_1a23e0589b7fd426cad643c8df24906756" prot="public" virt="non-virtual"><scope>sys_fork_args</scope><name>status</name></member>
+      <member refid="structsys__fork__args_1a732a4680f15d88c0fb767d4319256a23" prot="public" virt="non-virtual"><scope>sys_fork_args</scope><name>status_l_</name></member>
+      <member refid="structsys__fork__args_1abab82e1c14594018410e21b4c8136bf6" prot="public" virt="non-virtual"><scope>sys_fork_args</scope><name>status_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

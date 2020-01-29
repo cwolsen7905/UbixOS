@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__open__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_open_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__open__args_1a7cc431a46588fa9c1b1cf3d9f7fcd786" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_open_args::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="94" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="94" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3cd45d74317da8167bac4518cf43f6c0" compoundref="vfs__calls_8c" startline="39" endline="43">sys_open</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1a4c7223cea1bd9933c4f6c18ce01f0077" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_open_args::flags_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>flags_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="93" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1aa18c2de5772b9221edfb564494de4dff" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_open_args::flags_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>flags_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="95" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1ab63689873a9bf3f848ab32ff7724258e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_open_args::mode</definition>
+        <argsstring></argsstring>
+        <name>mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="98" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3cd45d74317da8167bac4518cf43f6c0" compoundref="vfs__calls_8c" startline="39" endline="43">sys_open</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1aa5280a2f7c45918fe641d40ef0023f5d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_open_args::mode_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>mode_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="97" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1a003a59fa4cb398ab64d5acdfcd9f4707" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_open_args::mode_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>mode_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="99" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1a664e124de651f96aa0bc40a6dced040d" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_open_args::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="90" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="90" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3cd45d74317da8167bac4518cf43f6c0" compoundref="vfs__calls_8c" startline="39" endline="43">sys_open</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1a2095e1317bacbb5a6f33a43ea4f7fec3" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_open_args::path_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>path_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="89" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__open__args_1aa3b5ae97134bb325b85b2f06f48fafe0" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_open_args::path_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>path_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="91" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_open_args</label>
+        <link refid="structsys__open__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="88" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="88" bodyend="100"/>
+    <listofallmembers>
+      <member refid="structsys__open__args_1a7cc431a46588fa9c1b1cf3d9f7fcd786" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>flags</name></member>
+      <member refid="structsys__open__args_1a4c7223cea1bd9933c4f6c18ce01f0077" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>flags_l_</name></member>
+      <member refid="structsys__open__args_1aa18c2de5772b9221edfb564494de4dff" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>flags_r_</name></member>
+      <member refid="structsys__open__args_1ab63689873a9bf3f848ab32ff7724258e" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>mode</name></member>
+      <member refid="structsys__open__args_1aa5280a2f7c45918fe641d40ef0023f5d" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>mode_l_</name></member>
+      <member refid="structsys__open__args_1a003a59fa4cb398ab64d5acdfcd9f4707" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>mode_r_</name></member>
+      <member refid="structsys__open__args_1a664e124de651f96aa0bc40a6dced040d" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>path</name></member>
+      <member refid="structsys__open__args_1a2095e1317bacbb5a6f33a43ea4f7fec3" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>path_l_</name></member>
+      <member refid="structsys__open__args_1aa3b5ae97134bb325b85b2f06f48fafe0" prot="public" virt="non-virtual"><scope>sys_open_args</scope><name>path_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

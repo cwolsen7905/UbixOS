@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__setsockopt__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_setsockopt_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a708c277b5a7a86b8a9f4b509143e4d29" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setsockopt_args::level</definition>
+        <argsstring></argsstring>
+        <name>level</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="658" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="658" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a189421c89cb55a4fba592aec307558fb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::level_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>level_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="657" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="657" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a6a903daa443c8eb4be7777add4d4fc34" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::level_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>level_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="659" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="659" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1ac6593d57df68514756da624e6837ad01" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setsockopt_args::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="661" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="661" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a220787ba61a45c630b0d19241645053d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::name_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>name_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="660" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="660" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1abd8d87c5d578d76aeb20f0f88c6f25d9" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::name_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>name_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="662" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="662" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a9cd0e0210ae5f2e21df72ee285b139f9" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setsockopt_args::s</definition>
+        <argsstring></argsstring>
+        <name>s</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="655" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="655" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a54654276a7fbfded0748a3a58391eae2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::s_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>s_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="654" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="654" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a993d30527b6c6ff1bbdf5112fc91e4bf" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::s_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>s_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="656" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="656" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1ae8fd9d06ec522de42e76ab67b22401e7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t sys_setsockopt_args::val</definition>
+        <argsstring></argsstring>
+        <name>val</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="664" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="664" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1adac72face35955be8225685fed96b56d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::val_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>val_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="663" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="663" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1ad06bdeb56f0cf328c576e3b527e11ea1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::val_r_[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</argsstring>
+        <name>val_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="665" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="665" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a611cdad145a127b525a3f7078506058c" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setsockopt_args::valsize</definition>
+        <argsstring></argsstring>
+        <name>valsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="667" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="667" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1a80a8540b90579484b00b8dd88f7e62c3" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::valsize_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>valsize_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="666" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="666" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setsockopt__args_1adde77df38ba14c7c429c4846b54c744c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setsockopt_args::valsize_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>valsize_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="668" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="668" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_setsockopt_args</label>
+        <link refid="structsys__setsockopt__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="653" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="653" bodyend="669"/>
+    <listofallmembers>
+      <member refid="structsys__setsockopt__args_1a708c277b5a7a86b8a9f4b509143e4d29" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>level</name></member>
+      <member refid="structsys__setsockopt__args_1a189421c89cb55a4fba592aec307558fb" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>level_l_</name></member>
+      <member refid="structsys__setsockopt__args_1a6a903daa443c8eb4be7777add4d4fc34" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>level_r_</name></member>
+      <member refid="structsys__setsockopt__args_1ac6593d57df68514756da624e6837ad01" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>name</name></member>
+      <member refid="structsys__setsockopt__args_1a220787ba61a45c630b0d19241645053d" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>name_l_</name></member>
+      <member refid="structsys__setsockopt__args_1abd8d87c5d578d76aeb20f0f88c6f25d9" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>name_r_</name></member>
+      <member refid="structsys__setsockopt__args_1a9cd0e0210ae5f2e21df72ee285b139f9" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>s</name></member>
+      <member refid="structsys__setsockopt__args_1a54654276a7fbfded0748a3a58391eae2" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>s_l_</name></member>
+      <member refid="structsys__setsockopt__args_1a993d30527b6c6ff1bbdf5112fc91e4bf" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>s_r_</name></member>
+      <member refid="structsys__setsockopt__args_1ae8fd9d06ec522de42e76ab67b22401e7" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>val</name></member>
+      <member refid="structsys__setsockopt__args_1adac72face35955be8225685fed96b56d" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>val_l_</name></member>
+      <member refid="structsys__setsockopt__args_1ad06bdeb56f0cf328c576e3b527e11ea1" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>val_r_</name></member>
+      <member refid="structsys__setsockopt__args_1a611cdad145a127b525a3f7078506058c" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>valsize</name></member>
+      <member refid="structsys__setsockopt__args_1a80a8540b90579484b00b8dd88f7e62c3" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>valsize_l_</name></member>
+      <member refid="structsys__setsockopt__args_1adde77df38ba14c7c429c4846b54c744c" prot="public" virt="non-virtual"><scope>sys_setsockopt_args</scope><name>valsize_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

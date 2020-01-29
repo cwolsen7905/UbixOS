@@ -1,0 +1,377 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structstatfs" kind="struct" language="C++" prot="public">
+    <compoundname>statfs</compoundname>
+    <includes refid="mount_8h" local="no">mount.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structstatfs_1a3c391f765ed54c74df309db6e40ca988" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_asyncreads</definition>
+        <argsstring></argsstring>
+        <name>f_asyncreads</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="55" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a63d1b0f892f4426aeea95e33afa06f2b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_asyncwrites</definition>
+        <argsstring></argsstring>
+        <name>f_asyncwrites</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="53" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1ad16c9666a946d7fad9014f4c874e6393" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t statfs::f_bavail</definition>
+        <argsstring></argsstring>
+        <name>f_bavail</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="49" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a8108951b97f47c474dd873e416f93eaa" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_bfree</definition>
+        <argsstring></argsstring>
+        <name>f_bfree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="48" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a336d5fd42293d94526439e64a44c986f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_blocks</definition>
+        <argsstring></argsstring>
+        <name>f_blocks</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="47" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1af5222b571c9008db7ae1791417294832" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_bsize</definition>
+        <argsstring></argsstring>
+        <name>f_bsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="45" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a2d71b28e0f711f917e60110b80b1ec37" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char statfs::f_charspare[80]</definition>
+        <argsstring>[80]</argsstring>
+        <name>f_charspare</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="60" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a323625cc7177126a589182aa43886f27" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t statfs::f_ffree</definition>
+        <argsstring></argsstring>
+        <name>f_ffree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="51" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1ad86b300ea3456919ade65070a1a386a6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_files</definition>
+        <argsstring></argsstring>
+        <name>f_files</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="50" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1ab36b2eeeda4ec12d3cc3306be0e409b2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_flags</definition>
+        <argsstring></argsstring>
+        <name>f_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="44" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" prot="public" static="no" mutable="no">
+        <type><ref refid="mount_8h_1a64b15807dd2ede85d728b779134071a2" kindref="member">fsid_t</ref></type>
+        <definition>fsid_t statfs::f_fsid</definition>
+        <argsstring></argsstring>
+        <name>f_fsid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="59" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="59" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1abed4a6c93c33aeaff6fcc82372200cdb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char statfs::f_fstypename[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>f_fstypename</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="61" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a24e79c417c6200bd1d3302abf24e8c29" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_iosize</definition>
+        <argsstring></argsstring>
+        <name>f_iosize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="46" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a70db5edf2cfd9827dae1be5ee94448a7" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char statfs::f_mntfromname[88]</definition>
+        <argsstring>[88]</argsstring>
+        <name>f_mntfromname</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="62" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1aa0c4e424f8ff4b24479e1931ffe4ef77" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char statfs::f_mntonname[88]</definition>
+        <argsstring>[88]</argsstring>
+        <name>f_mntonname</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="63" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="63" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a5f0abc0cf6d99454e2304571ff7deb80" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t statfs::f_namemax</definition>
+        <argsstring></argsstring>
+        <name>f_namemax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="57" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1afa7dfd5088527ec04b11153360ac7cad" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a1844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref></type>
+        <definition>uid_t statfs::f_owner</definition>
+        <argsstring></argsstring>
+        <name>f_owner</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="58" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a53167ba196024c70e2c39d385af30e6d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_spare[10]</definition>
+        <argsstring>[10]</argsstring>
+        <name>f_spare</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="56" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1aaee0c2fa85d30049e948c7fdfcdfe659" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_syncreads</definition>
+        <argsstring></argsstring>
+        <name>f_syncreads</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="54" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a4b47172314e490136e2ff5ee168dfae7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t statfs::f_syncwrites</definition>
+        <argsstring></argsstring>
+        <name>f_syncwrites</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="52" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1ac15a3e59d63b9537567de36817392165" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t statfs::f_type</definition>
+        <argsstring></argsstring>
+        <name>f_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="43" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structstatfs_1a03c4e8d17fcf59e1257834b868f759cf" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t statfs::f_version</definition>
+        <argsstring></argsstring>
+        <name>f_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="42" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>fsid</label>
+        <link refid="structfsid"/>
+      </node>
+      <node id="1">
+        <label>statfs</label>
+        <link refid="structstatfs"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+f_fsid</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="41" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="41" bodyend="64"/>
+    <listofallmembers>
+      <member refid="structstatfs_1a3c391f765ed54c74df309db6e40ca988" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_asyncreads</name></member>
+      <member refid="structstatfs_1a63d1b0f892f4426aeea95e33afa06f2b" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_asyncwrites</name></member>
+      <member refid="structstatfs_1ad16c9666a946d7fad9014f4c874e6393" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_bavail</name></member>
+      <member refid="structstatfs_1a8108951b97f47c474dd873e416f93eaa" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_bfree</name></member>
+      <member refid="structstatfs_1a336d5fd42293d94526439e64a44c986f" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_blocks</name></member>
+      <member refid="structstatfs_1af5222b571c9008db7ae1791417294832" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_bsize</name></member>
+      <member refid="structstatfs_1a2d71b28e0f711f917e60110b80b1ec37" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_charspare</name></member>
+      <member refid="structstatfs_1a323625cc7177126a589182aa43886f27" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_ffree</name></member>
+      <member refid="structstatfs_1ad86b300ea3456919ade65070a1a386a6" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_files</name></member>
+      <member refid="structstatfs_1ab36b2eeeda4ec12d3cc3306be0e409b2" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_flags</name></member>
+      <member refid="structstatfs_1afcf81e6feb4f13016452fc6053aa289e" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_fsid</name></member>
+      <member refid="structstatfs_1abed4a6c93c33aeaff6fcc82372200cdb" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_fstypename</name></member>
+      <member refid="structstatfs_1a24e79c417c6200bd1d3302abf24e8c29" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_iosize</name></member>
+      <member refid="structstatfs_1a70db5edf2cfd9827dae1be5ee94448a7" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_mntfromname</name></member>
+      <member refid="structstatfs_1aa0c4e424f8ff4b24479e1931ffe4ef77" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_mntonname</name></member>
+      <member refid="structstatfs_1a5f0abc0cf6d99454e2304571ff7deb80" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_namemax</name></member>
+      <member refid="structstatfs_1afa7dfd5088527ec04b11153360ac7cad" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_owner</name></member>
+      <member refid="structstatfs_1a53167ba196024c70e2c39d385af30e6d" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_spare</name></member>
+      <member refid="structstatfs_1aaee0c2fa85d30049e948c7fdfcdfe659" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_syncreads</name></member>
+      <member refid="structstatfs_1a4b47172314e490136e2ff5ee168dfae7" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_syncwrites</name></member>
+      <member refid="structstatfs_1ac15a3e59d63b9537567de36817392165" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_type</name></member>
+      <member refid="structstatfs_1a03c4e8d17fcf59e1257834b868f759cf" prot="public" virt="non-virtual"><scope>statfs</scope><name>f_version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

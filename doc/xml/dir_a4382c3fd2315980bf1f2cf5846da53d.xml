@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_a4382c3fd2315980bf1f2cf5846da53d" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/i386</compoundname>
+    <innerfile refid="asmacros_8h">asmacros.h</innerfile>
+    <innerfile refid="i386_2atkbd_8h">atkbd.h</innerfile>
+    <innerfile refid="i386_2cpu_8h">cpu.h</innerfile>
+    <innerfile refid="i386_2elf_8h">elf.h</innerfile>
+    <innerfile refid="i386_2limits_8h">limits.h</innerfile>
+    <innerfile refid="i386_2signal_8h">signal.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/i386/"/>
+  </compounddef>
+</doxygen>

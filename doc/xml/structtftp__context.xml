@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtftp__context" kind="struct" language="C++" prot="public">
+    <compoundname>tftp_context</compoundname>
+    <includes refid="tftp__server_8h" local="no">tftp_server.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structtftp__context_1ae9181c57d1cf89bc263f7671e5630a65" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* tftp_context::close) (void *handle)</definition>
+        <argsstring>)(void *handle)</argsstring>
+        <name>close</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Close file handle <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>File handle returned by <ref refid="structtftp__context_1ae70d64e8e20328cc492d766506df4cba" kindref="member">open()</ref> </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" line="68" column="3" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtftp__context_1ae70d64e8e20328cc492d766506df4cba" prot="public" static="no" mutable="no">
+        <type>void *(*</type>
+        <definition>void*(* tftp_context::open) (const char *fname, const char *mode, u8_t write)</definition>
+        <argsstring>)(const char *fname, const char *mode, u8_t write)</argsstring>
+        <name>open</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Open file for read/write. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>fname</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Filename </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>mode</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Mode string from TFTP RFC 1350 (netascii, octet, mail) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>write</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Flag indicating read (0) or write (!= 0) access </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>File handle supplied to other functions </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" line="63" column="3" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtftp__context_1a748e37df0c8b84b3adda78d603b9033c" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* tftp_context::read) (void *handle, void *buf, int bytes)</definition>
+        <argsstring>)(void *handle, void *buf, int bytes)</argsstring>
+        <name>read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Read from file <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>File handle returned by <ref refid="structtftp__context_1ae70d64e8e20328cc492d766506df4cba" kindref="member">open()</ref> </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buf</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Target buffer to copy read data to </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bytes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of bytes to copy to buf </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>&gt;= 0: Success; &lt; 0: Error </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" line="76" column="3" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtftp__context_1a9e6e4ec803ec9597822923369701754d" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* tftp_context::write) (void *handle, struct pbuf *p)</definition>
+        <argsstring>)(void *handle, struct pbuf *p)</argsstring>
+        <name>write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Write to file <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>handle</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>File handle returned by <ref refid="structtftp__context_1ae70d64e8e20328cc492d766506df4cba" kindref="member">open()</ref> </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pbuf</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>PBUF adjusted such that payload pointer points to the beginning of write data. In other words, TFTP headers are stripped off. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>&gt;= 0: Success; &lt; 0: Error </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" line="85" column="3" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>TFTP context containing callback functions for TFTP transfers </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>tftp_context</label>
+        <link refid="structtftp__context"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" line="55" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/tftp_server.h" bodystart="55" bodyend="86"/>
+    <listofallmembers>
+      <member refid="structtftp__context_1ae9181c57d1cf89bc263f7671e5630a65" prot="public" virt="non-virtual"><scope>tftp_context</scope><name>close</name></member>
+      <member refid="structtftp__context_1ae70d64e8e20328cc492d766506df4cba" prot="public" virt="non-virtual"><scope>tftp_context</scope><name>open</name></member>
+      <member refid="structtftp__context_1a748e37df0c8b84b3adda78d603b9033c" prot="public" virt="non-virtual"><scope>tftp_context</scope><name>read</name></member>
+      <member refid="structtftp__context_1a9e6e4ec803ec9597822923369701754d" prot="public" virt="non-virtual"><scope>tftp_context</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

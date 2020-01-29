@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__getdirentries__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_getdirentries_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a6b7c9f31971acf093c2982a055d49c4b" prot="public" static="no" mutable="no">
+        <type>long *</type>
+        <definition>long* sys_getdirentries_args::basep</definition>
+        <argsstring></argsstring>
+        <name>basep</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="637" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="637" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a194f0d62e516f37c76955543ad922f5f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::basep_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>basep_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="636" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="636" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1aaf86fe80b8ef112b8a3d918dce8d3ffb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::basep_r_[(sizeof(register_t)&lt;=sizeof(long *) ? 0 :sizeof(register_t) - sizeof(long *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(long *) ? 0 :sizeof(register_t) - sizeof(long *))]</argsstring>
+        <name>basep_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="638" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="638" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a3d55ee6aac44557c59c772df9cbe4879" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_getdirentries_args::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="631" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="631" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1aec77dd1139b0a36d6aa7b29d08039bc1" compoundref="vfs__calls_8c" startline="373" endline="387">sys_getdirentries</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a46840f22c9889e21ca56e0520b84003f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::buf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>buf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="630" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="630" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1adc40a7534fbf6d1bba98246a3304a56d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::buf_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>buf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="632" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="632" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1ad4c8ed1d8fe7dcf39d9e7dc2d8ee4db5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+        <definition>u_int sys_getdirentries_args::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="634" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="634" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1aec77dd1139b0a36d6aa7b29d08039bc1" compoundref="vfs__calls_8c" startline="373" endline="387">sys_getdirentries</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a84fcd93dfda380fcac5ecbf77c81014d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::count_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>count_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="633" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="633" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a8a09437f8d0f229b9723941f63a05a6b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::count_r_[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</argsstring>
+        <name>count_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="635" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="635" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1afa5ee0d234caa9962f5d4e72c6d23b72" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_getdirentries_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="628" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="628" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1aec77dd1139b0a36d6aa7b29d08039bc1" compoundref="vfs__calls_8c" startline="373" endline="387">sys_getdirentries</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a21304c35e3a8177ae9831d9ae06b03e7" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="627" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="627" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getdirentries__args_1a5500a434c20823a0f97e3cfac85db012" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getdirentries_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="629" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="629" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_getdirentries_args</label>
+        <link refid="structsys__getdirentries__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="626" column="29" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="626" bodyend="639"/>
+    <listofallmembers>
+      <member refid="structsys__getdirentries__args_1a6b7c9f31971acf093c2982a055d49c4b" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>basep</name></member>
+      <member refid="structsys__getdirentries__args_1a194f0d62e516f37c76955543ad922f5f" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>basep_l_</name></member>
+      <member refid="structsys__getdirentries__args_1aaf86fe80b8ef112b8a3d918dce8d3ffb" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>basep_r_</name></member>
+      <member refid="structsys__getdirentries__args_1a3d55ee6aac44557c59c772df9cbe4879" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>buf</name></member>
+      <member refid="structsys__getdirentries__args_1a46840f22c9889e21ca56e0520b84003f" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>buf_l_</name></member>
+      <member refid="structsys__getdirentries__args_1adc40a7534fbf6d1bba98246a3304a56d" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>buf_r_</name></member>
+      <member refid="structsys__getdirentries__args_1ad4c8ed1d8fe7dcf39d9e7dc2d8ee4db5" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>count</name></member>
+      <member refid="structsys__getdirentries__args_1a84fcd93dfda380fcac5ecbf77c81014d" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>count_l_</name></member>
+      <member refid="structsys__getdirentries__args_1a8a09437f8d0f229b9723941f63a05a6b" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>count_r_</name></member>
+      <member refid="structsys__getdirentries__args_1afa5ee0d234caa9962f5d4e72c6d23b72" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>fd</name></member>
+      <member refid="structsys__getdirentries__args_1a21304c35e3a8177ae9831d9ae06b03e7" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>fd_l_</name></member>
+      <member refid="structsys__getdirentries__args_1a5500a434c20823a0f97e3cfac85db012" prot="public" virt="non-virtual"><scope>sys_getdirentries_args</scope><name>fd_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

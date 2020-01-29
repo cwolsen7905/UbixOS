@@ -1,0 +1,11 @@
+digraph "C:/Dev/git/UbixOS/sys/net/net" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6ed706464e1919433e32bb89560817da {
+    graph [ bgcolor="#ddddee", pencolor="black", label="net" fontname="Helvetica", fontsize="10", URL="dir_6ed706464e1919433e32bb89560817da.html"]
+  dir_ef132642d4e2dd99b12ba6961727de4f [shape=box, label="net", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_ef132642d4e2dd99b12ba6961727de4f.html"];
+  }
+  dir_d1be8160e739b6eed1f7843efdbae1b3 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"];
+  dir_ef132642d4e2dd99b12ba6961727de4f->dir_d1be8160e739b6eed1f7843efdbae1b3 [headlabel="50", labeldistance=1.5 headhref="dir_000057_000019.html"];
+}

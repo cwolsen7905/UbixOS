@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__netbuf" kind="group">
+    <compoundname>netbuf</compoundname>
+    <title>Network buffers</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Network buffer descriptor for <ref refid="group__netconn" kindref="compound">Netconn API</ref>. Based on <ref refid="group__pbuf" kindref="compound">Packet buffers (PBUF)</ref> internally to avoid copying data around.<linebreak/>
+Buffers must not be shared accross multiple threads, all functions except netbuf_new() and netbuf_delete() are not thread-safe. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

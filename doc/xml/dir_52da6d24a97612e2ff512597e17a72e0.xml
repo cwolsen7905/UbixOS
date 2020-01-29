@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_52da6d24a97612e2ff512597e17a72e0" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/arch/armv6</compoundname>
+    <innerfile refid="armv6_2ap-boot_8S">ap-boot.S</innerfile>
+    <innerfile refid="armv6_2bioscall_8c">bioscall.c</innerfile>
+    <innerfile refid="exec_8c">exec.c</innerfile>
+    <innerfile refid="armv6_2fork_8c">fork.c</innerfile>
+    <innerfile refid="armv6_2kpanic_8c">kpanic.c</innerfile>
+    <innerfile refid="armv6_2sched_8c">sched.c</innerfile>
+    <innerfile refid="armv6_2schedyield_8S">schedyield.S</innerfile>
+    <innerfile refid="armv6_2spinlock_8c">spinlock.c</innerfile>
+    <innerfile refid="armv6_2sys__call_8S">sys_call.S</innerfile>
+    <innerfile refid="sys__call__new_8S">sys_call_new.S</innerfile>
+    <innerfile refid="arch_2armv6_2syscall_8c">syscall.c</innerfile>
+    <innerfile refid="armv6_2systemtask_8c">systemtask.c</innerfile>
+    <innerfile refid="armv6_2timer_8S">timer.S</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/"/>
+  </compounddef>
+</doxygen>

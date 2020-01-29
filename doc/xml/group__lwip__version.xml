@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__version" kind="group">
+    <compoundname>lwip_version</compoundname>
+    <title>Version</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" prot="public" static="no">
+        <name>LWIP_RC_DEVELOPMENT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_VERSION_RC is set to LWIP_RC_DEVELOPMENT for Git versions </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" prot="public" static="no">
+        <name>LWIP_RC_RELEASE</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_VERSION_RC is set to LWIP_RC_RELEASE for official releases </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga0a0d322fad0a67aa5b8f1b8c9dfcfe59" prot="public" static="no">
+        <name>LWIP_VERSION</name>
+        <initializer>(((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" kindref="member">LWIP_VERSION_MAJOR</ref>) &lt;&lt; 24   | ((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" kindref="member">LWIP_VERSION_MINOR</ref>) &lt;&lt; 16 | \
+                        ((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" kindref="member">LWIP_VERSION_REVISION</ref>) &lt;&lt; 8 | ((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Provides the version of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga5ccfb66bcbcf642a64f369ebefa2ad53" prot="public" static="no">
+        <name>LWIP_VERSION_IS_DEVELOPMENT</name>
+        <initializer>(<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> == <ref refid="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" kindref="member">LWIP_RC_DEVELOPMENT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga286a5221bb18242db9071479d8125b38" prot="public" static="no">
+        <name>LWIP_VERSION_IS_RC</name>
+        <initializer>((<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> != <ref refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" kindref="member">LWIP_RC_RELEASE</ref>) &amp;&amp; (<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> != <ref refid="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" kindref="member">LWIP_RC_DEVELOPMENT</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gabba875b6b4e4ca2dce972f4beec4b726" prot="public" static="no">
+        <name>LWIP_VERSION_IS_RELEASE</name>
+        <initializer>(<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> == <ref refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" kindref="member">LWIP_RC_RELEASE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" prot="public" static="no">
+        <name>LWIP_VERSION_MAJOR</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>X.x.x: Major version of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" prot="public" static="no">
+        <name>LWIP_VERSION_MINOR</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>x.X.x: Minor version of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" prot="public" static="no">
+        <name>LWIP_VERSION_RC</name>
+        <initializer><ref refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" kindref="member">LWIP_RC_RELEASE</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>For release candidates, this is set to 1..254 For official releases, this is set to 255 (LWIP_RC_RELEASE) For development versions (Git), this is set to 0 (LWIP_RC_DEVELOPMENT) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" prot="public" static="no">
+        <name>LWIP_VERSION_REVISION</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>x.x.X: Revision of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gab47e87bc38eef94486db402813183ba7" prot="public" static="no">
+        <name>LWIP_VERSION_STRING</name>
+        <initializer><ref refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" kindref="member">LWIP_VERSTR</ref>(<ref refid="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" kindref="member">LWIP_VERSION_MAJOR</ref>) &quot;.&quot; <ref refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" kindref="member">LWIP_VERSTR</ref>(<ref refid="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" kindref="member">LWIP_VERSION_MINOR</ref>) &quot;.&quot; <ref refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" kindref="member">LWIP_VERSTR</ref>(<ref refid="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" kindref="member">LWIP_VERSION_REVISION</ref>) <ref refid="group__lwip__version_1ga548fd1ff32bddf18074d284b794a3983" kindref="member">LWIP_VERSION_STRING_SUFFIX</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Provides the version of the stack as string </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="87" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga548fd1ff32bddf18074d284b794a3983" prot="public" static="no">
+        <name>LWIP_VERSION_STRING_SUFFIX</name>
+        <initializer>&quot;&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="76" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" prot="public" static="no">
+        <name>LWIP_VERSTR</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="group__lwip__version_1gaf32777134eea478cc10bada0629a9e7e" kindref="member">LWIP_VERSTR2</ref>(x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="74" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gaf32777134eea478cc10bada0629a9e7e" prot="public" static="no">
+        <name>LWIP_VERSTR2</name>
+        <param><defname>x</defname></param>
+        <initializer>#x</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

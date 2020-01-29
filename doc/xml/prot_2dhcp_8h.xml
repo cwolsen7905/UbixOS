@@ -1,0 +1,1036 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2dhcp_8h" kind="file" language="C++">
+    <compoundname>dhcp.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h</label>
+        <link refid="prot_2dhcp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structdhcp__msg" prot="public">dhcp_msg</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2dhcp_8h_1a3cca70105d2c42c3381829f456446e0e" prot="public" static="no">
+        <name>DHCP_ACK</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="126" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a17ef000d25276ab6ca9d773af0d97d21" prot="public" static="no">
+        <name>DHCP_BOOTREPLY</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="119" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a752b1eb7aba89801f20202b074f03b67" prot="public" static="no">
+        <name>DHCP_BOOTREQUEST</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="118" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a15b8e74ffbf5eb908da440c307401c04" prot="public" static="no">
+        <name>DHCP_CHADDR_LEN</name>
+        <initializer>16U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a23dd788b1cd28a0d834c3afefceaa1c1" prot="public" static="no">
+        <name>DHCP_CLIENT_PORT</name>
+        <initializer>68</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ae7469660afdf7997c020f7fbf5164548" prot="public" static="no">
+        <name>DHCP_DECLINE</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="125" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a368aca81d0a71853aa3939f546cc25ae" prot="public" static="no">
+        <name>DHCP_DISCOVER</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="122" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a4ffd004c5d53666e9315d9571af6d41b" prot="public" static="no">
+        <name>DHCP_FILE_LEN</name>
+        <initializer>128U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a87e51df90840a08fe0a3602d126ebfe3" prot="public" static="no">
+        <name>DHCP_FILE_OFS</name>
+        <initializer>108U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1aa9bbddbdf30ee61e9bc529d1981f943a" prot="public" static="no">
+        <name>DHCP_HTYPE_ETH</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DHCP hardware type, currently only ethernet is supported </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="132" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1aaea6a969c0da81c2611885514bbe433f" prot="public" static="no">
+        <name>DHCP_INFORM</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="129" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ac38bb410b5a906ccc81317bf2197d0d5" prot="public" static="no">
+        <name>DHCP_MAGIC_COOKIE</name>
+        <initializer>0x63825363UL</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="134" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a639e682d86ae2abca54841cf2d5c7b57" prot="public" static="no">
+        <name>DHCP_MIN_OPTIONS_LEN</name>
+        <initializer>68U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="82" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a418d69a76814cebcbe22d0211c686a53" prot="public" static="no">
+        <name>DHCP_MSG_LEN</name>
+        <initializer>236U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a12682fd5edb10129309f2046504d4221" prot="public" static="no">
+        <name>DHCP_NAK</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="127" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a4649df4abbae20e28fe422d09decd450" prot="public" static="no">
+        <name>DHCP_OFFER</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="123" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a75ddf8dd302393bf841cab237615eb67" prot="public" static="no">
+        <name>DHCP_OPTION_BOOTFILE</name>
+        <initializer>67</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="170" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ac6c1fce157c3297412cfb28d0822a93b" prot="public" static="no">
+        <name>DHCP_OPTION_BROADCAST</name>
+        <initializer>28</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="146" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ad1167da7c0637c6b1ef309115c25b7e6" prot="public" static="no">
+        <name>DHCP_OPTION_CLIENT_ID</name>
+        <initializer>61</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="168" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a8f05c5c6084fbac0be7b24101189232b" prot="public" static="no">
+        <name>DHCP_OPTION_DNS_SERVER</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="142" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1aea2eb67064efec2c65fff4497f659e7d" prot="public" static="no">
+        <name>DHCP_OPTION_END</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="149" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a8336c0e435dd07302c1b433d2c9197be" prot="public" static="no">
+        <name>DHCP_OPTION_HOSTNAME</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="143" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ab43ba1742cc39cd192431e9c8c3ea48d" prot="public" static="no">
+        <name>DHCP_OPTION_IP_TTL</name>
+        <initializer>23</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="144" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a458994de9415a8a622d1a560bfd9ace4" prot="public" static="no">
+        <name>DHCP_OPTION_LEASE_TIME</name>
+        <initializer>51 /* RFC 2132 9.2, time in seconds, in 4 bytes */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="153" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1aabc084bbce4768f1a2ec17caa0aac858" prot="public" static="no">
+        <name>DHCP_OPTION_MAX_MSG_SIZE</name>
+        <initializer>57 /* RFC 2132 9.10, message size accepted &gt;= 576 */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="162" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a73960c1209385e0b3f8d9c0e4f6f438f" prot="public" static="no">
+        <name>DHCP_OPTION_MAX_MSG_SIZE_LEN</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="163" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ab023a7a8b3307a68a2eff10a217e48a8" prot="public" static="no">
+        <name>DHCP_OPTION_MESSAGE_TYPE</name>
+        <initializer>53 /* RFC 2132 9.6, important for DHCP */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="156" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a9cf37917cca6ff44e6e409e1fc30ce6b" prot="public" static="no">
+        <name>DHCP_OPTION_MESSAGE_TYPE_LEN</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="157" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1abb0093dc9bbeff548b78ff876a36acd5" prot="public" static="no">
+        <name>DHCP_OPTION_MTU</name>
+        <initializer>26</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="145" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ae5a724660dd11c27d8ed477f0ee136e3" prot="public" static="no">
+        <name>DHCP_OPTION_NTP</name>
+        <initializer>42</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="148" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1afa25c2c462288d2ab8cec19d22af661f" prot="public" static="no">
+        <name>DHCP_OPTION_OVERLOAD</name>
+        <initializer>52 /* RFC2132 9.3, use <ref refid="structfile" kindref="compound">file</ref> and/or sname field for options */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="154" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1afcfde7a8c1ec0e3055d9a01ef2fa6aa9" prot="public" static="no">
+        <name>DHCP_OPTION_PAD</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="139" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a8b484e555c18f2d20df9a2267f35bced" prot="public" static="no">
+        <name>DHCP_OPTION_PARAMETER_REQUEST_LIST</name>
+        <initializer>55 /* RFC 2132 9.8, requested option types */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="160" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a1cbad840414a6617ebdb17b1b9073597" prot="public" static="no">
+        <name>DHCP_OPTION_REQUESTED_IP</name>
+        <initializer>50 /* RFC 2132 9.1, requested IP address */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="152" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a72cfc4e231017d1d116bb1d69d18ae8c" prot="public" static="no">
+        <name>DHCP_OPTION_ROUTER</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="141" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a3bdf84c273501fb73ad217dcab87bb4a" prot="public" static="no">
+        <name>DHCP_OPTION_SERVER_ID</name>
+        <initializer>54 /* RFC 2132 9.7, server IP address */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="159" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1acff5b8c45e6d63afd973aa8a0e72a901" prot="public" static="no">
+        <name>DHCP_OPTION_SUBNET_MASK</name>
+        <initializer>1 /* RFC 2132 3.3 */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="140" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ac32aa14a7fed99bcff08d10ca2dafc4d" prot="public" static="no">
+        <name>DHCP_OPTION_T1</name>
+        <initializer>58 /* T1 renewal time */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="165" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ab9a44c5141f2c790f94ec2dd8a1a4f7e" prot="public" static="no">
+        <name>DHCP_OPTION_T2</name>
+        <initializer>59 /* T2 rebinding time */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="166" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a608af55ab345fa8ee3aa32c95bb4786f" prot="public" static="no">
+        <name>DHCP_OPTION_TCP_TTL</name>
+        <initializer>37</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="147" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a03f2ea40cc8472e24c994c5882815f7c" prot="public" static="no">
+        <name>DHCP_OPTION_TFTP_SERVERNAME</name>
+        <initializer>66</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="169" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ac004aa5925855cd107487c9312b5163a" prot="public" static="no">
+        <name>DHCP_OPTION_US</name>
+        <initializer>60</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="167" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ae99d4be0d03f6f9c8f02f63abde91a06" prot="public" static="no">
+        <name>DHCP_OPTIONS_LEN</name>
+        <initializer><ref refid="prot_2dhcp_8h_1a639e682d86ae2abca54841cf2d5c7b57" kindref="member">DHCP_MIN_OPTIONS_LEN</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>make sure user does not configure this too small allow this to be configured in <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref>, but not too small set this to be sufficient for your options in outgoing DHCP msgs </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="90" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1af5e2f617c0b6005fb50db9851797be1b" prot="public" static="no">
+        <name>DHCP_OPTIONS_OFS</name>
+        <initializer>(<ref refid="prot_2dhcp_8h_1a418d69a76814cebcbe22d0211c686a53" kindref="member">DHCP_MSG_LEN</ref> + 4U) /* 4 byte: cookie */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a04a7b3f1d9138c82c51f2752d440c13e" prot="public" static="no">
+        <name>DHCP_OVERLOAD_FILE</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="174" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1abcd7ac0e3fe54f86f33d1b79855d5de7" prot="public" static="no">
+        <name>DHCP_OVERLOAD_NONE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="173" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a76d647c8774a4169ac92e01400bbb6ea" prot="public" static="no">
+        <name>DHCP_OVERLOAD_SNAME</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="175" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a07ea61064695eda45483c4c0a192614c" prot="public" static="no">
+        <name>DHCP_OVERLOAD_SNAME_FILE</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="176" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="176" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1ae629d2dc5df40f03ea87cc94a5e3f3eb" prot="public" static="no">
+        <name>DHCP_RELEASE</name>
+        <initializer>7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="128" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a98a346c53c91848070fd980a98fa77d1" prot="public" static="no">
+        <name>DHCP_REQUEST</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="124" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a478f5be6fb4bfb09b235bb50cf806cc9" prot="public" static="no">
+        <name>DHCP_SERVER_PORT</name>
+        <initializer>67</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a4227e9baee8b09567d1d9dda9d8a8cf3" prot="public" static="no">
+        <name>DHCP_SNAME_LEN</name>
+        <initializer>64U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dhcp_8h_1a370421b9ce80052774e0dd8a6437a025" prot="public" static="no">
+        <name>DHCP_SNAME_OFS</name>
+        <initializer>44U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bb" prot="public" static="no" strong="no">
+        <type></type>
+        <name>dhcp_state_enum_t</name>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba041a5104e13c4ccfe4982ca3aac677b1" prot="public">
+          <name>DHCP_STATE_OFF</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaba0a132e9bb9e5468d04013266e8c997" prot="public">
+          <name>DHCP_STATE_REQUESTING</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba04ab7401642e6e7d7dff940bf1c6ebc0" prot="public">
+          <name>DHCP_STATE_INIT</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba59b94c72eaa1d506d9014de5c9ff5608" prot="public">
+          <name>DHCP_STATE_REBOOTING</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaf55c3505a4745661f94134f8ccaa6c27" prot="public">
+          <name>DHCP_STATE_REBINDING</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbacd567c9a791f5112e7b5a46be86548cd" prot="public">
+          <name>DHCP_STATE_RENEWING</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba8a0dca73b4731e6e475dbedc75082bc5" prot="public">
+          <name>DHCP_STATE_SELECTING</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaf9a6f1bd1a701f3047c542bde1d42ce8" prot="public">
+          <name>DHCP_STATE_INFORMING</name>
+          <initializer>= 7</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba56d0710d1876bafdbf9a1c333d6d9ab9" prot="public">
+          <name>DHCP_STATE_CHECKING</name>
+          <initializer>= 8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba364344f5a66f35fd9de8daf9d1ef711a" prot="public">
+          <name>DHCP_STATE_PERMANENT</name>
+          <initializer>= 9</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba1200a3d268f2eadee62987a8d7d122e8" prot="public">
+          <name>DHCP_STATE_BOUND</name>
+          <initializer>= 10</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbac18cd7063818378187e8d0e2d7dc99a2" prot="public">
+          <name>DHCP_STATE_RELEASING</name>
+          <initializer>= 11</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba2dcc3cf888f75285cdc86c3574e1af44" prot="public">
+          <name>DHCP_STATE_BACKING_OFF</name>
+          <initializer>= 12</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="101" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" bodystart="101" bodyend="115"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2dhcp_8h_1a11d5d658ec923f9b7477ed70079f2455" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structdhcp__msg" kindref="compound">dhcp_msg</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct dhcp_msg  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h" line="93" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>DHCP protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Leon<sp/>Woestenberg<sp/>&lt;leon.woestenberg@gmx.net&gt;</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Axon<sp/>Digital<sp/>Design<sp/>B.V.,<sp/>The<sp/>Netherlands.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Leon<sp/>Woestenberg<sp/>&lt;leon.woestenberg@gmx.net&gt;</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_DHCP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_DHCP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="prot_2dhcp_8h_1a23dd788b1cd28a0d834c3afefceaa1c1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_CLIENT_PORT<sp/><sp/>68</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="prot_2dhcp_8h_1a478f5be6fb4bfb09b235bb50cf806cc9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_SERVER_PORT<sp/><sp/>67</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>DHCP<sp/>message<sp/>item<sp/>offsets<sp/>and<sp/>length<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="prot_2dhcp_8h_1a15b8e74ffbf5eb908da440c307401c04" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_CHADDR_LEN<sp/><sp/><sp/>16U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="prot_2dhcp_8h_1a370421b9ce80052774e0dd8a6437a025" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_SNAME_OFS<sp/><sp/><sp/><sp/>44U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="prot_2dhcp_8h_1a4227e9baee8b09567d1d9dda9d8a8cf3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_SNAME_LEN<sp/><sp/><sp/><sp/>64U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="prot_2dhcp_8h_1a87e51df90840a08fe0a3602d126ebfe3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_FILE_OFS<sp/><sp/><sp/><sp/><sp/>108U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="prot_2dhcp_8h_1a4ffd004c5d53666e9315d9571af6d41b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_FILE_LEN<sp/><sp/><sp/><sp/><sp/>128U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="prot_2dhcp_8h_1a418d69a76814cebcbe22d0211c686a53" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_MSG_LEN<sp/><sp/><sp/><sp/><sp/><sp/>236U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="prot_2dhcp_8h_1af5e2f617c0b6005fb50db9851797be1b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTIONS_OFS<sp/><sp/>(DHCP_MSG_LEN<sp/>+<sp/>4U)<sp/></highlight><highlight class="comment">/*<sp/>4<sp/>byte:<sp/>cookie<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="65" refid="structdhcp__msg" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdhcp__msg" kindref="compound">dhcp_msg</ref></highlight></codeline>
+<codeline lineno="66"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>op);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>htype);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>hlen);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>hops);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1accc488cabd8c68c9b0fb32fd348ede34" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>xid);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1accc488cabd8c68c9b0fb32fd348ede34" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>secs);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1accc488cabd8c68c9b0fb32fd348ede34" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>flags);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a1b1e3b64cb761605e306dff17be06b5e" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>ciaddr);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a1b1e3b64cb761605e306dff17be06b5e" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>yiaddr);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a1b1e3b64cb761605e306dff17be06b5e" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>siaddr);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a1b1e3b64cb761605e306dff17be06b5e" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>giaddr);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>chaddr[<ref refid="prot_2dhcp_8h_1a15b8e74ffbf5eb908da440c307401c04" kindref="member">DHCP_CHADDR_LEN</ref>]);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>sname[<ref refid="prot_2dhcp_8h_1a4227e9baee8b09567d1d9dda9d8a8cf3" kindref="member">DHCP_SNAME_LEN</ref>]);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structfile" kindref="compound">file</ref>[<ref refid="prot_2dhcp_8h_1a4ffd004c5d53666e9315d9571af6d41b" kindref="member">DHCP_FILE_LEN</ref>]);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1accc488cabd8c68c9b0fb32fd348ede34" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>cookie);</highlight></codeline>
+<codeline lineno="82" refid="prot_2dhcp_8h_1a639e682d86ae2abca54841cf2d5c7b57" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_MIN_OPTIONS_LEN<sp/>68U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="preprocessor">#if<sp/>((defined(DHCP_OPTIONS_LEN))<sp/>&amp;&amp;<sp/>(DHCP_OPTIONS_LEN<sp/>&lt;<sp/>DHCP_MIN_OPTIONS_LEN))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>undef<sp/>DHCP_OPTIONS_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="preprocessor">#if<sp/>(!defined(DHCP_OPTIONS_LEN))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="prot_2dhcp_8h_1ae99d4be0d03f6f9c8f02f63abde91a06" refkind="member"><highlight class="preprocessor">#<sp/><sp/>define<sp/>DHCP_OPTIONS_LEN<sp/>DHCP_MIN_OPTIONS_LEN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="structdhcp__msg_1a4767f765a467152d48153a7d1f05c5b3" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>options[<ref refid="prot_2dhcp_8h_1ae99d4be0d03f6f9c8f02f63abde91a06" kindref="member">DHCP_OPTIONS_LEN</ref>]);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal">}<sp/><ref refid="prot_2dhcp_8h_1a11d5d658ec923f9b7477ed70079f2455" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DHCP<sp/>client<sp/>states<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bb" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="102" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba041a5104e13c4ccfe4982ca3aac677b1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba041a5104e13c4ccfe4982ca3aac677b1" kindref="member">DHCP_STATE_OFF</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="103" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaba0a132e9bb9e5468d04013266e8c997" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaba0a132e9bb9e5468d04013266e8c997" kindref="member">DHCP_STATE_REQUESTING</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="104" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba04ab7401642e6e7d7dff940bf1c6ebc0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba04ab7401642e6e7d7dff940bf1c6ebc0" kindref="member">DHCP_STATE_INIT</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="105" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba59b94c72eaa1d506d9014de5c9ff5608" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba59b94c72eaa1d506d9014de5c9ff5608" kindref="member">DHCP_STATE_REBOOTING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>3,</highlight></codeline>
+<codeline lineno="106" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaf55c3505a4745661f94134f8ccaa6c27" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaf55c3505a4745661f94134f8ccaa6c27" kindref="member">DHCP_STATE_REBINDING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>4,</highlight></codeline>
+<codeline lineno="107" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbacd567c9a791f5112e7b5a46be86548cd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbacd567c9a791f5112e7b5a46be86548cd" kindref="member">DHCP_STATE_RENEWING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>5,</highlight></codeline>
+<codeline lineno="108" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba8a0dca73b4731e6e475dbedc75082bc5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba8a0dca73b4731e6e475dbedc75082bc5" kindref="member">DHCP_STATE_SELECTING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>6,</highlight></codeline>
+<codeline lineno="109" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaf9a6f1bd1a701f3047c542bde1d42ce8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbaf9a6f1bd1a701f3047c542bde1d42ce8" kindref="member">DHCP_STATE_INFORMING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>7,</highlight></codeline>
+<codeline lineno="110" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba56d0710d1876bafdbf9a1c333d6d9ab9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba56d0710d1876bafdbf9a1c333d6d9ab9" kindref="member">DHCP_STATE_CHECKING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>8,</highlight></codeline>
+<codeline lineno="111" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba364344f5a66f35fd9de8daf9d1ef711a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba364344f5a66f35fd9de8daf9d1ef711a" kindref="member">DHCP_STATE_PERMANENT</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>9,<sp/><sp/></highlight><highlight class="comment">/*<sp/>not<sp/>yet<sp/>implemented<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba1200a3d268f2eadee62987a8d7d122e8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba1200a3d268f2eadee62987a8d7d122e8" kindref="member">DHCP_STATE_BOUND</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>10,</highlight></codeline>
+<codeline lineno="113" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbac18cd7063818378187e8d0e2d7dc99a2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bbac18cd7063818378187e8d0e2d7dc99a2" kindref="member">DHCP_STATE_RELEASING</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>11,<sp/></highlight><highlight class="comment">/*<sp/>not<sp/>yet<sp/>implemented<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba2dcc3cf888f75285cdc86c3574e1af44" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bba2dcc3cf888f75285cdc86c3574e1af44" kindref="member">DHCP_STATE_BACKING_OFF</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>12</highlight></codeline>
+<codeline lineno="115"><highlight class="normal">}<sp/><ref refid="prot_2dhcp_8h_1ad85c86fcabb42bf16849247f12d810bb" kindref="member">dhcp_state_enum_t</ref>;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DHCP<sp/>op<sp/>codes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="prot_2dhcp_8h_1a752b1eb7aba89801f20202b074f03b67" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_BOOTREQUEST<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="prot_2dhcp_8h_1a17ef000d25276ab6ca9d773af0d97d21" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_BOOTREPLY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DHCP<sp/>message<sp/>types<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="prot_2dhcp_8h_1a368aca81d0a71853aa3939f546cc25ae" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_DISCOVER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123" refid="prot_2dhcp_8h_1a4649df4abbae20e28fe422d09decd450" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OFFER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124" refid="prot_2dhcp_8h_1a98a346c53c91848070fd980a98fa77d1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_REQUEST<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="prot_2dhcp_8h_1ae7469660afdf7997c020f7fbf5164548" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_DECLINE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126" refid="prot_2dhcp_8h_1a3cca70105d2c42c3381829f456446e0e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_ACK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127" refid="prot_2dhcp_8h_1a12682fd5edb10129309f2046504d4221" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_NAK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128" refid="prot_2dhcp_8h_1ae629d2dc5df40f03ea87cc94a5e3f3eb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_RELEASE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129" refid="prot_2dhcp_8h_1aaea6a969c0da81c2611885514bbe433f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_INFORM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132" refid="prot_2dhcp_8h_1aa9bbddbdf30ee61e9bc529d1981f943a" refkind="member"><highlight class="preprocessor">#define<sp/>DHCP_HTYPE_ETH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="prot_2dhcp_8h_1ac38bb410b5a906ccc81317bf2197d0d5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_MAGIC_COOKIE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x63825363UL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>This<sp/>is<sp/>a<sp/>list<sp/>of<sp/>options<sp/>for<sp/>BOOTP<sp/>and<sp/>DHCP,<sp/>see<sp/>RFC<sp/>2132<sp/>for<sp/>descriptions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>BootP<sp/>options<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139" refid="prot_2dhcp_8h_1afcfde7a8c1ec0e3055d9a01ef2fa6aa9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_PAD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="prot_2dhcp_8h_1acff5b8c45e6d63afd973aa8a0e72a901" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_SUBNET_MASK<sp/><sp/><sp/><sp/><sp/>1<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>3.3<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141" refid="prot_2dhcp_8h_1a72cfc4e231017d1d116bb1d69d18ae8c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_ROUTER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142" refid="prot_2dhcp_8h_1a8f05c5c6084fbac0be7b24101189232b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_DNS_SERVER<sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143" refid="prot_2dhcp_8h_1a8336c0e435dd07302c1b433d2c9197be" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_HOSTNAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>12</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="prot_2dhcp_8h_1ab43ba1742cc39cd192431e9c8c3ea48d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_IP_TTL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>23</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="prot_2dhcp_8h_1abb0093dc9bbeff548b78ff876a36acd5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_MTU<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>26</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146" refid="prot_2dhcp_8h_1ac6c1fce157c3297412cfb28d0822a93b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_BROADCAST<sp/><sp/><sp/><sp/><sp/><sp/><sp/>28</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147" refid="prot_2dhcp_8h_1a608af55ab345fa8ee3aa32c95bb4786f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_TCP_TTL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>37</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="prot_2dhcp_8h_1ae5a724660dd11c27d8ed477f0ee136e3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_NTP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>42</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149" refid="prot_2dhcp_8h_1aea2eb67064efec2c65fff4497f659e7d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_END<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DHCP<sp/>options<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="prot_2dhcp_8h_1a1cbad840414a6617ebdb17b1b9073597" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_REQUESTED_IP<sp/><sp/><sp/><sp/>50<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>9.1,<sp/>requested<sp/>IP<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153" refid="prot_2dhcp_8h_1a458994de9415a8a622d1a560bfd9ace4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_LEASE_TIME<sp/><sp/><sp/><sp/><sp/><sp/>51<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>9.2,<sp/>time<sp/>in<sp/>seconds,<sp/>in<sp/>4<sp/>bytes<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154" refid="prot_2dhcp_8h_1afa25c2c462288d2ab8cec19d22af661f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_OVERLOAD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>52<sp/></highlight><highlight class="comment">/*<sp/>RFC2132<sp/>9.3,<sp/>use<sp/>file<sp/>and/or<sp/>sname<sp/>field<sp/>for<sp/>options<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="prot_2dhcp_8h_1ab023a7a8b3307a68a2eff10a217e48a8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_MESSAGE_TYPE<sp/><sp/><sp/><sp/>53<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>9.6,<sp/>important<sp/>for<sp/>DHCP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="prot_2dhcp_8h_1a9cf37917cca6ff44e6e409e1fc30ce6b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_MESSAGE_TYPE_LEN<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159" refid="prot_2dhcp_8h_1a3bdf84c273501fb73ad217dcab87bb4a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_SERVER_ID<sp/><sp/><sp/><sp/><sp/><sp/><sp/>54<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>9.7,<sp/>server<sp/>IP<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="prot_2dhcp_8h_1a8b484e555c18f2d20df9a2267f35bced" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_PARAMETER_REQUEST_LIST<sp/><sp/>55<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>9.8,<sp/>requested<sp/>option<sp/>types<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="prot_2dhcp_8h_1aabc084bbce4768f1a2ec17caa0aac858" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_MAX_MSG_SIZE<sp/><sp/><sp/><sp/>57<sp/></highlight><highlight class="comment">/*<sp/>RFC<sp/>2132<sp/>9.10,<sp/>message<sp/>size<sp/>accepted<sp/>&gt;=<sp/>576<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163" refid="prot_2dhcp_8h_1a73960c1209385e0b3f8d9c0e4f6f438f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_MAX_MSG_SIZE_LEN<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="prot_2dhcp_8h_1ac32aa14a7fed99bcff08d10ca2dafc4d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_T1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>58<sp/></highlight><highlight class="comment">/*<sp/>T1<sp/>renewal<sp/>time<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166" refid="prot_2dhcp_8h_1ab9a44c5141f2c790f94ec2dd8a1a4f7e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_T2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>59<sp/></highlight><highlight class="comment">/*<sp/>T2<sp/>rebinding<sp/>time<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="prot_2dhcp_8h_1ac004aa5925855cd107487c9312b5163a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_US<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>60</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168" refid="prot_2dhcp_8h_1ad1167da7c0637c6b1ef309115c25b7e6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_CLIENT_ID<sp/><sp/><sp/><sp/><sp/><sp/><sp/>61</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169" refid="prot_2dhcp_8h_1a03f2ea40cc8472e24c994c5882815f7c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_TFTP_SERVERNAME<sp/>66</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170" refid="prot_2dhcp_8h_1a75ddf8dd302393bf841cab237615eb67" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OPTION_BOOTFILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>67</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>possible<sp/>combinations<sp/>of<sp/>overloading<sp/>the<sp/>file<sp/>and<sp/>sname<sp/>fields<sp/>with<sp/>options<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173" refid="prot_2dhcp_8h_1abcd7ac0e3fe54f86f33d1b79855d5de7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OVERLOAD_NONE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174" refid="prot_2dhcp_8h_1a04a7b3f1d9138c82c51f2752d440c13e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OVERLOAD_FILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175" refid="prot_2dhcp_8h_1a76d647c8774a4169ac92e01400bbb6ea" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OVERLOAD_SNAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176" refid="prot_2dhcp_8h_1a07ea61064695eda45483c4c0a192614c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_OVERLOAD_SNAME_FILE<sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*LWIP_HDR_PROT_DHCP_H*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h"/>
+  </compounddef>
+</doxygen>

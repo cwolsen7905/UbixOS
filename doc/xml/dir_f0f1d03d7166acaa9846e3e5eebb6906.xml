@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_f0f1d03d7166acaa9846e3e5eebb6906" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/fs</compoundname>
+    <innerdir refid="dir_490cab71c5aaa053a1993eb56c90d635">C:/Dev/git/UbixOS/sys/fs/common</innerdir>
+    <innerdir refid="dir_7a51bf66b571122379869b46a588cfdf">C:/Dev/git/UbixOS/sys/fs/devfs</innerdir>
+    <innerdir refid="dir_7155e0c9f6f186649a275c2913f17d4d">C:/Dev/git/UbixOS/sys/fs/fat</innerdir>
+    <innerdir refid="dir_cb8ca09a09b88e5783c23dbafd3d00a3">C:/Dev/git/UbixOS/sys/fs/ubixfs</innerdir>
+    <innerdir refid="dir_74bb5707befa08816061cada625d4de6">C:/Dev/git/UbixOS/sys/fs/ubixfsv2</innerdir>
+    <innerdir refid="dir_1f1faeada30558e8e6a4ead6b1f0ba7a">C:/Dev/git/UbixOS/sys/fs/ufs</innerdir>
+    <innerdir refid="dir_0cf0750cbeb97e10716794077f120bec">C:/Dev/git/UbixOS/sys/fs/vfs</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/fs/"/>
+  </compounddef>
+</doxygen>

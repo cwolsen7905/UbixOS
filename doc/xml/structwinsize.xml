@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structwinsize" kind="struct" language="C++" prot="public">
+    <compoundname>winsize</compoundname>
+    <includes refid="ioctl_8h" local="no">ioctl.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structwinsize_1a80bedf71a49fd324e0d92d0702cc7005" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short winsize::ws_col</definition>
+        <argsstring></argsstring>
+        <name>ws_col</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="48" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structwinsize_1a73698fa1d966374b0701e4bf225f0141" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short winsize::ws_row</definition>
+        <argsstring></argsstring>
+        <name>ws_row</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="47" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structwinsize_1a98b55f3411b646eca1e13cb52c5795e4" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short winsize::ws_xpixel</definition>
+        <argsstring></argsstring>
+        <name>ws_xpixel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="49" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structwinsize_1aca568563970602b60eb32fc17bd5a630" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short winsize::ws_ypixel</definition>
+        <argsstring></argsstring>
+        <name>ws_ypixel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="50" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>winsize</label>
+        <link refid="structwinsize"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="46" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="46" bodyend="51"/>
+    <listofallmembers>
+      <member refid="structwinsize_1a80bedf71a49fd324e0d92d0702cc7005" prot="public" virt="non-virtual"><scope>winsize</scope><name>ws_col</name></member>
+      <member refid="structwinsize_1a73698fa1d966374b0701e4bf225f0141" prot="public" virt="non-virtual"><scope>winsize</scope><name>ws_row</name></member>
+      <member refid="structwinsize_1a98b55f3411b646eca1e13cb52c5795e4" prot="public" virt="non-virtual"><scope>winsize</scope><name>ws_xpixel</name></member>
+      <member refid="structwinsize_1aca568563970602b60eb32fc17bd5a630" prot="public" virt="non-virtual"><scope>winsize</scope><name>ws_ypixel</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

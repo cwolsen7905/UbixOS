@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structjmvrec" kind="struct" language="C++" prot="public">
+    <compoundname>jmvrec</compoundname>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structjmvrec_1a35f86d3845ed80222885d4ed6918e205" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jmvrec::jm_ino</definition>
+        <argsstring></argsstring>
+        <name>jm_ino</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="719" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="719" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjmvrec_1a5ca871291a05ade9c0faf6381dd0ab09" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t jmvrec::jm_newoff</definition>
+        <argsstring></argsstring>
+        <name>jm_newoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="723" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="723" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjmvrec_1a12037114ac756c27ec7e161974e2be16" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t jmvrec::jm_oldoff</definition>
+        <argsstring></argsstring>
+        <name>jm_oldoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="722" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="722" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjmvrec_1a363ae8708e7609f9e0f194237582d09f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jmvrec::jm_op</definition>
+        <argsstring></argsstring>
+        <name>jm_op</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="718" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="718" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjmvrec_1ae422e0440c4fdb322972e30c4b57ac83" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jmvrec::jm_parent</definition>
+        <argsstring></argsstring>
+        <name>jm_parent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="720" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="720" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjmvrec_1a778a515848c751d9177b0811a801461d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t jmvrec::jm_unused</definition>
+        <argsstring></argsstring>
+        <name>jm_unused</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="721" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="721" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>jmvrec</label>
+        <link refid="structjmvrec"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="717" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="717" bodyend="724"/>
+    <listofallmembers>
+      <member refid="structjmvrec_1a35f86d3845ed80222885d4ed6918e205" prot="public" virt="non-virtual"><scope>jmvrec</scope><name>jm_ino</name></member>
+      <member refid="structjmvrec_1a5ca871291a05ade9c0faf6381dd0ab09" prot="public" virt="non-virtual"><scope>jmvrec</scope><name>jm_newoff</name></member>
+      <member refid="structjmvrec_1a12037114ac756c27ec7e161974e2be16" prot="public" virt="non-virtual"><scope>jmvrec</scope><name>jm_oldoff</name></member>
+      <member refid="structjmvrec_1a363ae8708e7609f9e0f194237582d09f" prot="public" virt="non-virtual"><scope>jmvrec</scope><name>jm_op</name></member>
+      <member refid="structjmvrec_1ae422e0440c4fdb322972e30c4b57ac83" prot="public" virt="non-virtual"><scope>jmvrec</scope><name>jm_parent</name></member>
+      <member refid="structjmvrec_1a778a515848c751d9177b0811a801461d" prot="public" virt="non-virtual"><scope>jmvrec</scope><name>jm_unused</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

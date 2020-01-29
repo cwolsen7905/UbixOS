@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__loop" kind="group">
+    <compoundname>lwip_opts_loop</compoundname>
+    <title>Loopback interface</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__loop_1gaa2b1f736373cd896e212644aa453fbaf" prot="public" static="no">
+        <name>LWIP_HAVE_LOOPIF</name>
+        <initializer><ref refid="group__lwip__opts__loop_1ga724a0ea765d5a47d026d529725f31c01" kindref="member">LWIP_NETIF_LOOPBACK</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_HAVE_LOOPIF==1: Support loop interface (127.0.0.1). This is only needed when no real netifs are available. If at least one other netif is available, loopback traffic uses this netif. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1438" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1438" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__loop_1gaacc3ad5d0a771d45fb0a3e3a09b1dbea" prot="public" static="no">
+        <name>LWIP_LOOPBACK_MAX_PBUFS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_LOOPBACK_MAX_PBUFS: Maximum number of pbufs on queue for loopback sending for each netif (0 = disabled) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1461" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1461" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__loop_1ga10a878b390c2fbe421d82502001c7300" prot="public" static="no">
+        <name>LWIP_LOOPIF_MULTICAST</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_LOOPIF_MULTICAST==1: Support multicast/IGMP on loop interface (127.0.0.1). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1445" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1445" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__loop_1ga724a0ea765d5a47d026d529725f31c01" prot="public" static="no">
+        <name>LWIP_NETIF_LOOPBACK</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_NETIF_LOOPBACK==1: Support sending packets with a destination IP address equal to the netif IP address, looping them back up the stack. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1453" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1453" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__loop_1gaa28d13ddd5281b1912276991e7ea58c5" prot="public" static="no">
+        <name>LWIP_NETIF_LOOPBACK_MULTITHREADING</name>
+        <initializer>(!<ref refid="opt_8h_1ae00ba99de94a5bf84d832be8976df59b" kindref="member">NO_SYS</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_NETIF_LOOPBACK_MULTITHREADING: Indicates whether threading is enabled in the system, as netifs must change how they behave depending on this setting for the LWIP_NETIF_LOOPBACK option to work. Setting this is needed to avoid reentering non-reentrant functions like tcp_input(). LWIP_NETIF_LOOPBACK_MULTITHREADING==1: Indicates that the user is using a multithreaded environment like <ref refid="tcpip_8c" kindref="compound">tcpip.c</ref>. In this case, netif-&gt;input() is called directly. LWIP_NETIF_LOOPBACK_MULTITHREADING==0: Indicates a polling (or NO_SYS) setup. The packets are put on a list and netif_poll() must be called in the main application loop. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1478" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1478" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

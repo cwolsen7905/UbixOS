@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Lib" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Lib</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Lib_1a11f09b77bcae792d5e5c120b4a0fbcca" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Lib::l_checksum</definition>
+        <argsstring></argsstring>
+        <name>l_checksum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="88" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Lib_1ac78fa7eafc377b04fcaf575c61dc2b60" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Lib::l_flags</definition>
+        <argsstring></argsstring>
+        <name>l_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="90" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Lib_1ac7f21d23c86f56c6583aa563eb960af0" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Lib::l_name</definition>
+        <argsstring></argsstring>
+        <name>l_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="86" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Lib_1ace001f85c3f31e91fedf4a1a1f923af5" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Lib::l_time_stamp</definition>
+        <argsstring></argsstring>
+        <name>l_time_stamp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="87" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Lib_1ab03d7034a6f1113717a9eefe33cb8343" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Lib::l_version</definition>
+        <argsstring></argsstring>
+        <name>l_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="89" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Lib</label>
+        <link refid="structElf64__Lib"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="85" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="85" bodyend="91"/>
+    <listofallmembers>
+      <member refid="structElf64__Lib_1a11f09b77bcae792d5e5c120b4a0fbcca" prot="public" virt="non-virtual"><scope>Elf64_Lib</scope><name>l_checksum</name></member>
+      <member refid="structElf64__Lib_1ac78fa7eafc377b04fcaf575c61dc2b60" prot="public" virt="non-virtual"><scope>Elf64_Lib</scope><name>l_flags</name></member>
+      <member refid="structElf64__Lib_1ac7f21d23c86f56c6583aa563eb960af0" prot="public" virt="non-virtual"><scope>Elf64_Lib</scope><name>l_name</name></member>
+      <member refid="structElf64__Lib_1ace001f85c3f31e91fedf4a1a1f923af5" prot="public" virt="non-virtual"><scope>Elf64_Lib</scope><name>l_time_stamp</name></member>
+      <member refid="structElf64__Lib_1ab03d7034a6f1113717a9eefe33cb8343" prot="public" virt="non-virtual"><scope>Elf64_Lib</scope><name>l_version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

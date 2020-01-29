@@ -1,0 +1,17 @@
+digraph "C:/Dev/git/UbixOS/sys/arch" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6ec99f6d7d5182ba8913209ab70c9f18 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="sys" fontname="Helvetica", fontsize="10", URL="dir_6ec99f6d7d5182ba8913209ab70c9f18.html"]
+  subgraph clusterdir_316bf5fdacfa44a7db12b020a0d9ab19 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_316bf5fdacfa44a7db12b020a0d9ab19.html"];
+    dir_316bf5fdacfa44a7db12b020a0d9ab19 [shape=plaintext label="arch"];
+    dir_52da6d24a97612e2ff512597e17a72e0 [shape=box label="armv6" color="black" fillcolor="white" style="filled" URL="dir_52da6d24a97612e2ff512597e17a72e0.html"];
+    dir_256d947363de5d2e978c467334167a28 [shape=box label="i386" color="black" fillcolor="white" style="filled" URL="dir_256d947363de5d2e978c467334167a28.html"];
+  }
+  }
+  dir_d1be8160e739b6eed1f7843efdbae1b3 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"];
+  dir_52da6d24a97612e2ff512597e17a72e0->dir_d1be8160e739b6eed1f7843efdbae1b3 [headlabel="76", labeldistance=1.5 headhref="dir_000006_000019.html"];
+  dir_256d947363de5d2e978c467334167a28->dir_d1be8160e739b6eed1f7843efdbae1b3 [headlabel="83", labeldistance=1.5 headhref="dir_000007_000019.html"];
+}

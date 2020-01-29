@@ -1,0 +1,14 @@
+digraph "sys_fgetc"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="sys_fgetc",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="fgetc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$file_8c.html#af3ae9aab3fa1a25c0b0cde40aa97f2d0",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="getchar",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_2vfs_2file_8h.html#ac45fdeab51c3197c1e7c4ec7beabaca9",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="sched_yield",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7",tooltip=" "];
+}

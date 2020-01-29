@@ -1,0 +1,7 @@
+digraph "Elf32_Verdef"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{Elf32_Verdef\n|+ vd_aux\l+ vd_cnt\l+ vd_flags\l+ vd_hash\l+ vd_ndx\l+ vd_next\l+ vd_version\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

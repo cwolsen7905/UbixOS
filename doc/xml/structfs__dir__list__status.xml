@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfs__dir__list__status" kind="struct" language="C++" prot="public">
+    <compoundname>fs_dir_list_status</compoundname>
+    <includes refid="fat__access_8h" local="no">fat_access.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfs__dir__list__status_1acffc0e07120b8ffa7ae56ecf5723554c" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 fs_dir_list_status::cluster</definition>
+        <argsstring></argsstring>
+        <name>cluster</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="93" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="93" bodyend="-1"/>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="fat__access_8h_1a4873df5d542fddb4a1d3b2884b56525e" compoundref="fat__access_8c" startline="708" endline="712">fatfs_list_directory_start</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfs__dir__list__status_1a79e4d964afc1d3bdfcf7e9d2626b62bd" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 fs_dir_list_status::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="94" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="94" bodyend="-1"/>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="fat__access_8h_1a4873df5d542fddb4a1d3b2884b56525e" compoundref="fat__access_8c" startline="708" endline="712">fatfs_list_directory_start</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfs__dir__list__status_1aecc41c4832bec5e4d6af1a2b16b04ac4" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 fs_dir_list_status::sector</definition>
+        <argsstring></argsstring>
+        <name>sector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="92" column="29" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="fat__access_8h_1a4873df5d542fddb4a1d3b2884b56525e" compoundref="fat__access_8c" startline="708" endline="712">fatfs_list_directory_start</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>fs_dir_list_status</label>
+        <link refid="structfs__dir__list__status"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" line="91" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_access.h" bodystart="90" bodyend="95"/>
+    <listofallmembers>
+      <member refid="structfs__dir__list__status_1acffc0e07120b8ffa7ae56ecf5723554c" prot="public" virt="non-virtual"><scope>fs_dir_list_status</scope><name>cluster</name></member>
+      <member refid="structfs__dir__list__status_1a79e4d964afc1d3bdfcf7e9d2626b62bd" prot="public" virt="non-virtual"><scope>fs_dir_list_status</scope><name>offset</name></member>
+      <member refid="structfs__dir__list__status_1aecc41c4832bec5e4d6af1a2b16b04ac4" prot="public" virt="non-virtual"><scope>fs_dir_list_status</scope><name>sector</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

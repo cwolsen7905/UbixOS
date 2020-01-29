@@ -1,0 +1,735 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2dns_8h" kind="file" language="C++">
+    <compoundname>dns.h</compoundname>
+    <includes refid="arch_8h" local="yes">net/arch.h</includes>
+    <incdepgraph>
+      <node id="14">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="15">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/dns.h</label>
+        <link refid="prot_2dns_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="11">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structdns__hdr" prot="public">dns_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2dns_8h_1add685a0f8b5e76a2687cc0f306813bfb" prot="public" static="no">
+        <name>DNS_FLAG1_AUTHORATIVE</name>
+        <initializer>0x04</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="88" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ae7250008b68d1909d54040515eef8ebb" prot="public" static="no">
+        <name>DNS_FLAG1_OPCODE_INVERSE</name>
+        <initializer>0x08</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="86" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a6a327c0ffd40f69fbcd5f01f12e5745c" prot="public" static="no">
+        <name>DNS_FLAG1_OPCODE_STANDARD</name>
+        <initializer>0x00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="87" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a4350350ce0d4595876743d4c0a720bcc" prot="public" static="no">
+        <name>DNS_FLAG1_OPCODE_STATUS</name>
+        <initializer>0x10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a72d99b1623afa14bd58c667b748c2ddc" prot="public" static="no">
+        <name>DNS_FLAG1_RD</name>
+        <initializer>0x01</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="90" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a96eb4534b574ece96ed36806039f73d3" prot="public" static="no">
+        <name>DNS_FLAG1_RESPONSE</name>
+        <initializer>0x80</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a2e52037249bb98d7bbecf42e275beb07" prot="public" static="no">
+        <name>DNS_FLAG1_TRUNC</name>
+        <initializer>0x02</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="89" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a9f6c329c04baba17fe0f5b2a6597d713" prot="public" static="no">
+        <name>DNS_FLAG2_ERR_MASK</name>
+        <initializer>0x0f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="92" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a8ee5e2c8e517d6e4f2198057f81e93c6" prot="public" static="no">
+        <name>DNS_FLAG2_ERR_NAME</name>
+        <initializer>0x03</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="94" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a6aaa9da3d0f8d4c0799516d46d939942" prot="public" static="no">
+        <name>DNS_FLAG2_ERR_NONE</name>
+        <initializer>0x00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="93" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ac72f8777ccc45ae274449ea7a9f3de04" prot="public" static="no">
+        <name>DNS_FLAG2_RA</name>
+        <initializer>0x80</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="91" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a8b3138fb652e7b2fcdf8c24d555188af" prot="public" static="no">
+        <name>DNS_HDR_GET_OPCODE</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((((hdr)-&gt;flags1) &gt;&gt; 3) &amp; 0xF)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="96" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a861fa0ab623ace9086f5c7247a9f04c8" prot="public" static="no">
+        <name>DNS_MQUERY_IPV4_GROUP_INIT</name>
+        <initializer>IPADDR4_INIT_BYTES(224,0,0,251)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="128" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ae8c419a73ada8ec6b470b3679ae87b8e" prot="public" static="no">
+        <name>DNS_MQUERY_IPV6_GROUP_INIT</name>
+        <initializer><ref refid="ip__addr_8h_1adaff748da2b808995993dd3db5420f08" kindref="member">IPADDR6_INIT_HOST</ref>(0xFF020000,0,0,0xFB)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="133" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a62d67af5ac6c6b3f98a6566a42564276" prot="public" static="no">
+        <name>DNS_MQUERY_PORT</name>
+        <initializer>5353</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>UDP port for multicast DNS queries </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="123" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a21008b249272ea02cfdc31aa7502a217" prot="public" static="no">
+        <name>DNS_RRCLASS_ANY</name>
+        <initializer>255   /* any class */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ae403127af0f1656d8c724e723f6b3252" prot="public" static="no">
+        <name>DNS_RRCLASS_CH</name>
+        <initializer>3     /* the CHAOS class */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="78" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a9d64fb2a8d4b656f11c7b334b810b5f1" prot="public" static="no">
+        <name>DNS_RRCLASS_CS</name>
+        <initializer>2     /* the CSNET class (Obsolete - used only for examples in some obsolete RFCs) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="77" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ad8e2e9df5f9942d5f2a50bbfc6da80d3" prot="public" static="no">
+        <name>DNS_RRCLASS_FLUSH</name>
+        <initializer>0x800 /* Flush bit */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="81" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a47055a9391e4a5c03e2aba7b1a4ad39a" prot="public" static="no">
+        <name>DNS_RRCLASS_HS</name>
+        <initializer>4     /* Hesiod [Dyer 87] */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="79" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a08bc1c1897d2921b6f102365be55da2a" prot="public" static="no">
+        <name>DNS_RRCLASS_IN</name>
+        <initializer>1     /* the Internet */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="76" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a830e99420463950d3c4d661487f20d0d" prot="public" static="no">
+        <name>DNS_RRTYPE_A</name>
+        <initializer>1     /* a host address */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ae533fbb9f59f4de915ed3ecb9ff24953" prot="public" static="no">
+        <name>DNS_RRTYPE_AAAA</name>
+        <initializer>28    /* IPv6 address */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1aea32c0d7d57c585bb1a9bfd3ce81bed5" prot="public" static="no">
+        <name>DNS_RRTYPE_ANY</name>
+        <initializer>255   /* any type */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a3dab0550bbdea0b4957461427d07be41" prot="public" static="no">
+        <name>DNS_RRTYPE_CNAME</name>
+        <initializer>5     /* the canonical <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> for an alias */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1aa38f49c344b6aa0caa6656dbc4f1b7c6" prot="public" static="no">
+        <name>DNS_RRTYPE_HINFO</name>
+        <initializer>13    /* host information */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a70b5c47284dbde86c3563f20c6201962" prot="public" static="no">
+        <name>DNS_RRTYPE_MB</name>
+        <initializer>7     /* a mailbox domain <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> (EXPERIMENTAL) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ae7d66bce2de34d6dbc3e4efc1a31e664" prot="public" static="no">
+        <name>DNS_RRTYPE_MD</name>
+        <initializer>3     /* a mail destination (Obsolete - use MX) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a3e88aee3ce8e0395e04b4248600e805d" prot="public" static="no">
+        <name>DNS_RRTYPE_MF</name>
+        <initializer>4     /* a mail forwarder (Obsolete - use MX) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a102558e1400d41a35868f82c7eba8503" prot="public" static="no">
+        <name>DNS_RRTYPE_MG</name>
+        <initializer>8     /* a mail group member (EXPERIMENTAL) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a952c8c700b3ddad714e51873692a345b" prot="public" static="no">
+        <name>DNS_RRTYPE_MINFO</name>
+        <initializer>14    /* mailbox or mail list information */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a2d4fdfd7f5d8f9f758278003dc243d04" prot="public" static="no">
+        <name>DNS_RRTYPE_MR</name>
+        <initializer>9     /* a mail rename domain <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> (EXPERIMENTAL) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a52c933b4a3def47075a16ba3006d7f99" prot="public" static="no">
+        <name>DNS_RRTYPE_MX</name>
+        <initializer>15    /* mail exchange */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1acca8f4a2a1bea8615d892150ed890633" prot="public" static="no">
+        <name>DNS_RRTYPE_NS</name>
+        <initializer>2     /* an authoritative <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> server */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1aaa883ee62a659bdde6207d737e77795c" prot="public" static="no">
+        <name>DNS_RRTYPE_NULL</name>
+        <initializer>10    /* a null RR (EXPERIMENTAL) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1ace55462cfcd4872a7c68178ed779cb89" prot="public" static="no">
+        <name>DNS_RRTYPE_PTR</name>
+        <initializer>12    /* a domain <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref> pointer */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1aba0e1e44b7ad6b4096384d041111ee7a" prot="public" static="no">
+        <name>DNS_RRTYPE_SOA</name>
+        <initializer>6     /* marks the start of a zone of authority */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a38f81c327955912ba9cc893c26d3a86e" prot="public" static="no">
+        <name>DNS_RRTYPE_SRV</name>
+        <initializer>33    /* service location */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a62820cc2f56dd4fdd301729fa05b4f96" prot="public" static="no">
+        <name>DNS_RRTYPE_TXT</name>
+        <initializer>16    /* text strings */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1aa64d1579e0da263c09134d12c89c9ce4" prot="public" static="no">
+        <name>DNS_RRTYPE_WKS</name>
+        <initializer>11    /* a well known service description */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a9266b48706648ecf0625a3e651095317" prot="public" static="no">
+        <name>DNS_SERVER_PORT</name>
+        <initializer>53</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DNS server port address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2dns_8h_1a1ffff846513e2493ba915d8874c26476" prot="public" static="no">
+        <name>SIZEOF_DNS_HDR</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="116" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2dns_8h_1abfbe0197612b7e138ae2dd9545e3664c" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structdns__hdr" kindref="compound">dns_hdr</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct dns_hdr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h" line="111" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>DNS - host name to IP address resolver. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Port<sp/>to<sp/>lwIP<sp/>from<sp/>uIP</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>by<sp/>Jim<sp/>Pettinato<sp/>April<sp/>2007</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>security<sp/>fixes<sp/>and<sp/>more<sp/>by<sp/>Simon<sp/>Goldschmidt</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>uIP<sp/>version<sp/>Copyright<sp/>(c)<sp/>2002-2003,<sp/>Adam<sp/>Dunkels.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_DNS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_DNS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="preprocessor">#ifndef<sp/>DNS_SERVER_PORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="prot_2dns_8h_1a9266b48706648ecf0625a3e651095317" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_SERVER_PORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>53</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DNS<sp/>field<sp/>TYPE<sp/>used<sp/>for<sp/>&quot;Resource<sp/>Records&quot;<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="prot_2dns_8h_1a830e99420463950d3c4d661487f20d0d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_A<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>host<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="prot_2dns_8h_1acca8f4a2a1bea8615d892150ed890633" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_NS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>an<sp/>authoritative<sp/>name<sp/>server<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="prot_2dns_8h_1ae7d66bce2de34d6dbc3e4efc1a31e664" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>mail<sp/>destination<sp/>(Obsolete<sp/>-<sp/>use<sp/>MX)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="prot_2dns_8h_1a3e88aee3ce8e0395e04b4248600e805d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>mail<sp/>forwarder<sp/>(Obsolete<sp/>-<sp/>use<sp/>MX)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="prot_2dns_8h_1a3dab0550bbdea0b4957461427d07be41" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_CNAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>canonical<sp/>name<sp/>for<sp/>an<sp/>alias<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="prot_2dns_8h_1aba0e1e44b7ad6b4096384d041111ee7a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_SOA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>marks<sp/>the<sp/>start<sp/>of<sp/>a<sp/>zone<sp/>of<sp/>authority<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="prot_2dns_8h_1a70b5c47284dbde86c3563f20c6201962" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MB<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>mailbox<sp/>domain<sp/>name<sp/>(EXPERIMENTAL)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="prot_2dns_8h_1a102558e1400d41a35868f82c7eba8503" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>mail<sp/>group<sp/>member<sp/>(EXPERIMENTAL)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="prot_2dns_8h_1a2d4fdfd7f5d8f9f758278003dc243d04" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>mail<sp/>rename<sp/>domain<sp/>name<sp/>(EXPERIMENTAL)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="prot_2dns_8h_1aaa883ee62a659bdde6207d737e77795c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_NULL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>null<sp/>RR<sp/>(EXPERIMENTAL)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="prot_2dns_8h_1aa64d1579e0da263c09134d12c89c9ce4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_WKS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>11<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>well<sp/>known<sp/>service<sp/>description<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="prot_2dns_8h_1ace55462cfcd4872a7c68178ed779cb89" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_PTR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>12<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>a<sp/>domain<sp/>name<sp/>pointer<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="prot_2dns_8h_1aa38f49c344b6aa0caa6656dbc4f1b7c6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_HINFO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>13<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>host<sp/>information<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="prot_2dns_8h_1a952c8c700b3ddad714e51873692a345b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MINFO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>14<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>mailbox<sp/>or<sp/>mail<sp/>list<sp/>information<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="prot_2dns_8h_1a52c933b4a3def47075a16ba3006d7f99" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_MX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>15<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>mail<sp/>exchange<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="prot_2dns_8h_1a62820cc2f56dd4fdd301729fa05b4f96" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_TXT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>16<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>text<sp/>strings<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="prot_2dns_8h_1ae533fbb9f59f4de915ed3ecb9ff24953" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_AAAA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>28<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>IPv6<sp/>address<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="prot_2dns_8h_1a38f81c327955912ba9cc893c26d3a86e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_SRV<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>33<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>service<sp/>location<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="prot_2dns_8h_1aea32c0d7d57c585bb1a9bfd3ce81bed5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRTYPE_ANY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>any<sp/>type<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DNS<sp/>field<sp/>CLASS<sp/>used<sp/>for<sp/>&quot;Resource<sp/>Records&quot;<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="prot_2dns_8h_1a08bc1c1897d2921b6f102365be55da2a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRCLASS_IN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>Internet<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="prot_2dns_8h_1a9d64fb2a8d4b656f11c7b334b810b5f1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRCLASS_CS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>CSNET<sp/>class<sp/>(Obsolete<sp/>-<sp/>used<sp/>only<sp/>for<sp/>examples<sp/>in<sp/>some<sp/>obsolete<sp/>RFCs)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="prot_2dns_8h_1ae403127af0f1656d8c724e723f6b3252" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRCLASS_CH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>CHAOS<sp/>class<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="prot_2dns_8h_1a47055a9391e4a5c03e2aba7b1a4ad39a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRCLASS_HS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Hesiod<sp/>[Dyer<sp/>87]<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="prot_2dns_8h_1a21008b249272ea02cfdc31aa7502a217" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRCLASS_ANY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>any<sp/>class<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="prot_2dns_8h_1ad8e2e9df5f9942d5f2a50bbfc6da80d3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_RRCLASS_FLUSH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x800<sp/></highlight><highlight class="comment">/*<sp/>Flush<sp/>bit<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DNS<sp/>protocol<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="prot_2dns_8h_1a96eb4534b574ece96ed36806039f73d3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_RESPONSE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x80</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="prot_2dns_8h_1a4350350ce0d4595876743d4c0a720bcc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_OPCODE_STATUS<sp/><sp/><sp/>0x10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="prot_2dns_8h_1ae7250008b68d1909d54040515eef8ebb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_OPCODE_INVERSE<sp/><sp/>0x08</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="prot_2dns_8h_1a6a327c0ffd40f69fbcd5f01f12e5745c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_OPCODE_STANDARD<sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="prot_2dns_8h_1add685a0f8b5e76a2687cc0f306813bfb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_AUTHORATIVE<sp/><sp/><sp/><sp/><sp/>0x04</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="prot_2dns_8h_1a2e52037249bb98d7bbecf42e275beb07" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_TRUNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x02</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="prot_2dns_8h_1a72d99b1623afa14bd58c667b748c2ddc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG1_RD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x01</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="prot_2dns_8h_1ac72f8777ccc45ae274449ea7a9f3de04" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG2_RA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x80</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="prot_2dns_8h_1a9f6c329c04baba17fe0f5b2a6597d713" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG2_ERR_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0f</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="prot_2dns_8h_1a6aaa9da3d0f8d4c0799516d46d939942" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG2_ERR_NONE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="prot_2dns_8h_1a8ee5e2c8e517d6e4f2198057f81e93c6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_FLAG2_ERR_NAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x03</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="prot_2dns_8h_1a8b3138fb652e7b2fcdf8c24d555188af" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_HDR_GET_OPCODE(hdr)<sp/>((((hdr)-&gt;flags1)<sp/>&gt;&gt;<sp/>3)<sp/>&amp;<sp/>0xF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="103" refid="structdns__hdr" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdns__hdr" kindref="compound">dns_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1aefcc5153f7570d6a1b1fdaf5a3b047e6" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>flags1);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1aefcc5153f7570d6a1b1fdaf5a3b047e6" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>flags2);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>numquestions);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>numanswers);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>numauthrr);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="structdns__hdr_1a0f5f82b2174927136d41f7ce335d8e48" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>numextrarr);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal">}<sp/><ref refid="prot_2dns_8h_1abfbe0197612b7e138ae2dd9545e3664c" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="prot_2dns_8h_1a1ffff846513e2493ba915d8874c26476" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIZEOF_DNS_HDR<sp/>12</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Multicast<sp/>DNS<sp/>definitions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="preprocessor">#ifndef<sp/>DNS_MQUERY_PORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123" refid="prot_2dns_8h_1a62d67af5ac6c6b3f98a6566a42564276" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_MQUERY_PORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5353</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>IPv4<sp/>group<sp/>for<sp/>multicast<sp/>DNS<sp/>queries:<sp/>224.0.0.251<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>DNS_MQUERY_IPV4_GROUP_INIT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128" refid="prot_2dns_8h_1a861fa0ab623ace9086f5c7247a9f04c8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_MQUERY_IPV4_GROUP_INIT<sp/><sp/>IPADDR4_INIT_BYTES(224,0,0,251)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>IPv6<sp/>group<sp/>for<sp/>multicast<sp/>DNS<sp/>queries:<sp/>FF02::FB<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>DNS_MQUERY_IPV6_GROUP_INIT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="prot_2dns_8h_1ae8c419a73ada8ec6b470b3679ae87b8e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DNS_MQUERY_IPV6_GROUP_INIT<sp/><sp/>IPADDR6_INIT_HOST(0xFF020000,0,0,0xFB)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_DNS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/dns.h"/>
+  </compounddef>
+</doxygen>

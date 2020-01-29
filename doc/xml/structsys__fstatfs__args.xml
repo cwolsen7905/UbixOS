@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__fstatfs__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_fstatfs_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structstatfs" kindref="compound">statfs</ref> *</type>
+        <definition>struct statfs* sys_fstatfs_args::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="292" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="292" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatfs__args_1ac51cd3c2ef2df45812ab10c1c4b30531" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatfs_args::buf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>buf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="291" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="291" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatfs__args_1a4ff74478d48c3eae03c7d284bf319154" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatfs_args::buf_r_[(sizeof(register_t)&lt;=sizeof(struct statfs *) ? 0 :sizeof(register_t) - sizeof(struct statfs *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct statfs *) ? 0 :sizeof(register_t) - sizeof(struct statfs *))]</argsstring>
+        <name>buf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="293" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="293" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatfs__args_1a15d9cd95dab3a41e743428dcabfbfeb4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_fstatfs_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="289" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="289" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatfs__args_1a736194cba600a310845f785703af4837" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatfs_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="288" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="288" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatfs__args_1a7f0a29d55561e53d91332fea2913cbdc" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatfs_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="290" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="290" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>fsid</label>
+        <link refid="structfsid"/>
+      </node>
+      <node id="1">
+        <label>sys_fstatfs_args</label>
+        <link refid="structsys__fstatfs__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+buf</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>statfs</label>
+        <link refid="structstatfs"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+f_fsid</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="287" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="287" bodyend="294"/>
+    <listofallmembers>
+      <member refid="structsys__fstatfs__args_1a5fc87226e9737d8aa4ddd376949b522c" prot="public" virt="non-virtual"><scope>sys_fstatfs_args</scope><name>buf</name></member>
+      <member refid="structsys__fstatfs__args_1ac51cd3c2ef2df45812ab10c1c4b30531" prot="public" virt="non-virtual"><scope>sys_fstatfs_args</scope><name>buf_l_</name></member>
+      <member refid="structsys__fstatfs__args_1a4ff74478d48c3eae03c7d284bf319154" prot="public" virt="non-virtual"><scope>sys_fstatfs_args</scope><name>buf_r_</name></member>
+      <member refid="structsys__fstatfs__args_1a15d9cd95dab3a41e743428dcabfbfeb4" prot="public" virt="non-virtual"><scope>sys_fstatfs_args</scope><name>fd</name></member>
+      <member refid="structsys__fstatfs__args_1a736194cba600a310845f785703af4837" prot="public" virt="non-virtual"><scope>sys_fstatfs_args</scope><name>fd_l_</name></member>
+      <member refid="structsys__fstatfs__args_1a7f0a29d55561e53d91332fea2913cbdc" prot="public" virt="non-virtual"><scope>sys_fstatfs_args</scope><name>fd_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

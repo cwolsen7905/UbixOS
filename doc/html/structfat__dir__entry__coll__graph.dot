@@ -1,0 +1,7 @@
+digraph "fat_dir_entry"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{fat_dir_entry\n|+ Attr\l+ CrtDate\l+ CrtTime\l+ CrtTimeTenth\l+ FileSize\l+ FstClusHI\l+ FstClusLO\l+ LstAccDate\l+ Name\l+ NTRes\l+ WrtDate\l+ WrtTime\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

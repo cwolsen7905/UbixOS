@@ -1,0 +1,28 @@
+digraph "ogDisplay_UbixOS::SetMode"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ogDisplay_UbixOS::SetMode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ogDisplay_UbixOS::GetModeInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classogDisplay__UbixOS.html#ae2c8cf31425f915d10490902c2ffec10",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="biosCall",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2bioscall_8c.html#a56a172d2268fc10811a0bb180d7c3f49",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="initVESAMode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ogDisplay__UbixOS_8cc.html#aaf55dbf02ab342a68f3a4078403763a0",tooltip=" "];
+  Node4 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="kpanic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2kpanic_8c.html#adb9a182aa071791a306163d50d653deb",tooltip="print panic message and halt system"];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ogDisplay_UbixOS::ogSetPalette",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classogDisplay__UbixOS.html#a2358b8b9aa1d32c66a3ceb0cc831049f",tooltip=" "];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="vmm_remapPage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$paging_8h.html#adea68f248df43bddee62a09d945304b0",tooltip=" "];
+  Node7 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="spinLock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53",tooltip=" "];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="sched_yield",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7",tooltip=" "];
+  Node8 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="spinTryLock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78",tooltip=" "];
+}

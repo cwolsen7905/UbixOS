@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_55dd03b94777b988453988bedf92c9ac" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/net/core/ipv6</compoundname>
+    <innerfile refid="dhcp6_8c">dhcp6.c</innerfile>
+    <innerfile refid="ethip6_8c">ethip6.c</innerfile>
+    <innerfile refid="icmp6_8c">icmp6.c</innerfile>
+    <innerfile refid="inet6_8c">inet6.c</innerfile>
+    <innerfile refid="ip6_8c">ip6.c</innerfile>
+    <innerfile refid="ip6__addr_8c">ip6_addr.c</innerfile>
+    <innerfile refid="ip6__frag_8c">ip6_frag.c</innerfile>
+    <innerfile refid="mld6_8c">mld6.c</innerfile>
+    <innerfile refid="nd6_8c">nd6.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/ipv6/"/>
+  </compounddef>
+</doxygen>

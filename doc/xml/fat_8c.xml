@@ -1,0 +1,1008 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat_8c" kind="file" language="C++">
+    <compoundname>fat.c</compoundname>
+    <includes refid="include_2vfs_2vfs_8h" local="no">vfs/vfs.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="exec_8h" local="no">ubixos/exec.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <includes refid="fat__filelib_8h" local="yes">fat_filelib.h</includes>
+    <includes refid="fat__access_8h" local="yes">fat_access.h</includes>
+    <incdepgraph>
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="36">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="50">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="42">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>fat_list.h</label>
+        <link refid="fat__list_8h"/>
+      </node>
+      <node id="61">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="31">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="28">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="55">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="41">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="32">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="37">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>stdio.h</label>
+      </node>
+      <node id="24">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="58" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="fat_8c_1aadf0173aff15772160dcb436ecf4fa5c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
+        <definition>fileDescriptor_t* _fd</definition>
+        <argsstring></argsstring>
+        <name>_fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="41" column="18" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+        <definition>struct vfs_mountPoint* _mp</definition>
+        <argsstring></argsstring>
+        <name>_mp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="42" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="42" bodyend="-1"/>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+        <referencedby refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" compoundref="fat_8c" startline="44" endline="48">media_read</referencedby>
+        <referencedby refid="fat_8c_1a6840e26b7167186163560ab960cb7530" compoundref="fat_8c" startline="50" endline="54">media_write</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat_8c_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fat_init</definition>
+        <argsstring>()</argsstring>
+        <name>fat_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="179" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="179" bodyend="206"/>
+        <references refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</references>
+        <references refid="fat__filelib_8c_1ac4154a1278a172ab8e6427eb64161179" compoundref="fat__filelib_8c" startline="584" endline="595">fl_init</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="fat_8c_1ab66e873ee114640f0462a7fd5826b3fe" compoundref="fat_8c" startline="175" endline="177">mkdir_fat</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</references>
+        <references refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" compoundref="fat_8c" startline="101" endline="114">read_fat</references>
+        <references refid="fat_8c_1ab09f570c60b6705826298d9896fd45d2" compoundref="fat_8c" startline="171" endline="173">unlink_fat</references>
+        <references refid="vfs_8c_1ad8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="79" endline="136">vfsRegisterFS</references>
+        <references refid="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" compoundref="fat_8c" startline="116" endline="129">write_fat</references>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fat_initialize</definition>
+        <argsstring>(struct vfs_mountPoint *mp)</argsstring>
+        <name>fat_initialize</name>
+        <param>
+          <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+          <declname>mp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="56" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="56" bodyend="99"/>
+        <references refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" compoundref="fat_8c" startline="42">_mp</references>
+        <references refid="fat__access_8h_1ae6aa6129ce17d5e7286e043c850e23c2" compoundref="fat__access_8h" startline="10">FAT_INIT_OK</references>
+        <references refid="tcpdump_8c_1a03d2d7be521e9d357862075078d24f06" compoundref="tcpdump_8c" startline="45">file</references>
+        <references refid="fat__filelib_8c_1af9d46bc71dd1953eb78c99d6615ade92" compoundref="fat__filelib_8c" startline="606" endline="623">fl_attach_media</references>
+        <references refid="fat__filelib_8c_1aef5675bf1c0db1d3e073ea36d4cf2d3a" compoundref="fat__filelib_8c" startline="856" endline="891">fl_fclose</references>
+        <references refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" compoundref="fat__filelib_8c" startline="638" endline="745">fl_fopen</references>
+        <references refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" compoundref="fat__filelib_8c" startline="1162" endline="1294">fl_fwrite</references>
+        <references refid="fat__filelib_8c_1ac3e517a9ac192e87329a62e5e8d53b2b" compoundref="fat__filelib_8c" startline="1314" endline="1339">fl_remove</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" compoundref="fat_8c" startline="44" endline="48">media_read</references>
+        <references refid="fat_8c_1a6840e26b7167186163560ab960cb7530" compoundref="fat_8c" startline="50" endline="54">media_write</references>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int media_read</definition>
+        <argsstring>(unsigned long sector, unsigned char *buffer, unsigned long sector_count)</argsstring>
+        <name>media_read</name>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector</declname>
+        </param>
+        <param>
+          <type>unsigned char *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector_count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="44" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="44" bodyend="48"/>
+        <references refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" compoundref="fat_8c" startline="42">_mp</references>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="70">vfs_mountPoint::device</references>
+        <references refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" compoundref="include_2sys_2device_8h" startline="37">device_node::devInfo</references>
+        <references refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" compoundref="include_2sys_2device_8h" startline="51">device_interface::info</references>
+        <references refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" compoundref="include_2sys_2device_8h" startline="52">device_interface::read</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1a6840e26b7167186163560ab960cb7530" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int media_write</definition>
+        <argsstring>(unsigned long sector, unsigned char *buffer, unsigned long sector_count)</argsstring>
+        <name>media_write</name>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector</declname>
+        </param>
+        <param>
+          <type>unsigned char *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector_count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="50" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="50" bodyend="54"/>
+        <references refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" compoundref="fat_8c" startline="42">_mp</references>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="70">vfs_mountPoint::device</references>
+        <references refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" compoundref="include_2sys_2device_8h" startline="37">device_node::devInfo</references>
+        <references refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" compoundref="include_2sys_2device_8h" startline="51">device_interface::info</references>
+        <references refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" compoundref="include_2sys_2device_8h" startline="53">device_interface::write</references>
+        <referencedby refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" compoundref="fat_8c" startline="56" endline="99">fat_initialize</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1ab66e873ee114640f0462a7fd5826b3fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int mkdir_fat</definition>
+        <argsstring>()</argsstring>
+        <name>mkdir_fat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="175" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="175" bodyend="177"/>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int open_fat</definition>
+        <argsstring>(const char *file, fileDescriptor_t *fd)</argsstring>
+        <name>open_fat</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="131" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="131" bodyend="169"/>
+        <references refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="70">vfs_mountPoint::device</references>
+        <references refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" compoundref="include_2sys_2device_8h" startline="37">device_node::devInfo</references>
+        <references refid="structsFL__FILE_1ad5a244bf8c1f0fb541220cb00e924703" compoundref="fat__filelib_8h" startline="43">sFL_FILE::filelength</references>
+        <references refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" compoundref="fat__filelib_8c" startline="638" endline="745">fl_fopen</references>
+        <references refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" compoundref="include_2vfs_2file_8h" startline="66">fileDescriptor::ino</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structfileDescriptor_1ac26434565d08e7590265288cf9e9f212" compoundref="include_2vfs_2file_8h" startline="68">fileDescriptor::mode</references>
+        <references refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" compoundref="include_2vfs_2file_8h" startline="65">fileDescriptor::mp</references>
+        <references refid="structfileDescriptor_1a09c5cd0d4979a70b8d7098319cd00b7c" compoundref="include_2vfs_2file_8h" startline="69">fileDescriptor::offset</references>
+        <references refid="structfileDescriptor_1aaf1c61f69cb312867bcdf95896a74bdc" compoundref="include_2vfs_2file_8h" startline="76">fileDescriptor::perms</references>
+        <references refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" compoundref="include_2sys_2device_8h" startline="52">device_interface::read</references>
+        <references refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" compoundref="include_2vfs_2file_8h" startline="82">fileDescriptor::res</references>
+        <references refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" compoundref="include_2vfs_2file_8h" startline="70">fileDescriptor::size</references>
+        <references refid="structsFL__FILE_1a6990c8cfed08794aadccb9352d2f8252" compoundref="fat__filelib_8h" startline="41">sFL_FILE::startcluster</references>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int read_fat</definition>
+        <argsstring>(fileDescriptor_t *fd, char *data, uInt32 offset, long size)</argsstring>
+        <name>read_fat</name>
+        <param>
+          <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="101" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="101" bodyend="114"/>
+        <references refid="fat__filelib_8c_1acfc7937a8a1f6846f762a2af33507b66" compoundref="fat__filelib_8c" startline="938" endline="1030">fl_fread</references>
+        <references refid="fat__filelib_8c_1aca40d99888beddbc51b1a484b3b95757" compoundref="fat__filelib_8c" startline="1034" endline="1093">fl_fseek</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" compoundref="include_2vfs_2file_8h" startline="82">fileDescriptor::res</references>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1ab09f570c60b6705826298d9896fd45d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int unlink_fat</definition>
+        <argsstring>()</argsstring>
+        <name>unlink_fat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="171" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="171" bodyend="173"/>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int write_fat</definition>
+        <argsstring>(fileDescriptor_t *fd, char *data, uInt32 offset, long size)</argsstring>
+        <name>write_fat</name>
+        <param>
+          <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" line="116" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat.c" bodystart="116" bodyend="129"/>
+        <references refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" compoundref="fat__filelib_8c" startline="1162" endline="1294">fl_fwrite</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" compoundref="include_2vfs_2file_8h" startline="82">fileDescriptor::res</references>
+        <referencedby refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" compoundref="fat_8c" startline="179" endline="206">fat_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id:<sp/>ubixfs.c<sp/>79<sp/>2016-01-11<sp/>16:21:27Z<sp/>reddawg<sp/>$</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2vfs_8h" kindref="compound">vfs/vfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="exec_8h" kindref="compound">ubixos/exec.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__filelib_8h" kindref="compound">fat_filelib.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__access_8h" kindref="compound">fat_access.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="fat_8c_1aadf0173aff15772160dcb436ecf4fa5c" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" refkind="member"><highlight class="normal"><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*<ref refid="fat_8c_1aadf0173aff15772160dcb436ecf4fa5c" kindref="member">_fd</ref>;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*<ref refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" kindref="member">_mp</ref>;</highlight></codeline>
+<codeline lineno="44" refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" kindref="member">media_read</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector_count)<sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" kindref="member">_mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" kindref="member">read</ref>(<ref refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" kindref="member">_mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/><ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/>sector,<sp/>sector_count);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="50" refid="fat_8c_1a6840e26b7167186163560ab960cb7530" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1a6840e26b7167186163560ab960cb7530" kindref="member">media_write</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector_count)<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" kindref="member">_mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" kindref="member">write</ref>(<ref refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" kindref="member">_mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/><ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/>sector,<sp/>sector_count);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="56" refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" kindref="member">fat_initialize</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*mp)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*<ref refid="tcpdump_8c_1a03d2d7be521e9d357862075078d24f06" kindref="member">file</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="fat_8c_1a49f6bfc45b91e95d0eb54c69d43ab5db" kindref="member">_mp</ref><sp/>=<sp/>mp;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Attach<sp/>media<sp/>access<sp/>functions<sp/>to<sp/>library</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1af9d46bc71dd1953eb78c99d6615ade92" kindref="member">fl_attach_media</ref>(<ref refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" kindref="member">media_read</ref>,<sp/><ref refid="fat_8c_1a6840e26b7167186163560ab960cb7530" kindref="member">media_write</ref>)<sp/>!=<sp/><ref refid="fat__access_8h_1ae6aa6129ce17d5e7286e043c850e23c2" kindref="member">FAT_INIT_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Media<sp/>attach<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>List<sp/>root<sp/>directory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//fl_listdirectory(&quot;/bin/&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Delete<sp/>File</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1ac3e517a9ac192e87329a62e5e8d53b2b" kindref="member">fl_remove</ref>(</highlight><highlight class="stringliteral">&quot;/file.bin&quot;</highlight><highlight class="normal">)<sp/>&lt;<sp/>0)</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Delete<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Create<sp/>File</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="structfile" kindref="compound">file</ref><sp/>=<sp/><ref refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" kindref="member">fl_fopen</ref>(</highlight><highlight class="stringliteral">&quot;/file.bin&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;w&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>data[]<sp/>=<sp/>{<sp/>1,<sp/>2,<sp/>3,<sp/>4<sp/>};</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile" kindref="compound">file</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Write<sp/>some<sp/>data</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" kindref="member">fl_fwrite</ref>(data,<sp/>1,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(data),<sp/><ref refid="structfile" kindref="compound">file</ref>)<sp/>!=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(data))</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Write<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Create<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Close<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="fat__filelib_8c_1aef5675bf1c0db1d3e073ea36d4cf2d3a" kindref="member">fl_fclose</ref>(<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/><sp/><sp/>fl_listdirectory(&quot;/&quot;);</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"></highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/><sp/><sp/>//<sp/>List<sp/>root<sp/>directory</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>fl_listdirectory(&quot;/&quot;);</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"></highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/><sp/><sp/>size_t<sp/>size;</highlight></codeline>
+<codeline lineno="93"><highlight class="comment"></highlight></codeline>
+<codeline lineno="94"><highlight class="comment"><sp/><sp/><sp/>file<sp/>=<sp/>fl_fopen(&quot;/shell&quot;,<sp/>&quot;r&quot;);</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/><sp/><sp/>size<sp/>=<sp/>fl_fread(data,<sp/>1,<sp/>sizeof(data),<sp/>file);</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"><sp/><sp/><sp/>kprintf(&quot;READ:<sp/>%i&quot;,<sp/>size);</highlight></codeline>
+<codeline lineno="97"><highlight class="comment"><sp/><sp/><sp/>fl_fclose(file);</highlight></codeline>
+<codeline lineno="98"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(1);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="101" refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" kindref="member">read_fat</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*fd,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>offset,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*_file<sp/>=<sp/>(<ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref>*)<sp/>fd-&gt;<ref refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" kindref="member">res</ref>;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;Reading:<sp/>%i[%i]\n&quot;,<sp/>size,<sp/>offset);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/>if<sp/>(<ref refid="fat__filelib_8c_1aca40d99888beddbc51b1a484b3b95757" kindref="member">fl_fseek</ref>(_file,<sp/>offset,<sp/>0)<sp/>!=<sp/>0)</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;SEEK<sp/>FAILED!&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>size<sp/>=<sp/><ref refid="fat__filelib_8c_1acfc7937a8a1f6846f762a2af33507b66" kindref="member">fl_fread</ref>(data,<sp/>size,<sp/>1,<sp/>_file);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;[Read:%i]&quot;,<sp/>size);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(size);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="116" refid="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" kindref="member">write_fat</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*fd,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>offset,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*_file<sp/>=<sp/>(<ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref>*)<sp/>fd-&gt;<ref refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" kindref="member">res</ref>;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Writing:<sp/>%i[%i]\n&quot;</highlight><highlight class="normal">,<sp/>size,<sp/>offset);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>XXX<sp/>this<sp/>is<sp/>not<sp/>supposed<sp/>to<sp/>happen<sp/>fl_fseek(_file,<sp/>offset,<sp/>0);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" kindref="member">fl_fwrite</ref>(data,<sp/>1,<sp/>size,<sp/>_file)<sp/>!=<sp/>size)</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Write<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Wrote:<sp/>%i\n&quot;</highlight><highlight class="normal">,<sp/>size);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(size);</highlight></codeline>
+<codeline lineno="130"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="131" refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" kindref="member">open_fat</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*fd)<sp/>{</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*_file<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(fd);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>);</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>);</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" kindref="member">read</ref>);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;File:<sp/>%s,<sp/>&quot;</highlight><highlight class="normal">,<sp/><ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Mode:<sp/>0x%X\n&quot;</highlight><highlight class="normal">,<sp/>fd-&gt;<ref refid="structfileDescriptor_1ac26434565d08e7590265288cf9e9f212" kindref="member">mode</ref>);</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((fd-&gt;<ref refid="structfileDescriptor_1ac26434565d08e7590265288cf9e9f212" kindref="member">mode</ref><sp/>&amp;<sp/>0x1)<sp/>==<sp/>0x1)</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>_file<sp/>=<sp/><ref refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" kindref="member">fl_fopen</ref>(<ref refid="structfile" kindref="compound">file</ref>,<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((fd-&gt;<ref refid="structfileDescriptor_1ac26434565d08e7590265288cf9e9f212" kindref="member">mode</ref><sp/>&amp;<sp/>0x2)<sp/>==<sp/>0x2)<sp/>{</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((fd-&gt;<ref refid="structfileDescriptor_1ac26434565d08e7590265288cf9e9f212" kindref="member">mode</ref><sp/>&amp;<sp/>0x8)<sp/>==<sp/>0x8)</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>_file<sp/>=<sp/><ref refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" kindref="member">fl_fopen</ref>(<ref refid="structfile" kindref="compound">file</ref>,<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>_file<sp/>=<sp/><ref refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" kindref="member">fl_fopen</ref>(<ref refid="structfile" kindref="compound">file</ref>,<sp/></highlight><highlight class="stringliteral">&quot;w&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>Mode?&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!_file)<sp/>{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;ERROR[%s:%i]:<sp/>Open<sp/>file:<sp/>[%s]<sp/>failed\n&quot;,<sp/>__FILE__,<sp/>__LINE__,<sp/>file);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1a09c5cd0d4979a70b8d7098319cd00b7c" kindref="member">offset</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1acf8de2682bb1eaedd14cc477895982d5" kindref="member">res</ref><sp/>=<sp/>_file;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1aaf1c61f69cb312867bcdf95896a74bdc" kindref="member">perms</ref><sp/>=<sp/>0x1;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" kindref="member">size</ref><sp/>=<sp/>_file-&gt;<ref refid="structsFL__FILE_1ad5a244bf8c1f0fb541220cb00e924703" kindref="member">filelength</ref>;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1af6a1235d2c373b43391f4da9b1dcc0be" kindref="member">ino</ref><sp/>=<sp/>_file-&gt;<ref refid="structsFL__FILE_1a6990c8cfed08794aadccb9352d2f8252" kindref="member">startcluster</ref>;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;Size:<sp/>%i\n&quot;,<sp/>fd-&gt;size);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="171" refid="fat_8c_1ab09f570c60b6705826298d9896fd45d2" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1ab09f570c60b6705826298d9896fd45d2" kindref="member">unlink_fat</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="175" refid="fat_8c_1ab66e873ee114640f0462a7fd5826b3fe" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1ab66e873ee114640f0462a7fd5826b3fe" kindref="member">mkdir_fat</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="178"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="179" refid="fat_8h_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fat_8c_1a8f1a7dc3b3ea2adcdea09c9dbd2ef762" kindref="member">fat_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Initialise<sp/>File<sp/>IO<sp/>Library</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><ref refid="fat__filelib_8c_1ac4154a1278a172ab8e6427eb64161179" kindref="member">fl_init</ref>();</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>our<sp/>file<sp/>system<sp/>structure<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfileSystem" kindref="compound">fileSystem</ref><sp/>ubixFileSystem<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/></highlight><highlight class="comment">/*<sp/>prev<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/></highlight><highlight class="comment">/*<sp/>next<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/><ref refid="fat_8c_1a29aa9552ba9b567abcf938fe64d4ec95" kindref="member">fat_initialize</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsInitFS<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/><ref refid="fat_8c_1afe837a4cad1bab6f8b8f293cd76059a0" kindref="member">read_fat</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsRead<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/><ref refid="fat_8c_1a22a997ae15aa6d91cf887f388ce46520" kindref="member">write_fat</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsWrite<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/><ref refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" kindref="member">open_fat</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsOpenFile<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/><ref refid="fat_8c_1ab09f570c60b6705826298d9896fd45d2" kindref="member">unlink_fat</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsUnlink<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/><ref refid="fat_8c_1ab66e873ee114640f0462a7fd5826b3fe" kindref="member">mkdir_fat</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsMakeDir<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsRemDir<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/></highlight><highlight class="comment">/*<sp/>vfsSync<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>0xFA<sp/></highlight><highlight class="comment">/*<sp/>vfsType<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/>};<sp/></highlight><highlight class="comment">/*<sp/>ubixFileSystem<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Add<sp/>UbixFS<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="vfs_8c_1ad8cb9693ae7b6b9fc419efc975778338" kindref="member">vfsRegisterFS</ref>(ubixFileSystem)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Unable<sp/>To<sp/>Enable<sp/>UbixFS&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat.c"/>
+  </compounddef>
+</doxygen>

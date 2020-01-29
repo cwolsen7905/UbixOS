@@ -1,0 +1,12 @@
+digraph "sFL_FILE"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sFL_FILE\n|+ bytenum\l+ file_data_address\l+ file_data_dirty\l+ file_data_sector\l+ filelength\l+ filelength_changed\l+ filename\l+ flags\l+ parentcluster\l+ path\l+ shortfilename\l+ startcluster\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +list_node" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{fat_node\n||}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structfat__node.html",tooltip=" "];
+  Node2 -> Node2 [color="grey25",fontsize="10",style="solid",label=" +previous\n+next" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +last_fat_lookup" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{cluster_lookup\n|+ ClusterIdx\l+ CurrentCluster\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcluster__lookup.html",tooltip=" "];
+}

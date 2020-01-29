@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsec__per__clus__table" kind="struct" language="C++" prot="public">
+    <compoundname>sec_per_clus_table</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsec__per__clus__table_1a7f836c999e6750764ea47e4faf15cacc" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 sec_per_clus_table::sectors</definition>
+        <argsstring></argsstring>
+        <name>sectors</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" line="48" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsec__per__clus__table_1a7009c7be6eceedeefc3973baee0fc524" prot="public" static="no" mutable="no">
+        <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>uint8 sec_per_clus_table::sectors_per_cluster</definition>
+        <argsstring></argsstring>
+        <name>sectors_per_cluster</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" line="49" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sec_per_clus_table</label>
+        <link refid="structsec__per__clus__table"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" line="47" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c" bodystart="46" bodyend="50"/>
+    <listofallmembers>
+      <member refid="structsec__per__clus__table_1a7f836c999e6750764ea47e4faf15cacc" prot="public" virt="non-virtual"><scope>sec_per_clus_table</scope><name>sectors</name></member>
+      <member refid="structsec__per__clus__table_1a7009c7be6eceedeefc3973baee0fc524" prot="public" virt="non-virtual"><scope>sec_per_clus_table</scope><name>sectors_per_cluster</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__memp" kind="group">
+    <compoundname>lwip_opts_memp</compoundname>
+    <title>Internal memory pools</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga5a95abf3610c56e7c23cb035eb9c3444" prot="public" static="no">
+        <name>MEMP_NUM_API_MSG</name>
+        <initializer><ref refid="group__lwip__opts__memp_1gafbbfd6ce8536038cd00fa85bebae987c" kindref="member">MEMP_NUM_TCPIP_MSG_API</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_API_MSG: the number of concurrently active calls to various socket, netconn, and tcpip functions </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="462" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="462" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga087b00ea20a7edebcad33a1a1353a5d7" prot="public" static="no">
+        <name>MEMP_NUM_ARP_QUEUE</name>
+        <initializer>30</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_ARP_QUEUE: the number of simultaneously queued outgoing packets (pbufs) that are waiting for an ARP request (to resolve their destination address) to finish. (requires the ARP_QUEUEING option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="379" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="379" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga3b1f228c598529c62895ad04ff294980" prot="public" static="no">
+        <name>MEMP_NUM_DNS_API_MSG</name>
+        <initializer><ref refid="group__lwip__opts__memp_1gafbbfd6ce8536038cd00fa85bebae987c" kindref="member">MEMP_NUM_TCPIP_MSG_API</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_DNS_API_MSG: the number of concurrently active calls to netconn_gethostbyname </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="468" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="468" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga1f66051a654dcd7a4e19bc6aff240630" prot="public" static="no">
+        <name>MEMP_NUM_FRAG_PBUF</name>
+        <initializer>15</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_FRAG_PBUF: the number of IP fragments simultaneously sent (fragments, not whole packets!). This is only used with LWIP_NETIF_TX_SINGLE_PBUF==0 and only has to be &gt; 1 with DMA-enabled MACs where the packet is not yet sent when netif-&gt;output returns. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="369" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="369" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gab648ff95d8ffa4216b95f82a568a5d9a" prot="public" static="no">
+        <name>MEMP_NUM_IGMP_GROUP</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_IGMP_GROUP: The number of multicast groups whose network interfaces can be members at the same time (one per netif - allsystems group -, plus one per netif membership). (requires the LWIP_IGMP option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="389" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="389" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gaa9b0f949da12cbe8fe5f7aefc30290e0" prot="public" static="no">
+        <name>MEMP_NUM_LOCALHOSTLIST</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_LOCALHOSTLIST: the number of host entries in the local host list if DNS_LOCAL_HOSTLIST_IS_DYNAMIC==1. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="448" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="448" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga5d99df65869ac101ed6a611fc85016be" prot="public" static="no">
+        <name>MEMP_NUM_NETBUF</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_NETBUF: the number of struct netbufs. (only needed if you use the sequential API, like <ref refid="api__lib_8c" kindref="compound">api_lib.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="406" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="406" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gacb40bd726b7e15593b20a628d298f456" prot="public" static="no">
+        <name>MEMP_NUM_NETCONN</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_NETCONN: the number of struct netconns. (only needed if you use the sequential API, like <ref refid="api__lib_8c" kindref="compound">api_lib.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="414" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="414" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga293bc22b60bf3f8e2520f60a88370e7a" prot="public" static="no">
+        <name>MEMP_NUM_NETDB</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_NETDB: the number of concurrently running lwip_addrinfo() calls (before freeing the corresponding memory using lwip_freeaddrinfo()). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="440" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="440" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gadd5a973b98068ce9318ea2f96b5fa14c" prot="public" static="no">
+        <name>MEMP_NUM_NETIFAPI_MSG</name>
+        <initializer><ref refid="group__lwip__opts__memp_1gafbbfd6ce8536038cd00fa85bebae987c" kindref="member">MEMP_NUM_TCPIP_MSG_API</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_NETIFAPI_MSG: the number of concurrently active calls to the netifapi functions </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="482" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="482" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga92b30aed958ec59334d936d4ca725418" prot="public" static="no">
+        <name>MEMP_NUM_PBUF</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_PBUF: the number of memp struct pbufs (used for PBUF_ROM and PBUF_REF). If the application sends a lot of data out of ROM (or other static memory), this should be set high. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="309" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="309" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga379bf92ed322cda54cb701337421e0d3" prot="public" static="no">
+        <name>MEMP_NUM_RAW_PCB</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_RAW_PCB: Number of raw connection PCBs (requires the LWIP_RAW option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="317" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="317" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga169436c5860253b90e25bdba9fdcac86" prot="public" static="no">
+        <name>MEMP_NUM_REASSDATA</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_REASSDATA: the number of IP packets simultaneously queued for reassembly (whole packets, not fragments!) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="358" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="358" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gacf9782dd26bf8a655044dc041a9de948" prot="public" static="no">
+        <name>MEMP_NUM_SOCKET_SETGETSOCKOPT_DATA</name>
+        <initializer><ref refid="group__lwip__opts__memp_1gafbbfd6ce8536038cd00fa85bebae987c" kindref="member">MEMP_NUM_TCPIP_MSG_API</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_SOCKET_SETGETSOCKOPT_DATA: the number of concurrently active calls to getsockopt/setsockopt </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="475" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="475" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga4afbdca581a58d57bc7a81118a95327e" prot="public" static="no">
+        <name>MEMP_NUM_SYS_TIMEOUT</name>
+        <initializer>(<ref refid="group__lwip__opts__tcp_1gaa4ed98deb97b77c633cb8870f34c71e9" kindref="member">LWIP_TCP</ref> + <ref refid="group__lwip__opts__ipv4_1ga1a31ab0e0f37b17d40fa7c35bc2c4f69" kindref="member">IP_REASSEMBLY</ref> + <ref refid="group__lwip__opts__arp_1ga9609a014bba4638cc191d6a8f9556c87" kindref="member">LWIP_ARP</ref> + (2*<ref refid="group__lwip__opts__dhcp_1ga8a6ec62dc121064ac591b1fd8567bee9" kindref="member">LWIP_DHCP</ref>) + <ref refid="group__lwip__opts__autoip_1gaaf1b3a089827223589baf1b7f4f57069" kindref="member">LWIP_AUTOIP</ref> + <ref refid="group__lwip__opts__igmp_1gadaf25915ae1fd69c0943ef68cbb38923" kindref="member">LWIP_IGMP</ref> + <ref refid="group__lwip__opts__dns_1ga98710dd81446b7cb2daac736bae6f646" kindref="member">LWIP_DNS</ref> + (<ref refid="ppp__opts_8h_1a746c0ebaef5399987d53a1426eba6273" kindref="member">PPP_SUPPORT</ref>*6*<ref refid="ppp__opts_8h_1a6721ea95cbd6afd6968470c2423b6482" kindref="member">MEMP_NUM_PPP_PCB</ref>) + (<ref refid="group__lwip__opts__ipv6_1ga872e3bb3fe2212156d66b18fccc9643f" kindref="member">LWIP_IPV6</ref> ? (1 + <ref refid="group__lwip__opts__ipv6_1gad0ef160d72e63b02c5e875b06ec53864" kindref="member">LWIP_IPV6_REASS</ref> + <ref refid="group__lwip__opts__mld6_1ga44d8f24eaebbc50221ac1336212a3528" kindref="member">LWIP_IPV6_MLD</ref>) : 0))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_SYS_TIMEOUT: the number of simultaneously active timeouts. The default number of timeouts is calculated here for all enabled modules. The formula expects settings to be either &apos;0&apos; or &apos;1&apos;. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="398" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="398" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga73beecc19cfbc3114768f9b32b2cd70e" prot="public" static="no">
+        <name>MEMP_NUM_TCP_PCB</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_TCP_PCB: the number of simultaneously active TCP connections. (requires the LWIP_TCP option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="334" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="334" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga04fba6a249123513271dccb4ec26aa5a" prot="public" static="no">
+        <name>MEMP_NUM_TCP_PCB_LISTEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_TCP_PCB_LISTEN: the number of listening TCP connections. (requires the LWIP_TCP option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="342" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="342" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gaa35fb3a1a76661e3ffb9722a57092de3" prot="public" static="no">
+        <name>MEMP_NUM_TCP_SEG</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP segments. (requires the LWIP_TCP option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="350" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gafbbfd6ce8536038cd00fa85bebae987c" prot="public" static="no">
+        <name>MEMP_NUM_TCPIP_MSG_API</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_TCPIP_MSG_API: the number of struct <ref refid="structtcpip__msg" kindref="compound">tcpip_msg</ref>, which are used for callback/timeout API communication. (only needed if you use <ref refid="tcpip_8c" kindref="compound">tcpip.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="423" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="423" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1gab089a7088439e726c3801ba9e249d831" prot="public" static="no">
+        <name>MEMP_NUM_TCPIP_MSG_INPKT</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_TCPIP_MSG_INPKT: the number of struct <ref refid="structtcpip__msg" kindref="compound">tcpip_msg</ref>, which are used for incoming packets. (only needed if you use <ref refid="tcpip_8c" kindref="compound">tcpip.c</ref>) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="432" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="432" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga2c416da481ab09bd1ba257b75a0707eb" prot="public" static="no">
+        <name>MEMP_NUM_UDP_PCB</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One per active UDP &quot;connection&quot;. (requires the LWIP_UDP option) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="326" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="326" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__memp_1ga50eaadc4cad0716410332691e382c38a" prot="public" static="no">
+        <name>PBUF_POOL_SIZE</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PBUF_POOL_SIZE: the number of buffers in the pbuf pool. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="455" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="455" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

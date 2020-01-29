@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__icmp" kind="group">
+    <compoundname>lwip_opts_icmp</compoundname>
+    <title>ICMP</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__icmp_1gae1533f2bc39a5843989909555f6ce0cf" prot="public" static="no">
+        <name>ICMP_TTL</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv4_1ga556b9b58fd02c0fdd126791baef77411" kindref="member">IP_DEFAULT_TTL</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP_TTL: Default value for Time-To-Live used by ICMP packets. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="737" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="737" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__icmp_1ga8088cb56d1a84fe554b11bc15d84b2b9" prot="public" static="no">
+        <name>LWIP_BROADCAST_PING</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_BROADCAST_PING==1: respond to broadcast pings (default is unicast only) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="744" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="744" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__icmp_1gae4d45345c3ab8e5a355fda1d8d24fca6" prot="public" static="no">
+        <name>LWIP_ICMP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_ICMP==1: Enable ICMP module inside the IP stack. Be careful, disable that make your product non-compliant to RFC1122 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="730" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="730" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__icmp_1gaf77baf0a83b04312eab4c006ef229661" prot="public" static="no">
+        <name>LWIP_MULTICAST_PING</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_MULTICAST_PING==1: respond to multicast pings (default is unicast only) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="751" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="751" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

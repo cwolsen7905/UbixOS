@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="example_8c" kind="file" language="C++">
+    <compoundname>example.c</compoundname>
+    <includes local="no">stdio.h</includes>
+    <includes refid="fat__filelib_8h" local="yes">fat_filelib.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>fat_list.h</label>
+        <link refid="fat__list_8h"/>
+      </node>
+      <node id="7">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="8">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="6">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>stdio.h</label>
+      </node>
+      <node id="5">
+        <label>fat_access.h</label>
+        <link refid="fat__access_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void main</definition>
+        <argsstring>()</argsstring>
+        <name>main</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/example.c" line="44" column="6" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/example.c" bodystart="44" bodyend="87"/>
+        <references refid="fat__access_8h_1ae6aa6129ce17d5e7286e043c850e23c2" compoundref="fat__access_8h" startline="10">FAT_INIT_OK</references>
+        <references refid="tcpdump_8c_1a03d2d7be521e9d357862075078d24f06" compoundref="tcpdump_8c" startline="45">file</references>
+        <references refid="fat__filelib_8c_1af9d46bc71dd1953eb78c99d6615ade92" compoundref="fat__filelib_8c" startline="606" endline="623">fl_attach_media</references>
+        <references refid="fat__filelib_8c_1aef5675bf1c0db1d3e073ea36d4cf2d3a" compoundref="fat__filelib_8c" startline="856" endline="891">fl_fclose</references>
+        <references refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" compoundref="fat__filelib_8c" startline="638" endline="745">fl_fopen</references>
+        <references refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" compoundref="fat__filelib_8c" startline="1162" endline="1294">fl_fwrite</references>
+        <references refid="fat__filelib_8c_1ac4154a1278a172ab8e6427eb64161179" compoundref="fat__filelib_8c" startline="584" endline="595">fl_init</references>
+        <references refid="fat__filelib_8c_1a28ef1f43950ba4743e5ddd57db5b8b6e" compoundref="fat__filelib_8c" startline="1362" endline="1395">fl_listdirectory</references>
+        <references refid="fat__filelib_8c_1ac3e517a9ac192e87329a62e5e8d53b2b" compoundref="fat__filelib_8c" startline="1314" endline="1339">fl_remove</references>
+        <references refid="fat__filelib_8c_1a9e4ba72f7c41f41f4a31ca5d46de3f5d" compoundref="fat__filelib_8c" startline="627" endline="634">fl_shutdown</references>
+        <references refid="example_8c_1a05380d5bf119a93d89b3396ff9b0a653" compoundref="example_8c" startline="4" endline="8">media_init</references>
+        <references refid="example_8c_1ac965e81e4e0f54efcfda500850a3c2aa" compoundref="example_8c" startline="10" endline="25">media_read</references>
+        <references refid="example_8c_1a6840e26b7167186163560ab960cb7530" compoundref="example_8c" startline="27" endline="42">media_write</references>
+      </memberdef>
+      <memberdef kind="function" id="example_8c_1a05380d5bf119a93d89b3396ff9b0a653" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int media_init</definition>
+        <argsstring>()</argsstring>
+        <name>media_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/example.c" line="4" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/example.c" bodystart="4" bodyend="8"/>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="example_8c_1ac965e81e4e0f54efcfda500850a3c2aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int media_read</definition>
+        <argsstring>(unsigned long sector, unsigned char *buffer, unsigned long sector_count)</argsstring>
+        <name>media_read</name>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector</declname>
+        </param>
+        <param>
+          <type>unsigned char *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector_count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/example.c" line="10" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/example.c" bodystart="10" bodyend="25"/>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="example_8c_1a6840e26b7167186163560ab960cb7530" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int media_write</definition>
+        <argsstring>(unsigned long sector, unsigned char *buffer, unsigned long sector_count)</argsstring>
+        <name>media_write</name>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector</declname>
+        </param>
+        <param>
+          <type>unsigned char *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>sector_count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/example.c" line="27" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/example.c" bodystart="27" bodyend="42"/>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <referencedby refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" compoundref="example_8c" startline="44" endline="87">main</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__filelib_8h" kindref="compound">fat_filelib.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="example_8c_1a05380d5bf119a93d89b3396ff9b0a653" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="example_8c_1a05380d5bf119a93d89b3396ff9b0a653" kindref="member">media_init</ref>()</highlight></codeline>
+<codeline lineno="5"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>...</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="8"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="example_8c_1ac965e81e4e0f54efcfda500850a3c2aa" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="example_8c_1ac965e81e4e0f54efcfda500850a3c2aa" kindref="member">media_read</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector_count)</highlight></codeline>
+<codeline lineno="11"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>i;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;i&lt;sector_count;i++)</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>...</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Add<sp/>platform<sp/>specific<sp/>sector<sp/>(512<sp/>bytes)<sp/>read<sp/>code<sp/>here</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//..</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sector<sp/>++;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref><sp/>+=<sp/>512;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="example_8c_1a6840e26b7167186163560ab960cb7530" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="example_8c_1a6840e26b7167186163560ab960cb7530" kindref="member">media_write</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>sector_count)</highlight></codeline>
+<codeline lineno="28"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>i;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;i&lt;sector_count;i++)</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>...</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Add<sp/>platform<sp/>specific<sp/>sector<sp/>(512<sp/>bytes)<sp/>write<sp/>code<sp/>here</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//..</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sector<sp/>++;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref><sp/>+=<sp/>512;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="example_8c_1acdef7a1fd863a6d3770c1268cb06add3" kindref="member">main</ref>()</highlight></codeline>
+<codeline lineno="45"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structsFL__FILE" kindref="compound">FL_FILE</ref><sp/>*<ref refid="tcpdump_8c_1a03d2d7be521e9d357862075078d24f06" kindref="member">file</ref>;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Initialise<sp/>media</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="example_8c_1a05380d5bf119a93d89b3396ff9b0a653" kindref="member">media_init</ref>();</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Initialise<sp/>File<sp/>IO<sp/>Library</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8c_1ac4154a1278a172ab8e6427eb64161179" kindref="member">fl_init</ref>();</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Attach<sp/>media<sp/>access<sp/>functions<sp/>to<sp/>library</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1af9d46bc71dd1953eb78c99d6615ade92" kindref="member">fl_attach_media</ref>(<ref refid="example_8c_1ac965e81e4e0f54efcfda500850a3c2aa" kindref="member">media_read</ref>,<sp/><ref refid="example_8c_1a6840e26b7167186163560ab960cb7530" kindref="member">media_write</ref>)<sp/>!=<sp/><ref refid="fat__access_8h_1ae6aa6129ce17d5e7286e043c850e23c2" kindref="member">FAT_INIT_OK</ref>)</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Media<sp/>attach<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;<sp/></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>List<sp/>root<sp/>directory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8c_1a28ef1f43950ba4743e5ddd57db5b8b6e" kindref="member">fl_listdirectory</ref>(</highlight><highlight class="stringliteral">&quot;/&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Create<sp/>File</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structfile" kindref="compound">file</ref><sp/>=<sp/><ref refid="fat__filelib_8c_1a800a79c9fb283c5f5199e08b1f2ada38" kindref="member">fl_fopen</ref>(</highlight><highlight class="stringliteral">&quot;/file.bin&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;w&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structfile" kindref="compound">file</ref>)</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Write<sp/>some<sp/>data</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>data[]<sp/>=<sp/>{<sp/>1,<sp/>2,<sp/>3,<sp/>4<sp/>};</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1a8349790c61beca1a9138fb28a2689607" kindref="member">fl_fwrite</ref>(data,<sp/>1,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(data),<sp/><ref refid="structfile" kindref="compound">file</ref>)<sp/>!=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(data))</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Write<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Create<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Close<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8c_1aef5675bf1c0db1d3e073ea36d4cf2d3a" kindref="member">fl_fclose</ref>(<ref refid="structfile" kindref="compound">file</ref>);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Delete<sp/>File</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="fat__filelib_8c_1ac3e517a9ac192e87329a62e5e8d53b2b" kindref="member">fl_remove</ref>(</highlight><highlight class="stringliteral">&quot;/file.bin&quot;</highlight><highlight class="normal">)<sp/>&lt;<sp/>0)</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>printf(</highlight><highlight class="stringliteral">&quot;ERROR:<sp/>Delete<sp/>file<sp/>failed\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>List<sp/>root<sp/>directory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8c_1a28ef1f43950ba4743e5ddd57db5b8b6e" kindref="member">fl_listdirectory</ref>(</highlight><highlight class="stringliteral">&quot;/&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__filelib_8c_1a9e4ba72f7c41f41f4a31ca5d46de3f5d" kindref="member">fl_shutdown</ref>();</highlight></codeline>
+<codeline lineno="87"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/example.c"/>
+  </compounddef>
+</doxygen>

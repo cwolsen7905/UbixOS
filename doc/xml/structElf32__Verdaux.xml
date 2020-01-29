@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Verdaux" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Verdaux</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Verdaux_1a5cec12aee4339964d8956351465efa51" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Verdaux::vda_name</definition>
+        <argsstring></argsstring>
+        <name>vda_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="226" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="226" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Verdaux_1ab3814a03060eab7d93f1f79d93d3fedd" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Verdaux::vda_next</definition>
+        <argsstring></argsstring>
+        <name>vda_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="227" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="227" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Verdaux</label>
+        <link refid="structElf32__Verdaux"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="225" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="225" bodyend="228"/>
+    <listofallmembers>
+      <member refid="structElf32__Verdaux_1a5cec12aee4339964d8956351465efa51" prot="public" virt="non-virtual"><scope>Elf32_Verdaux</scope><name>vda_name</name></member>
+      <member refid="structElf32__Verdaux_1ab3814a03060eab7d93f1f79d93d3fedd" prot="public" virt="non-virtual"><scope>Elf32_Verdaux</scope><name>vda_next</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,725 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="mqtt_8h" kind="file" language="C++">
+    <compoundname>mqtt.h</compoundname>
+    <includes local="yes">lwip/apps/mqtt_opts.h</includes>
+    <includes local="yes">lwip/err.h</includes>
+    <includes local="yes">lwip/ip_addr.h</includes>
+    <incdepgraph>
+      <node id="4">
+        <label>lwip/ip_addr.h</label>
+      </node>
+      <node id="3">
+        <label>lwip/err.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h</label>
+        <link refid="mqtt_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>lwip/apps/mqtt_opts.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structmqtt__client__t" prot="public">mqtt_client_t</innerclass>
+    <innerclass refid="structmqtt__connect__client__info__t" prot="public">mqtt_connect_client_info_t</innerclass>
+    <innerclass refid="structmqtt__request__t" prot="public">mqtt_request_t</innerclass>
+    <innerclass refid="structmqtt__ringbuf__t" prot="public">mqtt_ringbuf_t</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="mqtt_8h_1aa8632baff6bbb5004385998918f1e6bd" prot="public" static="no">
+        <name>MQTT_PORT</name>
+        <initializer>1883</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Default MQTT port </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mqtt_8h_1a83d6a6d811b201a74d793bc1b5d4e029" prot="public" static="no">
+        <name>mqtt_subscribe</name>
+        <param><defname>client</defname></param>
+        <param><defname>topic</defname></param>
+        <param><defname>qos</defname></param>
+        <param><defname>cb</defname></param>
+        <param><defname>arg</defname></param>
+        <initializer><ref refid="mqtt_8h_1afdb39d4a9758f98c02451aaa9a9b3103" kindref="member">mqtt_sub_unsub</ref>(client, topic, qos, cb, arg, 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Subscribe to topic </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="230" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="230" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mqtt_8h_1a0f133ef09cbe56c46ebe2cc21afccf3f" prot="public" static="no">
+        <name>mqtt_unsubscribe</name>
+        <param><defname>client</defname></param>
+        <param><defname>topic</defname></param>
+        <param><defname>cb</defname></param>
+        <param><defname>arg</defname></param>
+        <initializer><ref refid="mqtt_8h_1afdb39d4a9758f98c02451aaa9a9b3103" kindref="member">mqtt_sub_unsub</ref>(client, topic, 0, cb, arg, 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Unsubscribe to topic </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="233" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="233" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="mqtt_8h_1adf764cbdea00d65edcd07bb9953ad2b7" prot="public" static="no" strong="no">
+        <type></type>
+        <name>@1</name>
+        <enumvalue id="mqtt_8h_1adf764cbdea00d65edcd07bb9953ad2b7a79cd00d0a5a8df13207e0c49447df87f" prot="public">
+          <name>MQTT_DATA_FLAG_LAST</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Flag set when last fragment of data arrives in data callback </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Data callback flags </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="108" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="108" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="enum" id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77d" prot="public" static="no" strong="no">
+        <type></type>
+        <name>mqtt_connection_status_t</name>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da074dc1d289b8e8d4aad91f6a2cb93dc1" prot="public">
+          <name>MQTT_CONNECT_ACCEPTED</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da41f8aa97142be337cb639f94d9145190" prot="public">
+          <name>MQTT_CONNECT_REFUSED_PROTOCOL_VERSION</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da28ffe49b0175adaa2b9a27cb4873224a" prot="public">
+          <name>MQTT_CONNECT_REFUSED_IDENTIFIER</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77dade28ec1c2ce3d874e91251d683c92b2a" prot="public">
+          <name>MQTT_CONNECT_REFUSED_SERVER</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da290cf9037054c42022cc864cfade896a" prot="public">
+          <name>MQTT_CONNECT_REFUSED_USERNAME_PASS</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77dafc4888158dd6ee84269a5f0bfdc12b17" prot="public">
+          <name>MQTT_CONNECT_REFUSED_NOT_AUTHORIZED_</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da321f5ce31b173f235de1a517fcfd00dd" prot="public">
+          <name>MQTT_CONNECT_DISCONNECTED</name>
+          <initializer>= 256</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da57153f2ab4331c6f76a9ee74e1bcfc62" prot="public">
+          <name>MQTT_CONNECT_TIMEOUT</name>
+          <initializer>= 257</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Connection status codes </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="80" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="79" bodyend="89"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="mqtt_8h_1a3fa4eba06ca6187c7a8a8e7cb22b7e96" prot="public" static="no">
+        <type>struct <ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref></type>
+        <definition>typedef struct mqtt_client_t mqtt_client_t</definition>
+        <argsstring></argsstring>
+        <name>mqtt_client_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="77" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="mqtt_8h_1a8558743bdb7d599a93844fbc56c9029f" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* mqtt_connection_cb_t) (mqtt_client_t *client, void *arg, mqtt_connection_status_t status)</definition>
+        <argsstring>)(mqtt_client_t *client, void *arg, mqtt_connection_status_t status)</argsstring>
+        <name>mqtt_connection_cb_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function prototype for mqtt connection status callback. Called when client has connected to the server after initiating a mqtt connection attempt by calling mqtt_connect() or when connection is closed by server or an error</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>client</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>MQTT client itself </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>arg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Additional argument to pass to the callback function </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>status</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Connect result code or disconnection notification </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="see"><para><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77d" kindref="member">mqtt_connection_status_t</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="mqtt_8h_1afec7e75fe6a746eef9ca411463446c81" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* mqtt_incoming_data_cb_t) (void *arg, const u8_t *data, u16_t len, u8_t flags)</definition>
+        <argsstring>)(void *arg, const u8_t *data, u16_t len, u8_t flags)</argsstring>
+        <name>mqtt_incoming_data_cb_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function prototype for MQTT incoming publish data callback function. Called when data arrives to a subscribed topic <simplesect kind="see"><para><ref refid="mqtt_8h_1a83d6a6d811b201a74d793bc1b5d4e029" kindref="member">mqtt_subscribe</ref></para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Additional argument to pass to the callback function </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>User data, pointed object, data may not be referenced after callback return, NULL is passed when all publish data are delivered </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Length of publish data fragment </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>flags</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>MQTT_DATA_FLAG_LAST set when this call contains the last part of data from publish message </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="125" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="mqtt_8h_1a7116bb85255394cec4b1d9fa38842c29" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* mqtt_incoming_publish_cb_t) (void *arg, const char *topic, u32_t tot_len)</definition>
+        <argsstring>)(void *arg, const char *topic, u32_t tot_len)</argsstring>
+        <name>mqtt_incoming_publish_cb_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function prototype for MQTT incoming publish function. Called when an incoming publish arrives to a subscribed topic <simplesect kind="see"><para><ref refid="mqtt_8h_1a83d6a6d811b201a74d793bc1b5d4e029" kindref="member">mqtt_subscribe</ref></para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Additional argument to pass to the callback function </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>topic</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Zero terminated Topic text string, topic may not be referenced after callback return </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tot_len</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Total length of publish data, if set to 0 (no publish payload) data callback will not be invoked </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="137" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* mqtt_request_cb_t) (void *arg, err_t err)</definition>
+        <argsstring>)(void *arg, err_t err)</argsstring>
+        <name>mqtt_request_cb_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function prototype for mqtt request callback. Called when a subscribe, unsubscribe or publish request has completed <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to user data supplied when invoking request </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>err</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ERR_OK on success ERR_TIMEOUT if no response was received within timeout, ERR_ABRT if (un)subscribe was denied </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="149" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="mqtt_8h_1aaa9248041cdc76f3bf528c6434d83967" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t mqtt_client_connect</definition>
+        <argsstring>(mqtt_client_t *client, const ip_addr_t *ipaddr, u16_t port, mqtt_connection_cb_t cb, void *arg, const struct mqtt_connect_client_info_t *client_info)</argsstring>
+        <name>mqtt_client_connect</name>
+        <param>
+          <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+          <declname>client</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref> *</type>
+          <declname>ipaddr</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type><ref refid="mqtt_8h_1a8558743bdb7d599a93844fbc56c9029f" kindref="member">mqtt_connection_cb_t</ref></type>
+          <declname>cb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structmqtt__connect__client__info__t" kindref="compound">mqtt_connect_client_info_t</ref> *</type>
+          <declname>client_info</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Connect to server </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="209" column="7" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="209" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="mqtt_8h_1a98f0fd168112b8b7db59bcd7a325a5c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t mqtt_client_is_connected</definition>
+        <argsstring>(mqtt_client_t *client)</argsstring>
+        <name>mqtt_client_is_connected</name>
+        <param>
+          <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+          <declname>client</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Check connection status </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="219" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="219" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="mqtt_8h_1ae7e19e236eb6122c8c39e93db6f5f53f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+        <definition>mqtt_client_t* mqtt_client_new</definition>
+        <argsstring>(void)</argsstring>
+        <name>mqtt_client_new</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create new client </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="216" column="15" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="216" declcolumn="15"/>
+      </memberdef>
+      <memberdef kind="function" id="mqtt_8h_1a73d8dd718bce09bfaab452770b4f76e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mqtt_disconnect</definition>
+        <argsstring>(mqtt_client_t *client)</argsstring>
+        <name>mqtt_disconnect</name>
+        <param>
+          <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+          <declname>client</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Disconnect from server </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="213" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="213" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="mqtt_8h_1ade9850d716e81fde572cb012be795d2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t mqtt_publish</definition>
+        <argsstring>(mqtt_client_t *client, const char *topic, const void *payload, u16_t payload_length, u8_t qos, u8_t retain, mqtt_request_cb_t cb, void *arg)</argsstring>
+        <name>mqtt_publish</name>
+        <param>
+          <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+          <declname>client</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>topic</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>payload</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>payload_length</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>qos</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>retain</declname>
+        </param>
+        <param>
+          <type><ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref></type>
+          <declname>cb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Publish data to topic </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="237" column="7" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="237" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="mqtt_8h_1a1f165225a0aab027ba72b6077bc5dda0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mqtt_set_inpub_callback</definition>
+        <argsstring>(mqtt_client_t *client, mqtt_incoming_publish_cb_t, mqtt_incoming_data_cb_t data_cb, void *arg)</argsstring>
+        <name>mqtt_set_inpub_callback</name>
+        <param>
+          <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+          <declname>client</declname>
+        </param>
+        <param>
+          <type><ref refid="mqtt_8h_1a7116bb85255394cec4b1d9fa38842c29" kindref="member">mqtt_incoming_publish_cb_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="mqtt_8h_1afec7e75fe6a746eef9ca411463446c81" kindref="member">mqtt_incoming_data_cb_t</ref></type>
+          <declname>data_cb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set callback to call for incoming publish </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="222" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="222" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="mqtt_8h_1afdb39d4a9758f98c02451aaa9a9b3103" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t mqtt_sub_unsub</definition>
+        <argsstring>(mqtt_client_t *client, const char *topic, u8_t qos, mqtt_request_cb_t cb, void *arg, u8_t sub)</argsstring>
+        <name>mqtt_sub_unsub</name>
+        <param>
+          <type><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref> *</type>
+          <declname>client</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>topic</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>qos</declname>
+        </param>
+        <param>
+          <type><ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref></type>
+          <declname>cb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>sub</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Common function for subscribe and unsubscribe </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="226" column="7" declfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" declline="226" declcolumn="7"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>MQTT client </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2016<sp/>Erik<sp/>Andersson</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Erik<sp/>Andersson</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_APPS_MQTT_CLIENT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_APPS_MQTT_CLIENT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/apps/mqtt_opts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/err.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/ip_addr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="mqtt_8h_1a3fa4eba06ca6187c7a8a8e7cb22b7e96" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref>;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="mqtt_8h_1aa8632baff6bbb5004385998918f1e6bd" refkind="member"><highlight class="preprocessor">#define<sp/>MQTT_PORT<sp/>1883</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">/*----------------------------------------------------------------------------------------------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Connection<sp/>with<sp/>server<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="structmqtt__connect__client__info__t" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__connect__client__info__t" kindref="compound">mqtt_connect_client_info_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="62" refid="structmqtt__connect__client__info__t_1ad35f7850df21f001d5c5ffaa1a18c05a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structmqtt__connect__client__info__t_1ad35f7850df21f001d5c5ffaa1a18c05a" kindref="member">client_id</ref>;</highlight></codeline>
+<codeline lineno="64" refid="structmqtt__connect__client__info__t_1aec961673d5c3e8dc853c91f30d9333b5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="structmqtt__connect__client__info__t_1aec961673d5c3e8dc853c91f30d9333b5" kindref="member">client_user</ref>;</highlight></codeline>
+<codeline lineno="65" refid="structmqtt__connect__client__info__t_1a8f68efe91c5311418151256c96102d4b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="structmqtt__connect__client__info__t_1a8f68efe91c5311418151256c96102d4b" kindref="member">client_pass</ref>;</highlight></codeline>
+<codeline lineno="67" refid="structmqtt__connect__client__info__t_1ac80262a7456812e9eefffd8c3b9ac21a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__connect__client__info__t_1ac80262a7456812e9eefffd8c3b9ac21a" kindref="member">keep_alive</ref>;</highlight></codeline>
+<codeline lineno="70" refid="structmqtt__connect__client__info__t_1a32e77415460752ba0484eb3ba0faf0c8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="structmqtt__connect__client__info__t_1a32e77415460752ba0484eb3ba0faf0c8" kindref="member">will_topic</ref>;</highlight></codeline>
+<codeline lineno="71" refid="structmqtt__connect__client__info__t_1a925fcebd15555afdc0820e196e2fd3a7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="structmqtt__connect__client__info__t_1a925fcebd15555afdc0820e196e2fd3a7" kindref="member">will_msg</ref>;</highlight></codeline>
+<codeline lineno="72" refid="structmqtt__connect__client__info__t_1a07954934f4fecf54fa190997848229d9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structmqtt__connect__client__info__t_1a07954934f4fecf54fa190997848229d9" kindref="member">will_qos</ref>;</highlight></codeline>
+<codeline lineno="73" refid="structmqtt__connect__client__info__t_1a49c10873f44d7534140a63eef2a6a4e3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structmqtt__connect__client__info__t_1a49c10873f44d7534140a63eef2a6a4e3" kindref="member">will_retain</ref>;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77d" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="81" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da074dc1d289b8e8d4aad91f6a2cb93dc1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da074dc1d289b8e8d4aad91f6a2cb93dc1" kindref="member">MQTT_CONNECT_ACCEPTED</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="82" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da41f8aa97142be337cb639f94d9145190" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da41f8aa97142be337cb639f94d9145190" kindref="member">MQTT_CONNECT_REFUSED_PROTOCOL_VERSION</ref><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="83" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da28ffe49b0175adaa2b9a27cb4873224a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da28ffe49b0175adaa2b9a27cb4873224a" kindref="member">MQTT_CONNECT_REFUSED_IDENTIFIER</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="84" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77dade28ec1c2ce3d874e91251d683c92b2a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77dade28ec1c2ce3d874e91251d683c92b2a" kindref="member">MQTT_CONNECT_REFUSED_SERVER</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>3,</highlight></codeline>
+<codeline lineno="85" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da290cf9037054c42022cc864cfade896a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da290cf9037054c42022cc864cfade896a" kindref="member">MQTT_CONNECT_REFUSED_USERNAME_PASS</ref><sp/><sp/><sp/><sp/>=<sp/>4,</highlight></codeline>
+<codeline lineno="86" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77dafc4888158dd6ee84269a5f0bfdc12b17" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77dafc4888158dd6ee84269a5f0bfdc12b17" kindref="member">MQTT_CONNECT_REFUSED_NOT_AUTHORIZED_</ref><sp/><sp/>=<sp/>5,</highlight></codeline>
+<codeline lineno="87" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da321f5ce31b173f235de1a517fcfd00dd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da321f5ce31b173f235de1a517fcfd00dd" kindref="member">MQTT_CONNECT_DISCONNECTED</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>256,</highlight></codeline>
+<codeline lineno="88" refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da57153f2ab4331c6f76a9ee74e1bcfc62" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77da57153f2ab4331c6f76a9ee74e1bcfc62" kindref="member">MQTT_CONNECT_TIMEOUT</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>257</highlight></codeline>
+<codeline lineno="89"><highlight class="normal">}<sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77d" kindref="member">mqtt_connection_status_t</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="mqtt_8h_1a8558743bdb7d599a93844fbc56c9029f" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="mqtt_8h_1a8558743bdb7d599a93844fbc56c9029f" kindref="member">mqtt_connection_cb_t</ref>)(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/><ref refid="mqtt_8h_1a8cf0f360ab20343af37e1d124395a77d" kindref="member">mqtt_connection_status_t</ref><sp/>status);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="110" refid="mqtt_8h_1adf764cbdea00d65edcd07bb9953ad2b7a79cd00d0a5a8df13207e0c49447df87f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1adf764cbdea00d65edcd07bb9953ad2b7a79cd00d0a5a8df13207e0c49447df87f" kindref="member">MQTT_DATA_FLAG_LAST</ref><sp/>=<sp/>1</highlight></codeline>
+<codeline lineno="111"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="mqtt_8h_1afec7e75fe6a746eef9ca411463446c81" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="mqtt_8h_1afec7e75fe6a746eef9ca411463446c81" kindref="member">mqtt_incoming_data_cb_t</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*data,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>len,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>flags);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="mqtt_8h_1a7116bb85255394cec4b1d9fa38842c29" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="mqtt_8h_1a7116bb85255394cec4b1d9fa38842c29" kindref="member">mqtt_incoming_publish_cb_t</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*topic,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>tot_len);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149" refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>err);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="structmqtt__request__t" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__request__t" kindref="compound">mqtt_request_t</ref></highlight></codeline>
+<codeline lineno="156"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="159" refid="structmqtt__request__t_1aca8de21579f51e7742076a4975a4177b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__request__t" kindref="compound">mqtt_request_t</ref><sp/>*<ref refid="structmqtt__request__t_1aca8de21579f51e7742076a4975a4177b" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="161" refid="structmqtt__request__t_1a32a4b14b0b8b5b8ce8db1074e53f4a79" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref><sp/><ref refid="structmqtt__request__t_1a32a4b14b0b8b5b8ce8db1074e53f4a79" kindref="member">cb</ref>;</highlight></codeline>
+<codeline lineno="162" refid="structmqtt__request__t_1acefa437f87dd50890030d89319099a08" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmqtt__request__t_1acefa437f87dd50890030d89319099a08" kindref="member">arg</ref>;</highlight></codeline>
+<codeline lineno="164" refid="structmqtt__request__t_1af2dc3cd85cdad25b9b3e1534ecc0cb58" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__request__t_1af2dc3cd85cdad25b9b3e1534ecc0cb58" kindref="member">pkt_id</ref>;</highlight></codeline>
+<codeline lineno="166" refid="structmqtt__request__t_1a65a7292669bc1f2d9df8f30bbcd77073" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__request__t_1a65a7292669bc1f2d9df8f30bbcd77073" kindref="member">timeout_diff</ref>;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170" refid="structmqtt__ringbuf__t" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__ringbuf__t" kindref="compound">mqtt_ringbuf_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="171" refid="structmqtt__ringbuf__t_1af2d228ca682741a29621e9592536fa39" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__ringbuf__t_1af2d228ca682741a29621e9592536fa39" kindref="member">put</ref>;</highlight></codeline>
+<codeline lineno="172" refid="structmqtt__ringbuf__t_1aa403cea9ffc2f3a780591bf8d5482054" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__ringbuf__t_1aa403cea9ffc2f3a780591bf8d5482054" kindref="member">get</ref>;</highlight></codeline>
+<codeline lineno="173" refid="structmqtt__ringbuf__t_1a75775a25a3dfd83b66775041d6c10c09" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structbuf" kindref="compound">buf</ref>[<ref refid="group__mqtt__opts_1ga70627bafaffa071875cee9edc38d942b" kindref="member">MQTT_OUTPUT_RINGBUF_SIZE</ref>];</highlight></codeline>
+<codeline lineno="174"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177" refid="structmqtt__client__t" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref></highlight></codeline>
+<codeline lineno="178"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="180" refid="structmqtt__client__t_1a7faa0bf23ea59555ac197e92373eb5af" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__client__t_1a7faa0bf23ea59555ac197e92373eb5af" kindref="member">cyclic_tick</ref>;</highlight></codeline>
+<codeline lineno="181" refid="structmqtt__client__t_1a5d4e782a5ebce7f42909690a245e39cb" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__client__t_1a5d4e782a5ebce7f42909690a245e39cb" kindref="member">keep_alive</ref>;</highlight></codeline>
+<codeline lineno="182" refid="structmqtt__client__t_1aa0e3555ddd793ead6f731aa76c0eea6d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__client__t_1aa0e3555ddd793ead6f731aa76c0eea6d" kindref="member">server_watchdog</ref>;</highlight></codeline>
+<codeline lineno="184" refid="structmqtt__client__t_1a0dcc0d539bc0418f3a5eb559a7f0bb1f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__client__t_1a0dcc0d539bc0418f3a5eb559a7f0bb1f" kindref="member">pkt_id_seq</ref>;</highlight></codeline>
+<codeline lineno="186" refid="structmqtt__client__t_1aca6ec3ce9a992facc4f1e94492cff459" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structmqtt__client__t_1aca6ec3ce9a992facc4f1e94492cff459" kindref="member">inpub_pkt_id</ref>;</highlight></codeline>
+<codeline lineno="188" refid="structmqtt__client__t_1a5823d082e96704fd7f6dac15cbeceb3b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structmqtt__client__t_1a5823d082e96704fd7f6dac15cbeceb3b" kindref="member">conn_state</ref>;</highlight></codeline>
+<codeline lineno="189" refid="structmqtt__client__t_1a316df91be3e227081eb65db5ae6acc95" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">tcp_pcb<sp/>*<ref refid="structmqtt__client__t_1a316df91be3e227081eb65db5ae6acc95" kindref="member">conn</ref>;</highlight></codeline>
+<codeline lineno="191" refid="structmqtt__client__t_1af9243ec4301c1b135bb558b9bc14fe36" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmqtt__client__t_1af9243ec4301c1b135bb558b9bc14fe36" kindref="member">connect_arg</ref>;</highlight></codeline>
+<codeline lineno="192" refid="structmqtt__client__t_1aefe3a47f733efa1219d1b9e234a39815" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a8558743bdb7d599a93844fbc56c9029f" kindref="member">mqtt_connection_cb_t</ref><sp/><ref refid="structmqtt__client__t_1aefe3a47f733efa1219d1b9e234a39815" kindref="member">connect_cb</ref>;</highlight></codeline>
+<codeline lineno="194" refid="structmqtt__client__t_1a2108d22084f33f3eb656e13bdca3b545" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__request__t" kindref="compound">mqtt_request_t</ref><sp/>*<ref refid="structmqtt__client__t_1a2108d22084f33f3eb656e13bdca3b545" kindref="member">pend_req_queue</ref>;</highlight></codeline>
+<codeline lineno="195" refid="structmqtt__client__t_1ae165d8f9a3f1264f9f69aaa745b73e9f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__request__t" kindref="compound">mqtt_request_t</ref><sp/><ref refid="structmqtt__client__t_1ae165d8f9a3f1264f9f69aaa745b73e9f" kindref="member">req_list</ref>[<ref refid="group__mqtt__opts_1gae82460b35de2291e9661e440c3458e8f" kindref="member">MQTT_REQ_MAX_IN_FLIGHT</ref>];</highlight></codeline>
+<codeline lineno="196" refid="structmqtt__client__t_1ad7a160f23e5585a1d950e9cc5ab77d29" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmqtt__client__t_1ad7a160f23e5585a1d950e9cc5ab77d29" kindref="member">inpub_arg</ref>;</highlight></codeline>
+<codeline lineno="198" refid="structmqtt__client__t_1a3dc93a43df32d297cc5ab677c2d7fcb0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1afec7e75fe6a746eef9ca411463446c81" kindref="member">mqtt_incoming_data_cb_t</ref><sp/><ref refid="structmqtt__client__t_1a3dc93a43df32d297cc5ab677c2d7fcb0" kindref="member">data_cb</ref>;</highlight></codeline>
+<codeline lineno="199" refid="structmqtt__client__t_1afb1500ccfda7f232274c97c717901331" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mqtt_8h_1a7116bb85255394cec4b1d9fa38842c29" kindref="member">mqtt_incoming_publish_cb_t</ref><sp/><ref refid="structmqtt__client__t_1afb1500ccfda7f232274c97c717901331" kindref="member">pub_cb</ref>;</highlight></codeline>
+<codeline lineno="201" refid="structmqtt__client__t_1a88fdc82ad31ecb15e4adaeb5363c3ca1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/><ref refid="structmqtt__client__t_1a88fdc82ad31ecb15e4adaeb5363c3ca1" kindref="member">msg_idx</ref>;</highlight></codeline>
+<codeline lineno="202" refid="structmqtt__client__t_1a562c52abb06270cac6b5ea462c3b8c5f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structmqtt__client__t_1a562c52abb06270cac6b5ea462c3b8c5f" kindref="member">rx_buffer</ref>[<ref refid="group__mqtt__opts_1ga8275ef78a85fb14c3ac1423c70e45805" kindref="member">MQTT_VAR_HEADER_BUFFER_LEN</ref>];</highlight></codeline>
+<codeline lineno="204" refid="structmqtt__client__t_1a99a47e18b78a99284ec7a568172093e2" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmqtt__ringbuf__t" kindref="compound">mqtt_ringbuf_t</ref><sp/><ref refid="structmqtt__client__t_1a99a47e18b78a99284ec7a568172093e2" kindref="member">output</ref>;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="mqtt_8h_1aaa9248041cdc76f3bf528c6434d83967" kindref="member">mqtt_client_connect</ref>(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*ipaddr,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>port,<sp/><ref refid="mqtt_8h_1a8558743bdb7d599a93844fbc56c9029f" kindref="member">mqtt_connection_cb_t</ref><sp/>cb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structmqtt__connect__client__info__t" kindref="compound">mqtt_connect_client_info_t</ref><sp/>*client_info);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mqtt_8h_1a73d8dd718bce09bfaab452770b4f76e6" kindref="member">mqtt_disconnect</ref>(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client);</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*<ref refid="mqtt_8h_1ae7e19e236eb6122c8c39e93db6f5f53f" kindref="member">mqtt_client_new</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="mqtt_8h_1a98f0fd168112b8b7db59bcd7a325a5c5" kindref="member">mqtt_client_is_connected</ref>(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mqtt_8h_1a1f165225a0aab027ba72b6077bc5dda0" kindref="member">mqtt_set_inpub_callback</ref>(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client,<sp/><ref refid="mqtt_8h_1a7116bb85255394cec4b1d9fa38842c29" kindref="member">mqtt_incoming_publish_cb_t</ref>,</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mqtt_8h_1afec7e75fe6a746eef9ca411463446c81" kindref="member">mqtt_incoming_data_cb_t</ref><sp/>data_cb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="mqtt_8h_1afdb39d4a9758f98c02451aaa9a9b3103" kindref="member">mqtt_sub_unsub</ref>(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*topic,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>qos,<sp/><ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref><sp/>cb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>sub);</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230" refid="mqtt_8h_1a83d6a6d811b201a74d793bc1b5d4e029" refkind="member"><highlight class="preprocessor">#define<sp/>mqtt_subscribe(client,<sp/>topic,<sp/>qos,<sp/>cb,<sp/>arg)<sp/>mqtt_sub_unsub(client,<sp/>topic,<sp/>qos,<sp/>cb,<sp/>arg,<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="233" refid="mqtt_8h_1a0f133ef09cbe56c46ebe2cc21afccf3f" refkind="member"><highlight class="preprocessor">#define<sp/>mqtt_unsubscribe(client,<sp/>topic,<sp/>cb,<sp/>arg)<sp/>mqtt_sub_unsub(client,<sp/>topic,<sp/>0,<sp/>cb,<sp/>arg,<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="mqtt_8h_1ade9850d716e81fde572cb012be795d2f" kindref="member">mqtt_publish</ref>(<ref refid="structmqtt__client__t" kindref="compound">mqtt_client_t</ref><sp/>*client,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*topic,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*payload,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>payload_length,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>qos,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>retain,</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref><sp/>cb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_APPS_MQTT_CLIENT_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h"/>
+  </compounddef>
+</doxygen>

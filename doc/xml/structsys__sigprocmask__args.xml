@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__sigprocmask__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_sigprocmask_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_sigprocmask_args::how</definition>
+        <argsstring></argsstring>
+        <name>how</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="553" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="553" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1adb0dc568dd674705e372495140616236" compoundref="gen__calls_8c" startline="243" endline="292">sys_sigprocmask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1acddb55b045ec0a8a67c4f38ad8841e14" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigprocmask_args::how_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>how_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="552" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="552" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1aec3528dbede6dbfb0d92276588a0b2f6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigprocmask_args::how_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>how_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="554" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="554" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1a3b15609df6042f96a0fb6354b27d318e" prot="public" static="no" mutable="no">
+        <type><ref refid="select_8h_1a134f0411d52ec19a05b55b4ba2f87c3c" kindref="member">sigset_t</ref> *</type>
+        <definition>sigset_t* sys_sigprocmask_args::oset</definition>
+        <argsstring></argsstring>
+        <name>oset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="559" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="559" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1adb0dc568dd674705e372495140616236" compoundref="gen__calls_8c" startline="243" endline="292">sys_sigprocmask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1a64c6e64751f344301f7fa7a0b0999d53" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigprocmask_args::oset_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>oset_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="558" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="558" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1aa18bb3120a87f019136e06975bdc8cdb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigprocmask_args::oset_r_[(sizeof(register_t)&lt;=sizeof(sigset_t *) ? 0 :sizeof(register_t) - sizeof(sigset_t *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(sigset_t *) ? 0 :sizeof(register_t) - sizeof(sigset_t *))]</argsstring>
+        <name>oset_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="560" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="560" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="select_8h_1a134f0411d52ec19a05b55b4ba2f87c3c" kindref="member">sigset_t</ref> *</type>
+        <definition>const sigset_t* sys_sigprocmask_args::set</definition>
+        <argsstring></argsstring>
+        <name>set</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="556" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="556" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1adb0dc568dd674705e372495140616236" compoundref="gen__calls_8c" startline="243" endline="292">sys_sigprocmask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1a2454431bb9948d6489823a54561106a6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigprocmask_args::set_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>set_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="555" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="555" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sigprocmask__args_1ae725183e6a26ff9d18a6b757cb73c98b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sigprocmask_args::set_r_[(sizeof(register_t)&lt;=sizeof(const sigset_t *) ? 0 :sizeof(register_t) - sizeof(const sigset_t *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const sigset_t *) ? 0 :sizeof(register_t) - sizeof(const sigset_t *))]</argsstring>
+        <name>set_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="557" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="557" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_sigprocmask_args</label>
+        <link refid="structsys__sigprocmask__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+set</edgelabel>
+          <edgelabel>+oset</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="551" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="551" bodyend="561"/>
+    <listofallmembers>
+      <member refid="structsys__sigprocmask__args_1ac7673f08f959587ef3a47068e5be14ff" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>how</name></member>
+      <member refid="structsys__sigprocmask__args_1acddb55b045ec0a8a67c4f38ad8841e14" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>how_l_</name></member>
+      <member refid="structsys__sigprocmask__args_1aec3528dbede6dbfb0d92276588a0b2f6" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>how_r_</name></member>
+      <member refid="structsys__sigprocmask__args_1a3b15609df6042f96a0fb6354b27d318e" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>oset</name></member>
+      <member refid="structsys__sigprocmask__args_1a64c6e64751f344301f7fa7a0b0999d53" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>oset_l_</name></member>
+      <member refid="structsys__sigprocmask__args_1aa18bb3120a87f019136e06975bdc8cdb" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>oset_r_</name></member>
+      <member refid="structsys__sigprocmask__args_1ab37bc0eb4fcb9fde5f0e2a4f6f823aa1" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>set</name></member>
+      <member refid="structsys__sigprocmask__args_1a2454431bb9948d6489823a54561106a6" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>set_l_</name></member>
+      <member refid="structsys__sigprocmask__args_1ae725183e6a26ff9d18a6b757cb73c98b" prot="public" virt="non-virtual"><scope>sys_sigprocmask_args</scope><name>set_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

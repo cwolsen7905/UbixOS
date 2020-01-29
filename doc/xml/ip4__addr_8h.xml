@@ -1,0 +1,887 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ip4__addr_8h" kind="file" language="C++">
+    <compoundname>ip4_addr.h</compoundname>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includes refid="def_8h" local="no">net/def.h</includes>
+    <includedby refid="ip__addr_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/ip_addr.h</includedby>
+    <includedby refid="prot_2etharp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h</includedby>
+    <includedby refid="prot_2igmp_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h</includedby>
+    <includedby refid="prot_2ip4_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/net/igmp.h</label>
+        <link refid="igmp_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
+        <link refid="block_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</label>
+        <link refid="inet__chksum_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/slipif.h</label>
+        <link refid="slipif_8h"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/include/net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp.h</label>
+        <link refid="icmp_8h"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet.h</label>
+        <link refid="inet_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp6.h</label>
+        <link refid="icmp6_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/include/net/snmp.h</label>
+        <link refid="snmp_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/include/vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="74">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h</label>
+        <link refid="prot_2etharp_8h"/>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_frag.h</label>
+        <link refid="ip6__frag_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</label>
+        <link refid="ip4__frag_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</label>
+        <link refid="f_2ethernet_8h"/>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="76">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h</label>
+        <link refid="prot_2ip4_8h"/>
+      </node>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/etharp.h</label>
+        <link refid="f_2etharp_8h"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="75">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h</label>
+        <link refid="prot_2igmp_8h"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet_chksum.h</label>
+        <link refid="inet__chksum_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+    </invincdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IPv4 address API </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_IP4_ADDR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_IP4_ADDR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="def_8h" kindref="compound">net/def.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ip4_addr<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>addr;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ip4_addr<sp/>ip4_addr_t;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ip4_addr2<sp/>{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="cc_8h_1aab0b988124e37a978d9a88e7c1c778e0" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>addrw[2]);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal">}<sp/><ref refid="cc_8h_1a9ebc500530d0d9e6cd0b81969f48bbc8" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Forward<sp/>declaration<sp/>to<sp/>not<sp/>include<sp/>netif.h<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref>;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor">#define<sp/>IPADDR_NONE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((u32_t)0xffffffffUL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="preprocessor">#define<sp/>IPADDR_LOOPBACK<sp/><sp/><sp/><sp/><sp/>((u32_t)0x7f000001UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="preprocessor">#define<sp/>IPADDR_ANY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((u32_t)0x00000000UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor">#define<sp/>IPADDR_BROADCAST<sp/><sp/><sp/><sp/>((u32_t)0xffffffffUL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Definitions<sp/>of<sp/>the<sp/>bits<sp/>in<sp/>an<sp/>Internet<sp/>address<sp/>integer.</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"></highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/><sp/><sp/>On<sp/>subnets,<sp/>host<sp/>and<sp/>network<sp/>parts<sp/>are<sp/>found<sp/>according<sp/>to</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>the<sp/>subnet<sp/>mask,<sp/>not<sp/>these<sp/>masks.<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSA(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((u32_t)(a))<sp/>&amp;<sp/>0x80000000UL)<sp/>==<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSA_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xff000000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSA_NSHIFT<sp/><sp/><sp/><sp/>24</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSA_HOST<sp/><sp/><sp/><sp/><sp/><sp/>(0xffffffff<sp/>&amp;<sp/>~IP_CLASSA_NET)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSA_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSB(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((u32_t)(a))<sp/>&amp;<sp/>0xc0000000UL)<sp/>==<sp/>0x80000000UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSB_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xffff0000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSB_NSHIFT<sp/><sp/><sp/><sp/>16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSB_HOST<sp/><sp/><sp/><sp/><sp/><sp/>(0xffffffff<sp/>&amp;<sp/>~IP_CLASSB_NET)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSB_MAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/>65536</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSC(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((u32_t)(a))<sp/>&amp;<sp/>0xe0000000UL)<sp/>==<sp/>0xc0000000UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSC_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xffffff00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSC_NSHIFT<sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSC_HOST<sp/><sp/><sp/><sp/><sp/><sp/>(0xffffffff<sp/>&amp;<sp/>~IP_CLASSC_NET)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSD(a)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((u32_t)(a)<sp/>&amp;<sp/>0xf0000000UL)<sp/>==<sp/>0xe0000000UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSD_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xf0000000<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>These<sp/>ones<sp/>aren&apos;t<sp/>really<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSD_NSHIFT<sp/><sp/><sp/><sp/>28<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>net<sp/>and<sp/>host<sp/>fields,<sp/>but<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_CLASSD_HOST<sp/><sp/><sp/><sp/><sp/><sp/>0x0fffffff<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>routing<sp/>needn&apos;t<sp/>know.<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_MULTICAST(a)<sp/><sp/><sp/><sp/><sp/>IP_CLASSD(a)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_EXPERIMENTAL(a)<sp/><sp/>(((u32_t)(a)<sp/>&amp;<sp/>0xf0000000UL)<sp/>==<sp/>0xf0000000UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_BADCLASS(a)<sp/><sp/><sp/><sp/><sp/><sp/>(((u32_t)(a)<sp/>&amp;<sp/>0xf0000000UL)<sp/>==<sp/>0xf0000000UL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_LOOPBACKNET<sp/><sp/><sp/><sp/><sp/><sp/>127<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>official!<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="preprocessor">#define<sp/>IP4_ADDR(ipaddr,<sp/>a,b,c,d)<sp/><sp/>(ipaddr)-&gt;addr<sp/>=<sp/>PP_HTONL(LWIP_MAKEU32(a,b,c,d))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="preprocessor">#ifndef<sp/>IPADDR2_COPY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPADDR2_COPY(dest,<sp/>src)<sp/>SMEMCPY(dest,<sp/>src,<sp/>sizeof(ip4_addr_t))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="preprocessor">#define<sp/>ip4_addr_copy(dest,<sp/>src)<sp/>((dest).addr<sp/>=<sp/>(src).addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="preprocessor">#define<sp/>ip4_addr_set(dest,<sp/>src)<sp/>((dest)-&gt;addr<sp/>=<sp/>\</highlight></codeline>
+<codeline lineno="133"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((src)<sp/>==<sp/>NULL<sp/>?<sp/>0<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="134"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(src)-&gt;addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="preprocessor">#define<sp/>ip4_addr_set_zero(ipaddr)<sp/><sp/><sp/><sp/><sp/>((ipaddr)-&gt;addr<sp/>=<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="preprocessor">#define<sp/>ip4_addr_set_any(ipaddr)<sp/><sp/><sp/><sp/><sp/><sp/>((ipaddr)-&gt;addr<sp/>=<sp/>IPADDR_ANY)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="preprocessor">#define<sp/>ip4_addr_set_loopback(ipaddr)<sp/>((ipaddr)-&gt;addr<sp/>=<sp/>PP_HTONL(IPADDR_LOOPBACK))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="preprocessor">#define<sp/>ip4_addr_isloopback(ipaddr)<sp/><sp/><sp/><sp/>(((ipaddr)-&gt;addr<sp/>&amp;<sp/>PP_HTONL(IP_CLASSA_NET))<sp/>==<sp/>PP_HTONL(((u32_t)IP_LOOPBACKNET)<sp/>&lt;&lt;<sp/>24))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="preprocessor">#define<sp/>ip4_addr_set_hton(dest,<sp/>src)<sp/>((dest)-&gt;addr<sp/>=<sp/>\</highlight></codeline>
+<codeline lineno="146"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((src)<sp/>==<sp/>NULL<sp/>?<sp/>0:\</highlight></codeline>
+<codeline lineno="147"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_htonl((src)-&gt;addr)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="preprocessor">#define<sp/>ip4_addr_set_u32(dest_ipaddr,<sp/>src_u32)<sp/>((dest_ipaddr)-&gt;addr<sp/>=<sp/>(src_u32))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="preprocessor">#define<sp/>ip4_addr_get_u32(src_ipaddr)<sp/>((src_ipaddr)-&gt;addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="preprocessor">#define<sp/>ip4_addr_get_network(target,<sp/>host,<sp/>netmask)<sp/>do<sp/>{<sp/>((target)-&gt;addr<sp/>=<sp/>((host)-&gt;addr)<sp/>&amp;<sp/>((netmask)-&gt;addr));<sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="preprocessor">#define<sp/>ip4_addr_netcmp(addr1,<sp/>addr2,<sp/>mask)<sp/>(((addr1)-&gt;addr<sp/>&amp;<sp/>\</highlight></codeline>
+<codeline lineno="165"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(mask)-&gt;addr)<sp/>==<sp/>\</highlight></codeline>
+<codeline lineno="166"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((addr2)-&gt;addr<sp/>&amp;<sp/>\</highlight></codeline>
+<codeline lineno="167"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(mask)-&gt;addr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_cmp(addr1,<sp/>addr2)<sp/>((addr1)-&gt;addr<sp/>==<sp/>(addr2)-&gt;addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_isany_val(addr1)<sp/><sp/><sp/>((addr1).addr<sp/>==<sp/>IPADDR_ANY)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_isany(addr1)<sp/>((addr1)<sp/>==<sp/>NULL<sp/>||<sp/>ip4_addr_isany_val(*(addr1)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_isbroadcast(addr1,<sp/>netif)<sp/>ip4_addr_isbroadcast_u32((addr1)-&gt;addr,<sp/>netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>ip4_addr_isbroadcast_u32(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>addr,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_addr_netmask_valid(netmask)<sp/>ip4_addr_netmask_valid((netmask)-&gt;addr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>ip4_addr_netmask_valid(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>netmask);</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_ismulticast(addr1)<sp/>(((addr1)-&gt;addr<sp/>&amp;<sp/>PP_HTONL(0xf0000000UL))<sp/>==<sp/>PP_HTONL(0xe0000000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_islinklocal(addr1)<sp/>(((addr1)-&gt;addr<sp/>&amp;<sp/>PP_HTONL(0xffff0000UL))<sp/>==<sp/>PP_HTONL(0xa9fe0000UL))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_debug_print_parts(debug,<sp/>a,<sp/>b,<sp/>c,<sp/>d)<sp/>\</highlight></codeline>
+<codeline lineno="184"><highlight class="preprocessor"><sp/><sp/>LWIP_DEBUGF(debug,<sp/>(&quot;%&quot;<sp/>U16_F<sp/>&quot;.%&quot;<sp/>U16_F<sp/>&quot;.%&quot;<sp/>U16_F<sp/>&quot;.%&quot;<sp/>U16_F,<sp/>a,<sp/>b,<sp/>c,<sp/>d))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_debug_print(debug,<sp/>ipaddr)<sp/>\</highlight></codeline>
+<codeline lineno="186"><highlight class="preprocessor"><sp/><sp/>ip4_addr_debug_print_parts(debug,<sp/>\</highlight></codeline>
+<codeline lineno="187"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>ip4_addr1_16(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="188"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>ip4_addr2_16(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="189"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>ip4_addr3_16(ipaddr)<sp/>:<sp/>0),<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="190"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(u16_t)((ipaddr)<sp/>!=<sp/>NULL<sp/>?<sp/>ip4_addr4_16(ipaddr)<sp/>:<sp/>0))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr_debug_print_val(debug,<sp/>ipaddr)<sp/>\</highlight></codeline>
+<codeline lineno="192"><highlight class="preprocessor"><sp/><sp/>ip4_addr_debug_print_parts(debug,<sp/>\</highlight></codeline>
+<codeline lineno="193"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_addr1_16(&amp;(ipaddr)),<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="194"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_addr2_16(&amp;(ipaddr)),<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="195"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_addr3_16(&amp;(ipaddr)),<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="196"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_addr4_16(&amp;(ipaddr)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Get<sp/>one<sp/>byte<sp/>from<sp/>the<sp/>4-byte<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr1(ipaddr)<sp/>(((const<sp/>u8_t*)(&amp;(ipaddr)-&gt;addr))[0])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr2(ipaddr)<sp/>(((const<sp/>u8_t*)(&amp;(ipaddr)-&gt;addr))[1])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr3(ipaddr)<sp/>(((const<sp/>u8_t*)(&amp;(ipaddr)-&gt;addr))[2])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr4(ipaddr)<sp/>(((const<sp/>u8_t*)(&amp;(ipaddr)-&gt;addr))[3])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>These<sp/>are<sp/>cast<sp/>to<sp/>u16_t,<sp/>with<sp/>the<sp/>intent<sp/>that<sp/>they<sp/>are<sp/>often<sp/>arguments</highlight></codeline>
+<codeline lineno="204"><highlight class="comment"><sp/>*<sp/>to<sp/>printf<sp/>using<sp/>the<sp/>U16_F<sp/>format<sp/>from<sp/>cc.h.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr1_16(ipaddr)<sp/>((u16_t)ip4_addr1(ipaddr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr2_16(ipaddr)<sp/>((u16_t)ip4_addr2(ipaddr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr3_16(ipaddr)<sp/>((u16_t)ip4_addr3(ipaddr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip4_addr4_16(ipaddr)<sp/>((u16_t)ip4_addr4(ipaddr))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP4ADDR_STRLEN_MAX<sp/><sp/>16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="preprocessor">#define<sp/>ip_ntoa(ipaddr)<sp/><sp/>ipaddr_ntoa(ipaddr)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ipaddr_addr(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*cp);</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ip4addr_aton(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*cp,<sp/>ip4_addr_t<sp/>*addr);</highlight></codeline>
+<codeline lineno="218"><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*ip4addr_ntoa(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip4_addr_t<sp/>*addr);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*ip4addr_ntoa_r(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip4_addr_t<sp/>*addr,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>buflen);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_IP_ADDR_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/ip4_addr.h"/>
+  </compounddef>
+</doxygen>

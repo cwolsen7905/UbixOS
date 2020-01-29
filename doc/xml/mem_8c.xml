@@ -1,0 +1,1490 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="mem_8c" kind="file" language="C++">
+    <compoundname>mem.c</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="mem_8h" local="yes">net/mem.h</includes>
+    <includes refid="def_8h" local="yes">net/def.h</includes>
+    <includes refid="sys_8h" local="yes">net/sys.h</includes>
+    <includes refid="stats_8h" local="yes">net/stats.h</includes>
+    <includes refid="err_8h" local="yes">net/err.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="36">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="41">
+        <label>ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="39">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="22">
+        <label>net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="30">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="33">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="43">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structmem" prot="public">mem</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="mem_8c_1a016a07ea84e1d75386765b90015b6698" prot="public" static="no">
+        <name>LWIP_MEM_ALLOC_DECL_PROTECT</name>
+        <param></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="325" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="325" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1a3c644ac3ac94ed977bb165eeb6ff741a" prot="public" static="no">
+        <name>LWIP_MEM_ALLOC_PROTECT</name>
+        <param></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="326" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="326" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1af0643ce3aa197952517914e1d644150a" prot="public" static="no">
+        <name>LWIP_MEM_ALLOC_UNPROTECT</name>
+        <param></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="327" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="327" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1a581c4edded02d92caf7a938c801a618e" prot="public" static="no">
+        <name>LWIP_MEM_FREE_DECL_PROTECT</name>
+        <param></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="321" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="321" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1aef413072690259b59ce27e49df19e307" prot="public" static="no">
+        <name>LWIP_MEM_FREE_PROTECT</name>
+        <param></param>
+        <initializer><ref refid="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" kindref="member">sys_mutex_lock</ref>(&amp;mem_mutex)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="322" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="322" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1aa8a24c0593943bb1e64c1243dddfae50" prot="public" static="no">
+        <name>LWIP_MEM_FREE_UNPROTECT</name>
+        <param></param>
+        <initializer><ref refid="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" kindref="member">sys_mutex_unlock</ref>(&amp;mem_mutex)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="323" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="323" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1a4fa8ffb4c7a8b4c0404ad4278cc801d0" prot="public" static="no">
+        <name>LWIP_RAM_HEAP_POINTER</name>
+        <initializer>ram_heap</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="291" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="291" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" prot="public" static="no">
+        <name>MEM_SIZE_ALIGNED</name>
+        <initializer><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(<ref refid="group__lwip__opts__mem_1ga2dcf8c45f945dd0c4301a94700f2112c" kindref="member">MEM_SIZE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="282" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="282" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1a278694c2333c9826f21ddd2c2d220f66" prot="public" static="no">
+        <name>MIN_SIZE</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>All allocated blocks will be MIN_SIZE bytes big, at least! MIN_SIZE can be overridden to suit your needs. Smaller values save space, larger values could prevent too small blocks to fragment the RAM too much. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="277" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="277" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" prot="public" static="no">
+        <name>MIN_SIZE_ALIGNED</name>
+        <initializer><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(<ref refid="mem_8c_1a278694c2333c9826f21ddd2c2d220f66" kindref="member">MIN_SIZE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="280" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="280" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" prot="public" static="no">
+        <name>SIZEOF_STRUCT_MEM</name>
+        <initializer><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(sizeof(struct <ref refid="structmem" kindref="compound">mem</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="281" column="9" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="mem_8c_1a87c6d3c6504f1103aba005aa5eba5526" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structmem" kindref="compound">mem</ref> *</type>
+        <definition>struct mem* lfree</definition>
+        <argsstring></argsstring>
+        <name>lfree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>pointer to the lowest free block, this is used for faster search </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="299" column="17" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="299" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="mem_8c_1a0a9545ff448b4b134f210e9fb42ca4c6" prot="public" static="yes" mutable="no">
+        <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref></type>
+        <definition>sys_mutex_t mem_mutex</definition>
+        <argsstring></argsstring>
+        <name>mem_mutex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>concurrent access protection </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="303" column="20" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="303" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="mem_8c_1ac41fe7818b4d5e09db902dcd8c6c0506" prot="public" static="yes" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> *</type>
+        <definition>u8_t* ram</definition>
+        <argsstring></argsstring>
+        <name>ram</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>pointer to the heap (ram_heap): for alignment, ram is now a pointer instead of an array </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="295" column="13" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="295" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="mem_8c_1ae1f0ace7afd26797ed0b81802ee7aad3" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structmem" kindref="compound">mem</ref> *</type>
+        <definition>struct mem* ram_end</definition>
+        <argsstring></argsstring>
+        <name>ram_end</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>the last entry, always unused! </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="297" column="17" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="297" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="mem_8c_1aa33f9b7cf221a9cde8fa715a51d3bfc7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>LWIP_DECLARE_MEMORY_ALIGNED</definition>
+        <argsstring>(ram_heap, LWIP_MEM_ALIGN_SIZE(MEM_SIZE)+(2U *LWIP_MEM_ALIGN_SIZE(sizeof(struct mem))))</argsstring>
+        <name>LWIP_DECLARE_MEMORY_ALIGNED</name>
+        <param>
+          <type>ram_heap</type>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(<ref refid="group__lwip__opts__mem_1ga2dcf8c45f945dd0c4301a94700f2112c" kindref="member">MEM_SIZE</ref>)+(2U *<ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(sizeof(struct <ref refid="structmem" kindref="compound">mem</ref>)))</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If you want to relocate the heap to external memory, simply define LWIP_RAM_HEAP_POINTER as a void-pointer to that location. If so, make sure the memory at that location is big enough (see below on how that space is calculated). the heap. we need one struct mem at the end and some room for alignment </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="290" column="1" declfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" declline="290" declcolumn="1"/>
+      </memberdef>
+      <memberdef kind="function" id="mem_8c_1ab0bdc525971701883f2065e7fb257a24" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* mem_calloc</definition>
+        <argsstring>(mem_size_t count, mem_size_t size)</argsstring>
+        <name>mem_calloc</name>
+        <param>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Contiguously allocates enough space for count objects that are size bytes of memory each and returns a pointer to the allocated memory.</para>
+<para>The allocated memory is filled with bytes of value zero.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>number of objects to allocate </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>size of the objects to allocate </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>pointer to allocated memory / NULL pointer if there is an error </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="765" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="765" bodyend="776"/>
+        <references refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" compoundref="mem_8c" startline="603" endline="742">mem_malloc</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+      </memberdef>
+      <memberdef kind="function" id="mem_8c_1a65169147c44e9db60d997819af9b455c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mem_free</definition>
+        <argsstring>(void *rmem)</argsstring>
+        <name>mem_free</name>
+        <param>
+          <type>void *</type>
+          <declname>rmem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Put a struct mem back on the heap</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rmem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>is the data portion of a struct mem as returned by a previous call to <ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc()</ref> </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="419" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="419" bodyend="465"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" compoundref="debug_8h" startline="57">LWIP_DBG_LEVEL_SERIOUS</references>
+        <references refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" compoundref="debug_8h" startline="83">LWIP_DBG_TRACE</references>
+        <references refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" compoundref="debug_8h" startline="164">LWIP_DEBUGF</references>
+        <references refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" compoundref="mem_8c" startline="321">LWIP_MEM_FREE_DECL_PROTECT</references>
+        <references refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" compoundref="lwipopts_8h" startline="54">MEM_ALIGNMENT</references>
+        <references refid="lwipopts_8h_1a2d7bc380695eeedb1af50c3808613afe" compoundref="lwipopts_8h" startline="455">MEM_DEBUG</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="tcpip_8c_1a55b4de3765c6a37b3f2b26a11603771c" compoundref="tcpip_8c" startline="491" endline="493">mem_free_callback</referencedby>
+        <referencedby refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="mem_8c_1a44a136e3b70c36abb6f8dc060c778113" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mem_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>mem_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Zero the heap and initialize start, end and lowest-free </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="382" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="382" bodyend="410"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" compoundref="lwipopts_8h" startline="54">MEM_ALIGNMENT</references>
+        <references refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" compoundref="mem_8c" startline="281">SIZEOF_STRUCT_MEM</references>
+        <referencedby refid="core_2init_8c_1a0c1a18439524d2f4a5e51d25c0ca2ce9" compoundref="core_2init_8c" startline="333" endline="381">lwip_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="mem_8c_1a932aa40d85b14cb7331625e012d12335" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* mem_malloc</definition>
+        <argsstring>(mem_size_t size)</argsstring>
+        <name>mem_malloc</name>
+        <param>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Allocate a block of memory with a minimum of &apos;size&apos; bytes.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>is the minimum size of the requested block in bytes. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>pointer to allocated memory or NULL if no free memory was found.</para>
+</simplesect>
+Note that the returned value will always be aligned (as defined by MEM_ALIGNMENT). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="603" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="603" bodyend="742"/>
+        <references refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" compoundref="arch_8h" startline="221">LWIP_MEM_ALIGN_SIZE</references>
+        <references refid="mem_8c_1a016a07ea84e1d75386765b90015b6698" compoundref="mem_8c" startline="325">LWIP_MEM_ALLOC_DECL_PROTECT</references>
+        <references refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" compoundref="mem_8c" startline="282">MEM_SIZE_ALIGNED</references>
+        <references refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" compoundref="mem_8c" startline="280">MIN_SIZE_ALIGNED</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" compoundref="sys__arch_8c" startline="153" endline="155">sys_mutex_lock</references>
+        <referencedby refid="ethernetif_8c_1a7ce979d0ec31575ecf17998b7bd9abb2" compoundref="ethernetif_8c" startline="302" endline="344">ethernetif_init</referencedby>
+        <referencedby refid="mem_8c_1ab0bdc525971701883f2065e7fb257a24" compoundref="mem_8c" startline="765" endline="776">mem_calloc</referencedby>
+        <referencedby refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" compoundref="pbuf_8c" startline="248" endline="405">pbuf_alloc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="mem_8c_1a2f0214c1c0d4acf856fb3ec76818a5a9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* mem_trim</definition>
+        <argsstring>(void *rmem, mem_size_t newsize)</argsstring>
+        <name>mem_trim</name>
+        <param>
+          <type>void *</type>
+          <declname>rmem</declname>
+        </param>
+        <param>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+          <declname>newsize</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Shrink memory returned by <ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc()</ref>.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rmem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to memory allocated by mem_malloc the is to be shrinked </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>newsize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>required size after shrinking (needs to be smaller than or equal to the previous size) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>for compatibility reasons: is always == rmem, at the moment or NULL if newsize is &gt; old size, in which case rmem is NOT touched or freed! </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="478" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="478" bodyend="592"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" compoundref="arch_8h" startline="221">LWIP_MEM_ALIGN_SIZE</references>
+        <references refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" compoundref="mem_8c" startline="321">LWIP_MEM_FREE_DECL_PROTECT</references>
+        <references refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" compoundref="mem_8c" startline="282">MEM_SIZE_ALIGNED</references>
+        <references refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" compoundref="mem_8c" startline="280">MIN_SIZE_ALIGNED</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="group__pbuf_1ga50abfe830a33a1a47a562febee66015d" compoundref="pbuf_8c" startline="493" endline="555">pbuf_realloc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="mem_8c_1a649d0a69ffb196b2cd87e9e176d0e680" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void plug_holes</definition>
+        <argsstring>(struct mem *mem)</argsstring>
+        <name>plug_holes</name>
+        <param>
+          <type>struct <ref refid="structmem" kindref="compound">mem</ref> *</type>
+          <declname>mem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>&quot;Plug holes&quot; by combining adjacent empty struct mems. After this function is through, there should not exist one empty struct mem pointing to another empty struct mem.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>this points to a struct mem which just has been freed </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+<internal><para>this function is only called by <ref refid="mem_8c_1a65169147c44e9db60d997819af9b455c" kindref="member">mem_free()</ref> and <ref refid="mem_8c_1a2f0214c1c0d4acf856fb3ec76818a5a9" kindref="member">mem_trim()</ref></para>
+<para>This assumes access to the heap is protected by the calling function already. </para>
+</internal>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c" line="344" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="344" bodyend="376"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Dynamic memory manager</para>
+<para>This is a lightweight replacement for the standard C library malloc().</para>
+<para>If you want to use the standard C library malloc() instead, define MEM_LIBC_MALLOC to 1 in your <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref></para>
+<para>To let <ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc()</ref> use pools (prevents fragmentation and is much faster than a heap but might waste some memory), define MEM_USE_POOLS to 1, define MEMP_USE_CUSTOM_POOLS to 1 and create a file &quot;lwippools.h&quot; that includes a list of pools like this (more pools can be added between _START and _END):</para>
+<para>Define three pools with sizes 256, 512, and 1512 bytes LWIP_MALLOC_MEMPOOL_START <ref refid="memp__std_8h_1a2a2ee070ed2e841bdf67f9379780e03d" kindref="member">LWIP_MALLOC_MEMPOOL(20, 256)</ref> <ref refid="memp__std_8h_1a2a2ee070ed2e841bdf67f9379780e03d" kindref="member">LWIP_MALLOC_MEMPOOL(10, 512)</ref> <ref refid="memp__std_8h_1a2a2ee070ed2e841bdf67f9379780e03d" kindref="member">LWIP_MALLOC_MEMPOOL(5, 1512)</ref> LWIP_MALLOC_MEMPOOL_END </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="23"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Simon<sp/>Goldschmidt</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys_8h" kindref="compound">net/sys.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">net/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="err_8h" kindref="compound">net/err.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_LIBC_MALLOC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>for<sp/>malloc()/free()<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_LIBC_MALLOC<sp/>||<sp/>MEM_USE_POOLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><ref refid="mem_8c_1a44a136e3b70c36abb6f8dc060c778113" kindref="member">mem_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="76"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="keywordtype">void</highlight><highlight class="normal">*</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><ref refid="mem_8c_1a2f0214c1c0d4acf856fb3ec76818a5a9" kindref="member">mem_trim</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmem" kindref="compound">mem</ref>,<sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size)</highlight></codeline>
+<codeline lineno="85"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" kindref="member">LWIP_UNUSED_ARG</ref>(size);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="structmem" kindref="compound">mem</ref>;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_LIBC_MALLOC<sp/>||<sp/>MEM_USE_POOLS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_LIBC_MALLOC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>lwIP<sp/>heap<sp/>implemented<sp/>using<sp/>C<sp/>library<sp/>malloc()<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>in<sp/>case<sp/>C<sp/>library<sp/>malloc()<sp/>needs<sp/>extra<sp/>protection,</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/>*<sp/>allow<sp/>these<sp/>defines<sp/>to<sp/>be<sp/>overridden.</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>mem_clib_free</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>mem_clib_free<sp/>free</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>mem_clib_malloc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>mem_clib_malloc<sp/>malloc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>mem_clib_calloc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>mem_clib_calloc<sp/>calloc</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_STATS<sp/>&amp;&amp;<sp/>MEM_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_LIBC_STATSHELPER_SIZE<sp/>LWIP_MEM_ALIGN_SIZE(sizeof(mem_size_t))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_LIBC_STATSHELPER_SIZE<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size)</highlight></codeline>
+<codeline lineno="123"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>ret<sp/>=<sp/>mem_clib_malloc(size<sp/>+<sp/>MEM_LIBC_STATSHELPER_SIZE);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ret<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aa6bb9e8fcc38e7febafd7ef682700786" kindref="member">MEM_STATS_INC</ref>(err);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;malloc()<sp/>must<sp/>return<sp/>aligned<sp/>memory&quot;</highlight><highlight class="normal">,<sp/><ref refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" kindref="member">LWIP_MEM_ALIGN</ref>(ret)<sp/>==<sp/>ret);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_STATS<sp/>&amp;&amp;<sp/>MEM_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/>*(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>*)ret<sp/>=<sp/>size;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/>ret<sp/>=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)ret<sp/>+<sp/>MEM_LIBC_STATSHELPER_SIZE;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aefec777cb83885b2f399afb661cf3837" kindref="member">MEM_STATS_INC_USED</ref>(used,<sp/>size);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ret;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><ref refid="mem_8c_1a65169147c44e9db60d997819af9b455c" kindref="member">mem_free</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*rmem)</highlight></codeline>
+<codeline lineno="144"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;rmem<sp/>!=<sp/>NULL&quot;</highlight><highlight class="normal">,<sp/>(rmem<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>));</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;rmem<sp/>==<sp/>MEM_ALIGN(rmem)&quot;</highlight><highlight class="normal">,<sp/>(rmem<sp/>==<sp/><ref refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" kindref="member">LWIP_MEM_ALIGN</ref>(rmem)));</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_STATS<sp/>&amp;&amp;<sp/>MEM_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/>rmem<sp/>=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)rmem<sp/>-<sp/>MEM_LIBC_STATSHELPER_SIZE;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a8ff88328a91828b01070a90a1894815f" kindref="member">MEM_STATS_DEC_USED</ref>(used,<sp/>*(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>*)rmem);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/>mem_clib_free(rmem);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>MEM_USE_POOLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>lwIP<sp/>heap<sp/>implemented<sp/>with<sp/>different<sp/>sized<sp/>pools<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size)</highlight></codeline>
+<codeline lineno="167"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*ret;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">memp_malloc_helper<sp/>*element<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_1a85a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>poolnr;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>required_size<sp/>=<sp/>size<sp/>+<sp/><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>memp_malloc_helper));</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(poolnr<sp/>=<sp/>MEMP_POOL_FIRST;<sp/>poolnr<sp/>&lt;=<sp/>MEMP_POOL_LAST;<sp/>poolnr<sp/>=<sp/>(<ref refid="memp_8h_1a85a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref>)(poolnr<sp/>+<sp/>1))<sp/>{</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>is<sp/>this<sp/>pool<sp/>big<sp/>enough<sp/>to<sp/>hold<sp/>an<sp/>element<sp/>of<sp/>the<sp/>required<sp/>size</highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>plus<sp/>a<sp/>struct<sp/>memp_malloc_helper<sp/>that<sp/>saves<sp/>the<sp/>pool<sp/>this<sp/>element<sp/>came<sp/>from?<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(required_size<sp/>&lt;=<sp/><ref refid="memp_8h_1ad78a1f656a766f2c6341aa466762b883" kindref="member">memp_pools</ref>[poolnr]-&gt;size)<sp/>{</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>element<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">memp_malloc_helper*)<ref refid="memp_8h_1a2b00593d086313c267b54a976bf67aa5" kindref="member">memp_malloc</ref>(poolnr);</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(element<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>need<sp/>to<sp/>DEBUGF<sp/>or<sp/>ASSERT:<sp/>This<sp/>error<sp/>is<sp/>already<sp/>taken<sp/>care<sp/>of<sp/>in<sp/>memp.c<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_USE_POOLS_TRY_BIGGER_POOL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(poolnr<sp/>&lt;<sp/>MEMP_POOL_LAST)<sp/>{</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_USE_POOLS_TRY_BIGGER_POOL<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aa6bb9e8fcc38e7febafd7ef682700786" kindref="member">MEM_STATS_INC</ref>(err);</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(poolnr<sp/>&gt;<sp/>MEMP_POOL_LAST)<sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_malloc():<sp/>no<sp/>pool<sp/>is<sp/>that<sp/>big!&quot;</highlight><highlight class="normal">,<sp/>0);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aa6bb9e8fcc38e7febafd7ef682700786" kindref="member">MEM_STATS_INC</ref>(err);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>save<sp/>the<sp/>pool<sp/>number<sp/>this<sp/>element<sp/>came<sp/>from<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/>element-&gt;poolnr<sp/>=<sp/>poolnr;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>return<sp/>a<sp/>pointer<sp/>to<sp/>the<sp/>memory<sp/>directly<sp/>after<sp/>the<sp/>struct<sp/>memp_malloc_helper<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/>ret<sp/>=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)element<sp/>+<sp/><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>memp_malloc_helper));</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_OVERFLOW_CHECK<sp/>||<sp/>(LWIP_STATS<sp/>&amp;&amp;<sp/>MEM_STATS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>truncating<sp/>to<sp/>u16_t<sp/>is<sp/>safe<sp/>because<sp/>struct<sp/>memp_desc::size<sp/>is<sp/>u16_t<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/>element-&gt;size<sp/>=<sp/>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref>)size;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1aefec777cb83885b2f399afb661cf3837" kindref="member">MEM_STATS_INC_USED</ref>(used,<sp/>element-&gt;size);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEMP_OVERFLOW_CHECK<sp/>||<sp/>(LWIP_STATS<sp/>&amp;&amp;<sp/>MEM_STATS)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_OVERFLOW_CHECK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>initialize<sp/>unused<sp/>memory<sp/>(diff<sp/>between<sp/>requested<sp/>size<sp/>and<sp/>selected<sp/>pool&apos;s<sp/>size)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)ret<sp/>+<sp/>size,<sp/>0xcd,<sp/><ref refid="memp_8h_1ad78a1f656a766f2c6341aa466762b883" kindref="member">memp_pools</ref>[poolnr]-&gt;size<sp/>-<sp/>size);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEMP_OVERFLOW_CHECK<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ret;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><ref refid="mem_8c_1a65169147c44e9db60d997819af9b455c" kindref="member">mem_free</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*rmem)</highlight></codeline>
+<codeline lineno="224"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">memp_malloc_helper<sp/>*hmem;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;rmem<sp/>!=<sp/>NULL&quot;</highlight><highlight class="normal">,<sp/>(rmem<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>));</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;rmem<sp/>==<sp/>MEM_ALIGN(rmem)&quot;</highlight><highlight class="normal">,<sp/>(rmem<sp/>==<sp/><ref refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" kindref="member">LWIP_MEM_ALIGN</ref>(rmem)));</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>get<sp/>the<sp/>original<sp/>struct<sp/>memp_malloc_helper<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>cast<sp/>through<sp/>void*<sp/>to<sp/>get<sp/>rid<sp/>of<sp/>alignment<sp/>warnings<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/>hmem<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">memp_malloc_helper*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)rmem<sp/>-<sp/><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>memp_malloc_helper)));</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;hmem<sp/>!=<sp/>NULL&quot;</highlight><highlight class="normal">,<sp/>(hmem<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>));</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;hmem<sp/>==<sp/>MEM_ALIGN(hmem)&quot;</highlight><highlight class="normal">,<sp/>(hmem<sp/>==<sp/><ref refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" kindref="member">LWIP_MEM_ALIGN</ref>(hmem)));</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;hmem-&gt;poolnr<sp/>&lt;<sp/>MEMP_MAX&quot;</highlight><highlight class="normal">,<sp/>(hmem-&gt;poolnr<sp/>&lt;<sp/><ref refid="memp_8h_1a85a164b1f7764951cc685ea525114e57a3387042084427642949f3223c7ddd321" kindref="member">MEMP_MAX</ref>));</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a8ff88328a91828b01070a90a1894815f" kindref="member">MEM_STATS_DEC_USED</ref>(used,<sp/>hmem-&gt;size);</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_OVERFLOW_CHECK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>i;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;MEM_USE_POOLS:<sp/>invalid<sp/>chunk<sp/>size&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>hmem-&gt;size<sp/>&lt;=<sp/><ref refid="memp_8h_1ad78a1f656a766f2c6341aa466762b883" kindref="member">memp_pools</ref>[hmem-&gt;poolnr]-&gt;<ref refid="structmemp__desc_1a1688d2bdd5a7b77700e1fa627f025ba3" kindref="member">size</ref>);</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>check<sp/>that<sp/>unused<sp/>memory<sp/>remained<sp/>untouched<sp/>(diff<sp/>between<sp/>requested<sp/>size<sp/>and<sp/>selected<sp/>pool&apos;s<sp/>size)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>hmem-&gt;size;<sp/>i<sp/>&lt;<sp/><ref refid="memp_8h_1ad78a1f656a766f2c6341aa466762b883" kindref="member">memp_pools</ref>[hmem-&gt;poolnr]-&gt;<ref refid="structmemp__desc_1a1688d2bdd5a7b77700e1fa627f025ba3" kindref="member">size</ref>;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>data<sp/>=<sp/>*((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>*)rmem<sp/>+<sp/>i);</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;MEM_USE_POOLS:<sp/>mem<sp/>overflow<sp/>detected&quot;</highlight><highlight class="normal">,<sp/>data<sp/>==<sp/>0xcd);</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEMP_OVERFLOW_CHECK<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>put<sp/>it<sp/>in<sp/>the<sp/>pool<sp/>we<sp/>saved<sp/>earlier<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_1aecd94926b7c2a0e23ae195f4ae97581f" kindref="member">memp_free</ref>(hmem-&gt;poolnr,<sp/>hmem);</highlight></codeline>
+<codeline lineno="254"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>MEM_USE_POOLS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>lwIP<sp/>replacement<sp/>for<sp/>your<sp/>libc<sp/>malloc()<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="264" refid="structmem" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>{</highlight></codeline>
+<codeline lineno="266" refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/><ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="268" refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/><ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="270" refid="structmem_1aa76b6a39425617435978dce903f0d456" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="preprocessor">#ifndef<sp/>MIN_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="277" refid="mem_8c_1a278694c2333c9826f21ddd2c2d220f66" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MIN_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>12</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MIN_SIZE<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>some<sp/>alignment<sp/>macros:<sp/>we<sp/>define<sp/>them<sp/>here<sp/>for<sp/>better<sp/>source<sp/>code<sp/>layout<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280" refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MIN_SIZE_ALIGNED<sp/><sp/><sp/><sp/><sp/>LWIP_MEM_ALIGN_SIZE(MIN_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281" refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SIZEOF_STRUCT_MEM<sp/><sp/><sp/><sp/>LWIP_MEM_ALIGN_SIZE(sizeof(struct<sp/>mem))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282" refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_SIZE_ALIGNED<sp/><sp/><sp/><sp/><sp/>LWIP_MEM_ALIGN_SIZE(MEM_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="preprocessor">#ifndef<sp/>LWIP_RAM_HEAP_POINTER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><ref refid="mem_8c_1aa33f9b7cf221a9cde8fa715a51d3bfc7" kindref="member">LWIP_DECLARE_MEMORY_ALIGNED</ref>(ram_heap,<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref><sp/>+<sp/>(2U*<ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>));</highlight></codeline>
+<codeline lineno="291" refid="mem_8c_1a4fa8ffb4c7a8b4c0404ad4278cc801d0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_RAM_HEAP_POINTER<sp/>ram_heap</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_RAM_HEAP_POINTER<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*ram;</highlight></codeline>
+<codeline lineno="297"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*ram_end;</highlight></codeline>
+<codeline lineno="299"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*lfree;</highlight></codeline>
+<codeline lineno="300"><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="preprocessor">#if<sp/>!NO_SYS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>mem_mutex;</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>mem_free_count;</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"></highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Allow<sp/>mem_free<sp/>from<sp/>other<sp/>(e.g.<sp/>interrupt)<sp/>context<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_FREE_DECL_PROTECT()<sp/><sp/>SYS_ARCH_DECL_PROTECT(lev_free)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_FREE_PROTECT()<sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_PROTECT(lev_free)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_FREE_UNPROTECT()<sp/><sp/><sp/><sp/><sp/>SYS_ARCH_UNPROTECT(lev_free)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_ALLOC_DECL_PROTECT()<sp/>SYS_ARCH_DECL_PROTECT(lev_alloc)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_ALLOC_PROTECT()<sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_PROTECT(lev_alloc)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_ALLOC_UNPROTECT()<sp/><sp/><sp/><sp/>SYS_ARCH_UNPROTECT(lev_alloc)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Protect<sp/>the<sp/>heap<sp/>only<sp/>by<sp/>using<sp/>a<sp/>semaphore<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="321" refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_FREE_DECL_PROTECT()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="322" refid="mem_8c_1aef413072690259b59ce27e49df19e307" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_FREE_PROTECT()<sp/><sp/><sp/><sp/>sys_mutex_lock(&amp;mem_mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="323" refid="mem_8c_1aa8a24c0593943bb1e64c1243dddfae50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_FREE_UNPROTECT()<sp/><sp/>sys_mutex_unlock(&amp;mem_mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>mem_malloc<sp/>is<sp/>protected<sp/>using<sp/>semaphore<sp/>AND<sp/>LWIP_MEM_ALLOC_PROTECT<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="325" refid="mem_8c_1a016a07ea84e1d75386765b90015b6698" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_ALLOC_DECL_PROTECT()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="326" refid="mem_8c_1a3c644ac3ac94ed977bb165eeb6ff741a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_ALLOC_PROTECT()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="327" refid="mem_8c_1af0643ce3aa197952517914e1d644150a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_MEM_ALLOC_UNPROTECT()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="328"><highlight class="normal"></highlight></codeline>
+<codeline lineno="329"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="330"><highlight class="normal"></highlight></codeline>
+<codeline lineno="331"><highlight class="normal"></highlight></codeline>
+<codeline lineno="343"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="344"><highlight class="normal">plug_holes(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structmem" kindref="compound">mem</ref><sp/>*<ref refid="structmem" kindref="compound">mem</ref>)</highlight></codeline>
+<codeline lineno="345"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*nmem;</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*pmem;</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"></highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;plug_holes:<sp/>mem<sp/>&gt;=<sp/>ram&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>&gt;=<sp/>ram);</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;plug_holes:<sp/>mem<sp/>&lt;<sp/>ram_end&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>&lt;<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram_end);</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;plug_holes:<sp/>mem-&gt;used<sp/>==<sp/>0&quot;</highlight><highlight class="normal">,<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>==<sp/>0);</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"></highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>plug<sp/>hole<sp/>forward<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;plug_holes:<sp/>mem-&gt;next<sp/>&lt;=<sp/>MEM_SIZE_ALIGNED&quot;</highlight><highlight class="normal">,<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>&lt;=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>);</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/>nmem<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>];</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structmem" kindref="compound">mem</ref><sp/>!=<sp/>nmem<sp/>&amp;&amp;<sp/>nmem-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>==<sp/>0<sp/>&amp;&amp;<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)nmem<sp/>!=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram_end)<sp/>{</highlight></codeline>
+<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>if<sp/>mem-&gt;next<sp/>is<sp/>unused<sp/>and<sp/>not<sp/>end<sp/>of<sp/>ram,<sp/>combine<sp/>mem<sp/>and<sp/>mem-&gt;next<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(lfree<sp/>==<sp/>nmem)<sp/>{</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>lfree<sp/>=<sp/><ref refid="structmem" kindref="compound">mem</ref>;</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="362"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/>nmem-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[nmem-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>])-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>-<sp/>ram);</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>plug<sp/>hole<sp/>backward<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/>pmem<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref>];</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(pmem<sp/>!=<sp/><ref refid="structmem" kindref="compound">mem</ref><sp/>&amp;&amp;<sp/>pmem-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>if<sp/>mem-&gt;prev<sp/>is<sp/>unused,<sp/>combine<sp/>mem<sp/>and<sp/>mem-&gt;prev<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(lfree<sp/>==<sp/><ref refid="structmem" kindref="compound">mem</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="371"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>lfree<sp/>=<sp/>pmem;</highlight></codeline>
+<codeline lineno="372"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/><sp/><sp/>pmem-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"><sp/><sp/><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>])-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)pmem<sp/>-<sp/>ram);</highlight></codeline>
+<codeline lineno="375"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="376"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="377"><highlight class="normal"></highlight></codeline>
+<codeline lineno="381"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="382" refid="mem_8c_1a44a136e3b70c36abb6f8dc060c778113" refkind="member"><highlight class="normal"><ref refid="mem_8c_1a44a136e3b70c36abb6f8dc060c778113" kindref="member">mem_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="383"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="384"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*<ref refid="structmem" kindref="compound">mem</ref>;</highlight></codeline>
+<codeline lineno="385"><highlight class="normal"></highlight></codeline>
+<codeline lineno="386"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;Sanity<sp/>check<sp/>alignment&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="387"><highlight class="normal"><sp/><sp/><sp/><sp/>(<ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>&amp;<sp/>(<ref refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref>-1))<sp/>==<sp/>0);</highlight></codeline>
+<codeline lineno="388"><highlight class="normal"></highlight></codeline>
+<codeline lineno="389"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>align<sp/>the<sp/>heap<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="390"><highlight class="normal"><sp/><sp/>ram<sp/>=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="group__compiler__abstraction_1gaa8e8724eb1c220cbbb90de9e175ce1dc" kindref="member">LWIP_MEM_ALIGN</ref>(<ref refid="mem_8c_1a4fa8ffb4c7a8b4c0404ad4278cc801d0" kindref="member">LWIP_RAM_HEAP_POINTER</ref>);</highlight></codeline>
+<codeline lineno="391"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>initialize<sp/>the<sp/>start<sp/>of<sp/>the<sp/>heap<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="392"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)ram;</highlight></codeline>
+<codeline lineno="393"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>;</highlight></codeline>
+<codeline lineno="394"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="395"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="396"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>initialize<sp/>the<sp/>end<sp/>of<sp/>the<sp/>heap<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="397"><highlight class="normal"><sp/><sp/>ram_end<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[<ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>];</highlight></codeline>
+<codeline lineno="398"><highlight class="normal"><sp/><sp/>ram_end-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="399"><highlight class="normal"><sp/><sp/>ram_end-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>;</highlight></codeline>
+<codeline lineno="400"><highlight class="normal"><sp/><sp/>ram_end-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>;</highlight></codeline>
+<codeline lineno="401"><highlight class="normal"></highlight></codeline>
+<codeline lineno="402"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>initialize<sp/>the<sp/>lowest-free<sp/>pointer<sp/>to<sp/>the<sp/>start<sp/>of<sp/>the<sp/>heap<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="403"><highlight class="normal"><sp/><sp/>lfree<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)ram;</highlight></codeline>
+<codeline lineno="404"><highlight class="normal"></highlight></codeline>
+<codeline lineno="405"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a6ca3d10f92a30f5435aace26fa7d6020" kindref="member">MEM_STATS_AVAIL</ref>(avail,<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>);</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"></highlight></codeline>
+<codeline lineno="407"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="group__sys__mutex_1ga38e7dae1fd88b338eb1cd97f110f3897" kindref="member">sys_mutex_new</ref>(&amp;mem_mutex)<sp/>!=<sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="408"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;failed<sp/>to<sp/>create<sp/>mem_mutex&quot;</highlight><highlight class="normal">,<sp/>0);</highlight></codeline>
+<codeline lineno="409"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="410"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="411"><highlight class="normal"></highlight></codeline>
+<codeline lineno="418"><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="419" refid="mem_8c_1a65169147c44e9db60d997819af9b455c" refkind="member"><highlight class="normal"><ref refid="mem_8c_1a65169147c44e9db60d997819af9b455c" kindref="member">mem_free</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*rmem)</highlight></codeline>
+<codeline lineno="420"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="421"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*<ref refid="structmem" kindref="compound">mem</ref>;</highlight></codeline>
+<codeline lineno="422"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" kindref="member">LWIP_MEM_FREE_DECL_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="423"><highlight class="normal"></highlight></codeline>
+<codeline lineno="424"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(rmem<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="425"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a2d7bc380695eeedb1af50c3808613afe" kindref="member">MEM_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" kindref="member">LWIP_DBG_TRACE</ref><sp/>|<sp/><ref refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" kindref="member">LWIP_DBG_LEVEL_SERIOUS</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;mem_free(p<sp/>==<sp/>NULL)<sp/>was<sp/>called.\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="426"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="427"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="428"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_free:<sp/>sanity<sp/>check<sp/>alignment&quot;</highlight><highlight class="normal">,<sp/>(((<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)rmem)<sp/>&amp;<sp/>(<ref refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref>-1))<sp/>==<sp/>0);</highlight></codeline>
+<codeline lineno="429"><highlight class="normal"></highlight></codeline>
+<codeline lineno="430"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_free:<sp/>legal<sp/>memory&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&gt;=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="431"><highlight class="normal"><sp/><sp/><sp/><sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&lt;<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram_end);</highlight></codeline>
+<codeline lineno="432"><highlight class="normal"></highlight></codeline>
+<codeline lineno="433"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&lt;<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram<sp/>||<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&gt;=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram_end)<sp/>{</highlight></codeline>
+<codeline lineno="434"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sys_8h_1a945395fa326214fc9736487242710a90" kindref="member">SYS_ARCH_DECL_PROTECT</ref>(lev);</highlight></codeline>
+<codeline lineno="435"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a2d7bc380695eeedb1af50c3808613afe" kindref="member">MEM_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1gaab41143277cd38047b6660d90e9cec3b" kindref="member">LWIP_DBG_LEVEL_SEVERE</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;mem_free:<sp/>illegal<sp/>memory\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="436"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>protect<sp/>mem<sp/>stats<sp/>from<sp/>concurrent<sp/>access<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="437"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" kindref="member">SYS_ARCH_PROTECT</ref>(lev);</highlight></codeline>
+<codeline lineno="438"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aa6bb9e8fcc38e7febafd7ef682700786" kindref="member">MEM_STATS_INC</ref>(illegal);</highlight></codeline>
+<codeline lineno="439"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" kindref="member">SYS_ARCH_UNPROTECT</ref>(lev);</highlight></codeline>
+<codeline lineno="440"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="441"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="442"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>protect<sp/>the<sp/>heap<sp/>from<sp/>concurrent<sp/>access<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="443"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1aef413072690259b59ce27e49df19e307" kindref="member">LWIP_MEM_FREE_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="444"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Get<sp/>the<sp/>corresponding<sp/>struct<sp/>mem<sp/>...<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="445"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>cast<sp/>through<sp/>void*<sp/>to<sp/>get<sp/>rid<sp/>of<sp/>alignment<sp/>warnings<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="446"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>-<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>);</highlight></codeline>
+<codeline lineno="447"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>...<sp/>which<sp/>has<sp/>to<sp/>be<sp/>in<sp/>a<sp/>used<sp/>state<sp/>...<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="448"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_free:<sp/>mem-&gt;used&quot;</highlight><highlight class="normal">,<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>);</highlight></codeline>
+<codeline lineno="449"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>...<sp/>and<sp/>is<sp/>now<sp/>unused.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="450"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="451"><highlight class="normal"></highlight></codeline>
+<codeline lineno="452"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structmem" kindref="compound">mem</ref><sp/>&lt;<sp/>lfree)<sp/>{</highlight></codeline>
+<codeline lineno="453"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>newly<sp/>freed<sp/>struct<sp/>is<sp/>now<sp/>the<sp/>lowest<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="454"><highlight class="normal"><sp/><sp/><sp/><sp/>lfree<sp/>=<sp/><ref refid="structmem" kindref="compound">mem</ref>;</highlight></codeline>
+<codeline lineno="455"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="456"><highlight class="normal"></highlight></codeline>
+<codeline lineno="457"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1a8ff88328a91828b01070a90a1894815f" kindref="member">MEM_STATS_DEC_USED</ref>(<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>,<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>-<sp/>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>)(((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>-<sp/>ram)));</highlight></codeline>
+<codeline lineno="458"><highlight class="normal"></highlight></codeline>
+<codeline lineno="459"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>finally,<sp/>see<sp/>if<sp/>prev<sp/>or<sp/>next<sp/>are<sp/>free<sp/>also<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="460"><highlight class="normal"><sp/><sp/>plug_holes(<ref refid="structmem" kindref="compound">mem</ref>);</highlight></codeline>
+<codeline lineno="461"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="462"><highlight class="normal"><sp/><sp/>mem_free_count<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="463"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="464"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1aa8a24c0593943bb1e64c1243dddfae50" kindref="member">LWIP_MEM_FREE_UNPROTECT</ref>();</highlight></codeline>
+<codeline lineno="465"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="466"><highlight class="normal"></highlight></codeline>
+<codeline lineno="477"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="478" refid="mem_8c_1a2f0214c1c0d4acf856fb3ec76818a5a9" refkind="member"><highlight class="normal"><ref refid="mem_8c_1a2f0214c1c0d4acf856fb3ec76818a5a9" kindref="member">mem_trim</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*rmem,<sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>newsize)</highlight></codeline>
+<codeline lineno="479"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="480"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size;</highlight></codeline>
+<codeline lineno="481"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>ptr,<sp/>ptr2;</highlight></codeline>
+<codeline lineno="482"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*<ref refid="structmem" kindref="compound">mem</ref>,<sp/>*mem2;</highlight></codeline>
+<codeline lineno="483"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>use<sp/>the<sp/>FREE_PROTECT<sp/>here:<sp/>it<sp/>protects<sp/>with<sp/>sem<sp/>OR<sp/>SYS_ARCH_PROTECT<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="484"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" kindref="member">LWIP_MEM_FREE_DECL_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="485"><highlight class="normal"></highlight></codeline>
+<codeline lineno="486"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Expand<sp/>the<sp/>size<sp/>of<sp/>the<sp/>allocated<sp/>memory<sp/>region<sp/>so<sp/>that<sp/>we<sp/>can</highlight></codeline>
+<codeline lineno="487"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>adjust<sp/>for<sp/>alignment.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="488"><highlight class="normal"><sp/><sp/>newsize<sp/>=<sp/><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(newsize);</highlight></codeline>
+<codeline lineno="489"><highlight class="normal"></highlight></codeline>
+<codeline lineno="490"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(newsize<sp/>&lt;<sp/><ref refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" kindref="member">MIN_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="491"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>every<sp/>data<sp/>block<sp/>must<sp/>be<sp/>at<sp/>least<sp/>MIN_SIZE_ALIGNED<sp/>long<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="492"><highlight class="normal"><sp/><sp/><sp/><sp/>newsize<sp/>=<sp/><ref refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" kindref="member">MIN_SIZE_ALIGNED</ref>;</highlight></codeline>
+<codeline lineno="493"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="494"><highlight class="normal"></highlight></codeline>
+<codeline lineno="495"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(newsize<sp/>&gt;<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="496"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="497"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="498"><highlight class="normal"></highlight></codeline>
+<codeline lineno="499"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_trim:<sp/>legal<sp/>memory&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&gt;=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="500"><highlight class="normal"><sp/><sp/><sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&lt;<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram_end);</highlight></codeline>
+<codeline lineno="501"><highlight class="normal"></highlight></codeline>
+<codeline lineno="502"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&lt;<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram<sp/>||<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>&gt;=<sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)ram_end)<sp/>{</highlight></codeline>
+<codeline lineno="503"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sys_8h_1a945395fa326214fc9736487242710a90" kindref="member">SYS_ARCH_DECL_PROTECT</ref>(lev);</highlight></codeline>
+<codeline lineno="504"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a2d7bc380695eeedb1af50c3808613afe" kindref="member">MEM_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1gaab41143277cd38047b6660d90e9cec3b" kindref="member">LWIP_DBG_LEVEL_SEVERE</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;mem_trim:<sp/>illegal<sp/>memory\n&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="505"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>protect<sp/>mem<sp/>stats<sp/>from<sp/>concurrent<sp/>access<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="506"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" kindref="member">SYS_ARCH_PROTECT</ref>(lev);</highlight></codeline>
+<codeline lineno="507"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aa6bb9e8fcc38e7febafd7ef682700786" kindref="member">MEM_STATS_INC</ref>(illegal);</highlight></codeline>
+<codeline lineno="508"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" kindref="member">SYS_ARCH_UNPROTECT</ref>(lev);</highlight></codeline>
+<codeline lineno="509"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>rmem;</highlight></codeline>
+<codeline lineno="510"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="511"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Get<sp/>the<sp/>corresponding<sp/>struct<sp/>mem<sp/>...<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="512"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>cast<sp/>through<sp/>void*<sp/>to<sp/>get<sp/>rid<sp/>of<sp/>alignment<sp/>warnings<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="513"><highlight class="normal"><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)rmem<sp/>-<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>);</highlight></codeline>
+<codeline lineno="514"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>...<sp/>and<sp/>its<sp/>offset<sp/>pointer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="515"><highlight class="normal"><sp/><sp/>ptr<sp/>=<sp/>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>-<sp/>ram);</highlight></codeline>
+<codeline lineno="516"><highlight class="normal"></highlight></codeline>
+<codeline lineno="517"><highlight class="normal"><sp/><sp/>size<sp/>=<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>-<sp/>ptr<sp/>-<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>;</highlight></codeline>
+<codeline lineno="518"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_trim<sp/>can<sp/>only<sp/>shrink<sp/>memory&quot;</highlight><highlight class="normal">,<sp/>newsize<sp/>&lt;=<sp/>size);</highlight></codeline>
+<codeline lineno="519"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(newsize<sp/>&gt;<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="520"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>not<sp/>supported<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="521"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="522"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="523"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(newsize<sp/>==<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="524"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>change<sp/>in<sp/>size,<sp/>simply<sp/>return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="525"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>rmem;</highlight></codeline>
+<codeline lineno="526"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="527"><highlight class="normal"></highlight></codeline>
+<codeline lineno="528"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>protect<sp/>the<sp/>heap<sp/>from<sp/>concurrent<sp/>access<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="529"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1aef413072690259b59ce27e49df19e307" kindref="member">LWIP_MEM_FREE_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="530"><highlight class="normal"></highlight></codeline>
+<codeline lineno="531"><highlight class="normal"><sp/><sp/>mem2<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>];</highlight></codeline>
+<codeline lineno="532"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem2-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="533"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>The<sp/>next<sp/>struct<sp/>is<sp/>unused,<sp/>we<sp/>can<sp/>simply<sp/>move<sp/>it<sp/>at<sp/>little<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="534"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/><ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="535"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>remember<sp/>the<sp/>old<sp/>next<sp/>pointer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="536"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/>mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="537"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>create<sp/>new<sp/>struct<sp/>mem<sp/>which<sp/>is<sp/>moved<sp/>directly<sp/>after<sp/>the<sp/>shrinked<sp/>mem<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="538"><highlight class="normal"><sp/><sp/><sp/><sp/>ptr2<sp/>=<sp/>ptr<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>+<sp/>newsize;</highlight></codeline>
+<codeline lineno="539"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(lfree<sp/>==<sp/>mem2)<sp/>{</highlight></codeline>
+<codeline lineno="540"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>lfree<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[ptr2];</highlight></codeline>
+<codeline lineno="541"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="542"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[ptr2];</highlight></codeline>
+<codeline lineno="543"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="544"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>restore<sp/>the<sp/>next<sp/>pointer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="545"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/><ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="546"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>link<sp/>it<sp/>back<sp/>to<sp/>mem<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="547"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>ptr;</highlight></codeline>
+<codeline lineno="548"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>link<sp/>mem<sp/>to<sp/>it<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="549"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/>ptr2;</highlight></codeline>
+<codeline lineno="550"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>last<sp/>thing<sp/>to<sp/>restore<sp/>linked<sp/>list:<sp/>as<sp/>we<sp/>have<sp/>moved<sp/>mem2,</highlight></codeline>
+<codeline lineno="551"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>let<sp/>&apos;mem2-&gt;next-&gt;prev&apos;<sp/>point<sp/>to<sp/>mem2<sp/>again.<sp/>but<sp/>only<sp/>if<sp/>mem2-&gt;next<sp/>is<sp/>not</highlight></codeline>
+<codeline lineno="552"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>the<sp/>end<sp/>of<sp/>the<sp/>heap<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="553"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>!=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="554"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>])-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>ptr2;</highlight></codeline>
+<codeline lineno="555"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="556"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a8ff88328a91828b01070a90a1894815f" kindref="member">MEM_STATS_DEC_USED</ref>(<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>,<sp/>(size<sp/>-<sp/>newsize));</highlight></codeline>
+<codeline lineno="557"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>no<sp/>need<sp/>to<sp/>plug<sp/>holes,<sp/>we&apos;ve<sp/>already<sp/>done<sp/>that<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="558"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(newsize<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>+<sp/><ref refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" kindref="member">MIN_SIZE_ALIGNED</ref><sp/>&lt;=<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="559"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Next<sp/>struct<sp/>is<sp/>used<sp/>but<sp/>there&apos;s<sp/>room<sp/>for<sp/>another<sp/>struct<sp/>mem<sp/>with</highlight></codeline>
+<codeline lineno="560"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>at<sp/>least<sp/>MIN_SIZE_ALIGNED<sp/>of<sp/>data.</highlight></codeline>
+<codeline lineno="561"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>Old<sp/>size<sp/>(&apos;size&apos;)<sp/>must<sp/>be<sp/>big<sp/>enough<sp/>to<sp/>contain<sp/>at<sp/>least<sp/>&apos;newsize&apos;<sp/>plus<sp/>a<sp/>struct<sp/>mem</highlight></codeline>
+<codeline lineno="562"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>(&apos;SIZEOF_STRUCT_MEM&apos;)<sp/>with<sp/>some<sp/>data<sp/>(&apos;MIN_SIZE_ALIGNED&apos;).</highlight></codeline>
+<codeline lineno="563"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>@todo<sp/>we<sp/>could<sp/>leave<sp/>out<sp/>MIN_SIZE_ALIGNED.<sp/>We<sp/>would<sp/>create<sp/>an<sp/>empty</highlight></codeline>
+<codeline lineno="564"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/>region<sp/>that<sp/>couldn&apos;t<sp/>hold<sp/>data,<sp/>but<sp/>when<sp/>mem-&gt;next<sp/>gets<sp/>freed,</highlight></codeline>
+<codeline lineno="565"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/>the<sp/>2<sp/>regions<sp/>would<sp/>be<sp/>combined,<sp/>resulting<sp/>in<sp/>more<sp/>free<sp/>memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="566"><highlight class="normal"><sp/><sp/><sp/><sp/>ptr2<sp/>=<sp/>ptr<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>+<sp/>newsize;</highlight></codeline>
+<codeline lineno="567"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[ptr2];</highlight></codeline>
+<codeline lineno="568"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem2<sp/>&lt;<sp/>lfree)<sp/>{</highlight></codeline>
+<codeline lineno="569"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>lfree<sp/>=<sp/>mem2;</highlight></codeline>
+<codeline lineno="570"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="571"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="572"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="573"><highlight class="normal"><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>ptr;</highlight></codeline>
+<codeline lineno="574"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/>ptr2;</highlight></codeline>
+<codeline lineno="575"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>!=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="576"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>])-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>ptr2;</highlight></codeline>
+<codeline lineno="577"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="578"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="stats_8h_1a8ff88328a91828b01070a90a1894815f" kindref="member">MEM_STATS_DEC_USED</ref>(<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>,<sp/>(size<sp/>-<sp/>newsize));</highlight></codeline>
+<codeline lineno="579"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>original<sp/>mem-&gt;next<sp/>is<sp/>used,<sp/>so<sp/>no<sp/>need<sp/>to<sp/>plug<sp/>holes!<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="580"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="581"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>else<sp/>{</highlight></codeline>
+<codeline lineno="582"><highlight class="comment"><sp/><sp/><sp/><sp/>next<sp/>struct<sp/>mem<sp/>is<sp/>used<sp/>but<sp/>size<sp/>between<sp/>mem<sp/>and<sp/>mem2<sp/>is<sp/>not<sp/>big<sp/>enough</highlight></codeline>
+<codeline lineno="583"><highlight class="comment"><sp/><sp/><sp/><sp/>to<sp/>create<sp/>another<sp/>struct<sp/>mem</highlight></codeline>
+<codeline lineno="584"><highlight class="comment"><sp/><sp/><sp/><sp/>-&gt;<sp/>don&apos;t<sp/>do<sp/>anyhting.</highlight></codeline>
+<codeline lineno="585"><highlight class="comment"><sp/><sp/><sp/><sp/>-&gt;<sp/>the<sp/>remaining<sp/>space<sp/>stays<sp/>unused<sp/>since<sp/>it<sp/>is<sp/>too<sp/>small</highlight></codeline>
+<codeline lineno="586"><highlight class="comment"><sp/><sp/>}<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="587"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="588"><highlight class="normal"><sp/><sp/>mem_free_count<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="589"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="590"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1aa8a24c0593943bb1e64c1243dddfae50" kindref="member">LWIP_MEM_FREE_UNPROTECT</ref>();</highlight></codeline>
+<codeline lineno="591"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>rmem;</highlight></codeline>
+<codeline lineno="592"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="593"><highlight class="normal"></highlight></codeline>
+<codeline lineno="602"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="603" refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" refkind="member"><highlight class="normal"><ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size)</highlight></codeline>
+<codeline lineno="604"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="605"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>ptr,<sp/>ptr2;</highlight></codeline>
+<codeline lineno="606"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*<ref refid="structmem" kindref="compound">mem</ref>,<sp/>*mem2;</highlight></codeline>
+<codeline lineno="607"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="608"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>local_mem_free_count<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="609"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="610"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1a016a07ea84e1d75386765b90015b6698" kindref="member">LWIP_MEM_ALLOC_DECL_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="611"><highlight class="normal"></highlight></codeline>
+<codeline lineno="612"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(size<sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="613"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="614"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="615"><highlight class="normal"></highlight></codeline>
+<codeline lineno="616"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Expand<sp/>the<sp/>size<sp/>of<sp/>the<sp/>allocated<sp/>memory<sp/>region<sp/>so<sp/>that<sp/>we<sp/>can</highlight></codeline>
+<codeline lineno="617"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>adjust<sp/>for<sp/>alignment.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="618"><highlight class="normal"><sp/><sp/>size<sp/>=<sp/><ref refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" kindref="member">LWIP_MEM_ALIGN_SIZE</ref>(size);</highlight></codeline>
+<codeline lineno="619"><highlight class="normal"></highlight></codeline>
+<codeline lineno="620"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(size<sp/>&lt;<sp/><ref refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" kindref="member">MIN_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="621"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>every<sp/>data<sp/>block<sp/>must<sp/>be<sp/>at<sp/>least<sp/>MIN_SIZE_ALIGNED<sp/>long<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="622"><highlight class="normal"><sp/><sp/><sp/><sp/>size<sp/>=<sp/><ref refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" kindref="member">MIN_SIZE_ALIGNED</ref>;</highlight></codeline>
+<codeline lineno="623"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="624"><highlight class="normal"></highlight></codeline>
+<codeline lineno="625"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(size<sp/>&gt;<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="626"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="627"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="628"><highlight class="normal"></highlight></codeline>
+<codeline lineno="629"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>protect<sp/>the<sp/>heap<sp/>from<sp/>concurrent<sp/>access<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="630"><highlight class="normal"><sp/><sp/><ref refid="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" kindref="member">sys_mutex_lock</ref>(&amp;mem_mutex);</highlight></codeline>
+<codeline lineno="631"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1a3c644ac3ac94ed977bb165eeb6ff741a" kindref="member">LWIP_MEM_ALLOC_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="632"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="633"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>run<sp/>as<sp/>long<sp/>as<sp/>a<sp/>mem_free<sp/>disturbed<sp/>mem_malloc<sp/>or<sp/>mem_trim<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="634"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">do</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="635"><highlight class="normal"><sp/><sp/><sp/><sp/>local_mem_free_count<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="636"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="637"><highlight class="normal"></highlight></codeline>
+<codeline lineno="638"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Scan<sp/>through<sp/>the<sp/>heap<sp/>searching<sp/>for<sp/>a<sp/>free<sp/>block<sp/>that<sp/>is<sp/>big<sp/>enough,</highlight></codeline>
+<codeline lineno="639"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>beginning<sp/>with<sp/>the<sp/>lowest<sp/>free<sp/>block.</highlight></codeline>
+<codeline lineno="640"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="641"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(ptr<sp/>=<sp/>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)lfree<sp/>-<sp/>ram);<sp/>ptr<sp/>&lt;<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref><sp/>-<sp/>size;</highlight></codeline>
+<codeline lineno="642"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ptr<sp/>=<sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[ptr])-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="643"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[ptr];</highlight></codeline>
+<codeline lineno="644"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="645"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mem_free_count<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="646"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mem_8c_1af0643ce3aa197952517914e1d644150a" kindref="member">LWIP_MEM_ALLOC_UNPROTECT</ref>();</highlight></codeline>
+<codeline lineno="647"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>allow<sp/>mem_free<sp/>or<sp/>mem_trim<sp/>to<sp/>run<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="648"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mem_8c_1a3c644ac3ac94ed977bb165eeb6ff741a" kindref="member">LWIP_MEM_ALLOC_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="649"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem_free_count<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="650"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>If<sp/>mem_free<sp/>or<sp/>mem_trim<sp/>have<sp/>run,<sp/>we<sp/>have<sp/>to<sp/>restart<sp/>since<sp/>they</highlight></codeline>
+<codeline lineno="651"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>could<sp/>have<sp/>altered<sp/>our<sp/>current<sp/>struct<sp/>mem.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="652"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>local_mem_free_count<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="653"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="654"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="655"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="656"><highlight class="normal"></highlight></codeline>
+<codeline lineno="657"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((!<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>)<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="658"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>-<sp/>(ptr<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>))<sp/>&gt;=<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="659"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>mem<sp/>is<sp/>not<sp/>used<sp/>and<sp/>at<sp/>least<sp/>perfect<sp/>fit<sp/>is<sp/>possible:</highlight></codeline>
+<codeline lineno="660"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>mem-&gt;next<sp/>-<sp/>(ptr<sp/>+<sp/>SIZEOF_STRUCT_MEM)<sp/>gives<sp/>us<sp/>the<sp/>&apos;user<sp/>data<sp/>size&apos;<sp/>of<sp/>mem<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="661"><highlight class="normal"></highlight></codeline>
+<codeline lineno="662"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>-<sp/>(ptr<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>)<sp/>&gt;=<sp/>(size<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>+<sp/><ref refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" kindref="member">MIN_SIZE_ALIGNED</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="663"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(in<sp/>addition<sp/>to<sp/>the<sp/>above,<sp/>we<sp/>test<sp/>if<sp/>another<sp/>struct<sp/>mem<sp/>(SIZEOF_STRUCT_MEM)<sp/>containing</highlight></codeline>
+<codeline lineno="664"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>at<sp/>least<sp/>MIN_SIZE_ALIGNED<sp/>of<sp/>data<sp/>also<sp/>fits<sp/>in<sp/>the<sp/>&apos;user<sp/>data<sp/>space&apos;<sp/>of<sp/>&apos;mem&apos;)</highlight></codeline>
+<codeline lineno="665"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>-&gt;<sp/>split<sp/>large<sp/>block,<sp/>create<sp/>empty<sp/>remainder,</highlight></codeline>
+<codeline lineno="666"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>remainder<sp/>must<sp/>be<sp/>large<sp/>enough<sp/>to<sp/>contain<sp/>MIN_SIZE_ALIGNED<sp/>data:<sp/>if</highlight></codeline>
+<codeline lineno="667"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>mem-&gt;next<sp/>-<sp/>(ptr<sp/>+<sp/>(2*SIZEOF_STRUCT_MEM))<sp/>==<sp/>size,</highlight></codeline>
+<codeline lineno="668"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>struct<sp/>mem<sp/>would<sp/>fit<sp/>in<sp/>but<sp/>no<sp/>data<sp/>between<sp/>mem2<sp/>and<sp/>mem2-&gt;next</highlight></codeline>
+<codeline lineno="669"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>@todo<sp/>we<sp/>could<sp/>leave<sp/>out<sp/>MIN_SIZE_ALIGNED.<sp/>We<sp/>would<sp/>create<sp/>an<sp/>empty</highlight></codeline>
+<codeline lineno="670"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/>region<sp/>that<sp/>couldn&apos;t<sp/>hold<sp/>data,<sp/>but<sp/>when<sp/>mem-&gt;next<sp/>gets<sp/>freed,</highlight></codeline>
+<codeline lineno="671"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/>the<sp/>2<sp/>regions<sp/>would<sp/>be<sp/>combined,<sp/>resulting<sp/>in<sp/>more<sp/>free<sp/>memory</highlight></codeline>
+<codeline lineno="672"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="673"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ptr2<sp/>=<sp/>ptr<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>+<sp/>size;</highlight></codeline>
+<codeline lineno="674"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>create<sp/>mem2<sp/>struct<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="675"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem2<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[ptr2];</highlight></codeline>
+<codeline lineno="676"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="677"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="678"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem2-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>ptr;</highlight></codeline>
+<codeline lineno="679"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>insert<sp/>it<sp/>between<sp/>mem<sp/>and<sp/>mem-&gt;next<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="680"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>=<sp/>ptr2;</highlight></codeline>
+<codeline lineno="681"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="682"><highlight class="normal"></highlight></codeline>
+<codeline lineno="683"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>!=<sp/><ref refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" kindref="member">MEM_SIZE_ALIGNED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="684"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[mem2-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>])-&gt;<ref refid="structmem_1a9d7722ed10adf965fa98563d502f98ac" kindref="member">prev</ref><sp/>=<sp/>ptr2;</highlight></codeline>
+<codeline lineno="685"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="686"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aefec777cb83885b2f399afb661cf3837" kindref="member">MEM_STATS_INC_USED</ref>(<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>,<sp/>(size<sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>));</highlight></codeline>
+<codeline lineno="687"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="688"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(a<sp/>mem2<sp/>struct<sp/>does<sp/>no<sp/>fit<sp/>into<sp/>the<sp/>user<sp/>data<sp/>space<sp/>of<sp/>mem<sp/>and<sp/>mem-&gt;next<sp/>will<sp/>always</highlight></codeline>
+<codeline lineno="689"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>be<sp/>used<sp/>at<sp/>this<sp/>point:<sp/>if<sp/>not<sp/>we<sp/>have<sp/>2<sp/>unused<sp/>structs<sp/>in<sp/>a<sp/>row,<sp/>plug_holes<sp/>should<sp/>have</highlight></codeline>
+<codeline lineno="690"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>take<sp/>care<sp/>of<sp/>this).</highlight></codeline>
+<codeline lineno="691"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>-&gt;<sp/>near<sp/>fit<sp/>or<sp/>exact<sp/>fit:<sp/>do<sp/>not<sp/>split,<sp/>no<sp/>mem2<sp/>creation</highlight></codeline>
+<codeline lineno="692"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>also<sp/>can&apos;t<sp/>move<sp/>mem-&gt;next<sp/>directly<sp/>behind<sp/>mem,<sp/>since<sp/>mem-&gt;next</highlight></codeline>
+<codeline lineno="693"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>will<sp/>always<sp/>be<sp/>used<sp/>at<sp/>this<sp/>point!</highlight></codeline>
+<codeline lineno="694"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="695"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="696"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="stats_8h_1aefec777cb83885b2f399afb661cf3837" kindref="member">MEM_STATS_INC_USED</ref>(<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>,<sp/><ref refid="structmem" kindref="compound">mem</ref>-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref><sp/>-<sp/>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>)((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>-<sp/>ram));</highlight></codeline>
+<codeline lineno="697"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="698"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="699"><highlight class="normal">mem_malloc_adjust_lfree:</highlight></codeline>
+<codeline lineno="700"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="701"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="structmem" kindref="compound">mem</ref><sp/>==<sp/>lfree)<sp/>{</highlight></codeline>
+<codeline lineno="702"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*cur<sp/>=<sp/>lfree;</highlight></codeline>
+<codeline lineno="703"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Find<sp/>next<sp/>free<sp/>block<sp/>after<sp/>mem<sp/>and<sp/>update<sp/>lowest<sp/>free<sp/>pointer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="704"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(cur-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref><sp/>&amp;&amp;<sp/>cur<sp/>!=<sp/>ram_end)<sp/>{</highlight></codeline>
+<codeline lineno="705"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="706"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem_free_count<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="707"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mem_8c_1af0643ce3aa197952517914e1d644150a" kindref="member">LWIP_MEM_ALLOC_UNPROTECT</ref>();</highlight></codeline>
+<codeline lineno="708"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>prevent<sp/>high<sp/>interrupt<sp/>latency...<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="709"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mem_8c_1a3c644ac3ac94ed977bb165eeb6ff741a" kindref="member">LWIP_MEM_ALLOC_PROTECT</ref>();</highlight></codeline>
+<codeline lineno="710"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mem_free_count<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="711"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>If<sp/>mem_free<sp/>or<sp/>mem_trim<sp/>have<sp/>run,<sp/>we<sp/>have<sp/>to<sp/>restart<sp/>since<sp/>they</highlight></codeline>
+<codeline lineno="712"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>could<sp/>have<sp/>altered<sp/>our<sp/>current<sp/>struct<sp/>mem<sp/>or<sp/>lfree.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="713"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>mem_malloc_adjust_lfree;</highlight></codeline>
+<codeline lineno="714"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="715"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="716"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cur<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmem" kindref="compound">mem</ref><sp/>*)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)&amp;ram[cur-&gt;<ref refid="structmem_1a5abf13a11156e92c417f7ff66ef0b5cf" kindref="member">next</ref>];</highlight></codeline>
+<codeline lineno="717"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="718"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lfree<sp/>=<sp/>cur;</highlight></codeline>
+<codeline lineno="719"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_malloc:<sp/>!lfree-&gt;used&quot;</highlight><highlight class="normal">,<sp/>((lfree<sp/>==<sp/>ram_end)<sp/>||<sp/>(!lfree-&gt;<ref refid="structmem_1aa76b6a39425617435978dce903f0d456" kindref="member">used</ref>)));</highlight></codeline>
+<codeline lineno="720"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="721"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mem_8c_1af0643ce3aa197952517914e1d644150a" kindref="member">LWIP_MEM_ALLOC_UNPROTECT</ref>();</highlight></codeline>
+<codeline lineno="722"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" kindref="member">sys_mutex_unlock</ref>(&amp;mem_mutex);</highlight></codeline>
+<codeline lineno="723"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_malloc:<sp/>allocated<sp/>memory<sp/>not<sp/>above<sp/>ram_end.&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="724"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)<ref refid="structmem" kindref="compound">mem</ref><sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref><sp/>+<sp/>size<sp/>&lt;=<sp/>(<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)ram_end);</highlight></codeline>
+<codeline lineno="725"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_malloc:<sp/>allocated<sp/>memory<sp/>properly<sp/>aligned.&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="726"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)<ref refid="structmem" kindref="compound">mem</ref><sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>)<sp/>%<sp/><ref refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref><sp/>==<sp/>0);</highlight></codeline>
+<codeline lineno="727"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(</highlight><highlight class="stringliteral">&quot;mem_malloc:<sp/>sanity<sp/>check<sp/>alignment&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="728"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((<ref refid="group__compiler__abstraction_1gaf019cbb71af10dcfda7758b21e655307" kindref="member">mem_ptr_t</ref>)<ref refid="structmem" kindref="compound">mem</ref>)<sp/>&amp;<sp/>(<ref refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" kindref="member">MEM_ALIGNMENT</ref>-1))<sp/>==<sp/>0);</highlight></codeline>
+<codeline lineno="729"><highlight class="normal"></highlight></codeline>
+<codeline lineno="730"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*)<ref refid="structmem" kindref="compound">mem</ref><sp/>+<sp/><ref refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" kindref="member">SIZEOF_STRUCT_MEM</ref>;</highlight></codeline>
+<codeline lineno="731"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="732"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="733"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="734"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>if<sp/>we<sp/>got<sp/>interrupted<sp/>by<sp/>a<sp/>mem_free,<sp/>try<sp/>again<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="735"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(local_mem_free_count<sp/>!=<sp/>0);</highlight></codeline>
+<codeline lineno="736"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="737"><highlight class="normal"><sp/><sp/><ref refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" kindref="member">LWIP_DEBUGF</ref>(<ref refid="lwipopts_8h_1a2d7bc380695eeedb1af50c3808613afe" kindref="member">MEM_DEBUG</ref><sp/>|<sp/><ref refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" kindref="member">LWIP_DBG_LEVEL_SERIOUS</ref>,<sp/>(</highlight><highlight class="stringliteral">&quot;mem_malloc:<sp/>could<sp/>not<sp/>allocate<sp/>%&quot;</highlight><highlight class="normal"><ref refid="group__compiler__abstraction_1gac05a82d37afb251470f5e17ca15ab6e9" kindref="member">S16_F</ref></highlight><highlight class="stringliteral">&quot;<sp/>bytes\n&quot;</highlight><highlight class="normal">,<sp/>(<ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref>)size));</highlight></codeline>
+<codeline lineno="738"><highlight class="normal"><sp/><sp/><ref refid="stats_8h_1aa6bb9e8fcc38e7febafd7ef682700786" kindref="member">MEM_STATS_INC</ref>(err);</highlight></codeline>
+<codeline lineno="739"><highlight class="normal"><sp/><sp/><ref refid="mem_8c_1af0643ce3aa197952517914e1d644150a" kindref="member">LWIP_MEM_ALLOC_UNPROTECT</ref>();</highlight></codeline>
+<codeline lineno="740"><highlight class="normal"><sp/><sp/><ref refid="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" kindref="member">sys_mutex_unlock</ref>(&amp;mem_mutex);</highlight></codeline>
+<codeline lineno="741"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="742"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="743"><highlight class="normal"></highlight></codeline>
+<codeline lineno="744"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_USE_POOLS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="745"><highlight class="normal"></highlight></codeline>
+<codeline lineno="746"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_LIBC_MALLOC<sp/>&amp;&amp;<sp/>(!LWIP_STATS<sp/>||<sp/>!MEM_STATS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="747"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="748"><highlight class="normal"><ref refid="mem_8c_1ab0bdc525971701883f2065e7fb257a24" kindref="member">mem_calloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>count,<sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size)</highlight></codeline>
+<codeline lineno="749"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="750"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>mem_clib_calloc(count,<sp/>size);</highlight></codeline>
+<codeline lineno="751"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="752"><highlight class="normal"></highlight></codeline>
+<codeline lineno="753"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>MEM_LIBC_MALLOC<sp/>&amp;&amp;<sp/>(!LWIP_STATS<sp/>||<sp/>!MEM_STATS)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="754"><highlight class="normal"></highlight></codeline>
+<codeline lineno="764"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="765" refid="mem_8c_1ab0bdc525971701883f2065e7fb257a24" refkind="member"><highlight class="normal"><ref refid="mem_8c_1ab0bdc525971701883f2065e7fb257a24" kindref="member">mem_calloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>count,<sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size)</highlight></codeline>
+<codeline lineno="766"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="767"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*p;</highlight></codeline>
+<codeline lineno="768"><highlight class="normal"></highlight></codeline>
+<codeline lineno="769"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>allocate<sp/>&apos;count&apos;<sp/>objects<sp/>of<sp/>size<sp/>&apos;size&apos;<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="770"><highlight class="normal"><sp/><sp/>p<sp/>=<sp/><ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(count<sp/>*<sp/>size);</highlight></codeline>
+<codeline lineno="771"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(p)<sp/>{</highlight></codeline>
+<codeline lineno="772"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>zero<sp/>the<sp/>memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="773"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>(p,<sp/>0,<sp/>(</highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">)count<sp/>*<sp/>(</highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">)size);</highlight></codeline>
+<codeline lineno="774"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="775"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>p;</highlight></codeline>
+<codeline lineno="776"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="777"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_LIBC_MALLOC<sp/>&amp;&amp;<sp/>(!LWIP_STATS<sp/>||<sp/>!MEM_STATS)<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/net/core/mem.c"/>
+  </compounddef>
+</doxygen>

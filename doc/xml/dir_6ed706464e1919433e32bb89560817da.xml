@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_6ed706464e1919433e32bb89560817da" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/net</compoundname>
+    <innerdir refid="dir_e16ebb3f6c4e83da2215a82440c6e7b3">C:/Dev/git/UbixOS/sys/net/api</innerdir>
+    <innerdir refid="dir_cd4906596c0f2eb6dae79633ab001247">C:/Dev/git/UbixOS/sys/net/core</innerdir>
+    <innerdir refid="dir_ef132642d4e2dd99b12ba6961727de4f">C:/Dev/git/UbixOS/sys/net/net</innerdir>
+    <innerdir refid="dir_674cfa2aa5c4f20e1e28b60514329d0f">C:/Dev/git/UbixOS/sys/net/netif</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/net/"/>
+  </compounddef>
+</doxygen>

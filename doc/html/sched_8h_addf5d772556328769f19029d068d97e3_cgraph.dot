@@ -1,0 +1,15 @@
+digraph "schedEndTask"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="schedEndTask",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="endTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$endtask_8h.html#a152c1859ada097cc21071f471bfa2e67",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="sched_setStatus",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2sched_8c.html#a2cbadd034400c65dbd11fd4892ddf26e",tooltip=" "];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="sched_yield",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

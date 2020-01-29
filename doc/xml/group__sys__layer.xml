@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__layer" kind="group">
+    <compoundname>sys_layer</compoundname>
+    <title>Porting (system abstraction layer)</title>
+    <innergroup refid="group__compiler__abstraction">Compiler/platform abstraction</innergroup>
+    <innergroup refid="group__sys__nonstandard">Non-standard functions</innergroup>
+    <innergroup refid="group__sys__os">OS abstraction layer</innergroup>
+    <innergroup refid="group__sys__time">Time</innergroup>
+    <innergroup refid="group__sys__prot">Critical sections</innergroup>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><verbatim></verbatim> </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

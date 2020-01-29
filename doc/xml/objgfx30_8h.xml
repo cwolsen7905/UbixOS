@@ -1,0 +1,502 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="objgfx30_8h" kind="file" language="C++">
+    <compoundname>objgfx30.h</compoundname>
+    <includes local="no">stdlib.h</includes>
+    <includes local="yes">defpal.inc</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>stdlib.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h</label>
+        <link refid="objgfx30_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>defpal.inc</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="classTGfx0" prot="public">TGfx0</innerclass>
+    <innerclass refid="structTMode__Rec" prot="public">TMode_Rec</innerclass>
+    <innerclass refid="structTPixelFmt" prot="public">TPixelFmt</innerclass>
+    <innerclass refid="structTPoint" prot="public">TPoint</innerclass>
+    <innerclass refid="structTRGB" prot="public">TRGB</innerclass>
+    <innerclass refid="structTRGBA" prot="public">TRGBA</innerclass>
+    <innerclass refid="classTScreen" prot="public">TScreen</innerclass>
+    <innerclass refid="structTVESA__Rec" prot="public">TVESA_Rec</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="objgfx30_8h_1a467ed54b7ee6cf6bbf297c27fba36a9a" prot="public" static="no">
+        <name>RadToDeg</name>
+        <initializer>180.0/3.14159265358979;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" prot="public" static="no" strong="no">
+        <type></type>
+        <name>ogDataState</name>
+        <enumvalue id="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5aa837d3b7b74f0cefd8e32fc4883e20b7" prot="public">
+          <name>ogNONE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5a9f115a36e53b4d3514647d66f54712a2" prot="public">
+          <name>ogOWNER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5af372a8445c9ce265caf379416c944199" prot="public">
+          <name>ogALIASING</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="51" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="51" bodyend="53"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="objgfx30_8h_1af3cf8d818dc9f30754f325121c0353e2" prot="public" static="no">
+        <type><ref refid="cdefs_8h_1ae31516cd0c4adc3d52b93ef2e5c6117b" kindref="member">signed</ref> short int</type>
+        <definition>typedef signed short int Int16</definition>
+        <argsstring></argsstring>
+        <name>Int16</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="44" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" prot="public" static="no">
+        <type><ref refid="cdefs_8h_1ae31516cd0c4adc3d52b93ef2e5c6117b" kindref="member">signed</ref> long int</type>
+        <definition>typedef signed long int Int32</definition>
+        <argsstring></argsstring>
+        <name>Int32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="45" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="objgfx30_8h_1a7e31ca7716b8d85dd473450a5c5e5a97" prot="public" static="no">
+        <type><ref refid="cdefs_8h_1ae31516cd0c4adc3d52b93ef2e5c6117b" kindref="member">signed</ref> char</type>
+        <definition>typedef signed char Int8</definition>
+        <argsstring></argsstring>
+        <name>Int8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="43" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" prot="public" static="no">
+        <type>unsigned short int</type>
+        <definition>typedef unsigned short int uInt16</definition>
+        <argsstring></argsstring>
+        <name>uInt16</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="48" column="28" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" prot="public" static="no">
+        <type>unsigned long int</type>
+        <definition>typedef unsigned long int uInt32</definition>
+        <argsstring></argsstring>
+        <name>uInt32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="49" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" prot="public" static="no">
+        <type>unsigned char</type>
+        <definition>typedef unsigned char uInt8</definition>
+        <argsstring></argsstring>
+        <name>uInt8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="47" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="objgfx30_8h_1adee044b10304c6e17a1c2ebe6c48f30b" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt DEF_MAC_PIXFMT_16BPP</definition>
+        <argsstring></argsstring>
+        <name>DEF_MAC_PIXFMT_16BPP</name>
+        <initializer>= { 16, 8, 4, 0, 12, 4, 4, 4, 4 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="146" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="objgfx30_8h_1a9ca7800c538b528af0ff2a1ffff78646" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt DEF_PIXFMT_15BPP</definition>
+        <argsstring></argsstring>
+        <name>DEF_PIXFMT_15BPP</name>
+        <initializer>= { 15, 10, 5, 0, 15, 5, 5, 5, 1 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="142" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="objgfx30_8h_1a5b8dde76c446c13780e2897900378b0b" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt DEF_PIXFMT_16BPP</definition>
+        <argsstring></argsstring>
+        <name>DEF_PIXFMT_16BPP</name>
+        <initializer>= { 16, 11, 5, 0, 0, 5, 6, 5, 0 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="143" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="objgfx30_8h_1ab397e4aa1797b5b1e4293a27b6fdf4c4" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt DEF_PIXFMT_24BPP</definition>
+        <argsstring></argsstring>
+        <name>DEF_PIXFMT_24BPP</name>
+        <initializer>= { 24, 16, 8, 0, 8, 8, 8 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="144" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="objgfx30_8h_1a6a64fa53b2fe75ebe0d61494d96a5c61" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt DEF_PIXFMT_32BPP</definition>
+        <argsstring></argsstring>
+        <name>DEF_PIXFMT_32BPP</name>
+        <initializer>= { 32, 16, 8, 0, 24, 8, 8, 8, 8 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="145" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="objgfx30_8h_1ab086db66b7a8d74fbaf3c539baf960b2" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt DEF_PIXFMT_8BPP</definition>
+        <argsstring></argsstring>
+        <name>DEF_PIXFMT_8BPP</name>
+        <initializer>= { 8, 0, 0, 0, 0, 0, 0, 0, 0 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="141" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="objgfx30_8h_1a0d0a768bac671c350c330da45e55bc04" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref></type>
+        <definition>const TPixelFmt NULL_PIXFMT</definition>
+        <argsstring></argsstring>
+        <name>NULL_PIXFMT</name>
+        <initializer>= { 0, 0, 0, 0, 0, 0, 0, 0, 0 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="140" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>objgfx30.h</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/><sp/>Created<sp/>on:<sp/>Jan<sp/>12,<sp/>2018</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>Author:<sp/>cwolsen</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SYS_INCLUDE_OBJGFX_OBJGFX30_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_INCLUDE_OBJGFX_OBJGFX30_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>for<sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="objgfx30_8h_1a467ed54b7ee6cf6bbf297c27fba36a9a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>RadToDeg<sp/>180.0/3.14159265358979;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="objgfx30_8h_1a7e31ca7716b8d85dd473450a5c5e5a97" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1a7e31ca7716b8d85dd473450a5c5e5a97" kindref="member">Int8</ref>;</highlight></codeline>
+<codeline lineno="44" refid="objgfx30_8h_1af3cf8d818dc9f30754f325121c0353e2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1af3cf8d818dc9f30754f325121c0353e2" kindref="member">Int16</ref>;</highlight></codeline>
+<codeline lineno="45" refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>;</highlight></codeline>
+<codeline lineno="48" refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref>;</highlight></codeline>
+<codeline lineno="49" refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" kindref="member">ogDataState</ref><sp/>{</highlight></codeline>
+<codeline lineno="52" refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5a9f115a36e53b4d3514647d66f54712a2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5aa837d3b7b74f0cefd8e32fc4883e20b7" kindref="member">ogNONE</ref>,<sp/><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5a9f115a36e53b4d3514647d66f54712a2" kindref="member">ogOWNER</ref>,<sp/><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5af372a8445c9ce265caf379416c944199" kindref="member">ogALIASING</ref></highlight></codeline>
+<codeline lineno="53"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structTRGB" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="56" refid="structTRGB_1a7f952730031491fee049ebbd99bd3341" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGB_1a7f952730031491fee049ebbd99bd3341" kindref="member">red</ref>;</highlight></codeline>
+<codeline lineno="57" refid="structTRGB_1ae05d9b5d39230ed190000c01f7e0ebb0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGB_1ae05d9b5d39230ed190000c01f7e0ebb0" kindref="member">green</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structTRGB_1a02d8230339dbeca13a6b7eb9f42cff08" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGB_1a02d8230339dbeca13a6b7eb9f42cff08" kindref="member">blue</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal">}<sp/><ref refid="structTRGB" kindref="compound">TRGB</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="structTRGBA" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="62" refid="structTRGBA_1a1b18bb0b9c077a7baa5b2f45dbf742cd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGBA_1a1b18bb0b9c077a7baa5b2f45dbf742cd" kindref="member">red</ref>;</highlight></codeline>
+<codeline lineno="63" refid="structTRGBA_1a9dd7eab54137a08e9abdfe13072f1f62" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGBA_1a9dd7eab54137a08e9abdfe13072f1f62" kindref="member">green</ref>;</highlight></codeline>
+<codeline lineno="64" refid="structTRGBA_1a7105930d5345d6787379189afc7527f8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGBA_1a7105930d5345d6787379189afc7527f8" kindref="member">blue</ref>;</highlight></codeline>
+<codeline lineno="65" refid="structTRGBA_1a92498e50202c5b2bae289370f946c092" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTRGBA_1a92498e50202c5b2bae289370f946c092" kindref="member">alpha</ref>;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal">}<sp/><ref refid="structTRGBA" kindref="compound">TRGBA</ref>;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="structTMode__Rec" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="69" refid="structTMode__Rec_1ae241a04fcd9b74d19e7c20071cefb21e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1ae241a04fcd9b74d19e7c20071cefb21e" kindref="member">ModeAttributes</ref>;</highlight></codeline>
+<codeline lineno="70" refid="structTMode__Rec_1afd7635a77ace5997b093aa2c47e6902f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1afd7635a77ace5997b093aa2c47e6902f" kindref="member">WindowAFlags</ref>;</highlight></codeline>
+<codeline lineno="71" refid="structTMode__Rec_1a607928928e0d9867aa71dd5ebfe5a837" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a607928928e0d9867aa71dd5ebfe5a837" kindref="member">WindowBFlags</ref>;</highlight></codeline>
+<codeline lineno="72" refid="structTMode__Rec_1a0aee28a8c061723a9078deae222e4424" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1a0aee28a8c061723a9078deae222e4424" kindref="member">Granularity</ref>;</highlight></codeline>
+<codeline lineno="73" refid="structTMode__Rec_1aac4ed324d90c11833672c46f88f905ef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1aac4ed324d90c11833672c46f88f905ef" kindref="member">WindowSize</ref>;</highlight></codeline>
+<codeline lineno="74" refid="structTMode__Rec_1a84697e5e9c3003f2662e10f1f531f048" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1a84697e5e9c3003f2662e10f1f531f048" kindref="member">WindowASeg</ref>;</highlight></codeline>
+<codeline lineno="75" refid="structTMode__Rec_1acf42b9784ed1d54f13cf69d3031fcfb3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1acf42b9784ed1d54f13cf69d3031fcfb3" kindref="member">WindowBSeg</ref>;</highlight></codeline>
+<codeline lineno="76" refid="structTMode__Rec_1a1781ec66535683e7e7cf91f6e4036f27" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="structTMode__Rec_1a1781ec66535683e7e7cf91f6e4036f27" kindref="member">BankSwitch</ref>;</highlight></codeline>
+<codeline lineno="77" refid="structTMode__Rec_1a1d3219dbf4e058aa45582e6fbf1d0349" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1a1d3219dbf4e058aa45582e6fbf1d0349" kindref="member">BytesPerLine</ref>;</highlight></codeline>
+<codeline lineno="78" refid="structTMode__Rec_1a2853e93257786feed9510a40ba59e87f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/>xRes,<sp/><ref refid="structTMode__Rec_1a2853e93257786feed9510a40ba59e87f" kindref="member">yRes</ref>;</highlight></codeline>
+<codeline lineno="79" refid="structTMode__Rec_1a2970ac8388b0d027891c2c2bda0ab652" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a2970ac8388b0d027891c2c2bda0ab652" kindref="member">CharWidth</ref>;</highlight></codeline>
+<codeline lineno="80" refid="structTMode__Rec_1ad661f40af7efee1b81a77d33ea0dd5d8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ad661f40af7efee1b81a77d33ea0dd5d8" kindref="member">CharHeight</ref>;</highlight></codeline>
+<codeline lineno="81" refid="structTMode__Rec_1add2e0bfe5d3b452d126f1707bf1bc405" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1add2e0bfe5d3b452d126f1707bf1bc405" kindref="member">NumBitPlanes</ref>;</highlight></codeline>
+<codeline lineno="82" refid="structTMode__Rec_1ac961716fdfa16eddb820b407b87ce964" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ac961716fdfa16eddb820b407b87ce964" kindref="member">BitsPerPixel</ref>;</highlight></codeline>
+<codeline lineno="83" refid="structTMode__Rec_1a7d1bb1decd6f1690bd1472107ddebb78" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a7d1bb1decd6f1690bd1472107ddebb78" kindref="member">NumberOfBanks</ref>;</highlight></codeline>
+<codeline lineno="84" refid="structTMode__Rec_1a525f23bf50f81c495997dc9e97abdecd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a525f23bf50f81c495997dc9e97abdecd" kindref="member">MemoryModel</ref>;</highlight></codeline>
+<codeline lineno="85" refid="structTMode__Rec_1acef9fd2f7ecfa740ecbfeef1964b3c59" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1acef9fd2f7ecfa740ecbfeef1964b3c59" kindref="member">BankSize</ref>;</highlight></codeline>
+<codeline lineno="86" refid="structTMode__Rec_1a57e1b464f163a694df0889595963c64f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a57e1b464f163a694df0889595963c64f" kindref="member">NumOfImagePages</ref>;</highlight></codeline>
+<codeline lineno="87" refid="structTMode__Rec_1ac64f4b2ea3c11f3888ae8fa57ef13021" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ac64f4b2ea3c11f3888ae8fa57ef13021" kindref="member">Reserved</ref>;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Direct<sp/>colour<sp/>fields<sp/>(required<sp/>for<sp/>Direct/6<sp/>and<sp/>YUV/7<sp/>memory<sp/>models</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="structTMode__Rec_1a9000159872f08a660e0242a486456960" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a9000159872f08a660e0242a486456960" kindref="member">RedMaskSize</ref>;</highlight></codeline>
+<codeline lineno="90" refid="structTMode__Rec_1a0ea949d700a9d963ee9729a5ce89a762" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a0ea949d700a9d963ee9729a5ce89a762" kindref="member">RedFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="91" refid="structTMode__Rec_1a71010ab26fd0efae91dd49b4b7aa3cae" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a71010ab26fd0efae91dd49b4b7aa3cae" kindref="member">GreenMaskSize</ref>;</highlight></codeline>
+<codeline lineno="92" refid="structTMode__Rec_1a399c39aedde68e7d47ab4d7af068ffb1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1a399c39aedde68e7d47ab4d7af068ffb1" kindref="member">GreenFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="93" refid="structTMode__Rec_1ad08a1705fdd1c28f5c80058b2d3966ad" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ad08a1705fdd1c28f5c80058b2d3966ad" kindref="member">BlueMaskSize</ref>;</highlight></codeline>
+<codeline lineno="94" refid="structTMode__Rec_1ad52a71b09f9cf16685c706563c437295" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ad52a71b09f9cf16685c706563c437295" kindref="member">BlueFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="95" refid="structTMode__Rec_1ab76a27b7a0dab771436fcd18ef2040a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ab76a27b7a0dab771436fcd18ef2040a7" kindref="member">AlphaMaskSize</ref>;</highlight></codeline>
+<codeline lineno="96" refid="structTMode__Rec_1ae26231cc9e3a31594eb0bae769cf6e15" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1ae26231cc9e3a31594eb0bae769cf6e15" kindref="member">AlphaFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="97" refid="structTMode__Rec_1aa6c7431136b907bece94df99809aad75" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTMode__Rec_1aa6c7431136b907bece94df99809aad75" kindref="member">DirectColourMode</ref>;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>VESA<sp/>2.0<sp/>specific<sp/>fields</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="structTMode__Rec_1aa107a1ea87f632ae2af8605ca3977369" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="structTMode__Rec_1aa107a1ea87f632ae2af8605ca3977369" kindref="member">PhysBasePtr</ref>;</highlight></codeline>
+<codeline lineno="100" refid="structTMode__Rec_1acd73eb6a7812eebd95fc2b0b472ecc48" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="structTMode__Rec_1acd73eb6a7812eebd95fc2b0b472ecc48" kindref="member">OffScreenMemOffset</ref>;</highlight></codeline>
+<codeline lineno="101" refid="structTMode__Rec_1a915325aeec11cda300b621c9dad559f7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTMode__Rec_1a915325aeec11cda300b621c9dad559f7" kindref="member">OffScreenMemSize</ref>;</highlight></codeline>
+<codeline lineno="102" refid="structTMode__Rec_1a804e25c5f31dd7420bfee59f1b0efec9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>paddington[461];</highlight></codeline>
+<codeline lineno="103"><highlight class="normal">}<sp/><ref refid="structTMode__Rec" kindref="compound">TMode_Rec</ref>;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="structTVESA__Rec" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="106" refid="structTVESA__Rec_1a3a9244c36e5cfcc3336c2c56b08f48e7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>VBESignature[4];</highlight></codeline>
+<codeline lineno="107" refid="structTVESA__Rec_1af8d30266c87822b273608cd75d32c2cd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTVESA__Rec_1af8d30266c87822b273608cd75d32c2cd" kindref="member">minVersion</ref>;</highlight></codeline>
+<codeline lineno="108" refid="structTVESA__Rec_1afe54550ecfdc951a025886c1f55f7403" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTVESA__Rec_1afe54550ecfdc951a025886c1f55f7403" kindref="member">majVersion</ref>;</highlight></codeline>
+<codeline lineno="109" refid="structTVESA__Rec_1acec102a7f7ec32ea57ca8024fb6d37c4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structTVESA__Rec_1acec102a7f7ec32ea57ca8024fb6d37c4" kindref="member">OEMStringPtr</ref>;</highlight></codeline>
+<codeline lineno="110" refid="structTVESA__Rec_1ae1fba83a98b12c708a24fe06b7d9fe01" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="structTVESA__Rec_1ae1fba83a98b12c708a24fe06b7d9fe01" kindref="member">Capabilities</ref>;</highlight></codeline>
+<codeline lineno="111" refid="structTVESA__Rec_1a09e3fe7b30e99966ea34b277c9722e85" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref>*<sp/><ref refid="structTVESA__Rec_1a09e3fe7b30e99966ea34b277c9722e85" kindref="member">VideoModePtr</ref>;</highlight></codeline>
+<codeline lineno="112" refid="structTVESA__Rec_1a151196f63e11de479b8da7789027baea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTVESA__Rec_1a151196f63e11de479b8da7789027baea" kindref="member">TotalMemory</ref>;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>VESA<sp/>2.0<sp/>specific<sp/>fields</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="structTVESA__Rec_1a2e8e559468d152e17788689b55b86525" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structTVESA__Rec_1a2e8e559468d152e17788689b55b86525" kindref="member">OEMSoftwareRev</ref>;</highlight></codeline>
+<codeline lineno="115" refid="structTVESA__Rec_1aa21ea4e9e3148659fffabb0977ac53f1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structTVESA__Rec_1aa21ea4e9e3148659fffabb0977ac53f1" kindref="member">OEMVendorNamePtr</ref>;</highlight></codeline>
+<codeline lineno="116" refid="structTVESA__Rec_1aa09724791461caae3a5bc26206b29836" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structTVESA__Rec_1aa09724791461caae3a5bc26206b29836" kindref="member">OEMProductNamePtr</ref>;</highlight></codeline>
+<codeline lineno="117" refid="structTVESA__Rec_1a47048204956e3b81fdc3dd09c3a75b83" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structTVESA__Rec_1a47048204956e3b81fdc3dd09c3a75b83" kindref="member">OEMProductRevPtr</ref>;</highlight></codeline>
+<codeline lineno="118" refid="structTVESA__Rec_1a1b2bae51f26c79f2753831ebd86fd3db" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>paddington[474];</highlight></codeline>
+<codeline lineno="119"><highlight class="normal">}<sp/><ref refid="structTVESA__Rec" kindref="compound">TVESA_Rec</ref>;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121" refid="structTPoint" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="122" refid="structTPoint_1aee10d7be0f69306a9f98c80dd3a5afc1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref><sp/><ref refid="structTPoint_1aee10d7be0f69306a9f98c80dd3a5afc1" kindref="member">x</ref>;</highlight></codeline>
+<codeline lineno="123" refid="structTPoint_1a4ef36d6892872531da8abaa98a81cb76" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref><sp/><ref refid="structTPoint_1a4ef36d6892872531da8abaa98a81cb76" kindref="member">y</ref>;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal">}<sp/><ref refid="structTPoint" kindref="compound">TPoint</ref>;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126" refid="structTPixelFmt" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="127" refid="structTPixelFmt_1a7d62a1a888b70bdb802720e02df05476" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1a7d62a1a888b70bdb802720e02df05476" kindref="member">BPP</ref>;</highlight></codeline>
+<codeline lineno="128" refid="structTPixelFmt_1aaaafd070509044d1ef1bbf545ca1ce66" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1aaaafd070509044d1ef1bbf545ca1ce66" kindref="member">RedFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="129" refid="structTPixelFmt_1a7b0546c3b7509b25666b7f23aa32e5ed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1a7b0546c3b7509b25666b7f23aa32e5ed" kindref="member">GreenFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="130" refid="structTPixelFmt_1ace50b09ef450447c7891fc1d54fa7e4a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1ace50b09ef450447c7891fc1d54fa7e4a" kindref="member">BlueFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="131" refid="structTPixelFmt_1a2136406b7b4f597602e344510ba41895" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1a2136406b7b4f597602e344510ba41895" kindref="member">AlphaFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="132" refid="structTPixelFmt_1a3ec14799d55927ca163825cc5ef2142f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1a3ec14799d55927ca163825cc5ef2142f" kindref="member">RedMaskSize</ref>;</highlight></codeline>
+<codeline lineno="133" refid="structTPixelFmt_1aa6db97a236f576e7ff14d59454829210" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1aa6db97a236f576e7ff14d59454829210" kindref="member">GreenMaskSize</ref>;</highlight></codeline>
+<codeline lineno="134" refid="structTPixelFmt_1a1278a0d7f37c5127b2ac90801cc0b199" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1a1278a0d7f37c5127b2ac90801cc0b199" kindref="member">BlueMaskSize</ref>;</highlight></codeline>
+<codeline lineno="135" refid="structTPixelFmt_1a4588bf63c1a22523851eecc37b0ec581" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structTPixelFmt_1a4588bf63c1a22523851eecc37b0ec581" kindref="member">AlphaMaskSize</ref>;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal">}<sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref>;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Default<sp/>pixel<sp/>formats</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="objgfx30_8h_1a0d0a768bac671c350c330da45e55bc04" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1a0d0a768bac671c350c330da45e55bc04" kindref="member">NULL_PIXFMT</ref><sp/>=<sp/>{<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="141" refid="objgfx30_8h_1ab086db66b7a8d74fbaf3c539baf960b2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1ab086db66b7a8d74fbaf3c539baf960b2" kindref="member">DEF_PIXFMT_8BPP</ref><sp/>=<sp/>{<sp/>8,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0,<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="142" refid="objgfx30_8h_1a9ca7800c538b528af0ff2a1ffff78646" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1a9ca7800c538b528af0ff2a1ffff78646" kindref="member">DEF_PIXFMT_15BPP</ref><sp/>=<sp/>{<sp/>15,<sp/>10,<sp/>5,<sp/>0,<sp/>15,<sp/>5,<sp/>5,<sp/>5,<sp/>1<sp/>};</highlight></codeline>
+<codeline lineno="143" refid="objgfx30_8h_1a5b8dde76c446c13780e2897900378b0b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1a5b8dde76c446c13780e2897900378b0b" kindref="member">DEF_PIXFMT_16BPP</ref><sp/>=<sp/>{<sp/>16,<sp/>11,<sp/>5,<sp/>0,<sp/>0,<sp/>5,<sp/>6,<sp/>5,<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="144" refid="objgfx30_8h_1ab397e4aa1797b5b1e4293a27b6fdf4c4" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1ab397e4aa1797b5b1e4293a27b6fdf4c4" kindref="member">DEF_PIXFMT_24BPP</ref><sp/>=<sp/>{<sp/>24,<sp/>16,<sp/>8,<sp/>0,<sp/>8,<sp/>8,<sp/>8<sp/>};</highlight></codeline>
+<codeline lineno="145" refid="objgfx30_8h_1a6a64fa53b2fe75ebe0d61494d96a5c61" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1a6a64fa53b2fe75ebe0d61494d96a5c61" kindref="member">DEF_PIXFMT_32BPP</ref><sp/>=<sp/>{<sp/>32,<sp/>16,<sp/>8,<sp/>0,<sp/>24,<sp/>8,<sp/>8,<sp/>8,<sp/>8<sp/>};</highlight></codeline>
+<codeline lineno="146" refid="objgfx30_8h_1adee044b10304c6e17a1c2ebe6c48f30b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref><sp/><ref refid="objgfx30_8h_1adee044b10304c6e17a1c2ebe6c48f30b" kindref="member">DEF_MAC_PIXFMT_16BPP</ref><sp/>=<sp/>{<sp/>16,<sp/>8,<sp/>4,<sp/>0,<sp/>12,<sp/>4,<sp/>4,<sp/>4,<sp/>4<sp/>};</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;defpal.inc&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="classTGfx0" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classTGfx0" kindref="compound">TGfx0</ref><sp/>{</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="152" refid="classTGfx0_1a59c264f41f08a8626bb21b1b8ea5f123" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTGfx0" kindref="compound">TGfx0</ref>*<sp/><ref refid="classTGfx0_1a59c264f41f08a8626bb21b1b8ea5f123" kindref="member">Owner</ref>;</highlight></codeline>
+<codeline lineno="153" refid="classTGfx0_1a5a519d7a8cfcef2c8ab24d9e0ccba0b4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1abe0efc0848201c25630dfb652161ed72" kindref="member">xRes</ref>,<sp/><ref refid="classTGfx0_1a5a519d7a8cfcef2c8ab24d9e0ccba0b4" kindref="member">yRes</ref>;</highlight></codeline>
+<codeline lineno="154" refid="classTGfx0_1a1b0c7a2fb757986a97320ee684f2d0cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a502650cb072e21052fbaddbbd3435ced" kindref="member">MaxX</ref>,<sp/><ref refid="classTGfx0_1a1b0c7a2fb757986a97320ee684f2d0cb" kindref="member">MaxY</ref>;</highlight></codeline>
+<codeline lineno="155" refid="classTGfx0_1a1eced7c241fa3cbc4c1a3fa6f643c1da" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a1eced7c241fa3cbc4c1a3fa6f643c1da" kindref="member">bSize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>buffer<sp/>size<sp/>(in<sp/>bytes)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="classTGfx0_1a063c0df0c3532a740de39c670cd19b82" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a063c0df0c3532a740de39c670cd19b82" kindref="member">lSize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>LineOfs<sp/>size<sp/>(in<sp/>bytes)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="classTGfx0_1a820b6636804eb064a493dcdc27d9a981" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a820b6636804eb064a493dcdc27d9a981" kindref="member">TransparentColor</ref>;</highlight></codeline>
+<codeline lineno="158" refid="classTGfx0_1aa47b7d1266341b92bddeed6637919164" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" kindref="member">ogDataState</ref><sp/><ref refid="classTGfx0_1aa47b7d1266341b92bddeed6637919164" kindref="member">DataState</ref>;</highlight></codeline>
+<codeline lineno="159" refid="classTGfx0_1a93c1df656df3deb3f1464ea8b42fd66f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1a93c1df656df3deb3f1464ea8b42fd66f" kindref="member">BPP</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>bits<sp/>per<sp/>pixel</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="classTGfx0_1ad6c3ae24d482cb73d699d7c75b102c51" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1ad6c3ae24d482cb73d699d7c75b102c51" kindref="member">RedFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="161" refid="classTGfx0_1af9023f5a6a3decc2e316d299f3fa3a0c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1af9023f5a6a3decc2e316d299f3fa3a0c" kindref="member">GreenFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="162" refid="classTGfx0_1acb051caed2a384a770f37698cf941a05" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1acb051caed2a384a770f37698cf941a05" kindref="member">BlueFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="163" refid="classTGfx0_1a120ab8833470adf2655196a86861315a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTGfx0_1a120ab8833470adf2655196a86861315a" kindref="member">uInt8AlphaFieldPosition</ref>;</highlight></codeline>
+<codeline lineno="164" refid="classTGfx0_1ac992f15cb95c84257efa9db47767aff0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1ac992f15cb95c84257efa9db47767aff0" kindref="member">RedShifter</ref>;</highlight></codeline>
+<codeline lineno="165" refid="classTGfx0_1af7de50ef072a87c992395661a0464242" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1af7de50ef072a87c992395661a0464242" kindref="member">GreenShifter</ref>;</highlight></codeline>
+<codeline lineno="166" refid="classTGfx0_1af973497d9581ec5990dd7e2a7c32a941" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1af973497d9581ec5990dd7e2a7c32a941" kindref="member">BlueShifter</ref>;</highlight></codeline>
+<codeline lineno="167" refid="classTGfx0_1a46c8fc590ff1c40b6795294911140c84" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTGfx0_1a46c8fc590ff1c40b6795294911140c84" kindref="member">uInt8AlphaShifter</ref>;</highlight></codeline>
+<codeline lineno="168" refid="classTGfx0_1a78cc68d207e2742dc4742ddfa65ed580" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a78cc68d207e2742dc4742ddfa65ed580" kindref="member">AntiAlias</ref>;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a7b696d5a26692e7907a496e9bd3e6096" kindref="member">clipLine</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>&amp;,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>&amp;,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>&amp;,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>&amp;);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a5984d0d4c8a8c93f527a22a79aead5bd" kindref="member">rawLine</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a23ef525f10399416f9c8f434969ea9d4" kindref="member">aaRawLine</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="173" refid="classTGfx0_1a13f1379d8663907360596eaf3ec0874d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="classTGfx0_1a13f1379d8663907360596eaf3ec0874d" kindref="member">Buffer</ref>;</highlight></codeline>
+<codeline lineno="174" refid="classTGfx0_1a08505b7f34eefb5ce02392301dff97b0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>*<sp/><ref refid="classTGfx0_1a08505b7f34eefb5ce02392301dff97b0" kindref="member">LineOfs</ref>;</highlight></codeline>
+<codeline lineno="175" refid="classTGfx0_1a98a72ea99a45c5ae0fa2d6291fb82ea0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structTRGB" kindref="compound">TRGB</ref>*<sp/><ref refid="classTGfx0_1a98a72ea99a45c5ae0fa2d6291fb82ea0" kindref="member">pal</ref>;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTGfx0_1a227fa6ec50dfe445c162c7e1c5722f0b" kindref="member">TGfx0</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1aa1a3d766d828289bde3ff9f4a68c7eae" kindref="member">ogAlias</ref>(<ref refid="classTGfx0" kindref="compound">TGfx0</ref>&amp;,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a29f234c3fbc13a3a2b9420e7ffaf66f9" kindref="member">ogArc</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a27e34894eb8b4420020e672afb5fe5fc" kindref="member">ogBSpline</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="structTPoint" kindref="compound">TPoint</ref>*,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ac7ceb6f0684c426f1f4aa6991823c931" kindref="member">ogCircle</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1af5e61dab8ddc935fbc33f3abafc4881a" kindref="member">ogClear</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1aded39fd47cee6bde9135bc03f34fc52a" kindref="member">ogClone</ref>(<ref refid="classTGfx0" kindref="compound">TGfx0</ref>&amp;);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1aa03f3d9137a783ad6e9434e2deadecda" kindref="member">ogCopy</ref>(<ref refid="classTGfx0" kindref="compound">TGfx0</ref>&amp;);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ab82405bdce96235a0462d6b4f10ebe5e" kindref="member">ogCopyBuf</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="classTGfx0" kindref="compound">TGfx0</ref>&amp;,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a3c1c2552e15719ecdf03aa33a88078d8" kindref="member">ogCreate</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref>);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1aec99fe0773db7377faea0bb8b9114abe" kindref="member">ogCubicBezierCurve</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1aa233f3f5170efebbcbf8ccba1c301ef2" kindref="member">ogCurve</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ab869fe252f4cf79a9210f4d0b39b36af" kindref="member">ogFillCircle</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a35a3dde4b236d161d516a0b7f02e17d5" kindref="member">ogFillConvexPolygon</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="structTPoint" kindref="compound">TPoint</ref>*,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a9f239b7cfd4215a2adccb2f5a9b3e1bf" kindref="member">ogFillPolygon</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="structTPoint" kindref="compound">TPoint</ref>*,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a018cdefc109e5273cf38bb216c44ba57" kindref="member">ogFillRect</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a992619f2b3490a3973c910d83f1f5475" kindref="member">ogFillTriangle</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ae7458dffe0443434bf0f4a70760ac827" kindref="member">ogGetAntiAlias</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="classTGfx0_1a8d65fe8297d6b8f342213415838db371" kindref="member">ogGetBPP</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ac0ce9889830c3a8d750c7796fafd95f5" kindref="member">ogDataState</ref><sp/><ref refid="classTGfx0_1a1cb20fb2753e02f14aa5e389fe232e12" kindref="member">ogGetDataState</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a64b0d472d56712b5d92756bb98ce9286" kindref="member">ogGetMaxX</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1afae719e4d9255cc21d763b817ac0d7d5" kindref="member">ogGetMaxY</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a2f5cc9ef42b5377024b81271c7dd9e63" kindref="member">ogGetPal</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a2343a53d699b2e94ca83fd32a464f5b4" kindref="member">ogGetPixFmt</ref>(<ref refid="structTPixelFmt" kindref="compound">TPixelFmt</ref>&amp;);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a42281e8f32e5459dfba006a2201cfcab" kindref="member">ogGetPixel</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1aaaacdda37ac782492277ebcf1986fd97" kindref="member">ogGetTransparentColor</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a0867cd3d1e77053802beaed51cc89865" kindref="member">ogHFlip</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1acc3f77c5297734fab2d47bf7dcf9e094" kindref="member">ogHLine</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ac60359a77047dfdede8c1fb4a82d6f5e" kindref="member">ogLine</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a3221e7bcfc1f4804a375e118fe84cfe7" kindref="member">ogLoadPal</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a7d5b0589724c42418e140c56c1eae8a6" kindref="member">ogPolygon</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="structTPoint" kindref="compound">TPoint</ref>*,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a28aeb576aef53a0988fd96000e70e969" kindref="member">ogRect</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1ad838d0d70b6cc833d5eaf2e07fb18e9d" kindref="member">ogRGB</ref>(<ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>);</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1af00f32ca6bab8cbb83baa0507137dc0a" kindref="member">ogSavePal</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a08b171a2f918a7b605780470990995f0" kindref="member">ogScaleBuf</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="classTGfx0" kindref="compound">TGfx0</ref>&amp;,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a00490fc4053f1b1b64538dcb21f4bfd1" kindref="member">ogSetAntiAlias</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ae790f36e15b95cfdce164deaa212f287" kindref="member">ogSetPixel</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1af49b13b73dd2bdab866fdbc9f7f28729" kindref="member">ogSetRGBPalette</ref>(<ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>);</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="classTGfx0_1a2cd624dc55efef0b3dcc7108d169c572" kindref="member">ogSetTransparentColor</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1af20945fa17d2b3147262a7e6e429dab0" kindref="member">ogSpline</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="structTPoint" kindref="compound">TPoint</ref>*,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ab7bc50f1a726c1484b7db5e53422d816" kindref="member">ogTriangle</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a6863598395ed814db4b95a37014ac275" kindref="member">ogUnpackRGB</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>&amp;,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>&amp;,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>&amp;);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1a870915ea287827566edd5fa2a0d164f9" kindref="member">ogVFlip</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTGfx0_1ad7ec44c3504c7f11c101b130490af29f" kindref="member">ogVLine</ref>(<ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1a62f5dcfe6a8e8e05cf867fb83ed50298" kindref="member">Int32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTGfx0_1a6088c85e1fd371db3fb9dff1450be3ea" kindref="member">~TGfx0</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="221"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="comment">//<sp/>TGfx0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224" refid="classTScreen" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classTScreen" kindref="compound">TScreen</ref>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classTGfx0" kindref="compound">TGfx0</ref><sp/>{</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="226" refid="classTScreen_1a18091a36725045a627e7f31f73885ec2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structTVESA__Rec" kindref="compound">TVESA_Rec</ref>*<sp/><ref refid="classTScreen_1a18091a36725045a627e7f31f73885ec2" kindref="member">VESARec</ref>;</highlight></codeline>
+<codeline lineno="227" refid="classTScreen_1a852c621313692028ee0b114070865cbc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structTMode__Rec" kindref="compound">TMode_Rec</ref>*<sp/><ref refid="classTScreen_1a852c621313692028ee0b114070865cbc" kindref="member">ModeRec</ref>;</highlight></codeline>
+<codeline lineno="228" refid="classTScreen_1a46e7909ee6ecc88047ea8491ca99853c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classTScreen_1a46e7909ee6ecc88047ea8491ca99853c" kindref="member">InGraphics</ref>;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTScreen_1a94de7b7f7eab5bd744333967d3a376b3" kindref="member">TScreen</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classTScreen_1a9b83cc539a124a7f14b02ddd04b9de72" kindref="member">setupMode</ref>(<ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref>);</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classTScreen_1a6679aeb2b33e28a983b0327a0482c394" kindref="member">~TScreen</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="233"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="comment">//<sp/>TScreen</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>SYS_INCLUDE_OBJGFX_OBJGFX30_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h"/>
+  </compounddef>
+</doxygen>

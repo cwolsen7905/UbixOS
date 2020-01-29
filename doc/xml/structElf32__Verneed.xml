@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Verneed" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Verneed</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Verneed_1a0db7ff11ee775f27ebb1e10a6affabb8" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Verneed::vn_aux</definition>
+        <argsstring></argsstring>
+        <name>vn_aux</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="234" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="234" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Verneed_1a8c8c56b63ee1f38cf5568fa7bd5b4f73" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Verneed::vn_cnt</definition>
+        <argsstring></argsstring>
+        <name>vn_cnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="232" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="232" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Verneed_1a71c12598274c795cca809b99462e062a" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Verneed::vn_file</definition>
+        <argsstring></argsstring>
+        <name>vn_file</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="233" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="233" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Verneed_1ae3819b6239b81ed5c8ce4f8710176870" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Verneed::vn_next</definition>
+        <argsstring></argsstring>
+        <name>vn_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="235" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="235" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Verneed_1ae87cf6c64587fcf3cd80ba2f6aa6b1bb" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Verneed::vn_version</definition>
+        <argsstring></argsstring>
+        <name>vn_version</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="231" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="231" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Verneed</label>
+        <link refid="structElf32__Verneed"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="230" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="230" bodyend="236"/>
+    <listofallmembers>
+      <member refid="structElf32__Verneed_1a0db7ff11ee775f27ebb1e10a6affabb8" prot="public" virt="non-virtual"><scope>Elf32_Verneed</scope><name>vn_aux</name></member>
+      <member refid="structElf32__Verneed_1a8c8c56b63ee1f38cf5568fa7bd5b4f73" prot="public" virt="non-virtual"><scope>Elf32_Verneed</scope><name>vn_cnt</name></member>
+      <member refid="structElf32__Verneed_1a71c12598274c795cca809b99462e062a" prot="public" virt="non-virtual"><scope>Elf32_Verneed</scope><name>vn_file</name></member>
+      <member refid="structElf32__Verneed_1ae3819b6239b81ed5c8ce4f8710176870" prot="public" virt="non-virtual"><scope>Elf32_Verneed</scope><name>vn_next</name></member>
+      <member refid="structElf32__Verneed_1ae87cf6c64587fcf3cd80ba2f6aa6b1bb" prot="public" virt="non-virtual"><scope>Elf32_Verneed</scope><name>vn_version</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="armv6_2ap-boot_8S" kind="file" language="C++">
+    <compoundname>ap-boot.S</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline><highlight class="normal">/*-</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Okay,<sp/>this<sp/>file<sp/>contains<sp/>the<sp/>code<sp/>that&apos;s<sp/>going<sp/>to<sp/>bootstrap<sp/>the<sp/>AP<sp/>cpus</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.globl<sp/><sp/>ap_trampoline_start,ap_trampoline_end</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.text</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.code16</highlight></codeline>
+<codeline><highlight class="normal">ap_trampoline_start:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cli</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cld</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>movw<sp/><sp/><sp/><sp/>%cs,%ax<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>The<sp/>CPU<sp/>knows<sp/>its<sp/>CS<sp/>already,<sp/>so<sp/>lets<sp/>use<sp/>it<sp/>for<sp/>the<sp/>other<sp/>segments</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>movw<sp/><sp/><sp/><sp/>%ax,%ds</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>movw<sp/><sp/><sp/><sp/>%ax,%es</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>movw<sp/><sp/><sp/><sp/>%ax,%ss</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Do<sp/>some<sp/>bochs-specific<sp/>bullshit</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0x31,%al<sp/>//<sp/>&apos;1&apos;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0xe9,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outb<sp/><sp/><sp/><sp/>%al,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//lgdt<sp/><sp/><sp/><sp/>ap_gdt;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lgdt<sp/><sp/><sp/><sp/>ap_trampoline_gdt_limit<sp/>-<sp/>ap_trampoline_start</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>movl<sp/><sp/><sp/><sp/>%cr0,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>orl<sp/><sp/><sp/><sp/><sp/>$0x1,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>movl<sp/><sp/><sp/><sp/>%eax,%cr0<sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>PMODE!</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">.code32</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.byte<sp/>0x66</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ljmp<sp/><sp/><sp/><sp/>$0x08,$(ap_trampoline_32<sp/>-<sp/>ap_trampoline_start)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>0x08<sp/>==<sp/>KERNEL_CS</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">ap_trampoline_32:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0x32,%al<sp/>//<sp/>&apos;2&apos;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0xe9,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outb<sp/><sp/><sp/><sp/>%al,%dx</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0x10,%ax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ax,%ds</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ax,%es</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ax,%fs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ax,%gs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ax,%ss</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Spinlock</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>ap_trampoline_spl<sp/>-<sp/>ap_trampoline_start,%edi</highlight></codeline>
+<codeline><highlight class="normal">ap_spl:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//cmp<sp/><sp/><sp/>$1,(%edi)</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//je<sp/><sp/><sp/><sp/>ap_spl</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$1,%eax<sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Value<sp/>to<sp/>be<sp/>set</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>xchgl<sp/><sp/><sp/>(%edi),%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cmp<sp/><sp/><sp/><sp/><sp/>$0,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>je<sp/><sp/><sp/><sp/><sp/><sp/>ap_spl</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>/Spinlock</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0x30,%al<sp/>//<sp/>&apos;0&apos;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0xe9,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outb<sp/><sp/><sp/><sp/>%al,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>ap_trampoline_stackptr<sp/>-<sp/>ap_trampoline_start,%ebx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ebx,%esp</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>add<sp/><sp/><sp/><sp/><sp/>$0x1000,%ebx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>%ebx,ap_trampoline_stackptr<sp/>-<sp/>ap_trampoline_start</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0x31,%al<sp/>//<sp/>&apos;1&apos;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0xe9,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outb<sp/><sp/><sp/><sp/>%al,%dx</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>spinunlock</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>ap_trampoline_spl<sp/>-<sp/>ap_trampoline_start,%edi</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>xchgl<sp/><sp/><sp/>(%edi),%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>/spinunlock</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0x33,%al<sp/>//<sp/>&apos;3&apos;</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>$0xe9,%dx</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>outb<sp/><sp/><sp/><sp/>%al,%dx</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mov<sp/><sp/><sp/><sp/><sp/>ap_trampoline_epoint,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>call<sp/><sp/><sp/><sp/>*%eax</highlight></codeline>
+<codeline><highlight class="normal">1:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>hlt</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>jmp<sp/><sp/><sp/><sp/><sp/>1b<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Halt<sp/>if<sp/>we<sp/>ever<sp/>get<sp/>here<sp/>somehow</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Stack..<sp/>This<sp/>sucks,<sp/>since<sp/>CPU<sp/>initialization<sp/>isn&apos;t<sp/>serialized</highlight></codeline>
+<codeline><highlight class="normal">ap_trampoline_stackptr:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0x10000<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>256KB</highlight></codeline>
+<codeline><highlight class="normal">ap_trampoline_epoint:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>c_ap_boot</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">ap_trampoline_spl:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0</highlight></codeline>
+<codeline><highlight class="normal">ap_gdt:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/>ubixGDT</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>GDT</highlight></codeline>
+<codeline><highlight class="normal">ap_trampoline_gdt:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.word<sp/><sp/><sp/>0</highlight></codeline>
+<codeline><highlight class="normal">ap_trampoline_gdt_limit:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.word<sp/><sp/><sp/>128<sp/><sp/><sp/><sp/><sp/>//<sp/>Room<sp/>for<sp/>32<sp/>descriptors</highlight></codeline>
+<codeline><highlight class="normal">ap_trampoline_gdt_base:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>.long<sp/><sp/><sp/>0x20000<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>128KB<sp/>(move<sp/>this<sp/>later)</highlight></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">ap_trampoline_end:</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/ap-boot.S"/>
+  </compounddef>
+</doxygen>

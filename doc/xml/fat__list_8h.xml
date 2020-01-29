@@ -1,0 +1,487 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__list_8h" kind="file" language="C++">
+    <compoundname>fat_list.h</compoundname>
+    <includedby refid="fat__filelib_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</includedby>
+    <invincdepgraph>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/example.c</label>
+        <link refid="example_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h</label>
+        <link refid="fat__list_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.h</label>
+        <link refid="fat__cache_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.h</label>
+        <link refid="fat__filelib_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structfat__list" prot="public">fat_list</innerclass>
+    <innerclass refid="structfat__node" prot="public">fat_node</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" prot="public" static="no">
+        <name>FAT_ASSERT</name>
+        <param><defname>x</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="5" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="5" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" prot="public" static="no">
+        <name>FAT_INLINE</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="9" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1aab53a0527ed2fb648a6adc61e791fe62" prot="public" static="no">
+        <name>fat_list_entry</name>
+        <param><defname>p</defname></param>
+        <param><defname>t</defname></param>
+        <param><defname>m</defname></param>
+        <initializer>p ? ((t *)((char *)(p)-(char*)(&amp;((t *)0)-&gt;m))) : 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="32" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1adb94c2cb90ac57c8ce3aa64d9793c096" prot="public" static="no">
+        <name>fat_list_first</name>
+        <param><defname>l</defname></param>
+        <initializer>(l)-&gt;head</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1ae758b8b3afc33eb7dc35c7c0cf2e768b" prot="public" static="no">
+        <name>fat_list_for_each</name>
+        <param><defname>l</defname></param>
+        <param><defname>p</defname></param>
+        <initializer>for ((p) = (l)-&gt;head; (p); (p) = (p)-&gt;next)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1a969352c9e3dbf8cade1f3cb8a784669a" prot="public" static="no">
+        <name>fat_list_last</name>
+        <param><defname>l</defname></param>
+        <initializer>(l)-&gt;tail</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1a9404542e2cef8f6ecfb520c5ff3f9e40" prot="public" static="no">
+        <name>fat_list_next</name>
+        <param><defname>l</defname></param>
+        <param><defname>p</defname></param>
+        <initializer>(p)-&gt;next</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="33" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__list_8h_1a4809ba3c77fc69a8244e9f8b9d41782d" prot="public" static="no">
+        <name>fat_list_prev</name>
+        <param><defname>l</defname></param>
+        <param><defname>p</defname></param>
+        <initializer>(p)-&gt;previous</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__list_8h_1a8413f10bd228d9611db1a7eff8cb1a0c" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void fat_list_init</definition>
+        <argsstring>(struct fat_list *list)</argsstring>
+        <name>fat_list_init</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="46" column="16" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="46" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1afba9081c645df316dcb52d96aea2b3f6" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void fat_list_insert_after</definition>
+        <argsstring>(struct fat_list *list, struct fat_node *node, struct fat_node *new_node)</argsstring>
+        <name>fat_list_insert_after</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>node</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>new_node</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="73" column="16" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="73" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1ac98b2aa9914b3d064f006545d7fff223" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void fat_list_insert_before</definition>
+        <argsstring>(struct fat_list *list, struct fat_node *node, struct fat_node *new_node)</argsstring>
+        <name>fat_list_insert_before</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>node</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>new_node</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="90" column="16" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="90" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1a80bed082a72c780bb1357f63b4fa99a6" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void fat_list_insert_first</definition>
+        <argsstring>(struct fat_list *list, struct fat_node *node)</argsstring>
+        <name>fat_list_insert_first</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>node</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="107" column="16" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="107" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1a48e96dabd43c9ec8fdc1c7e6df557b79" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void fat_list_insert_last</definition>
+        <argsstring>(struct fat_list *list, struct fat_node *node)</argsstring>
+        <name>fat_list_insert_last</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>node</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="125" column="16" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="125" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1aedd1e4be80037b9cb22d97f0a3e3b218" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int fat_list_is_empty</definition>
+        <argsstring>(struct fat_list *list)</argsstring>
+        <name>fat_list_is_empty</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="138" column="15" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="138" bodyend="143"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1a52178472c198fb55c09236c96dbfb12b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+        <definition>static struct fat_node* fat_list_pop_head</definition>
+        <argsstring>(struct fat_list *list)</argsstring>
+        <name>fat_list_pop_head</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="147" column="26" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="147" bodyend="158"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__list_8h_1a1c54d5d33d1fb08201ec032dfe60bf41" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void fat_list_remove</definition>
+        <argsstring>(struct fat_list *list, struct fat_node *node)</argsstring>
+        <name>fat_list_remove</name>
+        <param>
+          <type>struct <ref refid="structfat__list" kindref="compound">fat_list</ref> *</type>
+          <declname>list</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__node" kindref="compound">fat_node</ref> *</type>
+          <declname>node</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" line="55" column="16" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h" bodystart="55" bodyend="69"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_LIST_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_LIST_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FAT_ASSERT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5" refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_ASSERT(x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>FAT_INLINE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>FAT_INLINE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Types</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__list" kindref="compound">fat_list</ref>;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="structfat__node" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref></highlight></codeline>
+<codeline lineno="18"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="19" refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/><sp/><sp/><sp/>*<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>;</highlight></codeline>
+<codeline lineno="20" refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/><sp/><sp/><sp/>*<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="structfat__list" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__list" kindref="compound">fat_list</ref></highlight></codeline>
+<codeline lineno="24"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="25" refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/><sp/><sp/><sp/>*<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref>;</highlight></codeline>
+<codeline lineno="26" refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/><sp/><sp/><sp/>*<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref>;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Macros</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="fat__list_8h_1aab53a0527ed2fb648a6adc61e791fe62" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fat_list_entry(p,<sp/>t,<sp/>m)<sp/><sp/><sp/><sp/><sp/>p<sp/>?<sp/>((t<sp/>*)((char<sp/>*)(p)-(char*)(&amp;((t<sp/>*)0)-&gt;m)))<sp/>:<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="fat__list_8h_1a9404542e2cef8f6ecfb520c5ff3f9e40" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fat_list_next(l,<sp/>p)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(p)-&gt;next</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="fat__list_8h_1a4809ba3c77fc69a8244e9f8b9d41782d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fat_list_prev(l,<sp/>p)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(p)-&gt;previous</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="fat__list_8h_1adb94c2cb90ac57c8ce3aa64d9793c096" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fat_list_first(l)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(l)-&gt;head</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="fat__list_8h_1a969352c9e3dbf8cade1f3cb8a784669a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fat_list_last(l)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(l)-&gt;tail</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="fat__list_8h_1ae758b8b3afc33eb7dc35c7c0cf2e768b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fat_list_for_each(l,<sp/>p)<sp/><sp/><sp/><sp/><sp/>for<sp/>((p)<sp/>=<sp/>(l)-&gt;head;<sp/>(p);<sp/>(p)<sp/>=<sp/>(p)-&gt;next)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Inline<sp/>Functions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_init:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>fat_list_init(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list)</highlight></codeline>
+<codeline lineno="47"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref><sp/>=<sp/>list-&gt;<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_remove:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>fat_list_remove(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*node)</highlight></codeline>
+<codeline lineno="56"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(node);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(!node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>)</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref><sp/>=<sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref><sp/>=<sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(!node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>)</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref><sp/>=<sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref><sp/>=<sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_insert_after:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>fat_list_insert_after(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*node,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*new_node)</highlight></codeline>
+<codeline lineno="74"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(node);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(new_node);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>new_node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref><sp/>=<sp/>node;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>new_node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref><sp/>=<sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>)</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref><sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref>-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref><sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref><sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_insert_before:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>fat_list_insert_before(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*node,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*new_node)</highlight></codeline>
+<codeline lineno="91"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(node);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(new_node);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>new_node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref><sp/>=<sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>new_node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref><sp/>=<sp/>node;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>)</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref><sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref>-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref><sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref><sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_insert_first:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>fat_list_insert_first(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*node)</highlight></codeline>
+<codeline lineno="108"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(node);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref>)</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref><sp/>=<sp/>node;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>list-&gt;<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref><sp/>=<sp/>node;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1ab1b80b977e97cd6f9d954ff22f9204e7" kindref="member">previous</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>node-&gt;<ref refid="structfat__node_1af2b7ae61cceaf05739f2bf4aa0241431" kindref="member">next</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fat_list_insert_before(list,<sp/>list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref>,<sp/>node);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_insert_last:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>fat_list_insert_last(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*node)</highlight></codeline>
+<codeline lineno="126"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(node);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!list-&gt;<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref>)</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fat_list_insert_first(list,<sp/>node);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fat_list_insert_after(list,<sp/>list-&gt;<ref refid="structfat__list_1a77a339e1f6638796f8c28663f048bc9e" kindref="member">tail</ref>,<sp/>node);</highlight></codeline>
+<codeline lineno="134"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_is_empty:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>fat_list_is_empty(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list)</highlight></codeline>
+<codeline lineno="139"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>!list-&gt;<ref refid="structfat__list_1a9d6d3257f21b700f3580a849369d34d0" kindref="member">head</ref>;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="comment">//<sp/>fat_list_pop_head:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="fat__list_8h_1a18b8a5040a53db949ac82507b8e78499" kindref="member">FAT_INLINE</ref><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*<sp/>fat_list_pop_head(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__list" kindref="compound">fat_list</ref><sp/>*list)</highlight></codeline>
+<codeline lineno="148"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfat__node" kindref="compound">fat_node</ref><sp/>*<sp/>node;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__list_8h_1a539e5658a7981ce0e59cc336c61c4cc1" kindref="member">FAT_ASSERT</ref>(list);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>node<sp/>=<sp/><ref refid="fat__list_8h_1adb94c2cb90ac57c8ce3aa64d9793c096" kindref="member">fat_list_first</ref>(list);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(node)</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fat_list_remove(list,<sp/>node);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>node;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_list.h"/>
+  </compounddef>
+</doxygen>

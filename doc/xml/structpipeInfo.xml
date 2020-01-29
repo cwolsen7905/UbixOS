@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structpipeInfo" kind="struct" language="C++" prot="public">
+    <compoundname>pipeInfo</compoundname>
+    <includes refid="pipe_8h" local="no">pipe.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpipeInfo_1a1af79350f10c92db334eb798c2e073e1" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int pipeInfo::bCNT</definition>
+        <argsstring></argsstring>
+        <name>bCNT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeInfo_1a17d5f665e9b347438e7062904ece1cfa" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structpipeBuf" kindref="compound">pipeBuf</ref> *</type>
+        <definition>struct pipeBuf* pipeInfo::headPB</definition>
+        <argsstring></argsstring>
+        <name>headPB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="51" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeInfo_1a7b8ab29519bbfd2a4f319bb08b13d999" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int pipeInfo::rFD</definition>
+        <argsstring></argsstring>
+        <name>rFD</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeInfo_1ad1f25bacb95bd28fd47a62b648dbd125" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int pipeInfo::rfdCNT</definition>
+        <argsstring></argsstring>
+        <name>rfdCNT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeInfo_1a3bd26f08a5757a3e89049a8f1d7c0831" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structpipeBuf" kindref="compound">pipeBuf</ref> *</type>
+        <definition>struct pipeBuf* pipeInfo::tailPB</definition>
+        <argsstring></argsstring>
+        <name>tailPB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="52" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeInfo_1ab3c324342452efcb74529c9c830d708b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int pipeInfo::wFD</definition>
+        <argsstring></argsstring>
+        <name>wFD</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpipeInfo_1a73534b061097015a340b287279fe52ed" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int pipeInfo::wfdCNT</definition>
+        <argsstring></argsstring>
+        <name>wfdCNT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>pipeBuf</label>
+        <link refid="structpipeBuf"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>pipeInfo</label>
+        <link refid="structpipeInfo"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+headPB</edgelabel>
+          <edgelabel>+tailPB</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" line="45" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/pipe.h" bodystart="45" bodyend="53"/>
+    <listofallmembers>
+      <member refid="structpipeInfo_1a1af79350f10c92db334eb798c2e073e1" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>bCNT</name></member>
+      <member refid="structpipeInfo_1a17d5f665e9b347438e7062904ece1cfa" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>headPB</name></member>
+      <member refid="structpipeInfo_1a7b8ab29519bbfd2a4f319bb08b13d999" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>rFD</name></member>
+      <member refid="structpipeInfo_1ad1f25bacb95bd28fd47a62b648dbd125" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>rfdCNT</name></member>
+      <member refid="structpipeInfo_1a3bd26f08a5757a3e89049a8f1d7c0831" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>tailPB</name></member>
+      <member refid="structpipeInfo_1ab3c324342452efcb74529c9c830d708b" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>wFD</name></member>
+      <member refid="structpipeInfo_1a73534b061097015a340b287279fe52ed" prot="public" virt="non-virtual"><scope>pipeInfo</scope><name>wfdCNT</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

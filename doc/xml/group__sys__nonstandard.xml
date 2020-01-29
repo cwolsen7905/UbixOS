@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__nonstandard" kind="group">
+    <compoundname>sys_nonstandard</compoundname>
+    <title>Non-standard functions</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__sys__nonstandard_1gaf15b4fbaaae5bb7f6da4301f3f979284" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void lwip_itoa</definition>
+        <argsstring>(char *result, size_t bufsize, int number)</argsstring>
+        <name>lwip_itoa</name>
+        <param>
+          <type>char *</type>
+          <declname>result</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>bufsize</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>lwIP default implementation for itoa() non-standard function. This can be #defined to itoa() or snprintf(result, bufsize, &quot;%d&quot;, number) depending on your platform port. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/def.c" line="196" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/def.c" bodystart="196" bodyend="219"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__nonstandard_1ga263cbafcb697eff964139a9998a6668a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_stricmp</definition>
+        <argsstring>(const char *str1, const char *str2)</argsstring>
+        <name>lwip_stricmp</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str1</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>lwIP default implementation for stricmp() non-standard function. This can be #defined to stricmp() depending on your platform port. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/def.c" line="126" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/def.c" bodystart="126" bodyend="151"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__nonstandard_1ga997dcc49451121d4ed755b33bc7bd26a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_strnicmp</definition>
+        <argsstring>(const char *str1, const char *str2, size_t len)</argsstring>
+        <name>lwip_strnicmp</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str1</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str2</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>lwIP default implementation for strnicmp() non-standard function. This can be #defined to strnicmp() depending on your platform port. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/def.c" line="161" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/def.c" bodystart="161" bodyend="186"/>
+        <references refid="structpbuf_1a6f82449625e36e294f5d210268c0703f" compoundref="pbuf_8h" startline="159">pbuf::len</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__nonstandard_1gaeece028198cdaea2f0d2f1d691752c02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* lwip_strnstr</definition>
+        <argsstring>(const char *buffer, const char *token, size_t n)</argsstring>
+        <name>lwip_strnstr</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>token</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>lwIP default implementation for strnstr() non-standard function. This can be #defined to strnstr() depending on your platform port. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/net/core/def.c" line="103" column="1" bodyfile="C:/Dev/git/UbixOS/sys/net/core/def.c" bodystart="103" bodyend="116"/>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" compoundref="arch_8h" startline="187">LWIP_CONST_CAST</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+        <references refid="lib_8h_1a6395668b53785234b479045e1773a6a4">strncmp</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>lwIP provides default implementations for non-standard functions. These can be mapped to OS functions to reduce code footprint if desired. All defines related to this section must not be placed in <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref>, but in <ref refid="cc_8h" kindref="compound">arch/cc.h</ref>! These options cannot be #defined in <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref> since they are not options of lwIP itself, but options of the lwIP port to your system. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

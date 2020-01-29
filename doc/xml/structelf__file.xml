@@ -1,0 +1,512 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structelf__file" kind="struct" language="C++" prot="public">
+    <compoundname>elf_file</compoundname>
+    <includes refid="sys_2elf_8h" local="no">elf.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structelf__file_1a3cdc3dfff0554c0a888a5773541f5d16" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="41" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1ac76e36146f8909ff02ba36bc4693d458" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Hashelt *</type>
+        <definition>const Elf_Hashelt* elf_file::buckets</definition>
+        <argsstring></argsstring>
+        <name>buckets</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="45" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1add95691d9796d447970b7065b772df7e" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Hashelt *</type>
+        <definition>const Elf_Hashelt* elf_file::chains</definition>
+        <argsstring></argsstring>
+        <name>chains</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="46" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a03212a51ea8e4e64a0afdbf2839aba79" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long elf_file::ctfcnt</definition>
+        <argsstring></argsstring>
+        <name>ctfcnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="68" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1af80c98c5e5b4a2109427f76b0d32ded2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::ctfoff</definition>
+        <argsstring></argsstring>
+        <name>ctfoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="69" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a84ab6ddb2f283567550b285c319f4e68" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::ctftab</definition>
+        <argsstring></argsstring>
+        <name>ctftab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="67" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1af892468f243e1b6564735e7161150804" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long elf_file::ddbstrcnt</definition>
+        <argsstring></argsstring>
+        <name>ddbstrcnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="64" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a302c2e919c7dc56e816cf0053a4e02d7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::ddbstrtab</definition>
+        <argsstring></argsstring>
+        <name>ddbstrtab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="63" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a6e46c7ddb204bc395157e1bca48e12ef" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long elf_file::ddbsymcnt</definition>
+        <argsstring></argsstring>
+        <name>ddbsymcnt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="62" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a899c46e13415eab1dfdd96fd65443f74" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Sym *</type>
+        <definition>const Elf_Sym* elf_file::ddbsymtab</definition>
+        <argsstring></argsstring>
+        <name>ddbsymtab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="61" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1ab8111701a8d834289326d463e21dc67e" prot="public" static="no" mutable="no">
+        <type>Elf_Dyn *</type>
+        <definition>Elf_Dyn* elf_file::dynamic</definition>
+        <argsstring></argsstring>
+        <name>dynamic</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="42" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1acc91f95bcc8b731bdc26d8175d66e98b" prot="public" static="no" mutable="no">
+        <type>Elf_Addr *</type>
+        <definition>Elf_Addr* elf_file::got</definition>
+        <argsstring></argsstring>
+        <name>got</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="51" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1ab31fe1433e209bc267178d18539d1d86" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::hash</definition>
+        <argsstring></argsstring>
+        <name>hash</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="47" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a6c4309554ab7ff225d723afaf26a14ff" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::modptr</definition>
+        <argsstring></argsstring>
+        <name>modptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="60" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a6b6d480fa558f2a588fb5f63d2ebeea8" prot="public" static="no" mutable="no">
+        <type>Elf_Hashelt</type>
+        <definition>Elf_Hashelt elf_file::nbuckets</definition>
+        <argsstring></argsstring>
+        <name>nbuckets</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="43" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a72f454afe05387ff880b400cdacae642" prot="public" static="no" mutable="no">
+        <type>Elf_Hashelt</type>
+        <definition>Elf_Hashelt elf_file::nchains</definition>
+        <argsstring></argsstring>
+        <name>nchains</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="44" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1acd3302741b041aa96cdac8e9862d2d8c" prot="public" static="no" mutable="no">
+        <type>Elf_Addr</type>
+        <definition>Elf_Addr elf_file::pcpu_base</definition>
+        <argsstring></argsstring>
+        <name>pcpu_base</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="74" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a986264d69c0d0de13657020b6a704ed8" prot="public" static="no" mutable="no">
+        <type>Elf_Addr</type>
+        <definition>Elf_Addr elf_file::pcpu_start</definition>
+        <argsstring></argsstring>
+        <name>pcpu_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="72" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a6eb7935b6314a939b3525d1ae4591e90" prot="public" static="no" mutable="no">
+        <type>Elf_Addr</type>
+        <definition>Elf_Addr elf_file::pcpu_stop</definition>
+        <argsstring></argsstring>
+        <name>pcpu_stop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="73" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1aa7dd2de2ea1d207ab3f3fbfa7e3b89f9" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Rel *</type>
+        <definition>const Elf_Rel* elf_file::pltrel</definition>
+        <argsstring></argsstring>
+        <name>pltrel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="52" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a4e137930e93c57023f16000ef06e86d1" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Rela *</type>
+        <definition>const Elf_Rela* elf_file::pltrela</definition>
+        <argsstring></argsstring>
+        <name>pltrela</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="54" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a2081c8ee01340f25c5a0df729302fe35" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int elf_file::pltrelasize</definition>
+        <argsstring></argsstring>
+        <name>pltrelasize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="55" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1ae7af19c65fab6d791b5b02077167319b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int elf_file::pltrelsize</definition>
+        <argsstring></argsstring>
+        <name>pltrelsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="53" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a8d1a6d2403f16fb2213af368f98090e4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int elf_file::preloaded</definition>
+        <argsstring></argsstring>
+        <name>preloaded</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="40" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a34491983703dced98e9c1481eaaad06b" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Rel *</type>
+        <definition>const Elf_Rel* elf_file::rel</definition>
+        <argsstring></argsstring>
+        <name>rel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="56" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a5401558f6878a7320a0848dc2854b265" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Rela *</type>
+        <definition>const Elf_Rela* elf_file::rela</definition>
+        <argsstring></argsstring>
+        <name>rela</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="58" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a674267389f17658414520572548d2d4e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int elf_file::relasize</definition>
+        <argsstring></argsstring>
+        <name>relasize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="59" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a6d4e9c913c8e95522040504a8a3d840b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int elf_file::relsize</definition>
+        <argsstring></argsstring>
+        <name>relsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="57" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a7a8c0a71df3c0f68938b06ebb8c2d3de" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::strbase</definition>
+        <argsstring></argsstring>
+        <name>strbase</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="66" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a96d09d0cba6e6a26c991a84db6b462cb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int elf_file::strsz</definition>
+        <argsstring></argsstring>
+        <name>strsz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="49" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a81ac81c56b630ca8b35a0640899f338e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::strtab</definition>
+        <argsstring></argsstring>
+        <name>strtab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="48" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1ad660f32ed907fc332fd6097de0d7ce87" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::symbase</definition>
+        <argsstring></argsstring>
+        <name>symbase</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="65" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1ae20fc8892c4b58b6e01b474ad5495d2d" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> Elf_Sym *</type>
+        <definition>const Elf_Sym* elf_file::symtab</definition>
+        <argsstring></argsstring>
+        <name>symtab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="50" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1af1015b44890e269b4abb13dc1ecca2b4" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long elf_file::typlen</definition>
+        <argsstring></argsstring>
+        <name>typlen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="71" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelf__file_1a20b4b841f23c56131233aa72e8ded01a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t elf_file::typoff</definition>
+        <argsstring></argsstring>
+        <name>typoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="70" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>elf_file</label>
+        <link refid="structelf__file"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf.h" line="39" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf.h" bodystart="39" bodyend="75"/>
+    <listofallmembers>
+      <member refid="structelf__file_1a3cdc3dfff0554c0a888a5773541f5d16" prot="public" virt="non-virtual"><scope>elf_file</scope><name>address</name></member>
+      <member refid="structelf__file_1ac76e36146f8909ff02ba36bc4693d458" prot="public" virt="non-virtual"><scope>elf_file</scope><name>buckets</name></member>
+      <member refid="structelf__file_1add95691d9796d447970b7065b772df7e" prot="public" virt="non-virtual"><scope>elf_file</scope><name>chains</name></member>
+      <member refid="structelf__file_1a03212a51ea8e4e64a0afdbf2839aba79" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ctfcnt</name></member>
+      <member refid="structelf__file_1af80c98c5e5b4a2109427f76b0d32ded2" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ctfoff</name></member>
+      <member refid="structelf__file_1a84ab6ddb2f283567550b285c319f4e68" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ctftab</name></member>
+      <member refid="structelf__file_1af892468f243e1b6564735e7161150804" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ddbstrcnt</name></member>
+      <member refid="structelf__file_1a302c2e919c7dc56e816cf0053a4e02d7" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ddbstrtab</name></member>
+      <member refid="structelf__file_1a6e46c7ddb204bc395157e1bca48e12ef" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ddbsymcnt</name></member>
+      <member refid="structelf__file_1a899c46e13415eab1dfdd96fd65443f74" prot="public" virt="non-virtual"><scope>elf_file</scope><name>ddbsymtab</name></member>
+      <member refid="structelf__file_1ab8111701a8d834289326d463e21dc67e" prot="public" virt="non-virtual"><scope>elf_file</scope><name>dynamic</name></member>
+      <member refid="structelf__file_1acc91f95bcc8b731bdc26d8175d66e98b" prot="public" virt="non-virtual"><scope>elf_file</scope><name>got</name></member>
+      <member refid="structelf__file_1ab31fe1433e209bc267178d18539d1d86" prot="public" virt="non-virtual"><scope>elf_file</scope><name>hash</name></member>
+      <member refid="structelf__file_1a6c4309554ab7ff225d723afaf26a14ff" prot="public" virt="non-virtual"><scope>elf_file</scope><name>modptr</name></member>
+      <member refid="structelf__file_1a6b6d480fa558f2a588fb5f63d2ebeea8" prot="public" virt="non-virtual"><scope>elf_file</scope><name>nbuckets</name></member>
+      <member refid="structelf__file_1a72f454afe05387ff880b400cdacae642" prot="public" virt="non-virtual"><scope>elf_file</scope><name>nchains</name></member>
+      <member refid="structelf__file_1acd3302741b041aa96cdac8e9862d2d8c" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pcpu_base</name></member>
+      <member refid="structelf__file_1a986264d69c0d0de13657020b6a704ed8" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pcpu_start</name></member>
+      <member refid="structelf__file_1a6eb7935b6314a939b3525d1ae4591e90" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pcpu_stop</name></member>
+      <member refid="structelf__file_1aa7dd2de2ea1d207ab3f3fbfa7e3b89f9" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pltrel</name></member>
+      <member refid="structelf__file_1a4e137930e93c57023f16000ef06e86d1" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pltrela</name></member>
+      <member refid="structelf__file_1a2081c8ee01340f25c5a0df729302fe35" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pltrelasize</name></member>
+      <member refid="structelf__file_1ae7af19c65fab6d791b5b02077167319b" prot="public" virt="non-virtual"><scope>elf_file</scope><name>pltrelsize</name></member>
+      <member refid="structelf__file_1a8d1a6d2403f16fb2213af368f98090e4" prot="public" virt="non-virtual"><scope>elf_file</scope><name>preloaded</name></member>
+      <member refid="structelf__file_1a34491983703dced98e9c1481eaaad06b" prot="public" virt="non-virtual"><scope>elf_file</scope><name>rel</name></member>
+      <member refid="structelf__file_1a5401558f6878a7320a0848dc2854b265" prot="public" virt="non-virtual"><scope>elf_file</scope><name>rela</name></member>
+      <member refid="structelf__file_1a674267389f17658414520572548d2d4e" prot="public" virt="non-virtual"><scope>elf_file</scope><name>relasize</name></member>
+      <member refid="structelf__file_1a6d4e9c913c8e95522040504a8a3d840b" prot="public" virt="non-virtual"><scope>elf_file</scope><name>relsize</name></member>
+      <member refid="structelf__file_1a7a8c0a71df3c0f68938b06ebb8c2d3de" prot="public" virt="non-virtual"><scope>elf_file</scope><name>strbase</name></member>
+      <member refid="structelf__file_1a96d09d0cba6e6a26c991a84db6b462cb" prot="public" virt="non-virtual"><scope>elf_file</scope><name>strsz</name></member>
+      <member refid="structelf__file_1a81ac81c56b630ca8b35a0640899f338e" prot="public" virt="non-virtual"><scope>elf_file</scope><name>strtab</name></member>
+      <member refid="structelf__file_1ad660f32ed907fc332fd6097de0d7ce87" prot="public" virt="non-virtual"><scope>elf_file</scope><name>symbase</name></member>
+      <member refid="structelf__file_1ae20fc8892c4b58b6e01b474ad5495d2d" prot="public" virt="non-virtual"><scope>elf_file</scope><name>symtab</name></member>
+      <member refid="structelf__file_1af1015b44890e269b4abb13dc1ecca2b4" prot="public" virt="non-virtual"><scope>elf_file</scope><name>typlen</name></member>
+      <member refid="structelf__file_1a20b4b841f23c56131233aa72e8ded01a" prot="public" virt="non-virtual"><scope>elf_file</scope><name>typoff</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

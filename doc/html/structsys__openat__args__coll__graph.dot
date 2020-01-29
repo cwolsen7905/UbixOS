@@ -1,0 +1,7 @@
+digraph "sys_openat_args"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sys_openat_args\n|+ fd\l+ fd_l_\l+ fd_r_\l+ flag\l+ flag_l_\l+ flag_r_\l+ mode\l+ mode_l_\l+ mode_r_\l+ path\l+ path_l_\l+ path_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

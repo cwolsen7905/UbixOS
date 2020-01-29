@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structinode__operations" kind="struct" language="C++" prot="public">
+    <compoundname>inode_operations</compoundname>
+    <includes refid="include_2vfs_2vfs_8h" local="no">vfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structinode__operations_1a31987b134f87edb3b183df818ab32a5f" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::bmap) (struct inode *, int)</definition>
+        <argsstring>)(struct inode *, int)</argsstring>
+        <name>bmap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="86" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a26426232f01a8c45b8f1fcdc3c3a1995" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::create) (struct inode *, const char *, int, int, struct inode **)</definition>
+        <argsstring>)(struct inode *, const char *, int, int, struct inode **)</argsstring>
+        <name>create</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="75" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a7be5e72a98ac07b748e77ae234592bb9" prot="public" static="no" mutable="no">
+        <type>struct file_operations *</type>
+        <definition>struct file_operations* inode_operations::default_file_ops</definition>
+        <argsstring></argsstring>
+        <name>default_file_ops</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="74" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1aa35664261988a830d4bffcbf13743684" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::follow_link) (struct inode *, struct inode *, int, int, struct inode **)</definition>
+        <argsstring>)(struct inode *, struct inode *, int, int, struct inode **)</argsstring>
+        <name>follow_link</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="85" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="namei_8c_1adf0c5ab136108b2606b8baba7e12abbe" compoundref="namei_8c" startline="34" endline="50">follow_link</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a4632baf5a268a2d977e5a917ad466b1b" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::link) (struct inode *, struct inode *, const char *, int)</definition>
+        <argsstring>)(struct inode *, struct inode *, const char *, int)</argsstring>
+        <name>link</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="77" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1ae2d0cd46daad5f8edbbc6bf272f5f6ef" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::lookup) (struct inode *, const char *, int, struct inode **)</definition>
+        <argsstring>)(struct inode *, const char *, int, struct inode **)</argsstring>
+        <name>lookup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="76" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="76" bodyend="-1"/>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a23f8bc1b7e600570ba41b6d34df1a612" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::mkdir) (struct inode *, const char *, int, int)</definition>
+        <argsstring>)(struct inode *, const char *, int, int)</argsstring>
+        <name>mkdir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="80" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1af1c7355d9cd4b20001e5113e399589f8" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::mknod) (struct inode *, const char *, int, int, int)</definition>
+        <argsstring>)(struct inode *, const char *, int, int, int)</argsstring>
+        <name>mknod</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="82" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a9498ad8187220a0751acc29b725f1fe3" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::permission) (struct inode *, int)</definition>
+        <argsstring>)(struct inode *, int)</argsstring>
+        <name>permission</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="88" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="88" bodyend="-1"/>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1acd23fbd87d79893d30a5a68c651d72d4" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::readlink) (struct inode *, char *, int)</definition>
+        <argsstring>)(struct inode *, char *, int)</argsstring>
+        <name>readlink</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="84" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a5eaa8822225ea18bbc4f1ab9037b1852" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::rename) (struct inode *, const char *, int, struct inode *, const char *, int)</definition>
+        <argsstring>)(struct inode *, const char *, int, struct inode *, const char *, int)</argsstring>
+        <name>rename</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="83" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1af4b126f23f4f52c8321197b4a4db7c30" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::rmdir) (struct inode *, const char *, int)</definition>
+        <argsstring>)(struct inode *, const char *, int)</argsstring>
+        <name>rmdir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="81" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a63132b07d7a2adf1c050347cc23bdbcc" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::symlink) (struct inode *, const char *, int, const char *)</definition>
+        <argsstring>)(struct inode *, const char *, int, const char *)</argsstring>
+        <name>symlink</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="79" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a2a457148bc687a61512e3a920f24b73f" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* inode_operations::truncate) (struct inode *)</definition>
+        <argsstring>)(struct inode *)</argsstring>
+        <name>truncate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="87" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinode__operations_1a65da2c7438988c419c78f78b3d87cac7" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* inode_operations::unlink) (struct inode *, const char *, int)</definition>
+        <argsstring>)(struct inode *, const char *, int)</argsstring>
+        <name>unlink</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="78" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>inode_operations</label>
+        <link refid="structinode__operations"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="73" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="73" bodyend="89"/>
+    <listofallmembers>
+      <member refid="structinode__operations_1a31987b134f87edb3b183df818ab32a5f" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>bmap</name></member>
+      <member refid="structinode__operations_1a26426232f01a8c45b8f1fcdc3c3a1995" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>create</name></member>
+      <member refid="structinode__operations_1a7be5e72a98ac07b748e77ae234592bb9" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>default_file_ops</name></member>
+      <member refid="structinode__operations_1aa35664261988a830d4bffcbf13743684" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>follow_link</name></member>
+      <member refid="structinode__operations_1a4632baf5a268a2d977e5a917ad466b1b" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>link</name></member>
+      <member refid="structinode__operations_1ae2d0cd46daad5f8edbbc6bf272f5f6ef" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>lookup</name></member>
+      <member refid="structinode__operations_1a23f8bc1b7e600570ba41b6d34df1a612" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>mkdir</name></member>
+      <member refid="structinode__operations_1af1c7355d9cd4b20001e5113e399589f8" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>mknod</name></member>
+      <member refid="structinode__operations_1a9498ad8187220a0751acc29b725f1fe3" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>permission</name></member>
+      <member refid="structinode__operations_1acd23fbd87d79893d30a5a68c651d72d4" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>readlink</name></member>
+      <member refid="structinode__operations_1a5eaa8822225ea18bbc4f1ab9037b1852" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>rename</name></member>
+      <member refid="structinode__operations_1af4b126f23f4f52c8321197b4a4db7c30" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>rmdir</name></member>
+      <member refid="structinode__operations_1a63132b07d7a2adf1c050347cc23bdbcc" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>symlink</name></member>
+      <member refid="structinode__operations_1a2a457148bc687a61512e3a920f24b73f" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>truncate</name></member>
+      <member refid="structinode__operations_1a65da2c7438988c419c78f78b3d87cac7" prot="public" virt="non-virtual"><scope>inode_operations</scope><name>unlink</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

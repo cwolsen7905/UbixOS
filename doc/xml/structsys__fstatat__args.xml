@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__fstatat__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_fstatat_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__fstatat__args_1a6783f510ae899c37a1c99d55edc6461d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structstat" kindref="compound">stat</ref> *</type>
+        <definition>struct stat* sys_fstatat_args::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="613" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="613" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1a2a2e0cc51edb4a3c726e64af9635e18b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::buf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>buf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="612" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="612" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1a23029210abe9ad0de139937db7d40161" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::buf_r_[(sizeof(register_t)&lt;=sizeof(struct stat *) ? 0 :sizeof(register_t) - sizeof(struct stat *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct stat *) ? 0 :sizeof(register_t) - sizeof(struct stat *))]</argsstring>
+        <name>buf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="614" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="614" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1ac79c76decad5ad13a3f3750b3822fdb5" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_fstatat_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="607" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="607" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1ae54500cef5cdc07d3a5720d5ea9a8fa6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="606" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="606" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1a318616b75e88c2ec33d68568e99041fc" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="608" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="608" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1a55db89a275f8dcbbae725bd42b554bf9" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_fstatat_args::flag</definition>
+        <argsstring></argsstring>
+        <name>flag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="616" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="616" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1aa327565820410bfb6aff92025aab6559" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::flag_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>flag_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="615" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="615" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1a7ec5b82018f89443c2ddb04e0fce2dca" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::flag_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>flag_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="617" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="617" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1a724d992a283dd8b6400787095031f365" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_fstatat_args::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="610" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="610" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1ab07df550e759339207d4f2780f87978a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::path_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>path_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="609" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="609" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__fstatat__args_1aa13a9609a08a163082084a835221f008" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_fstatat_args::path_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>path_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="611" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="611" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_fstatat_args</label>
+        <link refid="structsys__fstatat__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+buf</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>stat</label>
+        <link refid="structstat"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="605" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="605" bodyend="618"/>
+    <listofallmembers>
+      <member refid="structsys__fstatat__args_1a6783f510ae899c37a1c99d55edc6461d" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>buf</name></member>
+      <member refid="structsys__fstatat__args_1a2a2e0cc51edb4a3c726e64af9635e18b" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>buf_l_</name></member>
+      <member refid="structsys__fstatat__args_1a23029210abe9ad0de139937db7d40161" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>buf_r_</name></member>
+      <member refid="structsys__fstatat__args_1ac79c76decad5ad13a3f3750b3822fdb5" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>fd</name></member>
+      <member refid="structsys__fstatat__args_1ae54500cef5cdc07d3a5720d5ea9a8fa6" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>fd_l_</name></member>
+      <member refid="structsys__fstatat__args_1a318616b75e88c2ec33d68568e99041fc" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>fd_r_</name></member>
+      <member refid="structsys__fstatat__args_1a55db89a275f8dcbbae725bd42b554bf9" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>flag</name></member>
+      <member refid="structsys__fstatat__args_1aa327565820410bfb6aff92025aab6559" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>flag_l_</name></member>
+      <member refid="structsys__fstatat__args_1a7ec5b82018f89443c2ddb04e0fce2dca" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>flag_r_</name></member>
+      <member refid="structsys__fstatat__args_1a724d992a283dd8b6400787095031f365" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>path</name></member>
+      <member refid="structsys__fstatat__args_1ab07df550e759339207d4f2780f87978a" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>path_l_</name></member>
+      <member refid="structsys__fstatat__args_1aa13a9609a08a163082084a835221f008" prot="public" virt="non-virtual"><scope>sys_fstatat_args</scope><name>path_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

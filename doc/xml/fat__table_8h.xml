@@ -1,0 +1,341 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__table_8h" kind="file" language="C++">
+    <compoundname>fat_table.h</compoundname>
+    <includes refid="fat__opts_8h" local="yes">fat_opts.h</includes>
+    <includes refid="fat__misc_8h" local="yes">fat_misc.h</includes>
+    <includedby refid="fat__access_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</includedby>
+    <includedby refid="fat__filelib_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</includedby>
+    <includedby refid="fat__format_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</includedby>
+    <includedby refid="fat__table_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</includedby>
+    <includedby refid="fat__write_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</includedby>
+    <incdepgraph>
+      <node id="6">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="5">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>stdio.h</label>
+      </node>
+      <node id="4">
+        <label>fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__table_8h_1aa75d9d34a1735e3691f800a075966018" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 fatfs_count_free_clusters</definition>
+        <argsstring>(struct fatfs *fs)</argsstring>
+        <name>fatfs_count_free_clusters</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="18" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="445" bodyend="478" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="18" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1af55ecc38d5888e53106fd26fd6805d5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_fat_add_cluster_to_chain</definition>
+        <argsstring>(struct fatfs *fs, uint32 start_cluster, uint32 newEntry)</argsstring>
+        <name>fatfs_fat_add_cluster_to_chain</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>start_cluster</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>newEntry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="16" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="414" bodyend="440" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="16" declcolumn="9"/>
+        <references refid="fat__defs_8h_1a6542eeb37905e8f378fb8f3e5e94d083" compoundref="fat__defs_8h" startline="108">FAT32_LAST_CLUSTER</references>
+        <references refid="fat__table_8c_1a9869304acfd1d264b8cebe1561dfe60a" compoundref="fat__table_8c" startline="349" endline="383">fatfs_fat_set_cluster</references>
+        <references refid="fat__table_8c_1af6297d64179e09d929493451ab68d6e6" compoundref="fat__table_8c" startline="205" endline="256">fatfs_find_next_cluster</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1acee4d83639e6fa1a228aec05618140e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_fat_init</definition>
+        <argsstring>(struct fatfs *fs)</argsstring>
+        <name>fatfs_fat_init</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="10" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="60" bodyend="79" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="10" declcolumn="9"/>
+        <references refid="fat__defs_8h_1a8dd000b545e9a127169fdbd82d418965" compoundref="fat__defs_8h" startline="109">FAT32_INVALID_CLUSTER</references>
+        <references refid="fat__opts_8h_1aa9354e4947875cd05f1d02b6e1f0ae96" compoundref="fat__opts_8h" startline="35">FAT_BUFFERS</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="fat__format_8h_1a7e6b1990138851af406cd5fc667569d6" compoundref="fat__format_8c" startline="426" endline="471">fatfs_format_fat16</referencedby>
+        <referencedby refid="fat__format_8h_1a44986a3210ea48d5274da16dd60d27c1" compoundref="fat__format_8c" startline="475" endline="520">fatfs_format_fat32</referencedby>
+        <referencedby refid="fat__access_8h_1a79896ebc01463ec2121874995ea7d922" compoundref="fat__access_8c" startline="43" endline="186">fatfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1a4122bbba15645ebdeea241ef7bcb663e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_fat_purge</definition>
+        <argsstring>(struct fatfs *fs)</argsstring>
+        <name>fatfs_fat_purge</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="11" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="179" bodyend="195" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="11" declcolumn="9"/>
+        <references refid="structfat__buffer_1a1679a1936a7f1862e0a13389f03f7270" compoundref="fat__access_8h" startline="44">fat_buffer::dirty</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1a9869304acfd1d264b8cebe1561dfe60a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_fat_set_cluster</definition>
+        <argsstring>(struct fatfs *fs, uint32 cluster, uint32 next_cluster)</argsstring>
+        <name>fatfs_fat_set_cluster</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>cluster</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>next_cluster</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="15" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="349" bodyend="383" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="15" declcolumn="9"/>
+        <references refid="fat__access_8h_1abd20c4673fcbadb1753696ba8353a13ba5ba99630da99c25c9e9efd7ed0bebf51" compoundref="fat__access_8h" startline="53">FAT_TYPE_16</references>
+        <referencedby refid="fat__write_8h_1ae8950d150955379c297d1ac53583f8e0" compoundref="fat__write_8c" startline="45" endline="76">fatfs_add_free_space</referencedby>
+        <referencedby refid="fat__write_8h_1a68d609a89800a61f700b18500a56d30a" compoundref="fat__write_8c" startline="82" endline="125">fatfs_allocate_free_space</referencedby>
+        <referencedby refid="fat__table_8h_1af55ecc38d5888e53106fd26fd6805d5c" compoundref="fat__table_8c" startline="414" endline="440">fatfs_fat_add_cluster_to_chain</referencedby>
+        <referencedby refid="fat__table_8h_1a7a329446088ccb4d6348f05fcd848ee4" compoundref="fat__table_8c" startline="389" endline="407">fatfs_free_cluster_chain</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1a595276233a4e5f4696cb6030ec54ed64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_find_blank_cluster</definition>
+        <argsstring>(struct fatfs *fs, uint32 start_cluster, uint32 *free_cluster)</argsstring>
+        <name>fatfs_find_blank_cluster</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>start_cluster</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref> *</type>
+          <declname>free_cluster</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="14" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="288" bodyend="342" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="14" declcolumn="9"/>
+        <references refid="fat__access_8h_1abd20c4673fcbadb1753696ba8353a13ba5ba99630da99c25c9e9efd7ed0bebf51" compoundref="fat__access_8h" startline="53">FAT_TYPE_16</references>
+        <referencedby refid="fat__write_8h_1ae8950d150955379c297d1ac53583f8e0" compoundref="fat__write_8c" startline="45" endline="76">fatfs_add_free_space</referencedby>
+        <referencedby refid="fat__write_8h_1a68d609a89800a61f700b18500a56d30a" compoundref="fat__write_8c" startline="82" endline="125">fatfs_allocate_free_space</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1af6297d64179e09d929493451ab68d6e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+        <definition>uint32 fatfs_find_next_cluster</definition>
+        <argsstring>(struct fatfs *fs, uint32 current_cluster)</argsstring>
+        <name>fatfs_find_next_cluster</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>current_cluster</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="12" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="205" bodyend="256" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="12" declcolumn="9"/>
+        <references refid="fat__access_8h_1abd20c4673fcbadb1753696ba8353a13ba5ba99630da99c25c9e9efd7ed0bebf51" compoundref="fat__access_8h" startline="53">FAT_TYPE_16</references>
+        <referencedby refid="fat__table_8h_1af55ecc38d5888e53106fd26fd6805d5c" compoundref="fat__table_8c" startline="414" endline="440">fatfs_fat_add_cluster_to_chain</referencedby>
+        <referencedby refid="fat__table_8h_1a7a329446088ccb4d6348f05fcd848ee4" compoundref="fat__table_8c" startline="389" endline="407">fatfs_free_cluster_chain</referencedby>
+        <referencedby refid="fat__access_8h_1aaa34effab2043ace65e92d060a0e74c5" compoundref="fat__access_8c" startline="213" endline="258">fatfs_sector_reader</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1a7a329446088ccb4d6348f05fcd848ee4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_free_cluster_chain</definition>
+        <argsstring>(struct fatfs *fs, uint32 start_cluster)</argsstring>
+        <name>fatfs_free_cluster_chain</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>start_cluster</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="17" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="389" bodyend="407" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="17" declcolumn="9"/>
+        <references refid="fat__defs_8h_1a6542eeb37905e8f378fb8f3e5e94d083" compoundref="fat__defs_8h" startline="108">FAT32_LAST_CLUSTER</references>
+        <references refid="fat__table_8c_1a9869304acfd1d264b8cebe1561dfe60a" compoundref="fat__table_8c" startline="349" endline="383">fatfs_fat_set_cluster</references>
+        <references refid="fat__table_8c_1af6297d64179e09d929493451ab68d6e6" compoundref="fat__table_8c" startline="205" endline="256">fatfs_find_next_cluster</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__table_8h_1a41c8ddc94d8c036d0b62a67c021a0d71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_set_fs_info_next_free_cluster</definition>
+        <argsstring>(struct fatfs *fs, uint32 newValue)</argsstring>
+        <name>fatfs_set_fs_info_next_free_cluster</name>
+        <param>
+          <type>struct <ref refid="structfatfs" kindref="compound">fatfs</ref> *</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>newValue</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" line="13" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c" bodystart="260" bodyend="283" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h" declline="13" declcolumn="9"/>
+        <references refid="fat__access_8h_1abd20c4673fcbadb1753696ba8353a13ba5ba99630da99c25c9e9efd7ed0bebf51" compoundref="fat__access_8h" startline="53">FAT_TYPE_16</references>
+        <referencedby refid="fat__write_8h_1ae8950d150955379c297d1ac53583f8e0" compoundref="fat__write_8c" startline="45" endline="76">fatfs_add_free_space</referencedby>
+        <referencedby refid="fat__write_8h_1a68d609a89800a61f700b18500a56d30a" compoundref="fat__write_8c" startline="82" endline="125">fatfs_allocate_free_space</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_TABLE_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_TABLE_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__opts_8h" kindref="compound">fat_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__misc_8h" kindref="compound">fat_misc.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Prototypes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1acee4d83639e6fa1a228aec05618140e6" kindref="member">fatfs_fat_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>);</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1a4122bbba15645ebdeea241ef7bcb663e" kindref="member">fatfs_fat_purge</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><ref refid="fat__table_8h_1af6297d64179e09d929493451ab68d6e6" kindref="member">fatfs_find_next_cluster</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>current_cluster);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1a41c8ddc94d8c036d0b62a67c021a0d71" kindref="member">fatfs_set_fs_info_next_free_cluster</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>newValue);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1a595276233a4e5f4696cb6030ec54ed64" kindref="member">fatfs_find_blank_cluster</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>start_cluster,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>*free_cluster);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1a9869304acfd1d264b8cebe1561dfe60a" kindref="member">fatfs_fat_set_cluster</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>cluster,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>next_cluster);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1af55ecc38d5888e53106fd26fd6805d5c" kindref="member">fatfs_fat_add_cluster_to_chain</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>start_cluster,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>newEntry);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__table_8h_1a7a329446088ccb4d6348f05fcd848ee4" kindref="member">fatfs_free_cluster_chain</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>start_cluster);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/><sp/><ref refid="fat__table_8h_1aa75d9d34a1735e3691f800a075966018" kindref="member">fatfs_count_free_clusters</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfatfs" kindref="compound">fatfs</ref><sp/>*<ref refid="structfs" kindref="compound">fs</ref>);</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="todo" kind="page">
+    <compoundname>todo</compoundname>
+    <title>Todo List</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><variablelist>
+<varlistentry><term>Module <ref refid="group__dhcp4" kindref="compound">dhcp4</ref>  </term></varlistentry>
+<listitem><para><anchor id="todo_1_todo000007"/>:<itemizedlist>
+<listitem><para>Support for interfaces other than Ethernet (SLIP, PPP, ...) </para>
+</listitem></itemizedlist>
+</para>
+</listitem>
+<varlistentry><term>Global <ref refid="group__lwip__opts__netif_1gabafb9f64a80e51b56c0abbcfc1f7e04e" kindref="member">LWIP_NETIF_TX_SINGLE_PBUF</ref>  </term></varlistentry>
+<listitem><para><anchor id="todo_1_todo000002"/>: TCP and IP-frag do not work with this, yet:  </para>
+</listitem>
+<varlistentry><term>Global <ref refid="group__sntp__opts_1ga7d4e12d90912d486e64f289d7f3ca446" kindref="member">SNTP_CHECK_RESPONSE</ref>  </term></varlistentry>
+<listitem><para><anchor id="todo_1_todo000001"/>: discard reply if any of the LI, Stratum, or Transmit Timestamp fields is 0 or the Mode field is not 4 (unicast) or 5 (broadcast).<itemizedlist>
+<listitem><para>&gt;= 4 </para>
+</listitem></itemizedlist>
+</para>
+<para>: to check that the Root Delay and Root Dispersion fields are each greater than or equal to 0 and less than infinity, where infinity is currently a cozy number like one second. This check avoids using a server whose synchronization source has expired for a very long time. </para>
+</listitem>
+</variablelist>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

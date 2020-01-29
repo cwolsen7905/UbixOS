@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="vj_8h" kind="file" language="C++">
+    <compoundname>vj.h</compoundname>
+    <includes refid="ppp__opts_8h" local="yes">netif/ppp/ppp_opts.h</includes>
+    <incdepgraph>
+      <node id="18">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="2">
+        <label>netif/ppp/ppp_opts.h</label>
+        <link refid="ppp__opts_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/vj.h</label>
+        <link refid="vj_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Definitions<sp/>for<sp/>tcp<sp/>compression<sp/>routines.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>$Id:<sp/>vj.h,v<sp/>1.7<sp/>2010/02/22<sp/>17:52:09<sp/>goldsimon<sp/>Exp<sp/>$</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>1989<sp/>Regents<sp/>of<sp/>the<sp/>University<sp/>of<sp/>California.</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>above<sp/>copyright<sp/>notice<sp/>and<sp/>this<sp/>paragraph<sp/>are</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>duplicated<sp/>in<sp/>all<sp/>such<sp/>forms<sp/>and<sp/>that<sp/>any<sp/>documentation,</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>advertising<sp/>materials,<sp/>and<sp/>other<sp/>materials<sp/>related<sp/>to<sp/>such</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>distribution<sp/>and<sp/>use<sp/>acknowledge<sp/>that<sp/>the<sp/>software<sp/>was<sp/>developed</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>by<sp/>the<sp/>University<sp/>of<sp/>California,<sp/>Berkeley.<sp/><sp/>The<sp/>name<sp/>of<sp/>the</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>University<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>WITHOUT<sp/>ANY<sp/>EXPRESS<sp/>OR</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>WITHOUT<sp/>LIMITATION,<sp/>THE<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTIBILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>Van<sp/>Jacobson<sp/>(van@helios.ee.lbl.gov),<sp/>Dec<sp/>31,<sp/>1989:</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>-<sp/>Initial<sp/>distribution.</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ppp__opts_8h" kindref="compound">netif/ppp/ppp_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>PPP_SUPPORT<sp/>&amp;&amp;<sp/>VJ_SUPPORT<sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>VJ_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VJ_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip_8h" kindref="compound">net/ip.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tcp__priv_8h" kindref="compound">net/priv/tcp_priv.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_SLOTS<sp/>16<sp/></highlight><highlight class="comment">/*<sp/>must<sp/>be<sp/>&gt;<sp/>2<sp/>and<sp/>&lt;<sp/>256<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_HDR<sp/><sp/><sp/>128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>Compressed<sp/>packet<sp/>format:</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/>The<sp/>first<sp/>octet<sp/>contains<sp/>the<sp/>packet<sp/>type<sp/>(top<sp/>3<sp/>bits),<sp/>TCP</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*<sp/>&apos;push&apos;<sp/>bit,<sp/>and<sp/>flags<sp/>that<sp/>indicate<sp/>which<sp/>of<sp/>the<sp/>4<sp/>TCP<sp/>sequence</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>*<sp/>numbers<sp/>have<sp/>changed<sp/>(bottom<sp/>5<sp/>bits).<sp/><sp/>The<sp/>next<sp/>octet<sp/>is<sp/>a</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>*<sp/>conversation<sp/>number<sp/>that<sp/>associates<sp/>a<sp/>saved<sp/>IP/TCP<sp/>header<sp/>with</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*<sp/>the<sp/>compressed<sp/>packet.<sp/><sp/>The<sp/>next<sp/>two<sp/>octets<sp/>are<sp/>the<sp/>TCP<sp/>checksum</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>*<sp/>from<sp/>the<sp/>original<sp/>datagram.<sp/><sp/>The<sp/>next<sp/>0<sp/>to<sp/>15<sp/>octets<sp/>are</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>*<sp/>sequence<sp/>number<sp/>changes,<sp/>one<sp/>change<sp/>per<sp/>bit<sp/>set<sp/>in<sp/>the<sp/>header</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*<sp/>(there<sp/>may<sp/>be<sp/>no<sp/>changes<sp/>and<sp/>there<sp/>are<sp/>two<sp/>special<sp/>cases<sp/>where</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*<sp/>the<sp/>receiver<sp/>implicitly<sp/>knows<sp/>what<sp/>changed<sp/>--<sp/>see<sp/>below).</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>*<sp/>There<sp/>are<sp/>5<sp/>numbers<sp/>which<sp/>can<sp/>change<sp/>(they<sp/>are<sp/>always<sp/>inserted</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*<sp/>in<sp/>the<sp/>following<sp/>order):<sp/>TCP<sp/>urgent<sp/>pointer,<sp/>window,</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*<sp/>acknowlegement,<sp/>sequence<sp/>number<sp/>and<sp/>IP<sp/>ID.<sp/><sp/>(The<sp/>urgent<sp/>pointer</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>*<sp/>is<sp/>different<sp/>from<sp/>the<sp/>others<sp/>in<sp/>that<sp/>its<sp/>value<sp/>is<sp/>sent,<sp/>not<sp/>the</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>*<sp/>change<sp/>in<sp/>value.)<sp/><sp/>Since<sp/>typical<sp/>use<sp/>of<sp/>SLIP<sp/>links<sp/>is<sp/>biased</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>*<sp/>toward<sp/>small<sp/>packets<sp/>(see<sp/>comments<sp/>on<sp/>MTU/MSS<sp/>below),<sp/>changes</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>use<sp/>a<sp/>variable<sp/>length<sp/>coding<sp/>with<sp/>one<sp/>octet<sp/>for<sp/>numbers<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*<sp/>range<sp/>1<sp/>-<sp/>255<sp/>and<sp/>3<sp/>octets<sp/>(0,<sp/>MSB,<sp/>LSB)<sp/>for<sp/>numbers<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>*<sp/>range<sp/>256<sp/>-<sp/>65535<sp/>or<sp/>0.<sp/><sp/>(If<sp/>the<sp/>change<sp/>in<sp/>sequence<sp/>number<sp/>or</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>*<sp/>ack<sp/>is<sp/>more<sp/>than<sp/>65535,<sp/>an<sp/>uncompressed<sp/>packet<sp/>is<sp/>sent.)</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>*<sp/>Packet<sp/>types<sp/>(must<sp/>not<sp/>conflict<sp/>with<sp/>IP<sp/>protocol<sp/>version)</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>*<sp/>The<sp/>top<sp/>nibble<sp/>of<sp/>the<sp/>first<sp/>octet<sp/>is<sp/>the<sp/>packet<sp/>type.<sp/><sp/>There<sp/>are</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/>*<sp/>three<sp/>possible<sp/>types:<sp/>IP<sp/>(not<sp/>proto<sp/>TCP<sp/>or<sp/>tcp<sp/>with<sp/>one<sp/>of<sp/>the</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>*<sp/>control<sp/>flags<sp/>set);<sp/>uncompressed<sp/>TCP<sp/>(a<sp/>normal<sp/>IP/TCP<sp/>packet<sp/>but</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>*<sp/>with<sp/>the<sp/>8-bit<sp/>protocol<sp/>field<sp/>replaced<sp/>by<sp/>an<sp/>8-bit<sp/>connection<sp/>id<sp/>--</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>*<sp/>this<sp/>type<sp/>of<sp/>packet<sp/>syncs<sp/>the<sp/>sender<sp/>&amp;<sp/>receiver);<sp/>and<sp/>compressed</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>*<sp/>TCP<sp/>(described<sp/>above).</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>*<sp/>LSB<sp/>of<sp/>4-bit<sp/>field<sp/>is<sp/>TCP<sp/>&quot;PUSH&quot;<sp/>bit<sp/>(a<sp/>worthless<sp/>anachronism)<sp/>and</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>*<sp/>is<sp/>logically<sp/>part<sp/>of<sp/>the<sp/>4-bit<sp/>&quot;changes&quot;<sp/>field<sp/>that<sp/>follows.<sp/><sp/>Top</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>*<sp/>three<sp/>bits<sp/>are<sp/>actual<sp/>packet<sp/>type.<sp/><sp/>For<sp/>backward<sp/>compatibility</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>*<sp/>and<sp/>in<sp/>the<sp/>interest<sp/>of<sp/>conserving<sp/>bits,<sp/>numbers<sp/>are<sp/>chosen<sp/>so<sp/>the</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/>*<sp/>IP<sp/>protocol<sp/>version<sp/>number<sp/>(4)<sp/>which<sp/>normally<sp/>appears<sp/>in<sp/>this<sp/>nibble</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>*<sp/>means<sp/>&quot;IP<sp/>packet&quot;.</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>packet<sp/>types<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TYPE_IP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x40</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TYPE_UNCOMPRESSED_TCP<sp/>0x70</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TYPE_COMPRESSED_TCP<sp/><sp/><sp/>0x80</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TYPE_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Bits<sp/>in<sp/>first<sp/>octet<sp/>of<sp/>compressed<sp/>packet<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NEW_C<sp/>0x40<sp/></highlight><highlight class="comment">/*<sp/>flag<sp/>bits<sp/>for<sp/>what<sp/>changed<sp/>in<sp/>a<sp/>packet<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NEW_I<sp/>0x20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NEW_S<sp/>0x08</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NEW_A<sp/>0x04</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NEW_W<sp/>0x02</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NEW_U<sp/>0x01</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>reserved,<sp/>special-case<sp/>values<sp/>of<sp/>above<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPECIAL_I<sp/>(NEW_S|NEW_W|NEW_U)<sp/></highlight><highlight class="comment">/*<sp/>echoed<sp/>interactive<sp/>traffic<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPECIAL_D<sp/>(NEW_S|NEW_A|NEW_W|NEW_U)<sp/></highlight><highlight class="comment">/*<sp/>unidirectional<sp/>data<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPECIALS_MASK<sp/>(NEW_S|NEW_A|NEW_W|NEW_U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_PUSH_BIT<sp/>0x10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>*<sp/>&quot;state&quot;<sp/>data<sp/>for<sp/>each<sp/>active<sp/>tcp<sp/>conversation<sp/>on<sp/>the<sp/>wire.<sp/><sp/>This<sp/>is</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"><sp/>*<sp/>basically<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>entire<sp/>IP/TCP<sp/>header<sp/>from<sp/>the<sp/>last<sp/>packet</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>*<sp/>we<sp/>saw<sp/>from<sp/>the<sp/>conversation<sp/>together<sp/>with<sp/>a<sp/>small<sp/>identifier</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>*<sp/>the<sp/>transmit<sp/>&amp;<sp/>receive<sp/>ends<sp/>of<sp/>the<sp/>line<sp/>use<sp/>to<sp/>locate<sp/>saved<sp/>header.</highlight></codeline>
+<codeline lineno="107"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">cstate<sp/>{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">cstate<sp/>*cs_next;<sp/></highlight><highlight class="comment">/*<sp/>next<sp/>most<sp/>recently<sp/>used<sp/>state<sp/>(xmit<sp/>only)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>cs_hlen;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>size<sp/>of<sp/>hdr<sp/>(receive<sp/>only)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>cs_id;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>connection<sp/>#<sp/>associated<sp/>with<sp/>this<sp/>state<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>cs_filler;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>csu_hdr[MAX_HDR];</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>csu_ip;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ip/tcp<sp/>hdr<sp/>from<sp/>most<sp/>recent<sp/>packet<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>}<sp/>vjcs_u;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cs_ip<sp/>vjcs_u.csu_ip</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cs_hdr<sp/>vjcs_u.csu_hdr</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vjstat<sp/>{</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_packets;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>outbound<sp/>packets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_compressed;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>outbound<sp/>compressed<sp/>packets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_searches;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>searches<sp/>for<sp/>connection<sp/>state<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_misses;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>times<sp/>couldn&apos;t<sp/>find<sp/>conn.<sp/>state<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_uncompressedin;<sp/></highlight><highlight class="comment">/*<sp/>inbound<sp/>uncompressed<sp/>packets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_compressedin;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inbound<sp/>compressed<sp/>packets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_errorin;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inbound<sp/>unknown<sp/>type<sp/>packets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>vjs_tossed;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inbound<sp/>packets<sp/>tossed<sp/>because<sp/>of<sp/>error<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/>*<sp/>all<sp/>the<sp/>state<sp/>data<sp/>for<sp/>one<sp/>serial<sp/>line<sp/>(we<sp/>need<sp/>one<sp/>of<sp/>these<sp/>per<sp/>line).</highlight></codeline>
+<codeline lineno="135"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vjcompress<sp/>{</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">cstate<sp/>*last_cs;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>most<sp/>recently<sp/>used<sp/>tstate<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>last_recv;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>last<sp/>rcvd<sp/>conn.<sp/>id<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>last_xmit;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>last<sp/>sent<sp/>conn.<sp/>id<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>flags;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>maxSlotIndex;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>compressSlot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Flag<sp/>indicating<sp/>OK<sp/>to<sp/>compress<sp/>slot<sp/>ID.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LINK_STATS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">vjstat<sp/>stats;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">cstate<sp/>tstate[MAX_SLOTS];<sp/></highlight><highlight class="comment">/*<sp/>xmit<sp/>connection<sp/>states<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">cstate<sp/>rstate[MAX_SLOTS];<sp/></highlight><highlight class="comment">/*<sp/>receive<sp/>connection<sp/>states<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>flag<sp/>values<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VJF_TOSS<sp/>1U<sp/></highlight><highlight class="comment">/*<sp/>tossing<sp/>rcvd<sp/>frames<sp/>because<sp/>of<sp/>input<sp/>err<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/>vj_compress_init<sp/><sp/><sp/><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vjcompress<sp/>*comp);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/>vj_compress_tcp<sp/><sp/><sp/><sp/><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vjcompress<sp/>*comp,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>**pb);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/>vj_uncompress_err<sp/><sp/><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vjcompress<sp/>*comp);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/>vj_uncompress_uncomp(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*nb,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vjcompress<sp/>*comp);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/>vj_uncompress_tcp<sp/><sp/><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>**nb,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vjcompress<sp/>*comp);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>VJ_H<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>PPP_SUPPORT<sp/>&amp;&amp;<sp/>VJ_SUPPORT<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/vj.h"/>
+  </compounddef>
+</doxygen>

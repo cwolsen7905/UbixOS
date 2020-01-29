@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_74bb5707befa08816061cada625d4de6" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/fs/ubixfsv2</compoundname>
+    <innerfile refid="btree_8cpp">btree.cpp</innerfile>
+    <innerfile refid="btree_8h">btree.h</innerfile>
+    <innerfile refid="btreeheader_8h">btreeheader.h</innerfile>
+    <innerfile refid="fs_2ubixfsv2_2device_8h">device.h</innerfile>
+    <innerfile refid="fs_2ubixfsv2_2file_8h">file.h</innerfile>
+    <innerfile refid="fsAbstract_8h">fsAbstract.h</innerfile>
+    <innerfile refid="main_8cpp">main.cpp</innerfile>
+    <innerfile refid="ramdrive_8cpp">ramdrive.cpp</innerfile>
+    <innerfile refid="ramdrive_8h">ramdrive.h</innerfile>
+    <innerfile refid="fs_2ubixfsv2_2types_8h">types.h</innerfile>
+    <innerfile refid="ubixfs_8cpp">ubixfs.cpp</innerfile>
+    <innerfile refid="fs_2ubixfsv2_2ubixfs_8h">ubixfs.h</innerfile>
+    <innerfile refid="vfs_8cpp">vfs.cpp</innerfile>
+    <innerfile refid="fs_2ubixfsv2_2vfs_8h">vfs.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/fs/ubixfsv2/"/>
+  </compounddef>
+</doxygen>

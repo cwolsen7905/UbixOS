@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_316bf5fdacfa44a7db12b020a0d9ab19" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/arch</compoundname>
+    <innerdir refid="dir_52da6d24a97612e2ff512597e17a72e0">C:/Dev/git/UbixOS/sys/arch/armv6</innerdir>
+    <innerdir refid="dir_256d947363de5d2e978c467334167a28">C:/Dev/git/UbixOS/sys/arch/i386</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/arch/"/>
+  </compounddef>
+</doxygen>

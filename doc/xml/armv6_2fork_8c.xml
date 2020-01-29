@@ -1,0 +1,765 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="armv6_2fork_8c" kind="file" language="C++">
+    <compoundname>fork.c</compoundname>
+    <includes refid="fork_8h" local="no">ubixos/fork.h</includes>
+    <includes local="no">ubixos/types.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="tty_8h" local="no">ubixos/tty.h</includes>
+    <includes refid="vitals_8h" local="no">ubixos/vitals.h</includes>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <incdepgraph>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="43">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ubixos/fork.h</label>
+        <link refid="fork_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="59">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="48">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="27">
+        <label>ubixos/types.h</label>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="39">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="44">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="armv6_2fork_8c_1a86f90c245b03ff9e2f08ef0cd7943b54" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>asm</definition>
+        <argsstring>(&quot;.globl sysFork           \n&quot; &quot;sysFork:                 \n&quot; &quot;  xor   %eax,%eax        \n&quot; &quot;  call  schedNewTask     \n&quot; &quot;  testl %eax,%eax        \n&quot; &quot;  je fork_ret            \n&quot; &quot;  pushl %esi             \n&quot; &quot;  pushl %edi             \n&quot; &quot;  pushl %ebp             \n&quot; &quot;  pushl %eax             \n&quot; &quot;  call  fork_copyProcess \n&quot; &quot;  movl  %eax,(%ebx)      \n&quot; &quot;  addl  $16,%esp         \n&quot; &quot;fork_ret:                \n&quot; &quot;  ret                    \n&quot;)</argsstring>
+        <name>asm</name>
+        <param>
+          <type>&quot;.globl <ref refid="fork_8h_1ab9473dc5f399b5f40e8548b5c17f09ce" kindref="member">sysFork</ref> \n&quot; &quot;sysFork: \n&quot; &quot; xor %</type>
+          <declname>eax</declname>
+        </param>
+        <param>
+          <type>%eax \n&quot; &quot; call <ref refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" kindref="member">schedNewTask</ref> \n&quot; &quot; testl %</type>
+          <declname>eax</declname>
+        </param>
+        <param>
+          <type>%eax \n&quot; &quot; je fork_ret \n&quot; &quot; pushl %esi \n&quot; &quot; pushl %edi \n&quot; &quot; pushl %ebp \n&quot; &quot; pushl %eax \n&quot; &quot; call <ref refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" kindref="member">fork_copyProcess</ref> \n&quot; &quot; movl %</type>
+          <declname>eax</declname>
+        </param>
+        <param>
+          <type>(%ebx) \n&quot; &quot; addl</type>
+          <declname>$16</declname>
+        </param>
+        <param>
+          <type>%esp \n&quot; &quot;fork_ret:\n&quot; &quot; ret \n&quot;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/fork.c" line="110" column="1" declfile="C:/Dev/git/UbixOS/sys/arch/armv6/fork.c" declline="110" declcolumn="1"/>
+      </memberdef>
+      <memberdef kind="function" id="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fork_copyProcess</definition>
+        <argsstring>(struct taskStruct *newProcess, long ebp, long edi, long esi, long none, long ebx, long ecx, long edx, long eip, long cs, long eflags, long esp, long ss)</argsstring>
+        <name>fork_copyProcess</name>
+        <param>
+          <type>struct <ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
+          <declname>newProcess</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>ebp</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>edi</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>esi</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>none</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>ebx</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>ecx</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>edx</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>eip</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>cs</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>eflags</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>esp</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>ss</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/fork.c" line="48" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/fork.c" bodystart="48" bodyend="97"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structtssStruct_1afecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="35">tssStruct::back_link</references>
+        <references refid="structtssStruct_1a8d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="46">tssStruct::cr3</references>
+        <references refid="structtssStruct_1a6d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="56">tssStruct::cs</references>
+        <references refid="structosInfo_1ae9411eaa7df66cd0148237248848bbdf" compoundref="sched_8h" startline="58">osInfo::cwd</references>
+        <references refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="60">tssStruct::ds</references>
+        <references refid="structtssStruct_1a6f6c9fdd54cd0da7f2331dc35f7d8fc7" compoundref="tss_8h" startline="49">tssStruct::eax</references>
+        <references refid="structtssStruct_1ac2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="51">tssStruct::ebp</references>
+        <references refid="structtssStruct_1ad0df6b4fe61e708d94656809727747cb" compoundref="tss_8h" startline="49">tssStruct::ebx</references>
+        <references refid="structtssStruct_1a7ba37dceca6d9363ea799091138d4601" compoundref="tss_8h" startline="49">tssStruct::ecx</references>
+        <references refid="structtssStruct_1aa52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="53">tssStruct::edi</references>
+        <references refid="structtssStruct_1a75825d1693047c99df1911b3af4d613f" compoundref="tss_8h" startline="49">tssStruct::edx</references>
+        <references refid="structtssStruct_1aa85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="48">tssStruct::eflags</references>
+        <references refid="structtssStruct_1a3e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="47">tssStruct::eip</references>
+        <references refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="54">tssStruct::es</references>
+        <references refid="structtssStruct_1a8beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="52">tssStruct::esi</references>
+        <references refid="structtssStruct_1a85412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="50">tssStruct::esp</references>
+        <references refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="37">tssStruct::esp0</references>
+        <references refid="structtssStruct_1ad5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="40">tssStruct::esp1</references>
+        <references refid="structtssStruct_1a60c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="43">tssStruct::esp2</references>
+        <references refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9aeb5838b12f5849b4544c2d9d10dc6548" compoundref="sched_8h" startline="47">FORK</references>
+        <references refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="62">tssStruct::fs</references>
+        <references refid="structtaskStruct_1aa9363ba2e18b68870b9a7bd42a012fc3" compoundref="sched_8h" startline="73">taskStruct::gid</references>
+        <references refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="64">tssStruct::gs</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="structtssStruct_1a611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="69">tssStruct::io_map</references>
+        <references refid="structtssStruct_1ad7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="66">tssStruct::ldt</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="69">taskStruct::oInfo</references>
+        <references refid="structtty__termNode_1af8e2ad49f523044768d8e768bfe531e4" compoundref="tty_8h" startline="42">tty_termNode::owner</references>
+        <references refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" compoundref="armv6_2sched_8c" startline="244" endline="246">sched_yield</references>
+        <references refid="structtssStruct_1a340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="58">tssStruct::ss</references>
+        <references refid="structtssStruct_1a26d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="38">tssStruct::ss0</references>
+        <references refid="structtssStruct_1a6abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="41">tssStruct::ss1</references>
+        <references refid="structtssStruct_1a5a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="44">tssStruct::ss2</references>
+        <references refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="72">taskStruct::state</references>
+        <references refid="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" compoundref="sched_8h" startline="77">taskStruct::term</references>
+        <references refid="structtssStruct_1a52ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="68">tssStruct::trace_bitmap</references>
+        <references refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="67">taskStruct::tss</references>
+        <references refid="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" compoundref="sched_8h" startline="73">taskStruct::uid</references>
+        <references refid="structosInfo_1a2833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="54">osInfo::vmStart</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="fork_8h" kindref="compound">ubixos/fork.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;ubixos/types.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tty_8h" kindref="compound">ubixos/tty.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>Functoin:<sp/>static<sp/>int<sp/>fork_copyProcess(struct<sp/>taskStruct<sp/>*newProcess,long<sp/>ebp,long<sp/>edi,</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>long<sp/>esi,<sp/>long<sp/>none,long<sp/>ebx,long<sp/>ecx,long<sp/>edx,long<sp/>eip,long<sp/>cs,long<sp/>eflags,</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>long<sp/>esp,long<sp/>ss)</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>Desc:<sp/>This<sp/>function<sp/>will<sp/>copy<sp/>a<sp/>process</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"></highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"></highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" refkind="member"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Had<sp/>to<sp/>remove<sp/>static<sp/>though<sp/>tihs<sp/>function<sp/>is<sp/>only<sp/>used<sp/>in<sp/>this<sp/>file<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" kindref="member">fork_copyProcess</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtaskStruct" kindref="compound">taskStruct</ref><sp/>*newProcess,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a41628a27790fd3a5e7841964e2cfb567" kindref="member">ebp</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1adb872c338754cf34f31c3237c0744c5a" kindref="member">edi</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a695259228feafd38874d23d1d1c1f94c" kindref="member">esi</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>none,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a9b8ab2ce067172be7f7b47dd1fdff33b" kindref="member">ebx</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a5894cb5ead4ba1d3f560436bb626824e" kindref="member">ecx</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a49cc86b5a4cfc70acf54b6cc7e8c4799" kindref="member">edx</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a031746b975400ea26eac2e8dcbc2bb13" kindref="member">eip</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1af1046cdf3670b054d9d6e0c482cac2c5" kindref="member">cs</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>eflags,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a0638834b0dfdb225a01af4c6fa50574c" kindref="member">esp</ref>,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi386__frame_1a1b45e07b3d1a843351d2775f7a9f8b36" kindref="member">ss</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">taskStruct</ref><sp/>*<sp/>tmpProcPtr<sp/>=<sp/>newProcess;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(newProcess);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Up<sp/>New<sp/>Tasks<sp/>Information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(newProcess-&gt;<ref refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1ae9411eaa7df66cd0148237248848bbdf" kindref="member">cwd</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1ae9411eaa7df66cd0148237248848bbdf" kindref="member">cwd</ref>,<sp/>1024);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a3e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>eip;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1a2833c1fa4a221941b5d1141dfa5beefd" kindref="member">vmStart</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1a2833c1fa4a221941b5d1141dfa5beefd" kindref="member">vmStart</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" kindref="member">term</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" kindref="member">term</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" kindref="member">term</ref>-&gt;<ref refid="structtty__termNode_1af8e2ad49f523044768d8e768bfe531e4" kindref="member">owner</ref><sp/>=<sp/>newProcess-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" kindref="member">uid</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" kindref="member">uid</ref>;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1aa9363ba2e18b68870b9a7bd42a012fc3" kindref="member">gid</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1aa9363ba2e18b68870b9a7bd42a012fc3" kindref="member">gid</ref>;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1afecbe8ea2cfebfb4d1a0aa7b6ebcac2c" kindref="member">back_link</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" kindref="member">esp0</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" kindref="member">esp0</ref>;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a26d03018de8c122451661bfe9d030541" kindref="member">ss0</ref><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1ad5ef8867200562fd8262f70312beff4d" kindref="member">esp1</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a6abf05d9a8f6356860a5606ffbadc989" kindref="member">ss1</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a60c88f3cd3f2110cb24be62444f42cfb" kindref="member">esp2</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a5a79ace5652b01cc25fc5ba7ff45bfa8" kindref="member">ss2</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1aa85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>=<sp/>eflags;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a6f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1ad0df6b4fe61e708d94656809727747cb" kindref="member">ebx</ref><sp/>=<sp/>ebx;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a7ba37dceca6d9363ea799091138d4601" kindref="member">ecx</ref><sp/>=<sp/>ecx;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a75825d1693047c99df1911b3af4d613f" kindref="member">edx</ref><sp/>=<sp/>edx;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a8beab5808aad776957d4544f6b139d4e" kindref="member">esi</ref><sp/>=<sp/>esi;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1aa52b515706cd37e166c8eba348d5e68b" kindref="member">edi</ref><sp/>=<sp/>edi;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1ac2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref><sp/>=<sp/>ebp;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>esp;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a6d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref><sp/>=<sp/>cs<sp/>&amp;<sp/>0xFF;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a340a29782d3306ba84176c543725d70a" kindref="member">ss</ref><sp/>=<sp/>ss<sp/>&amp;<sp/>0xFF;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref><sp/>&amp;<sp/>0xFF;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" kindref="member">fs</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" kindref="member">fs</ref><sp/>&amp;<sp/>0xFF;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" kindref="member">gs</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" kindref="member">gs</ref><sp/>&amp;<sp/>0xFF;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref><sp/>&amp;<sp/>0xFF;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1ad7b6a367e1c2a38e1ee6c8e5dad955f7" kindref="member">ldt</ref><sp/>=<sp/>0x18;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a52ac0b54c6b2c71450c62d7fc911f2e2" kindref="member">trace_bitmap</ref><sp/>=<sp/>0x0000;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a611a0a044f99f092ace469ce2381bb33" kindref="member">io_map</ref><sp/>=<sp/>0x8000;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Create<sp/>A<sp/>Copy<sp/>Of<sp/>The<sp/>VM<sp/>Space<sp/>For<sp/>New<sp/>Task<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a8d312ed3dd0ea7a0f801c08a8cc4afd0" kindref="member">cr3</ref><sp/>=<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/>vmmCopyVirtualSpace(newProcess-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>newProcess-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9aeb5838b12f5849b4544c2d9d10dc6548" kindref="member">FORK</ref>;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Fix<sp/>gcc<sp/>optimization<sp/>problems<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(tmpProcPtr-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>==<sp/><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9aeb5838b12f5849b4544c2d9d10dc6548" kindref="member">FORK</ref>)</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>Id<sp/>of<sp/>Proccess<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(newProcess-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/>Functoin:<sp/>void<sp/>sysFork();</highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>Desc:<sp/>This<sp/>function<sp/>will<sp/>fork<sp/>a<sp/>new<sp/>task</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"></highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="107"><highlight class="comment"><sp/>08/01/02<sp/>-<sp/>This<sp/>Seems<sp/>To<sp/>Be<sp/>Working<sp/>Fine<sp/>However<sp/>I&apos;m<sp/>Not<sp/>Sure<sp/>If<sp/>I</highlight></codeline>
+<codeline lineno="108"><highlight class="comment"><sp/>Chose<sp/>The<sp/>Best<sp/>Path<sp/>To<sp/>Impliment<sp/>It<sp/>I<sp/>Guess<sp/>We<sp/>Will<sp/>See</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>What<sp/>The<sp/>Future<sp/>May<sp/>Bring</highlight></codeline>
+<codeline lineno="110"><highlight class="comment"></highlight></codeline>
+<codeline lineno="111"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;.globl<sp/>sysFork<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;sysFork:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>xor<sp/><sp/><sp/>%eax,%eax<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>call<sp/><sp/>schedNewTask<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>testl<sp/>%eax,%eax<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>je<sp/>fork_ret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/>%esi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/>%edi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/>%ebp<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/>%eax<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>call<sp/><sp/>fork_copyProcess<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/>%eax,(%ebx)<sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>addl<sp/><sp/>$16,%esp<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;fork_ret:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>ret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal">);</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/fork.c"/>
+  </compounddef>
+</doxygen>

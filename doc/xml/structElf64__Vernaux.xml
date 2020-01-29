@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Vernaux" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Vernaux</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Vernaux_1a1c5aa72ab842b4338ba2576d5f014700" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Vernaux::vna_flags</definition>
+        <argsstring></argsstring>
+        <name>vna_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="247" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="247" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Vernaux_1ae41cce47b72e2232f3880843ab550649" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Vernaux::vna_hash</definition>
+        <argsstring></argsstring>
+        <name>vna_hash</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="246" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="246" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Vernaux_1a4c83e76a256ad7fe7058df7ee9493c5c" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Vernaux::vna_name</definition>
+        <argsstring></argsstring>
+        <name>vna_name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="249" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Vernaux_1a565bd1e8b3ae2f45854f8163629444fc" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Vernaux::vna_next</definition>
+        <argsstring></argsstring>
+        <name>vna_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="250" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="250" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Vernaux_1a56e3d7fee69c7b55556297757e1977e5" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Vernaux::vna_other</definition>
+        <argsstring></argsstring>
+        <name>vna_other</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="248" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="248" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Vernaux</label>
+        <link refid="structElf64__Vernaux"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="245" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="245" bodyend="251"/>
+    <listofallmembers>
+      <member refid="structElf64__Vernaux_1a1c5aa72ab842b4338ba2576d5f014700" prot="public" virt="non-virtual"><scope>Elf64_Vernaux</scope><name>vna_flags</name></member>
+      <member refid="structElf64__Vernaux_1ae41cce47b72e2232f3880843ab550649" prot="public" virt="non-virtual"><scope>Elf64_Vernaux</scope><name>vna_hash</name></member>
+      <member refid="structElf64__Vernaux_1a4c83e76a256ad7fe7058df7ee9493c5c" prot="public" virt="non-virtual"><scope>Elf64_Vernaux</scope><name>vna_name</name></member>
+      <member refid="structElf64__Vernaux_1a565bd1e8b3ae2f45854f8163629444fc" prot="public" virt="non-virtual"><scope>Elf64_Vernaux</scope><name>vna_next</name></member>
+      <member refid="structElf64__Vernaux_1a56e3d7fee69c7b55556297757e1977e5" prot="public" virt="non-virtual"><scope>Elf64_Vernaux</scope><name>vna_other</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

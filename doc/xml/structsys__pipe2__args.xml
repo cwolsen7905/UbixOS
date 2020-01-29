@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__pipe2__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_pipe2_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__pipe2__args_1a7cd3e1a28b459403e1f2419ef5476f8c" prot="public" static="no" mutable="no">
+        <type>int *</type>
+        <definition>int* sys_pipe2_args::fildes</definition>
+        <argsstring></argsstring>
+        <name>fildes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="759" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="759" bodyend="-1"/>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__pipe2__args_1a3c3390940c6d9d32812a8f21e16a5b2c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_pipe2_args::fildes_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fildes_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="758" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="758" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__pipe2__args_1ae53c7a8a8df0adc3bdfb8242be133b3b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_pipe2_args::fildes_r_[(sizeof(register_t)&lt;=sizeof(int *) ? 0 :sizeof(register_t) - sizeof(int *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int *) ? 0 :sizeof(register_t) - sizeof(int *))]</argsstring>
+        <name>fildes_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="760" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="760" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__pipe2__args_1a1858ad99f7780c3da0661a309bfc3f76" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_pipe2_args::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="762" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="762" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__pipe2__args_1ab6b2885c5d6e6719db2b3ffc0fab0a60" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_pipe2_args::flags_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>flags_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="761" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="761" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__pipe2__args_1a701bc43cb56ea68c96f6173e0ea699d6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_pipe2_args::flags_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>flags_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="763" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="763" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_pipe2_args</label>
+        <link refid="structsys__pipe2__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="757" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="757" bodyend="764"/>
+    <listofallmembers>
+      <member refid="structsys__pipe2__args_1a7cd3e1a28b459403e1f2419ef5476f8c" prot="public" virt="non-virtual"><scope>sys_pipe2_args</scope><name>fildes</name></member>
+      <member refid="structsys__pipe2__args_1a3c3390940c6d9d32812a8f21e16a5b2c" prot="public" virt="non-virtual"><scope>sys_pipe2_args</scope><name>fildes_l_</name></member>
+      <member refid="structsys__pipe2__args_1ae53c7a8a8df0adc3bdfb8242be133b3b" prot="public" virt="non-virtual"><scope>sys_pipe2_args</scope><name>fildes_r_</name></member>
+      <member refid="structsys__pipe2__args_1a1858ad99f7780c3da0661a309bfc3f76" prot="public" virt="non-virtual"><scope>sys_pipe2_args</scope><name>flags</name></member>
+      <member refid="structsys__pipe2__args_1ab6b2885c5d6e6719db2b3ffc0fab0a60" prot="public" virt="non-virtual"><scope>sys_pipe2_args</scope><name>flags_l_</name></member>
+      <member refid="structsys__pipe2__args_1a701bc43cb56ea68c96f6173e0ea699d6" prot="public" virt="non-virtual"><scope>sys_pipe2_args</scope><name>flags_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

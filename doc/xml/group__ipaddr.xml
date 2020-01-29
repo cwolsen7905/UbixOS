@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__ipaddr" kind="group">
+    <compoundname>ipaddr</compoundname>
+    <title>IP address handling</title>
+    <innergroup refid="group__ip4addr">IPv4 only</innergroup>
+    <innergroup refid="group__ip6addr">IPv6 only</innergroup>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__ipaddr_1gaf2142f0dfdcc938e2db16aa745ed585c" prot="public" static="no" strong="no">
+        <type></type>
+        <name>lwip_ip_addr_type</name>
+        <enumvalue id="group__ipaddr_1ggaf2142f0dfdcc938e2db16aa745ed585cace47fa82608deeb1c1c7c2c891eb5049" prot="public">
+          <name>IPADDR_TYPE_V4</name>
+          <initializer>=   0U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>IPv4 </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ipaddr_1ggaf2142f0dfdcc938e2db16aa745ed585caae510fd8ec7fe405b594b57af61f9a02" prot="public">
+          <name>IPADDR_TYPE_V6</name>
+          <initializer>=   6U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>IPv6 </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__ipaddr_1ggaf2142f0dfdcc938e2db16aa745ed585cac6b2c99cf920e08efcb55dc40e42944e" prot="public">
+          <name>IPADDR_TYPE_ANY</name>
+          <initializer>= 46U</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>IPv4+IPv6 (&quot;dual-stack&quot;) </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP address types for use in ip_addr_t.type member. <simplesect kind="see"><para>tcp_new_ip_type(), udp_new_ip_type(), raw_new_ip_type(). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip_addr.h" line="54" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip_addr.h" bodystart="54" bodyend="61"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

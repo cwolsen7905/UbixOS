@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structigmp__msg" kind="struct" language="C++" prot="public">
+    <compoundname>igmp_msg</compoundname>
+    <includes refid="prot_2igmp_8h" local="no">igmp.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structigmp__msg_1a875894e6ca7849ad9eae5f81f5eeab29" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>igmp_msg::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t igmp_checksum)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>igmp_checksum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="78" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structigmp__msg_1a12565eb2acf6950ee18c368054fe0836" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>igmp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t igmp_maxresp)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>igmp_maxresp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="77" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structigmp__msg_1a623a3baf99a86878b7d0c2a87a7f9935" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>igmp_msg::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t igmp_msgtype)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>igmp_msgtype</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="76" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structigmp__msg_1a935034863490ec706ba33f238b77126a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>igmp_msg::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t igmp_group_address)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>igmp_group_address</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="79" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IGMP packet format. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>igmp_msg</label>
+        <link refid="structigmp__msg"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" line="75" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h" bodystart="75" bodyend="80"/>
+    <listofallmembers>
+      <member refid="structigmp__msg_1a875894e6ca7849ad9eae5f81f5eeab29" prot="public" virt="non-virtual"><scope>igmp_msg</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structigmp__msg_1a623a3baf99a86878b7d0c2a87a7f9935" prot="public" virt="non-virtual"><scope>igmp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structigmp__msg_1a12565eb2acf6950ee18c368054fe0836" prot="public" virt="non-virtual"><scope>igmp_msg</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structigmp__msg_1a935034863490ec706ba33f238b77126a" prot="public" virt="non-virtual"><scope>igmp_msg</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

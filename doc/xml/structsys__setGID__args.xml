@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__setGID__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_setGID_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__setGID__args_1af9eceb51d287d85b79ff96382563c51d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_setGID_args::gid</definition>
+        <argsstring></argsstring>
+        <name>gid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/access.h" line="39" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/access.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setGID__args_1a7196e37976fd853629ede4431e04d246" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setGID_args::gid</definition>
+        <argsstring></argsstring>
+        <name>gid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="150" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="150" bodyend="-1"/>
+        <referencedby refid="access_8c_1a2f790b60f547274cdc5c8381c7b8bff8" compoundref="access_8c" startline="63" endline="74">sys_setGID</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setGID__args_1ab68578062a8f41c7da0f6fcf5ea8bb4f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setGID_args::gid_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>gid_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="149" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setGID__args_1a95fc1004824fd5a93f5221186cda004a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setGID_args::gid_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>gid_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="151" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_setGID_args</label>
+        <link refid="structsys__setGID__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="148" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="148" bodyend="152"/>
+    <listofallmembers>
+      <member refid="structsys__setGID__args_1a7196e37976fd853629ede4431e04d246" prot="public" virt="non-virtual"><scope>sys_setGID_args</scope><name>gid</name></member>
+      <member refid="structsys__setGID__args_1af9eceb51d287d85b79ff96382563c51d" prot="public" virt="non-virtual"><scope>sys_setGID_args</scope><name>gid</name></member>
+      <member refid="structsys__setGID__args_1ab68578062a8f41c7da0f6fcf5ea8bb4f" prot="public" virt="non-virtual"><scope>sys_setGID_args</scope><name>gid_l_</name></member>
+      <member refid="structsys__setGID__args_1a95fc1004824fd5a93f5221186cda004a" prot="public" virt="non-virtual"><scope>sys_setGID_args</scope><name>gid_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

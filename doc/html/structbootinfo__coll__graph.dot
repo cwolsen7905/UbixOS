@@ -1,0 +1,7 @@
+digraph "bootinfo"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{bootinfo\n|+ bi_basemem\l+ bi_bios_dev\l+ bi_bios_geom\l+ bi_envp\l+ bi_esymtab\l+ bi_extmem\l+ bi_fpswa\l+ bi_hcdp\l+ bi_kernelname\l+ bi_kernend\land 13 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

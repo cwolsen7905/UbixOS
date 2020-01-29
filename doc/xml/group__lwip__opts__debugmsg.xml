@@ -1,0 +1,426 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__debugmsg" kind="group">
+    <compoundname>lwip_opts_debugmsg</compoundname>
+    <title>Debug messages</title>
+    <innergroup refid="group__debugging__levels">LWIP_DBG_MIN_LEVEL and LWIP_DBG_TYPES_ON values</innergroup>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga671009550216f7dc03e67ba5751e3160" prot="public" static="no">
+        <name>API_LIB_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>API_LIB_DEBUG: Enable debugging in <ref refid="api__lib_8c" kindref="compound">api_lib.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2611" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2611" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga4279d7ff9f986b2ff3eb068bb012b697" prot="public" static="no">
+        <name>API_MSG_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>API_MSG_DEBUG: Enable debugging in <ref refid="api__msg_8c" kindref="compound">api_msg.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2618" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2618" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gafaee522e7f32d81022215e1805e303a5" prot="public" static="no">
+        <name>AUTOIP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>AUTOIP_DEBUG: Enable debugging in <ref refid="autoip_8c" kindref="compound">autoip.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2794" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2794" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga97927ceecabcdb5f41735bf372a05cee" prot="public" static="no">
+        <name>DHCP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DHCP_DEBUG: Enable debugging in <ref refid="dhcp_8c" kindref="compound">dhcp.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2787" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2787" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gaba55da2352c99d813767913e5e36be1f" prot="public" static="no">
+        <name>DNS_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DNS_DEBUG: Enable debugging for DNS. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2801" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2801" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gabff5d1e0b334f5b45bd2b8bbb675411e" prot="public" static="no">
+        <name>ETHARP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ETHARP_DEBUG: Enable debugging in <ref refid="etharp_8c" kindref="compound">etharp.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2590" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2590" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga9595904a1cb9bfe0b9b1d958abdc923a" prot="public" static="no">
+        <name>ICMP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>ICMP_DEBUG: Enable debugging in <ref refid="icmp_8c" kindref="compound">icmp.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2632" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2632" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga8da07508ee75704362d45eee3eb857fa" prot="public" static="no">
+        <name>IGMP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IGMP_DEBUG: Enable debugging in <ref refid="igmp_8c" kindref="compound">igmp.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2639" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2639" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga78140cbe70258a65cb5c9e381843e4f3" prot="public" static="no">
+        <name>INET_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>INET_DEBUG: Enable debugging in inet.c. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2646" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2646" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gac2f9726756b78d4d7c425b0422a776ce" prot="public" static="no">
+        <name>IP6_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP6_DEBUG: Enable debugging for IPv6. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2808" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2808" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga5d3348778951e7bc5cd397c6575eef3a" prot="public" static="no">
+        <name>IP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP_DEBUG: Enable debugging for IP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2653" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2653" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga4cdc3e9a4a1c01d1f7f0e723a1b2ec33" prot="public" static="no">
+        <name>IP_REASS_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>IP_REASS_DEBUG: Enable debugging in ip_frag.c for both frag &amp; reass. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2660" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2660" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga2043f599515774f8e571ba185dbcb9e7" prot="public" static="no">
+        <name>LWIP_DBG_MIN_LEVEL</name>
+        <initializer><ref refid="group__debugging__levels_1ga8ebaeb006b43f55897f3196b3617dc87" kindref="member">LWIP_DBG_LEVEL_ALL</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_DBG_MIN_LEVEL: After masking, the value of the debug is compared against this value. If it is smaller, then debugging messages are written. <simplesect kind="see"><para><ref refid="group__debugging__levels" kindref="compound">LWIP_DBG_MIN_LEVEL and LWIP_DBG_TYPES_ON values</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2574" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2574" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gac095d0e53f5eb5b326b2cccfd071d93d" prot="public" static="no">
+        <name>LWIP_DBG_TYPES_ON</name>
+        <initializer><ref refid="group__debugging__levels_1ga9e31b7cbbc8f46af8e62b548079acd4e" kindref="member">LWIP_DBG_ON</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_DBG_TYPES_ON: A mask that can be used to globally enable/disable debug messages of certain types. <simplesect kind="see"><para><ref refid="group__debugging__levels" kindref="compound">LWIP_DBG_MIN_LEVEL and LWIP_DBG_TYPES_ON values</ref> </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2583" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2583" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga2d7bc380695eeedb1af50c3808613afe" prot="public" static="no">
+        <name>MEM_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEM_DEBUG: Enable debugging in <ref refid="mem_8c" kindref="compound">mem.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2674" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2674" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gad80231923f7a808d49eba5ec57d63616" prot="public" static="no">
+        <name>MEMP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MEMP_DEBUG: Enable debugging in <ref refid="memp_8c" kindref="compound">memp.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2681" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2681" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga2dfad02b075a7f9a8791a66fe40864a4" prot="public" static="no">
+        <name>NETIF_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>NETIF_DEBUG: Enable debugging in <ref refid="netif_8c" kindref="compound">netif.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2597" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2597" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga5c3d44a0ec3bb8bd66f776c70d5c6a6c" prot="public" static="no">
+        <name>PBUF_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>PBUF_DEBUG: Enable debugging in <ref refid="pbuf_8c" kindref="compound">pbuf.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2604" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2604" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gaf0551bef83c0fc1baa57cf339d220e25" prot="public" static="no">
+        <name>RAW_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>RAW_DEBUG: Enable debugging in <ref refid="raw_8c" kindref="compound">raw.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2667" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2667" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gab986f95183559d8678c6d80969b01857" prot="public" static="no">
+        <name>SLIP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SLIP_DEBUG: Enable debugging in slipif.c. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2780" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2780" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga509594f3ba7d8b1356628b50b55a0934" prot="public" static="no">
+        <name>SOCKETS_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SOCKETS_DEBUG: Enable debugging in <ref refid="sockets_8c" kindref="compound">sockets.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2625" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2625" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga2960ae20008f05da8cc0714f36365642" prot="public" static="no">
+        <name>SYS_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SYS_DEBUG: Enable debugging in <ref refid="sys_8c" kindref="compound">sys.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2688" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2688" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga66df03d8192cd978d3321a9d68bf5411" prot="public" static="no">
+        <name>TCP_CWND_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_CWND_DEBUG: Enable debugging for TCP congestion window. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2731" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2731" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga4f43bb8a430c7a52a1ad5086d3f2803c" prot="public" static="no">
+        <name>TCP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_DEBUG: Enable debugging for TCP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2702" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2702" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga5895bee26e8e1a0b89d597e0f2580b23" prot="public" static="no">
+        <name>TCP_FR_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_FR_DEBUG: Enable debugging in <ref refid="tcp__in_8c" kindref="compound">tcp_in.c</ref> for fast retransmit. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2716" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2716" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gaf51dc2563536de56470146749f715ba8" prot="public" static="no">
+        <name>TCP_INPUT_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_INPUT_DEBUG: Enable debugging in <ref refid="tcp__in_8c" kindref="compound">tcp_in.c</ref> for incoming debug. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2709" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2709" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga9f70601fdc1feee490772bf7fcdb74fb" prot="public" static="no">
+        <name>TCP_OUTPUT_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_OUTPUT_DEBUG: Enable debugging in <ref refid="tcp__out_8c" kindref="compound">tcp_out.c</ref> output functions. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2745" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2745" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gae7980c7f8eb45cd411bf410ff0a3fc55" prot="public" static="no">
+        <name>TCP_QLEN_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_QLEN_DEBUG: Enable debugging for TCP queue lengths. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2759" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2759" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga37596f7bbb9b7663826244ba54486679" prot="public" static="no">
+        <name>TCP_RST_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_RST_DEBUG: Enable debugging for TCP with the RST message. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2752" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2752" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1gad6e52e37415d0d0cbe4931a28f5a9662" prot="public" static="no">
+        <name>TCP_RTO_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_RTO_DEBUG: Enable debugging in TCP for retransmit timeout. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2724" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2724" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga3704f433e947d6342da77c74e33627e1" prot="public" static="no">
+        <name>TCP_WND_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCP_WND_DEBUG: Enable debugging in <ref refid="tcp__in_8c" kindref="compound">tcp_in.c</ref> for window updating. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2738" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2738" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga52d6c83451936c3de3b0338d4a3f921f" prot="public" static="no">
+        <name>TCPIP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCPIP_DEBUG: Enable debugging in <ref refid="tcpip_8c" kindref="compound">tcpip.c</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2773" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2773" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga24a6644ba9cc82665a7bf209b3870c15" prot="public" static="no">
+        <name>TIMERS_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TIMERS_DEBUG: Enable debugging in timers.c. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2695" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2695" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__debugmsg_1ga0393f312c5475a1c649b39ef9cfcaad4" prot="public" static="no">
+        <name>UDP_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>UDP_DEBUG: Enable debugging in UDP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2766" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2766" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

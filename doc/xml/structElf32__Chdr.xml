@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Chdr" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Chdr</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Chdr_1a72370f6928a556d16dd0fcfae9978c60" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Chdr::ch_addralign</definition>
+        <argsstring></argsstring>
+        <name>ch_addralign</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="256" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="256" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Chdr_1afbf67385dafc8d3a35034b9c5a755d6b" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Chdr::ch_size</definition>
+        <argsstring></argsstring>
+        <name>ch_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="255" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="255" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Chdr_1a7b78dd3e0ba865cd44c8a4f705d19954" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Chdr::ch_type</definition>
+        <argsstring></argsstring>
+        <name>ch_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="254" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="254" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Chdr</label>
+        <link refid="structElf32__Chdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="253" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="253" bodyend="257"/>
+    <listofallmembers>
+      <member refid="structElf32__Chdr_1a72370f6928a556d16dd0fcfae9978c60" prot="public" virt="non-virtual"><scope>Elf32_Chdr</scope><name>ch_addralign</name></member>
+      <member refid="structElf32__Chdr_1afbf67385dafc8d3a35034b9c5a755d6b" prot="public" virt="non-virtual"><scope>Elf32_Chdr</scope><name>ch_size</name></member>
+      <member refid="structElf32__Chdr_1a7b78dd3e0ba865cd44c8a4f705d19954" prot="public" virt="non-virtual"><scope>Elf32_Chdr</scope><name>ch_type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

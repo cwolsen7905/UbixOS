@@ -1,0 +1,11 @@
+digraph "C:/Dev/git/UbixOS/sys/include/isa" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d1be8160e739b6eed1f7843efdbae1b3 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"]
+  dir_5014c1b11ed476e69275a593545c2a82 [shape=box, label="isa", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_5014c1b11ed476e69275a593545c2a82.html"];
+  }
+  dir_214f84c2c73d0f2f98eaa46a63e7b8c6 [shape=box label="sys" URL="dir_214f84c2c73d0f2f98eaa46a63e7b8c6.html"];
+  dir_5014c1b11ed476e69275a593545c2a82->dir_214f84c2c73d0f2f98eaa46a63e7b8c6 [headlabel="4", labeldistance=1.5 headhref="dir_000030_000020.html"];
+}

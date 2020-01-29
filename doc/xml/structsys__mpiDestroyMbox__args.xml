@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__mpiDestroyMbox__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_mpiDestroyMbox_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_mpiDestroyMbox_args::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="55" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="mpi__syscalls_8c_1a1d7dceb64a31fd348cab540f8adea714" compoundref="mpi__syscalls_8c" startline="9" endline="12">sys_mpiDestroyMbox</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiDestroyMbox__args_1a3a79d4c11c01a3c451a095918d429431" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiDestroyMbox_args::name_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>name_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="54" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mpiDestroyMbox__args_1a1b62a0708a2645148faa6ecaa7657b51" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_mpiDestroyMbox_args::name_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>name_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="56" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_mpiDestroyMbox_args</label>
+        <link refid="structsys__mpiDestroyMbox__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="53" column="30" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="53" bodyend="57"/>
+    <listofallmembers>
+      <member refid="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" prot="public" virt="non-virtual"><scope>sys_mpiDestroyMbox_args</scope><name>name</name></member>
+      <member refid="structsys__mpiDestroyMbox__args_1a3a79d4c11c01a3c451a095918d429431" prot="public" virt="non-virtual"><scope>sys_mpiDestroyMbox_args</scope><name>name_l_</name></member>
+      <member refid="structsys__mpiDestroyMbox__args_1a1b62a0708a2645148faa6ecaa7657b51" prot="public" virt="non-virtual"><scope>sys_mpiDestroyMbox_args</scope><name>name_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

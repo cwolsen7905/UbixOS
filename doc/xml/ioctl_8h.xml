@@ -1,0 +1,378 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ioctl_8h" kind="file" language="C++">
+    <compoundname>ioctl.h</compoundname>
+    <includedby refid="descrip_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/descrip.c</includedby>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/ioctl.h</label>
+        <link refid="ioctl_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/kernel/descrip.c</label>
+        <link refid="descrip_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structtermios" prot="public">termios</innerclass>
+    <innerclass refid="structwinsize" prot="public">winsize</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ioctl_8h_1a07792d882badfbf686051cd670b6bef0" prot="public" static="no">
+        <name>_IO</name>
+        <param><defname>g</defname></param>
+        <param><defname>n</defname></param>
+        <initializer><ref refid="ioctl_8h_1a2615809f80ad225083411efbaad62629" kindref="member">_IOC</ref>(<ref refid="ioctl_8h_1a7871c80cdb00b01cc72dc287259a5986" kindref="member">IOC_VOID</ref>,  (g), (n), 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="21" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a2615809f80ad225083411efbaad62629" prot="public" static="no">
+        <name>_IOC</name>
+        <param><defname>inout</defname></param>
+        <param><defname>group</defname></param>
+        <param><defname>num</defname></param>
+        <param><defname>len</defname></param>
+        <initializer>((unsigned long) \
+        ((inout) | (((len) &amp; <ref refid="ioctl_8h_1a12085624b18c53c98d676ef97d617292" kindref="member">IOCPARM_MASK</ref>) &lt;&lt; 16) | ((group) &lt;&lt; 8) | (num)))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="19" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a9c75511e172abae589bdaec3a9bc47fc" prot="public" static="no">
+        <name>_IOR</name>
+        <param><defname>g</defname></param>
+        <param><defname>n</defname></param>
+        <param><defname>t</defname></param>
+        <initializer><ref refid="ioctl_8h_1a2615809f80ad225083411efbaad62629" kindref="member">_IOC</ref>(<ref refid="ioctl_8h_1aefe531e01b900d7ec9446d8a72060870" kindref="member">IOC_OUT</ref>,   (g), (n), sizeof(t))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="23" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1af6f978c977cb0e07f43fb862b23a8096" prot="public" static="no">
+        <name>_IOW</name>
+        <param><defname>g</defname></param>
+        <param><defname>n</defname></param>
+        <param><defname>t</defname></param>
+        <initializer><ref refid="ioctl_8h_1a2615809f80ad225083411efbaad62629" kindref="member">_IOC</ref>(<ref refid="ioctl_8h_1af941c6f2773d4304f947706d53fb9873" kindref="member">IOC_IN</ref>,    (g), (n), sizeof(t))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="24" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a06c4adf1dc1ab2dc276f5f5a3f2cf192" prot="public" static="no">
+        <name>_IOWINT</name>
+        <param><defname>g</defname></param>
+        <param><defname>n</defname></param>
+        <initializer><ref refid="ioctl_8h_1a2615809f80ad225083411efbaad62629" kindref="member">_IOC</ref>(<ref refid="ioctl_8h_1a7871c80cdb00b01cc72dc287259a5986" kindref="member">IOC_VOID</ref>,  (g), (n), sizeof(int))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="22" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a399aae2dd08561c675fb160394067f39" prot="public" static="no">
+        <name>_IOWR</name>
+        <param><defname>g</defname></param>
+        <param><defname>n</defname></param>
+        <param><defname>t</defname></param>
+        <initializer><ref refid="ioctl_8h_1a2615809f80ad225083411efbaad62629" kindref="member">_IOC</ref>(<ref refid="ioctl_8h_1a92f2b6ee13301e2094cfe3b4762265d2" kindref="member">IOC_INOUT</ref>, (g), (n), sizeof(t))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="26" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a53cb46d410f391ab4c7c625540133a28" prot="public" static="no">
+        <name>IOC_DIRMASK</name>
+        <initializer>(<ref refid="ioctl_8h_1a7871c80cdb00b01cc72dc287259a5986" kindref="member">IOC_VOID</ref>|<ref refid="ioctl_8h_1aefe531e01b900d7ec9446d8a72060870" kindref="member">IOC_OUT</ref>|<ref refid="ioctl_8h_1af941c6f2773d4304f947706d53fb9873" kindref="member">IOC_IN</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="17" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1af941c6f2773d4304f947706d53fb9873" prot="public" static="no">
+        <name>IOC_IN</name>
+        <initializer>0x80000000      /* copy in parameters */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="15" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a92f2b6ee13301e2094cfe3b4762265d2" prot="public" static="no">
+        <name>IOC_INOUT</name>
+        <initializer>(<ref refid="ioctl_8h_1af941c6f2773d4304f947706d53fb9873" kindref="member">IOC_IN</ref>|<ref refid="ioctl_8h_1aefe531e01b900d7ec9446d8a72060870" kindref="member">IOC_OUT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="16" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1aefe531e01b900d7ec9446d8a72060870" prot="public" static="no">
+        <name>IOC_OUT</name>
+        <initializer>0x40000000      /* copy out parameters */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="14" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a7871c80cdb00b01cc72dc287259a5986" prot="public" static="no">
+        <name>IOC_VOID</name>
+        <initializer>0x20000000      /* no parameters */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="13" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1af6113b7d69f0f75ba027d81bedede9ad" prot="public" static="no">
+        <name>IOCBASECMD</name>
+        <param><defname>x</defname></param>
+        <initializer>((x) &amp; ~(<ref refid="ioctl_8h_1a12085624b18c53c98d676ef97d617292" kindref="member">IOCPARM_MASK</ref> &lt;&lt; 16))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="9" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a5d2b3231835fd3d8b4515275b3b1305e" prot="public" static="no">
+        <name>IOCGROUP</name>
+        <param><defname>x</defname></param>
+        <initializer>(((x) &gt;&gt; 8) &amp; 0xff)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="10" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a434b63e8c8194850a9b1d4de1663a681" prot="public" static="no">
+        <name>IOCPARM_IVAL</name>
+        <param><defname>x</defname></param>
+        <initializer>((int)(intptr_t)(void *)*(<ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref> *)(void *)(x))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="28" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1ae909e727ac00ad9077951c90007f5507" prot="public" static="no">
+        <name>IOCPARM_LEN</name>
+        <param><defname>x</defname></param>
+        <initializer>(((x) &gt;&gt; 16) &amp; <ref refid="ioctl_8h_1a12085624b18c53c98d676ef97d617292" kindref="member">IOCPARM_MASK</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="8" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a12085624b18c53c98d676ef97d617292" prot="public" static="no">
+        <name>IOCPARM_MASK</name>
+        <initializer>((1 &lt;&lt; <ref refid="ioctl_8h_1afd44980152df25a90326c2e9b449c44e" kindref="member">IOCPARM_SHIFT</ref>) - 1) /* parameter length mask */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="7" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a6c54f5e13c8a717126f96fd46f9403fd" prot="public" static="no">
+        <name>IOCPARM_MAX</name>
+        <initializer>(1 &lt;&lt; <ref refid="ioctl_8h_1afd44980152df25a90326c2e9b449c44e" kindref="member">IOCPARM_SHIFT</ref>) /* max size of <ref refid="descrip_8c_1a899127227d8b9c9da3bcccc32332c749" kindref="member">ioctl</ref> */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="12" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1afd44980152df25a90326c2e9b449c44e" prot="public" static="no">
+        <name>IOCPARM_SHIFT</name>
+        <initializer>13              /* number of bits for <ref refid="descrip_8c_1a899127227d8b9c9da3bcccc32332c749" kindref="member">ioctl</ref> size */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="6" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="6" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a15cde8857ad26391c93358f528e7e13a" prot="public" static="no">
+        <name>NCCS</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="30" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a0cef5242a2853d0acf6d93879c517512" prot="public" static="no">
+        <name>TIOCGETA</name>
+        <initializer><ref refid="ioctl_8h_1a9c75511e172abae589bdaec3a9bc47fc" kindref="member">_IOR</ref>(&apos;t&apos;, 19, struct <ref refid="structtermios" kindref="compound">termios</ref>) /* get <ref refid="structtermios" kindref="compound">termios</ref> struct */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="53" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ioctl_8h_1a36ef545c47ae4202e81e14efafdd64db" prot="public" static="no">
+        <name>TIOCGWINSZ</name>
+        <initializer><ref refid="ioctl_8h_1a9c75511e172abae589bdaec3a9bc47fc" kindref="member">_IOR</ref>(&apos;t&apos;, 104, struct <ref refid="structwinsize" kindref="compound">winsize</ref>)  /* get window size */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="54" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="ioctl_8h_1a02a4a51b25871e505aad0dcae945a0dc" prot="public" static="no">
+        <type>unsigned char</type>
+        <definition>typedef unsigned char cc_t</definition>
+        <argsstring></argsstring>
+        <name>cc_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="33" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int speed_t</definition>
+        <argsstring></argsstring>
+        <name>speed_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="34" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int tcflag_t</definition>
+        <argsstring></argsstring>
+        <name>tcflag_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" line="32" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Ioctl&apos;s<sp/>have<sp/>the<sp/>command<sp/>encoded<sp/>in<sp/>the<sp/>lower<sp/>word,<sp/>and<sp/>the<sp/>size<sp/>of</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>any<sp/>in<sp/>or<sp/>out<sp/>parameters<sp/>in<sp/>the<sp/>upper<sp/>word.<sp/><sp/>The<sp/>high<sp/>3<sp/>bits<sp/>of<sp/>the</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>upper<sp/>word<sp/>are<sp/>used<sp/>to<sp/>encode<sp/>the<sp/>in/out<sp/>status<sp/>of<sp/>the<sp/>parameter.</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6" refid="ioctl_8h_1afd44980152df25a90326c2e9b449c44e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCPARM_SHIFT<sp/><sp/><sp/>13<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>bits<sp/>for<sp/>ioctl<sp/>size<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="ioctl_8h_1a12085624b18c53c98d676ef97d617292" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCPARM_MASK<sp/><sp/><sp/><sp/>((1<sp/>&lt;&lt;<sp/>IOCPARM_SHIFT)<sp/>-<sp/>1)<sp/></highlight><highlight class="comment">/*<sp/>parameter<sp/>length<sp/>mask<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="ioctl_8h_1ae909e727ac00ad9077951c90007f5507" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCPARM_LEN(x)<sp/><sp/>(((x)<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>IOCPARM_MASK)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="ioctl_8h_1af6113b7d69f0f75ba027d81bedede9ad" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCBASECMD(x)<sp/><sp/><sp/>((x)<sp/>&amp;<sp/>~(IOCPARM_MASK<sp/>&lt;&lt;<sp/>16))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="ioctl_8h_1a5d2b3231835fd3d8b4515275b3b1305e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCGROUP(x)<sp/><sp/><sp/><sp/><sp/>(((x)<sp/>&gt;&gt;<sp/>8)<sp/>&amp;<sp/>0xff)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12" refid="ioctl_8h_1a6c54f5e13c8a717126f96fd46f9403fd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCPARM_MAX<sp/><sp/><sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>IOCPARM_SHIFT)<sp/></highlight><highlight class="comment">/*<sp/>max<sp/>size<sp/>of<sp/>ioctl<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="ioctl_8h_1a7871c80cdb00b01cc72dc287259a5986" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOC_VOID<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x20000000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>no<sp/>parameters<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="ioctl_8h_1aefe531e01b900d7ec9446d8a72060870" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOC_OUT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x40000000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>out<sp/>parameters<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="ioctl_8h_1af941c6f2773d4304f947706d53fb9873" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOC_IN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x80000000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>copy<sp/>in<sp/>parameters<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="ioctl_8h_1a92f2b6ee13301e2094cfe3b4762265d2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOC_INOUT<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(IOC_IN|IOC_OUT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="ioctl_8h_1a53cb46d410f391ab4c7c625540133a28" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOC_DIRMASK<sp/><sp/><sp/><sp/><sp/>(IOC_VOID|IOC_OUT|IOC_IN)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="ioctl_8h_1a2615809f80ad225083411efbaad62629" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_IOC(inout,group,num,len)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>((unsigned<sp/>long)<sp/>\</highlight></codeline>
+<codeline lineno="20"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((inout)<sp/>|<sp/>(((len)<sp/>&amp;<sp/>IOCPARM_MASK)<sp/>&lt;&lt;<sp/>16)<sp/>|<sp/>((group)<sp/>&lt;&lt;<sp/>8)<sp/>|<sp/>(num)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="ioctl_8h_1a07792d882badfbf686051cd670b6bef0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_IO(g,n)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>_IOC(IOC_VOID,<sp/><sp/>(g),<sp/>(n),<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="ioctl_8h_1a06c4adf1dc1ab2dc276f5f5a3f2cf192" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_IOWINT(g,n)<sp/><sp/><sp/><sp/>_IOC(IOC_VOID,<sp/><sp/>(g),<sp/>(n),<sp/>sizeof(int))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="ioctl_8h_1a9c75511e172abae589bdaec3a9bc47fc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_IOR(g,n,t)<sp/><sp/><sp/><sp/><sp/>_IOC(IOC_OUT,<sp/><sp/><sp/>(g),<sp/>(n),<sp/>sizeof(t))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="ioctl_8h_1af6f978c977cb0e07f43fb862b23a8096" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_IOW(g,n,t)<sp/><sp/><sp/><sp/><sp/>_IOC(IOC_IN,<sp/><sp/><sp/><sp/>(g),<sp/>(n),<sp/>sizeof(t))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>this<sp/>should<sp/>be<sp/>_IORW,<sp/>but<sp/>stdio<sp/>got<sp/>there<sp/>first<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="ioctl_8h_1a399aae2dd08561c675fb160394067f39" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_IOWR(g,n,t)<sp/><sp/><sp/><sp/>_IOC(IOC_INOUT,<sp/>(g),<sp/>(n),<sp/>sizeof(t))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28" refid="ioctl_8h_1a434b63e8c8194850a9b1d4de1663a681" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IOCPARM_IVAL(x)<sp/>((int)(intptr_t)(void<sp/>*)*(caddr_t<sp/>*)(void<sp/>*)(x))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="ioctl_8h_1a15cde8857ad26391c93358f528e7e13a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NCCS<sp/>20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref>;</highlight></codeline>
+<codeline lineno="33" refid="ioctl_8h_1a02a4a51b25871e505aad0dcae945a0dc" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="ioctl_8h_1a02a4a51b25871e505aad0dcae945a0dc" kindref="member">cc_t</ref>;</highlight></codeline>
+<codeline lineno="34" refid="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" kindref="member">speed_t</ref>;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="structtermios" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtermios" kindref="compound">termios</ref><sp/>{</highlight></codeline>
+<codeline lineno="37" refid="structtermios_1a85b6c86d2a3db45a3829488190e357e4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref><sp/><ref refid="structtermios_1a85b6c86d2a3db45a3829488190e357e4" kindref="member">c_iflag</ref>;<sp/></highlight><highlight class="comment">/*<sp/>input<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="structtermios_1ad6e2cfedb81530e5a6a3a0e30b8c6362" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref><sp/><ref refid="structtermios_1ad6e2cfedb81530e5a6a3a0e30b8c6362" kindref="member">c_oflag</ref>;<sp/></highlight><highlight class="comment">/*<sp/>output<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="structtermios_1a5d42b95faa4745c3bea53652d2812162" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref><sp/><ref refid="structtermios_1a5d42b95faa4745c3bea53652d2812162" kindref="member">c_cflag</ref>;<sp/></highlight><highlight class="comment">/*<sp/>control<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="structtermios_1a91bdd7691180800fccc4b791466ee9c3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1ac9d3e47a1913b6665ee950e89ccb916b" kindref="member">tcflag_t</ref><sp/><ref refid="structtermios_1a91bdd7691180800fccc4b791466ee9c3" kindref="member">c_lflag</ref>;<sp/></highlight><highlight class="comment">/*<sp/>local<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1a02a4a51b25871e505aad0dcae945a0dc" kindref="member">cc_t</ref><sp/><ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[<ref refid="ioctl_8h_1a15cde8857ad26391c93358f528e7e13a" kindref="member">NCCS</ref>];<sp/></highlight><highlight class="comment">/*<sp/>control<sp/>chars<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="structtermios_1a02ae972cbc9fb2cf4a1aa6a6751a421a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" kindref="member">speed_t</ref><sp/><ref refid="structtermios_1a02ae972cbc9fb2cf4a1aa6a6751a421a" kindref="member">c_ispeed</ref>;<sp/></highlight><highlight class="comment">/*<sp/>input<sp/>speed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="structtermios_1a3f42b69c0c7fa4ce2179cb61f8c7ca99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ioctl_8h_1a14a0666abcf3bb67c7ff400b4a450467" kindref="member">speed_t</ref><sp/><ref refid="structtermios_1a3f42b69c0c7fa4ce2179cb61f8c7ca99" kindref="member">c_ospeed</ref>;<sp/></highlight><highlight class="comment">/*<sp/>output<sp/>speed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="structwinsize" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structwinsize" kindref="compound">winsize</ref><sp/>{</highlight></codeline>
+<codeline lineno="47" refid="structwinsize_1a73698fa1d966374b0701e4bf225f0141" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structwinsize_1a73698fa1d966374b0701e4bf225f0141" kindref="member">ws_row</ref>;<sp/></highlight><highlight class="comment">/*<sp/>rows,<sp/>in<sp/>characters<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="structwinsize_1a80bedf71a49fd324e0d92d0702cc7005" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structwinsize_1a80bedf71a49fd324e0d92d0702cc7005" kindref="member">ws_col</ref>;<sp/></highlight><highlight class="comment">/*<sp/>columns,<sp/>in<sp/>characters<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="structwinsize_1a98b55f3411b646eca1e13cb52c5795e4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structwinsize_1a98b55f3411b646eca1e13cb52c5795e4" kindref="member">ws_xpixel</ref>;<sp/></highlight><highlight class="comment">/*<sp/>horizontal<sp/>size,<sp/>pixels<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="structwinsize_1aca568563970602b60eb32fc17bd5a630" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structwinsize_1aca568563970602b60eb32fc17bd5a630" kindref="member">ws_ypixel</ref>;<sp/></highlight><highlight class="comment">/*<sp/>vertical<sp/>size,<sp/>pixels<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="ioctl_8h_1a0cef5242a2853d0acf6d93879c517512" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/>TIOCGETA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>_IOR(&apos;t&apos;,<sp/>19,<sp/>struct<sp/>termios)<sp/></highlight><highlight class="comment">/*<sp/>get<sp/>termios<sp/>struct<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="ioctl_8h_1a36ef545c47ae4202e81e14efafdd64db" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/>TIOCGWINSZ<sp/><sp/><sp/><sp/><sp/><sp/>_IOR(&apos;t&apos;,<sp/>104,<sp/>struct<sp/>winsize)<sp/><sp/></highlight><highlight class="comment">/*<sp/>get<sp/>window<sp/>size<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/ioctl.h"/>
+  </compounddef>
+</doxygen>

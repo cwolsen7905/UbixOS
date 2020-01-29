@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structredirected__header__option" kind="struct" language="C++" prot="public">
+    <compoundname>redirected_header_option</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structredirected__header__option_1a479517d0922fe7cbb4c3c2e1f0ebeddd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>redirected_header_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="204" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structredirected__header__option_1ae806b6ebda2c12304174aeb3ac5b2411" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>redirected_header_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t reserved[6])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>reserved</declname>
+          <array>[6]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="205" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structredirected__header__option_1aa724d787c7d99af8871afd908797a26e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>redirected_header_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="203" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>redirected_header_option</label>
+        <link refid="structredirected__header__option"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="202" column="31" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="202" bodyend="208"/>
+    <listofallmembers>
+      <member refid="structredirected__header__option_1aa724d787c7d99af8871afd908797a26e" prot="public" virt="non-virtual"><scope>redirected_header_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structredirected__header__option_1a479517d0922fe7cbb4c3c2e1f0ebeddd" prot="public" virt="non-virtual"><scope>redirected_header_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structredirected__header__option_1ae806b6ebda2c12304174aeb3ac5b2411" prot="public" virt="non-virtual"><scope>redirected_header_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

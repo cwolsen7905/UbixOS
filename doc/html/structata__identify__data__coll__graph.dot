@@ -1,0 +1,7 @@
+digraph "ata_identify_data"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{ata_identify_data\n|+ acoustic_test_interseek\l_delay\l+ additional_supported\l+ capabilities1\l+ capabilities2\l+ cfa_power_mode1\l+ command_set_default\l+ command_set_enabled0\l+ command_set_enabled1\l+ command_set_supported0\l+ command_set_supported1\land 75 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

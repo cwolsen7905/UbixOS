@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structetharp__hdr" kind="struct" language="C++" prot="public">
+    <compoundname>etharp_hdr</compoundname>
+    <includes refid="prot_2etharp_8h" local="no">etharp.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structetharp__hdr_1a9e768fe69372967f47685000c4b3610c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t hwtype)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>hwtype</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="58" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a3b20d36ae72daac8189ced51d1be27cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t opcode)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>opcode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="62" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a44ab7d21eacebf2c9f566bb4803277ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t proto)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>proto</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="59" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a1b4df95761337606835bc21163ea6929" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t hwlen)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>hwlen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="60" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a1b9ea937c307c6957789b32b27425e8f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t protolen)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>protolen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="61" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a38b79f2bc964169414a9ae3b77f461d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(struct eth_addr dhwaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+          <declname>dhwaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="65" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a3a446986ed72900fb5d88d7134677f5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(struct eth_addr shwaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+          <declname>shwaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="63" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1a9014d4d9dd83d01fc9f7af9ed67bfa38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(struct ip4_addr2 dipaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type>struct ip4_addr2</type>
+          <declname>dipaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="66" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structetharp__hdr_1ada173e74740db9db872ff4deb694df2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>etharp_hdr::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(struct ip4_addr2 sipaddr)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type>struct ip4_addr2</type>
+          <declname>sipaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="64" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>the ARP message, see RFC 826 (&quot;Packet format&quot;) </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>etharp_hdr</label>
+        <link refid="structetharp__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" line="57" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h" bodystart="57" bodyend="67"/>
+    <listofallmembers>
+      <member refid="structetharp__hdr_1a9e768fe69372967f47685000c4b3610c" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structetharp__hdr_1a44ab7d21eacebf2c9f566bb4803277ac" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structetharp__hdr_1a3b20d36ae72daac8189ced51d1be27cf" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structetharp__hdr_1a1b4df95761337606835bc21163ea6929" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structetharp__hdr_1a1b9ea937c307c6957789b32b27425e8f" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structetharp__hdr_1a3a446986ed72900fb5d88d7134677f5c" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structetharp__hdr_1ada173e74740db9db872ff4deb694df2f" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structetharp__hdr_1a38b79f2bc964169414a9ae3b77f461d5" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structetharp__hdr_1a9014d4d9dd83d01fc9f7af9ed67bfa38" prot="public" virt="non-virtual"><scope>etharp_hdr</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

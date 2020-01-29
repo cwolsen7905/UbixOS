@@ -1,0 +1,9 @@
+digraph "gpt_ent"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{gpt_ent\n|+ ent_attr\l+ ent_lba_end\l+ ent_lba_start\l+ ent_name\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +ent_type\n+ent_uuid" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{uuid\n|+ clock_seq_hi_and_reserved\l+ clock_seq_low\l+ node\l+ time_hi_and_version\l+ time_low\l+ time_mid\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structuuid.html",tooltip=" "];
+}

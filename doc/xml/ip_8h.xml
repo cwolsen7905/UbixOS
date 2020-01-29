@@ -1,0 +1,886 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ip_8h" kind="file" language="C++">
+    <compoundname>ip.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="def_8h" local="yes">net/def.h</includes>
+    <includes refid="pbuf_8h" local="yes">net/pbuf.h</includes>
+    <includes refid="ip__addr_8h" local="yes">net/ip_addr.h</includes>
+    <includes refid="err_8h" local="yes">net/err.h</includes>
+    <includes refid="netif_8h" local="yes">net/netif.h</includes>
+    <includes refid="ip4_8h" local="yes">net/ip4.h</includes>
+    <includes refid="ip6_8h" local="yes">net/ip6.h</includes>
+    <includes refid="prot_2ip_8h" local="yes">net/prot/ip.h</includes>
+    <includedby refid="ip4__frag_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</includedby>
+    <includedby refid="tcpip_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/tcpip.c</includedby>
+    <includedby refid="core_2init_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/init.c</includedby>
+    <includedby refid="ip6__frag_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</includedby>
+    <includedby refid="netif_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/netif.c</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="20">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/ip4.h</label>
+        <link refid="ip4_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/ip6.h</label>
+        <link refid="ip6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="33">
+        <label>net/prot/ip.h</label>
+        <link refid="prot_2ip_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</label>
+        <link refid="ip4__frag_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structip__globals" prot="public">ip_globals</innerclass>
+    <innerclass refid="structip__pcb" prot="public">ip_pcb</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ip_8h_1a9135977868017c3deeec86b525e13997" prot="public" static="no">
+        <name>ip_current_dest_addr</name>
+        <param></param>
+        <initializer>(&amp;ip_data.current_iphdr_dest)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Destination IP address of current_header</para>
+<para>Union destination address of current_header </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="143" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="212" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a9135977868017c3deeec86b525e13997" prot="public" static="no">
+        <name>ip_current_dest_addr</name>
+        <param></param>
+        <initializer>(&amp;ip_data.current_iphdr_dest)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Destination IP address of current_header</para>
+<para>Union destination address of current_header </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="212" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="212" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a2ca15ea285a10982294378cd7b8e83e2" prot="public" static="no">
+        <name>ip_current_header_tot_len</name>
+        <param></param>
+        <initializer>(ip_data.current_ip_header_tot_len)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Total header length of ip(6)_current_header() (i.e. after this, the UDP/TCP header starts) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="139" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1ae214afa9d3f1b26fc8d538436b8fa3c4" prot="public" static="no">
+        <name>ip_current_input_netif</name>
+        <param></param>
+        <initializer>(ip_data.current_input_netif)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get the interface that received the current packet. This function must only be called from a receive callback (udp_recv, raw_recv, tcp_accept). It will return NULL otherwise. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="137" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1aabecef3c7653a9767c79245c44fcab9f" prot="public" static="no">
+        <name>ip_current_netif</name>
+        <param></param>
+        <initializer>(ip_data.current_netif)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get the interface that accepted the current packet. This may or may not be the receiving netif, depending on your netif/network setup. This function must only be called from a receive callback (udp_recv, raw_recv, tcp_accept). It will return NULL otherwise. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="133" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a4e35b7692c228c98e738892f0a215647" prot="public" static="no">
+        <name>ip_current_src_addr</name>
+        <param></param>
+        <initializer>(&amp;ip_data.current_iphdr_src)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Source IP address of current_header</para>
+<para>Union source address of current_header </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="141" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="210" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a4e35b7692c228c98e738892f0a215647" prot="public" static="no">
+        <name>ip_current_src_addr</name>
+        <param></param>
+        <initializer>(&amp;ip_data.current_iphdr_src)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Source IP address of current_header</para>
+<para>Union source address of current_header </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="210" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="210" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a26e077f52de4a97ff89c02415c084518" prot="public" static="no">
+        <name>ip_get_option</name>
+        <param><defname>pcb</defname></param>
+        <param><defname>opt</defname></param>
+        <initializer>((pcb)-&gt;so_options &amp; (opt))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Gets an IP pcb option (SOF_* flags) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="215" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="215" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a8bdf4b5f674375e76cdd968826d80e53" prot="public" static="no">
+        <name>IP_PCB</name>
+        <initializer>/* ip addresses in network byte order */ \
+  <ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref> local_ip; \
+  <ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref> remote_ip; \
+   /* Socket options */  \
+  <ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> so_options;      \
+   /* Type Of Service */ \
+  <ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> tos;              \
+  /* Time To Live */     \
+  <ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> ttl               \
+  /* link layer address resolution hint */ \
+  <ref refid="ip_8h_1a19a7497f9c87e25b66382e1b92f56382" kindref="member">IP_PCB_ADDRHINT</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This is the common part of all PCB types. It needs to be at the beginning of a PCB type definition. It is located here so that changes to this common part are made in one location instead of having to change all PCB structs. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="76" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a19a7497f9c87e25b66382e1b92f56382" prot="public" static="no">
+        <name>IP_PCB_ADDRHINT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="69" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a441c63f00c4b0cb69fc34ca6b55307cc" prot="public" static="no">
+        <name>ip_reset_option</name>
+        <param><defname>pcb</defname></param>
+        <param><defname>opt</defname></param>
+        <initializer>((pcb)-&gt;so_options &amp;= ~(opt))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Resets an IP pcb option (SOF_* flags) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="219" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="219" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1ae392fc1ebc42a4b08f73d42c04089be9" prot="public" static="no">
+        <name>ip_route_get_local_ip</name>
+        <param><defname>src</defname></param>
+        <param><defname>dest</defname></param>
+        <param><defname>netif</defname></param>
+        <param><defname>ipaddr</defname></param>
+        <initializer>do { \
+  (<ref refid="structnetif" kindref="compound">netif</ref>) = ip_route(src, dest); \
+  (ipaddr) = ip_netif_get_local_ip(<ref refid="structnetif" kindref="compound">netif</ref>, dest); \
+}while(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="308" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="308" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a13f48cf825c7f074dc05bea54e9d6a93" prot="public" static="no">
+        <name>ip_set_option</name>
+        <param><defname>pcb</defname></param>
+        <param><defname>opt</defname></param>
+        <initializer>((pcb)-&gt;so_options |= (opt))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets an IP pcb option (SOF_* flags) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="217" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="217" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a355679dba1c0d8ef07ce3abcd28e3063" prot="public" static="no">
+        <name>LWIP_IP_CHECK_PBUF_REF_COUNT_FOR_TX</name>
+        <param><defname>p</defname></param>
+        <initializer><ref refid="debug_8h_1a94ad086267808462beae2b38f91996ed" kindref="member">LWIP_ASSERT</ref>(&quot;p-&gt;ref == 1&quot;, (p)-&gt;ref == 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>pbufs passed to IP must have a ref-count of 1 as their payload pointer gets altered as the packet is passed down the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a2b7dff1859ced5f2be3fc3da231819d7" prot="public" static="no">
+        <name>LWIP_IP_HDRINCL</name>
+        <initializer><ref refid="include_2sys_2types_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1ac8c7ccdad2d7d3a264bd8cfc57140ca8" prot="public" static="no">
+        <name>SOF_BROADCAST</name>
+        <initializer>0x20U  /* permit to send and to receive broadcast messages (see <ref refid="group__lwip__opts__ipv4_1ga0b2c993fd940f5774108298933310384" kindref="member">IP_SOF_BROADCAST</ref> option) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1ae4bbdf8a2e757d758ec0e1c91b58893f" prot="public" static="no">
+        <name>SOF_INHERITED</name>
+        <initializer>(<ref refid="ip_8h_1aa40b3366a7939ec3a60e9a7d239575e2" kindref="member">SOF_REUSEADDR</ref>|<ref refid="ip_8h_1a1f7f7efb095c77c06af5c5e8ba558d45" kindref="member">SOF_KEEPALIVE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1a1f7f7efb095c77c06af5c5e8ba558d45" prot="public" static="no">
+        <name>SOF_KEEPALIVE</name>
+        <initializer>0x08U  /* keep connections alive */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ip_8h_1aa40b3366a7939ec3a60e9a7d239575e2" prot="public" static="no">
+        <name>SOF_REUSEADDR</name>
+        <initializer>0x04U  /* allow local address reuse */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="97" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="ip_8h_1ac944fb6564f181bc90bc7c2b8b00d94c" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structip__globals" kindref="compound">ip_globals</ref></type>
+        <definition>struct ip_globals ip_data</definition>
+        <argsstring></argsstring>
+        <name>ip_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h" line="94" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/ip.h" declline="94" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IP API </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_IP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_IP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="pbuf_8h" kindref="compound">net/pbuf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip__addr_8h" kindref="compound">net/ip_addr.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="err_8h" kindref="compound">net/err.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="netif_8h" kindref="compound">net/netif.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip4_8h" kindref="compound">net/ip4.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip6_8h" kindref="compound">net/ip6.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="prot_2ip_8h" kindref="compound">net/prot/ip.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>This<sp/>is<sp/>passed<sp/>as<sp/>the<sp/>destination<sp/>address<sp/>to<sp/>ip_output_if<sp/>(not</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/><sp/><sp/>to<sp/>ip_output),<sp/>meaning<sp/>that<sp/>an<sp/>IP<sp/>header<sp/>already<sp/>is<sp/>constructed</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/><sp/><sp/>in<sp/>the<sp/>pbuf.<sp/>This<sp/>is<sp/>used<sp/>when<sp/>TCP<sp/>retransmits.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="ip_8h_1a2b7dff1859ced5f2be3fc3da231819d7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_IP_HDRINCL<sp/><sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="preprocessor">#ifndef<sp/>LWIP_IP_CHECK_PBUF_REF_COUNT_FOR_TX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="ip_8h_1a355679dba1c0d8ef07ce3abcd28e3063" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_IP_CHECK_PBUF_REF_COUNT_FOR_TX(p)<sp/>LWIP_ASSERT(&quot;p-&gt;ref<sp/>==<sp/>1&quot;,<sp/>(p)-&gt;ref<sp/>==<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_NETIF_HWADDRHINT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_PCB_ADDRHINT<sp/>;u8_t<sp/>addr_hint</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="ip_8h_1a19a7497f9c87e25b66382e1b92f56382" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_PCB_ADDRHINT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_NETIF_HWADDRHINT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="ip_8h_1a8bdf4b5f674375e76cdd968826d80e53" refkind="member"><highlight class="preprocessor">#define<sp/>IP_PCB<sp/>\</highlight></codeline>
+<codeline lineno="77"><highlight class="preprocessor"><sp/><sp/></highlight><highlight class="comment">/*<sp/>ip<sp/>addresses<sp/>in<sp/>network<sp/>byte<sp/>order<sp/>*/</highlight><highlight class="preprocessor"><sp/>\</highlight></codeline>
+<codeline lineno="78"><highlight class="preprocessor"><sp/><sp/>ip_addr_t<sp/>local_ip;<sp/>\</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"><sp/><sp/>ip_addr_t<sp/>remote_ip;<sp/>\</highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor"><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Socket<sp/>options<sp/>*/</highlight><highlight class="preprocessor"><sp/><sp/>\</highlight></codeline>
+<codeline lineno="81"><highlight class="preprocessor"><sp/><sp/>u8_t<sp/>so_options;<sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="82"><highlight class="preprocessor"><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Type<sp/>Of<sp/>Service<sp/>*/</highlight><highlight class="preprocessor"><sp/>\</highlight></codeline>
+<codeline lineno="83"><highlight class="preprocessor"><sp/><sp/>u8_t<sp/>tos;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="84"><highlight class="preprocessor"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Time<sp/>To<sp/>Live<sp/>*/</highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"><sp/><sp/>u8_t<sp/>ttl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="86"><highlight class="preprocessor"><sp/><sp/></highlight><highlight class="comment">/*<sp/>link<sp/>layer<sp/>address<sp/>resolution<sp/>hint<sp/>*/</highlight><highlight class="preprocessor"><sp/>\</highlight></codeline>
+<codeline lineno="87"><highlight class="preprocessor"><sp/><sp/>IP_PCB_ADDRHINT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="structip__pcb" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__pcb" kindref="compound">ip_pcb</ref><sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Common<sp/>members<sp/>of<sp/>all<sp/>PCB<sp/>types<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="structip__pcb_1a6a4e6df5254e4ed31856463496df206f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ip_8h_1a8bdf4b5f674375e76cdd968826d80e53" kindref="member">IP_PCB</ref>;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/>*<sp/>Option<sp/>flags<sp/>per-socket.<sp/>These<sp/>are<sp/>the<sp/>same<sp/>like<sp/>SO_XXX<sp/>in<sp/>sockets.h</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="ip_8h_1aa40b3366a7939ec3a60e9a7d239575e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SOF_REUSEADDR<sp/><sp/><sp/><sp/><sp/>0x04U<sp/><sp/></highlight><highlight class="comment">/*<sp/>allow<sp/>local<sp/>address<sp/>reuse<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="ip_8h_1a1f7f7efb095c77c06af5c5e8ba558d45" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SOF_KEEPALIVE<sp/><sp/><sp/><sp/><sp/>0x08U<sp/><sp/></highlight><highlight class="comment">/*<sp/>keep<sp/>connections<sp/>alive<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="ip_8h_1ac8c7ccdad2d7d3a264bd8cfc57140ca8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SOF_BROADCAST<sp/><sp/><sp/><sp/><sp/>0x20U<sp/><sp/></highlight><highlight class="comment">/*<sp/>permit<sp/>to<sp/>send<sp/>and<sp/>to<sp/>receive<sp/>broadcast<sp/>messages<sp/>(see<sp/>IP_SOF_BROADCAST<sp/>option)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>These<sp/>flags<sp/>are<sp/>inherited<sp/>(e.g.<sp/>from<sp/>a<sp/>listen-pcb<sp/>to<sp/>a<sp/>connection-pcb):<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="ip_8h_1ae4bbdf8a2e757d758ec0e1c91b58893f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SOF_INHERITED<sp/><sp/><sp/>(SOF_REUSEADDR|SOF_KEEPALIVE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="structip__globals" refkind="compound"><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__globals" kindref="compound">ip_globals</ref></highlight></codeline>
+<codeline lineno="106"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="108" refid="structip__globals_1a7803dc5950d143e4433a0df689989bab" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structip__globals_1a7803dc5950d143e4433a0df689989bab" kindref="member">current_netif</ref>;</highlight></codeline>
+<codeline lineno="110" refid="structip__globals_1a7da899c663b1d560b61d92ba6d544701" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structip__globals_1a7da899c663b1d560b61d92ba6d544701" kindref="member">current_input_netif</ref>;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>*current_ip4_header;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip6__hdr" kindref="compound">ip6_hdr</ref><sp/>*current_ip6_header;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="structip__globals_1a17004526e6f1a164c0bab01aeac5e34a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="structip__globals_1a17004526e6f1a164c0bab01aeac5e34a" kindref="member">current_ip_header_tot_len</ref>;</highlight></codeline>
+<codeline lineno="122" refid="structip__globals_1a04d85a3dc2c417050b3e088fa58a74b0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/><ref refid="structip__globals_1a04d85a3dc2c417050b3e088fa58a74b0" kindref="member">current_iphdr_src</ref>;</highlight></codeline>
+<codeline lineno="124" refid="structip__globals_1a0b4e54250c692c638408de54593d2aa1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/><ref refid="structip__globals_1a0b4e54250c692c638408de54593d2aa1" kindref="member">current_iphdr_dest</ref>;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__globals" kindref="compound">ip_globals</ref><sp/><ref refid="ip_8h_1ac944fb6564f181bc90bc7c2b8b00d94c" kindref="member">ip_data</ref>;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="ip_8h_1aabecef3c7653a9767c79245c44fcab9f" refkind="member"><highlight class="preprocessor">#define<sp/>ip_current_netif()<sp/><sp/><sp/><sp/><sp/><sp/>(ip_data.current_netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="ip_8h_1ae214afa9d3f1b26fc8d538436b8fa3c4" refkind="member"><highlight class="preprocessor">#define<sp/>ip_current_input_netif()<sp/>(ip_data.current_input_netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139" refid="ip_8h_1a2ca15ea285a10982294378cd7b8e83e2" refkind="member"><highlight class="preprocessor">#define<sp/>ip_current_header_tot_len()<sp/>(ip_data.current_ip_header_tot_len)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="preprocessor">#define<sp/>ip_current_src_addr()<sp/><sp/><sp/>(&amp;ip_data.current_iphdr_src)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="preprocessor">#define<sp/>ip_current_dest_addr()<sp/><sp/>(&amp;ip_data.current_iphdr_dest)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="preprocessor">#define<sp/>ip4_current_header()<sp/><sp/><sp/><sp/><sp/>((const<sp/>struct<sp/>ip_hdr*)(ip_data.current_ip4_header))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="preprocessor">#define<sp/>ip6_current_header()<sp/><sp/><sp/><sp/><sp/><sp/>((const<sp/>struct<sp/>ip6_hdr*)(ip_data.current_ip6_header))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="preprocessor">#define<sp/>ip_current_is_v6()<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(ip6_current_header()<sp/>!=<sp/>NULL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="preprocessor">#define<sp/>ip6_current_src_addr()<sp/><sp/><sp/><sp/>(ip_2_ip6(&amp;ip_data.current_iphdr_src))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="preprocessor">#define<sp/>ip6_current_dest_addr()<sp/><sp/><sp/>(ip_2_ip6(&amp;ip_data.current_iphdr_dest))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="preprocessor">#define<sp/>ip_current_header_proto()<sp/>(ip_current_is_v6()<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="162"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IP6H_NEXTH(ip6_current_header())<sp/>:\</highlight></codeline>
+<codeline lineno="163"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>IPH_PROTO(ip4_current_header()))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="preprocessor">#define<sp/>ip_next_header_ptr()<sp/><sp/><sp/><sp/><sp/>((const<sp/>void*)((ip_current_is_v6()<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="166"><highlight class="preprocessor"><sp/><sp/>(const<sp/>u8_t*)ip6_current_header()<sp/>:<sp/>(const<sp/>u8_t*)ip4_current_header())<sp/><sp/>+<sp/>ip_current_header_tot_len()))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="preprocessor">#define<sp/>ip4_current_src_addr()<sp/><sp/><sp/><sp/><sp/>(ip_2_ip4(&amp;ip_data.current_iphdr_src))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="preprocessor">#define<sp/>ip4_current_dest_addr()<sp/><sp/><sp/><sp/>(ip_2_ip4(&amp;ip_data.current_iphdr_dest))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>LWIP_IPV4<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="preprocessor">#define<sp/>ip4_current_header()<sp/><sp/><sp/><sp/><sp/>((const<sp/>struct<sp/>ip_hdr*)(ip_data.current_ip4_header))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="preprocessor">#define<sp/>ip_current_is_v6()<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="preprocessor">#define<sp/>ip_current_header_proto()<sp/>IPH_PROTO(ip4_current_header())</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="preprocessor">#define<sp/>ip_next_header_ptr()<sp/><sp/><sp/><sp/><sp/>((const<sp/>void*)((const<sp/>u8_t*)ip4_current_header()<sp/>+<sp/>ip_current_header_tot_len()))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="preprocessor">#define<sp/>ip4_current_src_addr()<sp/><sp/><sp/><sp/><sp/>(&amp;ip_data.current_iphdr_src)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="preprocessor">#define<sp/>ip4_current_dest_addr()<sp/><sp/><sp/><sp/>(&amp;ip_data.current_iphdr_dest)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>LWIP_IPV6<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="preprocessor">#define<sp/>ip6_current_header()<sp/><sp/><sp/><sp/><sp/><sp/>((const<sp/>struct<sp/>ip6_hdr*)(ip_data.current_ip6_header))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="preprocessor">#define<sp/>ip_current_is_v6()<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="preprocessor">#define<sp/>ip_current_header_proto()<sp/>IP6H_NEXTH(ip6_current_header())</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="preprocessor">#define<sp/>ip_next_header_ptr()<sp/><sp/><sp/><sp/><sp/>((const<sp/>void*)((const<sp/>u8_t*)ip6_current_header()))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="preprocessor">#define<sp/>ip6_current_src_addr()<sp/><sp/><sp/><sp/>(&amp;ip_data.current_iphdr_src)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="preprocessor">#define<sp/>ip6_current_dest_addr()<sp/><sp/><sp/>(&amp;ip_data.current_iphdr_dest)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210" refid="ip_8h_1a4e35b7692c228c98e738892f0a215647" refkind="member"><highlight class="preprocessor">#define<sp/>ip_current_src_addr()<sp/><sp/><sp/><sp/>(&amp;ip_data.current_iphdr_src)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212" refid="ip_8h_1a9135977868017c3deeec86b525e13997" refkind="member"><highlight class="preprocessor">#define<sp/>ip_current_dest_addr()<sp/><sp/><sp/>(&amp;ip_data.current_iphdr_dest)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215" refid="ip_8h_1a26e077f52de4a97ff89c02415c084518" refkind="member"><highlight class="preprocessor">#define<sp/>ip_get_option(pcb,<sp/>opt)<sp/><sp/><sp/>((pcb)-&gt;so_options<sp/>&amp;<sp/>(opt))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217" refid="ip_8h_1a13f48cf825c7f074dc05bea54e9d6a93" refkind="member"><highlight class="preprocessor">#define<sp/>ip_set_option(pcb,<sp/>opt)<sp/><sp/><sp/>((pcb)-&gt;so_options<sp/>|=<sp/>(opt))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219" refid="ip_8h_1a441c63f00c4b0cb69fc34ca6b55307cc" refkind="member"><highlight class="preprocessor">#define<sp/>ip_reset_option(pcb,<sp/>opt)<sp/>((pcb)-&gt;so_options<sp/>&amp;=<sp/>~(opt))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="preprocessor">#define<sp/>ip_output(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto)<sp/>\</highlight></codeline>
+<codeline lineno="227"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(IP_IS_V6(dest)<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="228"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output(p,<sp/>ip_2_ip6(src),<sp/>ip_2_ip6(dest),<sp/>ttl,<sp/>tos,<sp/>proto)<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="229"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output(p,<sp/>ip_2_ip4(src),<sp/>ip_2_ip4(dest),<sp/>ttl,<sp/>tos,<sp/>proto))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="preprocessor">#define<sp/>ip_output_if(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>\</highlight></codeline>
+<codeline lineno="235"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(IP_IS_V6(dest)<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="236"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output_if(p,<sp/>ip_2_ip6(src),<sp/>ip_2_ip6(dest),<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="237"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output_if(p,<sp/>ip_2_ip4(src),<sp/>ip_2_ip4(dest),<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="preprocessor">#define<sp/>ip_output_if_src(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>\</highlight></codeline>
+<codeline lineno="243"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(IP_IS_V6(dest)<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="244"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output_if_src(p,<sp/>ip_2_ip6(src),<sp/>ip_2_ip6(dest),<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="245"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output_if_src(p,<sp/>ip_2_ip4(src),<sp/>ip_2_ip4(dest),<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="preprocessor">#define<sp/>ip_output_hinted(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint)<sp/>\</highlight></codeline>
+<codeline lineno="248"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(IP_IS_V6(dest)<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="249"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output_hinted(p,<sp/>ip_2_ip6(src),<sp/>ip_2_ip6(dest),<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint)<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="250"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output_hinted(p,<sp/>ip_2_ip4(src),<sp/>ip_2_ip4(dest),<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="preprocessor">#define<sp/>ip_route(src,<sp/>dest)<sp/>\</highlight></codeline>
+<codeline lineno="256"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(IP_IS_V6(dest)<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="257"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_route(ip_2_ip6(src),<sp/>ip_2_ip6(dest))<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="258"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_route_src(ip_2_ip4(dest),<sp/>ip_2_ip4(src)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="preprocessor">#define<sp/>ip_netif_get_local_ip(netif,<sp/>dest)<sp/>(IP_IS_V6(dest)<sp/>?<sp/>\</highlight></codeline>
+<codeline lineno="264"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_netif_get_local_ip(netif,<sp/>ip_2_ip6(dest))<sp/>:<sp/>\</highlight></codeline>
+<codeline lineno="265"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_netif_get_local_ip(netif))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_debug_print(is_ipv6,<sp/>p)<sp/>((is_ipv6)<sp/>?<sp/>ip6_debug_print(p)<sp/>:<sp/>ip4_debug_print(p))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>ip_input(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*inp);</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>LWIP_IPV4<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto)<sp/>\</highlight></codeline>
+<codeline lineno="273"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output_if(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>\</highlight></codeline>
+<codeline lineno="275"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output_if(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output_if_src(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>\</highlight></codeline>
+<codeline lineno="277"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output_if_src(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output_hinted(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint)<sp/>\</highlight></codeline>
+<codeline lineno="279"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_output_hinted(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_route(src,<sp/>dest)<sp/>\</highlight></codeline>
+<codeline lineno="281"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_route_src(dest,<sp/>src)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_netif_get_local_ip(netif,<sp/>dest)<sp/>\</highlight></codeline>
+<codeline lineno="283"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip4_netif_get_local_ip(netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_debug_print(is_ipv6,<sp/>p)<sp/>ip4_debug_print(p)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_input<sp/>ip4_input</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>LWIP_IPV6<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>&amp;&amp;<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto)<sp/>\</highlight></codeline>
+<codeline lineno="291"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output_if(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>\</highlight></codeline>
+<codeline lineno="293"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output_if(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output_if_src(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)<sp/>\</highlight></codeline>
+<codeline lineno="295"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output_if_src(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>netif)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_output_hinted(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint)<sp/>\</highlight></codeline>
+<codeline lineno="297"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_output_hinted(p,<sp/>src,<sp/>dest,<sp/>ttl,<sp/>tos,<sp/>proto,<sp/>addr_hint)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_route(src,<sp/>dest)<sp/>\</highlight></codeline>
+<codeline lineno="299"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_route(src,<sp/>dest)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_netif_get_local_ip(netif,<sp/>dest)<sp/>\</highlight></codeline>
+<codeline lineno="301"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ip6_netif_get_local_ip(netif,<sp/>dest)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_debug_print(is_ipv6,<sp/>p)<sp/>ip6_debug_print(p)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_input<sp/>ip6_input</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight></codeline>
+<codeline lineno="306"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight></codeline>
+<codeline lineno="308" refid="ip_8h_1ae392fc1ebc42a4b08f73d42c04089be9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ip_route_get_local_ip(src,<sp/>dest,<sp/>netif,<sp/>ipaddr)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="309"><highlight class="preprocessor"><sp/><sp/>(netif)<sp/>=<sp/>ip_route(src,<sp/>dest);<sp/>\</highlight></codeline>
+<codeline lineno="310"><highlight class="preprocessor"><sp/><sp/>(ipaddr)<sp/>=<sp/>ip_netif_get_local_ip(netif,<sp/>dest);<sp/>\</highlight></codeline>
+<codeline lineno="311"><highlight class="preprocessor">}while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"></highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_IP_H<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/ip.h"/>
+  </compounddef>
+</doxygen>

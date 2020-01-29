@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structucred" kind="struct" language="C++" prot="public">
+    <compoundname>ucred</compoundname>
+    <includes refid="descrip_8h" local="no">descrip.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structucred_1a73cbbcb9f95c207f94ebbb86689cb2ed" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char ucred::pad</definition>
+        <argsstring></argsstring>
+        <name>pad</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="60" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>ucred</label>
+        <link refid="structucred"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="59" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="59" bodyend="61"/>
+    <listofallmembers>
+      <member refid="structucred_1a73cbbcb9f95c207f94ebbb86689cb2ed" prot="public" virt="non-virtual"><scope>ucred</scope><name>pad</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

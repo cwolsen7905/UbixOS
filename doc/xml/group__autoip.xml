@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__autoip" kind="group">
+    <compoundname>autoip</compoundname>
+    <title>AUTOIP</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>AUTOIP related functions USAGE:</para>
+<para>define <ref refid="group__lwip__opts__autoip_1gaaf1b3a089827223589baf1b7f4f57069" kindref="member">LWIP_AUTOIP</ref> 1 in your <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref> Options: AUTOIP_TMR_INTERVAL msecs, I recommend a value of 100. The value must divide 1000 with a remainder almost 0. Possible values are 1000, 500, 333, 250, 200, 166, 142, 125, 111, 100 ....</para>
+<para>Without DHCP:<itemizedlist>
+<listitem><para>Call autoip_start() after <ref refid="group__netif_1ga66970b5877dd6b0cae906bfa78d0cb4c" kindref="member">netif_add()</ref>.</para>
+</listitem></itemizedlist>
+</para>
+<para>With DHCP:<itemizedlist>
+<listitem><para>define <ref refid="group__lwip__opts__autoip_1ga1a91e18dbb9777bc6e3963f52cb5f9fe" kindref="member">LWIP_DHCP_AUTOIP_COOP</ref> 1 in your <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref>.</para>
+</listitem><listitem><para>Configure your DHCP Client.</para>
+</listitem></itemizedlist>
+</para>
+<para><simplesect kind="see"><para>netifapi_autoip </para>
+</simplesect>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

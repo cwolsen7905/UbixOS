@@ -1,0 +1,22 @@
+digraph "C:/Dev/git/UbixOS/sys/fs/fat/fat_format.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="C:/Dev/git/UbixOS/sys\l/fs/fat/fat_format.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="fat_defs.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fat__defs_8h.html",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="fat/fat.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fat_8h.html",tooltip=" "];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="fat_opts.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fat__opts_8h.html",tooltip=" "];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="stdio.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="fat_types.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fat__types_8h.html",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="fat_access.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fat__access_8h.html",tooltip=" "];
+  Node7 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

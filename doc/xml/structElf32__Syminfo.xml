@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Syminfo" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Syminfo</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Syminfo_1a9d321c4cc96a0324a9b2dbe98bca2bd9" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Syminfo::si_boundto</definition>
+        <argsstring></argsstring>
+        <name>si_boundto</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="249" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Syminfo_1a3c3931c5ff4c0681e1511987ea83649e" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a2ff0787d7d1bae0f251192806a2974ca" kindref="member">Elf32_Half</ref></type>
+        <definition>Elf32_Half Elf32_Syminfo::si_flags</definition>
+        <argsstring></argsstring>
+        <name>si_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="250" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="250" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Syminfo</label>
+        <link refid="structElf32__Syminfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="248" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="248" bodyend="251"/>
+    <listofallmembers>
+      <member refid="structElf32__Syminfo_1a9d321c4cc96a0324a9b2dbe98bca2bd9" prot="public" virt="non-virtual"><scope>Elf32_Syminfo</scope><name>si_boundto</name></member>
+      <member refid="structElf32__Syminfo_1a3c3931c5ff4c0681e1511987ea83649e" prot="public" virt="non-virtual"><scope>Elf32_Syminfo</scope><name>si_flags</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,23 @@
+digraph "Options (lwipopts.h)"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node7 [label="PBUF",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__pbuf.html",tooltip=" "];
+  Node1 [label="Options (lwipopts.h)",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 [label="Debugging",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__debug.html",tooltip=" "];
+  Node4 [label="Callback-style APIs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__callback.html",tooltip=" "];
+  Node8 [label="NETIF",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__netif.html",tooltip=" "];
+  Node6 [label="IPv4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__ipv4.html",tooltip=" "];
+  Node9 [label="IPv6",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__ipv6.html",tooltip=" "];
+  Node5 [label="Thread-safe APIs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__threadsafe__apis.html",tooltip=" "];
+  Node3 [label="Infrastructure",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__infrastructure.html",tooltip=" "];
+  Node1->Node2 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node6 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node7 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node8 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node9 [shape=plaintext, dir="back", style="solid"];
+}

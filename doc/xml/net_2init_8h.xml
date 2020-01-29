@@ -1,0 +1,437 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="net_2init_8h" kind="file" language="C++">
+    <compoundname>init.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includedby refid="tcpip_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/tcpip.c</includedby>
+    <includedby refid="core_2init_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/init.c</includedby>
+    <incdepgraph>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/init.h</label>
+        <link refid="net_2init_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/init.h</label>
+        <link refid="net_2init_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" prot="public" static="no">
+        <name>LWIP_RC_DEVELOPMENT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_VERSION_RC is set to LWIP_RC_DEVELOPMENT for Git versions </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" prot="public" static="no">
+        <name>LWIP_RC_RELEASE</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_VERSION_RC is set to LWIP_RC_RELEASE for official releases </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga0a0d322fad0a67aa5b8f1b8c9dfcfe59" prot="public" static="no">
+        <name>LWIP_VERSION</name>
+        <initializer>(((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" kindref="member">LWIP_VERSION_MAJOR</ref>) &lt;&lt; 24   | ((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" kindref="member">LWIP_VERSION_MINOR</ref>) &lt;&lt; 16 | \
+                        ((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" kindref="member">LWIP_VERSION_REVISION</ref>) &lt;&lt; 8 | ((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Provides the version of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga5ccfb66bcbcf642a64f369ebefa2ad53" prot="public" static="no">
+        <name>LWIP_VERSION_IS_DEVELOPMENT</name>
+        <initializer>(<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> == <ref refid="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" kindref="member">LWIP_RC_DEVELOPMENT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga286a5221bb18242db9071479d8125b38" prot="public" static="no">
+        <name>LWIP_VERSION_IS_RC</name>
+        <initializer>((<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> != <ref refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" kindref="member">LWIP_RC_RELEASE</ref>) &amp;&amp; (<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> != <ref refid="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" kindref="member">LWIP_RC_DEVELOPMENT</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gabba875b6b4e4ca2dce972f4beec4b726" prot="public" static="no">
+        <name>LWIP_VERSION_IS_RELEASE</name>
+        <initializer>(<ref refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" kindref="member">LWIP_VERSION_RC</ref> == <ref refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" kindref="member">LWIP_RC_RELEASE</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" prot="public" static="no">
+        <name>LWIP_VERSION_MAJOR</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>X.x.x: Major version of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" prot="public" static="no">
+        <name>LWIP_VERSION_MINOR</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>x.X.x: Minor version of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" prot="public" static="no">
+        <name>LWIP_VERSION_RC</name>
+        <initializer><ref refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" kindref="member">LWIP_RC_RELEASE</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>For release candidates, this is set to 1..254 For official releases, this is set to 255 (LWIP_RC_RELEASE) For development versions (Git), this is set to 0 (LWIP_RC_DEVELOPMENT) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" prot="public" static="no">
+        <name>LWIP_VERSION_REVISION</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>x.x.X: Revision of the stack </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gab47e87bc38eef94486db402813183ba7" prot="public" static="no">
+        <name>LWIP_VERSION_STRING</name>
+        <initializer><ref refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" kindref="member">LWIP_VERSTR</ref>(<ref refid="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" kindref="member">LWIP_VERSION_MAJOR</ref>) &quot;.&quot; <ref refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" kindref="member">LWIP_VERSTR</ref>(<ref refid="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" kindref="member">LWIP_VERSION_MINOR</ref>) &quot;.&quot; <ref refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" kindref="member">LWIP_VERSTR</ref>(<ref refid="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" kindref="member">LWIP_VERSION_REVISION</ref>) <ref refid="group__lwip__version_1ga548fd1ff32bddf18074d284b794a3983" kindref="member">LWIP_VERSION_STRING_SUFFIX</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Provides the version of the stack as string </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="87" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga548fd1ff32bddf18074d284b794a3983" prot="public" static="no">
+        <name>LWIP_VERSION_STRING_SUFFIX</name>
+        <initializer>&quot;&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="76" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" prot="public" static="no">
+        <name>LWIP_VERSTR</name>
+        <param><defname>x</defname></param>
+        <initializer><ref refid="group__lwip__version_1gaf32777134eea478cc10bada0629a9e7e" kindref="member">LWIP_VERSTR2</ref>(x)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="74" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__version_1gaf32777134eea478cc10bada0629a9e7e" prot="public" static="no">
+        <name>LWIP_VERSTR2</name>
+        <param><defname>x</defname></param>
+        <initializer>#x</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/init.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="net_2init_8h_1a0c1a18439524d2f4a5e51d25c0ca2ce9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void lwip_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>lwip_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialize all modules. Use this in NO_SYS mode. Use <ref refid="tcpip_8h_1ac104b53faf0e3905ad0e970866835661" kindref="member">tcpip_init()</ref> otherwise. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/init.h" line="94" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/core/init.c" bodystart="333" bodyend="381" declfile="C:/Dev/git/UbixOS/sys/include/net/init.h" declline="94" declcolumn="6"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__compiler__abstraction_1gaa0dd3f76dd9a837feaac61fedc0dbe72" compoundref="arch_8h" startline="187">LWIP_CONST_CAST</references>
+        <references refid="group__compiler__abstraction_1ga70624a5deb8b9199406372a7f3603ecf" compoundref="arch_8h" startline="315">LWIP_UNUSED_ARG</references>
+        <references refid="mem_8h_1a44a136e3b70c36abb6f8dc060c778113" compoundref="mem_8c" startline="382" endline="410">mem_init</references>
+        <references refid="memp_8h_1a9693e5b1ac2c6b9c0e7870522d45efa2" compoundref="memp_8c" startline="271" endline="288">memp_init</references>
+        <references refid="netif_8h_1a0f4a53e47c840904f824a2a1c0d4ebf4" compoundref="netif_8c" startline="163" endline="191">netif_init</references>
+        <references refid="core_2init_8c_1afa3b6d3e87614ea5ab1aa9e7ac00cda4" compoundref="core_2init_8c" startline="75">PACKED_STRUCT_TEST_EXPECTED_SIZE</references>
+        <references refid="pbuf_8h_1a0c9b6a35471ebe1628ffe74bbc67f0b4" compoundref="pbuf_8h" startline="221">pbuf_init</references>
+        <references refid="stats_8h_1a832291112716a16838a0cc49595211b2" compoundref="stats_8h" startline="318">stats_init</references>
+        <references refid="sys_8h_1af411a8bc6b7ed4b0af9114e10c959448" compoundref="sys__arch_8c" startline="32" endline="35">sys_init</references>
+        <referencedby refid="tcpip_8c_1a1f3a88b8df6ba3b9ed1c00e0a305e3db" compoundref="tcpip_8c" startline="446" endline="461">tcpip_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>lwIP initialization API </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_INIT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_INIT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="group__lwip__version_1ga4308c06ef36496e00c798d96d7d03246" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_VERSION_MAJOR<sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="group__lwip__version_1ga1e596388c15ba81e753c5633fad1c034" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_VERSION_MINOR<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__lwip__version_1ga0a57983df1b199cf39a2e6a2d90e3d50" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_VERSION_REVISION<sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="group__lwip__version_1gac1dc92d8f453a98560de7e2e00a221a1" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_VERSION_RC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LWIP_RC_RELEASE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="group__lwip__version_1ga375ee868e76ed7c458cdf249387bd469" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_RC_RELEASE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="group__lwip__version_1ga9ca69b1a453eb72efd0bbda333f2a33b" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_RC_DEVELOPMENT<sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="group__lwip__version_1gabba875b6b4e4ca2dce972f4beec4b726" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSION_IS_RELEASE<sp/><sp/><sp/><sp/><sp/>(LWIP_VERSION_RC<sp/>==<sp/>LWIP_RC_RELEASE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="group__lwip__version_1ga5ccfb66bcbcf642a64f369ebefa2ad53" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSION_IS_DEVELOPMENT<sp/>(LWIP_VERSION_RC<sp/>==<sp/>LWIP_RC_DEVELOPMENT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="group__lwip__version_1ga286a5221bb18242db9071479d8125b38" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSION_IS_RC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((LWIP_VERSION_RC<sp/>!=<sp/>LWIP_RC_RELEASE)<sp/>&amp;&amp;<sp/>(LWIP_VERSION_RC<sp/>!=<sp/>LWIP_RC_DEVELOPMENT))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Some<sp/>helper<sp/>defines<sp/>to<sp/>get<sp/>a<sp/>version<sp/>string<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="group__lwip__version_1gaf32777134eea478cc10bada0629a9e7e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSTR2(x)<sp/>#x</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="group__lwip__version_1ga6dcc57b1d685cae569b2c9c9461de0e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSTR(x)<sp/>LWIP_VERSTR2(x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_VERSION_IS_RELEASE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="group__lwip__version_1ga548fd1ff32bddf18074d284b794a3983" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSION_STRING_SUFFIX<sp/>&quot;&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>LWIP_VERSION_IS_DEVELOPMENT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSION_STRING_SUFFIX<sp/>&quot;d&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_VERSION_STRING_SUFFIX<sp/>&quot;rc&quot;<sp/>LWIP_VERSTR(LWIP_VERSION_RC)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="group__lwip__version_1ga0a0d322fad0a67aa5b8f1b8c9dfcfe59" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_VERSION<sp/><sp/><sp/>(((u32_t)LWIP_VERSION_MAJOR)<sp/>&lt;&lt;<sp/>24<sp/><sp/><sp/>|<sp/>((u32_t)LWIP_VERSION_MINOR)<sp/>&lt;&lt;<sp/>16<sp/>|<sp/>\</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((u32_t)LWIP_VERSION_REVISION)<sp/>&lt;&lt;<sp/>8<sp/>|<sp/>((u32_t)LWIP_VERSION_RC))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="group__lwip__version_1gab47e87bc38eef94486db402813183ba7" refkind="member"><highlight class="preprocessor">#define<sp/>LWIP_VERSION_STRING<sp/><sp/><sp/><sp/><sp/>LWIP_VERSTR(LWIP_VERSION_MAJOR)<sp/>&quot;.&quot;<sp/>LWIP_VERSTR(LWIP_VERSION_MINOR)<sp/>&quot;.&quot;<sp/>LWIP_VERSTR(LWIP_VERSION_REVISION)<sp/>LWIP_VERSION_STRING_SUFFIX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="comment">/*<sp/>Modules<sp/>initialization<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="net_2init_8h_1a0c1a18439524d2f4a5e51d25c0ca2ce9" kindref="member">lwip_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_INIT_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/init.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structinitBlock32" kind="struct" language="C++" prot="public">
+    <compoundname>initBlock32</compoundname>
+    <includes refid="lnc_8h" local="no">lnc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structinitBlock32_1a7bcca84394934e7f3c6e5e530a8980ae" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t initBlock32::ladrf[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>ladrf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="122" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1a7a82e395fd7ebc9c6d49aaa076079edf" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t initBlock32::mode</definition>
+        <argsstring></argsstring>
+        <name>mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="117" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="117" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1ac1cc1926832f4faadf8c68d4d3efad9c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t initBlock32::padr[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>padr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="120" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="120" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1a8c7d3f96a698e973939ab069e779e60f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t initBlock32::rdra</definition>
+        <argsstring></argsstring>
+        <name>rdra</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="123" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="123" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1ac77e9178ec01c36a2c3df3d7ffd9b704" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t initBlock32::res</definition>
+        <argsstring></argsstring>
+        <name>res</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="121" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1a7d8e6b5186ef35e5867bcc2df83e177b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t initBlock32::rlen</definition>
+        <argsstring></argsstring>
+        <name>rlen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="118" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="118" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1a21be4224d33c7821c3ada11a0e8c3f08" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t initBlock32::tdra</definition>
+        <argsstring></argsstring>
+        <name>tdra</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="124" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="124" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock32_1ad3c8914cac5a258208f737a446dfd78e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t initBlock32::tlen</definition>
+        <argsstring></argsstring>
+        <name>tlen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="119" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="119" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>initBlock32</label>
+        <link refid="structinitBlock32"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="116" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="116" bodyend="125"/>
+    <listofallmembers>
+      <member refid="structinitBlock32_1a7bcca84394934e7f3c6e5e530a8980ae" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>ladrf</name></member>
+      <member refid="structinitBlock32_1a7a82e395fd7ebc9c6d49aaa076079edf" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>mode</name></member>
+      <member refid="structinitBlock32_1ac1cc1926832f4faadf8c68d4d3efad9c" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>padr</name></member>
+      <member refid="structinitBlock32_1a8c7d3f96a698e973939ab069e779e60f" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>rdra</name></member>
+      <member refid="structinitBlock32_1ac77e9178ec01c36a2c3df3d7ffd9b704" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>res</name></member>
+      <member refid="structinitBlock32_1a7d8e6b5186ef35e5867bcc2df83e177b" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>rlen</name></member>
+      <member refid="structinitBlock32_1a21be4224d33c7821c3ada11a0e8c3f08" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>tdra</name></member>
+      <member refid="structinitBlock32_1ad3c8914cac5a258208f737a446dfd78e" prot="public" virt="non-virtual"><scope>initBlock32</scope><name>tlen</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

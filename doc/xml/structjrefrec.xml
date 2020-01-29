@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structjrefrec" kind="struct" language="C++" prot="public">
+    <compoundname>jrefrec</compoundname>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structjrefrec_1a2c060bb7bc920e9f63e1b5ec1bd41406" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t jrefrec::jr_diroff</definition>
+        <argsstring></argsstring>
+        <name>jr_diroff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="709" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="709" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjrefrec_1afbe139367c273c54c5b790c395385061" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jrefrec::jr_ino</definition>
+        <argsstring></argsstring>
+        <name>jr_ino</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="705" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="705" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjrefrec_1a1242006807e29a0c31872311698f115a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t jrefrec::jr_mode</definition>
+        <argsstring></argsstring>
+        <name>jr_mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="708" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="708" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjrefrec_1a69d1f31dca46cdf7944aa3be87fb5a82" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t jrefrec::jr_nlink</definition>
+        <argsstring></argsstring>
+        <name>jr_nlink</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="707" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="707" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjrefrec_1ad9c1d6d19e0529443ffcd9520df382c8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jrefrec::jr_op</definition>
+        <argsstring></argsstring>
+        <name>jr_op</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="704" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="704" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjrefrec_1afca2073ad3ca483ae3b7bd4558d01c68" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jrefrec::jr_parent</definition>
+        <argsstring></argsstring>
+        <name>jr_parent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="706" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="706" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjrefrec_1a6b0d2a77c1f4207db50cf88c13a50b3e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a747748dd98cf1e2e89eb8b1fa37113df" kindref="member">uint64_t</ref></type>
+        <definition>uint64_t jrefrec::jr_unused</definition>
+        <argsstring></argsstring>
+        <name>jr_unused</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="710" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="710" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>jrefrec</label>
+        <link refid="structjrefrec"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="703" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="703" bodyend="711"/>
+    <listofallmembers>
+      <member refid="structjrefrec_1a2c060bb7bc920e9f63e1b5ec1bd41406" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_diroff</name></member>
+      <member refid="structjrefrec_1afbe139367c273c54c5b790c395385061" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_ino</name></member>
+      <member refid="structjrefrec_1a1242006807e29a0c31872311698f115a" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_mode</name></member>
+      <member refid="structjrefrec_1a69d1f31dca46cdf7944aa3be87fb5a82" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_nlink</name></member>
+      <member refid="structjrefrec_1ad9c1d6d19e0529443ffcd9520df382c8" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_op</name></member>
+      <member refid="structjrefrec_1afca2073ad3ca483ae3b7bd4558d01c68" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_parent</name></member>
+      <member refid="structjrefrec_1a6b0d2a77c1f4207db50cf88c13a50b3e" prot="public" virt="non-virtual"><scope>jrefrec</scope><name>jr_unused</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

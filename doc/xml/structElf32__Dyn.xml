@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf32__Dyn" kind="struct" language="C++" prot="public">
+    <compoundname>Elf32_Dyn</compoundname>
+    <includes refid="elf32_8h" local="no">elf32.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf32__Dyn_1adcdb4fa1682c07a7e7874c99f9cbd028" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a40c6d4571e6001f443cc6a6474620158" kindref="member">Elf32_Addr</ref></type>
+        <definition>Elf32_Addr Elf32_Dyn::d_ptr</definition>
+        <argsstring></argsstring>
+        <name>d_ptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="125" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Dyn_1a0edbe45a1c49cbb352dc3e1937369180" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1a30ce6352cf03c667272698ada477da95" kindref="member">Elf32_Sword</ref></type>
+        <definition>Elf32_Sword Elf32_Dyn::d_tag</definition>
+        <argsstring></argsstring>
+        <name>d_tag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="122" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Dyn_1a01827e35b8f67916583c73f157c9f1c7" prot="public" static="no" mutable="no">
+        <type>union Elf32_Dyn::@9</type>
+        <definition>union Elf32_Dyn::@9  Elf32_Dyn::d_un</definition>
+        <argsstring></argsstring>
+        <name>d_un</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="126" column="10"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf32__Dyn_1a00a89085454a384ae77fd9112b3062c7" prot="public" static="no" mutable="no">
+        <type><ref refid="elf32_8h_1af5924ece606c732e86f8263a19408e45" kindref="member">Elf32_Word</ref></type>
+        <definition>Elf32_Word Elf32_Dyn::d_val</definition>
+        <argsstring></argsstring>
+        <name>d_val</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="124" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf32_Dyn</label>
+        <link refid="structElf32__Dyn"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" line="121" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf32.h" bodystart="121" bodyend="127"/>
+    <listofallmembers>
+      <member refid="structElf32__Dyn_1adcdb4fa1682c07a7e7874c99f9cbd028" prot="public" virt="non-virtual"><scope>Elf32_Dyn</scope><name>d_ptr</name></member>
+      <member refid="structElf32__Dyn_1a0edbe45a1c49cbb352dc3e1937369180" prot="public" virt="non-virtual"><scope>Elf32_Dyn</scope><name>d_tag</name></member>
+      <member refid="structElf32__Dyn_1a01827e35b8f67916583c73f157c9f1c7" prot="public" virt="non-virtual"><scope>Elf32_Dyn</scope><name>d_un</name></member>
+      <member refid="structElf32__Dyn_1a00a89085454a384ae77fd9112b3062c7" prot="public" virt="non-virtual"><scope>Elf32_Dyn</scope><name>d_val</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

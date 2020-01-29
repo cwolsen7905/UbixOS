@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__rename__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_rename_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__rename__args_1a4a804f6cc0aa56ffa91369ef0f9e175d" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_rename_args::from</definition>
+        <argsstring></argsstring>
+        <name>from</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="721" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="721" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__rename__args_1a75ad64b8ab04ec7481053b1cd672396e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_rename_args::from_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>from_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="720" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="720" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__rename__args_1aa767a577ad1aa319fc4fee291108935c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_rename_args::from_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>from_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="722" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="722" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__rename__args_1a36c3b1c58b670fbed01b09f62714e969" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_rename_args::to</definition>
+        <argsstring></argsstring>
+        <name>to</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="724" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="724" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__rename__args_1a796fe18844d3a810cbca7a6b5aaf8977" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_rename_args::to_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>to_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="723" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="723" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__rename__args_1ae02d0db0dfe2012afba16d10a6dfda2f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_rename_args::to_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>to_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="725" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="725" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_rename_args</label>
+        <link refid="structsys__rename__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="719" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="719" bodyend="726"/>
+    <listofallmembers>
+      <member refid="structsys__rename__args_1a4a804f6cc0aa56ffa91369ef0f9e175d" prot="public" virt="non-virtual"><scope>sys_rename_args</scope><name>from</name></member>
+      <member refid="structsys__rename__args_1a75ad64b8ab04ec7481053b1cd672396e" prot="public" virt="non-virtual"><scope>sys_rename_args</scope><name>from_l_</name></member>
+      <member refid="structsys__rename__args_1aa767a577ad1aa319fc4fee291108935c" prot="public" virt="non-virtual"><scope>sys_rename_args</scope><name>from_r_</name></member>
+      <member refid="structsys__rename__args_1a36c3b1c58b670fbed01b09f62714e969" prot="public" virt="non-virtual"><scope>sys_rename_args</scope><name>to</name></member>
+      <member refid="structsys__rename__args_1a796fe18844d3a810cbca7a6b5aaf8977" prot="public" virt="non-virtual"><scope>sys_rename_args</scope><name>to_l_</name></member>
+      <member refid="structsys__rename__args_1ae02d0db0dfe2012afba16d10a6dfda2f" prot="public" virt="non-virtual"><scope>sys_rename_args</scope><name>to_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

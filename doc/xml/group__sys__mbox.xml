@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__mbox" kind="group">
+    <compoundname>sys_mbox</compoundname>
+    <title>Mailboxes</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__sys__mbox_1gacc53b5c30f131abc40f0885d39d32f87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_arch_mbox_fetch</definition>
+        <argsstring>(struct sys_mbox **mb, void **msg, uint32_t timeout)</argsstring>
+        <name>sys_arch_mbox_fetch</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>void **</type>
+          <declname>msg</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+          <declname>timeout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Wait for a new message to arrive in the mbox <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to get a message from </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer where the message is stored </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>maximum time (in milliseconds) to wait for a message (0 = wait forever) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>time (in milliseconds) waited for a message, may be 0 if not waited or SYS_ARCH_TIMEOUT on timeout The returned time has to be accurate to prevent timer jitter! </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="229" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="287" bodyend="334" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="229" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1ga3e0e0f02be2f670ebfb093a21f7dcdb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_arch_mbox_tryfetch</definition>
+        <argsstring>(struct sys_mbox **mb, void **msg)</argsstring>
+        <name>sys_arch_mbox_tryfetch</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>void **</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Wait for a new message to arrive in the mbox <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to get a message from </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer where the message is stored </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0 (milliseconds) if a message has been received or SYS_MBOX_EMPTY if the mailbox is empty </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="240" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="336" bodyend="365" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="240" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1gad4a51a28337f89d4b4806e6deb99798d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mbox_free</definition>
+        <argsstring>(struct sys_mbox **mb)</argsstring>
+        <name>sys_mbox_free</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Delete an mbox <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to delete </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="251" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="194" bodyend="213" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="251" declcolumn="6"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="sys__arch_8h_1a151f190d8a41cf6e2a02e0eec2b75355" compoundref="sys__arch_8h" startline="7">SYS_MBOX_NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_mbox_new</definition>
+        <argsstring>(struct sys_mbox **mb, int size)</argsstring>
+        <name>sys_mbox_new</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create a new mbox of specified size <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to the mbox to create </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(minimum) number of messages in this mbox </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, another err_t otherwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="203" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="161" bodyend="192" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="203" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1ga8ff11ed9831af7ca486123f74d4064ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mbox_post</definition>
+        <argsstring>(struct sys_mbox **mb, void *msg)</argsstring>
+        <name>sys_mbox_post</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Post a message to an mbox - may not fail -&gt; blocks if full, only used from tasks not from ISR <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to posts the message </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>message to post (ATTENTION: can be NULL) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="211" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="215" bodyend="249" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="211" declcolumn="6"/>
+        <references refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" compoundref="sys__arch_8h" startline="23">head</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1ga64ca1b1ef4c810f4d67595eca4fdfef0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mbox_set_invalid</definition>
+        <argsstring>(struct sys_mbox **mb)</argsstring>
+        <name>sys_mbox_set_invalid</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set an mbox invalid so that sys_mbox_valid returns 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="265" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="375" bodyend="377" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="265" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1gacc06f47f34de04084e1d49788ce871b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_mbox_trypost</definition>
+        <argsstring>(struct sys_mbox **mb, void *msg)</argsstring>
+        <name>sys_mbox_trypost</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Try to post a message to an mbox - may fail if full or ISR <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to posts the message </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>message to post (ATTENTION: can be NULL) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="218" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="251" bodyend="285" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="218" declcolumn="7"/>
+        <references refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" compoundref="sys__arch_8h" startline="23">head</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1gadf4b8fccb41fe2d76e88bef546e8e8bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mbox_valid</definition>
+        <argsstring>(struct sys_mbox **mb)</argsstring>
+        <name>sys_mbox_valid</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Check if an mbox is valid/allocated: return 1 for valid, 0 for invalid </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="258" column="5" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="367" bodyend="373" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="258" declcolumn="5"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

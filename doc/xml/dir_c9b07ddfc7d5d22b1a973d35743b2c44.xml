@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_c9b07ddfc7d5d22b1a973d35743b2c44" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/ufs</compoundname>
+    <innerdir refid="dir_7e0525267d5b07abf651859445bd783d">C:/Dev/git/UbixOS/sys/include/ufs/ffs</innerdir>
+    <innerdir refid="dir_b085e6450d61d777dbfd570aca3ae05d">C:/Dev/git/UbixOS/sys/include/ufs/ufs</innerdir>
+    <innerfile refid="ffs_8h">ffs.h</innerfile>
+    <innerfile refid="ufs_8h">ufs.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/"/>
+  </compounddef>
+</doxygen>

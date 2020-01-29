@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_8e7aca17b1c41a49c5b9b5f4a96a3b39" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/net/prot</compoundname>
+    <innerfile refid="prot_2autoip_8h">autoip.h</innerfile>
+    <innerfile refid="prot_2dhcp_8h">dhcp.h</innerfile>
+    <innerfile refid="prot_2dns_8h">dns.h</innerfile>
+    <innerfile refid="prot_2etharp_8h">etharp.h</innerfile>
+    <innerfile refid="prot_2ethernet_8h">ethernet.h</innerfile>
+    <innerfile refid="prot_2icmp_8h">icmp.h</innerfile>
+    <innerfile refid="prot_2icmp6_8h">icmp6.h</innerfile>
+    <innerfile refid="prot_2igmp_8h">igmp.h</innerfile>
+    <innerfile refid="prot_2ip_8h">ip.h</innerfile>
+    <innerfile refid="prot_2ip4_8h">ip4.h</innerfile>
+    <innerfile refid="prot_2ip6_8h">ip6.h</innerfile>
+    <innerfile refid="prot_2mld6_8h">mld6.h</innerfile>
+    <innerfile refid="prot_2nd6_8h">nd6.h</innerfile>
+    <innerfile refid="prot_2tcp_8h">tcp.h</innerfile>
+    <innerfile refid="prot_2udp_8h">udp.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/"/>
+  </compounddef>
+</doxygen>

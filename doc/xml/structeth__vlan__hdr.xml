@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structeth__vlan__hdr" kind="struct" language="C++" prot="public">
+    <compoundname>eth_vlan_hdr</compoundname>
+    <includes refid="prot_2ethernet_8h" local="no">ethernet.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeth__vlan__hdr_1a8e6e8760f4fbbab94d0ea20f38c90261" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eth_vlan_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t prio_vid)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>prio_vid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="94" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structeth__vlan__hdr_1a580cefad860d7c3e84373236ff7f3aee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eth_vlan_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t tpid)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>tpid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="95" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>VLAN header inserted between ethernet header and payload if &apos;type&apos; in ethernet header is ETHTYPE_VLAN. See IEEE802.Q </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>eth_vlan_hdr</label>
+        <link refid="structeth__vlan__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="93" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="93" bodyend="96"/>
+    <listofallmembers>
+      <member refid="structeth__vlan__hdr_1a8e6e8760f4fbbab94d0ea20f38c90261" prot="public" virt="non-virtual"><scope>eth_vlan_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structeth__vlan__hdr_1a580cefad860d7c3e84373236ff7f3aee" prot="public" virt="non-virtual"><scope>eth_vlan_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

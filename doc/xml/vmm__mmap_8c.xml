@@ -1,0 +1,897 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="vmm__mmap_8c" kind="file" language="C++">
+    <compoundname>vmm_mmap.c</compoundname>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="descrip_8h" local="no">sys/descrip.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <incdepgraph>
+      <node id="30">
+        <label>sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+      </node>
+      <node id="23">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="31">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="35">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c</label>
+        <link refid="vmm__mmap_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="20">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="26">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="33">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>vfs/stat.h</label>
+        <link refid="stat_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="vmm__mmap_8c_1a2d1678d5a7cc8ce499643f3b8957def4" prot="public" static="no">
+        <name>EINVAL</name>
+        <initializer>22              /* Invalid argument */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="40" column="16" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1aa409085f7521a7123554f94fec464cae" prot="public" static="no">
+        <name>MAP_ALIGNED</name>
+        <param><defname>n</defname></param>
+        <initializer>((n) &lt;&lt; <ref refid="vmm__mmap_8c_1ab3c3a0c844aac4c2a776144af72fc962" kindref="member">MAP_ALIGNMENT_SHIFT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a62e85b60c36d9e7cfe94f571571a2fd9" prot="public" static="no">
+        <name>MAP_ALIGNED_SUPER</name>
+        <initializer><ref refid="vmm__mmap_8c_1aa409085f7521a7123554f94fec464cae" kindref="member">MAP_ALIGNED</ref>(1) /* align on a superpage */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1ac167c2691db71eec92db78befc180561" prot="public" static="no">
+        <name>MAP_ALIGNMENT_MASK</name>
+        <initializer><ref refid="vmm__mmap_8c_1aa409085f7521a7123554f94fec464cae" kindref="member">MAP_ALIGNED</ref>(0xff)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1ab3c3a0c844aac4c2a776144af72fc962" prot="public" static="no">
+        <name>MAP_ALIGNMENT_SHIFT</name>
+        <initializer>24</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a298ddbffafbe6cf941b92092edfb86a5" prot="public" static="no">
+        <name>MAP_ANON</name>
+        <initializer>0x1000 /* allocated from memory, swap space */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a238feed3512d8b21b3854d082dcae6f4" prot="public" static="no">
+        <name>MAP_FILE</name>
+        <initializer>0x0000 /* map from <ref refid="structfile" kindref="compound">file</ref> (default) */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a387ec707b30c5e78cf20a14517a63b96" prot="public" static="no">
+        <name>MAP_FIXED</name>
+        <initializer>0x0010 /* map addr must be exactly as requested */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a8b783766f5ca8ebdcb7650dc3f013232" prot="public" static="no">
+        <name>MAP_HASSEMAPHORE</name>
+        <initializer>0x0200 /* region may contain semaphores */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1ad1c6c22db4e0baa46eea82f3170c1e79" prot="public" static="no">
+        <name>MAP_NORESERVE</name>
+        <initializer>0x0040 /* Sun: don&apos;t reserve needed swap area */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1ada41ea14bbfdc7529727db00153e7da5" prot="public" static="no">
+        <name>MAP_NOSYNC</name>
+        <initializer>0x0800 /* page to but do not sync underlying <ref refid="structfile" kindref="compound">file</ref> */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a398ef47a991a44389aa9818c98a28d24" prot="public" static="no">
+        <name>MAP_PRIVATE</name>
+        <initializer>0x0002          /* changes are private */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1ab1561170ccb2de44dea6a3636474b259" prot="public" static="no">
+        <name>MAP_RENAME</name>
+        <initializer>0x0020 /* Sun: rename private pages to <ref refid="structfile" kindref="compound">file</ref> */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a944446c3a2efd9c21c915b49815d132c" prot="public" static="no">
+        <name>MAP_RESERVED0080</name>
+        <initializer>0x0080 /* previously misimplemented MAP_INHERIT */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a20fd5035505aefc7df7d95e1c08bedfe" prot="public" static="no">
+        <name>MAP_RESERVED0100</name>
+        <initializer>0x0100 /* previously unimplemented MAP_NOEXTEND */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a57028962c2a7c0c802ca6613492f2ef3" prot="public" static="no">
+        <name>MAP_SHARED</name>
+        <initializer>0x0001          /* share changes */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a06c706c6cc07f13a3d0e1252e923ec69" prot="public" static="no">
+        <name>MAP_STACK</name>
+        <initializer>0x0400 /* region grows down, like a stack */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1ac3e045b1eb12fc6a000555fda916a023" prot="public" static="no">
+        <name>NBBY</name>
+        <initializer>8               /* number of bits in a byte */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="45" column="16" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a77848f068638e916c72cd543f5ecb815" prot="public" static="no">
+        <name>PROT_EXEC</name>
+        <initializer>0x04    /* pages can be executed */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a6a982b48b8d3eb8eccd17e0d54ee5379" prot="public" static="no">
+        <name>PROT_NONE</name>
+        <initializer>0x00    /* no permissions */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a15bf68ce8b590838b3a5c0b639d8d519" prot="public" static="no">
+        <name>PROT_READ</name>
+        <initializer>0x01    /* pages can be <ref refid="gen__calls_8c_1a5eff3a25d417fafce7c4f211db219ca2" kindref="member">read</ref> */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="vmm__mmap_8c_1a2a79c8ceefb8fc25a940ae07a3d94429" prot="public" static="no">
+        <name>PROT_WRITE</name>
+        <initializer>0x02    /* pages can be written */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="vmm__mmap_8c_1aa7e5e65d64b34dac1a9567aef42e58b2" prot="public" static="no">
+        <type><ref refid="__types_8h_1acaa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
+        <definition>typedef __uint32_t __vm_size_t</definition>
+        <argsstring></argsstring>
+        <name>__vm_size_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="38" column="29" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="vmm__mmap_8c_1a3714bf69eda1989e3cf077bc1f029919" prot="public" static="no">
+        <type><ref refid="vmm__mmap_8c_1aa7e5e65d64b34dac1a9567aef42e58b2" kindref="member">__vm_size_t</ref></type>
+        <definition>typedef __vm_size_t vm_size_t</definition>
+        <argsstring></argsstring>
+        <name>vm_size_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="39" column="1" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int freebsd6_mmap</definition>
+        <argsstring>(struct thread *td, struct freebsd6_mmap_args *uap)</argsstring>
+        <name>freebsd6_mmap</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfreebsd6__mmap__args" kindref="compound">freebsd6_mmap_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="75" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="75" bodyend="153"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structfreebsd6__mmap__args_1a841d856e3b8557c71f49cbb1f2912915" compoundref="vmm_8h" startline="75">freebsd6_mmap_args::addr</references>
+        <references refid="vmm__mmap_8c_1a2d1678d5a7cc8ce499643f3b8957def4" compoundref="vmm__mmap_8c" startline="40">EINVAL</references>
+        <references refid="structfreebsd6__mmap__args_1a13eef518e4a15d1bcb4edd0fb8baf209" compoundref="vmm_8h" startline="90">freebsd6_mmap_args::fd</references>
+        <references refid="structfreebsd6__mmap__args_1a9233fccfb817eef25ee6aae5de43bef0" compoundref="vmm_8h" startline="87">freebsd6_mmap_args::flags</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="32">K_PANIC</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structfreebsd6__mmap__args_1aa6f8c3f17fdac371851c44f0f05a503e" compoundref="vmm_8h" startline="79">freebsd6_mmap_args::len</references>
+        <references refid="vmm__mmap_8c_1a62e85b60c36d9e7cfe94f571571a2fd9" compoundref="vmm__mmap_8c" startline="44">MAP_ALIGNED_SUPER</references>
+        <references refid="vmm__mmap_8c_1ac167c2691db71eec92db78befc180561" compoundref="vmm__mmap_8c" startline="43">MAP_ALIGNMENT_MASK</references>
+        <references refid="vmm__mmap_8c_1ab3c3a0c844aac4c2a776144af72fc962" compoundref="vmm__mmap_8c" startline="42">MAP_ALIGNMENT_SHIFT</references>
+        <references refid="vmm__mmap_8c_1a298ddbffafbe6cf941b92092edfb86a5" compoundref="vmm__mmap_8c" startline="73">MAP_ANON</references>
+        <references refid="vmm__mmap_8c_1a387ec707b30c5e78cf20a14517a63b96" compoundref="vmm__mmap_8c" startline="60">MAP_FIXED</references>
+        <references refid="vmm__mmap_8c_1ac3e045b1eb12fc6a000555fda916a023" compoundref="vmm__mmap_8c" startline="45">NBBY</references>
+        <references refid="structfreebsd6__mmap__args_1ac879a1ee14fb849a4d830bec94d5ae13" compoundref="vmm_8h" startline="94">freebsd6_mmap_args::pad</references>
+        <references refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="68">PAGE_DEFAULT</references>
+        <references refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" compoundref="paging_8h" startline="38">PAGE_MASK</references>
+        <references refid="paging_8h_1a850d80ca2291d26b40dc6b25c419f81a" compoundref="paging_8h" startline="36">PAGE_SHIFT</references>
+        <references refid="structfreebsd6__mmap__args_1a5ba1d1bc00b43b73a9edc1b299f2a56e" compoundref="vmm_8h" startline="98">freebsd6_mmap_args::pos</references>
+        <references refid="structfreebsd6__mmap__args_1ae114b2b851ebbd32b7a58224a59bd716" compoundref="vmm_8h" startline="83">freebsd6_mmap_args::prot</references>
+        <references refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" compoundref="paging_8h" startline="72">round_page</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="paging_8h_1adea68f248df43bddee62a09d945304b0" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</references>
+      </memberdef>
+      <memberdef kind="function" id="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mmap</definition>
+        <argsstring>(struct thread *td, struct sys_mmap_args *uap)</argsstring>
+        <name>sys_mmap</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mmap__args" kindref="compound">sys_mmap_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="162" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="162" bodyend="220"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" compoundref="sysproto__posix_8h" startline="380">sys_mmap_args::addr</references>
+        <references refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" compoundref="gpt_8h" startline="37">bzero</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="structsys__mmap__args_1ad79908545a6d8b5eeb57e75d6785d616" compoundref="sysproto__posix_8h" startline="392">sys_mmap_args::fd</references>
+        <references refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" compoundref="file_8c" startline="291" endline="309">fread</references>
+        <references refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" compoundref="file_8c" startline="326" endline="329">fseek</references>
+        <references refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" compoundref="descrip_8c" startline="214" endline="227">getfd</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="32">K_PANIC</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" compoundref="sysproto__posix_8h" startline="383">sys_mmap_args::len</references>
+        <references refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="68">PAGE_DEFAULT</references>
+        <references refid="structsys__mmap__args_1a644ac49c17d7ce5526b5f950261231c7" compoundref="sysproto__posix_8h" startline="395">sys_mmap_args::pos</references>
+        <references refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" compoundref="paging_8h" startline="72">round_page</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="paging_8h_1a59a518704bf2f0b56603476bcb1eebbf" compoundref="paging_8h" startline="52">VM_TASK</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="vmm_8h_1aabceab91796188f211167ff9ca38fad7a3b6a650ea04d6ae6d7a349d6b91afe58" compoundref="vmm_8h" startline="111">VMM_FREE</references>
+        <references refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" compoundref="getfreevirtualpage_8c" startline="47" endline="133">vmm_getFreeVirtualPage</references>
+        <references refid="paging_8h_1adea68f248df43bddee62a09d945304b0" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</references>
+        <references refid="vmm_8h_1a457446966aafafd939af6603f68516b1" compoundref="unmappage_8c" startline="47" endline="81">vmm_unmapPage</references>
+      </memberdef>
+      <memberdef kind="function" id="vmm__mmap_8c_1a985dc19746123edc27f59c56678f81ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_munmap</definition>
+        <argsstring>(struct thread *td, struct sys_munmap_args *uap)</argsstring>
+        <name>sys_munmap</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__munmap__args" kindref="compound">sys_munmap_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" line="155" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c" bodystart="155" bodyend="159"/>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="descrip_8h" kindref="compound">sys/descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MrOlsen<sp/>(2016-01-15)<sp/>TEMP:<sp/>Put<sp/>These<sp/>somewhere<sp/>else<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="vmm__mmap_8c_1aa7e5e65d64b34dac1a9567aef42e58b2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1acaa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="vmm__mmap_8c_1aa7e5e65d64b34dac1a9567aef42e58b2" kindref="member">__vm_size_t</ref>;<sp/></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="vmm__mmap_8c_1aa7e5e65d64b34dac1a9567aef42e58b2" kindref="member">__vm_size_t</ref></highlight></codeline>
+<codeline lineno="39" refid="vmm__mmap_8c_1a3714bf69eda1989e3cf077bc1f029919" refkind="member"><highlight class="normal"><ref refid="vmm__mmap_8c_1a3714bf69eda1989e3cf077bc1f029919" kindref="member">vm_size_t</ref>;</highlight></codeline>
+<codeline lineno="40" refid="vmm__mmap_8c_1a2d1678d5a7cc8ce499643f3b8957def4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>EINVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>22<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Invalid<sp/>argument<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="vmm__mmap_8c_1aa409085f7521a7123554f94fec464cae" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_ALIGNED(n)<sp/><sp/><sp/>((n)<sp/>&lt;&lt;<sp/>MAP_ALIGNMENT_SHIFT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="vmm__mmap_8c_1ab3c3a0c844aac4c2a776144af72fc962" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_ALIGNMENT_SHIFT<sp/><sp/><sp/><sp/><sp/>24</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="vmm__mmap_8c_1ac167c2691db71eec92db78befc180561" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_ALIGNMENT_MASK<sp/><sp/><sp/><sp/><sp/><sp/>MAP_ALIGNED(0xff)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="vmm__mmap_8c_1a62e85b60c36d9e7cfe94f571571a2fd9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_ALIGNED_SUPER<sp/><sp/><sp/><sp/><sp/><sp/><sp/>MAP_ALIGNED(1)<sp/></highlight><highlight class="comment">/*<sp/>align<sp/>on<sp/>a<sp/>superpage<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="vmm__mmap_8c_1ac3e045b1eb12fc6a000555fda916a023" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>NBBY<sp/><sp/><sp/><sp/>8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>bits<sp/>in<sp/>a<sp/>byte<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>PROTs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="vmm__mmap_8c_1a6a982b48b8d3eb8eccd17e0d54ee5379" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROT_NONE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>no<sp/>permissions<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="vmm__mmap_8c_1a15bf68ce8b590838b3a5c0b639d8d519" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROT_READ<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x01<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pages<sp/>can<sp/>be<sp/>read<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="vmm__mmap_8c_1a2a79c8ceefb8fc25a940ae07a3d94429" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROT_WRITE<sp/><sp/><sp/><sp/><sp/><sp/>0x02<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pages<sp/>can<sp/>be<sp/>written<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="vmm__mmap_8c_1a77848f068638e916c72cd543f5ecb815" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PROT_EXEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x04<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pages<sp/>can<sp/>be<sp/>executed<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>FLAGs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>Do<sp/>I<sp/>Need<sp/>These?</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="vmm__mmap_8c_1a57028962c2a7c0c802ca6613492f2ef3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_SHARED<sp/><sp/><sp/><sp/><sp/><sp/>0x0001<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>share<sp/>changes<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="vmm__mmap_8c_1a398ef47a991a44389aa9818c98a28d24" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_PRIVATE<sp/><sp/><sp/><sp/><sp/>0x0002<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>changes<sp/>are<sp/>private<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="vmm__mmap_8c_1a387ec707b30c5e78cf20a14517a63b96" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_FIXED<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0010<sp/></highlight><highlight class="comment">/*<sp/>map<sp/>addr<sp/>must<sp/>be<sp/>exactly<sp/>as<sp/>requested<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="vmm__mmap_8c_1ab1561170ccb2de44dea6a3636474b259" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_RENAME<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0020<sp/></highlight><highlight class="comment">/*<sp/>Sun:<sp/>rename<sp/>private<sp/>pages<sp/>to<sp/>file<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="vmm__mmap_8c_1ad1c6c22db4e0baa46eea82f3170c1e79" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_NORESERVE<sp/><sp/><sp/><sp/>0x0040<sp/></highlight><highlight class="comment">/*<sp/>Sun:<sp/>don&apos;t<sp/>reserve<sp/>needed<sp/>swap<sp/>area<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="vmm__mmap_8c_1a944446c3a2efd9c21c915b49815d132c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_RESERVED0080<sp/>0x0080<sp/></highlight><highlight class="comment">/*<sp/>previously<sp/>misimplemented<sp/>MAP_INHERIT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="vmm__mmap_8c_1a20fd5035505aefc7df7d95e1c08bedfe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_RESERVED0100<sp/>0x0100<sp/></highlight><highlight class="comment">/*<sp/>previously<sp/>unimplemented<sp/>MAP_NOEXTEND<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="vmm__mmap_8c_1a8b783766f5ca8ebdcb7650dc3f013232" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_HASSEMAPHORE<sp/>0x0200<sp/></highlight><highlight class="comment">/*<sp/>region<sp/>may<sp/>contain<sp/>semaphores<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="vmm__mmap_8c_1a06c706c6cc07f13a3d0e1252e923ec69" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_STACK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0400<sp/></highlight><highlight class="comment">/*<sp/>region<sp/>grows<sp/>down,<sp/>like<sp/>a<sp/>stack<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="vmm__mmap_8c_1ada41ea14bbfdc7529727db00153e7da5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_NOSYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0800<sp/></highlight><highlight class="comment">/*<sp/>page<sp/>to<sp/>but<sp/>do<sp/>not<sp/>sync<sp/>underlying<sp/>file<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>*<sp/>Mapping<sp/>type</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="vmm__mmap_8c_1a238feed3512d8b21b3854d082dcae6f4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_FILE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0000<sp/></highlight><highlight class="comment">/*<sp/>map<sp/>from<sp/>file<sp/>(default)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="vmm__mmap_8c_1a298ddbffafbe6cf941b92092edfb86a5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_ANON<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x1000<sp/></highlight><highlight class="comment">/*<sp/>allocated<sp/>from<sp/>memory,<sp/>swap<sp/>space<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" kindref="member">freebsd6_mmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfreebsd6__mmap__args" kindref="compound">freebsd6_mmap_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="vmm__mmap_8c_1a3714bf69eda1989e3cf077bc1f029919" kindref="member">vm_size_t</ref><sp/>size,<sp/>pageoff;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/>pos;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>align,<sp/>flags,<sp/>error;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1ad6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref><sp/>addr;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>size<sp/>=<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1aa6f8c3f17fdac371851c44f0f05a503e" kindref="member">len</ref>;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>flags<sp/>=<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1a9233fccfb817eef25ee6aae5de43bef0" kindref="member">flags</ref>;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>pos<sp/>=<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1a5ba1d1bc00b43b73a9edc1b299f2a56e" kindref="member">pos</ref>;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;flags:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1a9233fccfb817eef25ee6aae5de43bef0" kindref="member">flags</ref>);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;addr:<sp/><sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1a841d856e3b8557c71f49cbb1f2912915" kindref="member">addr</ref>);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;len:<sp/><sp/><sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1aa6f8c3f17fdac371851c44f0f05a503e" kindref="member">len</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;prot:<sp/><sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1ae114b2b851ebbd32b7a58224a59bd716" kindref="member">prot</ref>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;fd:<sp/><sp/><sp/><sp/>[%i]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1a13eef518e4a15d1bcb4edd0fb8baf209" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;pad:<sp/><sp/><sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1ac879a1ee14fb849a4d830bec94d5ae13" kindref="member">pad</ref>);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;uap-&gt;pos:<sp/><sp/><sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structfreebsd6__mmap__args_1a5ba1d1bc00b43b73a9edc1b299f2a56e" kindref="member">pos</ref>);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((uap-&gt;<ref refid="structfreebsd6__mmap__args_1a9233fccfb817eef25ee6aae5de43bef0" kindref="member">flags</ref><sp/>&amp;<sp/><ref refid="vmm__mmap_8c_1a298ddbffafbe6cf941b92092edfb86a5" kindref="member">MAP_ANON</ref>)<sp/>!=<sp/>0)</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>pos<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Align<sp/>the<sp/>file<sp/>position<sp/>to<sp/>a<sp/>page<sp/>boundary,</highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/><sp/><sp/>*<sp/>and<sp/>save<sp/>its<sp/>page<sp/>offset<sp/>component.</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>pageoff<sp/>=<sp/>(pos<sp/>&amp;<sp/><ref refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" kindref="member">PAGE_MASK</ref>);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/>pos<sp/>-=<sp/>pageoff;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Adjust<sp/>size<sp/>for<sp/>rounding<sp/>(on<sp/>both<sp/>ends).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>size<sp/>+=<sp/>pageoff;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>size<sp/>=<sp/>(<ref refid="vmm__mmap_8c_1a3714bf69eda1989e3cf077bc1f029919" kindref="member">vm_size_t</ref>)<sp/><ref refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" kindref="member">round_page</ref>(size);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Ensure<sp/>alignment<sp/>is<sp/>at<sp/>least<sp/>a<sp/>page<sp/>and<sp/>fits<sp/>in<sp/>a<sp/>pointer.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>align<sp/>=<sp/>flags<sp/>&amp;<sp/><ref refid="vmm__mmap_8c_1ac167c2691db71eec92db78befc180561" kindref="member">MAP_ALIGNMENT_MASK</ref>;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(align<sp/>!=<sp/>0<sp/>&amp;&amp;<sp/>align<sp/>!=<sp/><ref refid="vmm__mmap_8c_1a62e85b60c36d9e7cfe94f571571a2fd9" kindref="member">MAP_ALIGNED_SUPER</ref><sp/>&amp;&amp;<sp/>(align<sp/>&gt;&gt;<sp/><ref refid="vmm__mmap_8c_1ab3c3a0c844aac4c2a776144af72fc962" kindref="member">MAP_ALIGNMENT_SHIFT</ref><sp/>&gt;=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<sp/>*<sp/><ref refid="vmm__mmap_8c_1ac3e045b1eb12fc6a000555fda916a023" kindref="member">NBBY</ref><sp/>||<sp/>align<sp/>&gt;&gt;<sp/><ref refid="vmm__mmap_8c_1ab3c3a0c844aac4c2a776144af72fc962" kindref="member">MAP_ALIGNMENT_SHIFT</ref><sp/>&lt;<sp/><ref refid="paging_8h_1a850d80ca2291d26b40dc6b25c419f81a" kindref="member">PAGE_SHIFT</ref>))</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="vmm__mmap_8c_1a2d1678d5a7cc8ce499643f3b8957def4" kindref="member">EINVAL</ref>);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(flags<sp/>&amp;<sp/><ref refid="vmm__mmap_8c_1a387ec707b30c5e78cf20a14517a63b96" kindref="member">MAP_FIXED</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;FIXED<sp/>NOT<sp/>SUPPORTED<sp/>YET&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="vmm__mmap_8c_1a2d1678d5a7cc8ce499643f3b8957def4" kindref="member">EINVAL</ref>);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>At<sp/>Some<sp/>Point<sp/>I<sp/>Need<sp/>To<sp/><sp/>Proc<sp/>Lock<sp/>Incase<sp/>It&apos;s<sp/>Threaded<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>MrOlsen<sp/>(2016-01-15)<sp/>Temporary<sp/>comment<sp/>out</highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>if<sp/>(<sp/>addr<sp/>==<sp/>0<sp/>||<sp/>(addr<sp/>&gt;=<sp/>round_page(<sp/>(vm_offset_t)<sp/>vms-&gt;vm_taddr<sp/>)<sp/>&amp;&amp;<sp/>addr<sp/>&lt;<sp/>round_page(<sp/>(vm_offset_t)<sp/>vms-&gt;vm_daddr<sp/>+<sp/>lim_max(<sp/>td-&gt;td_proc,<sp/>RLIMIT_DATA<sp/>)<sp/>))<sp/>)</highlight></codeline>
+<codeline lineno="125"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>addr<sp/>=<sp/>round_page(<sp/>(vm_offset_t)<sp/>vms-&gt;vm_daddr<sp/>+<sp/>lim_max(<sp/>td-&gt;td_proc,<sp/>RLIMIT_DATA<sp/>)<sp/>);</highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(flags<sp/>&amp;<sp/><ref refid="vmm__mmap_8c_1a298ddbffafbe6cf941b92092edfb86a5" kindref="member">MAP_ANON</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>Mapping<sp/>blank<sp/>space<sp/>is<sp/>trivial.</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="135"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>handle<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>handle_type<sp/>=<sp/>OBJT_DEFAULT;</highlight></codeline>
+<codeline lineno="137"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>maxprot<sp/>=<sp/>VM_PROT_ALL;</highlight></codeline>
+<codeline lineno="138"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>cap_maxprot<sp/>=<sp/>VM_PROT_ALL;</highlight></codeline>
+<codeline lineno="139"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>addr;<sp/>i<sp/>&lt;<sp/>(addr<sp/>+<sp/>size);<sp/>i<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="paging_8h_1adea68f248df43bddee62a09d945304b0" kindref="member">vmm_remapPage</ref>(<ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>),<sp/>i,<sp/><ref refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/>0)<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;remap<sp/>Failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;td-&gt;vm_dsize<sp/>should<sp/>be<sp/>adjust<sp/>but<sp/>isn&apos;t&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Mapping<sp/>File<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;File<sp/>Mapping<sp/>Not<sp/>Supported<sp/>Yet&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="vmm__mmap_8c_1a2d1678d5a7cc8ce499643f3b8957def4" kindref="member">EINVAL</ref>);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="153"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="vmm__mmap_8c_1a985dc19746123edc27f59c56678f81ad" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm__mmap_8c_1a985dc19746123edc27f59c56678f81ad" kindref="member">sys_munmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__munmap__args" kindref="compound">sys_munmap_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//TEMP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" kindref="member">sys_mmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mmap__args" kindref="compound">sys_mmap_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1ad6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref><sp/>addr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*tmp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/>addr<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1ad6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref>)<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref>;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/>if<sp/>(uap-&gt;<ref refid="structsys__mmap__args_1ad79908545a6d8b5eeb57e75d6785d616" kindref="member">fd</ref><sp/>==<sp/>-1)<sp/>{</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0x0;<sp/>x<sp/>&lt;<sp/><ref refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" kindref="member">round_page</ref>(uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref>);<sp/>x<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref><sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x,<sp/><ref refid="vmm_8h_1aabceab91796188f211167ff9ca38fad7a3b6a650ea04d6ae6d7a349d6b91afe58" kindref="member">VMM_FREE</ref>);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Make<sp/>readonly<sp/>and<sp/>read/write<sp/>!!!<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="paging_8h_1adea68f248df43bddee62a09d945304b0" kindref="member">vmm_remapPage</ref>(<ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>),<sp/>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref><sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x),<sp/><ref refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/>0)<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;Remap<sp/>Page<sp/>Failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref>;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(tmp,<sp/>uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref>);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>tmp;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" kindref="member">vmm_getFreeVirtualPage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/><ref refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" kindref="member">round_page</ref>(<sp/>uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref><sp/>)<sp/>/<sp/>0x1000,<sp/><ref refid="paging_8h_1a59a518704bf2f0b56603476bcb1eebbf" kindref="member">VM_TASK</ref>);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0],<sp/>uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref>);</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);<sp/></highlight><highlight class="comment">//vmm_getFreeVirtualPage(_current-&gt;id,<sp/>round_page(<sp/>uap-&gt;len<sp/>)<sp/>/<sp/>0x1000,<sp/>VM_THRD));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="descrip_8h_1a14e228d6e5391a882d3b20ff2466b2ac" kindref="member">getfd</ref>(td,<sp/>&amp;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>,<sp/>uap-&gt;<ref refid="structsys__mmap__args_1ad79908545a6d8b5eeb57e75d6785d616" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref><sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" kindref="member">vmm_getFreeVirtualPage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/><ref refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" kindref="member">round_page</ref>(uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref>)<sp/>/<sp/>0x1000,<sp/><ref refid="paging_8h_1a59a518704bf2f0b56603476bcb1eebbf" kindref="member">VM_TASK</ref>);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0x0;<sp/>x<sp/>&lt;<sp/><ref refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" kindref="member">round_page</ref>(uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref>);<sp/>x<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref><sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x,<sp/>1);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Make<sp/>readonly<sp/>and<sp/>read/write<sp/>!!!<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="paging_8h_1adea68f248df43bddee62a09d945304b0" kindref="member">vmm_remapPage</ref>(<ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>),<sp/>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref><sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x),<sp/><ref refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/>0)<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;Remap<sp/>Page<sp/>Failed&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/>uap-&gt;<ref refid="structsys__mmap__args_1acfd252be16bbbe7ac39670ee5943709d" kindref="member">addr</ref>;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;fd,<sp/>uap-&gt;<ref refid="structsys__mmap__args_1a644ac49c17d7ce5526b5f950261231c7" kindref="member">pos</ref>,<sp/>0x0);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(tmp,<sp/>uap-&gt;<ref refid="structsys__mmap__args_1adaab8308692fd9673a8ba87b88a93103" kindref="member">len</ref>,<sp/>0x1,<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;fd);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>tmp;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>==<sp/>(<ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref>)<sp/>-1)</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;MMAP_FAILED&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c"/>
+  </compounddef>
+</doxygen>

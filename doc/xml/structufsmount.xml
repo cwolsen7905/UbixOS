@@ -1,0 +1,485 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structufsmount" kind="struct" language="C++" prot="public">
+    <compoundname>ufsmount</compoundname>
+    <includes refid="ufsmount_8h" local="no">ufsmount.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structufsmount_1a2ae5f079a55ace7601f4c4c3f831a426" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_balloc) (struct vnode *, off_t, int, struct ucred *, int, struct buf **)</definition>
+        <argsstring>)(struct vnode *, off_t, int, struct ucred *, int, struct buf **)</argsstring>
+        <name>um_balloc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="89" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a8df83f1a4460959055d2341e11e24d9b" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_blkatoff) (struct vnode *, off_t, char **, struct buf **)</definition>
+        <argsstring>)(struct vnode *, off_t, char **, struct buf **)</argsstring>
+        <name>um_blkatoff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="91" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1adb373dc5ae22f5b11b1c33ad13a6553e" prot="public" static="no" mutable="no">
+        <type>struct bufobj *</type>
+        <definition>struct bufobj* ufsmount::um_bo</definition>
+        <argsstring></argsstring>
+        <name>um_bo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="68" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a6b758facf79a3897899d8f548d62b69d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long ufsmount::um_bptrtodb</definition>
+        <argsstring></argsstring>
+        <name>um_bptrtodb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="74" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a8ef31cdf730aae447cce702d9c3ef378" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+        <definition>time_t ufsmount::um_btime[MAXQUOTAS]</definition>
+        <argsstring>[MAXQUOTAS]</argsstring>
+        <name>um_btime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="81" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a75141a053461af780fe2e073879a4e14" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int ufsmount::um_candelete</definition>
+        <argsstring></argsstring>
+        <name>um_candelete</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="85" column="4" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1aeb7ce24ab55e9840691f363fd855e91a" prot="public" static="no" mutable="no">
+        <type>struct g_consumer *</type>
+        <definition>struct g_consumer* ufsmount::um_cp</definition>
+        <argsstring></argsstring>
+        <name>um_cp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="67" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a51d34633e98fa872b200bd44c59ee7e4" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structucred" kindref="compound">ucred</ref> *</type>
+        <definition>struct ucred* ufsmount::um_cred[MAXQUOTAS]</definition>
+        <argsstring>[MAXQUOTAS]</argsstring>
+        <name>um_cred</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="80" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1afba51fd8df4d46ffb553f670984b93cb" prot="public" static="no" mutable="no">
+        <type>struct cdev *</type>
+        <definition>struct cdev* ufsmount::um_dev</definition>
+        <argsstring></argsstring>
+        <name>um_dev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="66" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a17a7d5db2778fbd5c8f995109a06cce1" prot="public" static="no" mutable="no">
+        <type>struct vnode *</type>
+        <definition>struct vnode* ufsmount::um_devvp</definition>
+        <argsstring></argsstring>
+        <name>um_devvp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="69" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1ae4862a2c81e265b4cff373c338c1f45d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfs" kindref="compound">fs</ref> *</type>
+        <definition>struct fs* ufsmount::um_fs</definition>
+        <argsstring></argsstring>
+        <name>um_fs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a49663dc50b513cfa17b7cce21535eae8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref></type>
+        <definition>pid_t ufsmount::um_fsckpid</definition>
+        <argsstring></argsstring>
+        <name>um_fsckpid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="77" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a62be54a9fd0282690565b73c1e3a82d9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long ufsmount::um_fstype</definition>
+        <argsstring></argsstring>
+        <name>um_fstype</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="70" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a8f8d3da23b2093a861f62fc4dd897839" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* ufsmount::um_ifree) (struct ufsmount *, struct inode *)</definition>
+        <argsstring>)(struct ufsmount *, struct inode *)</argsstring>
+        <name>um_ifree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="97" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1aac98de61c83df2f248ad80393670f818" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+        <definition>time_t ufsmount::um_itime[MAXQUOTAS]</definition>
+        <argsstring>[MAXQUOTAS]</argsstring>
+        <name>um_itime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="82" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a586f8f6215a76792b01d38c99184cb58" prot="public" static="no" mutable="no">
+        <type>struct mount *</type>
+        <definition>struct mount* ufsmount::um_mountp</definition>
+        <argsstring></argsstring>
+        <name>um_mountp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="65" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1acbebc793bce6001e1af4f0aa40359a94" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long ufsmount::um_nindir</definition>
+        <argsstring></argsstring>
+        <name>um_nindir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="73" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1aee5a0e477101453777777f339a488c0e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char ufsmount::um_qflags[MAXQUOTAS]</definition>
+        <argsstring>[MAXQUOTAS]</argsstring>
+        <name>um_qflags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="83" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a84ec6d43146862f44d054cae6370e474" prot="public" static="no" mutable="no">
+        <type>struct vnode *</type>
+        <definition>struct vnode* ufsmount::um_quotas[MAXQUOTAS]</definition>
+        <argsstring>[MAXQUOTAS]</argsstring>
+        <name>um_quotas</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="79" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a252dc601abe0cd69c1837996fdec9992" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_rdonly) (struct inode *)</definition>
+        <argsstring>)(struct inode *)</argsstring>
+        <name>um_rdonly</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="98" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1ab2dfba610fdd2762fb3447a723c2e15a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t ufsmount::um_savedmaxfilesize</definition>
+        <argsstring></argsstring>
+        <name>um_savedmaxfilesize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="84" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a75633370da4e6801848054424fa39795" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long ufsmount::um_seqinc</definition>
+        <argsstring></argsstring>
+        <name>um_seqinc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="75" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a38fe7783afc759a4799061ec616dc96b" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* ufsmount::um_snapgone) (struct inode *)</definition>
+        <argsstring>)(struct inode *)</argsstring>
+        <name>um_snapgone</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="99" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a04c97f51e4d3c42ca011dd8d0bf01f3e" prot="public" static="no" mutable="no">
+        <type>struct mount_softdeps *</type>
+        <definition>struct mount_softdeps* ufsmount::um_softdep</definition>
+        <argsstring></argsstring>
+        <name>um_softdep</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="78" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a5447899159c0acab985f9421716c25d8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+        <definition>u_int ufsmount::um_trim_inflight</definition>
+        <argsstring></argsstring>
+        <name>um_trim_inflight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="87" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a03b84ddc7f6c777d632b31b5fdd08d90" prot="public" static="no" mutable="no">
+        <type>struct taskqueue *</type>
+        <definition>struct taskqueue* ufsmount::um_trim_tq</definition>
+        <argsstring></argsstring>
+        <name>um_trim_tq</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="88" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a7b6b05a37e552e5c1fed08e2107923aa" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_truncate) (struct vnode *, off_t, int, struct ucred *)</definition>
+        <argsstring>)(struct vnode *, off_t, int, struct ucred *)</argsstring>
+        <name>um_truncate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="92" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1aed5b38b079abd0023d51413d09893ac0" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_update) (struct vnode *, int)</definition>
+        <argsstring>)(struct vnode *, int)</argsstring>
+        <name>um_update</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="93" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1aa29f45574af5d5e899c9251a57678a5c" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_valloc) (struct vnode *, int, struct ucred *, struct vnode **)</definition>
+        <argsstring>)(struct vnode *, int, struct ucred *, struct vnode **)</argsstring>
+        <name>um_valloc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="94" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1aab073da298e151dcf1d1a3ae6face768" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* ufsmount::um_vfree) (struct vnode *, ino_t, int)</definition>
+        <argsstring>)(struct vnode *, ino_t, int)</argsstring>
+        <name>um_vfree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="96" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structufsmount_1a5c68456661f9a577b18ac127d5a3ba33" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int ufsmount::um_writesuspended</definition>
+        <argsstring></argsstring>
+        <name>um_writesuspended</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="86" column="4" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="4">
+        <label>csum</label>
+        <link refid="structcsum"/>
+      </node>
+      <node id="1">
+        <label>ufsmount</label>
+        <link refid="structufsmount"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+um_cred</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+um_fs</edgelabel>
+        </childnode>
+      </node>
+      <node id="5">
+        <label>csum_total</label>
+        <link refid="structcsum__total"/>
+      </node>
+      <node id="3">
+        <label>fs</label>
+        <link refid="structfs"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+fs_csp</edgelabel>
+          <edgelabel>+fs_old_cstotal</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+fs_cstotal</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ucred</label>
+        <link refid="structucred"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" line="64" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufsmount.h" bodystart="64" bodyend="100"/>
+    <listofallmembers>
+      <member refid="structufsmount_1a2ae5f079a55ace7601f4c4c3f831a426" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_balloc</name></member>
+      <member refid="structufsmount_1a8df83f1a4460959055d2341e11e24d9b" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_blkatoff</name></member>
+      <member refid="structufsmount_1adb373dc5ae22f5b11b1c33ad13a6553e" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_bo</name></member>
+      <member refid="structufsmount_1a6b758facf79a3897899d8f548d62b69d" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_bptrtodb</name></member>
+      <member refid="structufsmount_1a8ef31cdf730aae447cce702d9c3ef378" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_btime</name></member>
+      <member refid="structufsmount_1a75141a053461af780fe2e073879a4e14" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_candelete</name></member>
+      <member refid="structufsmount_1aeb7ce24ab55e9840691f363fd855e91a" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_cp</name></member>
+      <member refid="structufsmount_1a51d34633e98fa872b200bd44c59ee7e4" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_cred</name></member>
+      <member refid="structufsmount_1afba51fd8df4d46ffb553f670984b93cb" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_dev</name></member>
+      <member refid="structufsmount_1a17a7d5db2778fbd5c8f995109a06cce1" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_devvp</name></member>
+      <member refid="structufsmount_1ae4862a2c81e265b4cff373c338c1f45d" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_fs</name></member>
+      <member refid="structufsmount_1a49663dc50b513cfa17b7cce21535eae8" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_fsckpid</name></member>
+      <member refid="structufsmount_1a62be54a9fd0282690565b73c1e3a82d9" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_fstype</name></member>
+      <member refid="structufsmount_1a8f8d3da23b2093a861f62fc4dd897839" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_ifree</name></member>
+      <member refid="structufsmount_1aac98de61c83df2f248ad80393670f818" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_itime</name></member>
+      <member refid="structufsmount_1a586f8f6215a76792b01d38c99184cb58" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_mountp</name></member>
+      <member refid="structufsmount_1acbebc793bce6001e1af4f0aa40359a94" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_nindir</name></member>
+      <member refid="structufsmount_1aee5a0e477101453777777f339a488c0e" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_qflags</name></member>
+      <member refid="structufsmount_1a84ec6d43146862f44d054cae6370e474" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_quotas</name></member>
+      <member refid="structufsmount_1a252dc601abe0cd69c1837996fdec9992" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_rdonly</name></member>
+      <member refid="structufsmount_1ab2dfba610fdd2762fb3447a723c2e15a" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_savedmaxfilesize</name></member>
+      <member refid="structufsmount_1a75633370da4e6801848054424fa39795" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_seqinc</name></member>
+      <member refid="structufsmount_1a38fe7783afc759a4799061ec616dc96b" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_snapgone</name></member>
+      <member refid="structufsmount_1a04c97f51e4d3c42ca011dd8d0bf01f3e" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_softdep</name></member>
+      <member refid="structufsmount_1a5447899159c0acab985f9421716c25d8" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_trim_inflight</name></member>
+      <member refid="structufsmount_1a03b84ddc7f6c777d632b31b5fdd08d90" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_trim_tq</name></member>
+      <member refid="structufsmount_1a7b6b05a37e552e5c1fed08e2107923aa" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_truncate</name></member>
+      <member refid="structufsmount_1aed5b38b079abd0023d51413d09893ac0" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_update</name></member>
+      <member refid="structufsmount_1aa29f45574af5d5e899c9251a57678a5c" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_valloc</name></member>
+      <member refid="structufsmount_1aab073da298e151dcf1d1a3ae6face768" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_vfree</name></member>
+      <member refid="structufsmount_1a5c68456661f9a577b18ac127d5a3ba33" prot="public" virt="non-virtual"><scope>ufsmount</scope><name>um_writesuspended</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

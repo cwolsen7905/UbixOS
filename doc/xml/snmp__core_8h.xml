@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="snmp__core_8h" kind="file" language="C++">
+    <compoundname>snmp_core.h</compoundname>
+    <includes local="yes">lwip/apps/snmp_opts.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/snmp_core.h</label>
+        <link refid="snmp__core_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>lwip/apps/snmp_opts.h</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>SNMP core API for implementing MIBs </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2006<sp/>Axon<sp/>Digital<sp/>Design<sp/>B.V.,<sp/>The<sp/>Netherlands.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Christiaan<sp/>Simons<sp/>&lt;christiaan.simons@axon.tv&gt;</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Martin<sp/>Hentschel<sp/>&lt;info@cl-soft.de&gt;</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_APPS_SNMP_CORE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_APPS_SNMP_CORE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/apps/snmp_opts.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_SNMP<sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>build<sp/>if<sp/>not<sp/>configured<sp/>for<sp/>use<sp/>in<sp/>lwipopts.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/ip_addr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/err.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>basic<sp/>ASN1<sp/>defines<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CLASS_UNIVERSAL<sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CLASS_APPLICATION<sp/>0x40</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CLASS_CONTEXT<sp/><sp/><sp/><sp/><sp/>0x80</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CLASS_PRIVATE<sp/><sp/><sp/><sp/><sp/>0xC0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CONTENTTYPE_CONSTRUCTED<sp/>0x20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>universal<sp/>tags<sp/>(from<sp/>ASN.1<sp/>spec.)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_UNIVERSAL_END_OF_CONTENT<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_UNIVERSAL_INTEGER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_UNIVERSAL_OCTET_STRING<sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_UNIVERSAL_NULL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_UNIVERSAL_OBJECT_ID<sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_UNIVERSAL_SEQUENCE_OF<sp/><sp/><sp/><sp/>16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>application<sp/>specific<sp/>(SNMP)<sp/>tags<sp/>(from<sp/>SNMPv2-SMI)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_APPLICATION_IPADDR<sp/><sp/><sp/><sp/>0<sp/><sp/></highlight><highlight class="comment">/*<sp/>[APPLICATION<sp/>0]<sp/>IMPLICIT<sp/>OCTET<sp/>STRING<sp/>(SIZE<sp/>(4))<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_APPLICATION_COUNTER<sp/><sp/><sp/>1<sp/><sp/></highlight><highlight class="comment">/*<sp/>[APPLICATION<sp/>1]<sp/>IMPLICIT<sp/>INTEGER<sp/>(0..4294967295)<sp/>=&gt;<sp/>u32_t<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_APPLICATION_GAUGE<sp/><sp/><sp/><sp/><sp/>2<sp/><sp/></highlight><highlight class="comment">/*<sp/>[APPLICATION<sp/>2]<sp/>IMPLICIT<sp/>INTEGER<sp/>(0..4294967295)<sp/>=&gt;<sp/>u32_t<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_APPLICATION_TIMETICKS<sp/>3<sp/><sp/></highlight><highlight class="comment">/*<sp/>[APPLICATION<sp/>3]<sp/>IMPLICIT<sp/>INTEGER<sp/>(0..4294967295)<sp/>=&gt;<sp/>u32_t<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_APPLICATION_OPAQUE<sp/><sp/><sp/><sp/>4<sp/><sp/></highlight><highlight class="comment">/*<sp/>[APPLICATION<sp/>4]<sp/>IMPLICIT<sp/>OCTET<sp/>STRING<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_APPLICATION_COUNTER64<sp/>6<sp/><sp/></highlight><highlight class="comment">/*<sp/>[APPLICATION<sp/>6]<sp/>IMPLICIT<sp/>INTEGER<sp/>(0..18446744073709551615)<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>context<sp/>specific<sp/>(SNMP)<sp/>tags<sp/>(from<sp/>RFC<sp/>1905)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_CONTEXT_VARBIND_NO_SUCH_INSTANCE<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>full<sp/>ASN1<sp/>type<sp/>defines<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_END_OF_CONTENT<sp/>(SNMP_ASN1_CLASS_UNIVERSAL<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_UNIVERSAL_END_OF_CONTENT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_INTEGER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_UNIVERSAL<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_UNIVERSAL_INTEGER)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_OCTET_STRING<sp/><sp/><sp/>(SNMP_ASN1_CLASS_UNIVERSAL<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_UNIVERSAL_OCTET_STRING)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_NULL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_UNIVERSAL<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_UNIVERSAL_NULL)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_OBJECT_ID<sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_UNIVERSAL<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_UNIVERSAL_OBJECT_ID)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_SEQUENCE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_UNIVERSAL<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_CONSTRUCTED<sp/>|<sp/>SNMP_ASN1_UNIVERSAL_SEQUENCE_OF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_IPADDR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_APPLICATION<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_APPLICATION_IPADDR)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_IPADDRESS<sp/><sp/><sp/><sp/><sp/><sp/>SNMP_ASN1_TYPE_IPADDR</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_COUNTER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_APPLICATION<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_APPLICATION_COUNTER)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_COUNTER32<sp/><sp/><sp/><sp/><sp/><sp/>SNMP_ASN1_TYPE_COUNTER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_GAUGE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_APPLICATION<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_APPLICATION_GAUGE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_GAUGE32<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SNMP_ASN1_TYPE_GAUGE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_UNSIGNED32<sp/><sp/><sp/><sp/><sp/>SNMP_ASN1_TYPE_GAUGE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_TIMETICKS<sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_APPLICATION<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_APPLICATION_TIMETICKS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_OPAQUE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_APPLICATION<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_APPLICATION_OPAQUE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_ASN1_TYPE_COUNTER64<sp/><sp/><sp/><sp/><sp/><sp/>(SNMP_ASN1_CLASS_APPLICATION<sp/>|<sp/>SNMP_ASN1_CONTENTTYPE_PRIMITIVE<sp/>|<sp/>SNMP_ASN1_APPLICATION_COUNTER64)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_VARBIND_EXCEPTION_OFFSET<sp/>0xF0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_VARBIND_EXCEPTION_MASK<sp/><sp/><sp/>0x0F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>SNMP_ERR_NOERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">/*<sp/></highlight></codeline>
+<codeline lineno="103"><highlight class="comment">outdated<sp/>v1<sp/>error<sp/>codes.<sp/>do<sp/>not<sp/>use<sp/>anmore!</highlight></codeline>
+<codeline lineno="104"><highlight class="comment">#define<sp/>SNMP_ERR_NOSUCHNAME<sp/>2<sp/><sp/>use<sp/>SNMP_ERR_NOSUCHINSTANCE<sp/>instead</highlight></codeline>
+<codeline lineno="105"><highlight class="comment">#define<sp/>SNMP_ERR_BADVALUE<sp/><sp/><sp/>3<sp/><sp/>use<sp/>SNMP_ERR_WRONGTYPE,SNMP_ERR_WRONGLENGTH,SNMP_ERR_WRONGENCODING<sp/>or<sp/>SNMP_ERR_WRONGVALUE<sp/>instead</highlight></codeline>
+<codeline lineno="106"><highlight class="comment">#define<sp/>SNMP_ERR_READONLY<sp/><sp/><sp/>4<sp/><sp/>use<sp/>SNMP_ERR_NOTWRITABLE<sp/>instead</highlight></codeline>
+<codeline lineno="107"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>SNMP_ERR_GENERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>5,</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>SNMP_ERR_NOACCESS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>6,</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>SNMP_ERR_WRONGTYPE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>7,</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>SNMP_ERR_WRONGLENGTH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>8,</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>SNMP_ERR_WRONGENCODING<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>9,</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>SNMP_ERR_WRONGVALUE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>10,</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>SNMP_ERR_NOCREATION<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>11,</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/>SNMP_ERR_INCONSISTENTVALUE<sp/><sp/><sp/>=<sp/>12,</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>SNMP_ERR_RESOURCEUNAVAILABLE<sp/>=<sp/>13,</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>SNMP_ERR_COMMITFAILED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>14,</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>SNMP_ERR_UNDOFAILED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>15,</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/>SNMP_ERR_NOTWRITABLE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>17,</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>SNMP_ERR_INCONSISTENTNAME<sp/><sp/><sp/><sp/>=<sp/>18,</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/>SNMP_ERR_NOSUCHINSTANCE<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>SNMP_VARBIND_EXCEPTION_OFFSET<sp/>+<sp/>SNMP_ASN1_CONTEXT_VARBIND_NO_SUCH_INSTANCE</highlight></codeline>
+<codeline lineno="123"><highlight class="normal">}<sp/>snmp_err_t;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_obj_id</highlight></codeline>
+<codeline lineno="127"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>len;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">[<ref refid="group__snmp__opts_1ga3ad9d293f90e3c885c4e3263a9064a41" kindref="member">SNMP_MAX_OBJ_ID_LEN</ref>];</highlight></codeline>
+<codeline lineno="130"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_obj_id_const_ref</highlight></codeline>
+<codeline lineno="133"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>len;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/><ref refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_obj_id_const_ref<sp/>snmp_zero_dot_zero;<sp/></highlight><highlight class="comment">/*<sp/>administrative<sp/>identifier<sp/>from<sp/>SNMPv2-SMI<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="keyword">union<sp/></highlight><highlight class="normal">snmp_variant_value</highlight></codeline>
+<codeline lineno="142"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>ptr;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>const_ptr;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>u32;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga10f9a3d7baef58ccc23228c3bd29c1fb" kindref="member">s32_t</ref><sp/>s32;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="preprocessor">#define<sp/>SNMP_NODE_TREE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>predefined<sp/>leaf<sp/>node<sp/>types<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_NODE_SCALAR<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x01</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_NODE_SCALAR_ARRAY<sp/>0x02</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_NODE_TABLE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x03</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_NODE_THREADSYNC<sp/><sp/><sp/>0x04</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node</highlight></codeline>
+<codeline lineno="165"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>node_type;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>oid;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/>SNMP_NODE_INSTANCE_ACCESS_READ<sp/><sp/><sp/><sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/>SNMP_NODE_INSTANCE_ACCESS_WRITE<sp/><sp/><sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/>SNMP_NODE_INSTANCE_READ_ONLY<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>SNMP_NODE_INSTANCE_ACCESS_READ,</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/>SNMP_NODE_INSTANCE_READ_WRITE<sp/><sp/><sp/><sp/><sp/>=<sp/>(SNMP_NODE_INSTANCE_ACCESS_READ<sp/>|<sp/>SNMP_NODE_INSTANCE_ACCESS_WRITE),</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/>SNMP_NODE_INSTANCE_WRITE_ONLY<sp/><sp/><sp/><sp/><sp/>=<sp/>SNMP_NODE_INSTANCE_ACCESS_WRITE,</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/>SNMP_NODE_INSTANCE_NOT_ACCESSIBLE<sp/>=<sp/>0</highlight></codeline>
+<codeline lineno="180"><highlight class="normal">}<sp/>snmp_access_t;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1gacf46f4df0ebab84edebcb69967fdf86b" kindref="member">s16_t</ref><sp/>(*node_instance_get_value_method)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>snmp_err_t<sp/>(*node_instance_set_test_method)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>snmp_err_t<sp/>(*node_instance_set_value_method)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*);</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*node_instance_release_method)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_GET_VALUE_RAW_DATA<sp/>0x8000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance</highlight></codeline>
+<codeline lineno="193"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node*<sp/>node;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_obj_id<sp/>instance_oid;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>asn1_type;</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/>snmp_access_t<sp/><ref refid="gdt_8h_1a8c3d836bf6ce197ad635d670265b97e1" kindref="member">access</ref>;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/>node_instance_get_value_method<sp/>get_value;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/>node_instance_set_test_method<sp/>set_test;</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/>node_instance_set_value_method<sp/>set_value;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/>node_instance_release_method<sp/>release_instance;</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">snmp_variant_value<sp/>reference;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>reference_len;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_tree_node</highlight></codeline>
+<codeline lineno="222"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node<sp/>node;</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>subnode_count;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node*<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*subnodes;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_CREATE_TREE_NODE(oid,<sp/>subnodes)<sp/>\</highlight></codeline>
+<codeline lineno="230"><highlight class="preprocessor"><sp/><sp/>{{<sp/>SNMP_NODE_TREE,<sp/>(oid)<sp/>},<sp/>\</highlight></codeline>
+<codeline lineno="231"><highlight class="preprocessor"><sp/><sp/>(u16_t)LWIP_ARRAYSIZE(subnodes),<sp/>(subnodes)<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_CREATE_EMPTY_TREE_NODE(oid)<sp/>\</highlight></codeline>
+<codeline lineno="234"><highlight class="preprocessor"><sp/><sp/>{{<sp/>SNMP_NODE_TREE,<sp/>(oid)<sp/>},<sp/>\</highlight></codeline>
+<codeline lineno="235"><highlight class="preprocessor"><sp/><sp/>0,<sp/>NULL<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_leaf_node</highlight></codeline>
+<codeline lineno="239"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node<sp/>node;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/>snmp_err_t<sp/>(*get_instance)(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*root_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>root_oid_len,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*<sp/>instance);</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/>snmp_err_t<sp/>(*get_next_instance)(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*root_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>root_oid_len,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node_instance*<sp/>instance);</highlight></codeline>
+<codeline lineno="244"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_mib</highlight></codeline>
+<codeline lineno="248"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*base_oid;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>base_oid_len;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_node<sp/>*root_node;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SNMP_MIB_CREATE(oid_list,<sp/>root_node)<sp/>{<sp/>(oid_list),<sp/>(u8_t)LWIP_ARRAYSIZE(oid_list),<sp/>root_node<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_oid_range</highlight></codeline>
+<codeline lineno="258"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>min;</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>max;</highlight></codeline>
+<codeline lineno="261"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_oid_in_range(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid_in,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_oid_range<sp/>*oid_ranges,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_ranges_len);</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/>SNMP_NEXT_OID_STATUS_SUCCESS,</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/>SNMP_NEXT_OID_STATUS_NO_MATCH,</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/>SNMP_NEXT_OID_STATUS_BUF_TO_SMALL</highlight></codeline>
+<codeline lineno="270"><highlight class="normal">}<sp/>snmp_next_oid_status_t;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="273"><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_next_oid_state</highlight></codeline>
+<codeline lineno="274"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>start_oid;</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>start_oid_len;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>*<sp/>next_oid;</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>next_oid_len;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>next_oid_max_len;</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/>snmp_next_oid_status_t<sp/>status;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>reference;</highlight></codeline>
+<codeline lineno="284"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_next_oid_init(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_next_oid_state<sp/>*state,</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*start_oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>start_oid_len,</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*next_oid_buf,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>next_oid_max_len);</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_next_oid_precheck(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_next_oid_state<sp/>*state,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len);</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_next_oid_check(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_next_oid_state<sp/>*state,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>reference);</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_oid_assign(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_obj_id*<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len);</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_oid_combine(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_obj_id*<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid1,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid1_len,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid2,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid2_len);</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_oid_prefix(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_obj_id*<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len);</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_oid_append(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_obj_id*<sp/>target,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len);</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_oid_equal(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid1,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid1_len,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid2,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid2_len);</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga9cd1d7891fe315de1201e2c6e45f4f57" kindref="member">s8_t</ref><sp/>snmp_oid_compare(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid1,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid1_len,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid2,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid2_len);</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_oid_to_ip4(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/>ip4_addr_t<sp/>*ip);</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_ip4_to_oid(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip4_addr_t<sp/>*ip,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid);</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_oid_to_ip6(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/>ip6_addr_t<sp/>*ip);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>snmp_ip6_to_oid(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ip6_addr_t<sp/>*ip,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid);</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_IPV4<sp/>||<sp/>LWIP_IPV6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_ip_to_oid(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*ip,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid);</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_ip_port_to_oid(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*ip,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>port,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid);</highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_oid_to_ip(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len,<sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*ip);</highlight></codeline>
+<codeline lineno="312"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>snmp_oid_to_ip_port(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*oid,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>oid_len,<sp/><ref refid="ip__addr_8h_1a88b43639738c4de2d3cd22e3a1fd7696" kindref="member">ip_addr_t</ref><sp/>*ip,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>*port);</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_IPV4<sp/>||<sp/>LWIP_IPV6<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="314"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref>;</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>netif_to_num(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>);</highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal">snmp_err_t<sp/>snmp_set_test_ok(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>snmp_node_instance*<sp/>instance,<sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>value_len,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>value);<sp/></highlight><highlight class="comment">/*<sp/>generic<sp/>function<sp/>which<sp/>can<sp/>be<sp/>used<sp/>if<sp/>test<sp/>is<sp/>always<sp/>successful<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="319"><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>snmp_decode_bits(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>buf_len,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>*bit_value);</highlight></codeline>
+<codeline lineno="321"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>snmp_decode_truthvalue(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga10f9a3d7baef58ccc23228c3bd29c1fb" kindref="member">s32_t</ref><sp/>*asn1_value,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*bool_value);</highlight></codeline>
+<codeline lineno="322"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/>snmp_encode_bits(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>buf_len,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>bit_value,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>bit_count);</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/><sp/>snmp_encode_truthvalue(<ref refid="group__compiler__abstraction_1ga10f9a3d7baef58ccc23228c3bd29c1fb" kindref="member">s32_t</ref><sp/>*asn1_value,<sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>bool_value);</highlight></codeline>
+<codeline lineno="324"><highlight class="normal"></highlight></codeline>
+<codeline lineno="325"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_statistics</highlight></codeline>
+<codeline lineno="326"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="327"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inpkts;</highlight></codeline>
+<codeline lineno="328"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outpkts;</highlight></codeline>
+<codeline lineno="329"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inbadversions;</highlight></codeline>
+<codeline lineno="330"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inbadcommunitynames;</highlight></codeline>
+<codeline lineno="331"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inbadcommunityuses;</highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inasnparseerrs;</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>intoobigs;</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>innosuchnames;</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inbadvalues;</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>inreadonlys;</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ingenerrs;</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>intotalreqvars;</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>intotalsetvars;</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ingetrequests;</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ingetnexts;</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>insetrequests;</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ingetresponses;</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>intraps;</highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outtoobigs;</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outnosuchnames;</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outbadvalues;</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outgenerrs;</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outgetrequests;</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outgetnexts;</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outsetrequests;</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outgetresponses;</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>outtraps;</highlight></codeline>
+<codeline lineno="354"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">snmp_statistics<sp/>snmp_stats;</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"></highlight></codeline>
+<codeline lineno="358"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="361"><highlight class="normal"></highlight></codeline>
+<codeline lineno="362"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_SNMP<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="363"><highlight class="normal"></highlight></codeline>
+<codeline lineno="364"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_APPS_SNMP_CORE_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/snmp_core.h"/>
+  </compounddef>
+</doxygen>

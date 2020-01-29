@@ -1,0 +1,581 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2ip4_8h" kind="file" language="C++">
+    <compoundname>ip4.h</compoundname>
+    <includes refid="arch_8h" local="yes">net/arch.h</includes>
+    <includes refid="ip4__addr_8h" local="yes">net/ip4_addr.h</includes>
+    <incdepgraph>
+      <node id="14">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="15">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="11">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h</label>
+        <link refid="prot_2ip4_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structip4__addr__packed" prot="public">ip4_addr_packed</innerclass>
+    <innerclass refid="structip__hdr" prot="public">ip_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2ip4_8h_1ae2473f4a88d141d5298f92a4335b714a" prot="public" static="no">
+        <name>IP_DF</name>
+        <initializer>0x4000U        /* don&apos;t fragment flag */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="83" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1ad76777d4d34f33ab5f715f9ca15503c3" prot="public" static="no">
+        <name>IP_HLEN</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1ae8afe1e04bb9bad791443556c3b2cd73" prot="public" static="no">
+        <name>IP_MF</name>
+        <initializer>0x2000U        /* more fragments flag */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="84" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1ad059798b16d1f615b5af8770175121ba" prot="public" static="no">
+        <name>IP_OFFMASK</name>
+        <initializer>0x1fffU   /* mask for fragmenting bits */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a895709708f8f909cf7b7459491d549e7" prot="public" static="no">
+        <name>IP_RF</name>
+        <initializer>0x8000U        /* reserved fragment flag */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="82" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a773b96f54c75b35bcd24e7f857fcf988" prot="public" static="no">
+        <name>IPH_CHKSUM</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_chksum)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="110" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1aec30403fb98b013bd094688de55cdaef" prot="public" static="no">
+        <name>IPH_CHKSUM_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>chksum</defname></param>
+        <initializer>(hdr)-&gt;_chksum = (chksum)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="120" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a7c60caeb708571a07a44309c10ec3a01" prot="public" static="no">
+        <name>IPH_HL</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_v_hl &amp; 0x0f)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1ae79eaecc0bf9e4dbb9e47ea56ad2157a" prot="public" static="no">
+        <name>IPH_ID</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_id)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="106" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a3b2c57b6a9dc9cc32fc2f145a96bbf8f" prot="public" static="no">
+        <name>IPH_ID_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>id</defname></param>
+        <initializer>(hdr)-&gt;_id = (<ref refid="kernel_2elf_8c_1affd99ec09f321a630ec19d0333e291cd" kindref="member">id</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="116" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1aec0328fe4711b8c1ef4dd6709e4fd6d5" prot="public" static="no">
+        <name>IPH_LEN</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_len)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="105" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a069cb9b3765c4bdd63d13efb2df0206e" prot="public" static="no">
+        <name>IPH_LEN_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>len</defname></param>
+        <initializer>(hdr)-&gt;_len = (len)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="115" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a559dce3878f1d6a46bcb4cb312962397" prot="public" static="no">
+        <name>IPH_OFFSET</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_offset)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="107" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a4c2189e1400dca1c0f785de96ceda2b6" prot="public" static="no">
+        <name>IPH_OFFSET_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>off</defname></param>
+        <initializer>(hdr)-&gt;_offset = (off)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="117" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1aa2de6f9d35337b4be67d799805665e11" prot="public" static="no">
+        <name>IPH_PROTO</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_proto)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="109" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a49753f7668f741b1877340bff6fb97c3" prot="public" static="no">
+        <name>IPH_PROTO_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>proto</defname></param>
+        <initializer>(hdr)-&gt;_proto = (<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>)(proto)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="119" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a13fb5476ab97db9c5de6c1f5ca0d82e6" prot="public" static="no">
+        <name>IPH_TOS</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_tos)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="104" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1af4e4d0cbbb1de541eea2b53b91e8b172" prot="public" static="no">
+        <name>IPH_TOS_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>tos</defname></param>
+        <initializer>(hdr)-&gt;_tos = (tos)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="114" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a0d8238411ce35a007170f652e62209b3" prot="public" static="no">
+        <name>IPH_TTL</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_ttl)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="108" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1aa0e49f03bd4c3144e3548a0db72d1deb" prot="public" static="no">
+        <name>IPH_TTL_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>ttl</defname></param>
+        <initializer>(hdr)-&gt;_ttl = (<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>)(ttl)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="118" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a05a9e8ecf4eff38244b4c13c7e70094c" prot="public" static="no">
+        <name>IPH_V</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_v_hl &gt;&gt; 4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip4_8h_1a037908f4291c62a7336362506cea01af" prot="public" static="no">
+        <name>IPH_VHL_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>v</defname></param>
+        <param><defname>hl</defname></param>
+        <initializer>(hdr)-&gt;_v_hl = (<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>)((((v) &lt;&lt; 4) | (hl)))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="113" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" prot="public" static="no">
+        <type>typedefPACK_STRUCT_END struct <ref refid="structip4__addr__packed" kindref="compound">ip4_addr_packed</ref></type>
+        <definition>typedef typedefPACK_STRUCT_END struct ip4_addr_packed ip4_addr_p_t</definition>
+        <argsstring></argsstring>
+        <name>ip4_addr_p_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="56" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2ip4_8h_1a7082e3ecbecbf496df63fda29a1e0f06" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structip4__addr__packed" kindref="compound">ip4_addr_packed</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct ip_hdr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="55" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IPv4 protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_IP4_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_IP4_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ip4__addr_8h" kindref="compound">net/ip4_addr.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="53" refid="structip4__addr__packed" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip4__addr__packed" kindref="compound">ip4_addr_packed</ref><sp/>{</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="structip4__addr__packed_1a829ac9d684c84b953bd111251ea037a6" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>addr);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}<sp/><ref refid="prot_2ip4_8h_1a7082e3ecbecbf496df63fda29a1e0f06" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip4__addr__packed" kindref="compound">ip4_addr_packed</ref><sp/><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref>;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>the<sp/>IPv4<sp/>header.<sp/>Same<sp/>as<sp/>&apos;sizeof(struct<sp/>ip_hdr)&apos;.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="prot_2ip4_8h_1ad76777d4d34f33ab5f715f9ca15503c3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_HLEN<sp/>20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>IPv4<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structip__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__hdr" kindref="compound">ip_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>version<sp/>/<sp/>header<sp/>length<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1a2e9a57bb4e23ad0b3b9b949890b2607e" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_v_hl);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>type<sp/>of<sp/>service<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1a2e9a57bb4e23ad0b3b9b949890b2607e" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_tos);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>total<sp/>length<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1aa3905f2613b3ce0994d3a04cf22ce2d7" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_len);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>identification<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1aa3905f2613b3ce0994d3a04cf22ce2d7" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_id);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>fragment<sp/>offset<sp/>field<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1aa3905f2613b3ce0994d3a04cf22ce2d7" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_offset);</highlight></codeline>
+<codeline lineno="82" refid="prot_2ip4_8h_1a895709708f8f909cf7b7459491d549e7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_RF<sp/>0x8000U<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>reserved<sp/>fragment<sp/>flag<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="prot_2ip4_8h_1ae2473f4a88d141d5298f92a4335b714a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_DF<sp/>0x4000U<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>fragment<sp/>flag<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="prot_2ip4_8h_1ae8afe1e04bb9bad791443556c3b2cd73" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_MF<sp/>0x2000U<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>more<sp/>fragments<sp/>flag<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85" refid="prot_2ip4_8h_1ad059798b16d1f615b5af8770175121ba" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_OFFMASK<sp/>0x1fffU<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>mask<sp/>for<sp/>fragmenting<sp/>bits<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>time<sp/>to<sp/>live<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1a2e9a57bb4e23ad0b3b9b949890b2607e" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_ttl);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>protocol*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1a2e9a57bb4e23ad0b3b9b949890b2607e" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_proto);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>checksum<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1aa3905f2613b3ce0994d3a04cf22ce2d7" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_chksum);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>source<sp/>and<sp/>destination<sp/>IP<sp/>addresses<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1a963b0932198484088775c5aa7446f0c1" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>src);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="structip__hdr_1a963b0932198484088775c5aa7446f0c1" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref><sp/>dest);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal">}<sp/><ref refid="prot_2ip4_8h_1a7082e3ecbecbf496df63fda29a1e0f06" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macros<sp/>to<sp/>get<sp/>struct<sp/>ip_hdr<sp/>fields:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="prot_2ip4_8h_1a05a9e8ecf4eff38244b4c13c7e70094c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_V(hdr)<sp/><sp/>((hdr)-&gt;_v_hl<sp/>&gt;&gt;<sp/>4)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="prot_2ip4_8h_1a7c60caeb708571a07a44309c10ec3a01" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_HL(hdr)<sp/>((hdr)-&gt;_v_hl<sp/>&amp;<sp/>0x0f)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104" refid="prot_2ip4_8h_1a13fb5476ab97db9c5de6c1f5ca0d82e6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_TOS(hdr)<sp/>((hdr)-&gt;_tos)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="prot_2ip4_8h_1aec0328fe4711b8c1ef4dd6709e4fd6d5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_LEN(hdr)<sp/>((hdr)-&gt;_len)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="prot_2ip4_8h_1ae79eaecc0bf9e4dbb9e47ea56ad2157a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_ID(hdr)<sp/>((hdr)-&gt;_id)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107" refid="prot_2ip4_8h_1a559dce3878f1d6a46bcb4cb312962397" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_OFFSET(hdr)<sp/>((hdr)-&gt;_offset)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="prot_2ip4_8h_1a0d8238411ce35a007170f652e62209b3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_TTL(hdr)<sp/>((hdr)-&gt;_ttl)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="prot_2ip4_8h_1aa2de6f9d35337b4be67d799805665e11" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_PROTO(hdr)<sp/>((hdr)-&gt;_proto)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="prot_2ip4_8h_1a773b96f54c75b35bcd24e7f857fcf988" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_CHKSUM(hdr)<sp/>((hdr)-&gt;_chksum)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Macros<sp/>to<sp/>set<sp/>struct<sp/>ip_hdr<sp/>fields:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="prot_2ip4_8h_1a037908f4291c62a7336362506cea01af" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_VHL_SET(hdr,<sp/>v,<sp/>hl)<sp/>(hdr)-&gt;_v_hl<sp/>=<sp/>(u8_t)((((v)<sp/>&lt;&lt;<sp/>4)<sp/>|<sp/>(hl)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="prot_2ip4_8h_1af4e4d0cbbb1de541eea2b53b91e8b172" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_TOS_SET(hdr,<sp/>tos)<sp/>(hdr)-&gt;_tos<sp/>=<sp/>(tos)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115" refid="prot_2ip4_8h_1a069cb9b3765c4bdd63d13efb2df0206e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_LEN_SET(hdr,<sp/>len)<sp/>(hdr)-&gt;_len<sp/>=<sp/>(len)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="prot_2ip4_8h_1a3b2c57b6a9dc9cc32fc2f145a96bbf8f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_ID_SET(hdr,<sp/>id)<sp/>(hdr)-&gt;_id<sp/>=<sp/>(id)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117" refid="prot_2ip4_8h_1a4c2189e1400dca1c0f785de96ceda2b6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_OFFSET_SET(hdr,<sp/>off)<sp/>(hdr)-&gt;_offset<sp/>=<sp/>(off)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="prot_2ip4_8h_1aa0e49f03bd4c3144e3548a0db72d1deb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_TTL_SET(hdr,<sp/>ttl)<sp/>(hdr)-&gt;_ttl<sp/>=<sp/>(u8_t)(ttl)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="prot_2ip4_8h_1a49753f7668f741b1877340bff6fb97c3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_PROTO_SET(hdr,<sp/>proto)<sp/>(hdr)-&gt;_proto<sp/>=<sp/>(u8_t)(proto)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="prot_2ip4_8h_1aec30403fb98b013bd094688de55cdaef" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPH_CHKSUM_SET(hdr,<sp/>chksum)<sp/>(hdr)-&gt;_chksum<sp/>=<sp/>(chksum)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_IP4_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_3d507672372b0ae5af2100bac49df869" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/fs/common</compoundname>
+    <innerfile refid="crc32_8h">crc32.h</innerfile>
+    <innerfile refid="gpt_8h">gpt.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/fs/common/"/>
+  </compounddef>
+</doxygen>

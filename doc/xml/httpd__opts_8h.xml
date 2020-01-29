@@ -1,0 +1,779 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="httpd__opts_8h" kind="file" language="C++">
+    <compoundname>httpd_opts.h</compoundname>
+    <includes local="yes">lwip/opt.h</includes>
+    <includedby refid="net_2apps_2fs_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/apps/fs.h</includedby>
+    <includedby refid="httpd_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/apps/httpd.h</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>lwip/opt.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h</label>
+        <link refid="httpd__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/httpd.h</label>
+        <link refid="httpd_8h"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/fs.h</label>
+        <link refid="net_2apps_2fs_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h</label>
+        <link refid="httpd__opts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__httpd__opts_1ga662e88120b507426374dd8ebbd54a048" prot="public" static="no">
+        <name>HTTP_IS_TAG_VOLATILE</name>
+        <param><defname>ptr</defname></param>
+        <initializer>TCP_WRITE_FLAG_COPY</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Default: Tags are sent from struct http_state and are therefore volatile </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="254" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="254" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga33cd73e701130f8fc3dc7db0a3013aa1" prot="public" static="no">
+        <name>HTTPD_DEBUG</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="120" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga5f2642874f930798d975b1f7a6d2e1da" prot="public" static="no">
+        <name>HTTPD_DEBUG_TIMING</name>
+        <initializer><ref refid="group__debugging__levels_1gadab1cdc3f45939a3a5c9a3d7e04987e1" kindref="member">LWIP_DBG_OFF</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable timing each file sent </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="161" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga5410b604b135deaf5efc472dd7ab9d88" prot="public" static="no">
+        <name>HTTPD_LIMIT_SENDING_TO_2MSS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="260" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="260" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gad92e78e19fd3ab2af42750e83ed73fd5" prot="public" static="no">
+        <name>HTTPD_MAX_RETRIES</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Maximum retries before the connection is aborted/closed.<itemizedlist>
+<listitem><para>number of times pcb-&gt;poll is called -&gt; default is 4*500ms = 2s;</para>
+</listitem><listitem><para>reset when pcb-&gt;sent is called </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="140" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga9faa2c18e1963ab5dfae826f6ee6d874" prot="public" static="no">
+        <name>HTTPD_MAX_WRITE_LEN</name>
+        <param><defname>pcb</defname></param>
+        <initializer>(2 * tcp_mss(pcb))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="267" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="267" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacc3e7667baa2cfafd23de2b152df7a63" prot="public" static="no">
+        <name>HTTPD_POLL_INTERVAL</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The poll delay is X*500ms </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="145" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga6e5de8515c89af12277e4cb011165103" prot="public" static="no">
+        <name>HTTPD_PRECALCULATED_CHECKSUM</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>HTTPD_PRECALCULATED_CHECKSUM==1: include precompiled checksums for predefined (MSS-sized) chunks of the files to prevent having to calculate the checksums at runtime. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="303" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="303" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gafb2115e763ed3163a3e204a0ba53edb9" prot="public" static="no">
+        <name>HTTPD_SERVER_AGENT</name>
+        <initializer>&quot;lwIP/&quot; LWIP_VERSION_STRING &quot; (http://savannah.nongnu.org/projects/lwip)&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This string is passed in the HTTP header as &quot;Server: &quot; </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="107" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga2b058c5d1bd67e5d7cb260166e3ace50" prot="public" static="no">
+        <name>HTTPD_SERVER_PORT</name>
+        <initializer>80</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The server port for HTTPD to use </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="132" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaabd1f6319d04b8d5f2c93270794d5182" prot="public" static="no">
+        <name>HTTPD_TCP_PRIO</name>
+        <initializer>TCP_PRIO_MIN</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Priority for tcp pcbs created by HTTPD (very low by default). Lower priorities get killed first when running out of memory. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="152" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gafd16fcfb798be426cc87611772ba437c" prot="public" static="no">
+        <name>HTTPD_USE_CUSTOM_FSDATA</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to include &quot;fsdata_custom.c&quot; instead of &quot;fsdata.c&quot; for the file system (to prevent changing the file included in CVS) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="316" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="316" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gabb13219495a813fceaafa954a238a924" prot="public" static="no">
+        <name>HTTPD_USE_MEM_POOL</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to use a memp pool for allocating struct http_state instead of the heap. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="127" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga0ff20ebc4ab50d4aa6151c3241dacb3a" prot="public" static="no">
+        <name>LWIP_HTTPD_ABORT_ON_CLOSE_MEM_ERROR</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to call tcp_abort when tcp_close fails with memory error. This can be used to prevent consuming all memory in situations where the HTTP server has low priority compared to other communication. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="235" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="235" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gafb28f7c5fee75f013a199d427452372c" prot="public" static="no">
+        <name>LWIP_HTTPD_CGI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support CGI (old style) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gad3960bf65731bd0f1341867664afe860" prot="public" static="no">
+        <name>LWIP_HTTPD_CGI_SSI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support CGI (new style) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gadadb70f5663cdf004bf879e3b5d326bd" prot="public" static="no">
+        <name>LWIP_HTTPD_CUSTOM_FILES</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 and provide the functions:<itemizedlist>
+<listitem><para>&quot;int fs_open_custom(struct fs_file *file, const char *name)&quot; Called first for every opened file to allow opening files that are not included in fsdata(_custom).c</para>
+</listitem><listitem><para>&quot;void fs_close_custom(struct fs_file *file)&quot; Called to free resources allocated by fs_open_custom(). </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="281" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga1ee8d7c975c7e3d1c9d9dd9b43660c79" prot="public" static="no">
+        <name>LWIP_HTTPD_DYNAMIC_FILE_READ</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support fs_read() to dynamically read file data. Without this (default=off), only one-block files are supported, and the contents must be ready after <ref refid="net_2apps_2fs_8h_1a594058d3f4dd9f333c51b7e5ca910ac3" kindref="member">fs_open()</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="289" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="289" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga75932fc5eeb9abeddfdaf8413574c6d7" prot="public" static="no">
+        <name>LWIP_HTTPD_DYNAMIC_HEADERS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 if you want to include code that creates HTTP headers at runtime. Default is off: HTTP headers are then created statically by the makefsdata tool. Static headers mean smaller code size, but the (readonly) fsdata will grow a bit as every file includes the HTTP header. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="116" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaedd0fa3d356170d8ca3557acb410fd7c" prot="public" static="no">
+        <name>LWIP_HTTPD_FILE_STATE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to include an application state argument per file that is opened. This allows to keep a state per connection/file. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="296" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="296" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga51cb673cb5cc362acc409f23c1e0a331" prot="public" static="no">
+        <name>LWIP_HTTPD_FS_ASYNC_READ</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_HTTPD_FS_ASYNC_READ==1: support asynchronous read operations (fs_read_async returns FS_READ_DELAYED and calls a callback when finished). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="310" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="310" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga0d5074965efd40786182287895feb691" prot="public" static="no">
+        <name>LWIP_HTTPD_KILL_OLD_ON_CONNECTIONS_EXCEEDED</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to kill the oldest connection when running out of memory for &apos;struct http_state&apos; or &apos;struct http_ssi_state&apos;. ATTENTION: This puts all connections on a linked list, so may be kind of slow. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="243" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="243" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga872adc1562d87d8b445f2231d5bab77a" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_CGI_PARAMETERS</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga30dc71c59f3904df7daaf293f74f91f8" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_REQ_LENGTH</name>
+        <initializer><ref refid="def_8h_1a748f5df614a3fc989e8900fd229d6e4e" kindref="member">LWIP_MIN</ref>(1023, (<ref refid="group__httpd__opts_1gaef23f4e3525aa5dd0ecbce9b5e16d4e0" kindref="member">LWIP_HTTPD_REQ_QUEUELEN</ref> * <ref refid="group__lwip__opts__pbuf_1gae61f4491d56e805e79b79eb5d35a00e5" kindref="member">PBUF_POOL_BUFSIZE</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Defines the maximum length of a HTTP request line (up to the first CRLF, copied from pbuf into this a global buffer when pbuf- or packet-queues are received - otherwise the input pbuf is used directly) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="205" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="205" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaca4ef53e7a9abbd8d4bd8bc1ba7b486a" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_REQUEST_URI_LEN</name>
+        <initializer>63</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This is the size of a static buffer used when URIs end with &apos;/&apos;. In this buffer, the directory requested is concatenated with all the configured default file names. Set to 0 to disable checking default filenames on non-root directories. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="215" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="215" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga9764ba9504923caf9cdd483479334ef5" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_TAG_INSERT_LEN</name>
+        <initializer>192</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacb2d74a4aa50287cf55c93d0aa4bcee1" prot="public" static="no">
+        <name>LWIP_HTTPD_MAX_TAG_NAME_LEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="93" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga82a030ce2ecdcf741b02b7be41c012b3" prot="public" static="no">
+        <name>LWIP_HTTPD_OMIT_HEADER_FOR_EXTENSIONLESS_URI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to send URIs without extension without headers (who uses this at all??) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="249" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="249" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga81de5c62c846e73ab59c4cb46264fd6f" prot="public" static="no">
+        <name>LWIP_HTTPD_POST_MANUAL_WND</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaa27f7c5450392d10aeed033ca878cce3" prot="public" static="no">
+        <name>LWIP_HTTPD_POST_MAX_RESPONSE_URI_LEN</name>
+        <initializer>63</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Maximum length of the filename to send as response to a POST request, filled in by the application when a POST is finished. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="222" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="222" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga8dbe61a35228da0e7365a088197191b8" prot="public" static="no">
+        <name>LWIP_HTTPD_REQ_BUFSIZE</name>
+        <initializer><ref refid="group__httpd__opts_1ga30dc71c59f3904df7daaf293f74f91f8" kindref="member">LWIP_HTTPD_MAX_REQ_LENGTH</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number of (TCP payload-) bytes (in pbufs) to enqueue to parse and incoming request (up to the first double-newline) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="198" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gaef23f4e3525aa5dd0ecbce9b5e16d4e0" prot="public" static="no">
+        <name>LWIP_HTTPD_REQ_QUEUELEN</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number of rx pbufs to enqueue to parse an incoming request (up to the first newline) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="192" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="192" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacb70e0cdd30a940f8bce681c6cc63949" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support SSI (Server-Side-Includes) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga975961a6d22d1a077118fb85dfec809a" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI_INCLUDE_TAG</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 0 to not send the SSI tag (default is on, so the tag will be sent in the HTML page </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="228" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="228" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga3167d52d20cf90857e2c809b92458bf0" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI_MULTIPART</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_HTTPD_SSI_MULTIPART==1: SSI handler function is called with 2 more arguments indicating a counter for insert string that are too long to be inserted at once: the SSI handler function must then set &apos;next_tag_part&apos; which will be passed back to it in the next call. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="88" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga520858778b84d4d2fa125294c0f119e5" prot="public" static="no">
+        <name>LWIP_HTTPD_SSI_RAW</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to implement an SSI tag handler callback that gets a const char* to the tag (instead of an index into a pre-registered array of known tags) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga6f78487bc829f7f98274f1264020045e" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_11_KEEPALIVE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable HTTP/1.1 persistent connections. ATTENTION: If the generated file system includes HTTP headers, these must include the &quot;Connection: keep-alive&quot; header (pass argument &quot;-11&quot; to makefsdata). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="180" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="180" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga85ebddbc4236b1e31bfa68fa163f9b07" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_EXTSTATUS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to one to show error pages when parsing a request fails instead of simply closing the connection. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="167" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1gacbea06ce33933e3ef2f2f1834a21cc2c" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_POST</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support HTTP POST </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="75" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga0bd0f9a89423fb3bbfea4e4c6141ae43" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_REQUESTLIST</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to support HTTP request coming in in multiple packets/pbufs </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="185" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="185" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga7a8f4ab787b6fb8482c8a36c9fd0c7dd" prot="public" static="no">
+        <name>LWIP_HTTPD_SUPPORT_V09</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 0 to drop support for HTTP/0.9 clients (to save some bytes) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="172" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__httpd__opts_1ga054db3f080715942967969c6ae30bb6a" prot="public" static="no">
+        <name>LWIP_HTTPD_TIMING</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable timing each file sent </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" line="157" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>HTTP server options list </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2003<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*<sp/>This<sp/>version<sp/>of<sp/>the<sp/>file<sp/>has<sp/>been<sp/>modified<sp/>by<sp/>Texas<sp/>Instruments<sp/>to<sp/>offer</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>simple<sp/>server-side-include<sp/>(SSI)<sp/>and<sp/>Common<sp/>Gateway<sp/>Interface<sp/>(CGI)</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>capability.</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_APPS_HTTPD_OPTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_APPS_HTTPD_OPTS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/opt.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_CGI<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="group__httpd__opts_1gafb28f7c5fee75f013a199d427452372c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_CGI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_CGI_SSI<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="group__httpd__opts_1gad3960bf65731bd0f1341867664afe860" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_CGI_SSI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SSI<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="group__httpd__opts_1gacb70e0cdd30a940f8bce681c6cc63949" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SSI<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SSI_RAW<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="group__httpd__opts_1ga520858778b84d4d2fa125294c0f119e5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SSI_RAW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SUPPORT_POST<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="group__httpd__opts_1gacbea06ce33933e3ef2f2f1834a21cc2c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SUPPORT_POST<sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>maximum<sp/>number<sp/>of<sp/>parameters<sp/>that<sp/>the<sp/>CGI<sp/>handler<sp/>can<sp/>be<sp/>sent.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_MAX_CGI_PARAMETERS<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="group__httpd__opts_1ga872adc1562d87d8b445f2231d5bab77a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_MAX_CGI_PARAMETERS<sp/>16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SSI_MULTIPART<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="group__httpd__opts_1ga3167d52d20cf90857e2c809b92458bf0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SSI_MULTIPART<sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>maximum<sp/>length<sp/>of<sp/>the<sp/>string<sp/>comprising<sp/>the<sp/>tag<sp/>name<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_MAX_TAG_NAME_LEN<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="group__httpd__opts_1gacb2d74a4aa50287cf55c93d0aa4bcee1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_MAX_TAG_NAME_LEN<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>maximum<sp/>length<sp/>of<sp/>string<sp/>that<sp/>can<sp/>be<sp/>returned<sp/>to<sp/>replace<sp/>any<sp/>given<sp/>tag<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_MAX_TAG_INSERT_LEN<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="group__httpd__opts_1ga9764ba9504923caf9cdd483479334ef5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_MAX_TAG_INSERT_LEN<sp/>192</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_POST_MANUAL_WND<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="group__httpd__opts_1ga81de5c62c846e73ab59c4cb46264fd6f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_POST_MANUAL_WND<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_SERVER_AGENT<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107" refid="group__httpd__opts_1gafb2115e763ed3163a3e204a0ba53edb9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_SERVER_AGENT<sp/>&quot;lwIP/&quot;<sp/>LWIP_VERSION_STRING<sp/>&quot;<sp/>(http://savannah.nongnu.org/projects/lwip)&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_DYNAMIC_HEADERS<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="group__httpd__opts_1ga75932fc5eeb9abeddfdaf8413574c6d7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_DYNAMIC_HEADERS<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_DEBUG<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="group__httpd__opts_1ga33cd73e701130f8fc3dc7db0a3013aa1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LWIP_DBG_OFF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_USE_MEM_POOL<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127" refid="group__httpd__opts_1gabb13219495a813fceaafa954a238a924" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_USE_MEM_POOL<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_SERVER_PORT<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132" refid="group__httpd__opts_1ga2b058c5d1bd67e5d7cb260166e3ace50" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_SERVER_PORT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>80</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_MAX_RETRIES<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="group__httpd__opts_1gad92e78e19fd3ab2af42750e83ed73fd5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_MAX_RETRIES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_POLL_INTERVAL<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="group__httpd__opts_1gacc3e7667baa2cfafd23de2b152df7a63" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_POLL_INTERVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_TCP_PRIO<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="group__httpd__opts_1gaabd1f6319d04b8d5f2c93270794d5182" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_TCP_PRIO<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>TCP_PRIO_MIN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_TIMING<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="group__httpd__opts_1ga054db3f080715942967969c6ae30bb6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_TIMING<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_DEBUG_TIMING<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161" refid="group__httpd__opts_1ga5f2642874f930798d975b1f7a6d2e1da" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_DEBUG_TIMING<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LWIP_DBG_OFF</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SUPPORT_EXTSTATUS<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="group__httpd__opts_1ga85ebddbc4236b1e31bfa68fa163f9b07" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SUPPORT_EXTSTATUS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SUPPORT_V09<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172" refid="group__httpd__opts_1ga7a8f4ab787b6fb8482c8a36c9fd0c7dd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SUPPORT_V09<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SUPPORT_11_KEEPALIVE<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180" refid="group__httpd__opts_1ga6f78487bc829f7f98274f1264020045e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SUPPORT_11_KEEPALIVE<sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SUPPORT_REQUESTLIST<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185" refid="group__httpd__opts_1ga0bd0f9a89423fb3bbfea4e4c6141ae43" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SUPPORT_REQUESTLIST<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_HTTPD_SUPPORT_REQUESTLIST</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_REQ_QUEUELEN<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192" refid="group__httpd__opts_1gaef23f4e3525aa5dd0ecbce9b5e16d4e0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_REQ_QUEUELEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_REQ_BUFSIZE<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198" refid="group__httpd__opts_1ga8dbe61a35228da0e7365a088197191b8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_REQ_BUFSIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LWIP_HTTPD_MAX_REQ_LENGTH</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_MAX_REQ_LENGTH<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205" refid="group__httpd__opts_1ga30dc71c59f3904df7daaf293f74f91f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_MAX_REQ_LENGTH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>LWIP_MIN(1023,<sp/>(LWIP_HTTPD_REQ_QUEUELEN<sp/>*<sp/>PBUF_POOL_BUFSIZE))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HTTPD_SUPPORT_REQUESTLIST<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_MAX_REQUEST_URI_LEN<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="215" refid="group__httpd__opts_1gaca4ef53e7a9abbd8d4bd8bc1ba7b486a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_MAX_REQUEST_URI_LEN<sp/><sp/><sp/><sp/><sp/><sp/>63</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_POST_MAX_RESPONSE_URI_LEN<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222" refid="group__httpd__opts_1gaa27f7c5450392d10aeed033ca878cce3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_POST_MAX_RESPONSE_URI_LEN<sp/>63</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_SSI_INCLUDE_TAG<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228" refid="group__httpd__opts_1ga975961a6d22d1a077118fb85dfec809a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_SSI_INCLUDE_TAG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_ABORT_ON_CLOSE_MEM_ERROR<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235" refid="group__httpd__opts_1ga0ff20ebc4ab50d4aa6151c3241dacb3a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_ABORT_ON_CLOSE_MEM_ERROR<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_KILL_OLD_ON_CONNECTIONS_EXCEEDED<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243" refid="group__httpd__opts_1ga0d5074965efd40786182287895feb691" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_KILL_OLD_ON_CONNECTIONS_EXCEEDED<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_OMIT_HEADER_FOR_EXTENSIONLESS_URI<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249" refid="group__httpd__opts_1ga82a030ce2ecdcf741b02b7be41c012b3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_OMIT_HEADER_FOR_EXTENSIONLESS_URI<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTP_IS_TAG_VOLATILE<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="254" refid="group__httpd__opts_1ga662e88120b507426374dd8ebbd54a048" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTP_IS_TAG_VOLATILE(ptr)<sp/>TCP_WRITE_FLAG_COPY</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>By<sp/>default,<sp/>the<sp/>httpd<sp/>is<sp/>limited<sp/>to<sp/>send<sp/>2*pcb-&gt;mss<sp/>to<sp/>keep<sp/>resource<sp/>usage<sp/>low</highlight></codeline>
+<codeline lineno="258"><highlight class="comment"><sp/><sp/><sp/>when<sp/>http<sp/>is<sp/>not<sp/>an<sp/>important<sp/>protocol<sp/>in<sp/>the<sp/>device.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_LIMIT_SENDING_TO_2MSS<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260" refid="group__httpd__opts_1ga5410b604b135deaf5efc472dd7ab9d88" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_LIMIT_SENDING_TO_2MSS<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Define<sp/>this<sp/>to<sp/>a<sp/>function<sp/>that<sp/>returns<sp/>the<sp/>maximum<sp/>amount<sp/>of<sp/>data<sp/>to<sp/>enqueue.</highlight></codeline>
+<codeline lineno="264"><highlight class="comment"><sp/><sp/><sp/>The<sp/>function<sp/>have<sp/>this<sp/>signature:<sp/>u16_t<sp/>fn(struct<sp/>tcp_pcb*<sp/>pcb);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_MAX_WRITE_LEN<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>HTTPD_LIMIT_SENDING_TO_2MSS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267" refid="group__httpd__opts_1ga9faa2c18e1963ab5dfae826f6ee6d874" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_MAX_WRITE_LEN(pcb)<sp/><sp/><sp/><sp/>(2<sp/>*<sp/>tcp_mss(pcb))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight><highlight class="comment">/*-------------------<sp/>FS<sp/>OPTIONS<sp/>-------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_CUSTOM_FILES<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281" refid="group__httpd__opts_1gadadb70f5663cdf004bf879e3b5d326bd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_CUSTOM_FILES<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_DYNAMIC_FILE_READ<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289" refid="group__httpd__opts_1ga1ee8d7c975c7e3d1c9d9dd9b43660c79" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_DYNAMIC_FILE_READ<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_FILE_STATE<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="296" refid="group__httpd__opts_1gaedd0fa3d356170d8ca3557acb410fd7c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_FILE_STATE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="297"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_PRECALCULATED_CHECKSUM<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303" refid="group__httpd__opts_1ga6e5de8515c89af12277e4cb011165103" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_PRECALCULATED_CHECKSUM<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"></highlight></codeline>
+<codeline lineno="309"><highlight class="preprocessor">#if<sp/>!defined<sp/>LWIP_HTTPD_FS_ASYNC_READ<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="310" refid="group__httpd__opts_1ga51cb673cb5cc362acc409f23c1e0a331" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HTTPD_FS_ASYNC_READ<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="preprocessor">#if<sp/>!defined<sp/>HTTPD_USE_CUSTOM_FSDATA<sp/>||<sp/>defined<sp/>__DOXYGEN__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316" refid="group__httpd__opts_1gafd16fcfb798be426cc87611772ba437c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HTTPD_USE_CUSTOM_FSDATA<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight></codeline>
+<codeline lineno="323"><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_APPS_HTTPD_OPTS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/httpd_opts.h"/>
+  </compounddef>
+</doxygen>

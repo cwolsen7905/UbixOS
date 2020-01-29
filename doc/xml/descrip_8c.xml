@@ -1,0 +1,1115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="descrip_8c" kind="file" language="C++">
+    <compoundname>descrip.c</compoundname>
+    <includes refid="descrip_8h" local="no">sys/descrip.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sys/sysproto_posix.h</includes>
+    <includes refid="thread_8h" local="no">sys/thread.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <includes refid="select_8h" local="no">sys/select.h</includes>
+    <includes refid="ioctl_8h" local="no">sys/ioctl.h</includes>
+    <incdepgraph>
+      <node id="26">
+        <label>sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+      </node>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="32">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>sys/ioctl.h</label>
+        <link refid="ioctl_8h"/>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="34">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="13">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/descrip.c</label>
+        <link refid="descrip_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="30">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>vfs/stat.h</label>
+        <link refid="stat_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="descrip_8c_1a7176d88c71cf7597fbc8d37576009fdc" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structfile" kindref="compound">file</ref> *</type>
+        <definition>struct file* kern_files</definition>
+        <argsstring></argsstring>
+        <name>kern_files</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="38" column="18" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="descrip_8c_1aec14600d2aa9db1288f00704ba3a55d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int close</definition>
+        <argsstring>(struct thread *td, struct close_args *uap)</argsstring>
+        <name>close</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structclose__args" kindref="compound">close_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="162" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="162" bodyend="171"/>
+        <references refid="structclose__args_1a795acdf38594b16ee7638db7ac6a3d4c" compoundref="sysproto__posix_8h" startline="374">close_args::fd</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a266f2b3582c66190ca585589f2938065" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int dup2</definition>
+        <argsstring>(struct thread *td, u_int32_t from, u_int32_t to)</argsstring>
+        <name>dup2</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+          <declname>from</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+          <declname>to</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="348" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="348" bodyend="375"/>
+        <references refid="structfileDescriptor_1a8df095a5809b8dcef834ecc696fb39a4" compoundref="include_2vfs_2file_8h" startline="83">fileDescriptor::dup</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" compoundref="descrip_8c" startline="147" endline="160">fdestroy</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" compoundref="descrip_8h" startline="42">MAX_FILES</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <referencedby refid="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" compoundref="descrip_8c" startline="377" endline="385">sys_dup2</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a9c93ac280b559128027746bda7c5d6d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int falloc</definition>
+        <argsstring>(struct thread *td, struct file **resultfp, int *resultfd)</argsstring>
+        <name>falloc</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfile" kindref="compound">file</ref> **</type>
+          <declname>resultfp</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>resultfd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="96" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="96" bodyend="123"/>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" compoundref="descrip_8h" startline="42">MAX_FILES</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <referencedby refid="vfs__calls_8c_1ab35b14c33a5b03f7617b58b4c0667bd4" compoundref="vfs__calls_8c" startline="399" endline="448">kern_openat</referencedby>
+        <referencedby refid="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="39" endline="49">pipe</referencedby>
+        <referencedby refid="vfs__calls_8c_1a61bacda2680307d7f33cd2efe52ba2b5" compoundref="vfs__calls_8c" startline="45" endline="97">sys_openat</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fcntl</definition>
+        <argsstring>(struct thread *td, struct sys_fcntl_args *uap)</argsstring>
+        <name>fcntl</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__fcntl__args" kindref="compound">sys_fcntl_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="40" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="40" bodyend="90"/>
+        <references refid="structsys__fcntl__args_1a264457e6fd1aec8fa71a6361b00135fc" compoundref="sysproto__posix_8h" startline="260">sys_fcntl_args::arg</references>
+        <references refid="structsys__fcntl__args_1aadd81616b8543a67aa7c2f1ed6d203a9" compoundref="sysproto__posix_8h" startline="257">sys_fcntl_args::cmd</references>
+        <references refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" compoundref="descrip_8h" startline="68">file::f_flag</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="fcntl_8h_1ae145197023ee3530510eaa80446eef77" compoundref="fcntl_8h" startline="80">FCNTLFLAGS</references>
+        <references refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" compoundref="sysproto__posix_8h" startline="254">sys_fcntl_args::fd</references>
+        <references refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" compoundref="descrip_8c" startline="147" endline="160">fdestroy</references>
+        <references refid="fcntl_8h_1a3c28c97a69c6ce8f87cac54a7c91f9db" compoundref="fcntl_8h" startline="88">FFLAGS</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" compoundref="descrip_8h" startline="42">MAX_FILES</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="fcntl_8h_1a4dc4d45e07d2abc899bcaf04b2846a87" compoundref="fcntl_8h" startline="64">O_ACCMODE</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <referencedby refid="descrip_8c_1a849f786ab87d384afb59d03d4dcb8b7d" compoundref="descrip_8c" startline="92" endline="94">sys_fcntl</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fdestroy</definition>
+        <argsstring>(struct thread *td, struct file *fp, int fd)</argsstring>
+        <name>fdestroy</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfile" kindref="compound">file</ref> *</type>
+          <declname>fp</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>fd</declname>
+        </param>
+        <briefdescription>
+<para>The function bar. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function does something which is doing nothing. So this text is totally senseless and you really do not need to read this, because this text is basically saying nothing.</para>
+<para><simplesect kind="note"><para>This text shall only show you, how such a "note" section is looking. There is nothing which really needs your notice, so you do not really need to read this section.</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">a</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Description of parameter a. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">b</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Description of the parameter b. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="inout">c</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Description of the parameter c.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The error return code of the function.</para>
+</simplesect>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername>ERR_SUCCESS</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The function is successfully executed </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ERR_FAILURE</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An error occurred </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="147" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="147" bodyend="160"/>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <referencedby refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" compoundref="descrip_8c" startline="348" endline="375">dup2</referencedby>
+        <referencedby refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</referencedby>
+        <referencedby refid="vfs__calls_8c_1ab35b14c33a5b03f7617b58b4c0667bd4" compoundref="vfs__calls_8c" startline="399" endline="448">kern_openat</referencedby>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="vfs__calls_8c_1a61bacda2680307d7f33cd2efe52ba2b5" compoundref="vfs__calls_8c" startline="45" endline="97">sys_openat</referencedby>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fstat</definition>
+        <argsstring>(struct thread *td, struct sys_fstat_args *uap)</argsstring>
+        <name>fstat</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__fstat__args" kindref="compound">sys_fstat_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="185" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="185" bodyend="197"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structsys__fstat__args_1ad8de8fb29a07e6c09a9f60930a16059f" compoundref="sysproto__posix_8h" startline="469">sys_fstat_args::fd</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <references refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" compoundref="sysproto__posix_8h" startline="472">sys_fstat_args::sb</references>
+        <references refid="structstat_1a38d474e1ae3cf6fbdde89ac3c3e308f1" compoundref="stat_8h" startline="60">stat::st_blksize</references>
+        <references refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" compoundref="stat_8h" startline="47">stat::st_mode</references>
+        <references refid="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="78">taskStruct::td</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1ac26938ed109edd82077382276bc8258c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int getdtablesize</definition>
+        <argsstring>(struct thread *td, struct getdtablesize_args *uap)</argsstring>
+        <name>getdtablesize</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgetdtablesize__args" kindref="compound">getdtablesize_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+<para>return data table size </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="176" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="176" bodyend="182"/>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="thread_8h_1ae333ffa5f209eaaffead0a7fce87af29" compoundref="thread_8h" startline="38">O_FILES</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a14e228d6e5391a882d3b20ff2466b2ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int getfd</definition>
+        <argsstring>(struct thread *td, struct file **fp, int fd)</argsstring>
+        <name>getfd</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfile" kindref="compound">file</ref> **</type>
+          <declname>fp</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>fd</declname>
+        </param>
+        <briefdescription>
+<para>get pointer to file fd in specified thread </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>returns fp </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="214" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="214" bodyend="227"/>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" compoundref="thread_8h" startline="42">thread::o_files</references>
+        <referencedby refid="gen__calls_8c_1a5eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="100" endline="119">read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a5ad4ab96ec36d0f1763b9540edaf0128" compoundref="file_8c" startline="197" endline="218">sys_fchdir</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="vfs__calls_8c_1aec77dd1139b0a36d6aa7b29d08039bc1" compoundref="vfs__calls_8c" startline="373" endline="387">sys_getdirentries</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a22d7ac2731d375722cb6fcfaa8b35996" compoundref="file_8c" startline="149" endline="184">sys_lseek</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a899127227d8b9c9da3bcccc32332c749" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ioctl</definition>
+        <argsstring>(struct thread *td, struct ioctl_args *uap)</argsstring>
+        <name>ioctl</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structioctl__args" kindref="compound">ioctl_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+<para>ioctl functionality not implimented yet </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>NULL for now </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="204" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="204" bodyend="207"/>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_dup2</definition>
+        <argsstring>(struct thread *td, struct sys_dup2_args *args)</argsstring>
+        <name>sys_dup2</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__dup2__args" kindref="compound">sys_dup2_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="377" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="377" bodyend="385"/>
+        <references refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" compoundref="descrip_8c" startline="348" endline="375">dup2</references>
+        <references refid="structsys__dup2__args_1a5f3ccda3a4a4890e7e3c59da420166d7" compoundref="sysproto__posix_8h" startline="812">sys_dup2_args::from</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structsys__dup2__args_1ad6a2433961f4e5eadd2eb1e00cf21a20" compoundref="sysproto__posix_8h" startline="815">sys_dup2_args::to</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a849f786ab87d384afb59d03d4dcb8b7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_fcntl</definition>
+        <argsstring>(struct thread *td, struct sys_fcntl_args *uap)</argsstring>
+        <name>sys_fcntl</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__fcntl__args" kindref="compound">sys_fcntl_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="92" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="92" bodyend="94"/>
+        <references refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_ioctl</definition>
+        <argsstring>(struct thread *td, struct sys_ioctl_args *args)</argsstring>
+        <name>sys_ioctl</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__ioctl__args" kindref="compound">sys_ioctl_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="229" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="229" bodyend="283"/>
+        <references refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" compoundref="ioctl_8h" startline="41">termios::c_cc</references>
+        <references refid="structtermios_1a5d42b95faa4745c3bea53652d2812162" compoundref="ioctl_8h" startline="39">termios::c_cflag</references>
+        <references refid="structtermios_1a85b6c86d2a3db45a3829488190e357e4" compoundref="ioctl_8h" startline="37">termios::c_iflag</references>
+        <references refid="structtermios_1a02ae972cbc9fb2cf4a1aa6a6751a421a" compoundref="ioctl_8h" startline="42">termios::c_ispeed</references>
+        <references refid="structtermios_1a91bdd7691180800fccc4b791466ee9c3" compoundref="ioctl_8h" startline="40">termios::c_lflag</references>
+        <references refid="structtermios_1ad6e2cfedb81530e5a6a3a0e30b8c6362" compoundref="ioctl_8h" startline="38">termios::c_oflag</references>
+        <references refid="structtermios_1a3f42b69c0c7fa4ce2179cb61f8c7ca99" compoundref="ioctl_8h" startline="43">termios::c_ospeed</references>
+        <references refid="structsys__ioctl__args_1a473875b0faba1ff9a4d049f421ad7f05" compoundref="sysproto__posix_8h" startline="532">sys_ioctl_args::com</references>
+        <references refid="structsys__ioctl__args_1a98ea2e72d3df45429360d8d4729ef9ed" compoundref="sysproto__posix_8h" startline="535">sys_ioctl_args::data</references>
+        <references refid="structsys__ioctl__args_1aba4691fa90aba9f6d54728276f2dfc0c" compoundref="sysproto__posix_8h" startline="529">sys_ioctl_args::fd</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="ioctl_8h_1a0cef5242a2853d0acf6d93879c517512" compoundref="ioctl_8h" startline="53">TIOCGETA</references>
+        <references refid="ioctl_8h_1a36ef545c47ae4202e81e14efafdd64db" compoundref="ioctl_8h" startline="54">TIOCGWINSZ</references>
+        <references refid="structwinsize_1a80bedf71a49fd324e0d92d0702cc7005" compoundref="ioctl_8h" startline="48">winsize::ws_col</references>
+        <references refid="structwinsize_1a73698fa1d966374b0701e4bf225f0141" compoundref="ioctl_8h" startline="47">winsize::ws_row</references>
+      </memberdef>
+      <memberdef kind="function" id="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_select</definition>
+        <argsstring>(struct thread *td, struct sys_select_args *args)</argsstring>
+        <name>sys_select</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__select__args" kindref="compound">sys_select_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c" line="285" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/descrip.c" bodystart="285" bodyend="346"/>
+        <references refid="structsys__select__args_1a01a0b41681d1ae3f7d0e12568b233501" compoundref="sysproto__posix_8h" startline="682">sys_select_args::ex</references>
+        <references refid="structsys__select__args_1a5a6c4eb7428feb6ccca2a10e4b107ea8" compoundref="sysproto__posix_8h" startline="676">sys_select_args::in</references>
+        <references refid="structsys__select__args_1a673ce56e9ea6df34e4d0fe6b4b2f897e" compoundref="sysproto__posix_8h" startline="673">sys_select_args::nd</references>
+        <references refid="structsys__select__args_1a8feedc149ab465ec0f0cf94523ad2daf" compoundref="sysproto__posix_8h" startline="679">sys_select_args::ou</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structsys__select__args_1ab1c4c43c0f25611d0160fd967cc87fee" compoundref="sysproto__posix_8h" startline="685">sys_select_args::tv</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="descrip_8h" kindref="compound">sys/descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto__posix_8h" kindref="compound">sys/sysproto_posix.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="select_8h" kindref="compound">sys/select.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*kern_files<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" kindref="member">fcntl</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__fcntl__args" kindref="compound">sys_fcntl_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*dup_fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>]<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR!!!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>];</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/>switch<sp/>(uap-&gt;<ref refid="structsys__fcntl__args_1aadd81616b8543a67aa7c2f1ed6d203a9" kindref="member">cmd</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>17:</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>First<sp/>5<sp/>Descriptors<sp/>Are<sp/>Reserved<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>5;<sp/>i<sp/>&lt;<sp/><ref refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" kindref="member">MAX_FILES</ref>;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[i]<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dup_fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(dup_fp,<sp/>fp,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[i]<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/>dup_fp;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>i;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>])-&gt;fd-&gt;dup++;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" kindref="member">fclose</ref>(((</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>])-&gt;fd);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//td-&gt;o_files[uap-&gt;fd]<sp/>=<sp/>0;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" kindref="member">fdestroy</ref>(td,<sp/>fp,<sp/>uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>))</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[%s:%i]<sp/>fdestroy(0x%X,<sp/>0x%X)<sp/>failed\n&quot;</highlight><highlight class="normal">,<sp/>__FILE__,<sp/>__LINE__,<sp/>fp,<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>]);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;FCNTL:<sp/>%i,<sp/>%i,<sp/>0x%X.&quot;</highlight><highlight class="normal">,<sp/>i,<sp/>uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>,<sp/>fp);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>fp-&gt;<ref refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" kindref="member">f_flag</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>4:</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fp-&gt;<ref refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" kindref="member">f_flag</ref><sp/>&amp;=<sp/>~<ref refid="fcntl_8h_1ae145197023ee3530510eaa80446eef77" kindref="member">FCNTLFLAGS</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fp-&gt;<ref refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" kindref="member">f_flag</ref><sp/>|=<sp/><ref refid="fcntl_8h_1a3c28c97a69c6ce8f87cac54a7c91f9db" kindref="member">FFLAGS</ref>(uap-&gt;<ref refid="structsys__fcntl__args_1a264457e6fd1aec8fa71a6361b00135fc" kindref="member">arg</ref><sp/>&amp;<sp/>~<ref refid="fcntl_8h_1a4dc4d45e07d2abc899bcaf04b2846a87" kindref="member">O_ACCMODE</ref>)<sp/>&amp;<sp/><ref refid="fcntl_8h_1ae145197023ee3530510eaa80446eef77" kindref="member">FCNTLFLAGS</ref>;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERROR<sp/>DEFAULT:<sp/>[%i]&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structsys__fcntl__args_1aec006b39b997d46edd2ac73a4d7ec738" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="descrip_8c_1a849f786ab87d384afb59d03d4dcb8b7d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a849f786ab87d384afb59d03d4dcb8b7d" kindref="member">sys_fcntl</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__fcntl__args" kindref="compound">sys_fcntl_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" kindref="member">fcntl</ref>(td,<sp/>uap));</highlight></codeline>
+<codeline lineno="94"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="descrip_8c_1a9c93ac280b559128027746bda7c5d6d4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a9c93ac280b559128027746bda7c5d6d4" kindref="member">falloc</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref><sp/>**resultfp,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*resultfd)<sp/>{</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>First<sp/>5<sp/>Descriptors<sp/>Are<sp/>Reserved<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>5;<sp/>i<sp/>&lt;<sp/><ref refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" kindref="member">MAX_FILES</ref>;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[i]<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[i]<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/>fp;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(resultfd)</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*resultfd<sp/>=<sp/>i;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(resultfp)</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*resultfp<sp/>=<sp/>fp;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>allocated;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(fp);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>*resultfp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>*resultfd<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>allocated:</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ioctl_8h" kindref="compound">sys/ioctl.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147" refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" kindref="member">fdestroy</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref><sp/>*fp,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>]<sp/>!=<sp/>fp)<sp/>{</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>]);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ERR:<sp/>%i&quot;</highlight><highlight class="normal">,<sp/>error);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="descrip_8c_1aec14600d2aa9db1288f00704ba3a55d7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1aec14600d2aa9db1288f00704ba3a55d7" kindref="member">close</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structclose__args" kindref="compound">close_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[%s:%i]&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[%s:%i]&quot;</highlight><highlight class="normal">,<sp/>__FILE__,<sp/>__LINE__);</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>((</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structclose__args_1a795acdf38594b16ee7638db7ac6a3d4c" kindref="member">fd</ref>]);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structclose__args_1a795acdf38594b16ee7638db7ac6a3d4c" kindref="member">fd</ref>]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176" refid="descrip_8c_1ac26938ed109edd82077382276bc8258c" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1ac26938ed109edd82077382276bc8258c" kindref="member">getdtablesize</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgetdtablesize__args" kindref="compound">getdtablesize_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[%s:%i]&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="thread_8h_1ae333ffa5f209eaaffead0a7fce87af29" kindref="member">O_FILES</ref>;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>HACK<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185" refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" kindref="member">fstat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__fstat__args" kindref="compound">sys_fstat_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[%s:%i]&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/>fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>.<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[uap-&gt;<ref refid="structsys__fstat__args_1ad8de8fb29a07e6c09a9f60930a16059f" kindref="member">fd</ref>];</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/>uap-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" kindref="member">st_mode</ref><sp/>=<sp/>0x2180;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/>uap-&gt;<ref refid="structsys__fstat__args_1a1fe8167040a9c85e4f438fe6041df876" kindref="member">sb</ref>-&gt;<ref refid="structstat_1a38d474e1ae3cf6fbdde89ac3c3e308f1" kindref="member">st_blksize</ref><sp/>=<sp/>0x1000;</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;fstat:<sp/>%i&quot;</highlight><highlight class="normal">,<sp/>uap-&gt;<ref refid="structsys__fstat__args_1ad8de8fb29a07e6c09a9f60930a16059f" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="197"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204" refid="descrip_8c_1a899127227d8b9c9da3bcccc32332c749" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a899127227d8b9c9da3bcccc32332c749" kindref="member">ioctl</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structioctl__args" kindref="compound">ioctl_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214" refid="descrip_8c_1a14e228d6e5391a882d3b20ff2466b2ac" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a14e228d6e5391a882d3b20ff2466b2ac" kindref="member">getfd</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref><sp/>**fp,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[%s:%i]&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/>*fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>];</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/>if<sp/>(fp<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="227"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229" refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" kindref="member">sys_ioctl</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__ioctl__args" kindref="compound">sys_ioctl_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__ioctl__args_1a473875b0faba1ff9a4d049f421ad7f05" kindref="member">com</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="ioctl_8h_1a0cef5242a2853d0acf6d93879c517512" kindref="member">TIOCGETA</ref>:</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__ioctl__args_1aba4691fa90aba9f6d54728276f2dfc0c" kindref="member">fd</ref><sp/>==<sp/>0<sp/>||<sp/>args-&gt;<ref refid="structsys__ioctl__args_1aba4691fa90aba9f6d54728276f2dfc0c" kindref="member">fd</ref><sp/>==<sp/>1)<sp/>{</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtermios" kindref="compound">termios</ref><sp/>*t<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtermios" kindref="compound">termios</ref>*)<sp/>args-&gt;<ref refid="structsys__ioctl__args_1a98ea2e72d3df45429360d8d4729ef9ed" kindref="member">data</ref>;</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a85b6c86d2a3db45a3829488190e357e4" kindref="member">c_iflag</ref><sp/>=<sp/>0x2B02;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1ad6e2cfedb81530e5a6a3a0e30b8c6362" kindref="member">c_oflag</ref><sp/>=<sp/>0x3;</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a5d42b95faa4745c3bea53652d2812162" kindref="member">c_cflag</ref><sp/>=<sp/>0x4B00;</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a91bdd7691180800fccc4b791466ee9c3" kindref="member">c_lflag</ref><sp/>=<sp/>0x5CB;</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[0]<sp/>=<sp/>4;</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[1]<sp/>=<sp/>255;</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[2]<sp/>=<sp/>255;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[3]<sp/>=<sp/>127;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[4]<sp/>=<sp/>23;</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[5]<sp/>=<sp/>21;</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[6]<sp/>=<sp/>18;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[7]<sp/>=<sp/>8;</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[8]<sp/>=<sp/>3;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[9]<sp/>=<sp/>28;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[10]<sp/>=<sp/>26;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[11]<sp/>=<sp/>25;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[12]<sp/>=<sp/>17;</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[13]<sp/>=<sp/>19;</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[14]<sp/>=<sp/>22;</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[15]<sp/>=<sp/>15;</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[16]<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[17]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[18]<sp/>=<sp/>20;</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a9f236000fef3dad8bad3d728d024cdf2" kindref="member">c_cc</ref>[19]<sp/>=<sp/>255;</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a02ae972cbc9fb2cf4a1aa6a6751a421a" kindref="member">c_ispeed</ref><sp/>=<sp/>0x9600;</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>t-&gt;<ref refid="structtermios_1a3f42b69c0c7fa4ce2179cb61f8c7ca99" kindref="member">c_ospeed</ref><sp/>=<sp/>0x9600;</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="ioctl_8h_1a36ef545c47ae4202e81e14efafdd64db" kindref="member">TIOCGWINSZ</ref>:</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structwinsize" kindref="compound">winsize</ref><sp/>*win<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structwinsize" kindref="compound">winsize</ref>*)<sp/>args-&gt;<ref refid="structsys__ioctl__args_1a98ea2e72d3df45429360d8d4729ef9ed" kindref="member">data</ref>;</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>win-&gt;<ref refid="structwinsize_1a73698fa1d966374b0701e4bf225f0141" kindref="member">ws_row</ref><sp/>=<sp/>50;</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>win-&gt;<ref refid="structwinsize_1a80bedf71a49fd324e0d92d0702cc7005" kindref="member">ws_col</ref><sp/>=<sp/>80;</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ioFD:%i:0x%X!&quot;</highlight><highlight class="normal">,<sp/>args-&gt;<ref refid="structsys__ioctl__args_1aba4691fa90aba9f6d54728276f2dfc0c" kindref="member">fd</ref>,<sp/>args-&gt;<ref refid="structsys__ioctl__args_1a473875b0faba1ff9a4d049f421ad7f05" kindref="member">com</ref>);</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="283"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"></highlight></codeline>
+<codeline lineno="285" refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" kindref="member">sys_select</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__select__args" kindref="compound">sys_select_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="288"><highlight class="comment"><sp/><sp/><sp/>int<sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="289"><highlight class="comment"></highlight></codeline>
+<codeline lineno="290"><highlight class="comment"><sp/><sp/><sp/>fd_set<sp/>sock_rfds;</highlight></codeline>
+<codeline lineno="291"><highlight class="comment"><sp/><sp/><sp/>fd_set<sp/>sock_wfds;</highlight></codeline>
+<codeline lineno="292"><highlight class="comment"><sp/><sp/><sp/>fd_set<sp/>sock_efds;</highlight></codeline>
+<codeline lineno="293"><highlight class="comment"></highlight></codeline>
+<codeline lineno="294"><highlight class="comment"><sp/><sp/><sp/>FD_ZERO(&amp;sock_rfds);</highlight></codeline>
+<codeline lineno="295"><highlight class="comment"><sp/><sp/><sp/>FD_ZERO(&amp;sock_wfds);</highlight></codeline>
+<codeline lineno="296"><highlight class="comment"><sp/><sp/><sp/>FD_ZERO(&amp;sock_efds);</highlight></codeline>
+<codeline lineno="297"><highlight class="comment"></highlight></codeline>
+<codeline lineno="298"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(args-&gt;in<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="299"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>args-&gt;nd;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="300"><highlight class="comment"><sp/><sp/><sp/>FD_SET(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;in[0]]).socket,<sp/>&amp;sock_rfds);</highlight></codeline>
+<codeline lineno="301"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="302"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="303"><highlight class="comment"></highlight></codeline>
+<codeline lineno="304"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(args-&gt;ou<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="305"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>args-&gt;nd;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="306"><highlight class="comment"><sp/><sp/><sp/>FD_SET(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>&amp;sock_wfds);</highlight></codeline>
+<codeline lineno="307"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="308"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="309"><highlight class="comment"></highlight></codeline>
+<codeline lineno="310"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(args-&gt;ex<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="311"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>args-&gt;nd;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="312"><highlight class="comment"><sp/><sp/><sp/>FD_SET(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ex[0]]).socket,<sp/>&amp;sock_efds);</highlight></codeline>
+<codeline lineno="313"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="314"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="315"><highlight class="comment"></highlight></codeline>
+<codeline lineno="316"><highlight class="comment"><sp/><sp/><sp/>if<sp/>((td-&gt;td_retval[0]<sp/>=<sp/>lwip_select(args-&gt;nd,<sp/>&amp;sock_rfds,<sp/>&amp;sock_wfds,<sp/>&amp;sock_efds,<sp/>args-&gt;tv))<sp/>==<sp/>-1)</highlight></codeline>
+<codeline lineno="317"><highlight class="comment"><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="318"><highlight class="comment"></highlight></codeline>
+<codeline lineno="319"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(args-&gt;in<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="320"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>MAX_FILES;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="321"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(!FD_ISSET(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>&amp;sock_rfds))</highlight></codeline>
+<codeline lineno="322"><highlight class="comment"><sp/><sp/><sp/>FD_CLR(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>args-&gt;in);</highlight></codeline>
+<codeline lineno="323"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="324"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="325"><highlight class="comment"></highlight></codeline>
+<codeline lineno="326"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(args-&gt;ou<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="327"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>MAX_FILES;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="328"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(!FD_ISSET(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>&amp;sock_wfds))</highlight></codeline>
+<codeline lineno="329"><highlight class="comment"><sp/><sp/><sp/>FD_CLR(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>args-&gt;ou);</highlight></codeline>
+<codeline lineno="330"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="331"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="332"><highlight class="comment"></highlight></codeline>
+<codeline lineno="333"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(args-&gt;ex<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="334"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>MAX_FILES;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="335"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(!FD_ISSET(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>&amp;sock_efds))</highlight></codeline>
+<codeline lineno="336"><highlight class="comment"><sp/><sp/><sp/>FD_CLR(((struct<sp/>file<sp/>*<sp/>)<sp/>td-&gt;o_files[args-&gt;ou[0]]).socket,<sp/>args-&gt;ex);</highlight></codeline>
+<codeline lineno="337"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="338"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="339"><highlight class="comment"></highlight></codeline>
+<codeline lineno="340"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="341"><highlight class="normal"></highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>lwip_select(args-&gt;<ref refid="structsys__select__args_1a673ce56e9ea6df34e4d0fe6b4b2f897e" kindref="member">nd</ref>,<sp/>args-&gt;<ref refid="structsys__select__args_1a5a6c4eb7428feb6ccca2a10e4b107ea8" kindref="member">in</ref>,<sp/>args-&gt;<ref refid="structsys__select__args_1a8feedc149ab465ec0f0cf94523ad2daf" kindref="member">ou</ref>,<sp/>args-&gt;<ref refid="structsys__select__args_1a01a0b41681d1ae3f7d0e12568b233501" kindref="member">ex</ref>,<sp/>args-&gt;<ref refid="structsys__select__args_1ab1c4c43c0f25611d0160fd967cc87fee" kindref="member">tv</ref>))<sp/>==<sp/>-1)</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="346"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"></highlight></codeline>
+<codeline lineno="348" refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" kindref="member">dup2</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>from,<sp/><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>to)<sp/>{</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*dup_fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"></highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(to<sp/>&gt;<sp/><ref refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" kindref="member">MAX_FILES</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;TO:<sp/>%i<sp/>&gt;<sp/>MAX_FILES:<sp/>%i&quot;</highlight><highlight class="normal">,<sp/>to,<sp/><ref refid="descrip_8h_1a2c5eecb22513a88c24ae5831a3265e54" kindref="member">MAX_FILES</ref>);</highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[to]<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"></highlight></codeline>
+<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" kindref="member">fclose</ref>(((</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[to])-&gt;fd);</highlight></codeline>
+<codeline lineno="359"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" kindref="member">fdestroy</ref>(td,<sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[to],<sp/>to);</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"></highlight></codeline>
+<codeline lineno="362"><highlight class="normal"><sp/><sp/>fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[from];</highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/>dup_fp<sp/>=<sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"></highlight></codeline>
+<codeline lineno="365"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(dup_fp,<sp/>fp,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="366"><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;DUP2.0:<sp/>%i:%i<sp/>[0x%X:0x%X]&quot;</highlight><highlight class="normal">,<sp/>from,<sp/>to,<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[from],<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[to]);</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"></highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[to]<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*)<sp/>dup_fp;</highlight></codeline>
+<codeline lineno="370"><highlight class="normal"></highlight></codeline>
+<codeline lineno="371"><highlight class="normal"><sp/><sp/>((</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[from])-&gt;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>-&gt;<ref refid="structfileDescriptor_1a8df095a5809b8dcef834ecc696fb39a4" kindref="member">dup</ref>++;</highlight></codeline>
+<codeline lineno="372"><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;DUP2.1:<sp/>%i:%i<sp/>&lt;%i&gt;<sp/>[0x%X:0x%X]&quot;</highlight><highlight class="normal">,<sp/>from,<sp/>to,<sp/>((</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>*)<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[from])-&gt;fd-&gt;dup,<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[from],<sp/>td-&gt;<ref refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" kindref="member">o_files</ref>[to]);</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="375"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"></highlight></codeline>
+<codeline lineno="377" refid="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" kindref="member">sys_dup2</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__dup2__args" kindref="compound">sys_dup2_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="378"><highlight class="normal"></highlight></codeline>
+<codeline lineno="379"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"></highlight></codeline>
+<codeline lineno="381"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" kindref="member">dup2</ref>(td,<sp/>args-&gt;<ref refid="structsys__dup2__args_1a5f3ccda3a4a4890e7e3c59da420166d7" kindref="member">from</ref>,<sp/>args-&gt;<ref refid="structsys__dup2__args_1ad6a2433961f4e5eadd2eb1e00cf21a20" kindref="member">to</ref>))<sp/>==<sp/>-1)</highlight></codeline>
+<codeline lineno="382"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="383"><highlight class="normal"></highlight></codeline>
+<codeline lineno="384"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(error);</highlight></codeline>
+<codeline lineno="385"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/descrip.c"/>
+  </compounddef>
+</doxygen>

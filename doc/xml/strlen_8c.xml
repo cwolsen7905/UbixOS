@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="strlen_8c" kind="file" language="C++">
+    <compoundname>strlen.c</compoundname>
+    <includes refid="sys_2limits_8h" local="no">sys/limits.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <incdepgraph>
+      <node id="3">
+        <label>i386/limits.h</label>
+        <link refid="i386_2limits_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/lib/strlen.c</label>
+        <link refid="strlen_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="2">
+        <label>sys/limits.h</label>
+        <link refid="sys_2limits_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="strlen_8c_1ae33e2dfb5c1456c17782ba1e0894d783" prot="public" static="no">
+        <name>LONGPTR_MASK</name>
+        <initializer>(sizeof(long) - 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/strlen.c" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/lib/strlen.c" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" prot="public" static="no">
+        <name>testbyte</name>
+        <param><defname>x</defname></param>
+        <initializer>do {                                    \
+                if (p[x] == &apos;\0&apos;)               \
+                    return (p - str + x);       \
+        } while (0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/strlen.c" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/lib/strlen.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="strlen_8c_1a008e171a518fe0e0352f31b245e03875" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t strlen</definition>
+        <argsstring>(const char *str)</argsstring>
+        <name>strlen</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/strlen.c" line="55" column="8" bodyfile="C:/Dev/git/UbixOS/sys/lib/strlen.c" bodystart="55" bodyend="101"/>
+        <references refid="strlen_8c_1ae33e2dfb5c1456c17782ba1e0894d783" compoundref="strlen_8c" startline="43">LONGPTR_MASK</references>
+        <references refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" compoundref="strlen_8c" startline="49">testbyte</references>
+        <referencedby refid="fat__misc_8h_1a0af6939cdfa14c20077e9508d1fd861d" compoundref="fat__misc_8c" startline="186" endline="220">fatfs_filename_to_lfn</referencedby>
+        <referencedby refid="fat__string_8h_1afe765f763082e56ad03a7512c926dead" compoundref="fat__string_8c" startline="92" endline="144">fatfs_get_substring</referencedby>
+        <referencedby refid="fat__misc_8h_1a25a4d4a522ffdb06b4fab094d05b1763" compoundref="fat__misc_8c" startline="260" endline="315">fatfs_lfn_create_sfn</referencedby>
+        <referencedby refid="fat__misc_8h_1ac8a7ba27f05e541eda01418c21acca7c" compoundref="fat__misc_8c" startline="173" endline="180">fatfs_lfn_entries_required</referencedby>
+        <referencedby refid="fat__string_8h_1a5d871ba6e84ac429b88cb32f61d49b74" compoundref="fat__string_8c" startline="151" endline="178">fatfs_split_path</referencedby>
+        <referencedby refid="fat__filelib_8h_1a3e374b01d35084aa1eee63e50afdf097" compoundref="fat__filelib_8c" startline="1300" endline="1308">fl_fputs</referencedby>
+        <referencedby refid="group__sys__nonstandard_1gaeece028198cdaea2f0d2f1d691752c02" compoundref="def_8c" startline="103" endline="116">lwip_strnstr</referencedby>
+        <referencedby refid="pbuf_8c_1a9ba3f7b705309ceadb147692fd5a1c7d" compoundref="pbuf_8c" startline="1432" endline="1443">pbuf_strstr</referencedby>
+        <referencedby refid="strstr_8c_1a2499642ce6d756fcafc0008ea513e4db" compoundref="strstr_8c" startline="32" endline="47">strstr</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1a96b9eebf3580117ce76158b2d53f188f" compoundref="kernel_2syscall_8c" startline="204" endline="222">sys_getcwd</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_2limits_8h" kindref="compound">sys/limits.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Magic<sp/>numbers<sp/>for<sp/>the<sp/>algorithm<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LONG_BIT<sp/>==<sp/>32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>mask01<sp/>=<sp/>0x01010101;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>mask80<sp/>=<sp/>0x80808080;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>LONG_BIT<sp/>==<sp/>64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>mask01<sp/>=<sp/>0x0101010101010101;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>mask80<sp/>=<sp/>0x8080808080808080;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>Unsupported<sp/>word<sp/>size</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="strlen_8c_1ae33e2dfb5c1456c17782ba1e0894d783" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LONGPTR_MASK<sp/>(sizeof(long)<sp/>-<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>*<sp/>Helper<sp/>macro<sp/>to<sp/>return<sp/>string<sp/>length<sp/>if<sp/>we<sp/>caught<sp/>the<sp/>zero</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*<sp/>byte.</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>testbyte(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="50"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>do<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="51"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(p[x]<sp/>==<sp/>&apos;\0&apos;)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="52"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>(p<sp/>-<sp/>str<sp/>+<sp/>x);<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="53"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while<sp/>(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="strlen_8c_1a008e171a518fe0e0352f31b245e03875" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/><ref refid="strlen_8c_1a008e171a518fe0e0352f31b245e03875" kindref="member">strlen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str)<sp/>{</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*p;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>*lp;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>va,<sp/>vb;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Before<sp/>trying<sp/>the<sp/>hard<sp/>(unaligned<sp/>byte-by-byte<sp/>access)<sp/>way</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/><sp/><sp/>*<sp/>to<sp/>figure<sp/>out<sp/>whether<sp/>there<sp/>is<sp/>a<sp/>nul<sp/>character,<sp/>try<sp/>to<sp/>see</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/><sp/><sp/>*<sp/>if<sp/>there<sp/>is<sp/>a<sp/>nul<sp/>character<sp/>is<sp/>within<sp/>this<sp/>accessible<sp/>word</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/>*<sp/>first.</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/>*</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/><sp/><sp/>*<sp/>p<sp/>and<sp/>(p<sp/>&amp;<sp/>~LONGPTR_MASK)<sp/>must<sp/>be<sp/>equally<sp/>accessible<sp/>since</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/><sp/><sp/>*<sp/>they<sp/>always<sp/>fall<sp/>in<sp/>the<sp/>same<sp/>memory<sp/>page,<sp/>as<sp/>long<sp/>as<sp/>page</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/><sp/><sp/>*<sp/>boundaries<sp/>is<sp/>integral<sp/>multiple<sp/>of<sp/>word<sp/>size.</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>lp<sp/>=<sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>*)<sp/>((<ref refid="include_2sys_2types_8h_1a09674b9e56fd7a93a2169aa9210deec7" kindref="member">uintptr_t</ref>)<sp/>str<sp/>&amp;<sp/>~<ref refid="strlen_8c_1ae33e2dfb5c1456c17782ba1e0894d783" kindref="member">LONGPTR_MASK</ref>);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>va<sp/>=<sp/>(*lp<sp/>-<sp/>mask01);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>vb<sp/>=<sp/>((~*lp)<sp/>&amp;<sp/>mask80);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>lp++;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(va<sp/>&amp;<sp/>vb)</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Check<sp/>if<sp/>we<sp/>have<sp/>\0<sp/>in<sp/>the<sp/>first<sp/>part<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(p<sp/>=<sp/>str;<sp/>p<sp/>&lt;<sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>lp;<sp/>p++)</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(*p<sp/>==<sp/></highlight><highlight class="charliteral">&apos;\0&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(p<sp/>-<sp/>str);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Scan<sp/>the<sp/>rest<sp/>of<sp/>the<sp/>string<sp/>using<sp/>word<sp/>sized<sp/>operation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;;<sp/>lp++)<sp/>{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>va<sp/>=<sp/>(*lp<sp/>-<sp/>mask01);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>vb<sp/>=<sp/>((~*lp)<sp/>&amp;<sp/>mask80);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(va<sp/>&amp;<sp/>vb)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>p<sp/>=<sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>(lp);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(0);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(1);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(2);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(3);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(LONG_BIT<sp/>&gt;=<sp/>64)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(4);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(5);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(6);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" kindref="member">testbyte</ref>(7);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>NOTREACHED<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/lib/strlen.c"/>
+  </compounddef>
+</doxygen>

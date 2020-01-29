@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__netif__cd" kind="group">
+    <compoundname>netif_cd</compoundname>
+    <title>Client data handling</title>
+    <briefdescription>
+<para>Store data (void*) on a netif for application usage. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="see"><para><ref refid="group__lwip__opts__netif_1ga94a35212616f9a9aae5c98741612b936" kindref="member">LWIP_NUM_NETIF_CLIENT_DATA</ref> </para>
+</simplesect>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

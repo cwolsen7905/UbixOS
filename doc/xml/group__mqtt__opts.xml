@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__mqtt__opts" kind="group">
+    <compoundname>mqtt_opts</compoundname>
+    <title>Options</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__mqtt__opts_1gac5d0580d1caf57dac1cb56662e5d9f7b" prot="public" static="no">
+        <name>MQTT_CONNECT_TIMOUT</name>
+        <initializer>100</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Seconds for MQTT connect response timeout after sending connect request </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" line="92" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mqtt__opts_1ga1d89fda808c7047eab7a67d3785aea8e" prot="public" static="no">
+        <name>MQTT_CYCLIC_TIMER_INTERVAL</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Seconds between each cyclic timer call. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" line="78" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mqtt__opts_1ga70627bafaffa071875cee9edc38d942b" prot="public" static="no">
+        <name>MQTT_OUTPUT_RINGBUF_SIZE</name>
+        <initializer>256</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Output ring-buffer size, must be able to fit largest outgoing publish message topic+payloads </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mqtt__opts_1gae82460b35de2291e9661e440c3458e8f" prot="public" static="no">
+        <name>MQTT_REQ_MAX_IN_FLIGHT</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Maximum number of pending subscribe, unsubscribe and publish requests to server . </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mqtt__opts_1ga262639f2b45f6e064fb53156396d6d0a" prot="public" static="no">
+        <name>MQTT_REQ_TIMEOUT</name>
+        <initializer>30</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Publish, subscribe and unsubscribe request timeout in seconds. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" line="85" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__mqtt__opts_1ga8275ef78a85fb14c3ac1423c70e45805" prot="public" static="no">
+        <name>MQTT_VAR_HEADER_BUFFER_LEN</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number of bytes in receive buffer, must be at least the size of the longest incoming topic + 8 If one wants to avoid fragmented incoming publish, set length to max incoming topic length + max payload length + 8 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt_opts.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

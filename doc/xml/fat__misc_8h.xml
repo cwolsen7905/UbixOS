@@ -1,0 +1,777 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fat__misc_8h" kind="file" language="C++">
+    <compoundname>fat_misc.h</compoundname>
+    <includes refid="fat__defs_8h" local="yes">fat_defs.h</includes>
+    <includes refid="fat__opts_8h" local="yes">fat_opts.h</includes>
+    <includedby refid="fat__table_8h" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</includedby>
+    <includedby refid="fat__access_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</includedby>
+    <includedby refid="fat__filelib_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</includedby>
+    <includedby refid="fat__format_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</includedby>
+    <includedby refid="fat__misc_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</includedby>
+    <includedby refid="fat__write_8c" local="yes">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</includedby>
+    <incdepgraph>
+      <node id="3">
+        <label>fat/fat.h</label>
+        <link refid="fat_8h"/>
+      </node>
+      <node id="6">
+        <label>fat_types.h</label>
+        <link refid="fat__types_8h"/>
+      </node>
+      <node id="2">
+        <label>fat_defs.h</label>
+        <link refid="fat__defs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>stdio.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>fat_opts.h</label>
+        <link refid="fat__opts_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.h</label>
+        <link refid="fat__table_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h</label>
+        <link refid="fat__misc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structlfn__cache" prot="public">lfn_cache</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fat__misc_8h_1ad253d9c5238132f5ee8cf06638f87829" prot="public" static="no">
+        <name>GET_16BIT_WORD</name>
+        <param><defname>buffer</defname></param>
+        <param><defname>location</defname></param>
+        <initializer>( ((<ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref>)<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+1]&lt;&lt;8) + (<ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref>)<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+0] )</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="17" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__misc_8h_1a857557cc9a2fc6a7f721a2960dcc6f33" prot="public" static="no">
+        <name>GET_32BIT_WORD</name>
+        <param><defname>buffer</defname></param>
+        <param><defname>location</defname></param>
+        <initializer>( ((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+3]&lt;&lt;24) + ((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+2]&lt;&lt;16) + ((<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+1]&lt;&lt;8) + (<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref>)<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+0] )</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="16" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" prot="public" static="no">
+        <name>MAX_LFN_ENTRY_LENGTH</name>
+        <initializer>13</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="11" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__misc_8h_1aa9404fb17284e70b3ca510d8c422c348" prot="public" static="no">
+        <name>MAX_LONGFILENAME_ENTRIES</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="10" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__misc_8h_1a187f3aa267c44c2bb1cdd55d27a2dbf4" prot="public" static="no">
+        <name>SET_16BIT_WORD</name>
+        <param><defname>buffer</defname></param>
+        <param><defname>location</defname></param>
+        <param><defname>value</defname></param>
+        <initializer>{ <ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+0] = (<ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>)((value)&amp;0xFF); \
+                                                  <ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+1] = (<ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>)((value&gt;&gt;8)&amp;0xFF); }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="24" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fat__misc_8h_1a33478d59d8bd88a65f6d9c35f9a8ee02" prot="public" static="no">
+        <name>SET_32BIT_WORD</name>
+        <param><defname>buffer</defname></param>
+        <param><defname>location</defname></param>
+        <param><defname>value</defname></param>
+        <initializer>{ <ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+0] = (<ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>)((value)&amp;0xFF); \
+                                                  <ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+1] = (<ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>)((value&gt;&gt;8)&amp;0xFF); \
+                                                  <ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+2] = (<ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>)((value&gt;&gt;16)&amp;0xFF); \
+                                                  <ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[location+3] = (<ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref>)((value&gt;&gt;24)&amp;0xFF); }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="19" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fat__misc_8h_1ad9567e1afb538f55b9f5c8ec46871f44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_convert_from_fat_date</definition>
+        <argsstring>(uint16 fat_date, int *day, int *month, int *year)</argsstring>
+        <name>fatfs_convert_from_fat_date</name>
+        <param>
+          <type><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref></type>
+          <declname>fat_date</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>day</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>month</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>year</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="58" column="9" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="58" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a8a0d22e7688e318ede6457eca6ba072d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_convert_from_fat_time</definition>
+        <argsstring>(uint16 fat_time, int *hours, int *minutes, int *seconds)</argsstring>
+        <name>fatfs_convert_from_fat_time</name>
+        <param>
+          <type><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref></type>
+          <declname>fat_time</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>hours</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>minutes</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>seconds</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="57" column="9" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="57" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a1d864cba89ca98550fcaa4c7e0e5e976" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref></type>
+        <definition>uint16 fatfs_convert_to_fat_date</definition>
+        <argsstring>(int day, int month, int year)</argsstring>
+        <name>fatfs_convert_to_fat_date</name>
+        <param>
+          <type>int</type>
+          <declname>day</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>month</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>year</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="60" column="9" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="60" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a42fbd44505592745afb1fdca6f074aab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref></type>
+        <definition>uint16 fatfs_convert_to_fat_time</definition>
+        <argsstring>(int hours, int minutes, int seconds)</argsstring>
+        <name>fatfs_convert_to_fat_time</name>
+        <param>
+          <type>int</type>
+          <declname>hours</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>minutes</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>seconds</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="59" column="9" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="59" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1adca70c7e5b6a384a99baf9e1ecb9d1a8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_entry_is_dir</definition>
+        <argsstring>(struct fat_dir_entry *entry)</argsstring>
+        <name>fatfs_entry_is_dir</name>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="152" bodyend="157" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="50" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="fat__defs_8h_1a57d8f1ade52476af4ab3c03f7387b973" compoundref="fat__defs_8h" startline="84">FILE_TYPE_DIR</references>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a11542caa285662d2b04f9d504f8f9e87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_entry_is_file</definition>
+        <argsstring>(struct fat_dir_entry *entry)</argsstring>
+        <name>fatfs_entry_is_file</name>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="161" bodyend="167" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="51" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="fat__defs_8h_1abace2d6eb53e065d5a32ab4c4758813b" compoundref="fat__defs_8h" startline="85">FILE_TYPE_FILE</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a27351ac7857382bf893d7e5a74cf5710" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_entry_lfn_exists</definition>
+        <argsstring>(struct lfn_cache *lfn, struct fat_dir_entry *entry)</argsstring>
+        <name>fatfs_entry_lfn_exists</name>
+        <param>
+          <type>struct <ref refid="structlfn__cache" kindref="compound">lfn_cache</ref> *</type>
+          <declname>lfn</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="132" bodyend="137" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="48" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="fat__defs_8h_1aeb0ab47a26edbbf113af1128a44304ee" compoundref="fat__defs_8h" startline="81">FILE_ATTR_LFN_TEXT</references>
+        <references refid="fat__defs_8h_1a9c6349054e802adf1045219e99714bed" compoundref="fat__defs_8h" startline="77">FILE_ATTR_SYSHID</references>
+        <references refid="fat__defs_8h_1a491017a8d29ca6102617583588eceb0e" compoundref="fat__defs_8h" startline="78">FILE_ATTR_VOLUME_ID</references>
+        <references refid="fat__defs_8h_1a7e2aeee00ea979682b81bea8f046af71" compoundref="fat__defs_8h" startline="82">FILE_HEADER_BLANK</references>
+        <references refid="fat__defs_8h_1acc2882877e3f516e53feb76ee87013d3" compoundref="fat__defs_8h" startline="83">FILE_HEADER_DELETED</references>
+        <references refid="structfat__dir__entry_1a3b690c897cb2883c0fd9b651128fbc69" compoundref="fat__defs_8h" startline="114">fat_dir_entry::Name</references>
+        <references refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" compoundref="fat__misc_8h" startline="37">lfn_cache::no_of_strings</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a4ed58a36d5257fed8f10aaca95433cdf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_entry_lfn_invalid</definition>
+        <argsstring>(struct fat_dir_entry *entry)</argsstring>
+        <name>fatfs_entry_lfn_invalid</name>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="121" bodyend="126" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="47" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="fat__defs_8h_1a9c6349054e802adf1045219e99714bed" compoundref="fat__defs_8h" startline="77">FILE_ATTR_SYSHID</references>
+        <references refid="fat__defs_8h_1a491017a8d29ca6102617583588eceb0e" compoundref="fat__defs_8h" startline="78">FILE_ATTR_VOLUME_ID</references>
+        <references refid="fat__defs_8h_1a7e2aeee00ea979682b81bea8f046af71" compoundref="fat__defs_8h" startline="82">FILE_HEADER_BLANK</references>
+        <references refid="fat__defs_8h_1acc2882877e3f516e53feb76ee87013d3" compoundref="fat__defs_8h" startline="83">FILE_HEADER_DELETED</references>
+        <references refid="structfat__dir__entry_1a3b690c897cb2883c0fd9b651128fbc69" compoundref="fat__defs_8h" startline="114">fat_dir_entry::Name</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="fat__access_8h_1a7333a9802b496ce05ca6df36c2fc6009" compoundref="fat__access_8c" startline="643" endline="702">fatfs_mark_file_deleted</referencedby>
+        <referencedby refid="fat__access_8h_1a8bdad35bc1dd908eda5d02f47a8d73d4" compoundref="fat__access_8c" startline="478" endline="519">fatfs_sfn_exists</referencedby>
+        <referencedby refid="fat__access_8h_1af94f715b4cdb59cf7854b564de855a65" compoundref="fat__access_8c" startline="578" endline="636">fatfs_update_file_length</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a7dac9a0d5348d1d6e9df6479c29d03c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_entry_lfn_text</definition>
+        <argsstring>(struct fat_dir_entry *entry)</argsstring>
+        <name>fatfs_entry_lfn_text</name>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="110" bodyend="115" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="46" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="fat__defs_8h_1aeb0ab47a26edbbf113af1128a44304ee" compoundref="fat__defs_8h" startline="81">FILE_ATTR_LFN_TEXT</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="fat__access_8h_1a7333a9802b496ce05ca6df36c2fc6009" compoundref="fat__access_8c" startline="643" endline="702">fatfs_mark_file_deleted</referencedby>
+        <referencedby refid="fat__access_8h_1a8bdad35bc1dd908eda5d02f47a8d73d4" compoundref="fat__access_8c" startline="478" endline="519">fatfs_sfn_exists</referencedby>
+        <referencedby refid="fat__access_8h_1af94f715b4cdb59cf7854b564de855a65" compoundref="fat__access_8c" startline="578" endline="636">fatfs_update_file_length</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a0c733bd55626e6751be7a7fcd770acd5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_entry_sfn_only</definition>
+        <argsstring>(struct fat_dir_entry *entry)</argsstring>
+        <name>fatfs_entry_sfn_only</name>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="142" bodyend="147" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="49" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="fat__defs_8h_1aeb0ab47a26edbbf113af1128a44304ee" compoundref="fat__defs_8h" startline="81">FILE_ATTR_LFN_TEXT</references>
+        <references refid="fat__defs_8h_1a9c6349054e802adf1045219e99714bed" compoundref="fat__defs_8h" startline="77">FILE_ATTR_SYSHID</references>
+        <references refid="fat__defs_8h_1a491017a8d29ca6102617583588eceb0e" compoundref="fat__defs_8h" startline="78">FILE_ATTR_VOLUME_ID</references>
+        <references refid="fat__defs_8h_1a7e2aeee00ea979682b81bea8f046af71" compoundref="fat__defs_8h" startline="82">FILE_HEADER_BLANK</references>
+        <references refid="fat__defs_8h_1acc2882877e3f516e53feb76ee87013d3" compoundref="fat__defs_8h" startline="83">FILE_HEADER_DELETED</references>
+        <references refid="structfat__dir__entry_1a3b690c897cb2883c0fd9b651128fbc69" compoundref="fat__defs_8h" startline="114">fat_dir_entry::Name</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="fat__access_8h_1a7333a9802b496ce05ca6df36c2fc6009" compoundref="fat__access_8c" startline="643" endline="702">fatfs_mark_file_deleted</referencedby>
+        <referencedby refid="fat__access_8h_1a8bdad35bc1dd908eda5d02f47a8d73d4" compoundref="fat__access_8c" startline="478" endline="519">fatfs_sfn_exists</referencedby>
+        <referencedby refid="fat__access_8h_1af94f715b4cdb59cf7854b564de855a65" compoundref="fat__access_8c" startline="578" endline="636">fatfs_update_file_length</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a0af6939cdfa14c20077e9508d1fd861d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_filename_to_lfn</definition>
+        <argsstring>(char *filename, uint8 *buffer, int entry, uint8 sfnChk)</argsstring>
+        <name>fatfs_filename_to_lfn</name>
+        <param>
+          <type>char *</type>
+          <declname>filename</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref> *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>entry</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+          <declname>sfnChk</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="186" bodyend="220" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="53" declcolumn="9"/>
+        <references refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="fat__defs_8h_1a0d73859aacf6d6e4ece7720fed28b9ca" compoundref="fat__defs_8h" startline="67">FAT_DIR_ENTRY_SIZE</references>
+        <references refid="fat__misc_8c_1ac8a7ba27f05e541eda01418c21acca7c" compoundref="fat__misc_8c" startline="173" endline="180">fatfs_lfn_entries_required</references>
+        <references refid="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" compoundref="fat__misc_8h" startline="11">MAX_LFN_ENTRY_LENGTH</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a37178e1cd0b3c962e4c41bd4e350c712" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_lfn_cache_entry</definition>
+        <argsstring>(struct lfn_cache *lfn, uint8 *entryBuffer)</argsstring>
+        <name>fatfs_lfn_cache_entry</name>
+        <param>
+          <type>struct <ref refid="structlfn__cache" kindref="compound">lfn_cache</ref> *</type>
+          <declname>lfn</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref> *</type>
+          <declname>entryBuffer</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="56" bodyend="88" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="44" declcolumn="9"/>
+        <references refid="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" compoundref="fat__misc_8h" startline="11">MAX_LFN_ENTRY_LENGTH</references>
+        <references refid="fat__misc_8h_1aa9404fb17284e70b3ca510d8c422c348" compoundref="fat__misc_8h" startline="10">MAX_LONGFILENAME_ENTRIES</references>
+        <references refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" compoundref="fat__misc_8h" startline="37">lfn_cache::no_of_strings</references>
+        <references refid="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" compoundref="fat__misc_8h" startline="34">lfn_cache::String</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a30fee82472e2faf585b0a84068abc672" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* fatfs_lfn_cache_get</definition>
+        <argsstring>(struct lfn_cache *lfn)</argsstring>
+        <name>fatfs_lfn_cache_get</name>
+        <param>
+          <type>struct <ref refid="structlfn__cache" kindref="compound">lfn_cache</ref> *</type>
+          <declname>lfn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="45" column="8" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="94" bodyend="104" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="45" declcolumn="8"/>
+        <references refid="fat__misc_8h_1aa9404fb17284e70b3ca510d8c422c348" compoundref="fat__misc_8h" startline="10">MAX_LONGFILENAME_ENTRIES</references>
+        <references refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" compoundref="fat__misc_8h" startline="37">lfn_cache::no_of_strings</references>
+        <references refid="structlfn__cache_1a9217d0b98362b34ff1fda188c4755bd4" compoundref="fat__misc_8h" startline="35">lfn_cache::Null</references>
+        <references refid="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" compoundref="fat__misc_8h" startline="34">lfn_cache::String</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1aa1fe29de6c2c59fdcf3159607ac2af47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_lfn_cache_init</definition>
+        <argsstring>(struct lfn_cache *lfn, int wipeTable)</argsstring>
+        <name>fatfs_lfn_cache_init</name>
+        <param>
+          <type>struct <ref refid="structlfn__cache" kindref="compound">lfn_cache</ref> *</type>
+          <declname>lfn</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>wipeTable</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="38" bodyend="50" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="43" declcolumn="9"/>
+        <references refid="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" compoundref="fat__misc_8h" startline="11">MAX_LFN_ENTRY_LENGTH</references>
+        <references refid="fat__misc_8h_1aa9404fb17284e70b3ca510d8c422c348" compoundref="fat__misc_8h" startline="10">MAX_LONGFILENAME_ENTRIES</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" compoundref="fat__misc_8h" startline="37">lfn_cache::no_of_strings</references>
+        <references refid="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" compoundref="fat__misc_8h" startline="34">lfn_cache::String</references>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a25a4d4a522ffdb06b4fab094d05b1763" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_lfn_create_sfn</definition>
+        <argsstring>(char *sfn_output, char *filename)</argsstring>
+        <name>fatfs_lfn_create_sfn</name>
+        <param>
+          <type>char *</type>
+          <declname>sfn_output</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="260" bodyend="315" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="55" declcolumn="9"/>
+        <references refid="fat__defs_8h_1a0918d60f1f01721da31d3b2b0f79f7aa" compoundref="fat__defs_8h" startline="68">FAT_SFN_SIZE_FULL</references>
+        <references refid="fat__defs_8h_1a25a96fb1ddc1bd5dae208f2491b0f7c3" compoundref="fat__defs_8h" startline="69">FAT_SFN_SIZE_PARTIAL</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1ac8a7ba27f05e541eda01418c21acca7c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_lfn_entries_required</definition>
+        <argsstring>(char *filename)</argsstring>
+        <name>fatfs_lfn_entries_required</name>
+        <param>
+          <type>char *</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="173" bodyend="180" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="52" declcolumn="9"/>
+        <references refid="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" compoundref="fat__misc_8h" startline="11">MAX_LFN_ENTRY_LENGTH</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+        <referencedby refid="fat__write_8h_1a1d762d2afde765d8848e7eaff4dd2fb1" compoundref="fat__write_8c" startline="266" endline="372">fatfs_add_file_entry</referencedby>
+        <referencedby refid="fat__misc_8h_1a0af6939cdfa14c20077e9508d1fd861d" compoundref="fat__misc_8c" startline="186" endline="220">fatfs_filename_to_lfn</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1a140f2ac336bea9e8c945b6357fc65083" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fatfs_lfn_generate_tail</definition>
+        <argsstring>(char *sfn_output, char *sfn_input, uint32 tailNum)</argsstring>
+        <name>fatfs_lfn_generate_tail</name>
+        <param>
+          <type>char *</type>
+          <declname>sfn_output</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>sfn_input</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>tailNum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="346" bodyend="366" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="56" declcolumn="9"/>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1ad788122bd3b50b07596b78c824f27301" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_print_sector</definition>
+        <argsstring>(uint32 sector, uint8 *data)</argsstring>
+        <name>fatfs_print_sector</name>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>sector</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref> *</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="61" column="9" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="61" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="fat__misc_8h_1ae562db5b28f07a3d0407e38aa9a77c13" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fatfs_sfn_create_entry</definition>
+        <argsstring>(char *shortfilename, uint32 size, uint32 startCluster, struct fat_dir_entry *entry, int dir)</argsstring>
+        <name>fatfs_sfn_create_entry</name>
+        <param>
+          <type>char *</type>
+          <declname>shortfilename</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref></type>
+          <declname>startCluster</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref> *</type>
+          <declname>entry</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>dir</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c" bodystart="226" bodyend="254" declfile="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h" declline="54" declcolumn="9"/>
+        <references refid="structfat__dir__entry_1aa73be99077695ab87ddd8c329e12e779" compoundref="fat__defs_8h" startline="115">fat_dir_entry::Attr</references>
+        <references refid="structfat__dir__entry_1a4a12f862ca27a01051664d72e6c95b6e" compoundref="fat__defs_8h" startline="119">fat_dir_entry::CrtDate</references>
+        <references refid="structfat__dir__entry_1a6a6b6e66fa26b03fad695a62bc12905f" compoundref="fat__defs_8h" startline="118">fat_dir_entry::CrtTime</references>
+        <references refid="structfat__dir__entry_1a2201702ad673bc37d3e732f4baab3ef6" compoundref="fat__defs_8h" startline="117">fat_dir_entry::CrtTimeTenth</references>
+        <references refid="fat__types_8h_1a79f47acd161cf6d4943a43745c179a6e" compoundref="fat__types_8h" startline="46">FAT_HTONL</references>
+        <references refid="fat__types_8h_1abbb9c5db3bb96b1398c9b011870c335b" compoundref="fat__types_8h" startline="45">FAT_HTONS</references>
+        <references refid="fat__defs_8h_1a0918d60f1f01721da31d3b2b0f79f7aa" compoundref="fat__defs_8h" startline="68">FAT_SFN_SIZE_FULL</references>
+        <references refid="fat__defs_8h_1a57d8f1ade52476af4ab3c03f7387b973" compoundref="fat__defs_8h" startline="84">FILE_TYPE_DIR</references>
+        <references refid="fat__defs_8h_1abace2d6eb53e065d5a32ab4c4758813b" compoundref="fat__defs_8h" startline="85">FILE_TYPE_FILE</references>
+        <references refid="structfat__dir__entry_1a0a053ffe5aa88eb280c5ddde56c3c0c8" compoundref="fat__defs_8h" startline="125">fat_dir_entry::FileSize</references>
+        <references refid="structfat__dir__entry_1abc27727d77c39b4481215c310058e7ef" compoundref="fat__defs_8h" startline="121">fat_dir_entry::FstClusHI</references>
+        <references refid="structfat__dir__entry_1ae91aaa2c62dd33e7f7d6e5042e7c42ed" compoundref="fat__defs_8h" startline="124">fat_dir_entry::FstClusLO</references>
+        <references refid="structfat__dir__entry_1a3908642d313faf4cb05c70052ce34b91" compoundref="fat__defs_8h" startline="120">fat_dir_entry::LstAccDate</references>
+        <references refid="structfat__dir__entry_1a3b690c897cb2883c0fd9b651128fbc69" compoundref="fat__defs_8h" startline="114">fat_dir_entry::Name</references>
+        <references refid="structfat__dir__entry_1a0af375d10cb5e96f95787716816a64d1" compoundref="fat__defs_8h" startline="116">fat_dir_entry::NTRes</references>
+        <references refid="structfat__dir__entry_1a7e05fe6b6708c7e57ff675fe06d47d58" compoundref="fat__defs_8h" startline="123">fat_dir_entry::WrtDate</references>
+        <references refid="structfat__dir__entry_1acab2693a2267a89aaaa11ffb35ec479d" compoundref="fat__defs_8h" startline="122">fat_dir_entry::WrtTime</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__FAT_MISC_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__FAT_MISC_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__defs_8h" kindref="compound">fat_defs.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fat__opts_8h" kindref="compound">fat_opts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Defines</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="fat__misc_8h_1aa9404fb17284e70b3ca510d8c422c348" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_LONGFILENAME_ENTRIES<sp/><sp/><sp/><sp/>20</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_LFN_ENTRY_LENGTH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>13</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Macros</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="fat__misc_8h_1a857557cc9a2fc6a7f721a2960dcc6f33" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GET_32BIT_WORD(buffer,<sp/>location)<sp/><sp/><sp/><sp/>(<sp/>((uint32)buffer[location+3]&lt;&lt;24)<sp/>+<sp/>((uint32)buffer[location+2]&lt;&lt;16)<sp/>+<sp/>((uint32)buffer[location+1]&lt;&lt;8)<sp/>+<sp/>(uint32)buffer[location+0]<sp/>)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="fat__misc_8h_1ad253d9c5238132f5ee8cf06638f87829" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GET_16BIT_WORD(buffer,<sp/>location)<sp/><sp/><sp/><sp/>(<sp/>((uint16)buffer[location+1]&lt;&lt;8)<sp/>+<sp/>(uint16)buffer[location+0]<sp/>)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19" refid="fat__misc_8h_1a33478d59d8bd88a65f6d9c35f9a8ee02" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SET_32BIT_WORD(buffer,<sp/>location,<sp/>value)<sp/><sp/><sp/><sp/>{<sp/>buffer[location+0]<sp/>=<sp/>(uint8)((value)&amp;0xFF);<sp/>\</highlight></codeline>
+<codeline lineno="20"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>buffer[location+1]<sp/>=<sp/>(uint8)((value&gt;&gt;8)&amp;0xFF);<sp/>\</highlight></codeline>
+<codeline lineno="21"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>buffer[location+2]<sp/>=<sp/>(uint8)((value&gt;&gt;16)&amp;0xFF);<sp/>\</highlight></codeline>
+<codeline lineno="22"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>buffer[location+3]<sp/>=<sp/>(uint8)((value&gt;&gt;24)&amp;0xFF);<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="fat__misc_8h_1a187f3aa267c44c2bb1cdd55d27a2dbf4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SET_16BIT_WORD(buffer,<sp/>location,<sp/>value)<sp/><sp/><sp/><sp/>{<sp/>buffer[location+0]<sp/>=<sp/>(uint8)((value)&amp;0xFF);<sp/>\</highlight></codeline>
+<codeline lineno="25"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>buffer[location+1]<sp/>=<sp/>(uint8)((value&gt;&gt;8)&amp;0xFF);<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="structlfn__cache" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structlfn__cache" kindref="compound">lfn_cache</ref></highlight></codeline>
+<codeline lineno="31"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>FATFS_INC_LFN_SUPPORT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Long<sp/>File<sp/>Name<sp/>Structure<sp/>(max<sp/>260<sp/>LFN<sp/>length)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structlfn__cache_1a2602f28cce8a1e1aaadd03b543528dc9" kindref="member">String</ref>[<ref refid="fat__misc_8h_1aa9404fb17284e70b3ca510d8c422c348" kindref="member">MAX_LONGFILENAME_ENTRIES</ref>][<ref refid="fat__misc_8h_1a2677e17baacb5a8739614e571253e15e" kindref="member">MAX_LFN_ENTRY_LENGTH</ref>];</highlight></codeline>
+<codeline lineno="35" refid="structlfn__cache_1a9217d0b98362b34ff1fda188c4755bd4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structlfn__cache_1a9217d0b98362b34ff1fda188c4755bd4" kindref="member">Null</ref>;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/><ref refid="structlfn__cache_1ad3c6533b79bd11d2218af143778e570d" kindref="member">no_of_strings</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Prototypes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">//-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1aa1fe29de6c2c59fdcf3159607ac2af47" kindref="member">fatfs_lfn_cache_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlfn__cache" kindref="compound">lfn_cache</ref><sp/>*lfn,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>wipeTable);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a37178e1cd0b3c962e4c41bd4e350c712" kindref="member">fatfs_lfn_cache_entry</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlfn__cache" kindref="compound">lfn_cache</ref><sp/>*lfn,<sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/>*entryBuffer);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><sp/><sp/><ref refid="fat__misc_8h_1a30fee82472e2faf585b0a84068abc672" kindref="member">fatfs_lfn_cache_get</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlfn__cache" kindref="compound">lfn_cache</ref><sp/>*lfn);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a7dac9a0d5348d1d6e9df6479c29d03c4" kindref="member">fatfs_entry_lfn_text</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a4ed58a36d5257fed8f10aaca95433cdf" kindref="member">fatfs_entry_lfn_invalid</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a27351ac7857382bf893d7e5a74cf5710" kindref="member">fatfs_entry_lfn_exists</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlfn__cache" kindref="compound">lfn_cache</ref><sp/>*lfn,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a0c733bd55626e6751be7a7fcd770acd5" kindref="member">fatfs_entry_sfn_only</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1adca70c7e5b6a384a99baf9e1ecb9d1a8" kindref="member">fatfs_entry_is_dir</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a11542caa285662d2b04f9d504f8f9e87" kindref="member">fatfs_entry_is_file</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1ac8a7ba27f05e541eda01418c21acca7c" kindref="member">fatfs_lfn_entries_required</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*filename);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a0af6939cdfa14c20077e9508d1fd861d" kindref="member">fatfs_filename_to_lfn</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*filename,<sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/>*<ref refid="shell_8c_1aff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>entry,<sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/>sfnChk);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1ae562db5b28f07a3d0407e38aa9a77c13" kindref="member">fatfs_sfn_create_entry</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*shortfilename,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>size,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>startCluster,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfat__dir__entry" kindref="compound">fat_dir_entry</ref><sp/>*entry,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dir);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a25a4d4a522ffdb06b4fab094d05b1763" kindref="member">fatfs_lfn_create_sfn</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*sfn_output,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*filename);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a140f2ac336bea9e8c945b6357fc65083" kindref="member">fatfs_lfn_generate_tail</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*sfn_output,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*sfn_input,<sp/><ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>tailNum);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1a8a0d22e7688e318ede6457eca6ba072d" kindref="member">fatfs_convert_from_fat_time</ref>(<ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref><sp/>fat_time,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*hours,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*minutes,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*seconds);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1ad9567e1afb538f55b9f5c8ec46871f44" kindref="member">fatfs_convert_from_fat_date</ref>(<ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref><sp/>fat_date,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*day,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*month,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*year);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref><sp/><sp/><ref refid="fat__misc_8h_1a42fbd44505592745afb1fdca6f074aab" kindref="member">fatfs_convert_to_fat_time</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>hours,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>minutes,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>seconds);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><ref refid="fat__types_8h_1a05f6b0ae8f6a6e135b0e290c25fe0e4e" kindref="member">uint16</ref><sp/><sp/><ref refid="fat__misc_8h_1a1d864cba89ca98550fcaa4c7e0e5e976" kindref="member">fatfs_convert_to_fat_date</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>day,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>month,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>year);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="fat__misc_8h_1ad788122bd3b50b07596b78c824f27301" kindref="member">fatfs_print_sector</ref>(<ref refid="fat__types_8h_1a4b435a49c74bb91f284f075e63416cb6" kindref="member">uint32</ref><sp/>sector,<sp/><ref refid="fat__types_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref><sp/>*data);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.h"/>
+  </compounddef>
+</doxygen>

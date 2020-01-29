@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmtu__option" kind="struct" language="C++" prot="public">
+    <compoundname>mtu_option</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structmtu__option_1aff19f1089ec723c5ef6864c8ab6a149b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mtu_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t reserved)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>reserved</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="223" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structmtu__option_1a13faba0bd821f9ae0c8c73d3b0212cb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mtu_option::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t mtu)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>mtu</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="224" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structmtu__option_1aef45abdb2db751a3ab6b13f2286a3469" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mtu_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t length)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="222" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structmtu__option_1ad61d7de73009f75f464c3b4b5c84dc46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>mtu_option::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="221" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>mtu_option</label>
+        <link refid="structmtu__option"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="220" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="220" bodyend="225"/>
+    <listofallmembers>
+      <member refid="structmtu__option_1aff19f1089ec723c5ef6864c8ab6a149b" prot="public" virt="non-virtual"><scope>mtu_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structmtu__option_1a13faba0bd821f9ae0c8c73d3b0212cb8" prot="public" virt="non-virtual"><scope>mtu_option</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structmtu__option_1ad61d7de73009f75f464c3b4b5c84dc46" prot="public" virt="non-virtual"><scope>mtu_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structmtu__option_1aef45abdb2db751a3ab6b13f2286a3469" prot="public" virt="non-virtual"><scope>mtu_option</scope><name>PACK_STRUCT_FLD_8</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

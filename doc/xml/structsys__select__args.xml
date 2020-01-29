@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__select__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_select_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__select__args_1a01a0b41681d1ae3f7d0e12568b233501" prot="public" static="no" mutable="no">
+        <type><ref refid="structfd__set" kindref="compound">fd_set</ref> *</type>
+        <definition>fd_set* sys_select_args::ex</definition>
+        <argsstring></argsstring>
+        <name>ex</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="682" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="682" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" compoundref="descrip_8c" startline="285" endline="346">sys_select</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1adc9c21aad90d45d10acceaa021268bd5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::ex_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>ex_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="681" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="681" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1afe81e297dcc7e1ced9fb89dc42dcc898" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::ex_r_[(sizeof(register_t)&lt;=sizeof(fd_set *) ? 0 :sizeof(register_t) - sizeof(fd_set *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(fd_set *) ? 0 :sizeof(register_t) - sizeof(fd_set *))]</argsstring>
+        <name>ex_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="683" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="683" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1a5a6c4eb7428feb6ccca2a10e4b107ea8" prot="public" static="no" mutable="no">
+        <type><ref refid="structfd__set" kindref="compound">fd_set</ref> *</type>
+        <definition>fd_set* sys_select_args::in</definition>
+        <argsstring></argsstring>
+        <name>in</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="676" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="676" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" compoundref="descrip_8c" startline="285" endline="346">sys_select</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1ae7e4a42ecc804049f52e21492121e890" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::in_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>in_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="675" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="675" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1a815f3e1d7e21b4e2a21c2f4b4238cc11" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::in_r_[(sizeof(register_t)&lt;=sizeof(fd_set *) ? 0 :sizeof(register_t) - sizeof(fd_set *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(fd_set *) ? 0 :sizeof(register_t) - sizeof(fd_set *))]</argsstring>
+        <name>in_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="677" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="677" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1a673ce56e9ea6df34e4d0fe6b4b2f897e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_select_args::nd</definition>
+        <argsstring></argsstring>
+        <name>nd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="673" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="673" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" compoundref="descrip_8c" startline="285" endline="346">sys_select</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1ab6e6d0d9919b006ae383f83be2ca3972" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::nd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>nd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="672" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="672" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1ade188c24bc0537a61b09f240206af901" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::nd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>nd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="674" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="674" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1a8feedc149ab465ec0f0cf94523ad2daf" prot="public" static="no" mutable="no">
+        <type><ref refid="structfd__set" kindref="compound">fd_set</ref> *</type>
+        <definition>fd_set* sys_select_args::ou</definition>
+        <argsstring></argsstring>
+        <name>ou</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="679" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="679" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" compoundref="descrip_8c" startline="285" endline="346">sys_select</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1ad057b60df95e61b664cf12af3182dd14" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::ou_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>ou_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="678" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="678" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1af8ffed26cef5b28ba866f8521a8145c5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::ou_r_[(sizeof(register_t)&lt;=sizeof(fd_set *) ? 0 :sizeof(register_t) - sizeof(fd_set *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(fd_set *) ? 0 :sizeof(register_t) - sizeof(fd_set *))]</argsstring>
+        <name>ou_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="680" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="680" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1ab1c4c43c0f25611d0160fd967cc87fee" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtimeval" kindref="compound">timeval</ref> *</type>
+        <definition>struct timeval* sys_select_args::tv</definition>
+        <argsstring></argsstring>
+        <name>tv</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="685" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="685" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" compoundref="descrip_8c" startline="285" endline="346">sys_select</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1a57f38e557f1d28faa20f197677e3a66e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::tv_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>tv_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="684" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="684" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__select__args_1adc07694456e027b7656e0b05e977b88e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_select_args::tv_r_[(sizeof(register_t)&lt;=sizeof(struct timeval *) ? 0 :sizeof(register_t) - sizeof(struct timeval *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct timeval *) ? 0 :sizeof(register_t) - sizeof(struct timeval *))]</argsstring>
+        <name>tv_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="686" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="686" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_select_args</label>
+        <link refid="structsys__select__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+tv</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+ex</edgelabel>
+          <edgelabel>+in</edgelabel>
+          <edgelabel>+ou</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>fd_set</label>
+        <link refid="structfd__set"/>
+      </node>
+      <node id="2">
+        <label>timeval</label>
+        <link refid="structtimeval"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="671" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="671" bodyend="687"/>
+    <listofallmembers>
+      <member refid="structsys__select__args_1a01a0b41681d1ae3f7d0e12568b233501" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>ex</name></member>
+      <member refid="structsys__select__args_1adc9c21aad90d45d10acceaa021268bd5" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>ex_l_</name></member>
+      <member refid="structsys__select__args_1afe81e297dcc7e1ced9fb89dc42dcc898" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>ex_r_</name></member>
+      <member refid="structsys__select__args_1a5a6c4eb7428feb6ccca2a10e4b107ea8" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>in</name></member>
+      <member refid="structsys__select__args_1ae7e4a42ecc804049f52e21492121e890" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>in_l_</name></member>
+      <member refid="structsys__select__args_1a815f3e1d7e21b4e2a21c2f4b4238cc11" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>in_r_</name></member>
+      <member refid="structsys__select__args_1a673ce56e9ea6df34e4d0fe6b4b2f897e" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>nd</name></member>
+      <member refid="structsys__select__args_1ab6e6d0d9919b006ae383f83be2ca3972" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>nd_l_</name></member>
+      <member refid="structsys__select__args_1ade188c24bc0537a61b09f240206af901" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>nd_r_</name></member>
+      <member refid="structsys__select__args_1a8feedc149ab465ec0f0cf94523ad2daf" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>ou</name></member>
+      <member refid="structsys__select__args_1ad057b60df95e61b664cf12af3182dd14" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>ou_l_</name></member>
+      <member refid="structsys__select__args_1af8ffed26cef5b28ba866f8521a8145c5" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>ou_r_</name></member>
+      <member refid="structsys__select__args_1ab1c4c43c0f25611d0160fd967cc87fee" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>tv</name></member>
+      <member refid="structsys__select__args_1a57f38e557f1d28faa20f197677e3a66e" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>tv_l_</name></member>
+      <member refid="structsys__select__args_1adc07694456e027b7656e0b05e977b88e" prot="public" virt="non-virtual"><scope>sys_select_args</scope><name>tv_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

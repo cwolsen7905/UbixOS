@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_d1be8160e739b6eed1f7843efdbae1b3" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include</compoundname>
+    <innerdir refid="dir_679a4eaffa522513d65ba6dfc85ce90c">C:/Dev/git/UbixOS/sys/include/devfs</innerdir>
+    <innerdir refid="dir_92051c5f162f50371f2a7941dbc5405d">C:/Dev/git/UbixOS/sys/include/fat</innerdir>
+    <innerdir refid="dir_7b74fffe3f857288959d2d645b2cf417">C:/Dev/git/UbixOS/sys/include/fs</innerdir>
+    <innerdir refid="dir_a4382c3fd2315980bf1f2cf5846da53d">C:/Dev/git/UbixOS/sys/include/i386</innerdir>
+    <innerdir refid="dir_5014c1b11ed476e69275a593545c2a82">C:/Dev/git/UbixOS/sys/include/isa</innerdir>
+    <innerdir refid="dir_afcf3461ab02e1bc9b71d2f3c9f1f65d">C:/Dev/git/UbixOS/sys/include/lib</innerdir>
+    <innerdir refid="dir_7bc55a2f2a97b0cc2b6a30d31bfaf010">C:/Dev/git/UbixOS/sys/include/mpi</innerdir>
+    <innerdir refid="dir_8a452844cab5a537277ef786999bc939">C:/Dev/git/UbixOS/sys/include/net</innerdir>
+    <innerdir refid="dir_d30d4e36b590a245c15c34f21c61e7a6">C:/Dev/git/UbixOS/sys/include/netif</innerdir>
+    <innerdir refid="dir_4ee4322b756ac3a28adc4652628681d8">C:/Dev/git/UbixOS/sys/include/objgfx</innerdir>
+    <innerdir refid="dir_3c613c826710371b20c56a4c4011e29a">C:/Dev/git/UbixOS/sys/include/pci</innerdir>
+    <innerdir refid="dir_78fe514d4f19d86cdec6c17c1cead036">C:/Dev/git/UbixOS/sys/include/sde</innerdir>
+    <innerdir refid="dir_214f84c2c73d0f2f98eaa46a63e7b8c6">C:/Dev/git/UbixOS/sys/include/sys</innerdir>
+    <innerdir refid="dir_3de624327ffb12f9bf9e6dbf8f72375d">C:/Dev/git/UbixOS/sys/include/ubixfs</innerdir>
+    <innerdir refid="dir_d779ef6b0dc4390059bcb3cfc53f8e8b">C:/Dev/git/UbixOS/sys/include/ubixos</innerdir>
+    <innerdir refid="dir_c9b07ddfc7d5d22b1a973d35743b2c44">C:/Dev/git/UbixOS/sys/include/ufs</innerdir>
+    <innerdir refid="dir_c3c0831de3b2f5e14fc52a7f92bdcaba">C:/Dev/git/UbixOS/sys/include/vfs</innerdir>
+    <innerdir refid="dir_9620b7853e5d88fbb5a7100cbf56a61c">C:/Dev/git/UbixOS/sys/include/vmm</innerdir>
+    <innerfile refid="assert_8h">assert.h</innerfile>
+    <innerfile refid="math_8h">math.h</innerfile>
+    <innerfile refid="stdarg_8h">stdarg.h</innerfile>
+    <innerfile refid="string_8h">string.h</innerfile>
+    <innerfile refid="strings_8h">strings.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,1193 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="gpt_8c" kind="file" language="C++">
+    <compoundname>gpt.c</compoundname>
+    <includes refid="gpt_8h" local="no">fs/common/gpt.h</includes>
+    <includes refid="crc32_8h" local="no">fs/common/crc32.h</includes>
+    <includes refid="include_2sys_2device_8h" local="no">sys/device.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="hd_8h" local="no">pci/hd.h</includes>
+    <incdepgraph>
+      <node id="31">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="43">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="58">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="49">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="14">
+        <label>fs/common/crc32.h</label>
+        <link refid="crc32_8h"/>
+      </node>
+      <node id="32">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/uuid.h</label>
+        <link refid="uuid_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="25">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="28">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="48">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="41">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="44">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>fs/common/gpt.h</label>
+        <link refid="gpt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" prot="public" static="no">
+        <name>BOOTPROG</name>
+        <initializer>&quot;Unknown&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gpt_8c_1a95b65761111b3977fdd2512c3c6c4fc7" prot="public" static="no">
+        <name>MAXTBLENTS</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="49" column="10" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="gpt_8c_1a1449164c61621b2b9f942cc5ea12e902" prot="public" static="yes" mutable="no">
+        <type>int</type>
+        <definition>int bootonce</definition>
+        <argsstring></argsstring>
+        <name>bootonce</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="59" column="19" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1a4cdad05de11e8f66374ff0a063b75e8e" prot="public" static="yes" mutable="no">
+        <type>int</type>
+        <definition>int curent</definition>
+        <argsstring></argsstring>
+        <name>curent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="59" column="12" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1a469e127e97b276ae1c6b39f6bd423428" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref> hdr_primary hdr_backup *</type>
+        <definition>struct gpt_hdr hdr_primary hdr_backup* gpthdr</definition>
+        <argsstring></argsstring>
+        <name>gpthdr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="55" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1ad5937e456206a54af837a620e103dae8" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structgpt__ent" kindref="compound">gpt_ent</ref> *</type>
+        <definition>struct gpt_ent* gpttable</definition>
+        <argsstring></argsstring>
+        <name>gpttable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="58" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1a69e2e335a2d93f3d9c828ad555e5162d" prot="public" static="yes" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t hdr_backup_lba</definition>
+        <argsstring></argsstring>
+        <name>hdr_backup_lba</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="56" column="34" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1af91eeb6daa4362a0394ea5b27c05b1ef" prot="public" static="yes" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+        <definition>u_int64_t hdr_primary_lba</definition>
+        <argsstring></argsstring>
+        <name>hdr_primary_lba</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="56" column="18" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1a1476acd91f017bb6dc805b304a2385e3" prot="public" static="yes" mutable="no">
+        <type>char *</type>
+        <definition>char* secbuf</definition>
+        <argsstring></argsstring>
+        <name>secbuf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="65" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1a7496385905c1e9c9b961a0a8c48cc28a" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structgpt__ent" kindref="compound">gpt_ent</ref></type>
+        <definition>struct gpt_ent table_backup[128]</definition>
+        <argsstring>[128]</argsstring>
+        <name>table_backup</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="57" column="22" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="gpt_8c_1a84d554d4c0b19b255f2f3c3dc1f47b61" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structgpt__ent" kindref="compound">gpt_ent</ref></type>
+        <definition>struct gpt_ent table_primary[128]</definition>
+        <argsstring>[128]</argsstring>
+        <name>table_primary</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="56" column="34" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="gpt_8c_1ad23ac51e0a9cc4494998beb4284dc202" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void gptbootconv</definition>
+        <argsstring>(const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, struct gpt_ent *table)</argsstring>
+        <name>gptbootconv</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>which</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref> *</type>
+          <declname>hdr</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__ent" kindref="compound">gpt_ent</ref> *</type>
+          <declname>table</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="233" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="233" bodyend="269"/>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8c_1a5653b9fc16d888d9ebcc76f33850ffab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void gptbootfailed</definition>
+        <argsstring>(struct device_interface *devInfo)</argsstring>
+        <name>gptbootfailed</name>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="216" column="6" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="216" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8c_1a08130ab1aa44989d74341a21057b62c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gptfind</definition>
+        <argsstring>(const uuid_t *uuid, struct device_interface *devInfo, int part)</argsstring>
+        <name>gptfind</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" kindref="member">uuid_t</ref> *</type>
+          <declname>uuid</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>part</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="99" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="99" bodyend="188"/>
+        <references refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" compoundref="include_2sys_2device_8h" startline="51">device_interface::info</references>
+        <references refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" compoundref="hd_8h" startline="180">driveInfo::part</references>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8c_1a70a0e368efe25cb0dacb3fb445466da2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int gptread</definition>
+        <argsstring>(const uuid_t *uuid, struct device_interface *devInfo, char *buf)</argsstring>
+        <name>gptread</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" kindref="member">uuid_t</ref> *</type>
+          <declname>uuid</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>buf</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="305" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="305" bodyend="369"/>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8c_1a1b0a64dfe619b2beaabc06c64866e07f" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int gptread_hdr</definition>
+        <argsstring>(const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, u_int64_t hdrlba)</argsstring>
+        <name>gptread_hdr</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>which</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref> *</type>
+          <declname>hdr</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+          <declname>hdrlba</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="190" column="12" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="190" bodyend="214"/>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8c_1a7c596f0dab93dfa079a39be39152299a" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int gptread_table</definition>
+        <argsstring>(const char *which, const uuid_t *uuid, struct device_interface *devInfo, struct gpt_hdr *hdr, struct gpt_ent *table)</argsstring>
+        <name>gptread_table</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>which</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="uuid_8h_1a86c80a9bcc352795ec12e8312d089c79" kindref="member">uuid_t</ref> *</type>
+          <declname>uuid</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref> *</type>
+          <declname>hdr</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__ent" kindref="compound">gpt_ent</ref> *</type>
+          <declname>table</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="271" column="12" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="271" bodyend="303"/>
+      </memberdef>
+      <memberdef kind="function" id="gpt_8c_1a719da88e8c77ab7eb9c192b206db07fa" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void gptupdate</definition>
+        <argsstring>(const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, struct gpt_ent *table)</argsstring>
+        <name>gptupdate</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>which</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+          <declname>devInfo</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref> *</type>
+          <declname>hdr</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structgpt__ent" kindref="compound">gpt_ent</ref> *</type>
+          <declname>table</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" line="67" column="13" bodyfile="C:/Dev/git/UbixOS/sys/fs/common/gpt.c" bodystart="67" bodyend="97"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2010<sp/>Pawel<sp/>Jakub<sp/>Dawidek<sp/>&lt;pjd@FreeBSD.org&gt;</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHORS<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>AUTHORS<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="comment">//#include<sp/>&lt;sys/cdefs.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">//#include<sp/>&lt;sys/param.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gpt_8h" kindref="compound">fs/common/gpt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="crc32_8h" kindref="compound">fs/common/crc32.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="hd_8h" kindref="compound">pci/hd.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>#ifndef<sp/>LITTLE_ENDIAN</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>#error<sp/>gpt.c<sp/>works<sp/>only<sp/>for<sp/>little<sp/>endian<sp/>architectures</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>#endif</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>#include<sp/>&quot;crc32.h&quot;</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>#include<sp/>&quot;drv.h&quot;</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>#include<sp/>&quot;util.h&quot;</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>#include<sp/>&quot;gpt.h&quot;</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="gpt_8c_1a95b65761111b3977fdd2512c3c6c4fc7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>MAXTBLENTS<sp/><sp/><sp/><sp/><sp/><sp/>128</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>BOOTPROG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BOOTPROG<sp/>&quot;Unknown&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref><sp/>hdr_primary,<sp/>hdr_backup,<sp/>*gpthdr;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/>hdr_primary_lba,<sp/>hdr_backup_lba;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>table_primary[<ref refid="gpt_8c_1a95b65761111b3977fdd2512c3c6c4fc7" kindref="member">MAXTBLENTS</ref>],<sp/>table_backup[<ref refid="gpt_8c_1a95b65761111b3977fdd2512c3c6c4fc7" kindref="member">MAXTBLENTS</ref>];</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*gpttable;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>curent,<sp/>bootonce;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>*<sp/>Buffer<sp/>below<sp/>64kB<sp/>passed<sp/>on<sp/>gptread(),<sp/>which<sp/>can<sp/>hold<sp/>at<sp/>least</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>*<sp/>one<sp/>sector<sp/>of<sp/>data<sp/>(512<sp/>bytes).</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*secbuf;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>gptupdate(<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*which,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref><sp/>*hdr,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*table<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>entries_per_sec,<sp/>firstent;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1ab4b318e7a68f3cd77c42492443c59895" kindref="member">daddr_t</ref><sp/>slba;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/><sp/><sp/>*<sp/>We<sp/>need<sp/>to<sp/>update<sp/>the<sp/>following<sp/>for<sp/>both<sp/>primary<sp/>and<sp/>backup<sp/>GPT:</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/><sp/><sp/>*<sp/>1.<sp/>Sector<sp/>on<sp/>disk<sp/>that<sp/>contains<sp/>current<sp/>partition.</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/><sp/><sp/>*<sp/>2.<sp/>Partition<sp/>table<sp/>checksum.</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/><sp/><sp/>*<sp/>3.<sp/>Header<sp/>checksum.</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/><sp/><sp/>*<sp/>4.<sp/>Header<sp/>on<sp/>disk.</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>entries_per_sec<sp/>=<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>/<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>slba<sp/>=<sp/>curent<sp/>/<sp/>entries_per_sec;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>firstent<sp/>=<sp/>slba<sp/>*<sp/>entries_per_sec;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" kindref="member">bcopy</ref>(<sp/>&amp;table[firstent],<sp/>secbuf,<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/>slba<sp/>+=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" kindref="member">hdr_lba_table</ref>;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" kindref="member">write</ref>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/>secbuf,<sp/>slba,<sp/>1<sp/>)<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>update<sp/>%s<sp/>GPT<sp/>partition<sp/>table\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" kindref="member">hdr_crc_table</ref><sp/>=<sp/><ref refid="crc32_8c_1ae1ce21755b99c89f626605a5814419d4" kindref="member">crc32</ref>(<sp/>table,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>*<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref><sp/>);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref><sp/>=<sp/><ref refid="crc32_8c_1ae1ce21755b99c89f626605a5814419d4" kindref="member">crc32</ref>(<sp/>hdr,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" kindref="member">hdr_size</ref><sp/>);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(<sp/>secbuf,<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" kindref="member">bcopy</ref>(<sp/>hdr,<sp/>secbuf,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" kindref="member">hdr_size</ref><sp/>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" kindref="member">write</ref>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/>secbuf,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" kindref="member">hdr_lba_self</ref>,<sp/>1<sp/>)<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>update<sp/>%s<sp/>GPT<sp/>header\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="gpt_8h_1a08130ab1aa44989d74341a21057b62c9" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="gpt_8c_1a08130ab1aa44989d74341a21057b62c9" kindref="member">gptfind</ref>(<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid_t</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>part<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*ent;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdriveInfo" kindref="compound">driveInfo</ref><sp/>*drvInfo<sp/>=<sp/>devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>firsttry;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" kindref="member">part</ref><sp/>&gt;=<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" kindref="member">part</ref><sp/>==<sp/>0<sp/>||<sp/><ref refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" kindref="member">part</ref><sp/>&gt;<sp/>gpthdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>invalid<sp/>partition<sp/>index\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref><sp/>);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>ent<sp/>=<sp/>&amp;gpttable[<ref refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" kindref="member">part</ref><sp/>-<sp/>1];</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" kindref="member">bcmp</ref>(<sp/>&amp;ent-&gt;<ref refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" kindref="member">ent_type</ref>,<sp/><ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structuuid" kindref="compound">uuid_t</ref>)<sp/>)<sp/>!=<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>specified<sp/>partition<sp/>is<sp/>not<sp/>UFS\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref><sp/>);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>curent<sp/>=<sp/><ref refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" kindref="member">part</ref><sp/>-<sp/>1;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>found;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>firsttry<sp/>=<sp/>(curent<sp/>==<sp/>-1);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/>curent++;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>curent<sp/>&gt;=<sp/>gpthdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>curent<sp/>=<sp/>gpthdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref>;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>bootonce<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>First<sp/>look<sp/>for<sp/>partition<sp/>with<sp/>both<sp/>GPT_ENT_ATTR_BOOTME<sp/>and</highlight></codeline>
+<codeline lineno="127"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>GPT_ENT_ATTR_BOOTONCE<sp/>flags.</highlight></codeline>
+<codeline lineno="128"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>curent<sp/>&lt;<sp/>gpthdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref>;<sp/>curent++<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ent<sp/>=<sp/>&amp;gpttable[curent];</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" kindref="member">bcmp</ref>(<sp/>&amp;ent-&gt;<ref refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" kindref="member">ent_type</ref>,<sp/><ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structuuid" kindref="compound">uuid_t</ref>)<sp/>)<sp/>!=<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>!(ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;<sp/><ref refid="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" kindref="member">GPT_ENT_ATTR_BOOTME</ref>)<sp/>)</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>!(ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;<sp/><ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref>)<sp/>)</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Ok,<sp/>found<sp/>one.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>found;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>bootonce<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/>curent<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>curent<sp/>&lt;<sp/>gpthdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref>;<sp/>curent++<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/>ent<sp/>=<sp/>&amp;gpttable[curent];</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" kindref="member">bcmp</ref>(<sp/>&amp;ent-&gt;<ref refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" kindref="member">ent_type</ref>,<sp/><ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structuuid" kindref="compound">uuid_t</ref>)<sp/>)<sp/>!=<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>!(ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;<sp/><ref refid="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" kindref="member">GPT_ENT_ATTR_BOOTME</ref>)<sp/>)</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;<sp/><ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref><sp/>)</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Ok,<sp/>found<sp/>one.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>found;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>firsttry<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="156"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>No<sp/>partition<sp/>with<sp/>BOOTME<sp/>flag<sp/>was<sp/>found,<sp/>try<sp/>to<sp/>boot<sp/>from</highlight></codeline>
+<codeline lineno="157"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>first<sp/>UFS<sp/>partition.</highlight></codeline>
+<codeline lineno="158"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<sp/>curent<sp/>=<sp/>0;<sp/>curent<sp/>&lt;<sp/>gpthdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref>;<sp/>curent++<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ent<sp/>=<sp/>&amp;gpttable[curent];</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" kindref="member">bcmp</ref>(<sp/>&amp;ent-&gt;<ref refid="structgpt__ent_1a85bb292b5660c919986df1a582d9f70b" kindref="member">ent_type</ref>,<sp/><ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structuuid" kindref="compound">uuid_t</ref>)<sp/>)<sp/>!=<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Ok,<sp/>found<sp/>one.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>found;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/>found:<sp/>drvInfo-&gt;<ref refid="structdriveInfo_1a3794d7beb8cc95275cd553103c457934" kindref="member">part</ref><sp/>=<sp/>curent<sp/>+<sp/>1;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/>ent<sp/>=<sp/>&amp;gpttable[curent];</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/>drvInfo-&gt;<ref refid="structdriveInfo_1abbb3cbf508e4e7b866eeb658846bd44a" kindref="member">parOffset</ref><sp/>=<sp/>ent-&gt;<ref refid="structgpt__ent_1af5ea55d2628bb832d0a52ae17af37d23" kindref="member">ent_lba_start</ref><sp/>*<sp/>drvInfo-&gt;<ref refid="structdriveInfo_1a8c8ee3abadd6bfef07f9b1b055818100" kindref="member">sector_size</ref>;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/>drvInfo-&gt;<ref refid="structdriveInfo_1a3ed5ef43179982d1950cdb710dc9a2eb" kindref="member">lba_start</ref><sp/>=<sp/>ent-&gt;<ref refid="structgpt__ent_1af5ea55d2628bb832d0a52ae17af37d23" kindref="member">ent_lba_start</ref>;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/>drvInfo-&gt;<ref refid="structdriveInfo_1a1d9e4b310044ea1eb5250017e8ba5185" kindref="member">lba_end</ref><sp/>=<sp/>ent-&gt;<ref refid="structgpt__ent_1ae8795717e6738ab602b9ea6b84353e46" kindref="member">ent_lba_end</ref>;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;<sp/><ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>Clear<sp/>BOOTME,<sp/>but<sp/>leave<sp/>BOOTONCE<sp/>set<sp/>before<sp/>trying<sp/>to</highlight></codeline>
+<codeline lineno="176"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>boot<sp/>from<sp/>this<sp/>partition.</highlight></codeline>
+<codeline lineno="177"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_primary_lba<sp/>&gt;<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>table_primary[curent].<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;=<sp/>~<ref refid="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" kindref="member">GPT_ENT_ATTR_BOOTME</ref>;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>gptupdate(<sp/></highlight><highlight class="stringliteral">&quot;primary&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_primary,<sp/>table_primary<sp/>);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_backup_lba<sp/>&gt;<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>table_backup[curent].<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;=<sp/>~<ref refid="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" kindref="member">GPT_ENT_ATTR_BOOTME</ref>;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>gptupdate(<sp/></highlight><highlight class="stringliteral">&quot;backup&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_backup,<sp/>table_backup<sp/>);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>gptread_hdr(<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*which,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref><sp/>*hdr,<sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/>hdrlba<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>crc;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" kindref="member">read</ref>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/>secbuf,<sp/>hdrlba,<sp/>1<sp/>)<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>read<sp/>%s<sp/>GPT<sp/>header\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" kindref="member">bcopy</ref>(<sp/>secbuf,<sp/>hdr,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(*hdr)<sp/>);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="gpt_8h_1a5ff0acc4b4213d656c1fb54275543358" kindref="member">bcmp</ref>(<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ade065292c6cb9b65da111255cc5c88f8" kindref="member">hdr_sig</ref>,<sp/><ref refid="gpt_8h_1ab937750fddd753950c4a4061a509fc46" kindref="member">GPT_HDR_SIG</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(hdr-&gt;<ref refid="structgpt__hdr_1ade065292c6cb9b65da111255cc5c88f8" kindref="member">hdr_sig</ref>)<sp/>)<sp/>!=<sp/>0<sp/>||<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" kindref="member">hdr_lba_self</ref><sp/>!=<sp/>hdrlba<sp/>||<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ab53c14f9782599554f537561436a62a5" kindref="member">hdr_revision</ref><sp/>&lt;<sp/>0x00010000<sp/>||<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref><sp/>&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref>)<sp/>||<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>&gt;<sp/><ref refid="gpt_8c_1a95b65761111b3977fdd2512c3c6c4fc7" kindref="member">MAXTBLENTS</ref><sp/>||<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>%<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref><sp/>!=<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>invalid<sp/>%s<sp/>GPT<sp/>header\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/>crc<sp/>=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref>;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="crc32_8c_1ae1ce21755b99c89f626605a5814419d4" kindref="member">crc32</ref>(<sp/>hdr,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" kindref="member">hdr_size</ref><sp/>)<sp/>!=<sp/>crc<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>%s<sp/>GPT<sp/>header<sp/>checksum<sp/>mismatch\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref><sp/>=<sp/>crc;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="214"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216" refid="gpt_8h_1a5653b9fc16d888d9ebcc76f33850ffab" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="gpt_8c_1a5653b9fc16d888d9ebcc76f33850ffab" kindref="member">gptbootfailed</ref>(<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>!(gpttable[curent].ent_attr<sp/>&amp;<sp/><ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref>)<sp/>)</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_primary_lba<sp/>&gt;<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>table_primary[curent].<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;=<sp/>~<ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref>;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/>table_primary[curent].<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>|=<sp/><ref refid="gpt_8h_1ac6c4c02ed0dc6857296da1c23659d66d" kindref="member">GPT_ENT_ATTR_BOOTFAILED</ref>;</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>gptupdate(<sp/></highlight><highlight class="stringliteral">&quot;primary&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_primary,<sp/>table_primary<sp/>);</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_backup_lba<sp/>&gt;<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>table_backup[curent].<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;=<sp/>~<ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref>;</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/>table_backup[curent].<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>|=<sp/><ref refid="gpt_8h_1ac6c4c02ed0dc6857296da1c23659d66d" kindref="member">GPT_ENT_ATTR_BOOTFAILED</ref>;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/>gptupdate(<sp/></highlight><highlight class="stringliteral">&quot;backup&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_backup,<sp/>table_backup<sp/>);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="231"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>gptbootconv(<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*which,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref><sp/>*hdr,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*table<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*ent;</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1ab4b318e7a68f3cd77c42492443c59895" kindref="member">daddr_t</ref><sp/>slba;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>table_updated,<sp/>sector_updated;</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>entries_per_sec,<sp/>nent,<sp/>part;</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/>table_updated<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/>entries_per_sec<sp/>=<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>/<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref>;</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<sp/>nent<sp/>=<sp/>0,<sp/>slba<sp/>=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" kindref="member">hdr_lba_table</ref>;<sp/>slba<sp/>&lt;<sp/>hdr-&gt;hdr_lba_table<sp/>+<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>/<sp/>entries_per_sec;<sp/>slba++,<sp/>nent<sp/>+=<sp/>entries_per_sec<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/>sector_updated<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<sp/>part<sp/>=<sp/>0;<sp/>part<sp/>&lt;<sp/>entries_per_sec;<sp/>part++<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ent<sp/>=<sp/>&amp;table[nent<sp/>+<sp/>part];</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>(ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;<sp/>(<ref refid="gpt_8h_1a1f597b449d11ca44be8ba93c852e5e2c" kindref="member">GPT_ENT_ATTR_BOOTME</ref><sp/>|<sp/><ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref><sp/>|<sp/><ref refid="gpt_8h_1ac6c4c02ed0dc6857296da1c23659d66d" kindref="member">GPT_ENT_ATTR_BOOTFAILED</ref>))<sp/>!=<sp/><ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>&amp;=<sp/>~<ref refid="gpt_8h_1a82b931029fa57fe25dcb10cd4d2482c7" kindref="member">GPT_ENT_ATTR_BOOTONCE</ref>;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>ent-&gt;<ref refid="structgpt__ent_1af4b97fa3ba7a6394272ca39e9ce60062" kindref="member">ent_attr</ref><sp/>|=<sp/><ref refid="gpt_8h_1ac6c4c02ed0dc6857296da1c23659d66d" kindref="member">GPT_ENT_ATTR_BOOTFAILED</ref>;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>table_updated<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>sector_updated<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>!sector_updated<sp/>)</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" kindref="member">bcopy</ref>(<sp/>&amp;table[nent],<sp/>secbuf,<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>);</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" kindref="member">write</ref>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/>secbuf,<sp/>slba,<sp/>1<sp/>)<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>update<sp/>%s<sp/>GPT<sp/>partition<sp/>table\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>!table_updated<sp/>)</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" kindref="member">hdr_crc_table</ref><sp/>=<sp/><ref refid="crc32_8c_1ae1ce21755b99c89f626605a5814419d4" kindref="member">crc32</ref>(<sp/>table,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>*<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref><sp/>);</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/>hdr-&gt;<ref refid="structgpt__hdr_1a986abb0de4a393986e6c8dc732174847" kindref="member">hdr_crc_self</ref><sp/>=<sp/><ref refid="crc32_8c_1ae1ce21755b99c89f626605a5814419d4" kindref="member">crc32</ref>(<sp/>hdr,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" kindref="member">hdr_size</ref><sp/>);</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(<sp/>secbuf,<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>);</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" kindref="member">bcopy</ref>(<sp/>hdr,<sp/>secbuf,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1ab53e02bffc0528a799410ce0b8254b23" kindref="member">hdr_size</ref><sp/>);</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" kindref="member">write</ref>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/>secbuf,<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a8f70da15903bc195afb782b6cd359974" kindref="member">hdr_lba_self</ref>,<sp/>1<sp/>)<sp/>)</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>update<sp/>%s<sp/>GPT<sp/>header\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="269"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>gptread_table(<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*which,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid_t</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__hdr" kindref="compound">gpt_hdr</ref><sp/>*hdr,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*table<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*ent;</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>entries_per_sec;</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>part,<sp/>nent;</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1ab4b318e7a68f3cd77c42492443c59895" kindref="member">daddr_t</ref><sp/>slba;</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>==<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/>entries_per_sec<sp/>=<sp/><ref refid="gpt_8h_1a9c8466b6111a11195a5cd2478c648e32" kindref="member">DEV_BSIZE</ref><sp/>/<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref>;</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/>slba<sp/>=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a2a826da27222d52b338e3074ef383ab7" kindref="member">hdr_lba_table</ref>;</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/>nent<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;;<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>devInfo-&gt;<ref refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" kindref="member">read</ref>(devInfo-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,<sp/>secbuf,<sp/>slba,<sp/>1<sp/>)<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>read<sp/>%s<sp/>GPT<sp/>partition<sp/>table\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/>ent<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgpt__ent" kindref="compound">gpt_ent</ref><sp/>*)<sp/>secbuf;</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<sp/>part<sp/>=<sp/>0;<sp/>part<sp/>&lt;<sp/>entries_per_sec;<sp/>part++,<sp/>ent++<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="gpt_8h_1a44c4efafeb8def719ad013ce4e3708d2" kindref="member">bcopy</ref>(<sp/>ent,<sp/>&amp;table[nent],<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(table[nent])<sp/>);</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>++nent<sp/>&gt;=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>)</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>nent<sp/>&gt;=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a3c312fe50f8513cddc7d940f609a905f" kindref="member">hdr_entries</ref><sp/>)</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/>slba++;</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="crc32_8c_1ae1ce21755b99c89f626605a5814419d4" kindref="member">crc32</ref>(<sp/>table,<sp/>nent<sp/>*<sp/>hdr-&gt;<ref refid="structgpt__hdr_1adb4121b24c31aad5fb88bb7cf357d379" kindref="member">hdr_entsz</ref><sp/>)<sp/>!=<sp/>hdr-&gt;<ref refid="structgpt__hdr_1a54d418c59b80e6b194964f2a7ff8b2d9" kindref="member">hdr_crc_table</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>%s<sp/>GPT<sp/>table<sp/>checksum<sp/>mismatch\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref>,<sp/>which<sp/>);</highlight></codeline>
+<codeline lineno="300"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="303"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight></codeline>
+<codeline lineno="305" refid="gpt_8h_1a70a0e368efe25cb0dacb3fb445466da2" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="gpt_8c_1a70a0e368efe25cb0dacb3fb445466da2" kindref="member">gptread</ref>(<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structuuid" kindref="compound">uuid_t</ref><sp/>*<ref refid="structuuid" kindref="compound">uuid</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/>altlba;</highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="309"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Read<sp/>and<sp/>verify<sp/>both<sp/>GPT<sp/>headers:<sp/>primary<sp/>and<sp/>backup.</highlight></codeline>
+<codeline lineno="310"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"><sp/><sp/>secbuf<sp/>=<sp/><ref refid="structbuf" kindref="compound">buf</ref>;</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"><sp/><sp/>hdr_primary_lba<sp/>=<sp/>hdr_backup_lba<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="314"><highlight class="normal"><sp/><sp/>curent<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"><sp/><sp/>bootonce<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>MrOlsen<sp/>(2016-01-11)<sp/>NOTE:<sp/>What<sp/>Was<sp/>This<sp/>For?</highlight></codeline>
+<codeline lineno="318"><highlight class="comment"><sp/><sp/>dskp-&gt;start<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="319"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>gptread_hdr(<sp/></highlight><highlight class="stringliteral">&quot;primary&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_primary,<sp/>1<sp/>)<sp/>==<sp/>0<sp/>&amp;&amp;<sp/>gptread_table(<sp/></highlight><highlight class="stringliteral">&quot;primary&quot;</highlight><highlight class="normal">,<sp/><ref refid="structuuid" kindref="compound">uuid</ref>,<sp/>devInfo,<sp/>&amp;hdr_primary,<sp/>table_primary<sp/>)<sp/>==<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/>hdr_primary_lba<sp/>=<sp/>hdr_primary.hdr_lba_self;</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"><sp/><sp/><sp/><sp/>gpthdr<sp/>=<sp/>&amp;hdr_primary;</highlight></codeline>
+<codeline lineno="324"><highlight class="normal"><sp/><sp/><sp/><sp/>gpttable<sp/>=<sp/>table_primary;</highlight></codeline>
+<codeline lineno="325"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="326"><highlight class="normal"></highlight></codeline>
+<codeline lineno="327"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_primary_lba<sp/>&gt;<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="328"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="329"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>If<sp/>primary<sp/>header<sp/>is<sp/>valid,<sp/>we<sp/>can<sp/>get<sp/>backup</highlight></codeline>
+<codeline lineno="330"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>header<sp/>location<sp/>from<sp/>there.</highlight></codeline>
+<codeline lineno="331"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/>altlba<sp/>=<sp/>hdr_primary.hdr_lba_alt;</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>(2016-01-11)<sp/>FIX:<sp/>What<sp/>Is<sp/>This???</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;FIX!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//altlba<sp/>=<sp/>drvsize(<sp/>dskp<sp/>);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>altlba<sp/>&gt;<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/>altlba--;</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>altlba<sp/>==<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>unable<sp/>to<sp/>locate<sp/>backup<sp/>GPT<sp/>header\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref><sp/>);</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>gptread_hdr(<sp/></highlight><highlight class="stringliteral">&quot;backup&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_backup,<sp/>altlba<sp/>)<sp/>==<sp/>0<sp/>&amp;&amp;<sp/>gptread_table(<sp/></highlight><highlight class="stringliteral">&quot;backup&quot;</highlight><highlight class="normal">,<sp/><ref refid="structuuid" kindref="compound">uuid</ref>,<sp/>devInfo,<sp/>&amp;hdr_backup,<sp/>table_backup<sp/>)<sp/>==<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/>hdr_backup_lba<sp/>=<sp/>hdr_backup.hdr_lba_self;</highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_primary_lba<sp/>==<sp/>0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>gpthdr<sp/>=<sp/>&amp;hdr_backup;</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>gpttable<sp/>=<sp/>table_backup;</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;%s:<sp/>using<sp/>backup<sp/>GPT\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="gpt_8c_1a9d6b29d1d0774d7ddc74723eafc3cb24" kindref="member">BOOTPROG</ref><sp/>);</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"></highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="353"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Convert<sp/>all<sp/>BOOTONCE<sp/>without<sp/>BOOTME<sp/>flags<sp/>into<sp/>BOOTFAILED.</highlight></codeline>
+<codeline lineno="354"><highlight class="comment"><sp/><sp/><sp/>*<sp/>BOOTONCE<sp/>without<sp/>BOOTME<sp/>means<sp/>that<sp/>we<sp/>tried<sp/>to<sp/>boot<sp/>from<sp/>it,</highlight></codeline>
+<codeline lineno="355"><highlight class="comment"><sp/><sp/><sp/>*<sp/>but<sp/>failed<sp/>after<sp/>leaving<sp/>gptboot<sp/>and<sp/>machine<sp/>was<sp/>rebooted.</highlight></codeline>
+<codeline lineno="356"><highlight class="comment"><sp/><sp/><sp/>*<sp/>We<sp/>don&apos;t<sp/>want<sp/>to<sp/>leave<sp/>partitions<sp/>marked<sp/>as<sp/>BOOTONCE<sp/>only,</highlight></codeline>
+<codeline lineno="357"><highlight class="comment"><sp/><sp/><sp/>*<sp/>because<sp/>when<sp/>we<sp/>boot<sp/>successfully<sp/>start-up<sp/>scripts<sp/>should</highlight></codeline>
+<codeline lineno="358"><highlight class="comment"><sp/><sp/><sp/>*<sp/>find<sp/>at<sp/>most<sp/>one<sp/>partition<sp/>with<sp/>only<sp/>BOOTONCE<sp/>flag<sp/>and<sp/>this</highlight></codeline>
+<codeline lineno="359"><highlight class="comment"><sp/><sp/><sp/>*<sp/>will<sp/>mean<sp/>that<sp/>we<sp/>booted<sp/>from<sp/>that<sp/>partition.</highlight></codeline>
+<codeline lineno="360"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="361"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_primary_lba<sp/>!=<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="362"><highlight class="normal"><sp/><sp/>gptbootconv(<sp/></highlight><highlight class="stringliteral">&quot;primary&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_primary,<sp/>table_primary<sp/>);</highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_backup_lba<sp/>!=<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/>gptbootconv(<sp/></highlight><highlight class="stringliteral">&quot;backup&quot;</highlight><highlight class="normal">,<sp/>devInfo,<sp/>&amp;hdr_backup,<sp/>table_backup<sp/>);</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>hdr_primary_lba<sp/>==<sp/>0<sp/>&amp;&amp;<sp/>hdr_backup_lba<sp/>==<sp/>0<sp/>)</highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="369"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/fs/common/gpt.c"/>
+  </compounddef>
+</doxygen>

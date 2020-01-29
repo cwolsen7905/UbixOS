@@ -1,0 +1,699 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="fcntl_8h" kind="file" language="C++">
+    <compoundname>fcntl.h</compoundname>
+    <includedby refid="descrip_8h" local="no">C:/Dev/git/UbixOS/sys/include/sys/descrip.h</includedby>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/stat.c</label>
+        <link refid="stat_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vfs_calls.c</label>
+        <link refid="vfs__calls_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c</label>
+        <link refid="vmm__mmap_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/kernel/pipe.c</label>
+        <link refid="pipe_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/kernel/descrip.c</label>
+        <link refid="descrip_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c</label>
+        <link refid="kern__pipe_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fcntl_8h_1a301749b9aa4b9416c329bb8b19345216" prot="public" static="no">
+        <name>AT_FDCWD</name>
+        <initializer>-100</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="32" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ab93a8621587aba90181efd7d3aeea67e" prot="public" static="no">
+        <name>F_DUPFD</name>
+        <initializer>0               /* duplicate <ref refid="structfile" kindref="compound">file</ref> descriptor */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1abc11141031604fb22b8e3a201155cbb3" prot="public" static="no">
+        <name>F_GETFD</name>
+        <initializer>1               /* get <ref refid="structfile" kindref="compound">file</ref> descriptor flags */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a025fad21a889c79f02ec53abe3526c32" prot="public" static="no">
+        <name>F_GETFL</name>
+        <initializer>3               /* get <ref refid="structfile" kindref="compound">file</ref> status flags */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a2c3005e07f9aedb5d77856d13c3e40c4" prot="public" static="no">
+        <name>F_GETLK</name>
+        <initializer>7               /* get record locking information */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aa76959dcf54457a81c4cdf7789ba73e4" prot="public" static="no">
+        <name>F_GETOWN</name>
+        <initializer>5               /* get <ref refid="i386_2signal_8h_1a929c5eace94ce2e099c6fa732450ce86" kindref="member">SIGIO</ref>/<ref refid="i386_2signal_8h_1ad9ff13149e36144a4ea28788948c34dd" kindref="member">SIGURG</ref> proc/pgrp */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ad27227e8d87b844648f07d66da38bb3f" prot="public" static="no">
+        <name>F_SETFD</name>
+        <initializer>2               /* set <ref refid="structfile" kindref="compound">file</ref> descriptor flags */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1af2939853c650561d3495ed40f68f6249" prot="public" static="no">
+        <name>F_SETFL</name>
+        <initializer>4               /* set <ref refid="structfile" kindref="compound">file</ref> status flags */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a68a7fc570f2fc271acc5358a6418504e" prot="public" static="no">
+        <name>F_SETLK</name>
+        <initializer>8               /* set record locking information */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aabb866cd0cf7ed3544dfc335e0e360fd" prot="public" static="no">
+        <name>F_SETLKW</name>
+        <initializer>9               /* <ref refid="fcntl_8h_1a68a7fc570f2fc271acc5358a6418504e" kindref="member">F_SETLK</ref>; wait if blocked */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a10e6ca002b56361c5adb1e66a8a4917d" prot="public" static="no">
+        <name>F_SETOWN</name>
+        <initializer>6               /* set <ref refid="i386_2signal_8h_1a929c5eace94ce2e099c6fa732450ce86" kindref="member">SIGIO</ref>/<ref refid="i386_2signal_8h_1ad9ff13149e36144a4ea28788948c34dd" kindref="member">SIGURG</ref> proc/pgrp */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aa336842f710119bfdab086f34efac63c" prot="public" static="no">
+        <name>FAPPEND</name>
+        <initializer><ref refid="fcntl_8h_1ae036f789407d21f07b211552d67b3214" kindref="member">O_APPEND</ref>        /* kernel/compat */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a1c28a43c30721462ad7e40f37051c9ca" prot="public" static="no">
+        <name>FASYNC</name>
+        <initializer><ref refid="fcntl_8h_1ac5d0c9848f853f8b026b1211b93f78b1" kindref="member">O_ASYNC</ref>         /* kernel/compat */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ae145197023ee3530510eaa80446eef77" prot="public" static="no">
+        <name>FCNTLFLAGS</name>
+        <initializer>(<ref refid="fcntl_8h_1aa336842f710119bfdab086f34efac63c" kindref="member">FAPPEND</ref>|<ref refid="fcntl_8h_1a1c28a43c30721462ad7e40f37051c9ca" kindref="member">FASYNC</ref>|<ref refid="fcntl_8h_1aee6e522943bfde38729955245588808c" kindref="member">FFSYNC</ref>|<ref refid="fcntl_8h_1aa7660d77d1097779b6b790cb4d89f56c" kindref="member">FNONBLOCK</ref>|<ref refid="fcntl_8h_1aed6c61cad1ddb572aae570ca0a7cb6f8" kindref="member">FPOSIXSHM</ref>|<ref refid="fcntl_8h_1ad28ccbf6f0a42c91c160ac5ada0c8429" kindref="member">O_DIRECT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="80" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ac6f4e8852707745da144bc4cef5a726f" prot="public" static="no">
+        <name>FEXEC</name>
+        <initializer><ref refid="fcntl_8h_1a459542206659fbe295eb4183f8b8f06c" kindref="member">O_EXEC</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="91" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a3c28c97a69c6ce8f87cac54a7c91f9db" prot="public" static="no">
+        <name>FFLAGS</name>
+        <param><defname>oflags</defname></param>
+        <initializer>((oflags) &amp; <ref refid="fcntl_8h_1a459542206659fbe295eb4183f8b8f06c" kindref="member">O_EXEC</ref> ? (oflags) : (oflags) + 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="88" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aee6e522943bfde38729955245588808c" prot="public" static="no">
+        <name>FFSYNC</name>
+        <initializer><ref refid="fcntl_8h_1ac683f821c3bf7ce4752ff436733cd715" kindref="member">O_FSYNC</ref>         /* kernel */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a5e502663ed8d9bf975848f5464c3f516" prot="public" static="no">
+        <name>FHASLOCK</name>
+        <initializer>0x4000          /* descriptor holds advisory lock */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ab3f8268db3f2e8e22c6f52345799b3fb" prot="public" static="no">
+        <name>FMASK</name>
+        <initializer>(<ref refid="fcntl_8h_1a3252b359359dea1efa45bb87c4499acd" kindref="member">FREAD</ref>|<ref refid="fcntl_8h_1a171aed9ee8e3ec0a65cedfb9a2626499" kindref="member">FWRITE</ref>|<ref refid="fcntl_8h_1aa336842f710119bfdab086f34efac63c" kindref="member">FAPPEND</ref>|<ref refid="fcntl_8h_1a1c28a43c30721462ad7e40f37051c9ca" kindref="member">FASYNC</ref>|<ref refid="fcntl_8h_1aee6e522943bfde38729955245588808c" kindref="member">FFSYNC</ref>|<ref refid="fcntl_8h_1aa7660d77d1097779b6b790cb4d89f56c" kindref="member">FNONBLOCK</ref>|<ref refid="fcntl_8h_1ad28ccbf6f0a42c91c160ac5ada0c8429" kindref="member">O_DIRECT</ref>|<ref refid="fcntl_8h_1ac6f4e8852707745da144bc4cef5a726f" kindref="member">FEXEC</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="93" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a71a490d1088a9c5f120f3a59e2a4599f" prot="public" static="no">
+        <name>FNDELAY</name>
+        <initializer><ref refid="fcntl_8h_1a39d33ce33804efd4d52606d59071c6d8" kindref="member">O_NONBLOCK</ref>      /* compat */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aa7660d77d1097779b6b790cb4d89f56c" prot="public" static="no">
+        <name>FNONBLOCK</name>
+        <initializer><ref refid="fcntl_8h_1a39d33ce33804efd4d52606d59071c6d8" kindref="member">O_NONBLOCK</ref>      /* kernel */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aed6c61cad1ddb572aae570ca0a7cb6f8" prot="public" static="no">
+        <name>FPOSIXSHM</name>
+        <initializer><ref refid="fcntl_8h_1a82d4d551b214905742c9e045185d352a" kindref="member">O_NOFOLLOW</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="75" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a3252b359359dea1efa45bb87c4499acd" prot="public" static="no">
+        <name>FREAD</name>
+        <initializer>0x0001</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a171aed9ee8e3ec0a65cedfb9a2626499" prot="public" static="no">
+        <name>FWRITE</name>
+        <initializer>0x0002</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a4dc4d45e07d2abc899bcaf04b2846a87" prot="public" static="no">
+        <name>O_ACCMODE</name>
+        <initializer>0x0003          /* mask for above modes */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ae036f789407d21f07b211552d67b3214" prot="public" static="no">
+        <name>O_APPEND</name>
+        <initializer>0x0008          /* set append mode */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ac5d0c9848f853f8b026b1211b93f78b1" prot="public" static="no">
+        <name>O_ASYNC</name>
+        <initializer>0x0040          /* signal pgrp when data ready */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a1cf6b1de1fffedaa1d26b189e9a8d2cc" prot="public" static="no">
+        <name>O_CREAT</name>
+        <initializer>0x0200          /* create if nonexistent */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ad28ccbf6f0a42c91c160ac5ada0c8429" prot="public" static="no">
+        <name>O_DIRECT</name>
+        <initializer>0x00010000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a6afd3dd2f570069804b40e6aa24fc966" prot="public" static="no">
+        <name>O_DIRECTORY</name>
+        <initializer>0x00020000      /* Fail if not directory */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="77" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a9f5acfe79fafe14b6694447bd0e9f10b" prot="public" static="no">
+        <name>O_EXCL</name>
+        <initializer>0x0800          /* error if already exists */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a459542206659fbe295eb4183f8b8f06c" prot="public" static="no">
+        <name>O_EXEC</name>
+        <initializer>0x00040000      /* Open for execute only */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="78" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ad041d863b473edbd26926d2fad250384" prot="public" static="no">
+        <name>O_EXLOCK</name>
+        <initializer>0x0020          /* open with exclusive <ref refid="structfile" kindref="compound">file</ref> lock */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ac683f821c3bf7ce4752ff436733cd715" prot="public" static="no">
+        <name>O_FSYNC</name>
+        <initializer>0x0080          /* synchronous writes */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a63ba256ec18f373817941d5a4d0e2d5e" prot="public" static="no">
+        <name>O_NDELAY</name>
+        <initializer><ref refid="fcntl_8h_1a39d33ce33804efd4d52606d59071c6d8" kindref="member">O_NONBLOCK</ref>      /* compat */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="74" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a82d4d551b214905742c9e045185d352a" prot="public" static="no">
+        <name>O_NOFOLLOW</name>
+        <initializer>0x0100          /* don&apos;t follow symlinks */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a39d33ce33804efd4d52606d59071c6d8" prot="public" static="no">
+        <name>O_NONBLOCK</name>
+        <initializer>0x0004          /* no delay */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a7a68c9ffaac7dbcd652225dd7c06a54b" prot="public" static="no">
+        <name>O_RDONLY</name>
+        <initializer>0x0000          /* open for reading only */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1abb0586253488ee61072b73557eeb873b" prot="public" static="no">
+        <name>O_RDWR</name>
+        <initializer>0x0002          /* open for reading and writing */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a8234597f4e8a183770c5f5d94ba8562a" prot="public" static="no">
+        <name>O_SHLOCK</name>
+        <initializer>0x0010          /* open with shared <ref refid="structfile" kindref="compound">file</ref> lock */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1aae85139bfa94236d126bb1e3b772998f" prot="public" static="no">
+        <name>O_SYNC</name>
+        <initializer>0x0080          /* POSIX synonym for <ref refid="fcntl_8h_1ac683f821c3bf7ce4752ff436733cd715" kindref="member">O_FSYNC</ref> */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1ad1d67e453fb3031f40f8cd3403773813" prot="public" static="no">
+        <name>O_TRUNC</name>
+        <initializer>0x0400          /* truncate to zero length */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a11b644a8526139c4cc1850dac1271ced" prot="public" static="no">
+        <name>O_WRONLY</name>
+        <initializer>0x0001          /* open for writing only */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fcntl_8h_1a9b5b463dd687798c592fd23584869cc8" prot="public" static="no">
+        <name>OFLAGS</name>
+        <param><defname>fflags</defname></param>
+        <initializer>((fflags) &amp; <ref refid="fcntl_8h_1a459542206659fbe295eb4183f8b8f06c" kindref="member">O_EXEC</ref> ? (fflags) : (fflags) - 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" line="89" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_FCNTL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_FCNTL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="fcntl_8h_1a301749b9aa4b9416c329bb8b19345216" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AT_FDCWD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-100</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>command<sp/>values<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="fcntl_8h_1ab93a8621587aba90181efd7d3aeea67e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_DUPFD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>duplicate<sp/>file<sp/>descriptor<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="fcntl_8h_1abc11141031604fb22b8e3a201155cbb3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_GETFD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>get<sp/>file<sp/>descriptor<sp/>flags<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="fcntl_8h_1ad27227e8d87b844648f07d66da38bb3f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_SETFD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>file<sp/>descriptor<sp/>flags<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="fcntl_8h_1a025fad21a889c79f02ec53abe3526c32" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_GETFL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>get<sp/>file<sp/>status<sp/>flags<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="fcntl_8h_1af2939853c650561d3495ed40f68f6249" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_SETFL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>file<sp/>status<sp/>flags<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="fcntl_8h_1aa76959dcf54457a81c4cdf7789ba73e4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_GETOWN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>get<sp/>SIGIO/SIGURG<sp/>proc/pgrp<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="fcntl_8h_1a10e6ca002b56361c5adb1e66a8a4917d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_SETOWN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>SIGIO/SIGURG<sp/>proc/pgrp<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="fcntl_8h_1a2c3005e07f9aedb5d77856d13c3e40c4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_GETLK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>get<sp/>record<sp/>locking<sp/>information<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="fcntl_8h_1a68a7fc570f2fc271acc5358a6418504e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_SETLK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>record<sp/>locking<sp/>information<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="fcntl_8h_1aabb866cd0cf7ed3544dfc335e0e360fd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>F_SETLKW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>F_SETLK;<sp/>wait<sp/>if<sp/>blocked<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Flag<sp/>Values<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="fcntl_8h_1a3252b359359dea1efa45bb87c4499acd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FREAD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0001</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="fcntl_8h_1a171aed9ee8e3ec0a65cedfb9a2626499" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FWRITE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0002</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="fcntl_8h_1a39d33ce33804efd4d52606d59071c6d8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_NONBLOCK<sp/><sp/><sp/><sp/><sp/><sp/>0x0004<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>no<sp/>delay<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="fcntl_8h_1ae036f789407d21f07b211552d67b3214" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_APPEND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0008<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>append<sp/>mode<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="fcntl_8h_1a8234597f4e8a183770c5f5d94ba8562a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_SHLOCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0010<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>open<sp/>with<sp/>shared<sp/>file<sp/>lock<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="fcntl_8h_1ad041d863b473edbd26926d2fad250384" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_EXLOCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0020<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>open<sp/>with<sp/>exclusive<sp/>file<sp/>lock<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="fcntl_8h_1ac5d0c9848f853f8b026b1211b93f78b1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_ASYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0040<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>signal<sp/>pgrp<sp/>when<sp/>data<sp/>ready<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="fcntl_8h_1ac683f821c3bf7ce4752ff436733cd715" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_FSYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0080<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>synchronous<sp/>writes<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="fcntl_8h_1aae85139bfa94236d126bb1e3b772998f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_SYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0080<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>POSIX<sp/>synonym<sp/>for<sp/>O_FSYNC<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="fcntl_8h_1a82d4d551b214905742c9e045185d352a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_NOFOLLOW<sp/><sp/><sp/><sp/><sp/><sp/>0x0100<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>follow<sp/>symlinks<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="fcntl_8h_1a1cf6b1de1fffedaa1d26b189e9a8d2cc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_CREAT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0200<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>create<sp/>if<sp/>nonexistent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="fcntl_8h_1ad1d67e453fb3031f40f8cd3403773813" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_TRUNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0400<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>truncate<sp/>to<sp/>zero<sp/>length<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="fcntl_8h_1a9f5acfe79fafe14b6694447bd0e9f10b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_EXCL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0800<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>error<sp/>if<sp/>already<sp/>exists<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="fcntl_8h_1ad28ccbf6f0a42c91c160ac5ada0c8429" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_DIRECT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00010000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="fcntl_8h_1a7a68c9ffaac7dbcd652225dd7c06a54b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_RDONLY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0000<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>open<sp/>for<sp/>reading<sp/>only<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="fcntl_8h_1a11b644a8526139c4cc1850dac1271ced" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_WRONLY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0001<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>open<sp/>for<sp/>writing<sp/>only<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="fcntl_8h_1abb0586253488ee61072b73557eeb873b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_RDWR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0002<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>open<sp/>for<sp/>reading<sp/>and<sp/>writing<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="fcntl_8h_1a4dc4d45e07d2abc899bcaf04b2846a87" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_ACCMODE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0003<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>mask<sp/>for<sp/>above<sp/>modes<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="fcntl_8h_1a5e502663ed8d9bf975848f5464c3f516" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FHASLOCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x4000<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>descriptor<sp/>holds<sp/>advisory<sp/>lock<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>F<sp/>MAPPERS<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="fcntl_8h_1aa336842f710119bfdab086f34efac63c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAPPEND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_APPEND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kernel/compat<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="fcntl_8h_1a1c28a43c30721462ad7e40f37051c9ca" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FASYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_ASYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kernel/compat<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="fcntl_8h_1aee6e522943bfde38729955245588808c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FFSYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_FSYNC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kernel<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="fcntl_8h_1aa7660d77d1097779b6b790cb4d89f56c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FNONBLOCK<sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_NONBLOCK<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kernel<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="fcntl_8h_1a71a490d1088a9c5f120f3a59e2a4599f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FNDELAY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_NONBLOCK<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>compat<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="fcntl_8h_1a63ba256ec18f373817941d5a4d0e2d5e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_NDELAY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_NONBLOCK<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>compat<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="fcntl_8h_1aed6c61cad1ddb572aae570ca0a7cb6f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FPOSIXSHM<sp/><sp/><sp/><sp/><sp/><sp/><sp/>O_NOFOLLOW</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="fcntl_8h_1a6afd3dd2f570069804b40e6aa24fc966" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_DIRECTORY<sp/><sp/><sp/><sp/><sp/>0x00020000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Fail<sp/>if<sp/>not<sp/>directory<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="fcntl_8h_1a459542206659fbe295eb4183f8b8f06c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>O_EXEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00040000<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Open<sp/>for<sp/>execute<sp/>only<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="fcntl_8h_1ae145197023ee3530510eaa80446eef77" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FCNTLFLAGS<sp/><sp/><sp/><sp/><sp/><sp/>(FAPPEND|FASYNC|FFSYNC|FNONBLOCK|FPOSIXSHM|O_DIRECT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>#define<sp/>FFLAGS(oflags)<sp/><sp/>((oflags)<sp/>+<sp/>1)</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"><sp/>#define<sp/>OFLAGS(fflags)<sp/><sp/>((fflags)<sp/>-<sp/>1)</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>convert<sp/>from<sp/>open()<sp/>flags<sp/>to/from<sp/>fflags;<sp/>convert<sp/>O_RD/WR<sp/>to<sp/>FREAD/FWRITE<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="fcntl_8h_1a3c28c97a69c6ce8f87cac54a7c91f9db" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FFLAGS(oflags)<sp/><sp/>((oflags)<sp/>&amp;<sp/>O_EXEC<sp/>?<sp/>(oflags)<sp/>:<sp/>(oflags)<sp/>+<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="fcntl_8h_1a9b5b463dd687798c592fd23584869cc8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OFLAGS(fflags)<sp/><sp/>((fflags)<sp/>&amp;<sp/>O_EXEC<sp/>?<sp/>(fflags)<sp/>:<sp/>(fflags)<sp/>-<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="fcntl_8h_1ac6f4e8852707745da144bc4cef5a726f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FEXEC<sp/>O_EXEC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="fcntl_8h_1ab3f8268db3f2e8e22c6f52345799b3fb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FMASK<sp/>(FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FNONBLOCK|O_DIRECT|FEXEC)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!_SYS_FCNTL_H_<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/fcntl.h"/>
+  </compounddef>
+</doxygen>

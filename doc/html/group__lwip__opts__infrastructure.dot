@@ -1,0 +1,21 @@
+digraph "Infrastructure"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node2 [label="Options (lwipopts.h)",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts.html",tooltip=" "];
+  Node7 [label="Checksum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__checksum.html",tooltip=" "];
+  Node8 [label="Hooks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__hooks.html",tooltip=" "];
+  Node6 [label="Threading",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__thread.html",tooltip=" "];
+  Node5 [label="SNMP MIB2 callbacks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__mib2.html",tooltip=" "];
+  Node3 [label="Heap and memory pools",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__mem.html",tooltip=" "];
+  Node4 [label="Internal memory pools",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__lwip__opts__memp.html",tooltip=" "];
+  Node1 [label="Infrastructure",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node6 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node7 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node8 [shape=plaintext, dir="back", style="solid"];
+}

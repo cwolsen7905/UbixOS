@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmemp__desc" kind="struct" language="C++" prot="public">
+    <compoundname>memp_desc</compoundname>
+    <includes refid="memp__priv_8h" local="no">memp_priv.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmemp__desc_1a9aec58adcbcd88167247296ca4346558" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> *</type>
+        <definition>u8_t* memp_desc::base</definition>
+        <argsstring></argsstring>
+        <name>base</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Base address </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="148" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="148" bodyend="-1"/>
+        <referencedby refid="memp_8c_1a6416303426d05526bed33f241fa6ecd7" compoundref="memp_8c" startline="230" endline="262">memp_init_pool</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmemp__desc_1a2c32db78e565b8812ca0e20fe929a8a7" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t memp_desc::num</definition>
+        <argsstring></argsstring>
+        <name>num</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Number of elements </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="145" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="145" bodyend="-1"/>
+        <referencedby refid="memp_8c_1a6416303426d05526bed33f241fa6ecd7" compoundref="memp_8c" startline="230" endline="262">memp_init_pool</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmemp__desc_1a1688d2bdd5a7b77700e1fa627f025ba3" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t memp_desc::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Element size </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="141" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="141" bodyend="-1"/>
+        <referencedby refid="memp_8c_1a6416303426d05526bed33f241fa6ecd7" compoundref="memp_8c" startline="230" endline="262">memp_init_pool</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmemp__desc_1a9d6b758ce5c3b47a67a7568d38fb3926" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmemp" kindref="compound">memp</ref> **</type>
+        <definition>struct memp** memp_desc::tab</definition>
+        <argsstring></argsstring>
+        <name>tab</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>First free element of each pool. Elements form a linked list. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="151" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="151" bodyend="-1"/>
+        <referencedby refid="memp_8c_1aecd94926b7c2a0e23ae195f4ae97581f" compoundref="memp_8c" startline="469" endline="496">memp_free</referencedby>
+        <referencedby refid="memp_8c_1a6416303426d05526bed33f241fa6ecd7" compoundref="memp_8c" startline="230" endline="262">memp_init_pool</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Memory pool descriptor </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>memp_desc</label>
+        <link refid="structmemp__desc"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+tab</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>memp</label>
+        <link refid="structmemp"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" line="130" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h" bodystart="130" bodyend="153"/>
+    <listofallmembers>
+      <member refid="structmemp__desc_1a9aec58adcbcd88167247296ca4346558" prot="public" virt="non-virtual"><scope>memp_desc</scope><name>base</name></member>
+      <member refid="structmemp__desc_1a2c32db78e565b8812ca0e20fe929a8a7" prot="public" virt="non-virtual"><scope>memp_desc</scope><name>num</name></member>
+      <member refid="structmemp__desc_1a1688d2bdd5a7b77700e1fa627f025ba3" prot="public" virt="non-virtual"><scope>memp_desc</scope><name>size</name></member>
+      <member refid="structmemp__desc_1a9d6b758ce5c3b47a67a7568d38fb3926" prot="public" virt="non-virtual"><scope>memp_desc</scope><name>tab</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

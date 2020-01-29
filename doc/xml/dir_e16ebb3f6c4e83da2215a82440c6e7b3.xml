@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_e16ebb3f6c4e83da2215a82440c6e7b3" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/net/api</compoundname>
+    <innerfile refid="api__lib_8c">api_lib.c</innerfile>
+    <innerfile refid="api__msg_8c">api_msg.c</innerfile>
+    <innerfile refid="err_8c">err.c</innerfile>
+    <innerfile refid="netbuf_8c">netbuf.c</innerfile>
+    <innerfile refid="netdb_8c">netdb.c</innerfile>
+    <innerfile refid="netifapi_8c">netifapi.c</innerfile>
+    <innerfile refid="sockets_8c">sockets.c</innerfile>
+    <innerfile refid="tcpip_8c">tcpip.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/net/api/"/>
+  </compounddef>
+</doxygen>

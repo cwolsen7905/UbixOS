@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__netifapi__netif" kind="group">
+    <compoundname>netifapi_netif</compoundname>
+    <title>NETIF related</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>To be called from non-TCPIP threads </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

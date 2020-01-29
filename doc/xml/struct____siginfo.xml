@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="struct____siginfo" kind="struct" language="C++" prot="public">
+    <compoundname>__siginfo</compoundname>
+    <includes refid="sys_2signal_8h" local="no">signal.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct____siginfo_1a42be958b1f604856c49311ee36edd04a" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long __siginfo::__spare1__</definition>
+        <argsstring></argsstring>
+        <name>__spare1__</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="85" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1aab95fcf495e4241cf5b70560934f7fae" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::__spare2__[7]</definition>
+        <argsstring>[7]</argsstring>
+        <name>__spare2__</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="86" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1abf557326db7e99e1b2aa99147671bcc1" prot="public" static="no" mutable="no">
+        <type>struct __siginfo::@13::@18</type>
+        <definition>struct __siginfo::@13::@18  __siginfo::__spare__</definition>
+        <argsstring></argsstring>
+        <name>__spare__</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="87" column="27"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a7d84b8be86956fbbb2c11f8b56a5da3b" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long __siginfo::_band</definition>
+        <argsstring></argsstring>
+        <name>_band</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="82" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1abdcd3a4d3607179e9e50c46e77f44ed0" prot="public" static="no" mutable="no">
+        <type>struct __siginfo::@13::@14</type>
+        <definition>struct __siginfo::@13::@14  __siginfo::_fault</definition>
+        <argsstring></argsstring>
+        <name>_fault</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="73" column="24"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a520e8738576eedda194dee01193b19d9" prot="public" static="no" mutable="no">
+        <type>struct __siginfo::@13::@16</type>
+        <definition>struct __siginfo::@13::@16  __siginfo::_mesgq</definition>
+        <argsstring></argsstring>
+        <name>_mesgq</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="80" column="24"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a2545de1e05b1a60d66d6bd09b982b2d5" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::_mqd</definition>
+        <argsstring></argsstring>
+        <name>_mqd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="79" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a923065e467dd139a592f81a337027fe8" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::_overrun</definition>
+        <argsstring></argsstring>
+        <name>_overrun</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="76" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a0bf1263bd91fcfa4651cfff1b9b9462e" prot="public" static="no" mutable="no">
+        <type>struct __siginfo::@13::@17</type>
+        <definition>struct __siginfo::@13::@17  __siginfo::_poll</definition>
+        <argsstring></argsstring>
+        <name>_poll</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="83" column="23"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a12c0027c675fb964044755dc75b1fe6f" prot="public" static="no" mutable="no">
+        <type>union __siginfo::@13</type>
+        <definition>union __siginfo::@13  __siginfo::_reason</definition>
+        <argsstring></argsstring>
+        <name>_reason</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="88" column="17"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a349e283b76e0fc540cc5db3b9bf22558" prot="public" static="no" mutable="no">
+        <type>struct __siginfo::@13::@15</type>
+        <definition>struct __siginfo::@13::@15  __siginfo::_timer</definition>
+        <argsstring></argsstring>
+        <name>_timer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="77" column="24"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a53fb0f8cd044449f620df0c0517d41d3" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::_timerid</definition>
+        <argsstring></argsstring>
+        <name>_timerid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="75" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a05d80a533c6590a5b47e287d4ba9095d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::_trapno</definition>
+        <argsstring></argsstring>
+        <name>_trapno</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="72" column="33" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1ad2715b91a9e1025df0c22b4138ff6158" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* __siginfo::si_addr</definition>
+        <argsstring></argsstring>
+        <name>si_addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="68" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1adb9dba43e8ea2b8a096126bc07358a72" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::si_code</definition>
+        <argsstring></argsstring>
+        <name>si_code</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="64" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1abba20ca794e53c7eba21407254eecb01" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::si_errno</definition>
+        <argsstring></argsstring>
+        <name>si_errno</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="57" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a3ab546acd7d1541dfa5229d06998fd63" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1af9ad87d76c9745a3713fa409336598d8" kindref="member">__pid_t</ref></type>
+        <definition>__pid_t __siginfo::si_pid</definition>
+        <argsstring></argsstring>
+        <name>si_pid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="65" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1ab312f10764c97511a500de6839427c76" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::si_signo</definition>
+        <argsstring></argsstring>
+        <name>si_signo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="56" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1a44d70fd2ddf79bbe5b4f38b6d8bbedf3" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int __siginfo::si_status</definition>
+        <argsstring></argsstring>
+        <name>si_status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="67" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1aa0ef9b0a81ea9039d126b5e3bc4c4107" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1ab78e9d0e7ded311d6c9dbd234039b393" kindref="member">__uid_t</ref></type>
+        <definition>__uid_t __siginfo::si_uid</definition>
+        <argsstring></argsstring>
+        <name>si_uid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="66" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct____siginfo_1af0c28a0fc13e1f756e4962257fe5e541" prot="public" static="no" mutable="no">
+        <type>union <ref refid="unionsigval" kindref="compound">sigval</ref></type>
+        <definition>union sigval __siginfo::si_value</definition>
+        <argsstring></argsstring>
+        <name>si_value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="68" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>sigval</label>
+        <link refid="unionsigval"/>
+      </node>
+      <node id="1">
+        <label>__siginfo</label>
+        <link refid="struct____siginfo"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+si_value</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/signal.h" line="55" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/signal.h" bodystart="55" bodyend="89"/>
+    <listofallmembers>
+      <member refid="struct____siginfo_1a42be958b1f604856c49311ee36edd04a" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>__spare1__</name></member>
+      <member refid="struct____siginfo_1aab95fcf495e4241cf5b70560934f7fae" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>__spare2__</name></member>
+      <member refid="struct____siginfo_1abf557326db7e99e1b2aa99147671bcc1" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>__spare__</name></member>
+      <member refid="struct____siginfo_1a7d84b8be86956fbbb2c11f8b56a5da3b" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_band</name></member>
+      <member refid="struct____siginfo_1abdcd3a4d3607179e9e50c46e77f44ed0" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_fault</name></member>
+      <member refid="struct____siginfo_1a520e8738576eedda194dee01193b19d9" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_mesgq</name></member>
+      <member refid="struct____siginfo_1a2545de1e05b1a60d66d6bd09b982b2d5" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_mqd</name></member>
+      <member refid="struct____siginfo_1a923065e467dd139a592f81a337027fe8" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_overrun</name></member>
+      <member refid="struct____siginfo_1a0bf1263bd91fcfa4651cfff1b9b9462e" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_poll</name></member>
+      <member refid="struct____siginfo_1a12c0027c675fb964044755dc75b1fe6f" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_reason</name></member>
+      <member refid="struct____siginfo_1a349e283b76e0fc540cc5db3b9bf22558" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_timer</name></member>
+      <member refid="struct____siginfo_1a53fb0f8cd044449f620df0c0517d41d3" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_timerid</name></member>
+      <member refid="struct____siginfo_1a05d80a533c6590a5b47e287d4ba9095d" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>_trapno</name></member>
+      <member refid="struct____siginfo_1ad2715b91a9e1025df0c22b4138ff6158" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_addr</name></member>
+      <member refid="struct____siginfo_1adb9dba43e8ea2b8a096126bc07358a72" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_code</name></member>
+      <member refid="struct____siginfo_1abba20ca794e53c7eba21407254eecb01" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_errno</name></member>
+      <member refid="struct____siginfo_1a3ab546acd7d1541dfa5229d06998fd63" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_pid</name></member>
+      <member refid="struct____siginfo_1ab312f10764c97511a500de6839427c76" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_signo</name></member>
+      <member refid="struct____siginfo_1a44d70fd2ddf79bbe5b4f38b6d8bbedf3" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_status</name></member>
+      <member refid="struct____siginfo_1aa0ef9b0a81ea9039d126b5e3bc4c4107" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_uid</name></member>
+      <member refid="struct____siginfo_1af0c28a0fc13e1f756e4962257fe5e541" prot="public" virt="non-virtual"><scope>__siginfo</scope><name>si_value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

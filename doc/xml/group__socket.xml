@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__socket" kind="group">
+    <compoundname>socket</compoundname>
+    <title>Socket API</title>
+    <innergroup refid="group__netdbapi">NETDB API</innergroup>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>BSD-style socket API.<linebreak/>
+Thread-safe, to be called from non-TCPIP threads only.<linebreak/>
+Can be activated by defining <ref refid="group__lwip__opts__socket_1ga1cb62ce61ac39d7d6728ae5d3d3b927f" kindref="member">LWIP_SOCKET</ref> to 1.<linebreak/>
+Header is in posix/sys/socket.h<bold></bold> </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

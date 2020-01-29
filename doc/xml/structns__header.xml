@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structns__header" kind="struct" language="C++" prot="public">
+    <compoundname>ns_header</compoundname>
+    <includes refid="prot_2nd6_8h" local="no">nd6.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structns__header_1a8b960b87442f2197345dcb017490458c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ns_header::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t chksum)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>chksum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="56" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structns__header_1ac7f435b2b9fc1cedabca99289e055a7c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ns_header::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u32_t reserved)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>reserved</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="57" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structns__header_1a24242894e6f1324a608b942c987f9992" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ns_header::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t code)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="55" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structns__header_1a234eadacec43dbdebad4f4a2bad4d737" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ns_header::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="54" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="structns__header_1a9afca416f5a3caff1d19744d8f89a571" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ns_header::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip6_addr_p_t target_address)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref></type>
+          <declname>target_address</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="58" column="3"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Neighbor solicitation message header. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>ns_header</label>
+        <link refid="structns__header"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" line="53" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/nd6.h" bodystart="53" bodyend="60"/>
+    <listofallmembers>
+      <member refid="structns__header_1a8b960b87442f2197345dcb017490458c" prot="public" virt="non-virtual"><scope>ns_header</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structns__header_1ac7f435b2b9fc1cedabca99289e055a7c" prot="public" virt="non-virtual"><scope>ns_header</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structns__header_1a234eadacec43dbdebad4f4a2bad4d737" prot="public" virt="non-virtual"><scope>ns_header</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structns__header_1a24242894e6f1324a608b942c987f9992" prot="public" virt="non-virtual"><scope>ns_header</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structns__header_1a9afca416f5a3caff1d19744d8f89a571" prot="public" virt="non-virtual"><scope>ns_header</scope><name>PACK_STRUCT_FLD_S</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

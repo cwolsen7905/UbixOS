@@ -1,0 +1,20 @@
+digraph "netif_init"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="netif_init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="netif_add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__netif.html#ga66970b5877dd6b0cae906bfa78d0cb4c",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="memset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$string_8h.html#ace4b911463887af5e748326323e99a23",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="netif_set_link_up",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__netif.html#gae0d2975f189277990e9d5276fdd9e9ea",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="netif_set_up",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__netif.html#gaf19693be401a265a52d2a56c65753121",tooltip=" "];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="tcpip_input",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$tcpip_8h.html#ae510f195171bed8499ae94e264a92717",tooltip=" "];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="tcpip_inpkt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$tcpip_8c.html#a93043b3c66dbe4a15a60299c6199d102",tooltip=" "];
+}

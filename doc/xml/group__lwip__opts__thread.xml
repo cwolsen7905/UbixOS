@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__thread" kind="group">
+    <compoundname>lwip_opts_thread</compoundname>
+    <title>Threading</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga5d5a6e04abe2ec233c7acdb09f992461" prot="public" static="no">
+        <name>DEFAULT_ACCEPTMBOX_SIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_ACCEPTMBOX_SIZE: The mailbox size for the incoming connections. The queue size value itself is platform-dependent, but is passed to <ref refid="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" kindref="member">sys_mbox_new()</ref> when the acceptmbox is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1619" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1619" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga4ef8f046c957750056131310a1580df7" prot="public" static="no">
+        <name>DEFAULT_RAW_RECVMBOX_SIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_RAW_RECVMBOX_SIZE: The mailbox size for the incoming packets on a NETCONN_RAW. The queue size value itself is platform-dependent, but is passed to <ref refid="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" kindref="member">sys_mbox_new()</ref> when the recvmbox is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1592" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1592" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga1bd172938b9c8ba63156fcafc87e83c7" prot="public" static="no">
+        <name>DEFAULT_TCP_RECVMBOX_SIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_TCP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a NETCONN_TCP. The queue size value itself is platform-dependent, but is passed to <ref refid="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" kindref="member">sys_mbox_new()</ref> when the recvmbox is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1610" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1610" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1gaca13123a5c8271558353e04123957616" prot="public" static="no">
+        <name>DEFAULT_THREAD_NAME</name>
+        <initializer>&quot;lwIP&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_THREAD_NAME: The name assigned to any other lwIP thread. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1565" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1565" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga3d8715b1fdd0449d6c214e4a40108456" prot="public" static="no">
+        <name>DEFAULT_THREAD_PRIO</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_THREAD_PRIO: The priority assigned to any other lwIP thread. The priority value itself is platform-dependent, but is passed to <ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new()</ref> when the thread is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1583" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1583" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga7f93dfeaed4021061959f822def602cb" prot="public" static="no">
+        <name>DEFAULT_THREAD_STACKSIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_THREAD_STACKSIZE: The stack size used by any other lwIP thread. The stack size value itself is platform-dependent, but is passed to <ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new()</ref> when the thread is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1574" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1574" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga09fe785559b3f0cf108da4440489e335" prot="public" static="no">
+        <name>DEFAULT_UDP_RECVMBOX_SIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DEFAULT_UDP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a NETCONN_UDP. The queue size value itself is platform-dependent, but is passed to <ref refid="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" kindref="member">sys_mbox_new()</ref> when the recvmbox is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1601" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1601" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga8b99d75d9e0a0868567d10c8522915bb" prot="public" static="no">
+        <name>LWIP_TCPIP_THREAD_ALIVE</name>
+        <param></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define this to something that triggers a watchdog. This is called from tcpip_thread after processing a message. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1533" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1533" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1gae9cd260c56472324a2f0ee5f9597a675" prot="public" static="no">
+        <name>SLIPIF_THREAD_NAME</name>
+        <initializer>&quot;slipif_loop&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SLIPIF_THREAD_NAME: The name assigned to the slipif_loop thread. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1540" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1540" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1gab1b9fc2efcbf1f804bfd0191bc019c4e" prot="public" static="no">
+        <name>SLIPIF_THREAD_PRIO</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SLIPIF_THREAD_PRIO: The priority assigned to the slipif_loop thread. The priority value itself is platform-dependent, but is passed to <ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new()</ref> when the thread is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1558" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1558" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1gae8ab54a25007ce997bbab6289815e258" prot="public" static="no">
+        <name>SLIPIF_THREAD_STACKSIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SLIP_THREAD_STACKSIZE: The stack size used by the slipif_loop thread. The stack size value itself is platform-dependent, but is passed to <ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new()</ref> when the thread is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1549" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1549" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga8cf210ad4e4bf616860a45fbd140fd06" prot="public" static="no">
+        <name>TCPIP_MBOX_SIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCPIP_MBOX_SIZE: The mailbox size for the tcpip thread messages The queue size value itself is platform-dependent, but is passed to <ref refid="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" kindref="member">sys_mbox_new()</ref> when tcpip_init is called. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1525" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1525" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga405e604e4328e1feb878c6fe1798a587" prot="public" static="no">
+        <name>TCPIP_THREAD_NAME</name>
+        <initializer>&quot;tcpip_thread&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCPIP_THREAD_NAME: The name assigned to the main tcpip thread. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1498" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1498" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1ga42b2c7a3042d7c3efd00f367f5837435" prot="public" static="no">
+        <name>TCPIP_THREAD_PRIO</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCPIP_THREAD_PRIO: The priority assigned to the main tcpip thread. The priority value itself is platform-dependent, but is passed to <ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new()</ref> when the thread is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1516" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1516" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__thread_1gaa02b84eafa0c8b09b158b97c96d79db0" prot="public" static="no">
+        <name>TCPIP_THREAD_STACKSIZE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>TCPIP_THREAD_STACKSIZE: The stack size used by the main tcpip thread. The stack size value itself is platform-dependent, but is passed to <ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new()</ref> when the thread is created. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1507" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1507" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

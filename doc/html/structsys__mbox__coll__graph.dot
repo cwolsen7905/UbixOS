@@ -1,0 +1,13 @@
+digraph "sys_mbox"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{sys_mbox\n|+ head\l+ msgs\l+ tail\l+ wait_send\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +lock\n+full\n+empty" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node2 [label="{sys_sem\n|+ signaled\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structsys__sem.html",tooltip=" "];
+  Node3 -> Node2 [color="grey25",fontsize="10",style="solid",label=" +mutex" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node3 [label="{ubthread_mutex\n|+ id\l+ lock\l+ pid\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structubthread__mutex.html",tooltip=" "];
+  Node4 -> Node2 [color="grey25",fontsize="10",style="solid",label=" +cond" ,arrowhead="odiamond",fontname="Helvetica"];
+  Node4 [label="{ubthread_cond\n|+ id\l+ lock\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structubthread__cond.html",tooltip=" "];
+}

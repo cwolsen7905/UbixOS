@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtcpip__api__call__data" kind="struct" language="C++" prot="public">
+    <compoundname>tcpip_api_call_data</compoundname>
+    <includes refid="tcpip__priv_8h" local="no">tcpip_priv.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structtcpip__api__call__data_1a1a1d5bb2f7fd09f592fb56089e762307" prot="public" static="no" mutable="no">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t tcpip_api_call_data::err</definition>
+        <argsstring></argsstring>
+        <name>err</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="100" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtcpip__api__call__data_1a430b64d7617893939ed12cc957765431" prot="public" static="no" mutable="no">
+        <type><ref refid="sem_8h_1a900e36da93bb688c29fc8148f2f44e04" kindref="member">sys_sem_t</ref></type>
+        <definition>sys_sem_t tcpip_api_call_data::sem</definition>
+        <argsstring></argsstring>
+        <name>sem</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="102" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="102" bodyend="-1"/>
+        <referencedby refid="tcpip_8c_1a3d42b0c46607f91aedcc7745ed466b08" compoundref="tcpip_8c" startline="356" endline="394">tcpip_api_call</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>ubthread_mutex</label>
+        <link refid="structubthread__mutex"/>
+      </node>
+      <node id="4">
+        <label>ubthread_cond</label>
+        <link refid="structubthread__cond"/>
+      </node>
+      <node id="2">
+        <label>sys_sem</label>
+        <link refid="structsys__sem"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+mutex</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+cond</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>tcpip_api_call_data</label>
+        <link refid="structtcpip__api__call__data"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+sem</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" line="98" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h" bodystart="97" bodyend="107"/>
+    <listofallmembers>
+      <member refid="structtcpip__api__call__data_1a1a1d5bb2f7fd09f592fb56089e762307" prot="public" virt="non-virtual"><scope>tcpip_api_call_data</scope><name>err</name></member>
+      <member refid="structtcpip__api__call__data_1a430b64d7617893939ed12cc957765431" prot="public" virt="non-virtual"><scope>tcpip_api_call_data</scope><name>sem</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

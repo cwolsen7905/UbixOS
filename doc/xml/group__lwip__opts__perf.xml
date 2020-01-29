@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__perf" kind="group">
+    <compoundname>lwip_opts_perf</compoundname>
+    <title>Performance</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__perf_1ga44acd95b33e2d58a74455279721298de" prot="public" static="no">
+        <name>LWIP_PERF</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_PERF: Enable performance testing for lwIP (if enabled, <ref refid="perf_8h" kindref="compound">arch/perf.h</ref> is included) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="2829" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="2829" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

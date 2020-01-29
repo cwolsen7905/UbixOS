@@ -1,0 +1,7 @@
+digraph "dos_partition"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="{dos_partition\n|+ dp_ecyl\l+ dp_ehd\l+ dp_esect\l+ dp_flag\l+ dp_scyl\l+ dp_shd\l+ dp_size\l+ dp_ssect\l+ dp_start\l+ dp_type\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+}

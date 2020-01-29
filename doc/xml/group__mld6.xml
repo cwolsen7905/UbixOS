@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__mld6" kind="group">
+    <compoundname>mld6</compoundname>
+    <title>MLD6</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Multicast listener discovery for IPv6. Aims to be compliant with RFC 2710. No support for MLDv2.<linebreak/>
+To be called from TCPIP thread </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

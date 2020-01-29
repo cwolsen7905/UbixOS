@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__dns" kind="group">
+    <compoundname>lwip_opts_dns</compoundname>
+    <title>DNS</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga07ffd8e9106dae3b65347bd03811a4b6" prot="public" static="no">
+        <name>DNS_DOES_NAME_CHECK</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DNS do a name checking between the query and the response. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="994" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="994" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1gacba1ac491c1b47b98dfbd0d5c1662659" prot="public" static="no">
+        <name>DNS_LOCAL_HOSTLIST</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DNS_LOCAL_HOSTLIST: Implements a local host-to-address list. If enabled, you have to define an initializer: #define DNS_LOCAL_HOSTLIST_INIT {DNS_LOCAL_HOSTLIST_ELEM(&quot;host_ip4&quot;, IPADDR4_INIT_BYTES(1,2,3,4)), \ DNS_LOCAL_HOSTLIST_ELEM(&quot;host_ip6&quot;, <ref refid="ip__addr_8h_1adaff748da2b808995993dd3db5420f08" kindref="member">IPADDR6_INIT_HOST(123, 234, 345, 456)</ref>}</para>
+<para>Instead, you can also use an external function: #define DNS_LOOKUP_LOCAL_EXTERN(x) extern err_t my_lookup_function(const char *name, ip_addr_t *addr, u8_t dns_addrtype) that looks up the IP address and returns ERR_OK if found (LWIP_DNS_ADDRTYPE_xxx is passed in dns_addrtype). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1019" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1019" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga8235a5fb0a1c1cceeee670cf95612ba8" prot="public" static="no">
+        <name>DNS_LOCAL_HOSTLIST_IS_DYNAMIC</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If this is turned on, the local host-list can be dynamically changed at runtime. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1025" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1025" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga3b01c79902063c170ef57deb72f56124" prot="public" static="no">
+        <name>DNS_MAX_NAME_LENGTH</name>
+        <initializer>256</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DNS maximum host name length supported in the name table. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="981" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="981" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga9f9881c887a8aceb9765820c2dbdf292" prot="public" static="no">
+        <name>DNS_MAX_SERVERS</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The maximum of DNS servers The first server can be initialized automatically by defining DNS_SERVER_ADDRESS(ipaddr), where &apos;ipaddr&apos; is an &apos;ip_addr_t*&apos; </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="989" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="989" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga2384e76c1acdf969d883f3de08d340f7" prot="public" static="no">
+        <name>DNS_TABLE_SIZE</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>DNS maximum number of entries to maintain locally. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="976" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="976" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga98710dd81446b7cb2daac736bae6f646" prot="public" static="no">
+        <name>LWIP_DNS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_DNS==1: Turn on DNS module. UDP must be available for DNS transport. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="971" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="971" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga8979c30dfbfde609d5139f80aabdfcc5" prot="public" static="no">
+        <name>LWIP_DNS_SECURE</name>
+        <initializer>(<ref refid="group__lwip__opts__dns_1ga247795be83258f9afd0e3649a20fe30d" kindref="member">LWIP_DNS_SECURE_RAND_XID</ref> | <ref refid="group__lwip__opts__dns_1ga5cabf5668bb2532408d9dcb8caf56092" kindref="member">LWIP_DNS_SECURE_NO_MULTIPLE_OUTSTANDING</ref> | <ref refid="group__lwip__opts__dns_1ga3aa0b17e6093d9e109790b28d6adfa65" kindref="member">LWIP_DNS_SECURE_RAND_SRC_PORT</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_DNS_SECURE: controls the security level of the DNS implementation Use all DNS security features by default. This is overridable but should only be needed by very small targets or when using against non standard DNS servers. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1002" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1002" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga5cabf5668bb2532408d9dcb8caf56092" prot="public" static="no">
+        <name>LWIP_DNS_SECURE_NO_MULTIPLE_OUTSTANDING</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1007" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1007" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga3aa0b17e6093d9e109790b28d6adfa65" prot="public" static="no">
+        <name>LWIP_DNS_SECURE_RAND_SRC_PORT</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1008" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1008" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1ga247795be83258f9afd0e3649a20fe30d" prot="public" static="no">
+        <name>LWIP_DNS_SECURE_RAND_XID</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1006" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1006" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__dns_1gafcbde5706a70ace562bd1f7d2d6f77cb" prot="public" static="no">
+        <name>LWIP_DNS_SUPPORT_MDNS_QUERIES</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set this to 1 to enable querying &quot;.local&quot; names via mDNS using a One-Shot Multicast DNS Query </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1031" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1031" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

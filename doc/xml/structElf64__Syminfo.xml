@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Syminfo" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Syminfo</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Syminfo_1a919d1c0dd96fae4b828902b765097e15" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Syminfo::si_boundto</definition>
+        <argsstring></argsstring>
+        <name>si_boundto</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="256" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="256" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Syminfo_1a919ad3ae58e391cb2cf9da819d9d1344" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1adb6a5584018b431da3472e7c6a7fd731" kindref="member">Elf64_Half</ref></type>
+        <definition>Elf64_Half Elf64_Syminfo::si_flags</definition>
+        <argsstring></argsstring>
+        <name>si_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="257" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="257" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Syminfo</label>
+        <link refid="structElf64__Syminfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="255" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="255" bodyend="258"/>
+    <listofallmembers>
+      <member refid="structElf64__Syminfo_1a919d1c0dd96fae4b828902b765097e15" prot="public" virt="non-virtual"><scope>Elf64_Syminfo</scope><name>si_boundto</name></member>
+      <member refid="structElf64__Syminfo_1a919ad3ae58e391cb2cf9da819d9d1344" prot="public" virt="non-virtual"><scope>Elf64_Syminfo</scope><name>si_flags</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

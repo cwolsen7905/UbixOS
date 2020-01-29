@@ -1,0 +1,572 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="prot_2ip6_8h" kind="file" language="C++">
+    <compoundname>ip6.h</compoundname>
+    <includes local="yes">lwip/arch.h</includes>
+    <includes local="yes">lwip/ip6_addr.h</includes>
+    <incdepgraph>
+      <node id="3">
+        <label>lwip/ip6_addr.h</label>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h</label>
+        <link refid="prot_2ip6_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>lwip/arch.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structip6__addr__packed" prot="public">ip6_addr_packed</innerclass>
+    <innerclass refid="structip6__frag__hdr" prot="public">ip6_frag_hdr</innerclass>
+    <innerclass refid="structip6__hbh__hdr" prot="public">ip6_hbh_hdr</innerclass>
+    <innerclass refid="structip6__hdr" prot="public">ip6_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="prot_2ip6_8h_1aacda00cc76d9e7f9f3197de3b27089ea" prot="public" static="no">
+        <name>IP6_FRAG_HLEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="130" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a4e60dc945c0061d3d4dc4a84132a506b" prot="public" static="no">
+        <name>IP6_FRAG_MORE_FLAG</name>
+        <initializer>0x0001</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="132" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a4ada75ee94d08af1a0d2656e6d14d7d9" prot="public" static="no">
+        <name>IP6_FRAG_OFFSET_MASK</name>
+        <initializer>0xfff8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="131" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a3c07dfc39f03801b78ea2b5e882feaa5" prot="public" static="no">
+        <name>IP6_HBH_HLEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1afb4c1dc527be76d8f27591dfb726c023" prot="public" static="no">
+        <name>IP6_HLEN</name>
+        <initializer>40</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1af01cb063f723d79e1c34a8e95a93a2c0" prot="public" static="no">
+        <name>IP6_NEXTH_DESTOPTS</name>
+        <initializer>60</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a203e1cfca6330ec95bcdbe2418587f65" prot="public" static="no">
+        <name>IP6_NEXTH_ENCAPS</name>
+        <initializer>41</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="67" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a1a72bdc1494ea84cbf16424e9aedcd79" prot="public" static="no">
+        <name>IP6_NEXTH_FRAGMENT</name>
+        <initializer>44</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a27db49d05c2230c085c04e766267ed38" prot="public" static="no">
+        <name>IP6_NEXTH_HOPBYHOP</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1ab277ee09b6e7200fc1cfe28482b886a6" prot="public" static="no">
+        <name>IP6_NEXTH_ICMP6</name>
+        <initializer>58</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a654fbd4bb77707859b16f6935f2ba4c7" prot="public" static="no">
+        <name>IP6_NEXTH_NONE</name>
+        <initializer>59</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a4d9e6542b73b17c81b56808e1ffd5b27" prot="public" static="no">
+        <name>IP6_NEXTH_ROUTING</name>
+        <initializer>43</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a748b24c4f1ae5bbeecaa34e066cb3f8c" prot="public" static="no">
+        <name>IP6_NEXTH_TCP</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a0159bb5b3af8ea1e203d543c0f3c17c2" prot="public" static="no">
+        <name>IP6_NEXTH_UDP</name>
+        <initializer>17</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a6e4afde135c71a3b194b68add3d9138c" prot="public" static="no">
+        <name>IP6_NEXTH_UDPLITE</name>
+        <initializer>136</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a792e3f1465395652f1df6dd41cfa089a" prot="public" static="no">
+        <name>IP6_PAD1_OPTION</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="100" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a42b8fada1fa942926239b86f91c11e03" prot="public" static="no">
+        <name>IP6_PADN_ALERT_OPTION</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="101" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a02ac672111b898fe0ab527329b05ce57" prot="public" static="no">
+        <name>IP6_ROUTER_ALERT_OPTION</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1afb8daf0c5217efe957cd809074ca5f0b" prot="public" static="no">
+        <name>IP6_ROUTER_ALERT_VALUE_MLD</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1aca05b52650fd3d7d7806b7aaf3fe4aaf" prot="public" static="no">
+        <name>IP6H_FL</name>
+        <param><defname>hdr</defname></param>
+        <initializer>(<ref refid="def_8h_1a56098407d66feb75806f655bafbee81d" kindref="member">lwip_ntohl</ref>((hdr)-&gt;_v_tc_fl) &amp; 0x000fffff)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="154" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a4f8209d53443b50770e57426d027de28" prot="public" static="no">
+        <name>IP6H_HOPLIM</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_hoplim)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="158" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1aaa72852834526961a3fb2cbc07fe602d" prot="public" static="no">
+        <name>IP6H_HOPLIM_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>hl</defname></param>
+        <initializer>(hdr)-&gt;_hoplim = (<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref>)(hl)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="163" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a11009a147aa680a6a486ded85382aff1" prot="public" static="no">
+        <name>IP6H_NEXTH</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((hdr)-&gt;_nexth)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="156" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1adc6c59e0bfc927c6770d7b01323a87d5" prot="public" static="no">
+        <name>IP6H_NEXTH_P</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref> *)(hdr) + 6)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="157" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a85d62e6278b0bed9e3b88df777be612c" prot="public" static="no">
+        <name>IP6H_NEXTH_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>nexth</defname></param>
+        <initializer>(hdr)-&gt;_nexth = (nexth)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="162" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1ac672706ee00b07f263dad7dcf116d351" prot="public" static="no">
+        <name>IP6H_PLEN</name>
+        <param><defname>hdr</defname></param>
+        <initializer>(<ref refid="def_8h_1ac642bf6057869696d7807564d8309ffc" kindref="member">lwip_ntohs</ref>((hdr)-&gt;_plen))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="155" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a2d727ccfecc56fb1e35ea4f7249f399b" prot="public" static="no">
+        <name>IP6H_PLEN_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>plen</defname></param>
+        <initializer>(hdr)-&gt;_plen = <ref refid="def_8c_1ad637280639de4066392e6b5614fa3e56" kindref="member">lwip_htons</ref>(plen)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="161" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a09221519353bd18683c39a37905af968" prot="public" static="no">
+        <name>IP6H_TC</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((<ref refid="def_8h_1a56098407d66feb75806f655bafbee81d" kindref="member">lwip_ntohl</ref>((hdr)-&gt;_v_tc_fl) &gt;&gt; 20) &amp; 0xff)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="153" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a90f24cf50dee93e0729a1fc1d05374e3" prot="public" static="no">
+        <name>IP6H_V</name>
+        <param><defname>hdr</defname></param>
+        <initializer>((<ref refid="def_8h_1a56098407d66feb75806f655bafbee81d" kindref="member">lwip_ntohl</ref>((hdr)-&gt;_v_tc_fl) &gt;&gt; 28) &amp; 0x0f)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="152" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="prot_2ip6_8h_1a932e7c887bb04691075a8c36c61736e4" prot="public" static="no">
+        <name>IP6H_VTCFL_SET</name>
+        <param><defname>hdr</defname></param>
+        <param><defname>v</defname></param>
+        <param><defname>tc</defname></param>
+        <param><defname>fl</defname></param>
+        <initializer>(hdr)-&gt;_v_tc_fl = (<ref refid="def_8c_1a14f94347a5b9b9e3602705b75b7ae524" kindref="member">lwip_htonl</ref>((((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)(v)) &lt;&lt; 28) | (((<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref>)(tc)) &lt;&lt; 20) | (fl)))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="160" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" prot="public" static="no">
+        <type>typedefPACK_STRUCT_END struct <ref refid="structip6__addr__packed" kindref="compound">ip6_addr_packed</ref></type>
+        <definition>typedef typedefPACK_STRUCT_END struct ip6_addr_packed ip6_addr_p_t</definition>
+        <argsstring></argsstring>
+        <name>ip6_addr_p_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="56" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="prot_2ip6_8h_1a12d53f506842c4aa511edf9e28746539" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref> struct <ref refid="structip6__addr__packed" kindref="compound">ip6_addr_packed</ref></type>
+        <definition>PACK_STRUCT_BEGIN struct ip6_frag_hdr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h" line="55" column="20"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>IPv6 protocol definitions </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_PROT_IP6_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_PROT_IP6_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/arch.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/ip6_addr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="53" refid="structip6__addr__packed" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip6__addr__packed" kindref="compound">ip6_addr_packed</ref><sp/>{</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="structip6__addr__packed_1a9d7cd2a55e5e416dec8a98f4cd495a55" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>addr[4]);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}<sp/><ref refid="prot_2ip6_8h_1a12d53f506842c4aa511edf9e28746539" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip6__addr__packed" kindref="compound">ip6_addr_packed</ref><sp/><ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="prot_2ip6_8h_1afb4c1dc527be76d8f27591dfb726c023" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_HLEN<sp/>40</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="prot_2ip6_8h_1a27db49d05c2230c085c04e766267ed38" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_HOPBYHOP<sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="prot_2ip6_8h_1a748b24c4f1ae5bbeecaa34e066cb3f8c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_TCP<sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="prot_2ip6_8h_1a0159bb5b3af8ea1e203d543c0f3c17c2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_UDP<sp/><sp/><sp/><sp/><sp/><sp/><sp/>17</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="prot_2ip6_8h_1a203e1cfca6330ec95bcdbe2418587f65" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_ENCAPS<sp/><sp/><sp/><sp/>41</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="prot_2ip6_8h_1a4d9e6542b73b17c81b56808e1ffd5b27" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_ROUTING<sp/><sp/><sp/>43</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="prot_2ip6_8h_1a1a72bdc1494ea84cbf16424e9aedcd79" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_FRAGMENT<sp/><sp/>44</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="prot_2ip6_8h_1ab277ee09b6e7200fc1cfe28482b886a6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_ICMP6<sp/><sp/><sp/><sp/><sp/>58</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="prot_2ip6_8h_1a654fbd4bb77707859b16f6935f2ba4c7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_NONE<sp/><sp/><sp/><sp/><sp/><sp/>59</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="prot_2ip6_8h_1af01cb063f723d79e1c34a8e95a93a2c0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_DESTOPTS<sp/><sp/>60</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="prot_2ip6_8h_1a6e4afde135c71a3b194b68add3d9138c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_NEXTH_UDPLITE<sp/><sp/><sp/>136</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="80" refid="structip6__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip6__hdr" kindref="compound">ip6_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="structip6__hdr_1ac6e6140bc60cc977c547fe1edf51bc66" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>_v_tc_fl);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="structip6__hdr_1ac6e6140bc60cc977c547fe1edf51bc66" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_plen);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="structip6__hdr_1a7e8821e0eb16fe1f048228c119a69942" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_nexth);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="structip6__hdr_1a7e8821e0eb16fe1f048228c119a69942" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_hoplim);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><ref refid="structip6__hdr_1a5a575c55ef0ba5454a4b2930cfc10733" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref><sp/>src);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="structip6__hdr_1a5a575c55ef0ba5454a4b2930cfc10733" kindref="member">PACK_STRUCT_FLD_S</ref>(<ref refid="prot_2ip6_8h_1a560932a657f17ec5a0a3a78a1ce7e60a" kindref="member">ip6_addr_p_t</ref><sp/>dest);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal">}<sp/><ref refid="prot_2ip6_8h_1a12d53f506842c4aa511edf9e28746539" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Hop-by-hop<sp/>router<sp/>alert<sp/>option.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="prot_2ip6_8h_1a3c07dfc39f03801b78ea2b5e882feaa5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_HBH_HLEN<sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="prot_2ip6_8h_1a792e3f1465395652f1df6dd41cfa089a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_PAD1_OPTION<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="prot_2ip6_8h_1a42b8fada1fa942926239b86f91c11e03" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_PADN_ALERT_OPTION<sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="prot_2ip6_8h_1a02ac672111b898fe0ab527329b05ce57" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ROUTER_ALERT_OPTION<sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="prot_2ip6_8h_1afb8daf0c5217efe957cd809074ca5f0b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_ROUTER_ALERT_VALUE_MLD<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="108" refid="structip6__hbh__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip6__hbh__hdr" kindref="compound">ip6_hbh_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>next<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a555a70b055779d096f51d359860ca93f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_nexth);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>header<sp/>length<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a555a70b055779d096f51d359860ca93f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_hlen);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>router<sp/>alert<sp/>option<sp/>type<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a555a70b055779d096f51d359860ca93f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_ra_opt_type);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>router<sp/>alert<sp/>option<sp/>data<sp/>len<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a555a70b055779d096f51d359860ca93f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_ra_opt_dlen);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>router<sp/>alert<sp/>option<sp/>data<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a5dff82e0d8756b04febd936e23b989da" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_ra_opt_data);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>PadN<sp/>option<sp/>type<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a555a70b055779d096f51d359860ca93f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_padn_opt_type);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>PadN<sp/>option<sp/>data<sp/>len<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><ref refid="structip6__hbh__hdr_1a555a70b055779d096f51d359860ca93f" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_padn_opt_dlen);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal">}<sp/><ref refid="prot_2ip6_8h_1a12d53f506842c4aa511edf9e28746539" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Fragment<sp/>header.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130" refid="prot_2ip6_8h_1aacda00cc76d9e7f9f3197de3b27089ea" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_FRAG_HLEN<sp/><sp/><sp/><sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131" refid="prot_2ip6_8h_1a4ada75ee94d08af1a0d2656e6d14d7d9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_FRAG_OFFSET_MASK<sp/><sp/><sp/><sp/>0xfff8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132" refid="prot_2ip6_8h_1a4e60dc945c0061d3d4dc4a84132a506b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6_FRAG_MORE_FLAG<sp/><sp/><sp/><sp/><sp/><sp/>0x0001</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/bpstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><ref refid="cc_8h_1a73199061891adf1b912d20835c7d5e96" kindref="member">PACK_STRUCT_BEGIN</ref></highlight></codeline>
+<codeline lineno="137" refid="structip6__frag__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip6__frag__hdr" kindref="compound">ip6_frag_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>next<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><ref refid="structip6__frag__hdr_1a8604fbb38f61d571cdc373f3ecc79512" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>_nexth);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>reserved<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><ref refid="structip6__frag__hdr_1a8604fbb38f61d571cdc373f3ecc79512" kindref="member">PACK_STRUCT_FLD_8</ref>(<ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>reserved);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>fragment<sp/>offset<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><ref refid="structip6__frag__hdr_1a623f3b24b23b28e1509c810e7a1d4711" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/>_fragment_offset);</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>fragmented<sp/>packet<sp/>identification<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="structip6__frag__hdr_1a623f3b24b23b28e1509c810e7a1d4711" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>_identification);</highlight></codeline>
+<codeline lineno="146"><highlight class="normal">}<sp/><ref refid="prot_2ip6_8h_1a12d53f506842c4aa511edf9e28746539" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><ref refid="cc_8h_1a465fef70f294e21cbf4ea51fc342f20e" kindref="member">PACK_STRUCT_END</ref></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>PACK_STRUCT_USE_INCLUDES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#<sp/><sp/>include<sp/>&quot;arch/epstruct.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="prot_2ip6_8h_1a90f24cf50dee93e0729a1fc1d05374e3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_V(hdr)<sp/><sp/>((lwip_ntohl((hdr)-&gt;_v_tc_fl)<sp/>&gt;&gt;<sp/>28)<sp/>&amp;<sp/>0x0f)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153" refid="prot_2ip6_8h_1a09221519353bd18683c39a37905af968" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_TC(hdr)<sp/>((lwip_ntohl((hdr)-&gt;_v_tc_fl)<sp/>&gt;&gt;<sp/>20)<sp/>&amp;<sp/>0xff)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154" refid="prot_2ip6_8h_1aca05b52650fd3d7d7806b7aaf3fe4aaf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_FL(hdr)<sp/>(lwip_ntohl((hdr)-&gt;_v_tc_fl)<sp/>&amp;<sp/>0x000fffff)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="prot_2ip6_8h_1ac672706ee00b07f263dad7dcf116d351" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_PLEN(hdr)<sp/>(lwip_ntohs((hdr)-&gt;_plen))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="prot_2ip6_8h_1a11009a147aa680a6a486ded85382aff1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_NEXTH(hdr)<sp/>((hdr)-&gt;_nexth)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="prot_2ip6_8h_1adc6c59e0bfc927c6770d7b01323a87d5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_NEXTH_P(hdr)<sp/>((u8_t<sp/>*)(hdr)<sp/>+<sp/>6)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158" refid="prot_2ip6_8h_1a4f8209d53443b50770e57426d027de28" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_HOPLIM(hdr)<sp/>((hdr)-&gt;_hoplim)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="prot_2ip6_8h_1a932e7c887bb04691075a8c36c61736e4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_VTCFL_SET(hdr,<sp/>v,<sp/>tc,<sp/>fl)<sp/>(hdr)-&gt;_v_tc_fl<sp/>=<sp/>(lwip_htonl((((u32_t)(v))<sp/>&lt;&lt;<sp/>28)<sp/>|<sp/>(((u32_t)(tc))<sp/>&lt;&lt;<sp/>20)<sp/>|<sp/>(fl)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161" refid="prot_2ip6_8h_1a2d727ccfecc56fb1e35ea4f7249f399b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_PLEN_SET(hdr,<sp/>plen)<sp/>(hdr)-&gt;_plen<sp/>=<sp/>lwip_htons(plen)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="prot_2ip6_8h_1a85d62e6278b0bed9e3b88df777be612c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_NEXTH_SET(hdr,<sp/>nexth)<sp/>(hdr)-&gt;_nexth<sp/>=<sp/>(nexth)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163" refid="prot_2ip6_8h_1aaa72852834526961a3fb2cbc07fe602d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP6H_HOPLIM_SET(hdr,<sp/>hl)<sp/>(hdr)-&gt;_hoplim<sp/>=<sp/>(u8_t)(hl)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_PROT_IP6_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip6.h"/>
+  </compounddef>
+</doxygen>

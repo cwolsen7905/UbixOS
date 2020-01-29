@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__setpgid__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_setpgid_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__setpgid__args_1a66f9360c1e5d51b0258c8db283bb8184" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setpgid_args::pgid</definition>
+        <argsstring></argsstring>
+        <name>pgid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="583" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="583" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setpgid__args_1af843ca1aba858ef1ebe4bdb968da2483" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setpgid_args::pgid_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>pgid_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="582" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="582" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setpgid__args_1a4160ba10a307531c736928de7149156f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setpgid_args::pgid_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>pgid_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="584" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="584" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setpgid__args_1a2eda57fe49567ba3348c50b321f84521" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_setpgid_args::pid</definition>
+        <argsstring></argsstring>
+        <name>pid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="580" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="580" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setpgid__args_1ab381cf8c9c5a88c9ac2edeca6e42faed" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setpgid_args::pid_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>pid_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="579" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="579" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__setpgid__args_1a824296454b49dd812f2eaeaf7b9b7bce" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_setpgid_args::pid_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>pid_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="581" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="581" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_setpgid_args</label>
+        <link refid="structsys__setpgid__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="578" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="578" bodyend="585"/>
+    <listofallmembers>
+      <member refid="structsys__setpgid__args_1a66f9360c1e5d51b0258c8db283bb8184" prot="public" virt="non-virtual"><scope>sys_setpgid_args</scope><name>pgid</name></member>
+      <member refid="structsys__setpgid__args_1af843ca1aba858ef1ebe4bdb968da2483" prot="public" virt="non-virtual"><scope>sys_setpgid_args</scope><name>pgid_l_</name></member>
+      <member refid="structsys__setpgid__args_1a4160ba10a307531c736928de7149156f" prot="public" virt="non-virtual"><scope>sys_setpgid_args</scope><name>pgid_r_</name></member>
+      <member refid="structsys__setpgid__args_1a2eda57fe49567ba3348c50b321f84521" prot="public" virt="non-virtual"><scope>sys_setpgid_args</scope><name>pid</name></member>
+      <member refid="structsys__setpgid__args_1ab381cf8c9c5a88c9ac2edeca6e42faed" prot="public" virt="non-virtual"><scope>sys_setpgid_args</scope><name>pid_l_</name></member>
+      <member refid="structsys__setpgid__args_1a824296454b49dd812f2eaeaf7b9b7bce" prot="public" virt="non-virtual"><scope>sys_setpgid_args</scope><name>pid_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

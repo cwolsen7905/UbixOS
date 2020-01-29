@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__sys__time" kind="group">
+    <compoundname>sys_time</compoundname>
+    <title>Time</title>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="group__sys__time_1ga11316ac1e77418c6fa4ab8869e3fa199" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+        <definition>u32_t sys_now</definition>
+        <argsstring>(void)</argsstring>
+        <name>sys_now</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Returns the current time in milliseconds, may be the same as sys_jiffies or at least based on it. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="310" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="497" bodyend="499" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="310" declcolumn="7"/>
+        <references refid="sys__arch_8c_1aa40706a5e306545035127c0cf198cf49" compoundref="sys__arch_8c" startline="483" endline="495">sys_unix_now</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

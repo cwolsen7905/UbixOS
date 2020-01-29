@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structhostRingEntry__old" kind="struct" language="C++" prot="public">
+    <compoundname>hostRingEntry_old</compoundname>
+    <includes refid="lnc_8h" local="no">lnc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structhostRingEntry__old_1afd81867b79b858131240062a87d02f47" prot="public" static="no" mutable="no">
+        <type>union hostRingEntry_old::@8</type>
+        <definition>union hostRingEntry_old::@8  hostRingEntry_old::buff</definition>
+        <argsstring></argsstring>
+        <name>buff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="81" column="10"/>
+      </memberdef>
+      <memberdef kind="variable" id="structhostRingEntry__old_1a452f5a03174e4d215a2757ae5a5e15da" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* hostRingEntry_old::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="80" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structhostRingEntry__old_1a23021f17f955424e310262c114101d92" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmds" kindref="compound">mds</ref> *</type>
+        <definition>struct mds* hostRingEntry_old::md</definition>
+        <argsstring></argsstring>
+        <name>md</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="77" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>mds</label>
+        <link refid="structmds"/>
+      </node>
+      <node id="1">
+        <label>hostRingEntry_old</label>
+        <link refid="structhostRingEntry__old"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+md</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="76" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="76" bodyend="82"/>
+    <listofallmembers>
+      <member refid="structhostRingEntry__old_1afd81867b79b858131240062a87d02f47" prot="public" virt="non-virtual"><scope>hostRingEntry_old</scope><name>buff</name></member>
+      <member refid="structhostRingEntry__old_1a452f5a03174e4d215a2757ae5a5e15da" prot="public" virt="non-virtual"><scope>hostRingEntry_old</scope><name>data</name></member>
+      <member refid="structhostRingEntry__old_1a23021f17f955424e310262c114101d92" prot="public" virt="non-virtual"><scope>hostRingEntry_old</scope><name>md</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

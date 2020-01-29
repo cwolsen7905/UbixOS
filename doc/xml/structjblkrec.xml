@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structjblkrec" kind="struct" language="C++" prot="public">
+    <compoundname>jblkrec</compoundname>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structjblkrec_1a453d7ed85a430c2c3f649b46451b21ae" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref></type>
+        <definition>ufs2_daddr_t jblkrec::jb_blkno</definition>
+        <argsstring></argsstring>
+        <name>jb_blkno</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="733" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="733" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjblkrec_1aac97a200e4ef35a5397c12442e04696c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t jblkrec::jb_frags</definition>
+        <argsstring></argsstring>
+        <name>jb_frags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="735" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="735" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjblkrec_1a2ac2f02b6a0100caf563f1b25fe7a4c2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jblkrec::jb_ino</definition>
+        <argsstring></argsstring>
+        <name>jb_ino</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="732" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="732" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjblkrec_1a53a989bf94c9673bf8cc7d633235c55b" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1acfdbacc42c74f81152f66f8f81316513" kindref="member">ufs_lbn_t</ref></type>
+        <definition>ufs_lbn_t jblkrec::jb_lbn</definition>
+        <argsstring></argsstring>
+        <name>jb_lbn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="734" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="734" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjblkrec_1a3b7d6f9767994ef1e9c100121e0f581e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t jblkrec::jb_oldfrags</definition>
+        <argsstring></argsstring>
+        <name>jb_oldfrags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="736" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="736" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjblkrec_1a41e3aed5863269fe86822b2eccd22906" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jblkrec::jb_op</definition>
+        <argsstring></argsstring>
+        <name>jb_op</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="731" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="731" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjblkrec_1a1b033d8a5dd4b5d9551b0ca8b584fde7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t jblkrec::jb_unused</definition>
+        <argsstring></argsstring>
+        <name>jb_unused</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="737" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="737" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>jblkrec</label>
+        <link refid="structjblkrec"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="730" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="730" bodyend="738"/>
+    <listofallmembers>
+      <member refid="structjblkrec_1a453d7ed85a430c2c3f649b46451b21ae" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_blkno</name></member>
+      <member refid="structjblkrec_1aac97a200e4ef35a5397c12442e04696c" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_frags</name></member>
+      <member refid="structjblkrec_1a2ac2f02b6a0100caf563f1b25fe7a4c2" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_ino</name></member>
+      <member refid="structjblkrec_1a53a989bf94c9673bf8cc7d633235c55b" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_lbn</name></member>
+      <member refid="structjblkrec_1a3b7d6f9767994ef1e9c100121e0f581e" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_oldfrags</name></member>
+      <member refid="structjblkrec_1a41e3aed5863269fe86822b2eccd22906" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_op</name></member>
+      <member refid="structjblkrec_1a1b033d8a5dd4b5d9551b0ca8b584fde7" prot="public" virt="non-virtual"><scope>jblkrec</scope><name>jb_unused</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__lwip__opts__udp" kind="group">
+    <compoundname>lwip_opts_udp</compoundname>
+    <title>UDP</title>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="group__lwip__opts__udp_1ga72021505969c5ce29e972486d7794baa" prot="public" static="no">
+        <name>LWIP_NETBUF_RECVINFO</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_NETBUF_RECVINFO==1: append destination addr and port to every netbuf. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1072" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1072" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__udp_1gab6030e96e72df649d2650fd32d7a67b3" prot="public" static="no">
+        <name>LWIP_UDP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_UDP==1: Turn on UDP. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1051" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1051" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__udp_1ga35731bc5f337943e474a15c1cd538a61" prot="public" static="no">
+        <name>LWIP_UDPLITE</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>LWIP_UDPLITE==1: Turn on UDP-Lite. (Requires LWIP_UDP) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1058" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1058" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__lwip__opts__udp_1ga97908a317bcba89174b5d1ccbdca0096" prot="public" static="no">
+        <name>UDP_TTL</name>
+        <initializer>(<ref refid="group__lwip__opts__ipv4_1ga556b9b58fd02c0fdd126791baef77411" kindref="member">IP_DEFAULT_TTL</ref>)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>UDP_TTL: Default Time-To-Live value. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/opt.h" line="1065" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/opt.h" bodystart="1065" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

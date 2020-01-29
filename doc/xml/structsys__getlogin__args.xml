@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__getlogin__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_getlogin_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__getlogin__args_1ab55f9d96796dc82c094526f794742edc" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_getlogin_args::namebuf</definition>
+        <argsstring></argsstring>
+        <name>namebuf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="770" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="770" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1aa52846421fb6bb39fb090a155cbfbdab" compoundref="gen__calls_8c" startline="360" endline="366">sys_getlogin</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getlogin__args_1abe6b3cd5690c7b98bba3ddfaa9c00be6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getlogin_args::namebuf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>namebuf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="769" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="769" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getlogin__args_1ad7b135a489dde789130651d4018d778f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getlogin_args::namebuf_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>namebuf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="771" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="771" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getlogin__args_1aa247bed5105660888e9e79622c09395f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+        <definition>u_int sys_getlogin_args::namelen</definition>
+        <argsstring></argsstring>
+        <name>namelen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="773" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="773" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1aa52846421fb6bb39fb090a155cbfbdab" compoundref="gen__calls_8c" startline="360" endline="366">sys_getlogin</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getlogin__args_1a41e49c4ba63127d45b7e3d2d6e28c2e7" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getlogin_args::namelen_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>namelen_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="772" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="772" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__getlogin__args_1a4e96d8a63cb28b0e2b7aa6271046c1bc" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_getlogin_args::namelen_r_[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</argsstring>
+        <name>namelen_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="774" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="774" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_getlogin_args</label>
+        <link refid="structsys__getlogin__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="768" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="768" bodyend="775"/>
+    <listofallmembers>
+      <member refid="structsys__getlogin__args_1ab55f9d96796dc82c094526f794742edc" prot="public" virt="non-virtual"><scope>sys_getlogin_args</scope><name>namebuf</name></member>
+      <member refid="structsys__getlogin__args_1abe6b3cd5690c7b98bba3ddfaa9c00be6" prot="public" virt="non-virtual"><scope>sys_getlogin_args</scope><name>namebuf_l_</name></member>
+      <member refid="structsys__getlogin__args_1ad7b135a489dde789130651d4018d778f" prot="public" virt="non-virtual"><scope>sys_getlogin_args</scope><name>namebuf_r_</name></member>
+      <member refid="structsys__getlogin__args_1aa247bed5105660888e9e79622c09395f" prot="public" virt="non-virtual"><scope>sys_getlogin_args</scope><name>namelen</name></member>
+      <member refid="structsys__getlogin__args_1a41e49c4ba63127d45b7e3d2d6e28c2e7" prot="public" virt="non-virtual"><scope>sys_getlogin_args</scope><name>namelen_l_</name></member>
+      <member refid="structsys__getlogin__args_1a4e96d8a63cb28b0e2b7aa6271046c1bc" prot="public" virt="non-virtual"><scope>sys_getlogin_args</scope><name>namelen_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

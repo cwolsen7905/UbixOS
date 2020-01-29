@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_5014c1b11ed476e69275a593545c2a82" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/isa</compoundname>
+    <innerfile refid="8259_8h">8259.h</innerfile>
+    <innerfile refid="isa_2atkbd_8h">atkbd.h</innerfile>
+    <innerfile refid="fdc_8h">fdc.h</innerfile>
+    <innerfile refid="mouse_8h">mouse.h</innerfile>
+    <innerfile refid="ne2k_8h">ne2k.h</innerfile>
+    <innerfile refid="pit_8h">pit.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/isa/"/>
+  </compounddef>
+</doxygen>

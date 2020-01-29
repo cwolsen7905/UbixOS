@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_60a47962a3554048f3afe735257bc308" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/netif/ppp</compoundname>
+    <innerdir refid="dir_a3e33ddc49fc07e4150ded69ff193142">C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl</innerdir>
+    <innerfile refid="ccp_8h">ccp.h</innerfile>
+    <innerfile refid="chap-md5_8h">chap-md5.h</innerfile>
+    <innerfile refid="chap-new_8h">chap-new.h</innerfile>
+    <innerfile refid="chap__ms_8h">chap_ms.h</innerfile>
+    <innerfile refid="eap_8h">eap.h</innerfile>
+    <innerfile refid="ecp_8h">ecp.h</innerfile>
+    <innerfile refid="eui64_8h">eui64.h</innerfile>
+    <innerfile refid="fsm_8h">fsm.h</innerfile>
+    <innerfile refid="ipcp_8h">ipcp.h</innerfile>
+    <innerfile refid="ipv6cp_8h">ipv6cp.h</innerfile>
+    <innerfile refid="lcp_8h">lcp.h</innerfile>
+    <innerfile refid="magic_8h">magic.h</innerfile>
+    <innerfile refid="mppe_8h">mppe.h</innerfile>
+    <innerfile refid="ppp_8h">ppp.h</innerfile>
+    <innerfile refid="ppp__impl_8h">ppp_impl.h</innerfile>
+    <innerfile refid="ppp__opts_8h">ppp_opts.h</innerfile>
+    <innerfile refid="pppapi_8h">pppapi.h</innerfile>
+    <innerfile refid="pppcrypt_8h">pppcrypt.h</innerfile>
+    <innerfile refid="pppdebug_8h">pppdebug.h</innerfile>
+    <innerfile refid="pppoe_8h">pppoe.h</innerfile>
+    <innerfile refid="pppol2tp_8h">pppol2tp.h</innerfile>
+    <innerfile refid="pppos_8h">pppos.h</innerfile>
+    <innerfile refid="upap_8h">upap.h</innerfile>
+    <innerfile refid="vj_8h">vj.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/"/>
+  </compounddef>
+</doxygen>

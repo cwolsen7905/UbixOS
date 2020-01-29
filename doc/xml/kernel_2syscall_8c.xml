@@ -1,0 +1,1142 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kernel_2syscall_8c" kind="file" language="C++">
+    <compoundname>syscall.c</compoundname>
+    <includes refid="syscalls_8h" local="no">ubixos/syscalls.h</includes>
+    <includes refid="syscall_8h" local="no">ubixos/syscall.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="vitals_8h" local="no">ubixos/vitals.h</includes>
+    <includes refid="trap_8h" local="no">sys/trap.h</includes>
+    <includes refid="sys_2elf_8h" local="no">sys/elf.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <incdepgraph>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="44">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="2">
+        <label>ubixos/syscalls.h</label>
+        <link refid="syscalls_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>sys/elf32.h</label>
+        <link refid="elf32_8h"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="64">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="27">
+        <label>ubixos/syscall.h</label>
+        <link refid="syscall_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="49">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="57">
+        <label>i386/elf.h</label>
+        <link refid="i386_2elf_8h"/>
+      </node>
+      <node id="40">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="45">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>sys/elf64.h</label>
+        <link refid="elf64_8h"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>sys/elf_common.h</label>
+        <link refid="elf__common_8h"/>
+      </node>
+      <node id="53">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <innerclass refid="struct__UbixUser" prot="public">_UbixUser</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="kernel_2syscall_8c_1a2aebf5c0d98c1cc7bdaffd745e6b1ca2" prot="public" static="no">
+        <type>struct <ref refid="struct__UbixUser" kindref="compound">_UbixUser</ref></type>
+        <definition>typedef struct _UbixUser UbixUser</definition>
+        <argsstring></argsstring>
+        <name>UbixUser</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="101" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kernel_2syscall_8c_1aaf261b06fab146a232b1b55ab16123eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int invalidCall</definition>
+        <argsstring>()</argsstring>
+        <name>invalidCall</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="101" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="101" bodyend="112"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_call</definition>
+        <argsstring>(struct trapframe *frame)</argsstring>
+        <name>sys_call</name>
+        <param>
+          <type>struct <ref refid="structtrapframe" kindref="compound">trapframe</ref> *</type>
+          <declname>frame</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="43" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="43" bodyend="99"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structthread_1ad50525c84c75cd60eace495f3731d457" compoundref="thread_8h" startline="48">thread::abi</references>
+        <references refid="trap_8c_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</references>
+        <references refid="elf__common_8h_1ac7863c747c742ebf280ffc50cd87a890" compoundref="elf__common_8h" startline="164">ELFOSABI_FREEBSD</references>
+        <references refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" compoundref="thread_8h" startline="47">thread::frame</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="i386_2cpu_8h_1a9547f658d81341fdf691bb24c6243b74" compoundref="i386_2cpu_8h" startline="37">PSL_C</references>
+        <references refid="structsyscall__entry_1a1ec13625ae86125bbac17514955e8332" compoundref="syscalls_8h" startline="53">syscall_entry::sc_name</references>
+        <references refid="syscalls_8h_1afa9ccac1e67742f71f026012e2c482c6" compoundref="syscalls_8h" startline="46">SYSCALL_DUMMY</references>
+        <references refid="syscalls_8h_1a128d1a590746d75087f6018dc46c69a4" compoundref="syscalls_8h" startline="44">SYSCALL_INVALID</references>
+        <references refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" compoundref="syscalls_8c" startline="34">systemCalls</references>
+        <references refid="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="78">taskStruct::td</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" compoundref="trap_8h" startline="46">trapframe::tf_eax</references>
+        <references refid="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" compoundref="trap_8h" startline="44">trapframe::tf_edx</references>
+        <references refid="structtrapframe_1adafa69a2f56db6fef99c33bc17c947ba" compoundref="trap_8h" startline="52">trapframe::tf_eflags</references>
+        <references refid="structtrapframe_1acbc06b1642fabea71bfa8ddbba3ede44" compoundref="trap_8h" startline="54">trapframe::tf_esp</references>
+        <references refid="syscalls_8h_1a8c4ca6f2d558ed8247697c76ed1cbc94" compoundref="syscalls_8c" startline="92">totalCalls</references>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a98fb463aa3c38a140b47e594bf9603d6" compoundref="arch_2armv6_2syscall_8c" startline="238" endline="241">invalidCall</referencedby>
+        <referencedby refid="syscall__posix_8c_1a732bce33711189953191fb779fa98c3a" compoundref="syscall__posix_8c" startline="124" endline="135">invalidCall_posix</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a96b9eebf3580117ce76158b2d53f188f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_getcwd</definition>
+        <argsstring>(struct thread *td, struct sys_getcwd_args *args)</argsstring>
+        <name>sys_getcwd</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__getcwd__args" kindref="compound">sys_getcwd_args</ref> *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="204" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="204" bodyend="222"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structsys__getcwd__args_1a0861081d2db6d797b4df182ebdfb371e" compoundref="sysproto__posix_8h" startline="134">sys_getcwd_args::buf</references>
+        <references refid="structosInfo_1ae9411eaa7df66cd0148237248848bbdf" compoundref="sched_8h" startline="58">osInfo::cwd</references>
+        <references refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="69">taskStruct::oInfo</references>
+        <references refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="278" endline="286">sprintf</references>
+        <references refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" compoundref="strlen_8c" startline="55" endline="101">strlen</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a770ac969c8caa5b63641bd50e92132a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_sched_yield</definition>
+        <argsstring>(struct thread *td, void *args)</argsstring>
+        <name>sys_sched_yield</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="224" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="224" bodyend="227"/>
+        <references refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" compoundref="armv6_2sched_8c" startline="244" endline="246">sched_yield</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1af3e2ba7368b2e372ed3c5f6d78d92abb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysAddModule</definition>
+        <argsstring>()</argsstring>
+        <name>sysAddModule</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="145" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="145" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a2406391fe26aeea05a66b4bfa89791d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysAuth</definition>
+        <argsstring>(UbixUser *uu)</argsstring>
+        <name>sysAuth</name>
+        <param>
+          <type><ref refid="arch_2armv6_2syscall_8c_1a2aebf5c0d98c1cc7bdaffd745e6b1ca2" kindref="member">UbixUser</ref> *</type>
+          <declname>uu</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="125" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="125" bodyend="138"/>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a52ff47edbeebe188625281fa52590b43" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysCheckPid</definition>
+        <argsstring>(int pid, int *ptr)</argsstring>
+        <name>sysCheckPid</name>
+        <param>
+          <type>int</type>
+          <declname>pid</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="164" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="164" bodyend="171"/>
+        <references refid="armv6_2sched_8c_1a9cf37ade4c1f6184b33014ac2015e8ed" compoundref="armv6_2sched_8c" startline="207" endline="216">schedFindTask</references>
+        <references refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="72">taskStruct::state</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a2be19f2ab4d1249ece380b7905f139c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysExit</definition>
+        <argsstring>(int status)</argsstring>
+        <name>sysExit</name>
+        <param>
+          <type>int</type>
+          <declname>status</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="159" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="159" bodyend="162"/>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1acde2d98ea53faf94bb3b6dc845401658" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetDrives</definition>
+        <argsstring>(uInt32 *ptr)</argsstring>
+        <name>sysGetDrives</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> *</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="186" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="186" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1aa023f30aed656a766f6aca5d9eeb5f46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetFreePage</definition>
+        <argsstring>(struct thread *td, uint32_t *count)</argsstring>
+        <name>sysGetFreePage</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> *</type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="179" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="179" bodyend="184"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="paging_8h_1a4ede4e8b3e149ef94678acdae7de0e18" compoundref="paging_8h" startline="51">VM_THRD</references>
+        <references refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" compoundref="getfreevirtualpage_8c" startline="47" endline="133">vmm_getFreeVirtualPage</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a82507d7b2cce2d3f09e5dcbb92147447" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetpid</definition>
+        <argsstring>(int *pid)</argsstring>
+        <name>sysGetpid</name>
+        <param>
+          <type>int *</type>
+          <declname>pid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="153" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="153" bodyend="157"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a171d8ec9b18bcfa4909d812003610d09" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetTime</definition>
+        <argsstring>(uInt32 *ptr)</argsstring>
+        <name>sysGetTime</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> *</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="198" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="198" bodyend="202"/>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structvitalsStruct_1a78832d978f9753eb94bf615dc215f511" compoundref="vitals_8h" startline="38">vitalsStruct::sysUptime</references>
+        <references refid="structvitalsStruct_1a338cf71b9ba1338f47fe955d417b3337" compoundref="vitals_8h" startline="46">vitalsStruct::timeStart</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1ad1ac138642b2d37f8ad4772a8a025fe2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetUptime</definition>
+        <argsstring>(uInt32 *ptr)</argsstring>
+        <name>sysGetUptime</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> *</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="192" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="192" bodyend="196"/>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structvitalsStruct_1a9bb69560eadb3b5128102a560f1368a8" compoundref="vitals_8h" startline="37">vitalsStruct::sysTicks</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a456132e49ce398f2579ede7a7c215b3f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysPasswd</definition>
+        <argsstring>(char *passwd)</argsstring>
+        <name>sysPasswd</name>
+        <param>
+          <type>char *</type>
+          <declname>passwd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="140" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="140" bodyend="143"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" compoundref="sched_8h" startline="73">taskStruct::uid</references>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a572c5cdbb579acd6cd998b2d1ef4fc38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysRmModule</definition>
+        <argsstring>()</argsstring>
+        <name>sysRmModule</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="149" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="149" bodyend="151"/>
+      </memberdef>
+      <memberdef kind="function" id="kernel_2syscall_8c_1a19fd41bb2de651eeb58e7324e09bdbb7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysStartSDE</definition>
+        <argsstring>()</argsstring>
+        <name>sysStartSDE</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c" line="229" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscall.c" bodystart="229" bodyend="239"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="syscalls_8h" kindref="compound">ubixos/syscalls.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="syscall_8h" kindref="compound">ubixos/syscall.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="trap_8h" kindref="compound">sys/trap.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_2elf_8h" kindref="compound">sys/elf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>#include<sp/>&lt;sde/sde.h&gt;<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" kindref="member">sys_call</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtrapframe" kindref="compound">trapframe</ref><sp/>*frame)<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>code<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref><sp/>params;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structthread" kindref="compound">thread</ref><sp/>*td<sp/>=<sp/>&amp;<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref><sp/>=<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>params<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref>)<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1acbc06b1642fabea71bfa8ddbba3ede44" kindref="member">tf_esp</ref><sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>code<sp/>=<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(code<sp/>&gt;<sp/><ref refid="syscalls_8h_1a8c4ca6f2d558ed8247697c76ed1cbc94" kindref="member">totalCalls</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="trap_8c_1a62b4617f9a2800b1e9baf8d6f93835bd" kindref="member">die_if_kernel</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>System<sp/>uCall&quot;</highlight><highlight class="normal">,<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>,<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref>);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;PID:<sp/>%i&quot;</highlight><highlight class="normal">,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/><ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].sc_status<sp/>==<sp/><ref refid="syscalls_8h_1a128d1a590746d75087f6018dc46c69a4" kindref="member">SYSCALL_INVALID</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>Call:<sp/>[%i][0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>code,<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/><ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].sc_name);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref><sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[1]<sp/>=<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].sc_status<sp/>==<sp/><ref refid="syscalls_8h_1afa9ccac1e67742f71f026012e2c482c6" kindref="member">SYSCALL_DUMMY</ref>)</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Syscall-&gt;abi:<sp/>[%i],<sp/>PID:<sp/>[%i],<sp/>Code:<sp/>%i,<sp/>Call:<sp/>%s\n&quot;</highlight><highlight class="normal">,<sp/>td-&gt;<ref refid="structthread_1ad50525c84c75cd60eace495f3731d457" kindref="member">abi</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref>,<sp/><ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].<ref refid="structsyscall__entry_1a1ec13625ae86125bbac17514955e8332" kindref="member">sc_name</ref>);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/><sp/><sp/><sp/>if<sp/>(td-&gt;abi<sp/>==<sp/>ELFOSABI_UBIXOS)</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>error<sp/>=<sp/>(int)<sp/>systemCalls[code].sc_entry(<sp/>frame-&gt;tf_ebx,<sp/>frame-&gt;tf_ecx,<sp/>frame-&gt;tf_edx<sp/>);</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/><sp/><sp/><sp/>else<sp/>*/</highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(td-&gt;<ref refid="structthread_1ad50525c84c75cd60eace495f3731d457" kindref="member">abi</ref><sp/>==<sp/><ref refid="elf__common_8h_1ac7863c747c742ebf280ffc50cd87a890" kindref="member">ELFOSABI_FREEBSD</ref>)</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>error<sp/>=<sp/>(int)<sp/><ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].sc_entry(td,<sp/>params);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>error<sp/>=<sp/>(int)<sp/><ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].sc_entry(td,<sp/>params);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[code].sc_status<sp/>==<sp/><ref refid="syscalls_8h_1afa9ccac1e67742f71f026012e2c482c6" kindref="member">SYSCALL_DUMMY</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;DUMMY<sp/>CALL:<sp/>(%i)\n&quot;</highlight><highlight class="normal">,<sp/>code);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="comment">//kprintf(&quot;ERROR:<sp/>0x%X&quot;,error);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(error)<sp/>{</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0:</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref><sp/>=<sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0];</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref><sp/>=<sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[1];</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1adafa69a2f56db6fef99c33bc17c947ba" kindref="member">tf_eflags</ref><sp/>&amp;=<sp/>~<ref refid="i386_2cpu_8h_1a9547f658d81341fdf691bb24c6243b74" kindref="member">PSL_C</ref>;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref><sp/>=<sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0];</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref><sp/>=<sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[1];</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" kindref="member">frame</ref>-&gt;<ref refid="structtrapframe_1adafa69a2f56db6fef99c33bc17c947ba" kindref="member">tf_eflags</ref><sp/>|=<sp/><ref refid="i386_2cpu_8h_1a9547f658d81341fdf691bb24c6243b74" kindref="member">PSL_C</ref>;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="99"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="kernel_2syscall_8c_1aaf261b06fab146a232b1b55ab16123eb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a98fb463aa3c38a140b47e594bf9603d6" kindref="member">invalidCall</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" kindref="member">sys_call</ref>;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(<ref refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" kindref="member">sys_call</ref>)</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>System<sp/>Call<sp/>#[%i],<sp/>PID:<sp/>%i\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" kindref="member">sys_call</ref>,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115" refid="kernel_2syscall_8c_1a2aebf5c0d98c1cc7bdaffd745e6b1ca2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="struct__UbixUser" kindref="compound">_UbixUser</ref><sp/><ref refid="struct__UbixUser" kindref="compound">UbixUser</ref>;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="struct__UbixUser" kindref="compound">_UbixUser</ref><sp/>{</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="struct__UbixUser_1a939885035625b337a1362e635b2a0cbe" kindref="member">username</ref>;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="struct__UbixUser_1a0abee881b70e504823fc70a6a2b93de4" kindref="member">password</ref>;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="struct__UbixUser_1a8d21d76e84a85aa49edf8109c138dfe9" kindref="member">uid</ref>;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="struct__UbixUser_1aa0779ab57c9c43976b09c01c2eaab5cb" kindref="member">gid</ref>;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="struct__UbixUser_1ae7db3a1be08e4f64b3393847d205ac13" kindref="member">home</ref>;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="struct__UbixUser_1aa813c8e6c03091fd69653fd436af0c75" kindref="member">shell</ref>;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="kernel_2syscall_8c_1a2406391fe26aeea05a66b4bfa89791d2" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1af53171b36a238440fc8e757c0d00a91f" kindref="member">sysAuth</ref>(<ref refid="struct__UbixUser" kindref="compound">UbixUser</ref><sp/>*<ref refid="unionuu" kindref="compound">uu</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;authenticating<sp/>user<sp/>%s\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="unionuu" kindref="compound">uu</ref>-&gt;username);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>MrOlsen<sp/>2016-01-01<sp/>uh?</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"><sp/><sp/><sp/>if(uu-&gt;username<sp/>==<sp/>&quot;root&quot;<sp/>&amp;&amp;<sp/>uu-&gt;password<sp/>==<sp/>&quot;user&quot;)</highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/><sp/><sp/>uu-&gt;uid<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"><sp/><sp/><sp/>uu-&gt;gid<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="133"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><ref refid="unionuu" kindref="compound">uu</ref>-&gt;uid<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><ref refid="unionuu" kindref="compound">uu</ref>-&gt;gid<sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="kernel_2syscall_8c_1a456132e49ce398f2579ede7a7c215b3f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a87ae7b6cdc0230fbdf65c167a776e9ad" kindref="member">sysPasswd</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*passwd)<sp/>{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;changing<sp/>user<sp/>password<sp/>for<sp/>user<sp/>%d\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" kindref="member">uid</ref>);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="kernel_2syscall_8c_1af3e2ba7368b2e372ed3c5f6d78d92abb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a5242d291fc024663a9035376f70a9938" kindref="member">sysAddModule</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149" refid="kernel_2syscall_8c_1a572c5cdbb579acd6cd998b2d1ef4fc38" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a15cbe3f603b53d632faf25bce7f0a7ce" kindref="member">sysRmModule</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="151"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153" refid="kernel_2syscall_8c_1a82507d7b2cce2d3f09e5dcbb92147447" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a850d08e73e21c01850eea87fbe334fb6" kindref="member">sysGetpid</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*pid)<sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(pid)</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/>*pid<sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159" refid="kernel_2syscall_8c_1a2be19f2ab4d1249ece380b7905f139c4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1afe946867553f08182c48bb1dac56f1ca" kindref="member">sysExit</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>status)<sp/>{</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1a152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164" refid="kernel_2syscall_8c_1a52ff47edbeebe188625281fa52590b43" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a618ade9098959166434c56fedf05f71a" kindref="member">sysCheckPid</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>pid,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*ptr)<sp/>{</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/><ref refid="armv6_2sched_8c_1a9cf37ade4c1f6184b33014ac2015e8ed" kindref="member">schedFindTask</ref>(pid);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((tmpTask<sp/>!=<sp/>0x0)<sp/>&amp;&amp;<sp/>(ptr<sp/>!=<sp/>0x0))</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>*ptr<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" kindref="member">state</ref>;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>*ptr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="174"><highlight class="comment"></highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/>Function:<sp/>int<sp/>sysGetFreePage();</highlight></codeline>
+<codeline lineno="176"><highlight class="comment"><sp/>Description:<sp/>Allocs<sp/>A<sp/>Page<sp/>To<sp/>The<sp/>Users<sp/>VM<sp/>Space</highlight></codeline>
+<codeline lineno="177"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="178"><highlight class="comment"></highlight></codeline>
+<codeline lineno="179" refid="kernel_2syscall_8c_1aa023f30aed656a766f6aca5d9eeb5f46" refkind="member"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a1db3bfbad534c2fa75c02646fcf80a90" kindref="member">sysGetFreePage</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*count)<sp/>{</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" kindref="member">vmm_getFreeVirtualPage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,<sp/>*count,<sp/><ref refid="paging_8h_1a4ede4e8b3e149ef94678acdae7de0e18" kindref="member">VM_THRD</ref>);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//return(vmm_getFreeVirtualPage(_current-&gt;id,<sp/>*count,<sp/>VM_TASK));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="186" refid="kernel_2syscall_8c_1acde2d98ea53faf94bb3b6dc845401658" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a8bdd527e2c5a0fe7ea30685196ce3323" kindref="member">sysGetDrives</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*ptr)<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ptr)</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>*ptr<sp/>=<sp/>0x0;<sp/></highlight><highlight class="comment">//(uInt32)devices;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="191"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="192" refid="kernel_2syscall_8c_1ad1ac138642b2d37f8ad4772a8a025fe2" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1a7c8a6dad2e6968015b21357c795bccc0" kindref="member">sysGetUptime</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*ptr)<sp/>{</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ptr)</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>*ptr<sp/>=<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a9bb69560eadb3b5128102a560f1368a8" kindref="member">sysTicks</ref>;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="197"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="198" refid="kernel_2syscall_8c_1a171d8ec9b18bcfa4909d812003610d09" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1ac0997ac7ac4b4bdb6f8565f2b7f0c74a" kindref="member">sysGetTime</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*ptr)<sp/>{</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ptr)</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/>*ptr<sp/>=<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a78832d978f9753eb94bf615dc215f511" kindref="member">sysUptime</ref><sp/>+<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a338cf71b9ba1338f47fe955d417b3337" kindref="member">timeStart</ref>;</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="204" refid="kernel_2syscall_8c_1a96b9eebf3580117ce76158b2d53f188f" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kernel_2syscall_8c_1a96b9eebf3580117ce76158b2d53f188f" kindref="member">sys_getcwd</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__getcwd__args" kindref="compound">sys_getcwd_args</ref><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>args-&gt;<ref refid="structsys__getcwd__args_1a0861081d2db6d797b4df182ebdfb371e" kindref="member">buf</ref>;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*cwd<sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1ae9411eaa7df66cd0148237248848bbdf" kindref="member">cwd</ref>;<sp/></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/>while<sp/>(cwd[0]<sp/>!=<sp/></highlight><highlight class="charliteral">&apos;/&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/>cwd++;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(args-&gt;<ref refid="structsys__getcwd__args_1a0861081d2db6d797b4df182ebdfb371e" kindref="member">buf</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>cwd);</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structbuf" kindref="compound">buf</ref>[<ref refid="lib_8h_1ae6c8de953239811a34eeeab09458e55e" kindref="member">strlen</ref>(cwd)]<sp/>=<sp/></highlight><highlight class="charliteral">&apos;\0&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//sprintf(buf,<sp/>&quot;%s&quot;,<sp/>_current-&gt;oInfo.cwd);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//buf[strlen(_current-&gt;oInfo.cwd)]<sp/>=<sp/>&apos;\0&apos;;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>(2018-01-01)<sp/>-<sp/>Why<sp/>is<sp/>sprintf<sp/>not<sp/>null<sp/>terminating</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>kprintf(&quot;GETCWD:<sp/>[%s][0x%X]\n&quot;,<sp/>_current-&gt;oInfo.cwd,<sp/>args-&gt;buf);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>kprintf(&quot;[%s]&quot;,<sp/>args-&gt;buf);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="224" refid="kernel_2syscall_8c_1a770ac969c8caa5b63641bd50e92132a0" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kernel_2syscall_8c_1a770ac969c8caa5b63641bd50e92132a0" kindref="member">sys_sched_yield</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*args)<sp/>{</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><ref refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="228"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="229" refid="kernel_2syscall_8c_1a19fd41bb2de651eeb58e7324e09bdbb7" refkind="member"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="arch_2armv6_2syscall_8c_1afb14ed929bdc2c68714da3685e650c6c" kindref="member">sysStartSDE</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>1400;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;hlt&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//execThread(sdeThread,0x2000),0x0);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>1400;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;hlt&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="240"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/syscall.c"/>
+  </compounddef>
+</doxygen>

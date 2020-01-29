@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Dyn" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Dyn</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Dyn_1a4820e579b624438f02827e7b44fbd0f7" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Dyn::d_ptr</definition>
+        <argsstring></argsstring>
+        <name>d_ptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="134" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Dyn_1a74a63e5acb7d8ddc946a5b0c5eb3c26a" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5b450442210b3d21567662fb96ac9a02" kindref="member">Elf64_Sxword</ref></type>
+        <definition>Elf64_Sxword Elf64_Dyn::d_tag</definition>
+        <argsstring></argsstring>
+        <name>d_tag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="131" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Dyn_1abaef1beabb944eaaa840f31b09bacc0e" prot="public" static="no" mutable="no">
+        <type>union Elf64_Dyn::@11</type>
+        <definition>union Elf64_Dyn::@11  Elf64_Dyn::d_un</definition>
+        <argsstring></argsstring>
+        <name>d_un</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="135" column="10"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Dyn_1ab1741378fc34cbcc8caf3f7bb5e6de18" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Dyn::d_val</definition>
+        <argsstring></argsstring>
+        <name>d_val</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="133" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Dyn</label>
+        <link refid="structElf64__Dyn"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="130" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="130" bodyend="136"/>
+    <listofallmembers>
+      <member refid="structElf64__Dyn_1a4820e579b624438f02827e7b44fbd0f7" prot="public" virt="non-virtual"><scope>Elf64_Dyn</scope><name>d_ptr</name></member>
+      <member refid="structElf64__Dyn_1a74a63e5acb7d8ddc946a5b0c5eb3c26a" prot="public" virt="non-virtual"><scope>Elf64_Dyn</scope><name>d_tag</name></member>
+      <member refid="structElf64__Dyn_1abaef1beabb944eaaa840f31b09bacc0e" prot="public" virt="non-virtual"><scope>Elf64_Dyn</scope><name>d_un</name></member>
+      <member refid="structElf64__Dyn_1ab1741378fc34cbcc8caf3f7bb5e6de18" prot="public" virt="non-virtual"><scope>Elf64_Dyn</scope><name>d_val</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

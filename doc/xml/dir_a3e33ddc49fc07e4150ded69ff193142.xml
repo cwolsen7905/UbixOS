@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="dir_a3e33ddc49fc07e4150ded69ff193142" kind="dir">
+    <compoundname>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl</compoundname>
+    <innerfile refid="arc4_8h">arc4.h</innerfile>
+    <innerfile refid="des_8h">des.h</innerfile>
+    <innerfile refid="md4_8h">md4.h</innerfile>
+    <innerfile refid="md5_8h">md5.h</innerfile>
+    <innerfile refid="sha1_8h">sha1.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/"/>
+  </compounddef>
+</doxygen>

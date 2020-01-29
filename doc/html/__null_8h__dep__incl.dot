@@ -1,0 +1,17 @@
+digraph "C:/Dev/git/UbixOS/sys/include/sys/_null.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="C:/Dev/git/UbixOS/sys\l/include/sys/_null.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="C:/Dev/git/UbixOS/sys\l/arch/i386/bioscall.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$i386_2bioscall_8c.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="C:/Dev/git/UbixOS/sys\l/arch/i386/i386_exec.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$i386__exec_8c.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="C:/Dev/git/UbixOS/sys\l/arch/i386/kpanic.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$i386_2kpanic_8c.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="C:/Dev/git/UbixOS/sys\l/arch/i386/sched.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$i386_2sched_8c.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="C:/Dev/git/UbixOS/sys\l/arch/i386/spinlock.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$i386_2spinlock_8c.html",tooltip=" "];
+}

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__sysarch__args" kind="struct" language="C++" prot="public">
+    <compoundname>sys_sysarch_args</compoundname>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__sysarch__args_1a5c9000e16bc6872af063afb9f8afabf1" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_sysarch_args::op</definition>
+        <argsstring></argsstring>
+        <name>op</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="516" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="516" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1a5df9e80cc5dda0f70fae4699168cf4b6" compoundref="gen__calls_8c" startline="186" endline="222">sys_sysarch</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sysarch__args_1a4492ce202084717a457bc109f9e83340" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sysarch_args::op_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>op_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="515" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="515" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sysarch__args_1a8320eabb07d4507d916f7660bfa4038a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sysarch_args::op_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
+        <name>op_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="517" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="517" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sysarch__args_1a2f09650048b8deb09ebb15e1d4621bd6" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* sys_sysarch_args::parms</definition>
+        <argsstring></argsstring>
+        <name>parms</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="519" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="519" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1a5df9e80cc5dda0f70fae4699168cf4b6" compoundref="gen__calls_8c" startline="186" endline="222">sys_sysarch</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sysarch__args_1a9d72b2a46a11b1d23bef62099595042e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sysarch_args::parms_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>parms_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="518" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="518" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sysarch__args_1a559437a9e2941555756f7969a4c94619" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sys_sysarch_args::parms_r_[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *) ? 0 :sizeof(register_t) - sizeof(char *))]</argsstring>
+        <name>parms_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="520" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="520" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>sys_sysarch_args</label>
+        <link refid="structsys__sysarch__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="514" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="514" bodyend="521"/>
+    <listofallmembers>
+      <member refid="structsys__sysarch__args_1a5c9000e16bc6872af063afb9f8afabf1" prot="public" virt="non-virtual"><scope>sys_sysarch_args</scope><name>op</name></member>
+      <member refid="structsys__sysarch__args_1a4492ce202084717a457bc109f9e83340" prot="public" virt="non-virtual"><scope>sys_sysarch_args</scope><name>op_l_</name></member>
+      <member refid="structsys__sysarch__args_1a8320eabb07d4507d916f7660bfa4038a" prot="public" virt="non-virtual"><scope>sys_sysarch_args</scope><name>op_r_</name></member>
+      <member refid="structsys__sysarch__args_1a2f09650048b8deb09ebb15e1d4621bd6" prot="public" virt="non-virtual"><scope>sys_sysarch_args</scope><name>parms</name></member>
+      <member refid="structsys__sysarch__args_1a9d72b2a46a11b1d23bef62099595042e" prot="public" virt="non-virtual"><scope>sys_sysarch_args</scope><name>parms_l_</name></member>
+      <member refid="structsys__sysarch__args_1a559437a9e2941555756f7969a4c94619" prot="public" virt="non-virtual"><scope>sys_sysarch_args</scope><name>parms_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

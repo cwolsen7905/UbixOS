@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structTRGBA" kind="struct" language="C++" prot="public">
+    <compoundname>TRGBA</compoundname>
+    <includes refid="objgfx30_8h" local="no">objgfx30.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structTRGBA_1a92498e50202c5b2bae289370f946c092" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGBA::alpha</definition>
+        <argsstring></argsstring>
+        <name>alpha</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="65" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTRGBA_1a7105930d5345d6787379189afc7527f8" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGBA::blue</definition>
+        <argsstring></argsstring>
+        <name>blue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="64" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTRGBA_1a9dd7eab54137a08e9abdfe13072f1f62" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGBA::green</definition>
+        <argsstring></argsstring>
+        <name>green</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="63" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTRGBA_1a1b18bb0b9c077a7baa5b2f45dbf742cd" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TRGBA::red</definition>
+        <argsstring></argsstring>
+        <name>red</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="62" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>TRGBA</label>
+        <link refid="structTRGBA"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="61" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="61" bodyend="66"/>
+    <listofallmembers>
+      <member refid="structTRGBA_1a92498e50202c5b2bae289370f946c092" prot="public" virt="non-virtual"><scope>TRGBA</scope><name>alpha</name></member>
+      <member refid="structTRGBA_1a7105930d5345d6787379189afc7527f8" prot="public" virt="non-virtual"><scope>TRGBA</scope><name>blue</name></member>
+      <member refid="structTRGBA_1a9dd7eab54137a08e9abdfe13072f1f62" prot="public" virt="non-virtual"><scope>TRGBA</scope><name>green</name></member>
+      <member refid="structTRGBA_1a1b18bb0b9c077a7baa5b2f45dbf742cd" prot="public" virt="non-virtual"><scope>TRGBA</scope><name>red</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="vmm__allocpagetable_8c" kind="file" language="C++">
+    <compoundname>vmm_allocpagetable.c</compoundname>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="paging_8h" local="no">vmm/paging.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="23">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c</label>
+        <link refid="vmm__allocpagetable_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="20">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="vmm__allocpagetable_8c_1ab5107978c7d2053460e2d890e4fd6242" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int vmm_allocPageTable</definition>
+        <argsstring>(uint32_t pdI, pidType pid)</argsstring>
+        <name>vmm_allocPageTable</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+          <declname>pdI</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c" line="7" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c" bodystart="7" bodyend="46"/>
+        <references refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" compoundref="gpt_8h" startline="37">bzero</references>
+        <references refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="69">KERNEL_PAGE_DEFAULT</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="68">PAGE_DEFAULT</references>
+        <references refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="55">PAGE_PRESENT</references>
+        <references refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" compoundref="paging_8h" startline="37">PAGE_SIZE</references>
+        <references refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" compoundref="paging_8h" startline="45">PD_BASE_ADDR</references>
+        <references refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" compoundref="paging_8h" startline="48">PD_ENTRIES</references>
+        <references refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" compoundref="paging_8h" startline="40">PD_INDEX</references>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="vmm_8h_1a71bd5e4901787995ae8f9cc3e1a888f9" compoundref="vmm_8h" startline="59">VMM_USER_END</references>
+        <references refid="vmm_8h_1ad43d15bd90c1980dae3db013c1a5abb0" compoundref="vmm_8h" startline="58">VMM_USER_START</references>
+        <referencedby refid="paging_8c_1a3615feeeee9f4038cd1070372ccba22e" compoundref="paging_8c" startline="291" endline="346">vmm_getFreeKernelPage</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="paging_8h" kindref="compound">vmm/paging.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="vmm__allocpagetable_8c_1ab5107978c7d2053460e2d890e4fd6242" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm__allocpagetable_8c_1ab5107978c7d2053460e2d890e4fd6242" kindref="member">vmm_allocPageTable</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>pdI,<sp/><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid)<sp/>{</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*pageDirectory<sp/>=<sp/><ref refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" kindref="member">PD_BASE_ADDR</ref>;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*pageTable<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((pdI<sp/>&gt;=<sp/><ref refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" kindref="member">PD_ENTRIES</ref>)<sp/>||<sp/>((pageDirectory[pdI]<sp/>&amp;<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>)<sp/>==<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>))</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Lock<sp/>The<sp/>Page<sp/>Directory<sp/>So<sp/>We<sp/>Dont<sp/>Collide<sp/>With<sp/>Another<sp/>Thread<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//spinLock(&amp;pdSpinLock);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>Page<sp/>Table<sp/>Page<sp/>Into<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((pdI<sp/>&gt;=<sp/><ref refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" kindref="member">PD_INDEX</ref>(<ref refid="vmm_8h_1ad43d15bd90c1980dae3db013c1a5abb0" kindref="member">VMM_USER_START</ref>))<sp/>&amp;&amp;<sp/>(pdI<sp/>&lt;=<sp/><ref refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" kindref="member">PD_INDEX</ref>(<ref refid="vmm_8h_1a71bd5e4901787995ae8f9cc3e1a888f9" kindref="member">VMM_USER_END</ref>)))</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>pageDirectory[pdI]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/><ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(pid)<sp/>|<sp/><ref refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>pageDirectory[pdI]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/><ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(pid)<sp/>|<sp/><ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref>;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>Page<sp/>Table<sp/>To<sp/>Virtual<sp/>Space<sp/>So<sp/>We<sp/>Can<sp/>Easily<sp/>Manipulate<sp/>It<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/>pageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/>(<ref refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" kindref="member">PT_BASE_ADDR</ref><sp/>+<sp/>(<ref refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" kindref="member">PD_INDEX</ref>(<sp/><ref refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" kindref="member">PT_BASE_ADDR</ref><sp/>)<sp/>*<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>));</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((pageTable[pdI]<sp/>&amp;<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>)<sp/>==<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>)</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;How<sp/>did<sp/>this<sp/>happen&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/>pageTable[pdI]<sp/>=<sp/><sp/>pageDirectory[pdI];</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Reload<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;movl<sp/>%cr3,%eax\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;movl<sp/>%eax,%cr3\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Clean<sp/>The<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/>pageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/>(<ref refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" kindref="member">PT_BASE_ADDR</ref><sp/>+<sp/>(pdI<sp/>*<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>));</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(pageTable,<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//spinUnlock(&amp;pdSpinLock);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="46"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmqtt__request__t" kind="struct" language="C++" prot="public">
+    <compoundname>mqtt_request_t</compoundname>
+    <includes refid="mqtt_8h" local="no">mqtt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmqtt__request__t_1acefa437f87dd50890030d89319099a08" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* mqtt_request_t::arg</definition>
+        <argsstring></argsstring>
+        <name>arg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="162" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__request__t_1a32a4b14b0b8b5b8ce8db1074e53f4a79" prot="public" static="no" mutable="no">
+        <type><ref refid="mqtt_8h_1acad2bbe2cee76eaa120cc63e2f6094fd" kindref="member">mqtt_request_cb_t</ref></type>
+        <definition>mqtt_request_cb_t mqtt_request_t::cb</definition>
+        <argsstring></argsstring>
+        <name>cb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Callback to upper layer </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="161" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__request__t_1aca8de21579f51e7742076a4975a4177b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmqtt__request__t" kindref="compound">mqtt_request_t</ref> *</type>
+        <definition>struct mqtt_request_t* mqtt_request_t::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Next item in list, NULL means this is the last in chain, next pointing at itself means request is unallocated </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="159" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__request__t_1af2dc3cd85cdad25b9b3e1534ecc0cb58" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t mqtt_request_t::pkt_id</definition>
+        <argsstring></argsstring>
+        <name>pkt_id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>MQTT packet identifier </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="164" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmqtt__request__t_1a65a7292669bc1f2d9df8f30bbcd77073" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t mqtt_request_t::timeout_diff</definition>
+        <argsstring></argsstring>
+        <name>timeout_diff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Expire time relative to element before this <linebreak/>
+ </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="166" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Pending request item, binds application callback to pending server requests </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>mqtt_request_t</label>
+        <link refid="structmqtt__request__t"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" line="156" column="1" bodyfile="C:/Dev/git/UbixOS/sys/include/net/apps/mqtt.h" bodystart="155" bodyend="167"/>
+    <listofallmembers>
+      <member refid="structmqtt__request__t_1acefa437f87dd50890030d89319099a08" prot="public" virt="non-virtual"><scope>mqtt_request_t</scope><name>arg</name></member>
+      <member refid="structmqtt__request__t_1a32a4b14b0b8b5b8ce8db1074e53f4a79" prot="public" virt="non-virtual"><scope>mqtt_request_t</scope><name>cb</name></member>
+      <member refid="structmqtt__request__t_1aca8de21579f51e7742076a4975a4177b" prot="public" virt="non-virtual"><scope>mqtt_request_t</scope><name>next</name></member>
+      <member refid="structmqtt__request__t_1af2dc3cd85cdad25b9b3e1534ecc0cb58" prot="public" virt="non-virtual"><scope>mqtt_request_t</scope><name>pkt_id</name></member>
+      <member refid="structmqtt__request__t_1a65a7292669bc1f2d9df8f30bbcd77073" prot="public" virt="non-virtual"><scope>mqtt_request_t</scope><name>timeout_diff</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

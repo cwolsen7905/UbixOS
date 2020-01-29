@@ -1,0 +1,11 @@
+digraph "C:/Dev/git/UbixOS/sys/include/sde" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_d1be8160e739b6eed1f7843efdbae1b3 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="include" fontname="Helvetica", fontsize="10", URL="dir_d1be8160e739b6eed1f7843efdbae1b3.html"]
+  dir_78fe514d4f19d86cdec6c17c1cead036 [shape=box, label="sde", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_78fe514d4f19d86cdec6c17c1cead036.html"];
+  }
+  dir_214f84c2c73d0f2f98eaa46a63e7b8c6 [shape=box label="sys" URL="dir_214f84c2c73d0f2f98eaa46a63e7b8c6.html"];
+  dir_78fe514d4f19d86cdec6c17c1cead036->dir_214f84c2c73d0f2f98eaa46a63e7b8c6 [headlabel="3", labeldistance=1.5 headhref="dir_000046_000020.html"];
+}

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="group__udp__raw" kind="group">
+    <compoundname>udp_raw</compoundname>
+    <title>UDP</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>User Datagram Protocol module<linebreak/>
+<simplesect kind="see"><para>raw_api and <ref refid="group__netconn" kindref="compound">Netconn API</ref> </para>
+</simplesect>
+</para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

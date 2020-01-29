@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structElf64__Phdr" kind="struct" language="C++" prot="public">
+    <compoundname>Elf64_Phdr</compoundname>
+    <includes refid="elf64_8h" local="no">elf64.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structElf64__Phdr_1aa89a4b1835998c8866e821d777a2f879" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Phdr::p_align</definition>
+        <argsstring></argsstring>
+        <name>p_align</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="123" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1af50e5756da2acda5ccb02ebaa3367092" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Phdr::p_filesz</definition>
+        <argsstring></argsstring>
+        <name>p_filesz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="121" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1ab96e7784733c2192a76d5a42897cb38b" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Phdr::p_flags</definition>
+        <argsstring></argsstring>
+        <name>p_flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="117" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1a55fae01175fc4e3f1c23e52b14459235" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a5447a48a3dae0bd24f606415268c6fe4" kindref="member">Elf64_Xword</ref></type>
+        <definition>Elf64_Xword Elf64_Phdr::p_memsz</definition>
+        <argsstring></argsstring>
+        <name>p_memsz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="122" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1aa2d51fb4517ded0c74903f8d0c9abea7" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1a6f7837bc80df7a68291fce54ff088849" kindref="member">Elf64_Off</ref></type>
+        <definition>Elf64_Off Elf64_Phdr::p_offset</definition>
+        <argsstring></argsstring>
+        <name>p_offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="118" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1a83f4adb032fc307f5af79bdee5ef692d" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Phdr::p_paddr</definition>
+        <argsstring></argsstring>
+        <name>p_paddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="120" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1aee6ec430eaaf8b8faf82ae6397282cb3" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aa3aa1920ed115b7ef7e99716fece4401" kindref="member">Elf64_Word</ref></type>
+        <definition>Elf64_Word Elf64_Phdr::p_type</definition>
+        <argsstring></argsstring>
+        <name>p_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="116" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structElf64__Phdr_1a5c69879e1229b175020ff011af46fcb9" prot="public" static="no" mutable="no">
+        <type><ref refid="elf64_8h_1aeed51d08e3a950d637f8ec1f0cd4ef65" kindref="member">Elf64_Addr</ref></type>
+        <definition>Elf64_Addr Elf64_Phdr::p_vaddr</definition>
+        <argsstring></argsstring>
+        <name>p_vaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="119" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>Elf64_Phdr</label>
+        <link refid="structElf64__Phdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" line="115" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/elf64.h" bodystart="115" bodyend="124"/>
+    <listofallmembers>
+      <member refid="structElf64__Phdr_1aa89a4b1835998c8866e821d777a2f879" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_align</name></member>
+      <member refid="structElf64__Phdr_1af50e5756da2acda5ccb02ebaa3367092" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_filesz</name></member>
+      <member refid="structElf64__Phdr_1ab96e7784733c2192a76d5a42897cb38b" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_flags</name></member>
+      <member refid="structElf64__Phdr_1a55fae01175fc4e3f1c23e52b14459235" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_memsz</name></member>
+      <member refid="structElf64__Phdr_1aa2d51fb4517ded0c74903f8d0c9abea7" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_offset</name></member>
+      <member refid="structElf64__Phdr_1a83f4adb032fc307f5af79bdee5ef692d" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_paddr</name></member>
+      <member refid="structElf64__Phdr_1aee6ec430eaaf8b8faf82ae6397282cb3" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_type</name></member>
+      <member refid="structElf64__Phdr_1a5c69879e1229b175020ff011af46fcb9" prot="public" virt="non-virtual"><scope>Elf64_Phdr</scope><name>p_vaddr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
