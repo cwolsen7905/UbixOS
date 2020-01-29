@@ -41,7 +41,7 @@
 #include <mpi/mpi.h>
 #include <string.h>
 
-static unsigned char *videoBuffer = (unsigned char *) 0xB8000;
+static unsigned char *videoBuffer = (unsigned char*) 0xB8000;
 
 void systemTask() {
 
@@ -61,28 +61,30 @@ void systemTask() {
     if (mpi_fetchMessage("system", &myMsg) == 0x0) {
       switch (myMsg.header) {
         case 0x69:
-          x = (int *) &myMsg.data;
+          x = (int*) &myMsg.data;
           kprintf("Switching to term: [%i][%i]\n", *x, myMsg.pid);
           schedFindTask(myMsg.pid)->term = tty_find(*x);
-        break;
-       case 1000:
+          break;
+        case 1000:
           kprintf("Restarting the system in 5 seconds\n");
           counter = systemVitals->sysUptime + 5;
           while (systemVitals->sysUptime < counter) {
             sched_yield();
           }
+          // XXX Temp Hack To Cleanup File system we need a shutdown procedure somewhere.
+          fl_shutdown();
           kprintf("Rebooting NOW!!!\n");
           while (inportByte(0x64) & 0x02)
             ;
           outportByte(0x64, 0xFE);
-        break;
+          break;
         case 31337:
           kprintf("system: backdoor opened\n");
-        break;
+          break;
         case 0x80:
           if (!strcmp(myMsg.data, "sdeStart")) {
             kprintf("Starting SDE\n");
-            execThread(sdeThread,0x2000,0x0);
+            execThread(sdeThread, 0x2000, 0x0);
           }
           else if (!strcmp(myMsg.data, "freePage")) {
             kprintf("kkk Free Pages");
@@ -93,10 +95,10 @@ void systemTask() {
             for (i = 0x0; i < 100; i++)
               asm("hlt");
           }
-        break;
+          break;
         default:
           kprintf("system: Received message %i:%s\n", myMsg.header, myMsg.data);
-        break;
+          break;
       }
     }
 
@@ -120,9 +122,9 @@ void systemTask() {
       videoBuffer[1] = 'c';
     }
     /*
-    else
-      ogPrintf(buf);
-    */
+     else
+     ogPrintf(buf);
+     */
 
     sched_yield();
   }
