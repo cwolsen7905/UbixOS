@@ -135,14 +135,12 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
         else {
           if (!fclose(fd->fd))
             td->td_retval[0] = -1;
-          kprintf("fd->fd->dup: %i", fd->fd->dup);
-          if (fd->fd->dup >= 0)
+
+          kprintf("DESTROY: %i!", args->fd);
+          if (!fdestroy(td, fd, args->fd))
+            kprintf("[%s:%i] fdestroy() failed!", __FILE__, __LINE__);
             td->td_retval[0] = 0;
-          else {
-            kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
-            fdestroy(td, fd, args->fd);
-            td->td_retval[0] = 0;
-          }
+
         }
     }
   }

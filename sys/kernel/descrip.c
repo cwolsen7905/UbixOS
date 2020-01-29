@@ -39,6 +39,7 @@ static struct file *kern_files = 0x0;
 
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
+  struct file *dup_fp = 0x0;
   int i = 0;
 
   if (td->o_files[uap->fd] == 0x0) {
@@ -54,12 +55,23 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
       /* First 5 Descriptors Are Reserved */
       for (i = 5; i < MAX_FILES; i++) {
         if (td->o_files[i] == 0x0) {
-          td->o_files[i] = (void*) fp;
+          dup_fp = (struct file*) kmalloc(sizeof(struct file));
+          memcpy(dup_fp, fp, sizeof(struct file));
+
+          td->o_files[i] = (void*) dup_fp;
           td->td_retval[0] = i;
+
           ((struct file*) td->o_files[uap->fd])->fd->dup++;
+
           fclose(td->o_files[uap->fd]);
-          td->o_files[uap->fd] = 0;
+
+          //td->o_files[uap->fd] = 0;
+
+          if (!fdestroy(td, fp, uap->fd))
+            kprintf("[%s:%i] fdestroy() failed\n", __FILE__, __LINE__);
+
           kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
+
           break;
         }
       }
@@ -315,19 +327,28 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
 }
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
-
-
+  struct file *fp = 0x0;
+  struct file *dup_fp = 0x0;
 
   if (to > MAX_FILES) {
     kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
     return (-1);
   }
   else if (td->o_files[to] != 0x0) {
-    kprintf("FD IN USE!");
-    //return (-1);
+
+    fclose(((struct file*) td->o_files[to])->fd);
+    fdestroy(td, ((struct file*) td->o_files[to])->fd, to);
   }
+
+  fp = (struct file*) td->o_files[from];
+  dup_fp = (struct file*) kmalloc(sizeof(struct file));
+
+  memcpy(dup_fp, fp, sizeof(struct file));
+
   kprintf("DUP2.0: %i:%i [0x%X:0x%X]", from, to, td->o_files[from], td->o_files[to]);
-  td->o_files[to] = td->o_files[from];
+
+  td->o_files[to] = (void*) dup_fp;
+
   ((struct file*) td->o_files[from])->fd->dup++;
 
   kprintf("DUP2.1: %i:%i <%i> [0x%X:0x%X]", from, to, ((struct file*) td->o_files[from])->fd->dup, td->o_files[from], td->o_files[to]);
