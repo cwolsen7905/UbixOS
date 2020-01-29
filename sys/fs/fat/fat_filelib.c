@@ -862,8 +862,6 @@ void fl_fclose(void *f) {
   if (file) {
     FL_LOCK(&_fs);
 
-    kprintf("fl_fclose: %s", file->filename);
-
     // Flush un-written data to file
     fl_fflush(f);
 

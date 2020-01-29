@@ -114,7 +114,7 @@ int read_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   return (size);
 }
 
-int write_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
+int write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
   kprintf("Writing: %i[%i]\n", size, offset);
