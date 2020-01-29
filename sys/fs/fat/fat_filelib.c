@@ -727,8 +727,10 @@ void* fl_fopen(const char *path, const char *mode) {
 
   // Create New
 #if FATFS_INC_WRITE_SUPPORT
-  if (!file && (flags & FILE_CREATE))
+  if (!file && (flags & FILE_CREATE)) {
     file = _create_file(path);
+    kprintf("[%s:%i]", __FILE__, __LINE__);
+  }
 #endif
 
   // Write Existing (and not open due to read or create)
