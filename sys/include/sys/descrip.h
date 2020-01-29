@@ -38,6 +38,7 @@
 #include <sys/fcntl.h>
 
 /* Limits */
+//#define MAX_FILES 256
 #define MAX_FILES 256
 
 typedef __mode_t mode_t;

@@ -34,7 +34,8 @@
 #include <sys/signal.h>
 #include <sys/resource.h>
 
-#define O_FILES 64
+//#define O_FILES 64
+#define O_FILES 512
 
 struct thread {
     int td_retval[2];
