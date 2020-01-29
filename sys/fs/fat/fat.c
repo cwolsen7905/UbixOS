@@ -99,16 +99,13 @@ int fat_initialize(struct vfs_mountPoint *mp) {
   return (1);
 }
 
-int read_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
+int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
-  //kprintf("Reading: %i[%i]\n", size, offset);
   if (fl_fseek(_file, offset, 0) != 0)
     kprintf("SEEK FAILED!");
 
   size = fl_fread(data, size, 1, _file);
-
-  //kprintf("[Read:%i]", size);
 
   /* Return */
   return (size);

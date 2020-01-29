@@ -59,49 +59,49 @@
 struct fileSystem {
     struct fileSystem *prev;
     struct fileSystem *next;
-    int (*vfsInitFS)(void *); /*!< pointer to inialization routine */
-    int (*vfsRead)(void *, char *, long, long); /*!< pointer to read routine */
-    int (*vfsWrite)(void *, char *, long, long); /*!< pointer to write routine */
-    int (*vfsOpenFile)(void *, void *); /*!< pointer to openfile routine */
-    int (*vfsUnlink)(char *, void *); /*!< pointer to unlink routine */
-    int (*vfsMakeDir)(char *, void *); /*!< pointer to makedir routine */
-    int (*vfsRemDir)(char *); /*!< pointer to remdir routine */
+    int (*vfsInitFS)(void*); /*!< pointer to inialization routine */
+    int (*vfsRead)(void*, char*, off_t, long); /*!< pointer to read routine */
+    int (*vfsWrite)(void*, char*, off_t, long); /*!< pointer to write routine */
+    int (*vfsOpenFile)(void*, void*); /*!< pointer to openfile routine */
+    int (*vfsUnlink)(char*, void*); /*!< pointer to unlink routine */
+    int (*vfsMakeDir)(char*, void*); /*!< pointer to makedir routine */
+    int (*vfsRemDir)(char*); /*!< pointer to remdir routine */
     int (*vfsSync)(void); /*!< pointer to sync routine */
     int vfsType; /*!< vfs type id */
 };
 
 struct inode_operations {
-    struct file_operations * default_file_ops;
-    int (*create)(struct inode *, const char *, int, int, struct inode **);
-    int (*lookup)(struct inode *, const char *, int, struct inode **);
-    int (*link)(struct inode *, struct inode *, const char *, int);
-    int (*unlink)(struct inode *, const char *, int);
-    int (*symlink)(struct inode *, const char *, int, const char *);
-    int (*mkdir)(struct inode *, const char *, int, int);
-    int (*rmdir)(struct inode *, const char *, int);
-    int (*mknod)(struct inode *, const char *, int, int, int);
-    int (*rename)(struct inode *, const char *, int, struct inode *, const char *, int);
-    int (*readlink)(struct inode *, char *, int);
-    int (*follow_link)(struct inode *, struct inode *, int, int, struct inode **);
-    int (*bmap)(struct inode *, int);
-    void (*truncate)(struct inode *);
-    int (*permission)(struct inode *, int);
+    struct file_operations *default_file_ops;
+    int (*create)(struct inode*, const char*, int, int, struct inode**);
+    int (*lookup)(struct inode*, const char*, int, struct inode**);
+    int (*link)(struct inode*, struct inode*, const char*, int);
+    int (*unlink)(struct inode*, const char*, int);
+    int (*symlink)(struct inode*, const char*, int, const char*);
+    int (*mkdir)(struct inode*, const char*, int, int);
+    int (*rmdir)(struct inode*, const char*, int);
+    int (*mknod)(struct inode*, const char*, int, int, int);
+    int (*rename)(struct inode*, const char*, int, struct inode*, const char*, int);
+    int (*readlink)(struct inode*, char*, int);
+    int (*follow_link)(struct inode*, struct inode*, int, int, struct inode**);
+    int (*bmap)(struct inode*, int);
+    void (*truncate)(struct inode*);
+    int (*permission)(struct inode*, int);
 };
 
 /* VFS Functions */
 int vfs_init();
 int vfsRegisterFS(struct fileSystem);
-struct fileSystem *vfs_findFS(int);
+struct fileSystem* vfs_findFS(int);
 
 struct super_operations {
-    void (*read_inode)(struct inode *);
-    int (*notify_change)(int flags, struct inode *);
-    void (*write_inode)(struct inode *);
-    void (*put_inode)(struct inode *);
-    void (*put_super)(struct super_block *);
-    void (*write_super)(struct super_block *);
-    void (*statfs)(struct super_block *, struct statfs *);
-    int (*remount_fs)(struct super_block *, int *, char *);
+    void (*read_inode)(struct inode*);
+    int (*notify_change)(int flags, struct inode*);
+    void (*write_inode)(struct inode*);
+    void (*put_inode)(struct inode*);
+    void (*put_super)(struct super_block*);
+    void (*write_super)(struct super_block*);
+    void (*statfs)(struct super_block*, struct statfs*);
+    int (*remount_fs)(struct super_block*, int*, char*);
 };
 
 struct super_block {
@@ -115,15 +115,15 @@ struct super_block {
     unsigned long s_flags;
     unsigned long s_magic;
     unsigned long s_time;
-    struct inode * s_covered;
-    struct inode * s_mounted;
-    struct wait_queue * s_wait;
+    struct inode *s_covered;
+    struct inode *s_mounted;
+    struct wait_queue *s_wait;
     union {
         struct msdos_sb_info msdos_sb;
-/*
-        struct fs ufs1_sb;
-        struct fs ufs2_sb;
-*/
+        /*
+         struct fs ufs1_sb;
+         struct fs ufs2_sb;
+         */
     } u;
 };
 
