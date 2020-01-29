@@ -302,7 +302,7 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
     kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
     return (-1);
   }
-  if (td->o_files[to] != 0x0) {
+  else if (td->o_files[to] != 0x0) {
     kprintf("FD IN USE!");
     return (-1);
   }
