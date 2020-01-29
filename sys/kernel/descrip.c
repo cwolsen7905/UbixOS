@@ -37,7 +37,7 @@
 
 static struct file *kern_files = 0x0;
 
-int fcntl(struct thread *td, struct fcntl_args *uap) {
+int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
   struct file *fp = 0x0;
   struct file *dup_fp = 0x0;
   int i = 0;
@@ -46,7 +46,6 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
     kprintf("ERROR!!!\n");
     return (-1);
   }
-
 
   fp = (struct file*) td->o_files[uap->fd];
 
@@ -87,13 +86,13 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
       kprintf("ERROR DEFAULT: [%i]", uap->fd);
   }
 
-
   return (0x0);
 }
 
 int sys_fcntl(struct thread *td, struct sys_fcntl_args *uap) {
   return (fcntl(td, uap));
 }
+
 
 int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 
@@ -337,7 +336,7 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
   else if (td->o_files[to] != 0x0) {
 
     fclose(((struct file*) td->o_files[to])->fd);
-    fdestroy(td, ((struct file*) td->o_files[to])->fd, to);
+    fdestroy(td, (struct file*) td->o_files[to], to);
   }
 
   fp = (struct file*) td->o_files[from];
