@@ -59,6 +59,7 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
           ((fileDescriptor_t*) td->o_files[uap->fd])->dup++;
           fclose(td->o_files[uap->fd]);
           td->o_files[uap->fd] = 0;
+          kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
           break;
         }
       }
