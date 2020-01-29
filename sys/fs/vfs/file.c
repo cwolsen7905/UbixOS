@@ -537,8 +537,12 @@ int fclose(fileDescriptor_t *fd) {
   spinLock(&fdTable_lock);
 
   kprintf("[%s:%i]", __FILE__, __LIME__);
+
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
     if (tmpFd == fd) {
+      if (fd->res != 0x0)
+        fl_fclose(fd->res);
+
       if (tmpFd->prev)
         tmpFd->prev->next = tmpFd->next;
       if (tmpFd->next)
