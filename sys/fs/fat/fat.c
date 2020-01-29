@@ -64,28 +64,27 @@ int fat_initialize(struct vfs_mountPoint *mp) {
   }
 
   // List root directory
-  fl_listdirectory("/bin/");
+  //fl_listdirectory("/bin/");
+
+  // Delete File
+  if (fl_remove("/file.bin") < 0)
+    kprintf("ERROR: Delete file failed\n");
+
   // Create File
+  file = fl_fopen("/file.bin", "w");
+  unsigned char data[] = { 1, 2, 3, 4 };
+  if (file) {
+    // Write some data
+    if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
+      kprintf("ERROR: Write file failed\n");
+  }
+  else
+    kprintf("ERROR: Create file failed\n");
 
-   file = fl_fopen("/file.bin", "w");
-   unsigned char data[] = { 1, 2, 3, 4 };
-   if (file)
-   {
-   // Write some data
-   if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
-   kprintf("ERROR: Write file failed\n");
-   }
-   else
-   kprintf("ERROR: Create file failed\n");
-
-   // Close file
-   fl_fclose(file);
+  // Close file
+  fl_fclose(file);
   /*
    fl_listdirectory("/");
-
-   // Delete File
-   if (fl_remove("/file.bin") < 0)
-   kprintf("ERROR: Delete file failed\n");
 
    // List root directory
    fl_listdirectory("/");
