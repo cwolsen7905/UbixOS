@@ -312,6 +312,8 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
     return (-1);
   }
 
+  td->o_files[to] = td->o_files[from];
+
   return (0x0);
 }
 
