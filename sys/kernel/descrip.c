@@ -313,7 +313,7 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
 
-  kprintf("DUP2: %i:%i", from, to);
+
 
   if (to > MAX_FILES) {
     kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
@@ -326,6 +326,7 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
 
   td->o_files[to] = td->o_files[from];
 
+  kprintf("DUP2: %i:%i [0x%X:0x%X]", from, to, td->o_files[from], td->o_files[to]);
   return (0x0);
 }
 
