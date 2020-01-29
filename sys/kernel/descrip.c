@@ -303,6 +303,8 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
     return (-1);
   }
 
+  kprintf("DUP2: %i:%i", from, to);
+
   return (0x0);
 }
 
