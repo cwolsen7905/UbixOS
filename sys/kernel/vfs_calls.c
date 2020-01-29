@@ -47,7 +47,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   int error = 0x0;
   int fd = 0x0;
   struct file *nfp = 0x0;
-
+  kprintf("sys_openat?");
 #ifdef DEBUG_OPENAT
   kprintf("openat");
 #endif
