@@ -314,7 +314,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
   else {
     getfd(td, &fd, uap->fd);
 
-    kprintf("[fd: :0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
+    kprintf("[fd: :0x%X, fd_type: %i]", uap->fd, fd->fd_type);
 
     switch (fd->fd_type) {
     case 3: /* XXX - Temp Pipe Stuff */
@@ -341,10 +341,10 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
       break;
     default:
-      kprintf("[]", uap->nbyte);
+        kprintf("[%i]", uap->nbyte);
       buffer = kmalloc(uap->nbyte);
       memcpy(buffer, uap->buf, uap->nbyte);
-      kprintf("() %s", uap->fd, uap->buf);
+        kprintf("(%i) %s", uap->fd, uap->buf);
       kfree(buffer);
       td->td_retval[0] = uap->nbyte;
     }
