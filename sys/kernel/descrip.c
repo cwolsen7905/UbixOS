@@ -40,6 +40,9 @@ static struct file *kern_files = 0x0;
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
 
+  if (uap->fd < 3)
+    kprintf("FD: %i", uap->fd);
+
   if (td->o_files[uap->fd] == 0x0) {
     kprintf("ERROR!!!\n");
     return (-1);
