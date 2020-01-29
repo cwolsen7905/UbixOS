@@ -83,19 +83,7 @@ int fat_initialize(struct vfs_mountPoint *mp) {
 
   // Close file
   fl_fclose(file);
-  /*
-   fl_listdirectory("/");
 
-   // List root directory
-   fl_listdirectory("/");
-
-   size_t size;
-
-   file = fl_fopen("/shell", "r");
-   size = fl_fread(data, 1, sizeof(data), file);
-   kprintf("READ: %i", size);
-   fl_fclose(file);
-   */
   return (1);
 }
 
@@ -139,11 +127,13 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   kprintf("File: %s, ", file);
   kprintf("Mode: 0x%X\n", fd->mode);
 
-  if ((fd->mode & 0x1) == 0x1)
+  if ((fd->mode & 0x1) == 0x1) {
     _file = fl_fopen(file, "r");
+  }
   else if ((fd->mode & 0x2) == 0x2) {
-    if ((fd->mode & 0x8) == 0x8)
+    if ((fd->mode & 0x8) == 0x8) {
       _file = fl_fopen(file, "a");
+    }
     else {
       _file = fl_fopen(file, "w");
       kprintf("open for writing");
@@ -153,7 +143,6 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     kprintf("Invalid Mode?");
 
   if (!_file) {
-    //kprintf("ERROR[%s:%i]: Open file: [%s] failed\n", __FILE__, __LINE__, file);
     return (0x0);
   }
   else {
@@ -162,7 +151,6 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     fd->perms = 0x1;
     fd->size = _file->filelength;
     fd->ino = _file->startcluster;
-    //kprintf("Size: %i\n", fd->size);
   }
 
   return (0x1);

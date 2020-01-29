@@ -542,10 +542,12 @@ int fclose(fileDescriptor_t *fd) {
   kprintf("[%s:%i]", __FILE__, __LINE__);
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
+
     if (tmpFd == fd) {
-      kprintf("DUP: [%i:0x%X]", fd->dup, fd);
-      if (fd->dup > 0)
+
+      if (fd->dup > 0) {
         fd->dup--;
+      }
       else {
         if (fd->res != 0x0)
           fl_fclose(fd->res);
@@ -559,9 +561,12 @@ int fclose(fileDescriptor_t *fd) {
           fdTable = tmpFd->next;
 
         systemVitals->openFiles--;
+
         spinUnlock(&fdTable_lock);
+
         if (tmpFd->buffer != NULL)
           kfree(tmpFd->buffer);
+
         kfree(tmpFd);
         return (0x0);
       }
