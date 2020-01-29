@@ -541,7 +541,7 @@ int fclose(fileDescriptor_t *fd) {
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
     if (tmpFd == fd) {
-      kprintf("DUP: %i", fd->dup);
+      kprintf("DUP: [%i:0x%X]", fd->dup, fd);
       if (fd->dup > 0)
         fd->dup--;
       else {
