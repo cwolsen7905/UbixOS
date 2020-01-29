@@ -326,11 +326,11 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
     kprintf("FD IN USE!");
     //return (-1);
   }
-
+  kprintf("DUP2.0: %i:%i [0x%X:0x%X]", from, to, td->o_files[from], td->o_files[to]);
   td->o_files[to] = td->o_files[from];
   ((fileDescriptor_t*) td->o_files[from])->dup++;
 
-  kprintf("DUP2: %i:%i [0x%X:0x%X]", from, to, td->o_files[from], td->o_files[to]);
+  kprintf("DUP2.1: %i:%i [0x%X:0x%X]", from, to, td->o_files[from], td->o_files[to]);
   return (0x0);
 }
 
