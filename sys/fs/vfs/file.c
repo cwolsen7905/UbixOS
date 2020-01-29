@@ -38,8 +38,7 @@
 #include <assert.h>
 #include <sys/descrip.h>
 
-static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
-;
+static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
 fileDescriptor_t *fdTable = 0x0;
 
@@ -49,7 +48,7 @@ int sys_fwrite(struct thread *td, struct sys_fwrite_args *uap) {
   char *t = uap->buf;
 
   if (uap->fd == 0x0)
-    tty_print((char *) uap->buf, _current->term);
+    tty_print((char*) uap->buf, _current->term);
   else {
 #ifdef DEBUG_VFS
     kprintf("uap->size: %i, FD: [0x%X], BUF: [0x%X][%c]\n", uap->nbytes, uap->fd, uap->buf, t[0]);
@@ -132,15 +131,15 @@ int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
   }
 
   switch (args->whence) {
-  case 0:
-    args->FILE->fd->offset = args->offset + args->whence;
-    break;
-  case 1:
-    args->FILE->fd->offset += args->offset;
-    break;
-  default:
-    kprintf("seek-whence: %i", args->whence);
-    break;
+    case 0:
+      args->FILE->fd->offset = args->offset + args->whence;
+      break;
+    case 1:
+      args->FILE->fd->offset += args->offset;
+      break;
+    default:
+      kprintf("seek-whence: %i", args->whence);
+      break;
   }
 
   td->td_retval[0] = args->FILE->fd->offset & 0xFFFFFFFF;
@@ -164,19 +163,19 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
   kprintf("loffset(%i): %i:%i, whence: 0x%X", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFF, args->whence);
 
   switch (args->whence) {
-  case SEEK_SET:
-    fd->offset = args->offset;
-    td->td_retval[0] = fd->offset & 0xFFFFFFFF;
-    td->td_retval[1] = fd->offset >> 32;
-    break;
-  case SEEK_CUR:
-    fd->offset += args->offset;
-    td->td_retval[0] = fd->offset & 0xFFFFFFFF;
-    td->td_retval[1] = fd->offset >> 32;
-    break;
-  default:
-    kprintf("seek-whence: %i", args->whence);
-    break;
+    case SEEK_SET:
+      fd->offset = args->offset;
+      td->td_retval[0] = fd->offset & 0xFFFFFFFF;
+      td->td_retval[1] = fd->offset >> 32;
+      break;
+    case SEEK_CUR:
+      fd->offset += args->offset;
+      td->td_retval[0] = fd->offset & 0xFFFFFFFF;
+      td->td_retval[1] = fd->offset >> 32;
+      break;
+    default:
+      kprintf("seek-whence: %i", args->whence);
+      break;
   }
 
   kprintf("loff: %ld", fd->offset);
@@ -348,7 +347,7 @@ int feof(fileDescriptor_t *fd) {
  ************************************************************************/
 int fputc(int ch, fileDescriptor_t *fd) {
   if (fd != 0x0) {
-    ch = fd->mp->fs->vfsWrite(fd, (char *) ch, fd->offset, 1);
+    ch = fd->mp->fs->vfsWrite(fd, (char*) ch, fd->offset, 1);
     fd->offset++;
     return (ch);
   }
@@ -367,7 +366,7 @@ int fgetc(fileDescriptor_t *fd) {
   int ch = 0x0;
   /* If Found Return Next Char */
   if (fd != 0x0) {
-    fd->mp->fs->vfsRead(fd, (char *) &ch, fd->offset, 1);
+    fd->mp->fs->vfsRead(fd, (char*) &ch, fd->offset, 1);
     fd->offset++;
     return (ch);
   }
@@ -386,7 +385,7 @@ int fgetc(fileDescriptor_t *fd) {
 
  ************************************************************************/
 
-fileDescriptor_t *fopen(const char *file, const char *flags) {
+fileDescriptor_t* fopen(const char *file, const char *flags) {
 
   int i = 0x0;
   char *path = 0x0;
@@ -395,7 +394,7 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
   fileDescriptor_t *tmpFd = 0x0;
 
   /* Allocate Memory For File Descriptor */
-  if ((tmpFd = (fileDescriptor_t *) kmalloc(sizeof(fileDescriptor_t))) == 0x0) {
+  if ((tmpFd = (fileDescriptor_t*) kmalloc(sizeof(fileDescriptor_t))) == 0x0) {
     kprintf("Error: tmpFd == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
     return (NULL);
   }
@@ -413,8 +412,8 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
   path = 0x0;
 
   if (strstr(fileName, ":")) {
-    mountPoint = (char *) strtok((char *) &fileName, ":");
-    path = strtok( NULL, "\n");
+    mountPoint = (char*) strtok((char*) &fileName, ":");
+    path = strtok(NULL, "\n");
   }
   else {
     path = fileName;
@@ -438,30 +437,29 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
     return (0x0);
   }
 
-
   /* This Will Set Up The Descriptor Modes */
   tmpFd->mode = 0;
   for (i = 0; '\0' != flags[i]; i++) {
     switch (flags[i]) {
-    case 'w':
-    case 'W':
-      tmpFd->mode |= fileWrite;
-      break;
-    case 'r':
-    case 'R':
-      tmpFd->mode |= fileRead;
-      break;
-    case 'b':
-    case 'B':
-      tmpFd->mode |= fileBinary;
-      break;
-    case 'a':
-    case 'A':
-      tmpFd->mode |= fileAppend;
-      break;
-    default:
-      kprintf("Invalid mode '%c' for fopen\n", flags[i]);
-      break;
+      case 'w':
+      case 'W':
+        tmpFd->mode |= fileWrite;
+        break;
+      case 'r':
+      case 'R':
+        tmpFd->mode |= fileRead;
+        break;
+      case 'b':
+      case 'B':
+        tmpFd->mode |= fileBinary;
+        break;
+      case 'a':
+      case 'A':
+        tmpFd->mode |= fileAppend;
+        break;
+      default:
+        kprintf("Invalid mode '%c' for fopen\n", flags[i]);
+        break;
     }
   }
 
@@ -471,7 +469,7 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
 
     /* in order to save resources we will allocate the buffer later when it is needed */
 
-    tmpFd->buffer = (char *) kmalloc(4096);
+    tmpFd->buffer = (char*) kmalloc(4096);
 
     if (tmpFd->buffer == 0x0) {
       kfree(tmpFd);
@@ -512,7 +510,7 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
     kfree(tmpFd);
     spinUnlock(&fdTable_lock);
     //MrOlsen (2016-01-13) NOTE: We don't need this right now kprintf("File Not Found? %s\n",file);
-    return (NULL);
+    return (0x0);
   }
 
   /* Return NULL */
@@ -529,14 +527,12 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
 int fclose(fileDescriptor_t *fd) {
   fileDescriptor_t *tmpFd = 0x0;
 
-  // XXX Can't do this
-  //assert( fd );
   if (fd == 0)
     return (0x0);
 
   spinLock(&fdTable_lock);
 
-  kprintf("[%s:%i]", __FILE__, __LIME__);
+  kprintf("[%s:%i]", __FILE__, __LINE__);
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
     if (tmpFd == fd) {
@@ -580,18 +576,18 @@ void sysMkDir(const char *path) {
   char *dir = 0x0; //UBU*mountPoint = 0x0;
   char *tmp = 0x0;
   rootPath[0] = '\0';
-  dir = (char *) path;
+  dir = (char*) path;
 
   if (strstr(path, ":") == 0x0) {
     sprintf(tmpDir, "%s%s", _current->oInfo.cwd, path);
-    dir = (char *) &tmpDir;
+    dir = (char*) &tmpDir;
   }
   while (strstr(dir, "/")) {
     if (rootPath[0] == 0x0)
       sprintf(rootPath, "%s/", strtok(dir, "/"));
     else
       sprintf(rootPath, "%s%s/", rootPath, strtok(dir, "/"));
-    tmp = strtok( NULL, "\n");
+    tmp = strtok(NULL, "\n");
     dir = tmp;
   }
 
@@ -620,8 +616,8 @@ int unlink(const char *node) {
   char *path = 0x0, *mountPoint = 0x0;
   struct vfs_mountPoint *mp = 0x0;
 
-  path = (char *) strtok((char *) node, "@");
-  mountPoint = strtok( NULL, "\n");
+  path = (char*) strtok((char*) node, "@");
+  mountPoint = strtok(NULL, "\n");
   if (mountPoint == 0x0) {
     mp = vfs_findMount("sys"); /* _current->oInfo.container; */
   }
