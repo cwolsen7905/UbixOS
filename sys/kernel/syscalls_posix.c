@@ -135,67 +135,67 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_getpid_args),
         "getpid",
         sys_getpid,
-        SYSCALL_VALID }, // 20 - getpid
+        SYSCALL_VALID },  // 20 - getpid
     {
         0,
         "mount",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 21 - mount
+        SYSCALL_NOTIMP },  // 21 - mount
     {
         0,
         "unmount",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 22 - unmount
+        SYSCALL_NOTIMP },  // 22 - unmount
     {
         ARG_COUNT(sys_setUID_args),
         "setuid",
         (sys_call_t*) sys_setUID,
-        SYSCALL_VALID }, // 23 - setUID
+        SYSCALL_VALID },  // 23 - setUID
     {
         0,
         "getuid",
         sys_getUID,
-        SYSCALL_VALID }, // 24 - getuid
+        SYSCALL_VALID },  // 24 - getuid
     {
         ARG_COUNT(sys_geteuid_args),
         "geteuid",
         sys_geteuid,
-        SYSCALL_VALID }, // 25 - geteuid
+        SYSCALL_VALID },  // 25 - geteuid
     {
         0,
         "ptrace",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 26 - ptrace
+        SYSCALL_NOTIMP },  // 26 - ptrace
     {
         0,
         "recvmsg",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 27 - recvmsg
+        SYSCALL_NOTIMP },  // 27 - recvmsg
     {
         0,
         "sendmsg",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 28 - sendmsg
+        SYSCALL_NOTIMP },  // 28 - sendmsg
     {
         0,
         "recvfrom",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 29 - recvfrom
+        SYSCALL_NOTIMP },  // 29 - recvfrom
     {
         0,
         "accept",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 30 - accept
+        SYSCALL_NOTIMP },  // 30 - accept
     {
         0,
         "getpeername",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 31 - getpeername
+        SYSCALL_NOTIMP },  // 31 - getpeername
     {
         0,
         "getsockname",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 32 - getsockname
+        SYSCALL_NOTIMP },  // 32 - getsockname
     {
         ARG_COUNT(sys_access_args),
         "access",
@@ -205,77 +205,77 @@ struct syscall_entry systemCalls_posix[] = {
         0,
         "chflags",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 34 - chflags
+        SYSCALL_NOTIMP },  // 34 - chflags
     {
         0,
         "fchflags",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 35 - fchflags
+        SYSCALL_NOTIMP },  // 35 - fchflags
     {
         0,
         "sync",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 36 - sync
+        SYSCALL_NOTIMP },  // 36 - sync
     {
         0,
         "kill",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 37 - kill
+        SYSCALL_NOTIMP },  // 37 - kill
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, // 38
+        SYSCALL_INVALID },  // 38
     {
         ARG_COUNT(sys_getppid_args),
         "getpid",
         sys_getpid,
-        SYSCALL_VALID }, // 39 - getppid
+        SYSCALL_VALID },  // 39 - getppid
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, // 40
+        SYSCALL_INVALID },  // 40
     {
         0,
         "dup",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 41 - dup
+        SYSCALL_NOTIMP },  // 41 - dup
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, // 42
+        SYSCALL_INVALID },  // 42
     {
         ARG_COUNT(sys_getegid_args),
         "getegid",
         sys_getegid,
-        SYSCALL_VALID }, // 43 - getegid
+        SYSCALL_VALID },  // 43 - getegid
     {
         0,
         "profil",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 44  - profil
+        SYSCALL_NOTIMP },  // 44  - profil
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 45 - ktrace
+        SYSCALL_NOTIMP },  // 45 - ktrace
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, // 46
+        SYSCALL_INVALID },  // 46
     {
         0,
         "getuid",
         sys_getGID,
-        SYSCALL_VALID }, // 47 - getgid
+        SYSCALL_VALID },  // 47 - getgid
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, // 48
+        SYSCALL_INVALID },  // 48
     {
         ARG_COUNT(sys_getlogin_args),
         "getlogin",
@@ -305,17 +305,17 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_ioctl_args),
         "ioctl",
         sys_ioctl,
-        SYSCALL_VALID }, // 54 - ioctl
+        SYSCALL_VALID },  // 54 - ioctl
     {
         0,
         "reboot",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 55 - reboot
+        SYSCALL_NOTIMP },  // 55 - reboot
     {
         0,
         "revoke",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 56 - revoke
+        SYSCALL_NOTIMP },  // 56 - revoke
     {
         0,
         "symlink",
@@ -330,42 +330,42 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_execve_args),
         "execve",
         (sys_call_t*) sys_execve,
-        SYSCALL_VALID }, // 59 - execv
+        SYSCALL_VALID },  // 59 - execv
     {
         0,
         "umask",
         sys_invalid,
-        SYSCALL_NOTIMP }, //  60 - umask
+        SYSCALL_NOTIMP },  //  60 - umask
     {
         0,
         "chroot",
         sys_invalid,
-        SYSCALL_NOTIMP }, //  61 - chroot
+        SYSCALL_NOTIMP },  //  61 - chroot
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, //  62
+        SYSCALL_INVALID },  //  62
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, //  63
+        SYSCALL_INVALID },  //  63
     {
         0,
         "No Call",
         sys_invalid,
-        SYSCALL_INVALID }, //  64
+        SYSCALL_INVALID },  //  64
     {
         0,
         "msync",
         sys_invalid,
-        SYSCALL_NOTIMP }, //  65 - msync
+        SYSCALL_NOTIMP },  //  65 - msync
     {
         0,
         "vfork",
         sys_invalid,
-        SYSCALL_NOTIMP }, //  66 - vfork
+        SYSCALL_NOTIMP },  //  66 - vfork
     {
         0,
         "No Call",
@@ -390,7 +390,7 @@ struct syscall_entry systemCalls_posix[] = {
         0,
         "old mmap",
         sys_invalid,
-        SYSCALL_INVALID }, //  71
+        SYSCALL_INVALID },  //  71
     {
         0,
         "vadvise",
@@ -440,12 +440,12 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_getpgrp_args),
         "getpgrp",
         sys_getpgrp,
-        SYSCALL_VALID }, //  81 - getpgrp
+        SYSCALL_VALID },  //  81 - getpgrp
     {
         ARG_COUNT(sys_setpgid_args),
         "setpgid",
         sys_setpgid,
-        SYSCALL_VALID }, //  82 - setpgid
+        SYSCALL_VALID },  //  82 - setpgid
     {
         0,
         "setitimer",
@@ -495,12 +495,12 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_fcntl_args),
         "fcntl",
         sys_fcntl,
-        SYSCALL_VALID }, //  92 - fcntl
+        SYSCALL_VALID },  //  92 - fcntl
     {
         ARG_COUNT(sys_select_args),
         "select",
         sys_select,
-        SYSCALL_VALID }, // 93 - select
+        SYSCALL_VALID },  // 93 - select
     {
         0,
         "setdopt",
@@ -520,7 +520,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_socket_args),
         "socket",
         sys_socket,
-        SYSCALL_VALID }, //  97 - socket
+        SYSCALL_VALID },  //  97 - socket
     {
         0,
         "connect",
@@ -555,12 +555,12 @@ struct syscall_entry systemCalls_posix[] = {
         0,
         "bind",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 104 - bind
+        SYSCALL_NOTIMP },  // 104 - bind
     {
         ARG_COUNT(sys_setsockopt_args),
         "setsockopt",
         sys_setsockopt,
-        SYSCALL_VALID }, // 105 setsockopt
+        SYSCALL_VALID },  // 105 setsockopt
     {
         0,
         "listen",
@@ -615,7 +615,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_gettimeofday_args),
         "gettimeofday",
         sys_gettimeofday,
-        SYSCALL_VALID }, // 116 - gettimeofday
+        SYSCALL_VALID },  // 116 - gettimeofday
     {
         0,
         "getrusage",
@@ -700,7 +700,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_sendto_args),
         "sendto",
         sys_sendto,
-        SYSCALL_VALID }, // 133 - sendto
+        SYSCALL_VALID },  // 133 - sendto
     {
         0,
         "shutdown",
@@ -860,7 +860,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_sysarch_args),
         "sysarch",
         sys_sysarch,
-        SYSCALL_VALID }, // 165 - sysarch
+        SYSCALL_VALID },  // 165 - sysarch
     {
         0,
         "rtprio",
@@ -945,12 +945,12 @@ struct syscall_entry systemCalls_posix[] = {
         0,
         "setegid",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 182 - setegid
+        SYSCALL_NOTIMP },  // 182 - setegid
     {
         0,
         "seteuid",
         sys_invalid,
-        SYSCALL_NOTIMP }, // 183 - seteuid
+        SYSCALL_NOTIMP },  // 183 - seteuid
     {
         0,
         "lfs_bmapv",
@@ -1015,7 +1015,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_getdirentries_args),
         "getdirentries",
         sys_getdirentries,
-        SYSCALL_VALID }, // 196 - getdirentries
+        SYSCALL_VALID },  // 196 - getdirentries
     {
         ARG_COUNT(sys_mmap_args),
         "old mmap",
@@ -1735,7 +1735,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_sigprocmask_args),
         "sigprocmask",
         sys_sigprocmask,
-        SYSCALL_VALID }, // 340 - sigprocmask
+        SYSCALL_VALID },  // 340 - sigprocmask
     {
         0,
         "sigsuspend",
@@ -2015,12 +2015,12 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_statfs_args),
         "statfs",
         (sys_call_t*) sys_statfs,
-        SYSCALL_VALID }, // 396 statfs
+        SYSCALL_VALID },  // 396 statfs
     {
         ARG_COUNT(sys_fstatfs_args),
         "fstatfs",
         (sys_call_t*) sys_fstatfs,
-        SYSCALL_VALID }, // 397 fstatfs
+        SYSCALL_VALID },  // 397 fstatfs
     {
         0,
         "fhstatfs",
@@ -2115,7 +2115,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_sigaction_args),
         "sigaction",
         sys_sigaction,
-        SYSCALL_VALID }, // 416 - sigaction
+        SYSCALL_VALID },  // 416 - sigaction
     {
         0,
         "sigreturn",
@@ -2410,7 +2410,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_pread_args),
         "pread",
         sys_pread,
-        SYSCALL_VALID }, // 475 - pread
+        SYSCALL_VALID },  // 475 - pread
     {
         0,
         "pwrite",
@@ -2425,7 +2425,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_lseek_args),
         "lseek",
         (sys_call_t*) sys_lseek,
-        SYSCALL_VALID }, /* 478 - sys_lseek */
+        SYSCALL_DEBUG }, /* 478 - sys_lseek */
     {
         0,
         "truncate",
@@ -2500,7 +2500,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_fstatat_args),
         "fstatat",
         sys_fstatat,
-        SYSCALL_VALID }, // 493 - fstatat
+        SYSCALL_VALID },  // 493 - fstatat
     {
         0,
         "futimesat",

@@ -115,7 +115,8 @@ void sys_call_posix(struct trapframe *frame) {
         frame->tf_eax = td->td_retval[0];
         frame->tf_edx = td->td_retval[1];
         frame->tf_eflags |= PSL_C;
-        kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
+                if (systemCalls_posix[code].sc_status == SYSCALL_DEBUG)
+                    kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
       break;
     }
   }

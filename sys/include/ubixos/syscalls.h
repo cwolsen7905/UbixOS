@@ -41,10 +41,21 @@
 
 #define ARG_COUNT(name) (sizeof(struct name) / sizeof(register_t))
 
+/*
 #define SYSCALL_INVALID 0
 #define SYSCALL_VALID   1
 #define SYSCALL_DUMMY   2
 #define SYSCALL_NOTIMP  3
+ #define SYSCALL_DEBUG   4
+ */
+
+typedef enum {
+    SYSCALL_INVALID,
+    SYSCALL_VALID,
+    SYSCALL_DUMMY,
+    SYSCALL_NOTIMP,
+    SYSCALL_DEBUG
+} syscallType_t;
 
 typedef int sys_call_t(struct thread *, void *);
 
@@ -52,7 +63,7 @@ struct syscall_entry {
     int sc_args;
     char *sc_name;
     sys_call_t *sc_entry;
-    int sc_status;
+        syscallType_t sc_status;
 };
 
 /*
