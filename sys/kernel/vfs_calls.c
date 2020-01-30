@@ -48,10 +48,6 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   int fd = 0x0;
   struct file *nfp = 0x0;
 
-#ifdef DEBUG_OPENAT
-  kprintf("openat");
-#endif
-
   error = falloc(td, &nfp, &fd);
 
   if (error)
@@ -92,7 +88,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     td->td_retval[0] = fd;
   }
 
-  //kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
+    kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
   //kprintf("sys_openat: %i, 0x%X, 0x%X", fd, nfp, nfp->fd);
   return (error);
 }

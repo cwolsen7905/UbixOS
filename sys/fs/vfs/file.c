@@ -42,9 +42,9 @@
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
 
-static fileDescriptor_t *fdTable = 0x0;
+fileDescriptor_t *fdTable = 0x0;
 
-static fileDescriptor_t *vfs_fileTable = 0x0;
+fileDescriptor_t *vfs_fileTable = 0x0;
 
 int sys_fwrite(struct thread *td, struct sys_fwrite_args *uap) {
     char *t = uap->buf;

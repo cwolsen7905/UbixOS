@@ -88,7 +88,7 @@ typedef struct userFileDescriptorStruct {
     uint32_t fdSize;
 } userFileDescriptor;
 
-extern static fileDescriptor_t *fdTable;
+extern fileDescriptor_t *fdTable;
 
 fileDescriptor_t *fopen(const char *, const char *);
 int fclose(fileDescriptor_t *);
