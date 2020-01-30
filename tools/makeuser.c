@@ -45,6 +45,7 @@ int main(int argc, char **argv) {
   FILE *out;
   password = (struct passwd *) malloc(4096);
   out = fopen("./userdb", "wbb");
+
   sprintf(password[0].username, "root");
   sprintf(password[0].passwd, "user");
   sprintf(password[0].shell, "sys:/bin/shell");
@@ -52,6 +53,7 @@ int main(int argc, char **argv) {
   sprintf(password[0].path, "root");
   password[0].uid = 0;
   password[0].gid = 0;
+
   sprintf(password[1].username, "guest");
   sprintf(password[1].passwd, "user");
   sprintf(password[1].shell, "sys:/bin/shell");
@@ -59,6 +61,7 @@ int main(int argc, char **argv) {
   sprintf(password[1].path, "guest");
   password[1].uid = 1;
   password[1].gid = 1;
+
   sprintf(password[2].username, "reddawg");
   sprintf(password[2].passwd, "temp123");
   sprintf(password[2].shell, "sys:/bin/sh");
@@ -66,9 +69,19 @@ int main(int argc, char **argv) {
   sprintf(password[2].path, "reddawg");
   password[2].uid = 1000;
   password[2].gid = 0;
+
+  sprintf(password[3].username, "bsd");
+  sprintf(password[3].passwd, "user");
+  sprintf(password[3].shell, "sys:/bin/sh");
+  sprintf(password[3].realname, "BSD User");
+  sprintf(password[3].path, "/home/bsd");
+  password[3].uid = 0;
+  password[3].gid = 0;
+
+
   fwrite(password, 4096, 1, out);
   fclose(out);
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 4; i++) {
     printf("User:  [%s]\n", password[i].username);
     printf("Pass:  [%s]\n", password[i].passwd);
     printf("UID:   [%i]\n", password[i].uid);
