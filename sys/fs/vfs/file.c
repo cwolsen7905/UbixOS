@@ -161,8 +161,8 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
     kprintf("ERROR!");
   }
 
-  kprintf("loffset(%i): %ld:%ld, whence: 0x%X", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFFFF, args->whence);
-  kprintf("loffset(%i): %lq, whence: %ld", sizeof(off_t), args->offset, args->whence);
+  kprintf("loffset(%i): %i:%i, whence: %i", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFFFF, args->whence);
+  kprintf("loffset(%i): %q, whence: %i", sizeof(off_t), args->offset, args->whence);
 
   switch (args->whence) {
     case SEEK_SET:
@@ -180,7 +180,7 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
       break;
   }
 
-  kprintf("loff: %lq", fd->offset);
+  kprintf("loff: %q", fd->offset);
 
   return (error);
 }
