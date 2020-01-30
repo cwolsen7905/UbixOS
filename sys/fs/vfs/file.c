@@ -37,6 +37,7 @@
 #include <lib/kprintf.h>
 #include <assert.h>
 #include <sys/descrip.h>
+#include "../fat/fat_filelib.h"
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
