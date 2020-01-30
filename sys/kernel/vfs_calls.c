@@ -93,7 +93,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   }
 
   //kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
-  kprintf("sys_openat: %i, 0x%X, 0x%X", fd, nfp, nfp->fd);
+  //kprintf("sys_openat: %i, 0x%X, 0x%X", fd, nfp, nfp->fd);
   return (error);
 }
 
@@ -103,7 +103,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
 
   getfd(td, &fd, args->fd);
 
-  kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
+  //kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
 
 #ifdef DEBUG_VFS_CALLS
   kprintf("[sC::0x%X:0x%X]", args->fd, fd, fd->fd);

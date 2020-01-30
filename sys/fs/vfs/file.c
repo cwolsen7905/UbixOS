@@ -38,7 +38,8 @@
 #include <assert.h>
 #include <sys/descrip.h>
 
-static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
+static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
+;
 
 fileDescriptor_t *fdTable = 0x0;
 
@@ -540,7 +541,7 @@ int fclose(fileDescriptor_t *fd) {
 
   spinLock(&fdTable_lock);
 
-  kprintf("[%s:%i]", __FILE__, __LINE__);
+  //kprintf("[%s:%i]", __FILE__, __LINE__);
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
 
