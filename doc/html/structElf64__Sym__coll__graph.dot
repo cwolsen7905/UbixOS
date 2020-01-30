@@ -1,7 +1,0 @@
-digraph "Elf64_Sym"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{Elf64_Sym\n|+ st_info\l+ st_name\l+ st_other\l+ st_shndx\l+ st_size\l+ st_value\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

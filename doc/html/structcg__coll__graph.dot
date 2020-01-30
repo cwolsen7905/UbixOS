@@ -1,9 +1,0 @@
-digraph "cg"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{cg\n|+ cg_cgx\l+ cg_clusteroff\l+ cg_clustersumoff\l+ cg_firstfield\l+ cg_freeoff\l+ cg_frotor\l+ cg_frsum\l+ cg_initediblk\l+ cg_irotor\l+ cg_iusedoff\land 16 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +cg_cs" ,arrowhead="odiamond",fontname="Helvetica"];
-  Node2 [label="{csum\n|+ cs_nbfree\l+ cs_ndir\l+ cs_nffree\l+ cs_nifree\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcsum.html",tooltip=" "];
-}

@@ -1,7 +1,0 @@
-digraph "sys_wait4_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_wait4_args\n|+ options\l+ options_l_\l+ options_r_\l+ pid\l+ pid_l_\l+ pid_r_\l+ rusage\l+ rusage_l_\l+ rusage_r_\l+ status\l+ status_l_\l+ status_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

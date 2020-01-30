@@ -1,7 +1,0 @@
-digraph "sys_open_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_open_args\n|+ flags\l+ flags_l_\l+ flags_r_\l+ mode\l+ mode_l_\l+ mode_r_\l+ path\l+ path_l_\l+ path_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

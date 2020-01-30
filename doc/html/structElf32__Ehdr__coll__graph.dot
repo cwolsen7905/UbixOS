@@ -1,7 +1,0 @@
-digraph "Elf32_Ehdr"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{Elf32_Ehdr\n|+ e_ehsize\l+ e_entry\l+ e_flags\l+ e_ident\l+ e_machine\l+ e_phentsize\l+ e_phnum\l+ e_phoff\l+ e_shentsize\l+ e_shnum\l+ e_shoff\l+ e_shstrndx\l+ e_type\l+ e_version\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

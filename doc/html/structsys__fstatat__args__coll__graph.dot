@@ -1,9 +1,0 @@
-digraph "sys_fstatat_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_fstatat_args\n|+ buf_l_\l+ buf_r_\l+ fd\l+ fd_l_\l+ fd_r_\l+ flag\l+ flag_l_\l+ flag_r_\l+ path\l+ path_l_\l+ path_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +buf" ,arrowhead="odiamond",fontname="Helvetica"];
-  Node2 [label="{stat\n|+ __st_atimensec\l+ __st_ctimensec\l+ __st_mtimensec\l+ int\l+ st_atime\l+ st_birthtime\l+ st_birthtimensec\l+ st_blksize\l+ st_blocks\l+ st_ctime\land 12 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structstat.html",tooltip=" "];
-}

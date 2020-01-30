@@ -1,7 +1,0 @@
-digraph "sys_setsockopt_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_setsockopt_args\n|+ level\l+ level_l_\l+ level_r_\l+ name\l+ name_l_\l+ name_r_\l+ s\l+ s_l_\l+ s_r_\l+ val\l+ val_l_\l+ val_r_\l+ valsize\l+ valsize_l_\l+ valsize_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

@@ -1,9 +1,0 @@
-digraph "sys_getrlimit_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_getrlimit_args\n|+ rlp_l_\l+ rlp_r_\l+ which\l+ which_l_\l+ which_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +rlp" ,arrowhead="odiamond",fontname="Helvetica"];
-  Node2 [label="{rlimit\n|+ rlim_cur\l+ rlim_max\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structrlimit.html",tooltip=" "];
-}

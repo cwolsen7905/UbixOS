@@ -1,9 +1,0 @@
-digraph "__siginfo"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{__siginfo\n|+ __spare1__\l+ __spare2__\l+ __spare__\l+ _band\l+ _fault\l+ _mesgq\l+ _mqd\l+ _overrun\l+ _poll\l+ _reason\land 10 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +si_value" ,arrowhead="odiamond",fontname="Helvetica"];
-  Node2 [label="{sigval\n|+ sigval_int\l+ sigval_ptr\l+ sival_int\l+ sival_ptr\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$unionsigval.html",tooltip=" "];
-}

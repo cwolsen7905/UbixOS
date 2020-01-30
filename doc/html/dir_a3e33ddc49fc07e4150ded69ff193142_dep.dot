@@ -1,9 +1,0 @@
-digraph "C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_60a47962a3554048f3afe735257bc308 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="ppp" fontname="Helvetica", fontsize="10", URL="dir_60a47962a3554048f3afe735257bc308.html"]
-  dir_a3e33ddc49fc07e4150ded69ff193142 [shape=box, label="polarssl", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a3e33ddc49fc07e4150ded69ff193142.html"];
-  }
-}

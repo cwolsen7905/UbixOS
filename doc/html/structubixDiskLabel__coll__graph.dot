@@ -1,9 +1,0 @@
-digraph "ubixDiskLabel"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{ubixDiskLabel\n|+ driveType\l+ magicNum\l+ magicNum2\l+ numPartitions\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-  Node2 -> Node1 [color="grey25",fontsize="10",style="solid",label=" +partitions" ,arrowhead="odiamond",fontname="Helvetica"];
-  Node2 [label="{ubixDiskLabel::ubixPartitions\n|+ pBatSize\l+ pFrag\l+ pFsSize\l+ pFsType\l+ pOffset\l+ pSize\l|}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structubixDiskLabel_1_1ubixPartitions.html",tooltip=" "];
-}

@@ -1,7 +1,0 @@
-digraph "sys_socket_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_socket_args\n|+ domain\l+ domain_l_\l+ domain_r_\l+ protocol\l+ protocol_l_\l+ protocol_r_\l+ type\l+ type_l_\l+ type_r_\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

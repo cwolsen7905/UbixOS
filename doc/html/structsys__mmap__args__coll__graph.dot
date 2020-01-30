@@ -1,7 +1,0 @@
-digraph "sys_mmap_args"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{sys_mmap_args\n|+ addr\l+ addr_l_\l+ addr_r_\l+ fd\l+ fd_l_\l+ fd_r_\l+ flags\l+ flags_l_\l+ flags_r_\l+ len\land 8 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

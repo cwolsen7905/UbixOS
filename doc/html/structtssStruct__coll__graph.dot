@@ -1,7 +1,0 @@
-digraph "tssStruct"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{tssStruct\n|+ back_link\l+ back_link_reserved\l+ cr3\l+ cs\l+ cs_reserved\l+ ds\l+ ds_reserved\l+ eax\l+ ebp\l+ ebx\land 29 more...\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}

@@ -1,7 +1,0 @@
-digraph "tty_termNode"
-{
- // LATEX_PDF_SIZE
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="{tty_termNode\n|+ owner\l+ stdin\l+ stdinSize\l+ tty_buffer\l+ tty_colour\l+ tty_pointer\l+ tty_x\l+ tty_y\l|}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
-}
