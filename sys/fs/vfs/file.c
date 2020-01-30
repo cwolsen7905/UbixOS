@@ -371,6 +371,7 @@ int fputc(int ch, fileDescriptor_t *fd) {
  ************************************************************************/
 int fgetc(fileDescriptor_t *fd) {
   int ch = 0x0;
+  kprintf("[%s:%i]", __FILE__, __LINE__);
   /* If Found Return Next Char */
   if (fd != 0x0) {
     fd->mp->fs->vfsRead(fd, (char*) &ch, fd->offset, 1);

@@ -199,6 +199,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
         break;
       default:
         //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
+        kprintf("[%s:%i]", __FILE__, __LINE__);
         td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }
