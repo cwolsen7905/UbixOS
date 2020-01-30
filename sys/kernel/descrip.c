@@ -36,7 +36,7 @@
 #include <assert.h>
 #include <sys/select.h>
 
-static struct file *kern_files = 0x0;
+// XXX MrOlsen (2020-01-30) No longer needed -> static struct file *kern_files = 0x0;
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
   struct file *fp = 0x0;
@@ -126,23 +126,23 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 #include <sys/ioctl.h>
 
 /**
- * \brief   This destroys a thread local file descriptor.
+ * @brief   This destroys a thread local file descriptor.
  *
- * \details This function will destroy the thread local file file specified as fd,
+ * @details This function will destroy the thread local file file specified as fd,
  *          for sanity it requires the file descriptor id and memory address to check before destroying.
  *
- * \note    This text shall only show you, how such a \"note\" section
+ * @note    This text shall only show you, how such a \"note\" section
  *          is looking. There is nothing which really needs your notice,
  *          so you do not really need to read this section.
  *
- * \param[in] td Pointer to thread which initiated the syscall.
- * \param[in] fp Pointer to the thread local file which you want to destroy.
- * \param[in] fd File descriptor id that points to the thread local file which you want to destroy.
+ * @param   td Pointer to thread which initiated the syscall.
+ * @param   fp Pointer to the thread local file which you want to destroy.
+ * @param   fd File descriptor id that points to the thread local file which you want to destroy.
  *
- * \return        The error return code of the function.
+ * @return  The error return code of the function.
  *
- * \retval        0    The function is successfully executed
- * \retval        -1    An error occurred
+ * @retval  0 The function is successfully executed
+ * @retval  -1 An error occurred
  */
 int fdestroy(struct thread *td, struct file *fp, int fd) {
   int error = 0;
