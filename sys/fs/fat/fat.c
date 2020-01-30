@@ -90,7 +90,7 @@ int fat_initialize(struct vfs_mountPoint *mp) {
 int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
-  kprintf("Offset: %i", offset);
+  kprintf("Offset(%s): %i:%i", _file->filename, offset, size);
   if (fl_fseek(_file, offset, 0) != 0)
     kprintf("SEEK FAILED!");
 

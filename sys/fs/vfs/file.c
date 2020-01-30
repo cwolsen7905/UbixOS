@@ -178,9 +178,6 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
       break;
   }
 
-  if (fd->res)
-    fl_fseek(fd->res, fd->offset);
-
   kprintf("loff: %ld", fd->offset);
 
   return (error);
