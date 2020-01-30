@@ -139,7 +139,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
           if (!fclose(fd->fd))
             td->td_retval[0] = -1;
 
-          kprintf("DESTROY: %i!", args->fd);
+          //kprintf("DESTROY: %i!", args->fd);
           if (fdestroy(td, fd, args->fd) != 0x0)
             kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
 
@@ -199,7 +199,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
         break;
       default:
         //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
-        kprintf("[%s:%i]", __FILE__, __LINE__);
+        //kprintf("[%s:%i]", __FILE__, __LINE__);
         td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }

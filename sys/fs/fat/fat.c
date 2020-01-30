@@ -72,7 +72,13 @@ int fat_initialize(struct vfs_mountPoint *mp) {
 
   // Create File
   file = fl_fopen("/file.bin", "w");
-  unsigned char data[] = { 'a', '\n', 'b', '\n', 'c', '\n' };
+  unsigned char data[] = {
+      'a',
+      '\n',
+      'b',
+      '\n',
+      'c',
+      '\n' };
   if (file) {
     // Write some data
     if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
@@ -95,7 +101,7 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
     return (-1);
   }
 
-  kprintf("[Offset(%s): %ld:%ld]", _file->filename, offset, size);
+  //kprintf("[Offset(%s): %ld:%ld]", _file->filename, offset, size);
   if (fl_fseek(_file, offset, 0) != 0)
     kprintf("SEEK FAILED!");
 
@@ -132,8 +138,8 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
-  kprintf("File: %s, ", file);
-  kprintf("Mode: 0x%X\n", fd->mode);
+  //kprintf("File: %s, ", file);
+  //kprintf("Mode: 0x%X\n", fd->mode);
 
   if ((fd->mode & 0x1) == 0x1) {
     _file = fl_fopen(file, "r");
@@ -144,7 +150,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     }
     else {
       _file = fl_fopen(file, "w");
-      kprintf("open for writing");
+      //kprintf("open for writing");
     }
   }
   else
@@ -178,17 +184,17 @@ int fat_init() {
 
   /* Set up our file system structure */
   struct fileSystem ubixFileSystem = {
-  NULL, /* prev        */
-  NULL, /* next        */
-  (void*) fat_initialize, /* vfsInitFS   */
-  (void*) read_fat, /* vfsRead     */
-  (void*) write_fat, /* vfsWrite    */
-  (void*) open_fat, /* vfsOpenFile */
-  (void*) unlink_fat, /* vfsUnlink   */
-  (void*) mkdir_fat, /* vfsMakeDir  */
-  NULL, /* vfsRemDir   */
-  NULL, /* vfsSync     */
-  0xFA /* vfsType     */
+      NULL, /* prev        */
+      NULL, /* next        */
+      (void*) fat_initialize, /* vfsInitFS   */
+      (void*) read_fat, /* vfsRead     */
+      (void*) write_fat, /* vfsWrite    */
+      (void*) open_fat, /* vfsOpenFile */
+      (void*) unlink_fat, /* vfsUnlink   */
+      (void*) mkdir_fat, /* vfsMakeDir  */
+      NULL, /* vfsRemDir   */
+      NULL, /* vfsSync     */
+      0xFA /* vfsType     */
   }; /* ubixFileSystem */
 
   /* Add UbixFS */
