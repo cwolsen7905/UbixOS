@@ -116,8 +116,7 @@ typedef __int64_t int64_t;
 
 typedef __ssize_t ssize_t;
 typedef char *caddr_t;
-// XXX TEMP HACK typedef __int64_t off_t;
-typedef long off_t;
+typedef __int64_t off_t;
 typedef __uint32_t vm_offset_t;
 
 typedef __uid_t uid_t; /* user id */
