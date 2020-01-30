@@ -180,7 +180,7 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
       break;
   }
 
-  kprintf("loff: %qd:%s", fd->offset, fd->res->filename);
+  kprintf("loff: %qd:%s", fd->offset, ((FL_FILE*) fd->res)->filename);
 
   return (error);
 }
