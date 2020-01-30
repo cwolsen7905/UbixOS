@@ -97,7 +97,7 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
   if (size == 0) {
-    kprintf("ZERO");
+    kprintf("ZERO: %s", _file->filename);
     return (-1);
   }
 
