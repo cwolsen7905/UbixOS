@@ -32,6 +32,7 @@
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/io.h>
+#include <sys/shutdown.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/sched.h>
@@ -296,13 +297,7 @@ void keyboardHandler(struct trapframe *frame) {
         sched_setStatus(tty_foreground->owner, DEAD);
         break;
       case 0x9:
-        kprintf("REBOOTING");
-
-        // XXX Hack add shutdown procedure
-        fl_shutdown();
-        while (inportByte(0x64) & 0x02)
-          ;
-        outportByte(0x64, 0xFE);
+                sys_shutdown(REBOOT);
         break;
       case 0x18:
         if (tty_foreground->owner == _current->id)

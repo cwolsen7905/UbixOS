@@ -36,7 +36,7 @@
 #include <lib/kprintf.h>
 #include <lib/bioscall.h>
 #include <sde/sde.h>
-#include <sys/io.h>
+#include <sys/shutdown.h>
 #include <vmm/vmm.h>
 #include <mpi/mpi.h>
 #include <string.h>
@@ -71,12 +71,7 @@ void systemTask() {
           while (systemVitals->sysUptime < counter) {
             sched_yield();
           }
-          // XXX Temp Hack To Cleanup File system we need a shutdown procedure somewhere.
-          fl_shutdown();
-          kprintf("Rebooting NOW!!!\n");
-          while (inportByte(0x64) & 0x02)
-            ;
-          outportByte(0x64, 0xFE);
+                    sys_shutdown(REBOOT);
           break;
         case 31337:
           kprintf("system: backdoor opened\n");
