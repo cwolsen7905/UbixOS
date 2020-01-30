@@ -95,7 +95,7 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
     return (-1);
   }
 
-  kprintf("Offset(%s): %i:%i", _file->filename, offset, size);
+  kprintf("[Offset(%s): %ld:%ld]", _file->filename, offset, size);
   if (fl_fseek(_file, offset, 0) != 0)
     kprintf("SEEK FAILED!");
 
