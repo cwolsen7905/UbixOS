@@ -39,37 +39,37 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_exit_args),
         "exit",
-        (sys_call_t *) sys_exit,
+        (sys_call_t*) sys_exit,
         SYSCALL_VALID }, /* 1 */
     {
         ARG_COUNT(sys_fork_args),
         "fork",
-        (sys_call_t *) sys_fork,
+        (sys_call_t*) sys_fork,
         SYSCALL_VALID }, /* 2 */
     {
         ARG_COUNT(sys_read_args),
         "read",
-        (sys_call_t *) sys_read,
+        (sys_call_t*) sys_read,
         SYSCALL_VALID }, /* 3 */
     {
         ARG_COUNT(sys_write_args),
         "write",
-        (sys_call_t *) sys_write,
+        (sys_call_t*) sys_write,
         SYSCALL_VALID }, /* 4 */
     {
         ARG_COUNT(sys_open_args),
         "open",
-        (sys_call_t *) sys_open,
+        (sys_call_t*) sys_open,
         SYSCALL_VALID }, /* 5 */
     {
         ARG_COUNT(sys_close_args),
         "close",
-        (sys_call_t *) sys_close,
+        (sys_call_t*) sys_close,
         SYSCALL_VALID }, /* 6 */
     {
         ARG_COUNT(sys_wait4_args),
         "wiat4",
-        (sys_call_t *) sys_wait4,
+        (sys_call_t*) sys_wait4,
         SYSCALL_VALID }, /* 7 */
     {
         0,
@@ -82,10 +82,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 9 */
     {
-        0,
+        ARG_COUNT(sys_unlink_args),
         "unlink",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 10 */
+        sys_unlink,
+        SYSCALL_VALID }, /* 10 */
     {
         0,
         "No Call",
@@ -94,7 +94,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_chdir_args),
         "cgdur",
-        (sys_call_t *) sys_chdir,
+        (sys_call_t*) sys_chdir,
         SYSCALL_VALID }, /* 12 */
     {
         ARG_COUNT(sys_fchdir_args),
@@ -149,7 +149,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_setUID_args),
         "setuid",
-        (sys_call_t *) sys_setUID,
+        (sys_call_t*) sys_setUID,
         SYSCALL_VALID }, // 23 - setUID
     {
         0,
@@ -329,7 +329,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_execve_args),
         "execve",
-        (sys_call_t *) sys_execve,
+        (sys_call_t*) sys_execve,
         SYSCALL_VALID }, // 59 - execv
     {
         0,
@@ -474,7 +474,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         0,
         "Get Free Page",
-        (sys_call_t *) sysGetFreePage,
+        (sys_call_t*) sysGetFreePage,
         SYSCALL_VALID }, /*  88 - getFreePage TEMP OLD sethostname */
     {
         0,
@@ -485,7 +485,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_dup2_args),
         "dup2",
         sys_dup2,
-    SYSCALL_VALID }, /*  90 - dup2 */
+        SYSCALL_VALID }, /*  90 - dup2 */
     {
         0,
         "getdopt",
@@ -939,7 +939,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_setGID_args),
         "setgid",
-        (sys_call_t *) sys_setGID,
+        (sys_call_t*) sys_setGID,
         SYSCALL_VALID }, /* 181 - setgid */
     {
         0,
@@ -974,17 +974,17 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_stat_args),
         "stat",
-        (sys_call_t *) sys_stat,
+        (sys_call_t*) sys_stat,
         SYSCALL_VALID }, /* 188 - sys_stat */
     {
         ARG_COUNT(sys_fstat_args),
         "fstat",
-        (sys_call_t *) sys_fstat,
+        (sys_call_t*) sys_fstat,
         SYSCALL_VALID }, /* 189 - sys_fstat */
     {
         ARG_COUNT(sys_lstat_args),
         "lstat",
-        (sys_call_t *) sys_lstat,
+        (sys_call_t*) sys_lstat,
         SYSCALL_VALID }, /* 190 - sys_lstat */
     {
         0,
@@ -1019,7 +1019,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_mmap_args),
         "old mmap",
-        (sys_call_t *) sys_mmap,
+        (sys_call_t*) sys_mmap,
         SYSCALL_INVALID }, /* 197 - sys_mmap */
     {
         0,
@@ -1044,7 +1044,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_sysctl_args),
         "__sysctl",
-        (sys_call_t *) sys_sysctl,
+        (sys_call_t*) sys_sysctl,
         SYSCALL_VALID }, /* 202 - sys_sysctl */
     {
         0,
@@ -1299,7 +1299,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_issetugid_args),
         "issetugid",
-        (sys_call_t *) sys_issetugid,
+        (sys_call_t*) sys_issetugid,
         SYSCALL_VALID }, /* 253 - Invalid */
     {
         0,
@@ -1504,27 +1504,27 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_fseek_args),
         "feek",
-        (sys_call_t *) sys_fseek,
+        (sys_call_t*) sys_fseek,
         SYSCALL_VALID }, /* XXX - Wrong Spot 294 - fseek */
     {
         ARG_COUNT(sys_fgetc_args),
         "fgetc",
-        (sys_call_t *) sys_fgetc,
+        (sys_call_t*) sys_fgetc,
         SYSCALL_VALID }, /* XXX - Wrong Spot 295 - fgetc */
     {
         ARG_COUNT(sys_fclose_args),
         "flose",
-        (sys_call_t *) sys_fclose,
+        (sys_call_t*) sys_fclose,
         SYSCALL_VALID }, /* XXX - Wrong Spot 296 - fclose */
     {
         ARG_COUNT(sys_fread_args),
         "fread",
-        (sys_call_t *) sys_fread,
+        (sys_call_t*) sys_fread,
         SYSCALL_VALID }, /* XXX - Wrong Spot 297 - fread */
     {
         ARG_COUNT(sys_fopen_args),
         "fopen",
-        (sys_call_t *) sys_fopen,
+        (sys_call_t*) sys_fopen,
         SYSCALL_VALID }, /* XXX - Wrong Spot 298 - fopen */
     {
         0,
@@ -1664,7 +1664,7 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_getcwd_args),
         "__getcwd",
-        (sys_call_t *) sys_getcwd,
+        (sys_call_t*) sys_getcwd,
         SYSCALL_VALID }, /* 326 - sys_getcwd */
     {
         0,
@@ -2014,12 +2014,12 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_statfs_args),
         "statfs",
-        (sys_call_t *) sys_statfs,
+        (sys_call_t*) sys_statfs,
         SYSCALL_VALID }, // 396 statfs
     {
         ARG_COUNT(sys_fstatfs_args),
         "fstatfs",
-        (sys_call_t *) sys_fstatfs,
+        (sys_call_t*) sys_fstatfs,
         SYSCALL_VALID }, // 397 fstatfs
     {
         0,
@@ -2419,12 +2419,12 @@ struct syscall_entry systemCalls_posix[] = {
     {
         ARG_COUNT(sys_mmap_args),
         "mmap",
-        (sys_call_t *) sys_mmap,
+        (sys_call_t*) sys_mmap,
         SYSCALL_VALID }, /* 477 - sys_mmap */
     {
         ARG_COUNT(sys_lseek_args),
         "lseek",
-        (sys_call_t *) sys_lseek,
+        (sys_call_t*) sys_lseek,
         SYSCALL_VALID }, /* 478 - sys_lseek */
     {
         0,

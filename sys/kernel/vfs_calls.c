@@ -451,3 +451,9 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
   return (error);
 
 }
+
+int sys_unlink(struct thread *td, struct sys_unlink_args *uap) {
+  int error = 0x0;
+  kprintf("Path: %s", uap->path);
+  return (error);
+}
