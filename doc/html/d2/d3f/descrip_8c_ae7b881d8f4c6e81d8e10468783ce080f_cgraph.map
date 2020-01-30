@@ -1,0 +1,4 @@
+<map id="fdestroy" name="fdestroy">
+<area shape="rect" id="node1" title="This destroys a thread local file descriptor." alt="" coords="5,5,73,32"/>
+<area shape="rect" id="node2" href="$d4/d03/kmalloc_8h.html#aaa9ed6886459604cf73ccdbf6410e487" title=" " alt="" coords="121,5,172,32"/>
+</map>

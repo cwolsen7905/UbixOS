@@ -1,0 +1,27 @@
+var ufsmount_8h =
+[
+    [ "ufs_args", "d5/d14/structufs__args.html", "d5/d14/structufs__args" ],
+    [ "ufsmount", "d3/d15/structufsmount.html", "d3/d15/structufsmount" ],
+    [ "blkptrtodb", "d9/d19/ufsmount_8h.html#a913a8748ec360435c8e65e2e4cb3318c", null ],
+    [ "is_sequential", "d9/d19/ufsmount_8h.html#a86eb8637589a459928612f45fc6e80fa", null ],
+    [ "MNINDIR", "d9/d19/ufsmount_8h.html#a42404c72db1422d0837d9fae3781538d", null ],
+    [ "QTF_64BIT", "d9/d19/ufsmount_8h.html#a3632ca1f7860387f77093d56877cb85c", null ],
+    [ "QTF_CLOSING", "d9/d19/ufsmount_8h.html#a96d49cd4fb95d51b3f9f79c04fb2a5ca", null ],
+    [ "QTF_OPENING", "d9/d19/ufsmount_8h.html#af48b052b3cd7afd7b2c044b789689e8d", null ],
+    [ "UFS1", "d9/d19/ufsmount_8h.html#a4e9b665625734832f1e9d74423c3d14e", null ],
+    [ "UFS2", "d9/d19/ufsmount_8h.html#ad32c8660fd7a17ed68caa6ce7fccdebb", null ],
+    [ "UFS_BALLOC", "d9/d19/ufsmount_8h.html#ab1ffb7a8b522c2a097488771cfe6260b", null ],
+    [ "UFS_BLKATOFF", "d9/d19/ufsmount_8h.html#aa471c93cf6a507440608e8b45fd9749c", null ],
+    [ "UFS_IFREE", "d9/d19/ufsmount_8h.html#acce10eab727e73e002852559420e5f87", null ],
+    [ "UFS_LOCK", "d9/d19/ufsmount_8h.html#aa0b8c506725697d8568e30147ad9323d", null ],
+    [ "UFS_MTX", "d9/d19/ufsmount_8h.html#a901c94ce5c87e28436c33b98c0bfe34e", null ],
+    [ "UFS_RDONLY", "d9/d19/ufsmount_8h.html#aa05d805f7e8df57fa7ec172b9af3cc18", null ],
+    [ "UFS_SNAPGONE", "d9/d19/ufsmount_8h.html#a55eebc9549bfafaf3a5052996f100291", null ],
+    [ "UFS_TRUNCATE", "d9/d19/ufsmount_8h.html#ab37fca7a4c6cd25fdc60399d752667c1", null ],
+    [ "UFS_UNLOCK", "d9/d19/ufsmount_8h.html#a1197bd535da38d4751ea95f42a4ec71d", null ],
+    [ "UFS_UPDATE", "d9/d19/ufsmount_8h.html#a8cf7b61a6e07c4cc1b4ff75b32b3cb8b", null ],
+    [ "UFS_VALLOC", "d9/d19/ufsmount_8h.html#a6aad41928181cbdd4a02b0878cbfb661", null ],
+    [ "UFS_VFREE", "d9/d19/ufsmount_8h.html#a1084d90274af8ad7a01195e4167e230d", null ],
+    [ "UFSTOVFS", "d9/d19/ufsmount_8h.html#a1054fb140b060ecc73499fced97d1ff4", null ],
+    [ "VFSTOUFS", "d9/d19/ufsmount_8h.html#a8d260fabf8d4158b89b5f913276dc73a", null ]
+];

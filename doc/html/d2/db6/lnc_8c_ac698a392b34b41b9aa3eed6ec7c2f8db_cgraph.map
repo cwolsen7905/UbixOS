@@ -1,0 +1,7 @@
+<map id="lanceProbe" name="lanceProbe">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,92,57"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="292,5,377,32"/>
+<area shape="rect" id="node3" href="$d2/db6/lnc_8c.html#a752b6613ae8e3adf7c11e20bd94be152" title=" " alt="" coords="141,31,239,57"/>
+<area shape="rect" id="node5" href="$d2/db6/lnc_8c.html#a7ddaf6c2816ca0adea2397a0ccbc101b" title=" " alt="" coords="140,81,240,108"/>
+<area shape="rect" id="node4" href="$dc/dac/io_8h.html#a243f6b6d22cc5948908b764d58efc2b0" title="outputut one word to specified port" alt="" coords="288,68,381,95"/>
+</map>

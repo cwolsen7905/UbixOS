@@ -1,0 +1,12 @@
+<map id="include/ubixos/syscall_posix.h" name="include/ubixos/syscall_posix.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,156,47"/>
+<area shape="rect" id="node2" href="$d7/d0b/trap_8h.html" title=" " alt="" coords="41,95,121,121"/>
+<area shape="rect" id="node3" href="$d6/d35/i386_2cpu_8h.html" title=" " alt="" coords="39,169,122,196"/>
+<area shape="rect" id="node4" href="$d0/d27/include_2sys_2types_8h.html" title=" " alt="" coords="35,244,126,271"/>
+<area shape="rect" id="node5" href="$d0/d6f/__types_8h.html" title=" " alt="" coords="195,468,292,495"/>
+<area shape="rect" id="node6" href="$d9/dab/select_8h.html" title=" " alt="" coords="133,319,226,345"/>
+<area shape="rect" id="node7" href="$d6/d92/cdefs_8h.html" title=" " alt="" coords="71,393,160,420"/>
+<area shape="rect" id="node8" href="$d6/d30/__timespec_8h.html" title=" " alt="" coords="184,393,303,420"/>
+<area shape="rect" id="node9" href="$df/dc5/__timeval_8h.html" title=" " alt="" coords="327,393,432,420"/>
+<area shape="rect" id="node10" href="$d6/da4/__sigset_8h.html" title=" " alt="" coords="456,393,556,420"/>
+</map>

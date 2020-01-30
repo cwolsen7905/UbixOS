@@ -1,0 +1,26 @@
+var arch_2armv6_2syscall_8c =
+[
+    [ "_UbixUser", "d0/dd5/struct__UbixUser.html", "d0/dd5/struct__UbixUser" ],
+    [ "UbixUser", "d5/d60/arch_2armv6_2syscall_8c.html#a2aebf5c0d98c1cc7bdaffd745e6b1ca2", null ],
+    [ "asm", "d5/d60/arch_2armv6_2syscall_8c.html#a935b40ee71918d65b0e42dfc37542bd0", null ],
+    [ "invalidCall", "d5/d60/arch_2armv6_2syscall_8c.html#a98fb463aa3c38a140b47e594bf9603d6", null ],
+    [ "InvalidSystemCall", "d5/d60/arch_2armv6_2syscall_8c.html#af7052cfb833f292be2fd73436e4c96b6", null ],
+    [ "sysAddModule", "d5/d60/arch_2armv6_2syscall_8c.html#a5242d291fc024663a9035376f70a9938", null ],
+    [ "sysAuth", "d5/d60/arch_2armv6_2syscall_8c.html#af53171b36a238440fc8e757c0d00a91f", null ],
+    [ "sysCheckPid", "d5/d60/arch_2armv6_2syscall_8c.html#a618ade9098959166434c56fedf05f71a", null ],
+    [ "sysExit", "d5/d60/arch_2armv6_2syscall_8c.html#afe946867553f08182c48bb1dac56f1ca", null ],
+    [ "sysGetCwd", "d5/d60/arch_2armv6_2syscall_8c.html#aa1858601da45332a2cd7d43bb3bcb80d", null ],
+    [ "sysGetDrives", "d5/d60/arch_2armv6_2syscall_8c.html#a8bdd527e2c5a0fe7ea30685196ce3323", null ],
+    [ "sysGetFreePage", "d5/d60/arch_2armv6_2syscall_8c.html#a1db3bfbad534c2fa75c02646fcf80a90", null ],
+    [ "sysGetGid", "d5/d60/arch_2armv6_2syscall_8c.html#ae96a621ca025dd8af6bc3c8288cc0cb7", null ],
+    [ "sysGetpid", "d5/d60/arch_2armv6_2syscall_8c.html#a850d08e73e21c01850eea87fbe334fb6", null ],
+    [ "sysGetTime", "d5/d60/arch_2armv6_2syscall_8c.html#ac0997ac7ac4b4bdb6f8565f2b7f0c74a", null ],
+    [ "sysGetUid", "d5/d60/arch_2armv6_2syscall_8c.html#a20b15028f242e382e441fff69880b55b", null ],
+    [ "sysGetUptime", "d5/d60/arch_2armv6_2syscall_8c.html#a7c8a6dad2e6968015b21357c795bccc0", null ],
+    [ "sysPasswd", "d5/d60/arch_2armv6_2syscall_8c.html#a87ae7b6cdc0230fbdf65c167a776e9ad", null ],
+    [ "sysRmModule", "d5/d60/arch_2armv6_2syscall_8c.html#a15cbe3f603b53d632faf25bce7f0a7ce", null ],
+    [ "sysSchedYield", "d5/d60/arch_2armv6_2syscall_8c.html#a4fe050b57d00373f9f9810f1934244e7", null ],
+    [ "sysSetGid", "d5/d60/arch_2armv6_2syscall_8c.html#ac21d2c80c103093157c7929814b23265", null ],
+    [ "sysSetUid", "d5/d60/arch_2armv6_2syscall_8c.html#a201b5066c18eb41f32293f2f0338264b", null ],
+    [ "sysStartSDE", "d5/d60/arch_2armv6_2syscall_8c.html#afb14ed929bdc2c68714da3685e650c6c", null ]
+];

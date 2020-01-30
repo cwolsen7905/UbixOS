@@ -1,0 +1,11 @@
+<map id="include/sys/idt.h" name="include/sys/idt.h">
+<area shape="rect" id="node1" title=" " alt="" coords="47,5,165,32"/>
+<area shape="rect" id="node2" href="$d0/d27/include_2sys_2types_8h.html" title=" " alt="" coords="7,80,98,107"/>
+<area shape="rect" id="node9" href="$d5/d4a/gdt_8h.html" title=" " alt="" coords="123,80,199,107"/>
+<area shape="rect" id="node3" href="$d0/d6f/__types_8h.html" title=" " alt="" coords="167,304,264,331"/>
+<area shape="rect" id="node4" href="$d9/dab/select_8h.html" title=" " alt="" coords="105,155,198,181"/>
+<area shape="rect" id="node5" href="$d6/d92/cdefs_8h.html" title=" " alt="" coords="43,229,132,256"/>
+<area shape="rect" id="node6" href="$d6/d30/__timespec_8h.html" title=" " alt="" coords="156,229,275,256"/>
+<area shape="rect" id="node7" href="$df/dc5/__timeval_8h.html" title=" " alt="" coords="299,229,404,256"/>
+<area shape="rect" id="node8" href="$d6/da4/__sigset_8h.html" title=" " alt="" coords="428,229,528,256"/>
+</map>

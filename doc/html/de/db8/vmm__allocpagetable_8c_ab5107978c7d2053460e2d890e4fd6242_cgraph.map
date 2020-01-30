@@ -1,0 +1,8 @@
+<map id="vmm_allocPageTable" name="vmm_allocPageTable">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,149,57"/>
+<area shape="rect" id="node2" href="$dc/d94/armv6_2kpanic_8c.html#adb9a182aa071791a306163d50d653deb" title="print panic message and halt system" alt="" coords="385,5,445,32"/>
+<area shape="rect" id="node3" href="$d1/d21/vmm_8h.html#ab8e4e189a7b1df2a03072ce5b75c89fe" title=" " alt="" coords="197,56,329,83"/>
+<area shape="rect" id="node4" href="$dc/d88/armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53" title=" " alt="" coords="377,56,452,83"/>
+<area shape="rect" id="node5" href="$d3/d02/armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7" title=" " alt="" coords="501,31,591,57"/>
+<area shape="rect" id="node6" href="$dc/d88/armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78" title=" " alt="" coords="500,81,592,108"/>
+</map>

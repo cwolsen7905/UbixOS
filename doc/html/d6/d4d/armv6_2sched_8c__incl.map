@@ -1,0 +1,45 @@
+<map id="arch/armv6/sched.c" name="arch/armv6/sched.c">
+<area shape="rect" id="node1" title=" " alt="" coords="1312,5,1447,32"/>
+<area shape="rect" id="node2" href="$d7/d00/sched_8h.html" title=" " alt="" coords="161,229,272,256"/>
+<area shape="rect" id="node23" href="$d2/d29/mount_8h.html" title=" " alt="" coords="1126,379,1214,405"/>
+<area shape="rect" id="node26" href="$d3/d24/kpanic_8h.html" title=" " alt="" coords="1775,80,1888,107"/>
+<area shape="rect" id="node27" href="$df/d63/spinlock_8h.html" title=" " alt="" coords="1217,229,1339,256"/>
+<area shape="rect" id="node28" href="$dc/d0c/endtask_8h.html" title=" " alt="" coords="5,155,127,181"/>
+<area shape="rect" id="node29" href="$d4/d03/kmalloc_8h.html" title=" " alt="" coords="1311,304,1405,331"/>
+<area shape="rect" id="node30" href="$da/d28/kprintf_8h.html" title=" " alt="" coords="1377,80,1462,107"/>
+<area shape="rect" id="node32" href="$d1/d21/vmm_8h.html" title=" " alt="" coords="654,80,745,107"/>
+<area shape="rect" id="node35" href="$d5/d4a/gdt_8h.html" title=" " alt="" coords="1623,155,1699,181"/>
+<area shape="rect" id="node36" href="$d4/d35/idt_8h.html" title=" " alt="" coords="1562,80,1634,107"/>
+<area shape="rect" id="node37" href="$d2/d68/8259_8h.html" title=" " alt="" coords="1465,229,1547,256"/>
+<area shape="rect" id="node38" href="$da/d66/string_8h.html" title=" " alt="" coords="1641,453,1707,480"/>
+<area shape="rect" id="node40" href="$dc/da7/assert_8h.html" title=" " alt="" coords="1913,80,1982,107"/>
+<area shape="rect" id="node41" href="$d3/df4/descrip_8h.html" title=" " alt="" coords="960,155,1060,181"/>
+<area shape="rect" id="node3" href="$d0/d27/include_2sys_2types_8h.html" title=" " alt="" coords="950,603,1041,629"/>
+<area shape="rect" id="node10" href="$d6/db4/include_2vfs_2file_8h.html" title=" " alt="" coords="680,304,748,331"/>
+<area shape="rect" id="node12" href="$db/dd5/thread_8h.html" title=" " alt="" coords="908,379,1003,405"/>
+<area shape="rect" id="node24" href="$dd/d71/tty_8h.html" title=" " alt="" coords="203,379,294,405"/>
+<area shape="rect" id="node25" href="$de/d9a/tss_8h.html" title=" " alt="" coords="103,304,179,331"/>
+<area shape="rect" id="node4" href="$d0/d6f/__types_8h.html" title=" " alt="" coords="991,827,1088,853"/>
+<area shape="rect" id="node5" href="$d9/dab/select_8h.html" title=" " alt="" coords="949,677,1042,704"/>
+<area shape="rect" id="node6" href="$d6/d92/cdefs_8h.html" title=" " alt="" coords="1121,752,1211,779"/>
+<area shape="rect" id="node7" href="$d6/d30/__timespec_8h.html" title=" " alt="" coords="673,752,792,779"/>
+<area shape="rect" id="node8" href="$df/dc5/__timeval_8h.html" title=" " alt="" coords="816,752,921,779"/>
+<area shape="rect" id="node9" href="$d6/da4/__sigset_8h.html" title=" " alt="" coords="945,752,1045,779"/>
+<area shape="rect" id="node11" href="$d1/de9/dirCache_8h.html" title=" " alt="" coords="547,528,670,555"/>
+<area shape="rect" id="node17" href="$d3/d73/inode_8h.html" title=" " alt="" coords="541,379,623,405"/>
+<area shape="rect" id="node21" href="$df/d42/ufs_8h.html" title=" " alt="" coords="769,453,840,480"/>
+<area shape="rect" id="node13" href="$d7/d0b/trap_8h.html" title=" " alt="" coords="915,453,995,480"/>
+<area shape="rect" id="node15" href="$df/d92/sys_2signal_8h.html" title=" " alt="" coords="1071,453,1163,480"/>
+<area shape="rect" id="node16" href="$d8/d01/resource_8h.html" title=" " alt="" coords="1609,603,1717,629"/>
+<area shape="rect" id="node14" href="$d6/d35/i386_2cpu_8h.html" title=" " alt="" coords="915,528,998,555"/>
+<area shape="rect" id="node18" href="$d1/df2/wait_8h.html" title=" " alt="" coords="595,453,694,480"/>
+<area shape="rect" id="node19" href="$d1/d7d/pipe__fs_8h.html" title=" " alt="" coords="355,453,443,480"/>
+<area shape="rect" id="node20" href="$d8/dff/msdos__fs_8h.html" title=" " alt="" coords="468,453,571,480"/>
+<area shape="rect" id="node22" href="$d4/d7e/include_2sys_2device_8h.html" title=" " alt="" coords="745,528,840,555"/>
+<area shape="rect" id="node31" href="$d1/d2d/stdarg_8h.html" title=" " alt="" coords="1427,155,1497,181"/>
+<area shape="rect" id="node33" href="$d4/df4/paging_8h.html" title=" " alt="" coords="648,155,751,181"/>
+<area shape="rect" id="node34" href="$d3/d7e/sysproto__posix_8h.html" title=" " alt="" coords="787,229,934,256"/>
+<area shape="rect" id="node39" href="$d6/d90/strings_8h.html" title=" " alt="" coords="1638,528,1710,555"/>
+<area shape="rect" id="node42" href="$d2/d1b/stat_8h.html" title=" " alt="" coords="1067,304,1142,331"/>
+<area shape="rect" id="node43" href="$d7/d9f/fcntl_8h.html" title=" " alt="" coords="1009,229,1091,256"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="lnc_getMode" name="lnc_getMode">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,101,108"/>
+<area shape="rect" id="node2" href="$d2/db6/lnc_8c.html#a752b6613ae8e3adf7c11e20bd94be152" title=" " alt="" coords="156,56,255,83"/>
+<area shape="rect" id="node5" href="$d2/db6/lnc_8c.html#afe2d2cf61518c2dbc5abbf42cadec6b2" title=" " alt="" coords="149,107,261,133"/>
+<area shape="rect" id="node8" href="$d2/db6/lnc_8c.html#a4acfee627f5b840fa9491efcd0ef384d" title=" " alt="" coords="168,5,243,32"/>
+<area shape="rect" id="node9" href="$d2/db6/lnc_8c.html#ab42934c99afb63e4dab3859307feeb80" title=" " alt="" coords="161,157,250,184"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="318,5,403,32"/>
+<area shape="rect" id="node4" href="$dc/dac/io_8h.html#a243f6b6d22cc5948908b764d58efc2b0" title="outputut one word to specified port" alt="" coords="314,56,407,83"/>
+<area shape="rect" id="node6" href="$dc/dac/io_8h.html#a8d6617406b264c7f9e143adab8406791" title="input one double word from specified port" alt="" coords="313,157,408,184"/>
+<area shape="rect" id="node7" href="$dc/dac/io_8h.html#a2e2ad8d744ae4b35ea37d39dcfea1296" title="outputut one double word to specified port" alt="" coords="309,107,412,133"/>
+</map>

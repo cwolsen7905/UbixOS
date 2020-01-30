@@ -1,0 +1,5 @@
+<map id="NICtoPC" name="NICtoPC">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,77,57"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="127,5,213,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="125,56,215,83"/>
+</map>

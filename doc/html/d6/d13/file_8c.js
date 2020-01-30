@@ -1,0 +1,28 @@
+var file_8c =
+[
+    [ "fclose", "d6/d13/file_8c.html#a62ac32695420234cb7ccbcfc6cabd4a4", null ],
+    [ "feof", "d6/d13/file_8c.html#aac3b8b18e3c19492e533d385cae01f3a", null ],
+    [ "fgetc", "d6/d13/file_8c.html#af3ae9aab3fa1a25c0b0cde40aa97f2d0", null ],
+    [ "fopen", "d6/d13/file_8c.html#a249f3bc0af043dc5ac3c9aa8646986af", null ],
+    [ "fputc", "d6/d13/file_8c.html#aeedf75b4010ae4e12e9743744a3b20f0", null ],
+    [ "fread", "d6/d13/file_8c.html#ac539f57edd90fcd088fd3baa10319166", null ],
+    [ "fseek", "d6/d13/file_8c.html#aac4e345a7fcee61422a6b35b54f22def", null ],
+    [ "fwrite", "d6/d13/file_8c.html#a803ecb7dac37bee57ef3fe11c7899d36", null ],
+    [ "sys_chdir", "d6/d13/file_8c.html#a291abf9e4a4c13bf52334f8b70ed89c4", null ],
+    [ "sys_fchdir", "d6/d13/file_8c.html#aacb366423b61090b6713b0bf4b1fd7a1", null ],
+    [ "sys_fclose", "d6/d13/file_8c.html#a70191cfd6769c66c6d06b164dcdbc17f", null ],
+    [ "sys_fgetc", "d6/d13/file_8c.html#abb61ebfb43c853943e7e05235d80ed01", null ],
+    [ "sys_fopen", "d6/d13/file_8c.html#a3be521720a454a77765244b4c72c3bbb", null ],
+    [ "sys_fread", "d6/d13/file_8c.html#a545f03b28b5716fbe15ce9659ceb6d90", null ],
+    [ "sys_fseek", "d6/d13/file_8c.html#ae325931441d5a2a5799cfc3b3b565ea5", null ],
+    [ "sys_fwrite", "d6/d13/file_8c.html#a09b738cc798b6031b843553e9ecab54e", null ],
+    [ "sys_lseek", "d6/d13/file_8c.html#ade0b74e887087f04856c55aebaa9f2e5", null ],
+    [ "sys_rename", "d6/d13/file_8c.html#a6d4fd27c5c2e07c9d631d0e7cd3d9b6c", null ],
+    [ "sysFwrite", "d6/d13/file_8c.html#a1a17e9753f6c9d2b34c35a2b2e7d240e", null ],
+    [ "sysMkDir", "d6/d13/file_8c.html#a81e426f86ee3d066c32986948fe3f6fd", null ],
+    [ "sysRmDir", "d6/d13/file_8c.html#a6db05e27ce2d54b4d2b5202c2d4282df", null ],
+    [ "sysUnlink", "d6/d13/file_8c.html#a2cd9f983c9c2595c1126e6618a762526", null ],
+    [ "unlink", "d6/d13/file_8c.html#ada4d877b19c34ce3137e0c35dab6e947", null ],
+    [ "fdTable", "d6/d13/file_8c.html#acc7848731c780c8a5c224413af7e9a68", null ],
+    [ "vfs_fileTable", "d6/d13/file_8c.html#a09e62893d79bde83aab854950d41b941", null ]
+];

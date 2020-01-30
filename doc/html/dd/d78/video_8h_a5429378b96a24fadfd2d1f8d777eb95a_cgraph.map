@@ -1,0 +1,10 @@
+<map id="kprint" name="kprint">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,60,108"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="112,5,193,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="108,56,197,83"/>
+<area shape="rect" id="node4" href="$dd/d71/tty_8h.html#a4f96ccac7e60296ef496008d8cbed0ff" title=" " alt="" coords="121,107,185,133"/>
+<area shape="rect" id="node5" href="$dd/d71/tty_8h.html#ad96f57a7c113d3cfa76ee5fed6de33c0" title=" " alt="" coords="118,157,187,184"/>
+<area shape="rect" id="node6" href="$dc/d88/armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53" title=" " alt="" coords="245,157,320,184"/>
+<area shape="rect" id="node7" href="$d3/d02/armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7" title=" " alt="" coords="369,132,459,159"/>
+<area shape="rect" id="node8" href="$dc/d88/armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78" title=" " alt="" coords="368,183,460,209"/>
+</map>

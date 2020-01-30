@@ -1,0 +1,29 @@
+<map id="sys_open" name="sys_open">
+<area shape="rect" id="node1" title=" " alt="" coords="5,171,84,197"/>
+<area shape="rect" id="node2" href="$d7/d42/vfs__calls_8c.html#ab35b14c33a5b03f7617b58b4c0667bd4" title=" " alt="" coords="132,277,225,304"/>
+<area shape="rect" id="node11" href="$da/d28/kprintf_8h.html#a20b56810edb62a6fe59917015c30848f" title=" " alt="" coords="411,43,468,69"/>
+<area shape="rect" id="node3" href="$d3/df4/descrip_8h.html#a434fb15226182b0ee879a5afe9a8c190" title=" " alt="" coords="281,448,333,475"/>
+<area shape="rect" id="node9" href="$d2/d3f/descrip_8c.html#ae7b881d8f4c6e81d8e10468783ce080f" title="This destroys a thread local file descriptor." alt="" coords="273,499,341,525"/>
+<area shape="rect" id="node10" href="$d6/d13/file_8c.html#a249f3bc0af043dc5ac3c9aa8646986af" title=" " alt="" coords="281,277,334,304"/>
+<area shape="rect" id="node4" href="$d4/d03/kmalloc_8h.html#aaa9ed6886459604cf73ccdbf6410e487" title=" " alt="" coords="414,499,465,525"/>
+<area shape="rect" id="node5" href="$d4/d03/kmalloc_8h.html#a150eab2ac4ce4553e21ca10e7f441762" title=" " alt="" coords="406,448,473,475"/>
+<area shape="rect" id="node6" href="$dc/d88/armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53" title=" " alt="" coords="789,379,864,405"/>
+<area shape="rect" id="node7" href="$d3/d02/armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7" title=" " alt="" coords="913,353,1003,380"/>
+<area shape="rect" id="node8" href="$dc/d88/armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78" title=" " alt="" coords="912,404,1004,431"/>
+<area shape="rect" id="node19" href="$da/d66/string_8h.html#ace4b911463887af5e748326323e99a23" title=" " alt="" coords="405,245,474,272"/>
+<area shape="rect" id="node20" href="$dc/d88/armv6_2spinlock_8c.html#ae29ab191c93f9ead066cb462dd2e7247" title=" " alt="" coords="396,296,483,323"/>
+<area shape="rect" id="node21" href="$da/d28/kprintf_8h.html#ac38cd16373d98782e1465bd3d5aba470" title=" " alt="" coords="411,347,468,373"/>
+<area shape="rect" id="node22" href="$da/d66/string_8h.html#a55e123beb3d7f96e25e024a13582d987" title=" " alt="" coords="410,93,469,120"/>
+<area shape="rect" id="node23" href="$da/d66/string_8h.html#adcec9a82a6a276e8edb0fd4fc26fe8f2" title=" " alt="" coords="413,144,465,171"/>
+<area shape="rect" id="node24" href="$da/d66/string_8h.html#a9af7251f0c1b875e0e34b8e2b94dda39" title=" " alt="" coords="412,195,467,221"/>
+<area shape="rect" id="node26" href="$dc/d92/mount_8c.html#aa8cc926aa9badb781158b6738b1b0f2d" title=" " alt="" coords="389,397,489,424"/>
+<area shape="rect" id="node12" href="$dd/d78/video_8h.html#a5429378b96a24fadfd2d1f8d777eb95a" title=" " alt="" coords="543,119,598,145"/>
+<area shape="rect" id="node17" href="$df/d87/kprintf_8c.html#a3093cdac4668a4ccffdd7f77270888b7" title=" " alt="" coords="539,56,602,83"/>
+<area shape="rect" id="node18" href="$da/d28/kprintf_8h.html#a3b4a66bf1f6583e65660f281b6014aa1" title=" " alt="" coords="537,5,604,32"/>
+<area shape="rect" id="node13" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="656,169,737,196"/>
+<area shape="rect" id="node14" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="652,68,741,95"/>
+<area shape="rect" id="node15" href="$dd/d71/tty_8h.html#a4f96ccac7e60296ef496008d8cbed0ff" title=" " alt="" coords="665,119,729,145"/>
+<area shape="rect" id="node16" href="$dd/d71/tty_8h.html#ad96f57a7c113d3cfa76ee5fed6de33c0" title=" " alt="" coords="662,309,731,336"/>
+<area shape="rect" id="node25" href="$d7/d7c/strtok_8c.html#af18c3fca5cc30bc1313728d45c031ae9" title=" " alt="" coords="537,195,604,221"/>
+<area shape="rect" id="node27" href="$da/d66/string_8h.html#a6f3dcb20ff11ff9db5904c3cfb61a38c" title=" " alt="" coords="539,397,602,424"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="getByte" name="getByte">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,72,32"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="120,5,201,32"/>
+</map>

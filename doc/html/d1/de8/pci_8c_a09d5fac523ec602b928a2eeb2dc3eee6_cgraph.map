@@ -1,0 +1,7 @@
+<map id="pciRead" name="pciRead">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,75,108"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="133,5,215,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#a8d6617406b264c7f9e143adab8406791" title="input one double word from specified port" alt="" coords="127,56,221,83"/>
+<area shape="rect" id="node4" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="131,107,217,133"/>
+<area shape="rect" id="node5" href="$dc/dac/io_8h.html#a2e2ad8d744ae4b35ea37d39dcfea1296" title="outputut one double word to specified port" alt="" coords="123,157,225,184"/>
+</map>

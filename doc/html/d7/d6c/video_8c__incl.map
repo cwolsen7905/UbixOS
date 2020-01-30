@@ -1,0 +1,14 @@
+<map id="sys/video.c" name="sys/video.c">
+<area shape="rect" id="node1" title=" " alt="" coords="161,5,248,32"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html" title=" " alt="" coords="5,80,73,107"/>
+<area shape="rect" id="node3" href="$dd/d78/video_8h.html" title=" " alt="" coords="97,80,184,107"/>
+<area shape="rect" id="node11" href="$df/d63/spinlock_8h.html" title=" " alt="" coords="209,80,331,107"/>
+<area shape="rect" id="node12" href="$dd/d71/tty_8h.html" title=" " alt="" coords="355,80,446,107"/>
+<area shape="rect" id="node4" href="$d0/d27/include_2sys_2types_8h.html" title=" " alt="" coords="225,155,315,181"/>
+<area shape="rect" id="node5" href="$d0/d6f/__types_8h.html" title=" " alt="" coords="416,379,513,405"/>
+<area shape="rect" id="node6" href="$d9/dab/select_8h.html" title=" " alt="" coords="354,229,447,256"/>
+<area shape="rect" id="node7" href="$d6/d92/cdefs_8h.html" title=" " alt="" coords="292,304,381,331"/>
+<area shape="rect" id="node8" href="$d6/d30/__timespec_8h.html" title=" " alt="" coords="405,304,524,331"/>
+<area shape="rect" id="node9" href="$df/dc5/__timeval_8h.html" title=" " alt="" coords="548,304,653,331"/>
+<area shape="rect" id="node10" href="$d6/da4/__sigset_8h.html" title=" " alt="" coords="677,304,777,331"/>
+</map>

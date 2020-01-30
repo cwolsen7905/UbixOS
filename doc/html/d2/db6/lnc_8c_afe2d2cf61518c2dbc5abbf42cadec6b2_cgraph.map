@@ -1,0 +1,5 @@
+<map id="lnc_readCSR32" name="lnc_readCSR32">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,117,57"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a8d6617406b264c7f9e143adab8406791" title="input one double word from specified port" alt="" coords="169,5,264,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#a2e2ad8d744ae4b35ea37d39dcfea1296" title="outputut one double word to specified port" alt="" coords="165,56,268,83"/>
+</map>

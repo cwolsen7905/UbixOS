@@ -1,0 +1,8 @@
+<map id="lnc_probe" name="lnc_probe">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,84,57"/>
+<area shape="rect" id="node2" href="$d2/db6/lnc_8c.html#ac698a392b34b41b9aa3eed6ec7c2f8db" title=" " alt="" coords="132,56,219,83"/>
+<area shape="rect" id="node4" href="$d2/db6/lnc_8c.html#a752b6613ae8e3adf7c11e20bd94be152" title=" " alt="" coords="267,5,366,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="419,95,504,121"/>
+<area shape="rect" id="node6" href="$d2/db6/lnc_8c.html#a7ddaf6c2816ca0adea2397a0ccbc101b" title=" " alt="" coords="267,56,367,83"/>
+<area shape="rect" id="node5" href="$dc/dac/io_8h.html#a243f6b6d22cc5948908b764d58efc2b0" title="outputut one word to specified port" alt="" coords="415,19,508,45"/>
+</map>

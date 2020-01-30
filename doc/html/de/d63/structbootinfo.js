@@ -1,0 +1,26 @@
+var structbootinfo =
+[
+    [ "bi_basemem", "de/d63/structbootinfo.html#a4561e0a52867c84dc6edd21f2b9bba87", null ],
+    [ "bi_bios_dev", "de/d63/structbootinfo.html#a4570abd481d8371076fbb6609754786c", null ],
+    [ "bi_bios_geom", "de/d63/structbootinfo.html#a82967b4777b4c8906d7c86b494a678c6", null ],
+    [ "bi_envp", "de/d63/structbootinfo.html#ac93240f3049fae72be3992026593b4ed", null ],
+    [ "bi_esymtab", "de/d63/structbootinfo.html#afdfb66c8a12a4f9498f4c8c0b317295f", null ],
+    [ "bi_extmem", "de/d63/structbootinfo.html#a72b7402769a6d7a6213f13ab2c35c1df", null ],
+    [ "bi_fpswa", "de/d63/structbootinfo.html#ad83d8b62277301745b1bc867043c2a93", null ],
+    [ "bi_hcdp", "de/d63/structbootinfo.html#a17751b0542c0d0ab467553865a122c24", null ],
+    [ "bi_kernelname", "de/d63/structbootinfo.html#a13d55b77736e865540f58a597b18a10b", null ],
+    [ "bi_kernend", "de/d63/structbootinfo.html#aed8199512836cf4b7b8992c2f7a301a8", null ],
+    [ "bi_memdesc_size", "de/d63/structbootinfo.html#a8958e1b7b1de09a9c7be031ca60a6790", null ],
+    [ "bi_memdesc_version", "de/d63/structbootinfo.html#a0f4f38fd366237430e1333ed10475a1e", null ],
+    [ "bi_memmap", "de/d63/structbootinfo.html#aec5fca43949165517a39b8f5242f7b9d", null ],
+    [ "bi_memmap_size", "de/d63/structbootinfo.html#ada395afe1ff401dc0a43352f7713a4bd", null ],
+    [ "bi_memsizes_valid", "de/d63/structbootinfo.html#a138a7d9594577cbe541abbbf20c4ace1", null ],
+    [ "bi_modulep", "de/d63/structbootinfo.html#a51d5181d9e4232f2c10e1984491994a4", null ],
+    [ "bi_n_bios_used", "de/d63/structbootinfo.html#a1a59f8678ccfa7c6cd3cbe1e06f1c18f", null ],
+    [ "bi_nfs_diskless", "de/d63/structbootinfo.html#ac9b0a44646158909cf68dd4a9d0ace28", null ],
+    [ "bi_pad", "de/d63/structbootinfo.html#a454b41cd1fed4e22212b03996b1e1949", null ],
+    [ "bi_size", "de/d63/structbootinfo.html#a07551b66b66d8f45bc40f1a70098d2e5", null ],
+    [ "bi_symtab", "de/d63/structbootinfo.html#ab458d8269b72d5f251c548c12ec5fe75", null ],
+    [ "bi_systab", "de/d63/structbootinfo.html#a4b377394e7630409a7b4effe6b91f707", null ],
+    [ "bi_version", "de/d63/structbootinfo.html#a53bf5cac412e5d0a2837e391cc0419a9", null ]
+];

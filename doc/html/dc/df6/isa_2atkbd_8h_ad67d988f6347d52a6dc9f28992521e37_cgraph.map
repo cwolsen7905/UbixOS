@@ -1,0 +1,8 @@
+<map id="atkbd_init" name="atkbd_init">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,84,83"/>
+<area shape="rect" id="node2" href="$d3/d04/i386_2atkbd_8h.html#a583a241acfdbcbe82f25db0f95b0c92d" title=" " alt="" coords="134,5,209,32"/>
+<area shape="rect" id="node3" href="$dd/dd3/atkbd_8c.html#a75680b4d84b721b03a3454677758a21e" title=" " alt="" coords="139,56,204,83"/>
+<area shape="rect" id="node6" href="$d4/d35/idt_8h.html#a174a47ed653fc64fff6b5bb1b895c2cf" title=" " alt="" coords="132,107,211,133"/>
+<area shape="rect" id="node4" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="263,31,344,57"/>
+<area shape="rect" id="node5" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="259,81,348,108"/>
+</map>

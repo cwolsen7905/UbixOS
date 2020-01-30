@@ -1,0 +1,6 @@
+<map id="vmm_memMapInit" name="vmm_memMapInit">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,132,57"/>
+<area shape="rect" id="node2" href="$d3/db5/vmm__memory_8c.html#a1a89fbc2f80ca828332c5ef31801faa3" title=" " alt="" coords="180,31,281,57"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="333,5,415,32"/>
+<area shape="rect" id="node4" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="329,56,419,83"/>
+</map>

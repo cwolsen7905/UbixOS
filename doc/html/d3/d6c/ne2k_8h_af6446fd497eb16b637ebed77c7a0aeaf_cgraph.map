@@ -1,0 +1,8 @@
+<map id="PCtoNIC" name="PCtoNIC">
+<area shape="rect" id="node1" title=" " alt="" coords="5,107,77,133"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="134,5,215,32"/>
+<area shape="rect" id="node3" href="$dc/d94/armv6_2kpanic_8c.html#adb9a182aa071791a306163d50d653deb" title="print panic message and halt system" alt="" coords="145,56,205,83"/>
+<area shape="rect" id="node4" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="130,107,219,133"/>
+<area shape="rect" id="node5" href="$dc/dac/io_8h.html#af0c1dd5717007bf73b6c5119dfe7eaf2" title="outputut one byte to specified port with a delay" alt="" coords="125,157,224,184"/>
+<area shape="rect" id="node6" href="$dc/dac/io_8h.html#a243f6b6d22cc5948908b764d58efc2b0" title="outputut one word to specified port" alt="" coords="128,208,221,235"/>
+</map>

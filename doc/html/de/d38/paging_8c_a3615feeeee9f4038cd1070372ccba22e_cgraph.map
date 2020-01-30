@@ -1,0 +1,12 @@
+<map id="vmm_getFreeKernelPage" name="vmm_getFreeKernelPage">
+<area shape="rect" id="node1" title=" " alt="" coords="5,141,172,168"/>
+<area shape="rect" id="node2" href="$dc/d94/armv6_2kpanic_8c.html#adb9a182aa071791a306163d50d653deb" title="print panic message and halt system" alt="" coords="606,65,666,92"/>
+<area shape="rect" id="node3" href="$dc/d88/armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53" title=" " alt="" coords="599,141,673,168"/>
+<area shape="rect" id="node6" href="$dc/d88/armv6_2spinlock_8c.html#ae29ab191c93f9ead066cb462dd2e7247" title=" " alt="" coords="252,242,339,269"/>
+<area shape="rect" id="node7" href="$d1/d21/vmm_8h.html#acba8d9cc298370338bc5bea5187183b2" title=" " alt="" coords="223,40,367,66"/>
+<area shape="rect" id="node8" href="$d1/d21/vmm_8h.html#ab8e4e189a7b1df2a03072ce5b75c89fe" title=" " alt="" coords="419,90,551,117"/>
+<area shape="rect" id="node9" href="$de/d38/paging_8c.html#a8350aa43ff69829ba667ca34d9bcaa7a" title=" " alt="" coords="220,293,371,320"/>
+<area shape="rect" id="node10" href="$de/d38/paging_8c.html#ad6c3897473d837504f3d1415fb8ab796" title=" " alt="" coords="423,141,546,168"/>
+<area shape="rect" id="node4" href="$d3/d02/armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7" title=" " alt="" coords="722,116,813,142"/>
+<area shape="rect" id="node5" href="$dc/d88/armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78" title=" " alt="" coords="721,166,813,193"/>
+</map>

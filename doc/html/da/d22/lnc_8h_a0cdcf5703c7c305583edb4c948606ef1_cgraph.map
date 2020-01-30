@@ -1,0 +1,4 @@
+<map id="lnc_reset" name="lnc_reset">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,80,32"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="128,5,213,32"/>
+</map>

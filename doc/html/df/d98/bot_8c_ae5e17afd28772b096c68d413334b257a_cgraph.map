@@ -1,0 +1,9 @@
+<map id="bot_init" name="bot_init">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,69,83"/>
+<area shape="rect" id="node2" href="$d1/d84/group__sys__misc.html#ga0d596afdd8dbcfad320172d39b0f607a" title=" " alt="" coords="117,56,233,83"/>
+<area shape="rect" id="node3" href="$d4/d03/kmalloc_8h.html#a150eab2ac4ce4553e21ca10e7f441762" title=" " alt="" coords="283,5,349,32"/>
+<area shape="rect" id="node4" href="$dc/d88/armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53" title=" " alt="" coords="399,31,473,57"/>
+<area shape="rect" id="node7" href="$da/d66/string_8h.html#ace4b911463887af5e748326323e99a23" title=" " alt="" coords="281,107,351,133"/>
+<area shape="rect" id="node5" href="$d3/d02/armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7" title=" " alt="" coords="522,5,613,32"/>
+<area shape="rect" id="node6" href="$dc/d88/armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78" title=" " alt="" coords="521,56,613,83"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="irqDisable" name="irqDisable">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,84,57"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="136,5,217,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="132,56,221,83"/>
+</map>

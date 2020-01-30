@@ -1,0 +1,15 @@
+<map id="hdInit" name="hdInit">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,59,108"/>
+<area shape="rect" id="node2" href="$dc/dac/io_8h.html#a77b934268de1b3ecdcf3f275413b3108" title="input one byte from specified port" alt="" coords="359,5,440,32"/>
+<area shape="rect" id="node3" href="$dc/dac/io_8h.html#afb703b187feb4b92444454df6c3dd9e6" title="input one word from specified port" alt="" coords="107,56,192,83"/>
+<area shape="rect" id="node4" href="$da/d28/kprintf_8h.html#a20b56810edb62a6fe59917015c30848f" title=" " alt="" coords="121,107,178,133"/>
+<area shape="rect" id="node6" href="$dc/dac/io_8h.html#a8acc1a06073db2e7b92ffbd00fbd0cf1" title="outputut one byte to specified port" alt="" coords="355,183,444,209"/>
+<area shape="rect" id="node5" href="$dd/d78/video_8h.html#a5429378b96a24fadfd2d1f8d777eb95a" title=" " alt="" coords="246,56,301,83"/>
+<area shape="rect" id="node12" href="$df/d87/kprintf_8c.html#a3093cdac4668a4ccffdd7f77270888b7" title=" " alt="" coords="242,107,305,133"/>
+<area shape="rect" id="node13" href="$da/d28/kprintf_8h.html#a3b4a66bf1f6583e65660f281b6014aa1" title=" " alt="" coords="240,157,307,184"/>
+<area shape="rect" id="node7" href="$dd/d71/tty_8h.html#a4f96ccac7e60296ef496008d8cbed0ff" title=" " alt="" coords="367,56,431,83"/>
+<area shape="rect" id="node8" href="$dd/d71/tty_8h.html#ad96f57a7c113d3cfa76ee5fed6de33c0" title=" " alt="" coords="365,107,434,133"/>
+<area shape="rect" id="node9" href="$dc/d88/armv6_2spinlock_8c.html#a71f03d2ba55111c715b6068254847a53" title=" " alt="" coords="492,107,567,133"/>
+<area shape="rect" id="node10" href="$d3/d02/armv6_2sched_8c.html#a08933fe6d593a1c78b9080359f15a0b7" title=" " alt="" coords="615,81,706,108"/>
+<area shape="rect" id="node11" href="$dc/d88/armv6_2spinlock_8c.html#a740766af5da58616f700fffab6768a78" title=" " alt="" coords="615,132,707,159"/>
+</map>

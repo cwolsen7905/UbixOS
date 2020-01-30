@@ -1,0 +1,12 @@
+<map id="include/ubixos/syscall.h" name="include/ubixos/syscall.h">
+<area shape="rect" id="node1" title=" " alt="" coords="297,5,458,32"/>
+<area shape="rect" id="node2" href="$d5/d60/arch_2armv6_2syscall_8c.html" title=" " alt="" coords="5,155,147,181"/>
+<area shape="rect" id="node3" href="$d2/d6e/syscalls_8h.html" title=" " alt="" coords="293,80,461,107"/>
+<area shape="rect" id="node6" href="$dc/d5c/kernel_2syscall_8c.html" title=" " alt="" coords="171,155,285,181"/>
+<area shape="rect" id="node7" href="$de/d5f/syscall__posix_8c.html" title=" " alt="" coords="798,155,949,181"/>
+<area shape="rect" id="node10" href="$d5/d05/idt_8c.html" title=" " alt="" coords="536,80,608,107"/>
+<area shape="rect" id="node4" href="$d4/d75/ubixos_2init_8h.html" title=" " alt="" coords="309,155,446,181"/>
+<area shape="rect" id="node8" href="$d5/d87/syscalls_8c.html" title=" " alt="" coords="471,155,591,181"/>
+<area shape="rect" id="node9" href="$dc/d85/syscalls__posix_8c.html" title=" " alt="" coords="615,155,774,181"/>
+<area shape="rect" id="node5" href="$d0/d29/main_8c.html" title=" " alt="" coords="336,229,419,256"/>
+</map>

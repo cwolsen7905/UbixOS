@@ -1,0 +1,31 @@
+<map id="kernel/access.c" name="kernel/access.c">
+<area shape="rect" id="node1" title=" " alt="" coords="1051,5,1166,32"/>
+<area shape="rect" id="node2" href="$d2/def/access_8h.html" title=" " alt="" coords="1050,80,1167,107"/>
+<area shape="rect" id="node3" href="$dd/d1b/ubthread_8h.html" title=" " alt="" coords="1046,155,1171,181"/>
+<area shape="rect" id="node4" href="$d0/d27/include_2sys_2types_8h.html" title=" " alt="" coords="497,603,587,629"/>
+<area shape="rect" id="node11" href="$d7/d00/sched_8h.html" title=" " alt="" coords="408,229,519,256"/>
+<area shape="rect" id="node28" href="$de/df7/time_8h.html" title=" " alt="" coords="1147,528,1247,555"/>
+<area shape="rect" id="node5" href="$d0/d6f/__types_8h.html" title=" " alt="" coords="345,827,443,853"/>
+<area shape="rect" id="node6" href="$d9/dab/select_8h.html" title=" " alt="" coords="443,677,537,704"/>
+<area shape="rect" id="node7" href="$d6/d92/cdefs_8h.html" title=" " alt="" coords="516,752,605,779"/>
+<area shape="rect" id="node8" href="$d6/d30/__timespec_8h.html" title=" " alt="" coords="681,752,800,779"/>
+<area shape="rect" id="node9" href="$df/dc5/__timeval_8h.html" title=" " alt="" coords="387,752,492,779"/>
+<area shape="rect" id="node10" href="$d6/da4/__sigset_8h.html" title=" " alt="" coords="211,752,311,779"/>
+<area shape="rect" id="node12" href="$d6/db4/include_2vfs_2file_8h.html" title=" " alt="" coords="545,304,613,331"/>
+<area shape="rect" id="node14" href="$db/dd5/thread_8h.html" title=" " alt="" coords="197,379,292,405"/>
+<area shape="rect" id="node26" href="$dd/d71/tty_8h.html" title=" " alt="" coords="810,304,901,331"/>
+<area shape="rect" id="node27" href="$de/d9a/tss_8h.html" title=" " alt="" coords="32,304,108,331"/>
+<area shape="rect" id="node13" href="$d1/de9/dirCache_8h.html" title=" " alt="" coords="898,379,1021,405"/>
+<area shape="rect" id="node19" href="$d3/d73/inode_8h.html" title=" " alt="" coords="538,379,621,405"/>
+<area shape="rect" id="node23" href="$df/d42/ufs_8h.html" title=" " alt="" coords="384,453,455,480"/>
+<area shape="rect" id="node25" href="$d2/d29/mount_8h.html" title=" " alt="" coords="786,379,874,405"/>
+<area shape="rect" id="node15" href="$d7/d0b/trap_8h.html" title=" " alt="" coords="85,453,165,480"/>
+<area shape="rect" id="node17" href="$df/d92/sys_2signal_8h.html" title=" " alt="" coords="165,528,257,555"/>
+<area shape="rect" id="node18" href="$d8/d01/resource_8h.html" title=" " alt="" coords="5,677,113,704"/>
+<area shape="rect" id="node16" href="$d6/d35/i386_2cpu_8h.html" title=" " alt="" coords="58,528,141,555"/>
+<area shape="rect" id="node20" href="$d1/df2/wait_8h.html" title=" " alt="" coords="530,453,629,480"/>
+<area shape="rect" id="node21" href="$d1/d7d/pipe__fs_8h.html" title=" " alt="" coords="653,453,741,480"/>
+<area shape="rect" id="node22" href="$d8/dff/msdos__fs_8h.html" title=" " alt="" coords="765,453,868,480"/>
+<area shape="rect" id="node24" href="$d4/d7e/include_2sys_2device_8h.html" title=" " alt="" coords="384,528,479,555"/>
+<area shape="rect" id="node29" href="$dc/dac/io_8h.html" title=" " alt="" coords="1163,603,1231,629"/>
+</map>
