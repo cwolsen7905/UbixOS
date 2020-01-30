@@ -161,7 +161,7 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
     kprintf("ERROR!");
   }
 
-  kprintf("loffset(%i): %i:%i, whence: 0x%X", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFF, args->whence);
+  kprintf("loffset(%i): %ul:%ul, whence: 0x%X", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFF, args->whence);
   kprintf("loffset(%i): %ld, whence: %ld", sizeof(off_t), args->offset, args->whence);
 
   switch (args->whence) {
