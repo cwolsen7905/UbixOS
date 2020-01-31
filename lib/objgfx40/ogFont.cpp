@@ -158,7 +158,12 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
 
   fontData = new uint8_t[fontDataSize];
 
+#ifdef __UBIXOS_KERNEL__
+  kern_seek(infile, 16, );
+#else
   fseek(infile, 16, 0);
+#endif
+
   lresult = fread(fontData, fontDataSize, 1, infile);
 
   fclose(infile);
