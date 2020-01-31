@@ -106,7 +106,7 @@ int feof(fileDescriptor_t *fd);
 int fgetc(fileDescriptor_t *fd);
 size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd);
 size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd);
-int fseek(fileDescriptor_t *, long, int);
+int fseek(fileDescriptor_t*, u_int32_t, int);
 
 int sysFseek(userFileDescriptor *, long, int);
 
