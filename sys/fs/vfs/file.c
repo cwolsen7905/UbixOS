@@ -137,7 +137,7 @@ int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
 
     switch (args->whence) {
         case 0:
-            args->FILE->fd->offset = args->offset + args->whence;
+            args->FILE->fd->offset = args->offset;
             break;
         case 1:
             args->FILE->fd->offset += args->offset;
@@ -333,6 +333,7 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
 }
 
 int fseek(fileDescriptor_t *tmpFd, long offset, int whence) {
+    kprintf("[%s:%i] Am I Using This Fucntion Anywhere?!?!?!");
     tmpFd->offset = offset + whence;
     return (tmpFd->offset);
 }
