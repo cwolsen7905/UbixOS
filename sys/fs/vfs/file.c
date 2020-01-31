@@ -332,8 +332,7 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
     return (res);
 }
 
-int fseek(fileDescriptor_t *tmpFd, long offset, int whence) {
-    kprintf("[%s:%i] Am I Using This Fucntion Anywhere?!?!?!");
+int fseek(fileDescriptor_t *tmpFd, u_int32_t offset, int whence) {
     tmpFd->offset = offset + whence;
     return (tmpFd->offset);
 }
