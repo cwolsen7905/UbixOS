@@ -91,7 +91,7 @@ uInt32 kmod_load(const char *kmod_file) {
   }
 
   /* load module header */
-  fseek(kmod_fd, 0x0, 0x0);
+    kern_fseek(kmod_fd, 0x0, 0x0);
   binaryHeader = (elfHeader *) kmalloc(sizeof(elfHeader));
   if (binaryHeader == 0x0) {
     kprintf("kmod: out of memory\n");
@@ -103,16 +103,16 @@ uInt32 kmod_load(const char *kmod_file) {
 
   programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->ePhnum);
   assert(programHeader);
-  fseek(kmod_fd, binaryHeader->ePhoff, 0);
+    kern_fseek(kmod_fd, binaryHeader->ePhoff, 0);
   fread(programHeader, sizeof(elfSectionHeader), binaryHeader->ePhnum, kmod_fd);
 
   sectionHeader = (elfSectionHeader *) kmalloc(sizeof(elfSectionHeader) * binaryHeader->eShnum);
   assert(sectionHeader);
-  fseek(kmod_fd, binaryHeader->eShoff, 0);
+    kern_fseek(kmod_fd, binaryHeader->eShoff, 0);
   fread(sectionHeader, sizeof(elfSectionHeader), binaryHeader->eShnum, kmod_fd);
 
   shStr = (char *) kmalloc(sectionHeader[binaryHeader->eShstrndx].shSize);
-  fseek(kmod_fd, sectionHeader[binaryHeader->eShstrndx].shOffset, 0);
+    kern_fseek(kmod_fd, sectionHeader[binaryHeader->eShstrndx].shOffset, 0);
   fread(shStr, sectionHeader[binaryHeader->eShstrndx].shSize, 1, kmod_fd);
 
   for (i = 0; i < binaryHeader->ePhnum; i++) {
@@ -131,7 +131,7 @@ uInt32 kmod_load(const char *kmod_file) {
           memset((void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
         }
         /* Now Load Section To Memory */
-        fseek(kmod_fd, programHeader[i].phOffset, 0x0);
+                kern_fseek(kmod_fd, programHeader[i].phOffset, 0x0);
         fread(newLoc, programHeader[i].phFilesz, 1, kmod_fd);
       break;
       case PT_GNU_STACK:
@@ -154,13 +154,13 @@ uInt32 kmod_load(const char *kmod_file) {
       case 3:
         if (!strcmp((shStr + sectionHeader[i].shName), ".dynstr")) {
           dynStr = (char *) kmalloc(sectionHeader[i].shSize);
-          fseek(kmod_fd, sectionHeader[i].shOffset, 0x0);
+                    kern_fseek(kmod_fd, sectionHeader[i].shOffset, 0x0);
           fread(dynStr, sectionHeader[i].shSize, 1, kmod_fd);
         }
       break;
       case 9:
         elfRel = (elfPltInfo *) kmalloc(sectionHeader[i].shSize);
-        fseek(kmod_fd, sectionHeader[i].shOffset, 0x0);
+                kern_fseek(kmod_fd, sectionHeader[i].shOffset, 0x0);
         fread(elfRel, sectionHeader[i].shSize, 1, kmod_fd);
 
         for (x = 0x0; x < sectionHeader[i].shSize / sizeof(elfPltInfo); x++) {
@@ -186,7 +186,7 @@ uInt32 kmod_load(const char *kmod_file) {
       break;
       case 11:
         relSymTab = (elfDynSym *) kmalloc(sectionHeader[i].shSize);
-        fseek(kmod_fd, sectionHeader[i].shOffset, 0x0);
+                kern_fseek(kmod_fd, sectionHeader[i].shOffset, 0x0);
         fread(relSymTab, sectionHeader[i].shSize, 1, kmod_fd);
         sym = i;
       break;

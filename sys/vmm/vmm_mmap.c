@@ -208,7 +208,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
 
     }
 
-    fseek(fd->fd, uap->pos, 0x0);
+        kern_fseek(fd->fd, uap->pos, 0x0);
     fread(tmp, uap->len, 0x1, fd->fd);
 
     td->td_retval[0] = (uint32_t) tmp;

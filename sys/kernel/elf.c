@@ -79,7 +79,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
   if ((programHeader = (Elf32_Phdr *) kmalloc(sizeof(Elf32_Phdr) * binaryHeader->e_phnum)) == 0x0)
     K_PANIC("malloc failed!");
 
-  fseek(exec_fd, binaryHeader->e_phoff, 0);
+    kern_fseek(exec_fd, binaryHeader->e_phoff, 0);
 
   fread(programHeader, (sizeof(Elf32_Phdr) * binaryHeader->e_phnum), 1, exec_fd);
 
@@ -100,7 +100,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
         }
 
         /* Now Load Section To Memory */
-        fseek(exec_fd, programHeader[i].p_offset, 0);
+                kern_fseek(exec_fd, programHeader[i].p_offset, 0);
         fread((void *) programHeader[i].p_vaddr + real_base_addr, programHeader[i].p_filesz, 1, exec_fd);
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {

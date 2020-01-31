@@ -64,7 +64,7 @@ uint32_t ldEnable(const char *interp) {
       return(0x0);
   }
 
-  fseek(ldFd, 0x0, 0x0);
+    kern_fseek(ldFd, 0x0, 0x0);
   binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr));
 
   assert(binaryHeader);
@@ -73,16 +73,17 @@ uint32_t ldEnable(const char *interp) {
   programHeader = (Elf_Phdr *) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
   assert(programHeader);
 
-  fseek(ldFd, binaryHeader->e_phoff, 0);
+    kern_fseek(ldFd, binaryHeader->e_phoff, 0);
   fread(programHeader, sizeof(Elf_Shdr), binaryHeader->e_phnum, ldFd);
 
   sectionHeader = (Elf_Shdr *) kmalloc(sizeof(Elf_Shdr) * binaryHeader->e_shnum);
+
   assert(sectionHeader);
-  fseek(ldFd, binaryHeader->e_shoff, 0);
+    kern_fseek(ldFd, binaryHeader->e_shoff, 0);
   fread(sectionHeader, sizeof(Elf_Shdr), binaryHeader->e_shnum, ldFd);
 
   shStr = (char *) kmalloc(sectionHeader[binaryHeader->e_shstrndx].sh_size);
-  fseek(ldFd, sectionHeader[binaryHeader->e_shstrndx].sh_offset, 0);
+    kern_fseek(ldFd, sectionHeader[binaryHeader->e_shstrndx].sh_offset, 0);
   fread(shStr, sectionHeader[binaryHeader->e_shstrndx].sh_size, 1, ldFd);
 
   for (i = 0x0; i < binaryHeader->e_phnum; i++) {
@@ -100,7 +101,7 @@ uint32_t ldEnable(const char *interp) {
           memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
         }
         /* Now Load Section To Memory */
-        fseek(ldFd, programHeader[i].p_offset, 0x0);
+                kern_fseek(ldFd, programHeader[i].p_offset, 0x0);
         fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
 
       break;
@@ -158,7 +159,7 @@ uint32_t ldEnable(const char *interp) {
       break;
       case SHT_DYNSYM:
         relSymTab = (Elf_Sym *) kmalloc(sectionHeader[i].sh_size);
-        fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+                kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
         fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
         sym = i;
       break;
