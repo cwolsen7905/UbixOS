@@ -227,7 +227,7 @@ void execFile(char *file, int argc, char **argv, int console) {
 
   /* Load The Program Header(s) */
   programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->ePhnum);
-  fseek(tmpFd, binaryHeader->ePhoff, 0);
+    kern_fseek(tmpFd, binaryHeader->ePhoff, 0);
 
   //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->ePhnum,programHeader,tmpFd);
   fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->ePhnum), 1, tmpFd);
@@ -250,7 +250,7 @@ void execFile(char *file, int argc, char **argv, int console) {
       _current->oInfo.vmStart = 0x80000000;
       _current->td.vm_daddr = (char *) (programHeader[i].phVaddr & 0xFFFFF000);
       /* Now Load Section To Memory */
-      fseek(tmpFd, programHeader[i].phOffset, 0);
+            kern_fseek(tmpFd, programHeader[i].phOffset, 0);
       fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd);
       if ((programHeader[i].phFlags & 0x2) != 0x2) {
         kprintf("pH: [0x%X]\n", programHeader[i].phMemsz);
@@ -405,14 +405,14 @@ void sysExec(char *file, char *ap) {
     endTask(_current->id);
 
   assert(programHeader);
-  fseek(tmpFd, binaryHeader->ePhoff, 0);
+    kern_fseek(tmpFd, binaryHeader->ePhoff, 0);
   fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->ePhnum), 1, tmpFd);
 
   if ((sectionHeader = (elfSectionHeader *) kmalloc(sizeof(elfSectionHeader) * binaryHeader->eShnum)) == 0x0)
     endTask(_current->id);
 
   assert(sectionHeader);
-  fseek(tmpFd, binaryHeader->eShoff, 0);
+    kern_fseek(tmpFd, binaryHeader->eShoff, 0);
   fread(sectionHeader, sizeof(elfSectionHeader) * binaryHeader->eShnum, 1, tmpFd);
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
@@ -434,7 +434,7 @@ void sysExec(char *file, char *ap) {
         }
 
         /* Now Load Section To Memory */
-        fseek(tmpFd, programHeader[i].phOffset, 0);
+                kern_fseek(tmpFd, programHeader[i].phOffset, 0);
         fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd);
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
           for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
@@ -456,12 +456,12 @@ void sysExec(char *file, char *ap) {
       case PT_DYNAMIC:
         //newLoc = (char *)programHeader[i].phVaddr;
         elfDynamicS = (elfDynamic *) programHeader[i].phVaddr;
-        fseek(tmpFd, programHeader[i].phOffset, 0);
+                kern_fseek(tmpFd, programHeader[i].phOffset, 0);
         fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd);
       break;
       case PT_INTERP:
         interp = (char *) kmalloc(programHeader[i].phFilesz);
-        fseek(tmpFd, programHeader[i].phOffset, 0);
+                kern_fseek(tmpFd, programHeader[i].phOffset, 0);
         fread((void *) interp, programHeader[i].phFilesz, 1, tmpFd);
         kprintf("Interp: [%s]\n", interp);
         ldAddr = ldEnable();
@@ -590,7 +590,7 @@ void sys_exec(char *file, char *ap) {
   /* Load The Program Header(s) */
   if ((programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->ePhnum)) == 0x0)
     K_PANIC("malloc failed!");
-  fseek(_current->files[0], binaryHeader->ePhoff, 0);
+    kern_fseek(_current->files[0], binaryHeader->ePhoff, 0);
   fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->ePhnum), 1, _current->files[0]);
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
@@ -612,7 +612,7 @@ void sys_exec(char *file, char *ap) {
         }
 
         /* Now Load Section To Memory */
-        fseek(_current->files[0], programHeader[i].phOffset, 0);
+                kern_fseek(_current->files[0], programHeader[i].phOffset, 0);
         fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, _current->files[0]);
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
           for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
@@ -636,7 +636,7 @@ void sys_exec(char *file, char *ap) {
           K_PANIC("malloc failed")
         ;
 
-        fseek(_current->files[0], programHeader[i].phOffset, 0);
+                kern_fseek(_current->files[0], programHeader[i].phOffset, 0);
         fread((void *) interp, programHeader[i].phFilesz, 1, _current->files[0]);
         kprintf("Interp: [%s]\n", interp);
         //ldAddr = ldEnable();

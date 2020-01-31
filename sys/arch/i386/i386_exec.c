@@ -331,7 +331,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Load The Program Header(s) */
   programHeader = (Elf_Phdr *) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
-  fseek(newProcess->files[0], binaryHeader->e_phoff, 0);
+    kern_fseek(newProcess->files[0], binaryHeader->e_phoff, 0);
 
   fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, newProcess->files[0]);
 
@@ -352,7 +352,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
       }
 
       /* Now Load Section To Memory */
-      fseek(newProcess->files[0], programHeader[i].p_offset, 0);
+            kern_fseek(newProcess->files[0], programHeader[i].p_offset, 0);
 
       fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, newProcess->files[0]);
 
@@ -600,7 +600,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   assert(programHeader);
 
-  fseek(fd, binaryHeader->e_phoff, 0);
+    kern_fseek(fd, binaryHeader->e_phoff, 0);
   fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, fd);
   /* Done Loading Program Header(s) */
 
@@ -609,7 +609,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
     K_PANIC("MALLOC FAILED");
 
   assert(sectionHeader);
-  fseek(fd, binaryHeader->e_shoff, 0);
+    kern_fseek(fd, binaryHeader->e_shoff, 0);
   fread(sectionHeader, sizeof(Elf_Shdr) * binaryHeader->e_shnum, 1, fd);
   /* Done Loading Section Header(s) */
 
@@ -644,7 +644,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         }
 
         /* Now Load Section To Memory */
-        fseek(fd, programHeader[i].p_offset, 0);
+                kern_fseek(fd, programHeader[i].p_offset, 0);
         fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {
@@ -688,7 +688,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         kprintf("%s:%i>Malloc: %i\n", _FILE_,_LINE_,programHeader[i].p_filesz);
         #endif
         interp = (char *) kmalloc(programHeader[i].p_filesz);
-        fseek(fd, programHeader[i].p_offset, 0);
+                kern_fseek(fd, programHeader[i].p_offset, 0);
         fread((void *) interp, programHeader[i].p_filesz, 1, fd);
         #ifdef DEBUG_EXEC
         kprintf("Interp: [%s]\n", interp);
@@ -779,7 +779,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   struct file *tFP = 0x0;
   int tFD = 0x0;
 
-  fseek(_current->files[0], 0x0, 0x0); // Reset File Position
+    kern_fseek(_current->files[0], 0x0, 0x0);  // Reset File Position
   falloc(&_current->td, &tFP, &tFD);
 
   tFP->fd = _current->files[0];
