@@ -256,9 +256,12 @@ void ogBitFont::PutChar(ogSurface& dest, int32 x, int32 y, const char ch) {
 
         bits += bits;
         ++xx;
+
       } while (--xCount);
     } // for yCount
+
   } // if
+
   return;
 } // ogBitFont::PutChar
 

@@ -57,6 +57,7 @@ int media_write(unsigned long sector, unsigned char *buffer, unsigned long secto
 int fat_initialize(struct vfs_mountPoint *mp) {
   FL_FILE *file;
   _mp = mp;
+
   // Attach media access functions to library
   if (fl_attach_media(media_read, media_write) != FAT_INIT_OK) {
     kprintf("ERROR: Media attach failed\n");
@@ -152,7 +153,6 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     }
     else {
       _file = fl_fopen(file, "w");
-      //kprintf("open for writing");
     }
   }
   else
@@ -173,10 +173,12 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
 }
 
 int unlink_fat() {
+    kprintf("[%s:%i] unlink_fat");
   return (0);
 }
 
 int mkdir_fat() {
+    kprintf("[%s:%i] mkdir_fat");
   return (0);
 }
 
