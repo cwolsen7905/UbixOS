@@ -43,6 +43,7 @@
 
  ************************************************************************/
 void endTask(pidType pid) {
+    kprintf("endTask: %i", pid);
   sched_setStatus(pid, DEAD);
   sched_yield();
   while (1)
