@@ -26,8 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _VMM_VMM_H
-#define _VMM_VMM_H
+#ifndef _VMM_MMAP_H
+#define _VMM_MMAP_H
 
 // @formatter:off
 typedef __uint32_t  __vm_size_t;    // MrOlsen (2016-01-15) TEMP: Put These somewhere else
