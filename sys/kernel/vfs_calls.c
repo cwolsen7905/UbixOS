@@ -300,6 +300,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
   if (uap->fd == 2) {
     buffer = kmalloc(1024);
+        kprintf("nbyte: %i", uap->nbyte);
     memcpy(buffer, uap->buf, uap->nbyte);
     printColor += 1;
     kprintf(buffer);
