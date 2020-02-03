@@ -298,6 +298,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
   size_t nbytes;
 
+    kprintf("size_t: %i", sizeof(size_t));
+
   if (uap->fd == 2) {
     buffer = kmalloc(1024);
         kprintf("nbyte: %i", uap->nbyte);
