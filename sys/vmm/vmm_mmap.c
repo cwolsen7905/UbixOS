@@ -117,7 +117,7 @@ int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap) {
 
 int sys_munmap(struct thread *td, struct sys_munmap_args *uap) {
     //TEMP
-    kprintf("[%s:%i] munmap", __FILE__, __LINE__);
+    //kprintf("[%s:%i] munmap", __FILE__, __LINE__);
     td->td_retval[0] = 0;
     return (0);
 }
@@ -129,7 +129,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     struct file *fd = 0x0;
     int x;
 
-    kprintf("[%s:%i] mmap(%i)", __FILE__, __LINE__, uap->fd);
+    kprintf("[%s:%i] mmap(%i-0x%X)", __FILE__, __LINE__, uap->fd, uap->addr);
 
     addr = (vm_offset_t) uap->addr;
 

@@ -54,8 +54,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   uint32_t start_page = 0x0;
   uint32_t map_from = 0x0;
 
-    kprintf("gFVP");
-
   spinLock(&fvpSpinLock);
 
   pageDirectory = (uint32_t *) PD_BASE_ADDR;
