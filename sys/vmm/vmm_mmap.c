@@ -151,6 +151,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
         }
 
         td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
+        kprintf("(tmp5: 0x%X)", td->td_retval[0]);
         bzero(td->td_retval[0], uap->len);
         return (0x0);  //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
     }
