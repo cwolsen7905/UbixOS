@@ -570,7 +570,6 @@ int fclose(fileDescriptor_t *fd) {
                 spinUnlock(&fdTable_lock);
 
                 if (tmpFd->buffer != NULL) {
-                    kprintf("KFREE BUFF(%i)");
                     kfree(tmpFd->buffer);
                 }
 

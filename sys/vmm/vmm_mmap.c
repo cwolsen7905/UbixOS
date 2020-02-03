@@ -117,7 +117,7 @@ int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap) {
 
 int sys_munmap(struct thread *td, struct sys_munmap_args *uap) {
     //TEMP
-    kprintf("[%s:%i] munmap(0x%X:%i)", __FILE__, __LINE__, uap->addr, uap->len);
+    //kprintf("[%s:%i] munmap(0x%X:%i)", __FILE__, __LINE__, uap->addr, uap->len);
     td->td_retval[0] = 0;
     return (0);
 }
@@ -129,7 +129,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     struct file *fd = 0x0;
     int x;
 
-    kprintf("[%s:%i] mmap(%i-0x%X-%i)", __FILE__, __LINE__, uap->fd, uap->addr, uap->len);
+    //kprintf("[%s:%i] mmap(%i-0x%X-%i)", __FILE__, __LINE__, uap->fd, uap->addr, uap->len);
 
     addr = (vm_offset_t) uap->addr;
 
@@ -142,16 +142,16 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
                     K_PANIC("Remap Page Failed");
 
             }
-            kprintf("(tmp3: 0x%X)", tmp);
+            //kprintf("(tmp3: 0x%X)", tmp);
             tmp = uap->addr;
-            kprintf("(tmp4: 0x%X)", tmp);
+            //kprintf("(tmp4: 0x%X)", tmp);
             bzero(tmp, uap->len);
             td->td_retval[0] = (uint32_t) tmp;
             return (0x0);
         }
 
         td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
-        kprintf("(tmp5: 0x%X)", td->td_retval[0]);
+        //kprintf("(tmp5: 0x%X)", td->td_retval[0]);
         bzero(td->td_retval[0], uap->len);
         return (0x0);  //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
     }
@@ -172,9 +172,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
                     K_PANIC("Remap Page Failed");
 
             }
-            kprintf("(tmp1: 0x%X)", tmp);
+            // kprintf("(tmp1: 0x%X)", tmp);
             tmp = uap->addr;
-            kprintf("(tmp2: 0x%X)", tmp);
+            // kprintf("(tmp2: 0x%X)", tmp);
 
         }
 
