@@ -655,7 +655,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
           }
 
                     if (round_page(programHeader[i].p_memsz) == 0x3300) {
-                        kprintf("T: %c", (char*) programHeader[i].p_vaddr[0x2c094]);
+                        kprintf("T: %c", (char*) (programHeader[i].p_vaddr)[0x2c094]);
                     }
         }
 
