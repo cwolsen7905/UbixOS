@@ -142,7 +142,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
                     K_PANIC("Remap Page Failed");
 
             }
+            kprintf("(tmp3: 0x%X)", tmp);
             tmp = uap->addr;
+            kprintf("(tmp4: 0x%X)", tmp);
             bzero(tmp, uap->len);
             td->td_retval[0] = (uint32_t) tmp;
             return (0x0);
@@ -169,9 +171,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
                     K_PANIC("Remap Page Failed");
 
             }
-
+            kprintf("(tmp1: 0x%X)", tmp);
             tmp = uap->addr;
-            kprintf("(tmp: 0x%X)", tmp);
+            kprintf("(tmp2: 0x%X)", tmp);
 
         }
 

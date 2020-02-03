@@ -546,8 +546,6 @@ int fclose(fileDescriptor_t *fd) {
 
     spinLock(&fdTable_lock);
 
-    //kprintf("[%s:%i]", __FILE__, __LINE__);
-
     for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
 
         if (tmpFd == fd) {
@@ -574,7 +572,6 @@ int fclose(fileDescriptor_t *fd) {
                 if (tmpFd->buffer != NULL) {
                     kprintf("KFREE BUFF(%i)");
                     kfree(tmpFd->buffer);
-                    memset(tmpFd->buffer, 0xDE, 32);
                 }
 
                 kfree(tmpFd);
