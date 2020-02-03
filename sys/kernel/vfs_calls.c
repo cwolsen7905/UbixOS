@@ -428,6 +428,8 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
 
   nfp->fd = fopen(path, "rwb");
 
+    kprintf("[%s:%i] o(%s)%i", __FILE__, __LINE__, path, fd);
+
   if (nfp->fd == 0x0) {
     if (fdestroy(thr, nfp, fd) != 0x0)
       kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
@@ -437,7 +439,6 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
     error = -1;
   }
   else {
-        kprintf("[%s:%i] o(%s)%i", __FILE__, __LINE__, path, fd);
     thr->td_retval[0] = fd;
   }
 
