@@ -136,7 +136,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     if (uap->fd == -1) {
         if (uap->addr != 0x0) {
             for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
-                vmm_unmapPage(((uint32_t) uap->addr & 0xFFFFF000) + x, 1);  //TEST will lose space fast VMM_FREE);
+                vmm_unmapPage(((uint32_t) uap->addr & 0xFFFFF000) + x, VMM_FREE);
                 /* Make readonly and read/write !!! */
                 if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t) uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
                     K_PANIC("Remap Page Failed");
