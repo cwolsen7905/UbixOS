@@ -645,13 +645,15 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
         /* Now Load Section To Memory */
                 kern_fseek(fd, programHeader[i].p_offset, 0);
-        fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
+                //fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
+                kprintf("read: 0x%X, 0x%X, 0x%X, 0x%X", round_page(programHeader[i].p_memsz), programHEader[i].p_filesz, programHeader[i].p_vaddr, fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd));
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {
           for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000) {
             if ((vmm_setPageAttributes((programHeader[i].p_vaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
               kpanic("Error: vmm_setPageAttributes failed, File: %s,Line: %i\n", __FILE__, __LINE__);
           }
+                    kprintf("%i", round_page(programHeader[i].p_memsz));
         }
 
         if ((programHeader[i].p_flags & PF_X) && text_size < seg_size) {
