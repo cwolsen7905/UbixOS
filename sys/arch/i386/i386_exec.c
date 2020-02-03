@@ -646,7 +646,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         /* Now Load Section To Memory */
                 kern_fseek(fd, programHeader[i].p_offset, 0);
                 //fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
-                kprintf("read: 0x%X, 0x%X, 0x%X, 0x%X", round_page(programHeader[i].p_memsz), programHEader[i].p_filesz, programHeader[i].p_vaddr, fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd));
+                kprintf("read: 0x%X, 0x%X, 0x%X, 0x%X", round_page(programHeader[i].p_memsz), programHeader[i].p_filesz, programHeader[i].p_vaddr, fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd));
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {
           for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000) {
