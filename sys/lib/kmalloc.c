@@ -357,8 +357,8 @@ void kfree(void *baseAddr) {
     for (tmpDesc = usedKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next) {
 
         if (tmpDesc->baseAddr == baseAddr) {
-            kprintf("[bA: 0x%X]", tmpDesc->baseAddr);
-            memset(tmpDesc->baseAddr, 0xBE, tmpDesc->limit);
+            //kprintf("[bA: 0x%X]", tmpDesc->baseAddr);
+            //memset(tmpDesc->baseAddr, 0xBE, tmpDesc->limit);
 
             if (usedKernDesc == tmpDesc)
                 usedKernDesc = tmpDesc->next;
