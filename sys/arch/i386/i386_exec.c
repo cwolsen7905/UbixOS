@@ -654,7 +654,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
               kpanic("Error: vmm_setPageAttributes failed, File: %s,Line: %i\n", __FILE__, __LINE__);
           }
 
-                    if (round_page(programHeader[i].p_memsz) == 0x3300) {
+                    if (round_page(programHeader[i].p_memsz) == 0x33000) {
                         char *b = (void*) programHeader[i].p_vaddr;
                         kprintf("T: %c", b[0x2c094]);
                     }
