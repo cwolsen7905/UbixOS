@@ -85,6 +85,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 
   }
   else {
+        kprintf("[%s:%i] o(%s)%i", __FILE__, __LINE__, args->path, fd);
     td->td_retval[0] = fd;
   }
 
