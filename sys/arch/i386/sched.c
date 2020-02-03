@@ -112,8 +112,9 @@ void sched() {
       }
 
       tmpTask = tmpTask->next;
-      sched_deleteTask(delTask->id);
-      sched_addDelTask(delTask);
+            // XXX Temporary Test
+            //sched_deleteTask(delTask->id);
+            //sched_addDelTask(delTask);
       goto schedStart;
     }
   }
