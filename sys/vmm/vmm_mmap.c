@@ -171,6 +171,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
             }
 
             tmp = uap->addr;
+            kprintf("(tmp: 0x%X)", tmp);
 
         }
 
