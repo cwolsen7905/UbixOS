@@ -298,7 +298,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
   size_t nbytes;
 
-    //kprintf("<size_t: %i:%i>", sizeof(size_t), uap->nbyte);
+    kprintf("<size_t: %i:%i>", sizeof(size_t), uap->nbyte);
 
   if (uap->fd == 2) {
     buffer = kmalloc(1024);
@@ -353,7 +353,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
       default:
         if (fd->fd) {
           kprintf("[0x%X]", fd->fd->res);
-                    //XXX TEST - td->td_retval[0] = fwrite(uap->buf, uap->nbyte, 1, fd->fd);
+                    td->td_retval[0] = fwrite(uap->buf, uap->nbyte, 1, fd->fd);
         }
         else {
           kprintf("[%i]", uap->nbyte);
