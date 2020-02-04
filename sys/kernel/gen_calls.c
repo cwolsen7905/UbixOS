@@ -195,7 +195,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
 
     struct gdtDescriptor *tmpDesc = 0x0;
 
-    tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor); //taskLDT[1];
+        tmpDesc = VMM_USER_LDT;  //XXX Is this my problem? + sizeof(struct gdtDescriptor); //taskLDT[1];
 
     tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
     tmpDesc->baseLow = (base_addr & 0xFFFF);
