@@ -316,8 +316,13 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         //kprintf("nbyte: %i", uap->nbyte);
         memcpy(buffer, uap->buf, uap->nbyte);
         kprintf(buffer);
-        kprintf("\n");
-        kprintf("^");
+
+
+        if (uap->nbyte >= 1023) {
+            kprintf("\n");
+            kprintf("^");
+            asm("nop");
+        }
         kfree(buffer);
         //kprintf(buffer);
         // kprintf(uap->buf);
