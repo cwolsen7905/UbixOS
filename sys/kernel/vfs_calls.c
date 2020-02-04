@@ -315,6 +315,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         memset(buffer, 0x0, 1025);
         kprintf("nbyte: %i", uap->nbyte);
         memcpy(buffer, uap->buf, uap->nbyte);
+        buffer[1024] = '\0';
         kprintf(buffer);
 
 
