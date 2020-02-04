@@ -317,7 +317,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         //kprintf(buffer);
         // kprintf(uap->buf);
         //kfree(buffer);
-        kprintf("[%s:%i]", __FILE__, __LINE__);
+        //kprintf("[%s:%i]", __FILE__, __LINE__);
         kprint(uap->buf);
     td->td_retval[0] = uap->nbyte;
   }
@@ -353,7 +353,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
       default:
         if (fd->fd) {
           kprintf("[0x%X]", fd->fd->res);
-          td->td_retval[0] = fwrite(uap->buf, uap->nbyte, 1, fd->fd);
+                    //XXX TEST - td->td_retval[0] = fwrite(uap->buf, uap->nbyte, 1, fd->fd);
         }
         else {
           kprintf("[%i]", uap->nbyte);
