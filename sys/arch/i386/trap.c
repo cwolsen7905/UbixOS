@@ -105,6 +105,7 @@ void trap(struct trapframe *frame) {
   trap_code = frame->tf_trapno;
 
   cr2 = rcr2();
+
   kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2, _current->tss.eip, _current->tss.ldt);
   if (_current->id == 7)
     while (1)

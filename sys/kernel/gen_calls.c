@@ -192,6 +192,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     segbase = args->parms;
         kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
     base_addr = (uint32_t) segbase[0];
+
     struct gdtDescriptor *tmpDesc = 0x0;
 
     tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor); //taskLDT[1];
