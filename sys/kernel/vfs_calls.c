@@ -316,13 +316,15 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         //kprintf("nbyte: %i", uap->nbyte);
         memcpy(buffer, uap->buf, uap->nbyte);
         kprintf(buffer);
+        kprintf("\n");
+        kprintf("^");
         kfree(buffer);
         //kprintf(buffer);
         // kprintf(uap->buf);
         //kfree(buffer);
         //kprintf("[%s:%i]", __FILE__, __LINE__);
         //kprint(uap->buf);
-        kprintf("^");
+
     td->td_retval[0] = uap->nbyte;
   }
   else {
