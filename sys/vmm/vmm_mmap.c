@@ -129,7 +129,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     struct file *fd = 0x0;
     int x;
 
-    printf("[%s:%i] mmap(%i-0x%X-%i)", __FILE__, __LINE__, uap->fd, uap->addr, uap->len);
+    kprintf("[%s:%i] mmap(%i-0x%X-%i)", __FILE__, __LINE__, uap->fd, uap->addr, uap->len);
 
     addr = (vm_offset_t) uap->addr;
 
