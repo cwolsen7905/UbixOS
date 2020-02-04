@@ -143,7 +143,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
-  //kprintf("File: %s, ", file);
+    kprintf("File: %s, ", file);
   //kprintf("Mode: 0x%X\n", fd->mode);
 
   if ((fd->mode & 0x1) == 0x1) {
