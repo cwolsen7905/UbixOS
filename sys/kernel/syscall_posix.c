@@ -64,6 +64,11 @@ void sys_call_posix(struct trapframe *frame) {
     params += sizeof(quad_t);
   }
 
+    if (code == 89) {
+        while (1)
+            kprintf("MFR");
+    }
+
   if (code > totalCalls_posix) {
     kprintf("pCall [%i]\n", code);
     die_if_kernel("Invalid System pCall", frame, frame->tf_eax);
