@@ -123,7 +123,7 @@ void trap(struct trapframe *frame) {
     }
   }
 
-    //kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+    kprintf("trap _code: %i(0x%X), EIP: 0x%X, CS: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip.frame->tf_cs, cr2);
   if (frame->tf_trapno == 0xc) {
     vmm_pageFault(frame, cr2);
   }
