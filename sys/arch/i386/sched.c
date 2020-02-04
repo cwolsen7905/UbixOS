@@ -210,7 +210,7 @@ int sched_deleteTask(pidType id) {
         tmpTask->next->prev = tmpTask->prev;
       if (taskList == tmpTask)
         taskList = tmpTask->next;
-
+            kprintf("[%s:%i]: ??\n", __FILE__, __LINE__);
       return (0x0);
     }
   }
