@@ -322,6 +322,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     td->td_retval[0] = uap->nbyte;
   }
   else {
+        return (0x0);
+
     getfd(td, &fd, uap->fd);
 
     //kprintf("[fd: %i:0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
