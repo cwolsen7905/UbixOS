@@ -318,7 +318,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         kprintf(buffer);
 
 
-        if (uap->nbyte >= 512) {
+        if (uap->nbyte >= 786) {
             kprintf("\n");
             kprintf("^");
             while (1)
