@@ -890,7 +890,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 
   //data_addr = 0x0; //TEMP
-
+    kprintf("data_addr: 0x%X", data_addr);
   taskLDT->limitLow = (0xFFFFF & 0xFFFF);
   taskLDT->baseLow = (data_addr & 0xFFFF);
   taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
