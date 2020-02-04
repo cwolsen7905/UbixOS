@@ -311,8 +311,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     td->td_retval[0] = uap->nbyte;
   }
   else if (uap->fd == 1 && ((struct file*) td->o_files[1])->fd == 0x0) {
-        buffer = kmalloc(1024);
-        memset(buffer, 0x0, 1024);
+        buffer = kmalloc(1025);
+        memset(buffer, 0x0, 1025);
         //kprintf("nbyte: %i", uap->nbyte);
         memcpy(buffer, uap->buf, uap->nbyte);
         kprintf(buffer);
