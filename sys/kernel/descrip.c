@@ -48,6 +48,8 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
     return (-1);
   }
 
+    kprintf("CMD: %i", uap->cmd);
+
   fp = (struct file*) td->o_files[uap->fd];
 
   switch (uap->cmd) {
