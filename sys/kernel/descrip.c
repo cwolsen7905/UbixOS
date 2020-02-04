@@ -79,6 +79,7 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
       }
       break;
     case 3:
+            if (uap->fd > 3)
             fp->f_flag = O_RDWR & O_ACCMODE;
       td->td_retval[0] = fp->f_flag;
       break;
