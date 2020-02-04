@@ -43,7 +43,8 @@ void sys_call_posix(struct trapframe *frame) {
   uint32_t code = 0x0;
   caddr_t params;
 
-   kprintf("SYSCALL: 0x%X.", frame->tf_eip);
+    //kprintf("SYSCALL: 0x%X.", frame->tf_eip);
+
 
   struct thread *td = &_current->td;
 
@@ -55,6 +56,8 @@ void sys_call_posix(struct trapframe *frame) {
   params = (caddr_t) frame->tf_esp + sizeof(int);
 
   code = frame->tf_eax;
+
+    kprintf("SYSCALL: %i", code);
 
   if (code == 198) {
     memcpy(&code, params, sizeof(int));
