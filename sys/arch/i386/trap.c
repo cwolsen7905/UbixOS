@@ -89,7 +89,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
 
   stack = (unsigned long *) esp;
 
-  for (i = 0; i < 16; i++) {
+    for (i = 0; i < 32; i++) {
     if (i && ((i % 8) == 0))
       kprintf("\n      ");
     kprintf("%08lx ", get_seg_long(ss, stack++));
@@ -98,6 +98,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   endTask(_current->id);
 }
 
+/* NOTE This rap is really just for page fault */
 void trap(struct trapframe *frame) {
   u_int trap_code;
   u_int cr2 = 0;
@@ -106,7 +107,7 @@ void trap(struct trapframe *frame) {
 
   cr2 = rcr2();
 
-  kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2, _current->tss.eip, _current->tss.ldt);
+    // kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2, _current->tss.eip, _current->tss.ldt);
   if (_current->id == 7)
     while (1)
       asm("nop");
@@ -122,7 +123,7 @@ void trap(struct trapframe *frame) {
     }
   }
 
-  kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+    //kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
   if (frame->tf_trapno == 0xc) {
     vmm_pageFault(frame, cr2);
   }
