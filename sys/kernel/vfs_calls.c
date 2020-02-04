@@ -298,11 +298,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
   size_t nbytes;
 
-    kprintf("<size_t: %i:%i>", sizeof(size_t), uap->nbyte);
-    if (uap->fd > 2) {
-        td->td_retval[0] = 0;
-        return (-1);
-    }
+    //kprintf("<size_t: %i:%i>", sizeof(size_t), uap->nbyte);
 
   if (uap->fd == 2) {
     buffer = kmalloc(1024);

@@ -184,12 +184,13 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
 }
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
+
   void **segbase = 0x0;
   uint32_t base_addr = 0x0;
   if (args->op == 10) {
-    //kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
+        kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
     segbase = args->parms;
-    //kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
+        kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
     base_addr = (uint32_t) segbase[0];
     struct gdtDescriptor *tmpDesc = 0x0;
 

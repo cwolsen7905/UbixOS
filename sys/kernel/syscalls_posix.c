@@ -860,7 +860,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_sysarch_args),
         "sysarch",
         sys_sysarch,
-        SYSCALL_VALID },  // 165 - sysarch
+        SYSCALL_DEBUG },  // 165 - sysarch
     {
         0,
         "rtprio",
