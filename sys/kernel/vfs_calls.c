@@ -313,7 +313,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
   else if (uap->fd == 1 && ((struct file*) td->o_files[1])->fd == 0x0) {
         buffer = kmalloc(1025);
         memset(buffer, 0x0, 1025);
-        //kprintf("nbyte: %i", uap->nbyte);
+        kprintf("nbyte: %i", uap->nbyte);
         memcpy(buffer, uap->buf, uap->nbyte);
         kprintf(buffer);
 
@@ -321,6 +321,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         if (uap->nbyte >= 512) {
             kprintf("\n");
             kprintf("^");
+            while (1)
             asm("nop");
         }
         kfree(buffer);
