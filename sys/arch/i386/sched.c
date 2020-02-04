@@ -198,8 +198,6 @@ kTask_t *schedNewTask() {
 int sched_deleteTask(pidType id) {
   kTask_t *tmpTask = 0x0;
 
-    kprintf("s_dT");
-
   /* Checking each task from the prio queue */
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
         kprintf("[%s:%i] %i:%i", __FILE__, __LINE__, tmpTask->id, id);

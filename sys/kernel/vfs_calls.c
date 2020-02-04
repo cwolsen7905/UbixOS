@@ -317,6 +317,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         //kprintf(buffer);
         kprintf(uap->buf);
         //kfree(buffer);
+        kprintf("[%s:%i]", __FILE__, __LINE__);
+        kprint(uap->buf);
     td->td_retval[0] = uap->nbyte;
   }
   else {
