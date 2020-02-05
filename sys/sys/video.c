@@ -31,78 +31,78 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/tty.h>
 
-static unsigned char *videoBuffer = (unsigned char *) 0xB8000;
+static unsigned char *videoBuffer = (unsigned char*) 0xB8000;
 int printColor = defaultColor;
 
 void backSpace() {
-  uInt32 bufferOffset = 0x0;
-  outportByte(0x3d4, 0x0e);
-  bufferOffset = inportByte(0x3d5);
-  bufferOffset <<= 0x8; /* Shift Address Left 8 Bits */
-  outportByte(0x3d4, 0x0f);
-  bufferOffset += inportByte(0x3d5);
-  bufferOffset <<= 0x1; /* Shift Address Left 1 Bits */
-  videoBuffer[bufferOffset--] = 0x20;
-  videoBuffer[bufferOffset--] = printColor;
-  videoBuffer[bufferOffset] = 0x20;
-  bufferOffset >>= 0x1;
-  tty_foreground->tty_x = (bufferOffset & 0xFF);
-  tty_foreground->tty_y = (bufferOffset >> 0x8);
-  outportByte(0x3D4, 0x0f);
-  outportByte(0x3D5, tty_foreground->tty_x);
-  outportByte(0x3D4, 0x0e);
-  outportByte(0x3D5, tty_foreground->tty_y);
-  return;
+    uInt32 bufferOffset = 0x0;
+    outportByte(0x3d4, 0x0e);
+    bufferOffset = inportByte(0x3d5);
+    bufferOffset <<= 0x8; /* Shift Address Left 8 Bits */
+    outportByte(0x3d4, 0x0f);
+    bufferOffset += inportByte(0x3d5);
+    bufferOffset <<= 0x1; /* Shift Address Left 1 Bits */
+    videoBuffer[bufferOffset--] = 0x20;
+    videoBuffer[bufferOffset--] = printColor;
+    videoBuffer[bufferOffset] = 0x20;
+    bufferOffset >>= 0x1;
+    tty_foreground->tty_x = (bufferOffset & 0xFF);
+    tty_foreground->tty_y = (bufferOffset >> 0x8);
+    outportByte(0x3D4, 0x0f);
+    outportByte(0x3D5, tty_foreground->tty_x);
+    outportByte(0x3D4, 0x0e);
+    outportByte(0x3D5, tty_foreground->tty_y);
+    return;
 }
 
 void kprint(char *string) {
 
-  unsigned int bufferOffset = 0x0, character = 0x0, i = 0x0;
+    unsigned int bufferOffset = 0x0, character = 0x0, i = 0x0;
 
-  /* Short circuit if we're in tty mode */
-  if (NULL != tty_foreground) {
-    tty_print(string, tty_find(0));
+    /* Short circuit if we're in tty mode */
+    if (NULL != tty_foreground) {
+        tty_print(string, tty_find(0));
+        return;
+    }
+
+    /* We Need To Get The Y Position */
+    outportByte(0x3D4, 0x0e);
+    bufferOffset = inportByte(0x3D5);
+    bufferOffset <<= 8; /* Shift Address Left 8 Bits */
+    /* Then We Need To Add The X Position */
+    outportByte(0x3D4, 0x0f);
+    bufferOffset += inportByte(0x3D5);
+    bufferOffset <<= 1; /* Shift Address Left 1 Bits */
+
+    while ((character = *string++)) {
+        switch (character) {
+            case '\n':
+                bufferOffset = (bufferOffset / 160) * 160 + 160;
+                break;
+            default:
+                videoBuffer[bufferOffset++] = character;
+                videoBuffer[bufferOffset++] = printColor;
+                break;
+        } /* switch */
+        /* Check To See If We Are Out Of Bounds */
+        if (bufferOffset >= 160 * 25) {
+            for (i = 0; i < 160 * 24; i++) {
+                videoBuffer[i] = videoBuffer[i + 160];
+            } /* for */
+            for (i = 0; i < 80; i++) {
+                videoBuffer[(160 * 24) + (i * 2)] = 0x20;
+                videoBuffer[(160 * 24) + (i * 2) + 1] = printColor;
+            } /* for */
+            bufferOffset -= 160;
+        } /* if */
+    } /* while */
+    bufferOffset >>= 1; /* Set the new cursor position  */
+    outportByte(0x3D4, 0x0f);
+    outportByte(0x3D5, ((bufferOffset & 0x0ff) & 0xFF));
+    outportByte(0x3D4, 0x0e);
+    outportByte(0x3D5, ((bufferOffset >> 8) & 0xFF));
+
     return;
-  }
-
-  /* We Need To Get The Y Position */
-  outportByte(0x3D4, 0x0e);
-  bufferOffset = inportByte(0x3D5);
-  bufferOffset <<= 8; /* Shift Address Left 8 Bits */
-  /* Then We Need To Add The X Position */
-  outportByte(0x3D4, 0x0f);
-  bufferOffset += inportByte(0x3D5);
-  bufferOffset <<= 1; /* Shift Address Left 1 Bits */
-
-  while ((character = *string++)) {
-    switch (character) {
-      case '\n':
-        bufferOffset = (bufferOffset / 160) * 160 + 160;
-      break;
-      default:
-        videoBuffer[bufferOffset++] = character;
-        videoBuffer[bufferOffset++] = printColor;
-      break;
-    } /* switch */
-    /* Check To See If We Are Out Of Bounds */
-    if (bufferOffset >= 160 * 25) {
-      for (i = 0; i < 160 * 24; i++) {
-        videoBuffer[i] = videoBuffer[i + 160];
-      } /* for */
-      for (i = 0; i < 80; i++) {
-        videoBuffer[(160 * 24) + (i * 2)] = 0x20;
-        videoBuffer[(160 * 24) + (i * 2) + 1] = printColor;
-      } /* for */
-      bufferOffset -= 160;
-    } /* if */
-  } /* while */
-  bufferOffset >>= 1; /* Set the new cursor position  */
-  outportByte(0x3D4, 0x0f);
-  outportByte(0x3D5, ((bufferOffset & 0x0ff) & 0xFF));
-  outportByte(0x3D4, 0x0e);
-  outportByte(0x3D5, ((bufferOffset >> 8) & 0xFF));
-
-  return;
 }
 
 void kprint_len(char *string, int len) {
@@ -162,16 +162,16 @@ void kprint_len(char *string, int len) {
 
 /* Clears The Screen */
 void clearScreen() {
-  short i = 0x0;
+    short i = 0x0;
 
-  for (i = 0x0; i < (80 * 25); i++) {
-    videoBuffer[i * 2] = 0x20;
-    videoBuffer[i * 2 + 1] = defaultColor;
-  }
-  outportByte(0x3D4, 0x0f);
-  outportByte(0x3D5, 0);
-  outportByte(0x3D4, 0x0e);
-  outportByte(0x3D5, 0);
+    for (i = 0x0; i < (80 * 25); i++) {
+        videoBuffer[i * 2] = 0x20;
+        videoBuffer[i * 2 + 1] = defaultColor;
+    }
+    outportByte(0x3D4, 0x0f);
+    outportByte(0x3D5, 0);
+    outportByte(0x3D4, 0x0e);
+    outportByte(0x3D5, 0);
 }
 
 /***
