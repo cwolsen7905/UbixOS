@@ -40,92 +40,92 @@
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
     struct file *fp = 0x0;
-    q
-  struct file *dup_fp = 0x0;
-  int i = 0;
 
-  if (td->o_files[uap->fd] == 0x0) {
-    kprintf("ERROR!!!\n");
-    return (-1);
-  }
+    struct file *dup_fp = 0x0;
+    int i = 0;
+
+    if (td->o_files[uap->fd] == 0x0) {
+        kprintf("ERROR!!!\n");
+        return (-1);
+    }
 
     kprintf("CMD: %i", uap->cmd);
 
-  fp = (struct file*) td->o_files[uap->fd];
+    fp = (struct file*) td->o_files[uap->fd];
 
-  switch (uap->cmd) {
-    case 17:
-      /* First 5 Descriptors Are Reserved */
-      for (i = 5; i < MAX_FILES; i++) {
-        if (td->o_files[i] == 0x0) {
-          dup_fp = (struct file*) kmalloc(sizeof(struct file));
-          memcpy(dup_fp, fp, sizeof(struct file));
+    switch (uap->cmd) {
+        case 17:
+            /* First 5 Descriptors Are Reserved */
+            for (i = 5; i < MAX_FILES; i++) {
+                if (td->o_files[i] == 0x0) {
+                    dup_fp = (struct file*) kmalloc(sizeof(struct file));
+                    memcpy(dup_fp, fp, sizeof(struct file));
 
-          td->o_files[i] = (void*) dup_fp;
-          td->td_retval[0] = i;
+                    td->o_files[i] = (void*) dup_fp;
+                    td->td_retval[0] = i;
 
-          ((struct file*) td->o_files[uap->fd])->fd->dup++;
+                    ((struct file*) td->o_files[uap->fd])->fd->dup++;
 
-          fclose(((struct file*) td->o_files[uap->fd])->fd);
+                    fclose(((struct file*) td->o_files[uap->fd])->fd);
 
-          //td->o_files[uap->fd] = 0;
+                    //td->o_files[uap->fd] = 0;
 
-          if (fdestroy(td, fp, uap->fd) != 0x0)
-            kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fp, td->o_files[uap->fd]);
+                    if (fdestroy(td, fp, uap->fd) != 0x0)
+                        kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fp, td->o_files[uap->fd]);
 
-          kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
+                    kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
 
-          break;
-        }
-      }
-      break;
-    case 3:
+                    break;
+                }
+            }
+            break;
+        case 3:
             if (uap->fd > 3)
-            fp->f_flag = O_RDWR & O_ACCMODE;
-      td->td_retval[0] = fp->f_flag;
-      break;
-    case 4:
-      fp->f_flag &= ~FCNTLFLAGS;
-      fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
-      break;
-    default:
-      kprintf("ERROR DEFAULT: [%i]", uap->fd);
-  }
+                fp->f_flag = O_RDWR & O_ACCMODE;
+            td->td_retval[0] = fp->f_flag;
+            break;
+        case 4:
+            fp->f_flag &= ~FCNTLFLAGS;
+            fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
+            break;
+        default:
+            kprintf("ERROR DEFAULT: [%i]", uap->fd);
+    }
 
-  return (0x0);
+    return (0x0);
 }
 
 int sys_fcntl(struct thread *td, struct sys_fcntl_args *uap) {
-  return (fcntl(td, uap));
+    return (fcntl(td, uap));
 }
 
 int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 
-  struct file *fp = 0x0;
-  int i = 0;
+    struct file *fp = 0x0;
+    int i = 0;
 
-  fp = (struct file*) kmalloc(sizeof(struct file));
+    fp = (struct file*) kmalloc(sizeof(struct file));
 
-  /* First 5 Descriptors Are Reserved */
-  for (i = 5; i < MAX_FILES; i++) {
-    if (td->o_files[i] == 0x0) {
-      td->o_files[i] = (void*) fp;
-      if (resultfd)
-        *resultfd = i;
-      if (resultfp)
-        *resultfp = fp;
-      goto allocated;
+    /* First 5 Descriptors Are Reserved */
+    for (i = 5; i < MAX_FILES; i++) {
+        if (td->o_files[i] == 0x0) {
+            td->o_files[i] = (void*) fp;
+            if (resultfd)
+                *resultfd = i;
+            if (resultfp)
+                *resultfp = fp;
+            goto allocated;
+        }
     }
-  }
 
-  kfree(fp);
+    kfree(fp);
 
-  *resultfp = 0x0;
-  *resultfd = 0x0;
+    *resultfp = 0x0;
+    *resultfd = 0x0;
 
-  allocated:
+    allocated:
 
-  return (0x0);
+    return (0x0);
 }
 
 #include <sys/ioctl.h>
@@ -150,28 +150,28 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
  * @retval  -1 An error occurred
  */
 int fdestroy(struct thread *td, struct file *fp, int fd) {
-  int error = 0;
+    int error = 0;
 
-  if (td->o_files[fd] != fp) {
-    error = -1;
-  }
-  else {
-    kfree(td->o_files[fd]);
-    td->o_files[fd] = 0x0;
-  }
+    if (td->o_files[fd] != fp) {
+        error = -1;
+    }
+    else {
+        kfree(td->o_files[fd]);
+        td->o_files[fd] = 0x0;
+    }
 
-  return (error);
+    return (error);
 }
 
 int close(struct thread *td, struct close_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
-  kprintf("[%s:%i]", __FILE__, __LINE__);
-  kfree((void*) td->o_files[uap->fd]);
-  td->o_files[uap->fd] = 0x0;
-  td->td_retval[0] = 0x0;
-  return (0x0);
+    kprintf("[%s:%i]", __FILE__, __LINE__);
+    kfree((void*) td->o_files[uap->fd]);
+    td->o_files[uap->fd] = 0x0;
+    td->td_retval[0] = 0x0;
+    return (0x0);
 }
 
 /*!
@@ -181,23 +181,23 @@ int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
-  td->td_retval[0] = O_FILES;
-  return (0);
+    td->td_retval[0] = O_FILES;
+    return (0);
 }
 
 /* HACK */
 int fstat(struct thread *td, struct sys_fstat_args *uap) {
-  struct file *fp = 0x0;
+    struct file *fp = 0x0;
 
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
 
-  fp = (struct file*) _current->td.o_files[uap->fd];
-  uap->sb->st_mode = 0x2180;
-  uap->sb->st_blksize = 0x1000;
-  kprintf("fstat: %i", uap->fd);
-  return (0x0);
+    fp = (struct file*) _current->td.o_files[uap->fd];
+    uap->sb->st_mode = 0x2180;
+    uap->sb->st_blksize = 0x1000;
+    kprintf("fstat: %i", uap->fd);
+    return (0x0);
 }
 
 /*!
@@ -206,8 +206,8 @@ int fstat(struct thread *td, struct sys_fstat_args *uap) {
  * \returns NULL for now
  */
 int ioctl(struct thread *td, struct ioctl_args *uap) {
-  td->td_retval[0] = 0x0;
-  return (0x0);
+    td->td_retval[0] = 0x0;
+    return (0x0);
 }
 
 /*!
@@ -216,173 +216,173 @@ int ioctl(struct thread *td, struct ioctl_args *uap) {
  * \return returns fp
  */
 int getfd(struct thread *td, struct file **fp, int fd) {
-  int error = 0x0;
+    int error = 0x0;
 
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
 
-  *fp = (struct file*) td->o_files[fd];
+    *fp = (struct file*) td->o_files[fd];
 
-  if (fp == 0x0)
-    error = -1;
+    if (fp == 0x0)
+        error = -1;
 
-  return (error);
+    return (error);
 }
 
 int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
-  switch (args->com) {
-    case TIOCGETA:
-      if (args->fd == 0 || args->fd == 1) {
-        struct termios *t = (struct termios*) args->data;
+    switch (args->com) {
+        case TIOCGETA:
+            if (args->fd == 0 || args->fd == 1) {
+                struct termios *t = (struct termios*) args->data;
 
-        t->c_iflag = 0x2B02;
-        t->c_oflag = 0x3;
-        t->c_cflag = 0x4B00;
-        t->c_lflag = 0x5CB;
+                t->c_iflag = 0x2B02;
+                t->c_oflag = 0x3;
+                t->c_cflag = 0x4B00;
+                t->c_lflag = 0x5CB;
 
-        t->c_cc[0] = 4;
-        t->c_cc[1] = 255;
-        t->c_cc[2] = 255;
-        t->c_cc[3] = 127;
-        t->c_cc[4] = 23;
-        t->c_cc[5] = 21;
-        t->c_cc[6] = 18;
-        t->c_cc[7] = 8;
-        t->c_cc[8] = 3;
-        t->c_cc[9] = 28;
-        t->c_cc[10] = 26;
-        t->c_cc[11] = 25;
-        t->c_cc[12] = 17;
-        t->c_cc[13] = 19;
-        t->c_cc[14] = 22;
-        t->c_cc[15] = 15;
-        t->c_cc[16] = 1;
-        t->c_cc[17] = 0;
-        t->c_cc[18] = 20;
-        t->c_cc[19] = 255;
+                t->c_cc[0] = 4;
+                t->c_cc[1] = 255;
+                t->c_cc[2] = 255;
+                t->c_cc[3] = 127;
+                t->c_cc[4] = 23;
+                t->c_cc[5] = 21;
+                t->c_cc[6] = 18;
+                t->c_cc[7] = 8;
+                t->c_cc[8] = 3;
+                t->c_cc[9] = 28;
+                t->c_cc[10] = 26;
+                t->c_cc[11] = 25;
+                t->c_cc[12] = 17;
+                t->c_cc[13] = 19;
+                t->c_cc[14] = 22;
+                t->c_cc[15] = 15;
+                t->c_cc[16] = 1;
+                t->c_cc[17] = 0;
+                t->c_cc[18] = 20;
+                t->c_cc[19] = 255;
 
-        t->c_ispeed = 0x9600;
-        t->c_ospeed = 0x9600;
+                t->c_ispeed = 0x9600;
+                t->c_ospeed = 0x9600;
 
-        td->td_retval[0] = 0;
-      }
-      else {
-        td->td_retval[0] = -1;
-      }
-      break;
-    case TIOCGWINSZ:
-      asm("nop");
-      struct winsize *win = (struct winsize*) args->data;
-      win->ws_row = 50;
-      win->ws_col = 80;
-      break;
-    default:
-      kprintf("ioFD:%i:0x%X!", args->fd, args->com);
-      break;
-  }
+                td->td_retval[0] = 0;
+            }
+            else {
+                td->td_retval[0] = -1;
+            }
+            break;
+        case TIOCGWINSZ:
+            asm("nop");
+            struct winsize *win = (struct winsize*) args->data;
+            win->ws_row = 50;
+            win->ws_col = 80;
+            break;
+        default:
+            kprintf("ioFD:%i:0x%X!", args->fd, args->com);
+            break;
+    }
 
-  td->td_retval[0] = 0x0;
-  return (0x0);
+    td->td_retval[0] = 0x0;
+    return (0x0);
 }
 
 int sys_select(struct thread *td, struct sys_select_args *args) {
-  int error = 0x0;
-  /*
-   int i = 0x0;
+    int error = 0x0;
+    /*
+     int i = 0x0;
 
-   fd_set sock_rfds;
-   fd_set sock_wfds;
-   fd_set sock_efds;
+     fd_set sock_rfds;
+     fd_set sock_wfds;
+     fd_set sock_efds;
 
-   FD_ZERO(&sock_rfds);
-   FD_ZERO(&sock_wfds);
-   FD_ZERO(&sock_efds);
+     FD_ZERO(&sock_rfds);
+     FD_ZERO(&sock_wfds);
+     FD_ZERO(&sock_efds);
 
-   if (args->in != 0x0) {
-   for (i = 0; i < args->nd; i++) {
-   FD_SET(((struct file * ) td->o_files[args->in[0]]).socket, &sock_rfds);
-   }
-   }
+     if (args->in != 0x0) {
+     for (i = 0; i < args->nd; i++) {
+     FD_SET(((struct file * ) td->o_files[args->in[0]]).socket, &sock_rfds);
+     }
+     }
 
-   if (args->ou != 0x0) {
-   for (i = 0; i < args->nd; i++) {
-   FD_SET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds);
-   }
-   }
+     if (args->ou != 0x0) {
+     for (i = 0; i < args->nd; i++) {
+     FD_SET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds);
+     }
+     }
 
-   if (args->ex != 0x0) {
-   for (i = 0; i < args->nd; i++) {
-   FD_SET(((struct file * ) td->o_files[args->ex[0]]).socket, &sock_efds);
-   }
-   }
+     if (args->ex != 0x0) {
+     for (i = 0; i < args->nd; i++) {
+     FD_SET(((struct file * ) td->o_files[args->ex[0]]).socket, &sock_efds);
+     }
+     }
 
-   if ((td->td_retval[0] = lwip_select(args->nd, &sock_rfds, &sock_wfds, &sock_efds, args->tv)) == -1)
-   error = -1;
+     if ((td->td_retval[0] = lwip_select(args->nd, &sock_rfds, &sock_wfds, &sock_efds, args->tv)) == -1)
+     error = -1;
 
-   if (args->in != 0x0) {
-   for (i = 0; i < MAX_FILES; i++) {
-   if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_rfds))
-   FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->in);
-   }
-   }
+     if (args->in != 0x0) {
+     for (i = 0; i < MAX_FILES; i++) {
+     if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_rfds))
+     FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->in);
+     }
+     }
 
-   if (args->ou != 0x0) {
-   for (i = 0; i < MAX_FILES; i++) {
-   if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds))
-   FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ou);
-   }
-   }
+     if (args->ou != 0x0) {
+     for (i = 0; i < MAX_FILES; i++) {
+     if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds))
+     FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ou);
+     }
+     }
 
-   if (args->ex != 0x0) {
-   for (i = 0; i < MAX_FILES; i++) {
-   if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_efds))
-   FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ex);
-   }
-   }
+     if (args->ex != 0x0) {
+     for (i = 0; i < MAX_FILES; i++) {
+     if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_efds))
+     FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ex);
+     }
+     }
 
-   */
+     */
 
-  if ((td->td_retval[0] = lwip_select(args->nd, args->in, args->ou, args->ex, args->tv)) == -1)
-    error = -1;
+    if ((td->td_retval[0] = lwip_select(args->nd, args->in, args->ou, args->ex, args->tv)) == -1)
+        error = -1;
 
-  return (error);
+    return (error);
 }
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
 
-  struct file *fp = 0x0;
-  struct file *dup_fp = 0x0;
+    struct file *fp = 0x0;
+    struct file *dup_fp = 0x0;
 
-  if (to > MAX_FILES) {
-    kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
-    return (-1);
-  }
-  else if (td->o_files[to] != 0x0) {
+    if (to > MAX_FILES) {
+        kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
+        return (-1);
+    }
+    else if (td->o_files[to] != 0x0) {
 
-    fclose(((struct file*) td->o_files[to])->fd);
-    if (fdestroy(td, (struct file*) td->o_files[to], to) != 0x0)
-      kprintf("[%s:%i] Error with fdestroy!", __FILE__, __LINE__);
-  }
+        fclose(((struct file*) td->o_files[to])->fd);
+        if (fdestroy(td, (struct file*) td->o_files[to], to) != 0x0)
+            kprintf("[%s:%i] Error with fdestroy!", __FILE__, __LINE__);
+    }
 
-  fp = (struct file*) td->o_files[from];
-  dup_fp = (struct file*) kmalloc(sizeof(struct file));
+    fp = (struct file*) td->o_files[from];
+    dup_fp = (struct file*) kmalloc(sizeof(struct file));
 
-  memcpy(dup_fp, fp, sizeof(struct file));
+    memcpy(dup_fp, fp, sizeof(struct file));
 
-  td->o_files[to] = (void*) dup_fp;
+    td->o_files[to] = (void*) dup_fp;
 
-  ((struct file*) td->o_files[from])->fd->dup++;
+    ((struct file*) td->o_files[from])->fd->dup++;
 
-  return (0x0);
+    return (0x0);
 }
 
 int sys_dup2(struct thread *td, struct sys_dup2_args *args) {
 
-  int error = 0x0;
+    int error = 0x0;
 
-  if ((td->td_retval[0] = dup2(td, args->from, args->to)) == -1)
-    error = -1;
+    if ((td->td_retval[0] = dup2(td, args->from, args->to)) == -1)
+        error = -1;
 
-  return (error);
+    return (error);
 }
