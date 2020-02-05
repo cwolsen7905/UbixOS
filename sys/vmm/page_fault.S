@@ -79,6 +79,7 @@ mov %eax,%fs
 cld
 push %esp
 call trap
+call _popFS
 notyet:
 pushl %eax
 sti
