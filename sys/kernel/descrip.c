@@ -39,7 +39,8 @@
 // XXX MrOlsen (2020-01-30) No longer needed -> static struct file *kern_files = 0x0;
 
 int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
-  struct file *fp = 0x0;
+    struct file *fp = 0x0;
+    q
   struct file *dup_fp = 0x0;
   int i = 0;
 
