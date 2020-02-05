@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2018, 2020 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -103,6 +103,61 @@ void kprint(char *string) {
   outportByte(0x3D5, ((bufferOffset >> 8) & 0xFF));
 
   return;
+}
+
+void kprint_len(char *string, int len) {
+
+    unsigned int bufferOffset = 0x0, character = 0x0, i = 0x0;
+    int x = 0;
+
+    /* Short circuit if we're in tty mode */
+    if (NULL != tty_foreground) {
+        tty_print(string, tty_find(0));
+        return;
+    }
+
+    /* We Need To Get The Y Position */
+    outportByte(0x3D4, 0x0e);
+    bufferOffset = inportByte(0x3D5);
+    bufferOffset <<= 8; /* Shift Address Left 8 Bits */
+    /* Then We Need To Add The X Position */
+    outportByte(0x3D4, 0x0f);
+    bufferOffset += inportByte(0x3D5);
+    bufferOffset <<= 1; /* Shift Address Left 1 Bits */
+
+    while ((character = *string++)) {
+        if (x++ == len)
+            break;
+
+        switch (character) {
+            case '\n':
+                bufferOffset = (bufferOffset / 160) * 160 + 160;
+                break;
+            default:
+                videoBuffer[bufferOffset++] = character;
+                videoBuffer[bufferOffset++] = printColor;
+                break;
+        } /* switch */
+        /* Check To See If We Are Out Of Bounds */
+        if (bufferOffset >= 160 * 25) {
+            for (i = 0; i < 160 * 24; i++) {
+                videoBuffer[i] = videoBuffer[i + 160];
+            } /* for */
+            for (i = 0; i < 80; i++) {
+                videoBuffer[(160 * 24) + (i * 2)] = 0x20;
+                videoBuffer[(160 * 24) + (i * 2) + 1] = printColor;
+            } /* for */
+            bufferOffset -= 160;
+        } /* if */
+    } /* while */
+
+    bufferOffset >>= 1; /* Set the new cursor position  */
+    outportByte(0x3D4, 0x0f);
+    outportByte(0x3D5, ((bufferOffset & 0x0ff) & 0xFF));
+    outportByte(0x3D4, 0x0e);
+    outportByte(0x3D5, ((bufferOffset >> 8) & 0xFF));
+
+    return;
 }
 
 /* Clears The Screen */
