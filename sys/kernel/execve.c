@@ -30,10 +30,14 @@
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
 
-int sys_execve( struct thread *td, struct sys_execve_args *args ) {
-  int ret = sys_exec( td, args->fname, args->argv, args->envp );
-  td->td_retval[0] = ret;
-  if (ret != 0)
-    td->td_retval[1] = -8;
-  return (ret);
+int sys_execve(struct thread *td, struct sys_execve_args *args) {
+
+    int ret = sys_exec(td, args->fname, args->argv, args->envp);
+
+    td->td_retval[0] = ret;
+
+    if (ret != 0)
+        td->td_retval[1] = -8;
+
+    return (ret);
 }

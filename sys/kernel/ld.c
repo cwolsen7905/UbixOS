@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2018, 2020 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -38,158 +38,161 @@
 #include <assert.h>
 
 uint32_t ldEnable(const char *interp) {
-  int i = 0x0;
-  int x = 0x0;
-  int rel = 0x0;
-  int sym = 0x0;
-  char *newLoc = 0x0;
-  char *shStr = 0x0;
-  char *dynStr = 0x0;
-  uint32_t *reMap = 0x0;
-  fileDescriptor_t *ldFd = 0x0;
-  Elf_Ehdr *binaryHeader = 0x0;
-  Elf_Phdr *programHeader = 0x0;
-  Elf_Shdr *sectionHeader = 0x0;
-  Elf_Sym *relSymTab = 0x0;
-  Elf_Rel *elfRel = 0x0;
-  Elf_Rela *elfRela = 0x0;
-  Elf_Addr addr;
+    int i = 0x0;
+    int x = 0x0;
+    int rel = 0x0;
+    int sym = 0x0;
+    char *newLoc = 0x0;
+    char *shStr = 0x0;
+    char *dynStr = 0x0;
+    uint32_t *reMap = 0x0;
+    fileDescriptor_t *ldFd = 0x0;
+    Elf_Ehdr *binaryHeader = 0x0;
+    Elf_Phdr *programHeader = 0x0;
+    Elf_Shdr *sectionHeader = 0x0;
+    Elf_Sym *relSymTab = 0x0;
+    Elf_Rel *elfRel = 0x0;
+    Elf_Rela *elfRela = 0x0;
+    Elf_Addr addr;
 
-  /* Open our dynamic linker */
-  ldFd = fopen(interp, "rb");
+    /* Open our dynamic linker */
+    ldFd = fopen(interp, "rb");
 
-  if (ldFd == 0x0) {
-    ldFd = fopen("sys:/libexec/ld.so", "rb");
-    if (ldFd == 0x0)
-      return(0x0);
-  }
+    if (ldFd == 0x0) {
+        ldFd = fopen("sys:/libexec/ld.so", "rb");
+        if (ldFd == 0x0)
+            return (0x0);
+    }
 
     kern_fseek(ldFd, 0x0, 0x0);
-  binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr));
+    binaryHeader = (Elf32_Ehdr*) kmalloc(sizeof(Elf32_Ehdr));
 
-  assert(binaryHeader);
-  fread(binaryHeader, sizeof(Elf32_Ehdr), 1, ldFd);
+    assert(binaryHeader);
+    fread(binaryHeader, sizeof(Elf32_Ehdr), 1, ldFd);
 
-  programHeader = (Elf_Phdr *) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
-  assert(programHeader);
+    programHeader = (Elf_Phdr*) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
+    assert(programHeader);
 
     kern_fseek(ldFd, binaryHeader->e_phoff, 0);
-  fread(programHeader, sizeof(Elf_Shdr), binaryHeader->e_phnum, ldFd);
+    fread(programHeader, sizeof(Elf_Shdr), binaryHeader->e_phnum, ldFd);
 
-  sectionHeader = (Elf_Shdr *) kmalloc(sizeof(Elf_Shdr) * binaryHeader->e_shnum);
+    sectionHeader = (Elf_Shdr*) kmalloc(sizeof(Elf_Shdr) * binaryHeader->e_shnum);
 
-  assert(sectionHeader);
+    assert(sectionHeader);
     kern_fseek(ldFd, binaryHeader->e_shoff, 0);
-  fread(sectionHeader, sizeof(Elf_Shdr), binaryHeader->e_shnum, ldFd);
+    fread(sectionHeader, sizeof(Elf_Shdr), binaryHeader->e_shnum, ldFd);
 
-  shStr = (char *) kmalloc(sectionHeader[binaryHeader->e_shstrndx].sh_size);
+    shStr = (char*) kmalloc(sectionHeader[binaryHeader->e_shstrndx].sh_size);
     kern_fseek(ldFd, sectionHeader[binaryHeader->e_shstrndx].sh_offset, 0);
-  fread(shStr, sectionHeader[binaryHeader->e_shstrndx].sh_size, 1, ldFd);
+    fread(shStr, sectionHeader[binaryHeader->e_shstrndx].sh_size, 1, ldFd);
 
-  for (i = 0x0; i < binaryHeader->e_phnum; i++) {
-    switch (programHeader[i].p_type) {
-      case PT_LOAD:
-        newLoc = (char *) programHeader[i].p_vaddr + LD_START;
-        /*
-         Allocate Memory Im Going To Have To Make This Load Memory With Correct
-         Settings so it helps us in the future
-         */
-        for (x = 0; x < (programHeader[i].p_memsz); x += 0x1000) {
-          /* make r/w or ro */
-          if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT, _current->id, 0)) == 0x0)
-            K_PANIC("vmmRemapPage: ld");
-          memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
-        }
-        /* Now Load Section To Memory */
+    for (i = 0x0; i < binaryHeader->e_phnum; i++) {
+        switch (programHeader[i].p_type) {
+            case PT_LOAD:
+                newLoc = (char*) programHeader[i].p_vaddr + LD_START;
+                /*
+                 Allocate Memory Im Going To Have To Make This Load Memory With Correct
+                 Settings so it helps us in the future
+                 */
+                for (x = 0; x < (programHeader[i].p_memsz); x += 0x1000) {
+                    /* make r/w or ro */
+                    if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT, _current->id, 0)) == 0x0)
+                        K_PANIC("vmmRemapPage: ld");
+                    memset((void*) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
+                }
+                /* Now Load Section To Memory */
                 kern_fseek(ldFd, programHeader[i].p_offset, 0x0);
-        fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
+                fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
 
-      break;
-      case PT_DYNAMIC:
-        /* Now Load Section To Memory */
-        //fseek(ldFd, programHeader[i].p_offset, 0x0);
-        //fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
-      break;
-      case PT_GNU_STACK:
-        /* Tells us if the stack should be executable.  Failsafe to executable
-         until we add checking */
-      break;
-      default:
-        kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].p_type);
-      break;
-    }
-  }
-
-  for (i = 0x0; i < binaryHeader->e_shnum; i++) {
-    switch (sectionHeader[i].sh_type) {
-      case SHT_STRTAB:
-        if (!strcmp((shStr + sectionHeader[i].sh_name), ".dynstr")) {
-          dynStr = (char *) kmalloc(sectionHeader[i].sh_size);
-          //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-          //fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
-        }
-      break;
-      case SHT_REL:
-        elfRel = (Elf_Rel *) kmalloc(sectionHeader[i].sh_size);
-        //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-        //fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
-
-        for (x = 0x0; x < sectionHeader[i].sh_size / sizeof(Elf_Rel); x++) {
-          rel = ELF32_R_SYM(elfRel[x].r_info);
-          reMap = (uint32_t *) ((uint32_t) LD_START + elfRel[x].r_offset);
-          switch (ELF32_R_TYPE(elfRel[x].r_info)) {
-            case R_386_32:
-              *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value);
-            break;
-            case R_386_PC32:
-              *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value) - (uint32_t) reMap;
-            break;
-            case R_386_RELATIVE:
-              *reMap += (uint32_t) LD_START;
-            break;
-            case R_386_NONE:
-            break;
+                break;
+            case PT_DYNAMIC:
+                kprintf("[%s:%i] PT_DYNAMIC", __FILE__, __LINE__);
+                /* Now Load Section To Memory */
+                //fseek(ldFd, programHeader[i].p_offset, 0x0);
+                //fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
+                break;
+            case PT_GNU_STACK:
+                kprintf("[%s:%i] PT_GNU_STACK", __FILE__, __LINE__);
+                /* Tells us if the stack should be executable.  Failsafe to executable
+                 until we add checking */
+                break;
             default:
-              kprintf("[0x%X][0x%X](%i)[%s]\n", elfRel[x].r_offset, elfRel[x].r_info, rel, elfGetRelType(ELF32_R_TYPE(elfRel[x].r_info)));
-              kprintf("relTab [%s][0x%X][0x%X]\n", dynStr + relSymTab[rel].st_name, relSymTab[rel].st_value, relSymTab[rel].st_name);
-            break;
-          }
+                kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].p_type);
+                break;
         }
-        kfree(elfRel);
-      break;
-      case SHT_DYNSYM:
-        relSymTab = (Elf_Sym *) kmalloc(sectionHeader[i].sh_size);
-                kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-        fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
-        sym = i;
-      break;
-      case SHT_PROGBITS:
-        //kprintf("PROGBITS");
-        break;
-      case SHT_HASH:
-        //kprintf("HASH");
-        break;
-      case SHT_DYNAMIC:
-        //kprintf("DYNAMIC");
-        break;
-      case SHT_SYMTAB:
-        //kprintf("SYMTAB");
-        break;
-      default:
-        //kprintf("Invalid: %i]", sectionHeader[i].sh_type);
-      break;
     }
-  }
 
-  i = binaryHeader->e_entry + LD_START;
+    for (i = 0x0; i < binaryHeader->e_shnum; i++) {
+        switch (sectionHeader[i].sh_type) {
+            case SHT_STRTAB:
+                if (!strcmp((shStr + sectionHeader[i].sh_name), ".dynstr")) {
+                    dynStr = (char*) kmalloc(sectionHeader[i].sh_size);
+                    //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+                    //fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
+                }
+                break;
+            case SHT_REL:
+                elfRel = (Elf_Rel*) kmalloc(sectionHeader[i].sh_size);
+                //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+                //fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
 
-  kfree(dynStr);
-  kfree(shStr);
-  kfree(relSymTab);
-  kfree(sectionHeader);
-  kfree(programHeader);
-  kfree(binaryHeader);
-  fclose(ldFd);
+                for (x = 0x0; x < sectionHeader[i].sh_size / sizeof(Elf_Rel); x++) {
+                    rel = ELF32_R_SYM(elfRel[x].r_info);
+                    reMap = (uint32_t*) ((uint32_t) LD_START + elfRel[x].r_offset);
+                    switch (ELF32_R_TYPE(elfRel[x].r_info)) {
+                        case R_386_32:
+                            *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value);
+                            break;
+                        case R_386_PC32:
+                            *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value) - (uint32_t) reMap;
+                            break;
+                        case R_386_RELATIVE:
+                            *reMap += (uint32_t) LD_START;
+                            break;
+                        case R_386_NONE:
+                            kprintf("[%s:%i] R_386_NONE", __FILE__, __LINE__);
+                            break;
+                        default:
+                            kprintf("[0x%X][0x%X](%i)[%s]\n", elfRel[x].r_offset, elfRel[x].r_info, rel, elfGetRelType(ELF32_R_TYPE(elfRel[x].r_info)));
+                            kprintf("relTab [%s][0x%X][0x%X]\n", dynStr + relSymTab[rel].st_name, relSymTab[rel].st_value, relSymTab[rel].st_name);
+                            break;
+                    }
+                }
+                kfree(elfRel);
+                break;
+            case SHT_DYNSYM:
+                relSymTab = (Elf_Sym*) kmalloc(sectionHeader[i].sh_size);
+                kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+                fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
+                sym = i;
+                break;
+            case SHT_PROGBITS:
+                kprintf("[%s:%i] SHT_PROGBITS", __FILE__, __LINE__);
+                break;
+            case SHT_HASH:
+                kprintf("[%s:%i] SHT_HASH", __FILE__, __LINE__);
+                break;
+            case SHT_DYNAMIC:
+                kprintf("[%s:%i] SHT_DYNAMIC", __FILE__, __LINE__);
+                break;
+            case SHT_SYMTAB:
+                kprintf("[%s:%i] SHT_SYMTAB", __FILE__, __LINE__);
+                break;
+            default:
+                kprintf("Invalid: %i]", sectionHeader[i].sh_type);
+                break;
+        }
+    }
 
-  return ((uint32_t) i);
+    i = binaryHeader->e_entry + LD_START;
+
+    kfree(dynStr);
+    kfree(shStr);
+    kfree(relSymTab);
+    kfree(sectionHeader);
+    kfree(programHeader);
+    kfree(binaryHeader);
+    fclose(ldFd);
+
+    return ((uint32_t) i);
 }
