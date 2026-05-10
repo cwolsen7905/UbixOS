@@ -11,3 +11,7 @@ t.c
 /sys/sde/ogImage.cpp
 *.img
 ubixos.img
+.DS_Store
+serial.log
+ubixos.iso
+*.png

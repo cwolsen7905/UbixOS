@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `include_old/dirent.h` and `lib/libc_old/dirent/` — userland `opendir`/`readdir`/`closedir` implementation backed by the kernel VFS `sys_opendir`/`sys_readdir`/`sys_closedir` syscalls. Provides the standard `DIR`/`struct dirent` API to dynamically-linked binaries such as `ls`.
 - `docs/task-switching.md` — detailed documentation of the hardware TSS-based task switching mechanism, GDT/LDT layout, fork mechanics, FPU lazy save/restore, and a critical review with improvement suggestions.
 - `kTask_t.kernelStack` field — stores the base address of each task's dedicated ring-0 kernel stack for future cleanup on task exit.
 - `kprint_len(char *, size_t)` — kernel print function that writes up to a specified number of characters to the display.
@@ -16,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sized C++ delete operators (`operator delete(void*, unsigned int)` / `operator delete[](void*, unsigned int)`) added to `sys/lib/libcpp.cc` for GCC 14+ compatibility.
 
 ### Fixed
+- **Dynamic linker (`ld.so`) — `ls` now runs end-to-end with full lazy PLT resolution**:
+  - **`libexec/ld/main.c` — `rel` not persisted across PLT resolution calls**: `rel` (the section-header index of `.rel.plt`) was a local variable inside `ld()`. The section-scanning loop that populates it is guarded by `if (binarySectionHeader == 0x0)` and only runs on the first call. Every subsequent PLT symbol resolution started with `rel=0`, hit the `if (rel == 0) return 0x0` guard, causing `_ld` to jump to address 0 — crash at EIP=0x3. Fixed by promoting `rel` and `relDyn` to `static int` (`binaryRel`/`binaryRelDyn`) so the section index survives across calls.
+  - **`sys/kernel/ld.c` — `R_386_JMP_SLOT` used `+=` instead of `=`**: when the kernel loads `ld.so` and applies its relocations, JMP_SLOT entries were computed as `*reMap += LD_START + st_value`. Because the initial GOT slot value is a PLT stub offset (not zero), this added `LD_START` to a small integer and produced a garbage address. Fixed to `*reMap = LD_START + st_value` (absolute assignment).
 - **COW / fork-exit lifecycle bugs (BUG-COW-03, BUG-COW-05, BUG-COW-06) and kernel debug cleanup**:
   - **BUG-COW-05** (`page_fault.S`): `_vmm_pageFault` used `call _popFS` after returning from `trap()`. The `call` pushed a 4-byte return address on the stack, shifting the `pop %gs/%fs/%es/%ds; popa` sequence off by one slot — every general-purpose register was misassigned after COW fault handling, corrupting the returning task's state. Fixed by replacing `call _popFS` with `add $0x4,%esp; jmp _popFS`.
   - **BUG-COW-06** (`paging.c`): `vmm_cleanVirtualSpace` zeroed non-COW present PTEs without calling `freePage()`, leaking one physical page per mapped user page on every `exec`. Fixed by replacing the commented-out open-coded free block with `freePage(pageTableSrc[y] & 0xFFFFF000)`.
