@@ -34,6 +34,7 @@ extern char *optarg;                    /* getopt(3) external variables */
 extern int optind, opterr, optopt;
 #endif /* _GETOPT_DECLARED */
 
+ssize_t  read(int, void *, size_t);
 ssize_t  write(int, const void *, size_t);
 off_t    lseek(int, off_t, int);
 
@@ -63,6 +64,7 @@ int  getuid(void);
 int  getgid(void);
 int  chdir(const char *path);
 int unlink(const char *path);
+int execvp(const char *, char * const []);
 int open(const char *path, int flags, ...);
 int close(int fd);
 int dup2(int oldfd, int newfd);

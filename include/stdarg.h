@@ -24,26 +24,20 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #ifndef _STDARG_H
 #define _STDARG_H
 
-typedef char *vaList;
+/* UbixOS native names */
+typedef __builtin_va_list vaList;
 
-/*
-#define _vaSize(TYPE) (((sizeof(TYPE) + sizeof(int) -1) / sizeof(int)) * sizeof(int))
-#define vaStart(AP, LASTARG) (AP=((vaList)&(LASTARG) + _vaSize(LASTARG)))
-#define vaEnd(AP)
-#define vaArg(AP, TYPE) (AP += _vaSize(TYPE), *((TYPE *)(AP - _vaSize(TYPE))))
-*/
+#define vaStart(ap, last)	__builtin_va_start((ap), (last))
+#define vaArg(ap, type)		__builtin_va_arg((ap), type)
+#define vaEnd(ap)		__builtin_va_end(ap)
+#define __va_copy(dst, src)	__builtin_va_copy((dst), (src))
 
-#define vaStart(ap, last) \
-        __builtin_va_start((ap), (last))
+/* Standard C99 names — required by third-party code (e.g. TCC) */
+typedef __builtin_va_list va_list;
 
-#define vaArg(ap, type) \
-        __builtin_va_arg((ap), type)
-
-#define __va_copy(dest, src) \
-        __builtin_va_copy((dest), (src))
-
-#define vaEnd(ap) \
-        __builtin_va_end(ap)
-
+#define va_start(ap, last)	__builtin_va_start((ap), (last))
+#define va_arg(ap, type)	__builtin_va_arg((ap), type)
+#define va_end(ap)		__builtin_va_end(ap)
+#define va_copy(dst, src)	__builtin_va_copy((dst), (src))
 
 #endif
