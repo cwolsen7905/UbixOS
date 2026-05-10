@@ -34,7 +34,17 @@ void *malloc(u_int len);
 void free(void *);
 int abs(int val);
 int atoi(const char *str);
-long strtol(const char * __restrict nptr, char ** __restrict endptr, int base);
+long          strtol(const char * __restrict nptr, char ** __restrict endptr, int base);
+unsigned long strtoul(const char * __restrict nptr, char ** __restrict endptr, int base);
+double        strtod(const char * __restrict nptr, char ** __restrict endptr);
+long long           strtoll(const char * __restrict nptr, char ** __restrict endptr, int base);
+unsigned long long  strtoull(const char * __restrict nptr, char ** __restrict endptr, int base);
+
+void  *realloc(void *, size_t);
+void  *calloc(size_t, size_t);
+char  *getenv(const char *);
+void   qsort(void *, size_t, size_t, int (*)(const void *, const void *));
+int    putenv(char *);
 
 const char *getprogname(void);
 

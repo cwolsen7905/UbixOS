@@ -44,6 +44,8 @@ extern FILE fdTable[];
 #define stderr  (&fdTable[2])
 
 #define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
 
 #define EOF     (-1)
 
@@ -77,6 +79,18 @@ int      asprintf(char **, const char *, ...) __printflike(2, 3);
 int      feof(FILE *);
 char    *fgets(char * __restrict, int, FILE * __restrict);
 int      fflush(FILE *);
+int      fputc(int, FILE *);
+int      fputs(const char *, FILE *);
+long     ftell(FILE *);
+int      ferror(FILE *);
+void     rewind(FILE *);
+int      remove(const char *);
+void     perror(const char *);
+FILE    *fdopen(int, const char *);
+int      snprintf(char *, size_t, const char *, ...);
+int      vsnprintf(char *, size_t, const char *, va_list);
+int      vprintf(const char *, va_list);
+int      sscanf(const char * __restrict, const char * __restrict, ...);
 /**** END ****/
 
 #endif
