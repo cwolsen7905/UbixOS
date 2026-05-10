@@ -34,7 +34,7 @@
 
 ldLibrary *libs = 0x0;
 int lib_c = 0x0;
-int lib_s[10];
+int lib_s[LIB_S_MAX];
 
 static elfHeader *binaryHeader = 0x0;
 static elfSectionHeader *binarySectionHeader = 0x0;
@@ -90,8 +90,12 @@ uint32_t ld( uint32_t got2, uint32_t entry ) {
           fread( binaryElf32_Dyn, binarySectionHeader[i].shSize, 1, binaryFd );
           for ( x = 0; x < binarySectionHeader[i].shSize / sizeof(Elf32_Dyn) ; x++ ) {
             if ( binaryElf32_Dyn[x].d_tag == 1 ) {
-              lib_s[lib_c] = binaryElf32_Dyn[x].d_un.d_ptr;
-              lib_c++;
+              if ( lib_c < LIB_S_MAX ) {
+                lib_s[lib_c] = binaryElf32_Dyn[x].d_un.d_ptr;
+                lib_c++;
+              } else {
+                printf("ld: too many DT_NEEDED entries (max %i), skipping\n", LIB_S_MAX);
+              }
             }
           }
           break;
@@ -134,6 +138,11 @@ uint32_t ld( uint32_t got2, uint32_t entry ) {
    }
    */
 
+  if ( rel == 0 ) {
+    printf("ld: no SHT_REL section found in binary\n");
+    return (0x0);
+  }
+
   if ( binaryElfRel == 0x0 ) {
     binaryElfRel = (elfPltInfo *) malloc( binarySectionHeader[rel].shSize );
     fseek( binaryFd, binarySectionHeader[rel].shOffset, 0x0 );
@@ -144,7 +153,10 @@ uint32_t ld( uint32_t got2, uint32_t entry ) {
   x = ELF32_R_SYM( binaryElfRel[i].pltInfo );
   reMap = (uint32_t *) binaryElfRel[i].pltOffset;
   *reMap = ldFindFunc( binaryDynStr + binaryRelSymTab[x].dynName, binaryDynStr );
-  printf( "\nld(%s:0x%X:0x%X)", binaryDynStr + binaryRelSymTab[x].dynName, reMap, *reMap );
+  if ( *reMap == 0x0 )
+    printf("ld: WARNING symbol not found: %s\n", binaryDynStr + binaryRelSymTab[x].dynName);
+  else
+    printf( "\nld(%s:0x%X:0x%X)", binaryDynStr + binaryRelSymTab[x].dynName, reMap, *reMap );
   //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));
 
   if ( binaryFd ) {

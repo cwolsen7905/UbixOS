@@ -14,14 +14,10 @@ uint32_t ldFindFunc(const char *func,const char *lib) {
       libPtr = ldAddLibrary(lib + lib_s[x]);
       }
   
-    for (i=0x0;i<libPtr->linkerSectionHeader[libPtr->sym].shSize/sizeof(elfDynSym);i++) {
+    for (i=0x0;i<(int)(libPtr->linkerSectionHeader[libPtr->sym].shSize/sizeof(elfDynSym));i++) {
       if (!strcmp(func,(libPtr->linkerDynStr + libPtr->linkerRelSymTab[i].dynName))) {
         funcPtr = (uint32_t *)((uint32_t)(libPtr->linkerRelSymTab[i].dynValue) + (uint32_t)libPtr->output);
-        if (funcPtr == 0x0) {
-            printf("[%s:0x%X]\n",func,funcPtr,*funcPtr);
-          }
         return((uint32_t)funcPtr);
-        break;
         }
       }
     }

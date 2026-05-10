@@ -45,11 +45,11 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 
 | ID | File | Description |
 |----|------|-------------|
-| BUG-LD-01 | [libexec/ld/addlibrary.c:19](libexec/ld/addlibrary.c#L19) | `ldAddLibrary`: `tmpLib` not zeroed after `malloc`. Every field check (`tmpLib->output == 0`, `tmpLib->linkerHeader == 0`, etc.) reads uninitialized garbage — UB. Fix: `memset(tmpLib, 0, sizeof(ldLibrary))` after malloc. |
-| BUG-LD-02 | [libexec/ld/addlibrary.c:27](libexec/ld/addlibrary.c#L27) | `ldAddLibrary`: `fopen` failure check tests `linkerFd->fd == 0x0` instead of `linkerFd == 0x0`. If `fopen` returns NULL the dereference crashes before the guard fires. |
-| BUG-LD-03 | [libexec/ld/addlibrary.c:139](libexec/ld/addlibrary.c#L139) | `ldAddLibrary`: SHT_REL relocations applied inline during the section loop, but SHT_SYMTAB may appear later in the table. `linkerRelSymTab` is NULL when line 155 accesses `linkerRelSymTab[rel]` — NULL dereference. Fix: two-pass loop (symtab first, then relocations). |
-| BUG-LD-04 | [libexec/ld/addlibrary.c:155](libexec/ld/addlibrary.c#L155) | `ldAddLibrary`: R_386_32 relocation applied twice — two consecutive `*reMap +=` lines both add `output + dynValue`. Should be a single operation. |
-| BUG-LD-05 | [libexec/ld/addlibrary.c:172](libexec/ld/addlibrary.c#L172) | `ldAddLibrary`: unhandled relocation type spins forever (`while (1)`), hanging the system. Should log and `break`. |
-| BUG-LD-06 | [libexec/ld/main.c:37](libexec/ld/main.c#L37) | `ld`: `lib_s[10]` fixed array with no bounds check on `lib_c` before `lib_s[lib_c++]`. More than 10 `DT_NEEDED` entries silently overflow the stack array. |
-| BUG-LD-07 | [libexec/ld/main.c:52](libexec/ld/main.c#L52) | `ld`: `rel` defaults to 0 if no `SHT_REL` section is found. Line 138 then uses `binarySectionHeader[0]` (the ELF null section) as the relocation table — garbage size and offset. |
-| BUG-LD-08 | [libexec/ld/findfunc.c:20](libexec/ld/findfunc.c#L20) | `ldFindFunc`: NULL check tests `funcPtr == 0x0` after computing `dynValue + output` (almost never zero). Should check whether the symbol was found. `printf` on line 21 has 3 args for 2 format specifiers (UB). `break` after `return` on line 24 is dead code. |
+| ~~BUG-LD-01~~ | [libexec/ld/addlibrary.c](libexec/ld/addlibrary.c) | **FIXED** `ldAddLibrary`: added `memset(tmpLib, 0, sizeof(ldLibrary))` after malloc so all field checks read defined values. |
+| ~~BUG-LD-02~~ | [libexec/ld/addlibrary.c](libexec/ld/addlibrary.c) | **FIXED** `ldAddLibrary`: `fopen` NULL check changed from `linkerFd->fd == 0x0` to `linkerFd == 0x0`. On failure now frees `tmpLib` and returns NULL instead of calling `exit`. |
+| ~~BUG-LD-03~~ | [libexec/ld/addlibrary.c](libexec/ld/addlibrary.c) | **FIXED** `ldAddLibrary`: section loop split into two passes — pass 1 loads dynstr and symtab, pass 2 applies relocations. Eliminates NULL dereference when REL appears before SYMTAB in the section table. |
+| ~~BUG-LD-04~~ | [libexec/ld/addlibrary.c](libexec/ld/addlibrary.c) | **FIXED** `ldAddLibrary`: R_386_32 double relocation removed. Now a single `*reMap += output + dynValue`. |
+| ~~BUG-LD-05~~ | [libexec/ld/addlibrary.c](libexec/ld/addlibrary.c) | **FIXED** `ldAddLibrary`: `while (1)` on unhandled relocation type replaced with log + `break`. |
+| ~~BUG-LD-06~~ | [libexec/ld/main.c](libexec/ld/main.c) | **FIXED** `ld`: `lib_s` grown to 64 entries (defined as `LIB_S_MAX` in `ld.h`). Bounds check added before each `lib_s[lib_c++]` write. |
+| ~~BUG-LD-07~~ | [libexec/ld/main.c](libexec/ld/main.c) | **FIXED** `ld`: guard added — returns 0x0 with an error message if `rel == 0` (no SHT_REL section found) before attempting to use it as a section index. |
+| ~~BUG-LD-08~~ | [libexec/ld/findfunc.c](libexec/ld/findfunc.c) | **FIXED** `ldFindFunc`: removed backwards NULL check, bad printf (3 args/2 specifiers), and unreachable `break` after `return`. |
