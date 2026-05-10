@@ -1,38 +1,64 @@
-UbixOS VM -
-Preconfigured System To Run UbixOS
-Has RDP enabled on 3389 so you can see the desktop and launch with VBoxHeadless -s UbixOS
+UbixOS Build Guide
+==================
 
-UbixOS has a 2GB drive that is a shared drive so it can be used live in the UbixOS VM and the MrOlsen VM
-
-
-MrOlsen-BSD VM -
-Preconfigured System To Build UbixOS
-Has SSHD enabled and is on DHCP so you can launch with VBoxHeadless -s MrOlsen-BSD
-
-MrOlsen-BSD has the UbixOS.vdi attached and mapped at /ubixos
+For full documentation see BUILDING.md in the repository root.
+This file summarizes the VirtualBox VM development workflow.
 
 
-BUILD -
+VirtualBox VMs
+--------------
 
-To build ubixos ssh in 
+Two VMs are used for UbixOS development:
 
-username your username
-password your passwod
+  MrOlsen-BSD VM
+    - Build host running a preconfigured BSD system.
+    - SSHD enabled; VM uses DHCP (check assigned IP after start).
+    - UbixOS.vdi virtual disk attached and mounted at /ubixos.
+    - Start: VBoxHeadless -s MrOlsen-BSD
 
-su (root password)
+  UbixOS VM
+    - Target system that boots from the shared UbixOS.vdi disk.
+    - RDP enabled on port 3389 for desktop access.
+    - Start: VBoxHeadless -s UbixOS
 
-cd /ubixos/usr/src
-
-make;sync (that simple will compile everything and automatically copy to the right spaces)
-
-Press alt-c in the RDP for the UbixOS vm and it will reboot UbixOS VM (only reboot for kernel changes)
+The 2 GB virtual disk is shared between both VMs. Do not run both VMs
+with simultaneous write access.
 
 
-NOTES -
+Building
+--------
 
-Now using git, when you want to get any changes from the MASTER in /ubixos/usr/src type git pull
+SSH into MrOlsen-BSD, become root, and run:
 
-If you made changes you have to type git commit -a (the -a auto tracks files)
-If you create a new file you need to git add [filename] (this add a new file ex. git add ./src/kernel/kern_stuff.c) then git commit -a
+  cd /ubixos/usr/src
+  make; sync
 
-To push your changes to the MASTER for me and the rest of the devs to get you need to type git push.. Please make everything compiles before doing a git push
+This builds the kernel and world, installs both to /ubixos and /ubixos_fat,
+and flushes all filesystem buffers.
+
+For kernel-only changes:
+  make kernel; make install-kernel; sync
+
+For userland-only changes:
+  make world; make install-world; sync
+
+
+Rebooting
+---------
+
+After a kernel change: press Alt+C in the RDP session for the UbixOS VM.
+After a userland-only change: no reboot needed; new processes pick up the
+updated binaries immediately.
+
+
+Version Control
+---------------
+
+The repository uses git. Common operations:
+
+  git pull                  # fetch latest changes from the remote
+  git commit -a             # stage and commit all tracked changes
+  git add <file>            # track a newly created file before committing
+  git push                  # push commits upstream (ensure it builds first)
+
+Always verify that `make; sync` succeeds before running `git push`.

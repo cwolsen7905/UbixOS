@@ -1,34 +1,81 @@
-This document goes over the UbixOS VMM
+UbixOS Virtual Memory Manager (VMM)
+====================================
+
+Source: sys/vmm/
 
 
-1. Memory Layout -
+1. Memory Layout
+----------------
 
-   Each application has its own private 4gb memory area the first 1mb is mapped 1:1 against the systems memory and is shared between all of the proccess
-   on the system it include bios information video buffers and the kernel code.
+Each process has a private 4 GB virtual address space divided into three regions:
 
-   From 0x100000 - 3gb this memory region is available for the task itself for its code data and anything else it may need it for
+  0x00000000 - 0x000FFFFF  (first 1 MB)
+    Shared read-only region mapped identically (1:1) across all processes.
+    Contains BIOS data, video frame buffers, and the kernel boot code.
 
-  The top 1gb is reserved and shared across every application this is the os memory region not readable by the application unless it is in a syscall
+  0x00100000 - 0xBFFFFFFF  (1 MB to 3 GB)
+    Per-process region. Available for the task's code, data, heap, and stack.
+    This address range is private; each process has its own page tables here.
 
-  at 0x100000 the applications page directory is stored and page 0x768 is all the pagetable listed in the page dir specified at 0x100000
+  0xC0000000 - 0xFFFFFFFF  (top 1 GB)
+    Kernel-only region. Shared read-only mapping across all processes, but
+    only accessible at ring 0 (i.e., while executing a syscall). User-space
+    code that attempts to access this region triggers a general protection fault.
 
-2. Functions -
+At physical address 0x00100000 each process stores its own page directory.
+PDE entry 0x300 (page 0x768) is the self-referencing slot that points to the
+page tables covering the top 1 GB kernel mapping.
 
-   vmmInit: 
-     This function initializes our memory map and paging system if either fail this returns a failure.
 
-   vmmMemMapInit: 
-     This initializes our memory map, it is a linked list of available pages it keeps track of COW (copy on write) as well as ownership and status
-  
-   vmmPagingInit:
-     This initializes our paging system sets up default memory area for kernel and remaps the memory map into the top 1GB this builds the memory foundation
-     for each application to follow
+2. Functions
+------------
 
-   vmmCreateVirtualSpace:
-      This creates a new virtual space for a process it takes on arg pidType pid and returns the base address of the new page directory
-        This has the shared lower 1 mb and top 1GB everything inbetween is available for the process
+vmmInit()
+  Top-level initialization entry point. Calls vmmMemMapInit() and then
+  vmmPagingInit(). If either fails the kernel halts.
 
-   vmmCopyVirtualSpace:
-     This copies the current virtual space for the process specified by the arg pidType pid passed in. This copy sets all the pages for 2mb -3gb COW and no
-     memory is physically copied when the program attempts to write to this region a page fault happens then the memory is physically copied
+vmmMemMapInit()
+  Builds the physical page frame map — a linked list of all available physical
+  pages. Each entry tracks:
+    - Physical frame address
+    - Ownership (which process holds the page)
+    - Reference count (for COW sharing)
+    - Status flags (free, allocated, COW-pending)
 
+vmmPagingInit()
+  Enables hardware paging. Sets up the kernel's initial page directory,
+  identity-maps the lower 1 MB, and maps the physical frame list into the
+  top 1 GB so the kernel can reach it from any process context.
+
+vmmCreateVirtualSpace(pid)
+  Allocates and initializes a brand-new page directory for the process
+  identified by pid. Returns the physical base address of the new page
+  directory. The shared lower 1 MB and top 1 GB kernel mappings are
+  pre-installed; everything between 1 MB and 3 GB starts unmapped.
+
+vmmCopyVirtualSpace(pid)
+  Forks the address space of the process identified by pid using
+  copy-on-write (COW):
+    1. The entire 2 MB - 3 GB range is duplicated at the page-table level.
+    2. All pages in that range are marked read-only and COW-pending in both
+       the parent and the child; no physical memory is copied.
+    3. On the first write to any shared page a page fault fires.
+    4. The page fault handler (pagefault.c) allocates a new physical frame,
+       copies the content, clears the COW flag, and updates the faulting
+       process's page table entry to point to the new frame.
+
+
+3. Page Fault Handling
+----------------------
+
+Source: sys/vmm/page_fault.S, sys/vmm/pagefault.c
+
+The x86 page-fault exception (interrupt 14) is routed to the VMM handler.
+The handler distinguishes three cases:
+
+  - COW fault: A write to a shared COW page. Allocate a new frame, copy,
+    update PTE, and resume the faulting instruction.
+  - Demand-zero: A first access to an allocated but not-yet-mapped page.
+    Allocate a zeroed frame, map it, and resume.
+  - Invalid access: Access to an unmapped or protected region. Deliver
+    SIGSEGV to the faulting process.
