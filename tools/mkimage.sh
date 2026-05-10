@@ -133,11 +133,18 @@ for f in "$BUILD/bin"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/bin/; 
 for f in "$BUILD/lib"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/;    done
 for f in "$BUILD/libexec"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/libexec/; done
 
-echo "==> Installing TCC compiler (lib/tcc/)"
+echo "==> Installing TCC compiler (lib/tcc/ and usr/bin/)"
 mmd -i "$IMG"@@1M ::/lib/tcc 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/lib/tcc/include 2>/dev/null || true
 for f in "$BUILD/lib/tcc"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/tcc/;    done
 for f in "$BUILD/lib/tcc/include"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/tcc/include/; done
+mmd -i "$IMG"@@1M ::/usr 2>/dev/null || true
+mmd -i "$IMG"@@1M ::/usr/bin 2>/dev/null || true
+[ -f "$BUILD/bin/tcc" ] && mcopy -i "$IMG"@@1M "$BUILD/bin/tcc" ::/usr/bin/tcc
+
+echo "==> Installing source examples (src/)"
+mmd -i "$IMG"@@1M ::/src 2>/dev/null || true
+for f in tools/src/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/src/; done
 
 echo "==> Installing system files (etc/)"
 mmd -i "$IMG"@@1M ::/etc
