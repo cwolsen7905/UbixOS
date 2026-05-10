@@ -45,3 +45,19 @@ Fix the items in [BUGS.md](BUGS.md) first.
 | TODO-VMM-03 | [sys/vmm/paging.c:381](sys/vmm/paging.c#L381) | `vmm_mapFromTask`: hardcoded virtual address `0x5A00000` for the child page directory window. This should be a named constant and validated against the kernel virtual memory layout map. |
 | TODO-VMM-04 | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | `freePage`: `systemVitals->freePages` is updated inside `vmmSpinLock` in some paths but the `adjustCowCounter` path updates it outside any lock on `systemVitals`. Consolidate so `freePages` is always updated under `vmmSpinLock`. |
 | TODO-VMM-05 | [sys/vmm/freevirtualpage.c](sys/vmm/freevirtualpage.c) | `vmm_freeVirtualPage` is a stub (TODO comment, no implementation). Any code that expects to free individual virtual pages silently does nothing, leaking virtual address space. |
+
+---
+
+## ld.so Improvements (identified 2026-05-10)
+
+Fix the items in [BUGS.md](BUGS.md) first.
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-LD-01 | [libexec/ld/main.c:58](libexec/ld/main.c#L58) | `ld`: `malloc(sizeof(FILE))` to create a fake fd struct is fragile — size of FILE varies. Use `calloc` and add a NULL check before using the result. |
+| TODO-LD-02 | [libexec/ld/addlibrary.c:25](libexec/ld/addlibrary.c#L25) | Replace `sprintf(tmpFile, "sys:/lib/%s", lib)` and `sprintf(tmpLib->name, lib)` with `snprintf` to prevent buffer overflow on long library names. |
+| TODO-LD-03 | [libexec/ld/addlibrary.c:48](libexec/ld/addlibrary.c#L48) | Add ELF magic validation after reading the header (`e_ident[0..3] == "\x7fELF"`, `e_machine == EM_386`). Currently any file is processed as a valid ELF. |
+| TODO-LD-04 | [libexec/ld/addlibrary.c:111](libexec/ld/addlibrary.c#L111) | Validate `eShnum` and `ePhnum` from the ELF header are within reasonable bounds before using them as `malloc` sizes. A corrupt ELF could cause a massive allocation. |
+| TODO-LD-05 | [libexec/ld/addlibrary.c:119](libexec/ld/addlibrary.c#L119) | Validate `eShstrndx < eShnum` before using it to index `linkerSectionHeader`. A malformed ELF header causes an out-of-bounds read. |
+| TODO-LD-06 | [libexec/ld/findfunc.c:17](libexec/ld/findfunc.c#L17) | `ldFindFunc`: `libPtr->sym` defaults to 0 (null section) if `ldAddLibrary` never found a symtab. Add a check that `sym > 0` before using it to index `linkerSectionHeader`. |
+| TODO-LD-07 | [libexec/ld/main.c:146](libexec/ld/main.c#L146) | `ld`: check `ldFindFunc` return value before writing it to `*reMap`. Writing 0x0 as a function address will crash on the first call to that symbol. |
