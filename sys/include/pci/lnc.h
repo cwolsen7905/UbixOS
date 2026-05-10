@@ -248,6 +248,7 @@ int initLNC();
 int probe(struct lncInfo *lnc);
 int lanceProbe(struct lncInfo *lnc);
 int lncAttach(struct lncInfo *lnc, int unit);
+extern int lnc_ready;  /* 1 when lncAttach completed successfully */
 
 void lncInt();
 void _lncInt();

@@ -9,4 +9,5 @@ CFLAGS = -m32 -fno-builtin -Wno-uninitialized -O2 -fno-strict-aliasing -pipe
 #INCLUDES = -I${INCLUDE}
 
 INCLUDES = -I${SRCTOP}/include_old
-CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -O
+CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -O \
+         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow

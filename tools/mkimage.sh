@@ -133,6 +133,12 @@ for f in "$BUILD/bin"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/bin/; 
 for f in "$BUILD/lib"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/;    done
 for f in "$BUILD/libexec"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/libexec/; done
 
+echo "==> Installing system files (etc/)"
+mmd -i "$IMG"@@1M ::/etc
+[ -f tools/userdb ] && mcopy -i "$IMG"@@1M tools/userdb ::/etc/userdb
+[ -f tools/fstab  ] && mcopy -i "$IMG"@@1M tools/fstab  ::/etc/fstab
+[ -f tools/motd   ] && mcopy -i "$IMG"@@1M tools/motd   ::/etc/motd
+
 echo ""
 echo "Done: $IMG"
 echo "Run with: bmake run"

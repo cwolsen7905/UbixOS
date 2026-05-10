@@ -35,8 +35,19 @@ image:
 	@sh tools/mkimage.sh ${DISK_IMAGE}
 
 # Boot the disk image in QEMU (primary IDE master, boot from HD).
+# Serial output is captured to serial.log for post-mortem inspection.
 run:
-	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 -serial stdio -vga std -device pcnet -net user
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -serial file:serial.log -vga std -device pcnet -net user
+
+# Headless debug run: no display, serial goes to stdout.  Ctrl-C to stop.
+run-debug:
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -nographic -serial stdio -device pcnet -net user
+
+# Update just the kernel in an existing disk image (faster than full image rebuild).
+kernel-to-image:
+	mcopy -o -i ${DISK_IMAGE}@@1M sys/compile/kernel ::/boot/kernel/kernel
 
 kernel:
 	@cd sys;${MAKE}

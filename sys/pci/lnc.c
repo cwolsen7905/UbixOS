@@ -45,6 +45,8 @@
 struct lncInfo;
 static int lnc_nextRxPtr(struct lncInfo *lnc);
 static int lnc_nextTxPtr(struct lncInfo *lnc);
+
+int lnc_ready = 0;  /* set to 1 by lncAttach on successful NIC init */
 static int lnc_driverOwnsTX(struct lncInfo *lnc);
 
 struct netif lnc_netif;
@@ -128,8 +130,8 @@ int initLNC() {
     }
   }
   else {
-    kprintf("LNC Init Error\n");
-    return (-1);
+    kprintf("LNC: no card found, skipping\n");
+    return (0);
   }
 
   lncAttach(lnc, 0);
@@ -189,8 +191,8 @@ int initLNC() {
     lnc_writeCSR32(lnc, CSR0, STRT | INEA);
   }
   else {
-    kprintf("LNC: init Error\n");
-    return (-1);
+    kprintf("LNC: init Error (IDON timeout), skipping\n");
+    return (0);
   }
 
   return (0);
@@ -516,6 +518,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
     kprintf("%s", icIdent[lnc->nic.ic]);
 
   kprintf(" address %x:%x:%x:%x:%x:%x\n", lnc->arpcom.ac_enaddr[0], lnc->arpcom.ac_enaddr[1], lnc->arpcom.ac_enaddr[2], lnc->arpcom.ac_enaddr[3], lnc->arpcom.ac_enaddr[4], lnc->arpcom.ac_enaddr[5]);
+  lnc_ready = 1;
   return (1);
 }
 
