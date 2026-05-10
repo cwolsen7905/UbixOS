@@ -48,7 +48,7 @@
 void lnc_thread();
 void shell_thread(void *);
 
-struct netif lnc_netif;
+extern struct netif lnc_netif;
 
 int net_init() {
   ip_addr_t ipaddr, netmask, gw;

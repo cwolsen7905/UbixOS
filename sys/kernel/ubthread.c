@@ -37,7 +37,7 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
-#include <sys/stdatomic.h>
+#include <string.h>
 
 struct ubthread_cond_list *conds = 0x0;
 struct ubthread_mutex_list *mutex = 0x0;
@@ -51,7 +51,7 @@ int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr) {
     memset(ubcond, 0x0, sizeof(struct ubthread_cond));
 
     ubcond->id = (int) cond;
-    ubcond->lock = ATOMIC_VAR_INIT(0);
+    ubcond->lock = 0;
 
     *cond = ubcond;
     return (0x0);
@@ -62,7 +62,7 @@ int ubthread_mutex_init(ubthread_mutex_t *mutex, const uint32_t attr) {
     memset(ubmutex, 0x0, sizeof(struct ubthread_mutex));
 
     ubmutex->id = (int) mutex;
-    ubmutex->lock = ATOMIC_VAR_INIT(0);
+    ubmutex->lock = 0;
 
     *mutex = ubmutex;
     return (0x0);

@@ -30,6 +30,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/endtask.h>
 #include <lib/kprintf.h>
 #include <sys/trap.h>
 

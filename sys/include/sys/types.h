@@ -79,13 +79,22 @@ typedef int size_t; /* standard */
 
 #ifndef NOBOOL
 #ifndef __cplusplus
+/* C23 (GCC 16+) makes bool a keyword — guard the typedef. */
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 202311L
+#  define FALSE 0
+#  define TRUE  1
+#else
 typedef enum {FALSE=0,TRUE=1}bool;
+#endif
 #endif
 #else
 #ifndef __cplusplus
 #define FALSE 0
 #define TRUE  1
+/* bool is a keyword in C23; skip the typedef there too. */
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 typedef int bool;
+#endif
 #endif
 #endif
 

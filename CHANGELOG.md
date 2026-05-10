@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `kprint_len(char *, size_t)` — kernel print function that writes up to a specified number of characters to the display.
+- `sys/fs/fat/Makefile` — FAT filesystem driver now has its own build file (was missing, causing fat objects to be excluded from the kernel link).
+- `sys/lib/kern_trie.c` now included in the lib build (`kern_trie.o` added to `sys/lib/Makefile`) so sysctl trie operations link correctly.
+- Sized C++ delete operators (`operator delete(void*, unsigned int)` / `operator delete[](void*, unsigned int)`) added to `sys/lib/libcpp.cc` for GCC 14+ compatibility.
+
+### Fixed
+- **macOS cross-build (`feature/macos-build-qemu`)**: resolved all compile and link errors blocking `bmake kernel` under GCC 16 with `-std=c23` defaults.
+  - **C23 / GCC 16 compatibility**: updated `()` function declarations to typed signatures throughout `sys/include/ubixos/syscalls.h`, `sys/include/ubixfs/ubixfs.h`, `sys/include/ufs/ufs.h`, `sys/include/i386/atkbd.h`, `sys/include/isa/atkbd.h`, and `sys/include/ubixos/ld.h`.
+  - **`stdatomic.h`**: reordered GCC vs. Clang detection so GCC 16 (which now satisfies `__has_extension(c_atomic)`) correctly uses `__GNUC_ATOMICS` instead of the missing `__c11_atomic_*` builtins.
+  - **`ubthread`**: changed `lock` fields from `bool` to `uint32_t` to match `xchg_32` signature; replaced `ATOMIC_VAR_INIT(0)` with plain `= 0`.
+  - **`sys/vmm/`**: added missing casts (`(uint32_t *)PD_BASE_ADDR`, `(void *)`, `(uint32_t)`) and missing includes (`string.h`, `kpanic.h`, `endtask.h`, `vmm.h`) across `paging.c`, `unmappage.c`, `vmm_allocpagetable.c`, `vmm_mmap.c`, `getfreevirtualpage.c`, `pagefault.c`.
+  - **`sys/kernel/`**: added missing includes and forward declarations in `descrip.c`, `vfs_calls.c`, `gen_calls.c`, `execve.c`, `kern_pipe.c`, `sem.c`, `shutdown.c`, `syscall.c`, `ubthread.c`, `vitals.c`.
+  - **`sys/fs/vfs/`**: added missing includes and forward declarations in `mount.c`, `stat.c`, `namei.c`, `inode.c`; renamed `vfsFindFS` → `vfs_findFS` to match header.
+  - **`sys/pci/`**: fixed implicit-int `static hdC` in `hd.c`; added missing includes in `pci.c` and `lnc.c`; fixed `vmm_getRealAddr` pointer casts in `lnc.c`.
+  - **`sys/net/`**: forward-declared lwIP socket functions in `sys_arch.c` and `descrip.c` instead of including `net/sockets.h` (whose macros redefine `fcntl`/`close`/`ioctl` and break `descrip.h`); added `string.h` to `ethernetif.c`; changed `lnc_netif` and `tmpBuf` in `init.c`/`ethernetif.c` to `extern` (authoritative definitions are in `pci/lnc.c`).
+  - **`sys/lib/kern_trie.c`**: fixed recursive call (`deletion` → `delete_trieNode`), replaced `free` with `kfree`, added `haveChildren` forward declaration.
+  - **`sys/sde/Makefile`**: changed `make allBuild` → `$(MAKE) allBuild` so bmake is used recursively instead of GNU make.
+  - **`sys/Makefile.incl`**: added `-Wno-incompatible-pointer-types` to suppress GCC 16 errors on syscall table function pointer casts (all i386 calling conventions are compatible in practice).
+  - **`sys/include/sys/descrip.h`**: fixed `int_kern_openat` typo; corrected `kern_openat` parameter count; added `fdestroy` declaration.
+  - **`sys/include/vmm/paging.h`**: corrected stale `vmmClearVirtualPage` → `vmm_clearVirtualPage`.
+  - **`sys/arch/i386/`**: added missing includes in `fork.c` and `trap.c`; fixed pointer/integer casts in `i386_exec.c` and `bioscall.c`.
 - `ARCHITECTURE.md` — technical documentation covering kernel subsystems, memory layout, boot sequence, and design decisions.
 - `BUILDING.md` — detailed build guide covering toolchain requirements, make targets, VirtualBox VM workflow, and troubleshooting.
 - `CHANGELOG.md` — this file; project now tracks changes under Keep a Changelog format with semantic versioning.

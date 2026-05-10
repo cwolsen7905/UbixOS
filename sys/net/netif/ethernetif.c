@@ -43,6 +43,7 @@
  * something that better describes your network interface.
  */
 #include <pci/lnc.h>
+#include <string.h>
 #include "net/opt.h"
 
 #include <net/tcpip.h> //TMP
@@ -60,7 +61,7 @@
 #define IFNAME0 'e'
 #define IFNAME1 'n'
 
-struct nicBuffer *tmpBuf = 0x0;
+extern struct nicBuffer *tmpBuf;
 
 /**
  * Helper struct to hold private data used to operate your ethernet interface.

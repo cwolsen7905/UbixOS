@@ -39,6 +39,7 @@
 #include <sys/video.h>
 #include <sys/signal.h>
 #include <ubixos/errno.h>
+#include <ubixos/time.h>
 #include <vmm/vmm.h>
 
 /* Exit Syscall */
@@ -191,14 +192,14 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     if (args->op == 10) {
         kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
 
-        segbase = args->parms;
+        segbase = (void **)args->parms;
 
         kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
         base_addr = (uint32_t) segbase[0];
 
         struct gdtDescriptor *tmpDesc = 0x0;
 
-        tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor);  //taskLDT[1];
+        tmpDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));  //taskLDT[1];
 
         tmpDesc->limitLow = 0xFFFF;  //(0xFFFFF & 0xFFFF);
         tmpDesc->limitHigh = 0xF;  //(0xFFFFF >> 16);

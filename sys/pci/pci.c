@@ -29,6 +29,8 @@
 #include <pci/pci.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
+#include <lib/kmalloc.h>
+#include <string.h>
 
 const struct {
   uInt8 baseClass;

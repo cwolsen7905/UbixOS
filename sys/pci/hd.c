@@ -37,7 +37,9 @@
 
 static const uuid_t freebsd_ufs_uuid = GPT_ENT_TYPE_FREEBSD_UFS;
 
-static hdC = 0;
+static int hdC = 0;
+
+static int _initHardDisk(int hdD);
 
 int initHardDisk() {
   _initHardDisk(0xE0);

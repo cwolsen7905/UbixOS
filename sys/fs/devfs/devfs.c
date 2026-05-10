@@ -87,7 +87,7 @@ static int devfs_open(char *file, fileDescriptor_t *fd) {
         case 0:
         case 1:
           device = device_find(tmpDev->devMajor, tmpDev->devMinor);
-          fd->start = (uint32_t *) tmpDev; /* MrOlsen (2016-01-19) FIX: I Don't Understand This */
+          fd->start = (uint32_t)(uintptr_t) tmpDev; /* MrOlsen (2016-01-19) FIX: I Don't Understand This */
           fd->size = device->devInfo->size;
         break;
         default:

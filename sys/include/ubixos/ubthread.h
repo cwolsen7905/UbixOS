@@ -46,12 +46,12 @@ struct ubthread {
 
 struct ubthread_cond {
     int id;
-    bool lock;
+    uint32_t lock;
 };
 
 struct ubthread_mutex {
     int id;
-    bool lock;
+    uint32_t lock;
     pidType pid;
 };
 

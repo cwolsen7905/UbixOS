@@ -155,7 +155,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
   newProcess = schedNewTask();
   assert(newProcess);
 
-  stackAddr = vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
+  stackAddr = (uint32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
 
   /* Set All The Correct Thread Attributes */
   newProcess->tss.back_link = 0x0;

@@ -35,6 +35,7 @@
 #include <string.h>
 #include <assert.h>
 #include <lib/kprintf.h>
+#include <lib/kmalloc.h>
 #include <sys/descrip.h>
 
 int sys_fork(struct thread *td, struct sys_fork_args *args) {

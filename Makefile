@@ -1,5 +1,6 @@
 # The System Makefile (C) 2002, 2017 The UbixOS Project
-MAKE=make
+# Do not override MAKE — let bmake set it to itself so recursive invocations
+# stay within bmake rather than falling back to GNU make.
 
 CURDIR=${.CURDIR}
 
@@ -17,7 +18,7 @@ WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="
 WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDUMP= OBJCOPY="objcopy" RANLIB=ranlib
 .endif
 
-WMAKE=${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
+WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
 TMP_PATH=${PATH}
 ROOT=/ubixos
@@ -36,7 +37,7 @@ run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide -serial stdio -vga std
 
 kernel:
-	@cd sys;make
+	@cd sys;${MAKE}
 
 world:
 	@echo

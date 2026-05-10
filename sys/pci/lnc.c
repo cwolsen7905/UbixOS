@@ -38,6 +38,14 @@
 #include <net/net.h>
 #include <net/netif.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/sched.h>
+#include <vmm/paging.h>
+#include <string.h>
+
+struct lncInfo;
+static int lnc_nextRxPtr(struct lncInfo *lnc);
+static int lnc_nextTxPtr(struct lncInfo *lnc);
+static int lnc_driverOwnsTX(struct lncInfo *lnc);
 
 struct netif lnc_netif;
 
@@ -152,17 +160,17 @@ int initLNC() {
   lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
   lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
 
-  lnc->init.rdra = (uint32_t) vmm_getRealAddr(lnc->rxRing);
+  lnc->init.rdra = (uint32_t) vmm_getRealAddr((uint32_t)lnc->rxRing);
   lnc->init.rlen = 3 << 4;
-  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr(lnc->rxRing));
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr((uint32_t)lnc->rxRing));
 
-  lnc->init.tdra = (uint32_t) vmm_getRealAddr(lnc->txRing);
+  lnc->init.tdra = (uint32_t) vmm_getRealAddr((uint32_t)lnc->txRing);
   lnc->init.tlen = 3 << 4;
-  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr(lnc->txRing));
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr((uint32_t)lnc->txRing));
 
-  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr(&lnc->init));
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr((uint32_t)&lnc->init));
 
-  iW = vmm_getRealAddr(&lnc->init);
+  iW = vmm_getRealAddr((uint32_t)&lnc->init);
 
   lnc_writeCSR32(lnc, CSR1, iW & 0xFFFF);
   lnc_writeCSR32(lnc, CSR2, (iW >> 16) & 0xFFFF);

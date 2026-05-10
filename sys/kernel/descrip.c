@@ -35,6 +35,12 @@
 #include <lib/kmalloc.h>
 #include <assert.h>
 #include <sys/select.h>
+#include <string.h>
+
+/* Forward-declare lwip_select to avoid pulling in sockets.h macros. */
+struct timeval;
+struct fd_set;
+int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct timeval *);
 
 // XXX MrOlsen (2020-01-30) No longer needed -> static struct file *kern_files = 0x0;
 

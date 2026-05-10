@@ -9,12 +9,13 @@ REMOVE = rm -rf
 FD_DEVICE = /dev/md0
 
 # Cross-compiler prefix.
-# On macOS: install i386-elf-gcc + i386-elf-binutils via Homebrew, then build
-# with CROSS_PREFIX=i386-elf- (set automatically below when uname is Darwin).
-# On FreeBSD native: leave empty to use the host toolchain.
+# Homebrew provides x86_64-elf-gcc (not i386-elf-gcc); we use it with -m32
+# to target i386.  On FreeBSD native the prefix is empty (host toolchain).
 UNAME_S != uname -s
 .if ${UNAME_S} == "Darwin"
-CROSS_PREFIX?=i386-elf-
+CROSS_PREFIX?=x86_64-elf-
+CROSS_M32?=-m32
 .else
 CROSS_PREFIX?=
+CROSS_M32?=
 .endif

@@ -1,11 +1,12 @@
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/kpanic.h>
 #include <string.h>
 
 
 int vmm_allocPageTable(uint32_t pdI, pidType pid) {
-  uint32_t *pageDirectory = PD_BASE_ADDR;
+  uint32_t *pageDirectory = (uint32_t *)PD_BASE_ADDR;
   uint32_t *pageTable = 0x0;
 
   if ((pdI >= PD_ENTRIES) || ((pageDirectory[pdI] & PAGE_PRESENT) == PAGE_PRESENT))

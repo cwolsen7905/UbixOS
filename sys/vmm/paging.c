@@ -294,7 +294,7 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
 void *vmm_getFreeKernelPage(pidType pid, uint16_t count) {
   int pdI = 0x0, ptI = 0x0, c = 0, lc = 0;
 
-  uint32_t *pageDirectory = PD_BASE_ADDR;
+  uint32_t *pageDirectory = (uint32_t *)PD_BASE_ADDR;
 
   uint32_t *pageTable = 0x0;
 
@@ -345,7 +345,7 @@ void *vmm_getFreeKernelPage(pidType pid, uint16_t count) {
 
   noPagesAvail: spinUnlock(&pdSpinLock);
 
-  return (startAddress);
+  return (void *)startAddress;
 }
 
 /************************************************************************

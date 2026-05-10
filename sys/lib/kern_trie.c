@@ -30,6 +30,8 @@
 #include <lib/kmalloc.h>
 #include <lib/kern_trie.h>
 
+int haveChildren(struct Trie *curr);
+
 struct Trie *new_trieNode() {
 
   struct Trie *node = (struct Trie *) kmalloc(sizeof(struct Trie));
@@ -107,9 +109,9 @@ int delete_trieNode(struct Trie **curr, char *str) {
     // recurse for the node corresponding to next character in
     // the string and if it returns 1, delete current node
     // (if it is non-leaf)
-    if (*curr != NULL && (*curr)->character[*str - 'a'] != NULL && deletion(&((*curr)->character[*str - 'a']), str + 1) && (*curr)->isLeaf == 0) {
+    if (*curr != NULL && (*curr)->character[*str - 'a'] != NULL && delete_trieNode(&((*curr)->character[*str - 'a']), str + 1) && (*curr)->isLeaf == 0) {
       if (!haveChildren(*curr)) {
-        free(*curr);
+        kfree(*curr);
         (*curr) = NULL;
         return (1);
       }
@@ -123,7 +125,7 @@ int delete_trieNode(struct Trie **curr, char *str) {
   if (*str == '\0' && (*curr)->isLeaf) {
     // if current node is a leaf node and don't have any children
     if (!haveChildren(*curr)) {
-      free(*curr); // delete current node
+      kfree(*curr); // delete current node
       (*curr) = NULL;
       return (1); // delete non-leaf parent nodes
     }

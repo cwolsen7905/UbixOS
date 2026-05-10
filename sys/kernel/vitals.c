@@ -47,7 +47,8 @@ spinLock_t vitals_lock;
  ************************************************************************/
 int vitals_init() {
   /* Initialize Vitals SpinLock */
-  spinLockInit(&vitals_lock);
+  vitals_lock = (spinLock_t)kmalloc(sizeof(struct spinLock));
+  spinLockInit(vitals_lock);
 
   /* Initialize Memory For The System Vitals Node */
   systemVitals = (vitalsNode *) kmalloc(sizeof(vitalsNode));

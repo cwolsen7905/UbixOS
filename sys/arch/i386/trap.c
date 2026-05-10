@@ -31,6 +31,7 @@
 #include <sys/gdt.h>
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
+#include <ubixos/kpanic.h>
 #include <vmm/vmm.h>
 #include <ubixos/endtask.h>
 

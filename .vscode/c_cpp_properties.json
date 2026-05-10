@@ -17,7 +17,7 @@
                 "DEBUG_SYSCTL",
                 "KERNEL"
             ],
-            "compilerPath": "/opt/homebrew/bin/i386-elf-gcc",
+            "compilerPath": "/opt/homebrew/bin/x86_64-elf-gcc",
             "compilerArgs": [
                 "-m32",
                 "-nostdinc",
@@ -49,7 +49,7 @@
                 "__i386__",
                 "__UBIXOS__"
             ],
-            "compilerPath": "/opt/homebrew/bin/i386-elf-gcc",
+            "compilerPath": "/opt/homebrew/bin/x86_64-elf-gcc",
             "compilerArgs": [
                 "-m32",
                 "-nostdinc",

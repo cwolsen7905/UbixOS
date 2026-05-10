@@ -29,6 +29,7 @@
 #include <lib/kprintf.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
+#include <ubixos/exec.h>
 
 int sys_execve(struct thread *td, struct sys_execve_args *args) {
 

@@ -35,6 +35,9 @@
 #include <sys/errno.h>
 #include <string.h>
 #include <ufs/ufs.h>
+#include <lib/kprintf.h>
+#include <lib/kmalloc.h>
+#include "../fs/fat/fat_filelib.h"
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
   kprintf("sys_open?");
@@ -155,7 +158,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
   struct file *fd = 0x0;
 
   struct pipeInfo *pFD = 0x0;
-  struct pipeInfo *rpFD = 0x0;
+  struct pipeBuf *rpFD = 0x0;
 
   size_t nbytes;
 

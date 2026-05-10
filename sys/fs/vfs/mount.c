@@ -27,6 +27,7 @@
  */
 
 #include <vfs/mount.h>
+#include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
@@ -59,7 +60,7 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
 
   /* Set Up Mp Defaults */
   mp->device = device;
-  mp->fs = (struct fileSystem *) vfsFindFS( vfsType );
+  mp->fs = (struct fileSystem *) vfs_findFS( vfsType );
   mp->partition = partition;
   mp->perms = *perms;
 

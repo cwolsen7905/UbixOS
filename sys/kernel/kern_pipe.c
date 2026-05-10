@@ -32,6 +32,7 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <string.h>
+#include <lib/kmalloc.h>
 
 int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   int error = 0x0;

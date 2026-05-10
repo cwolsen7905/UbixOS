@@ -55,7 +55,7 @@ int vfs_init() {
   return(0x0);
   }
 
-struct fileSystem *vfsFindFS(int vfsType) {
+struct fileSystem *vfs_findFS(int vfsType) {
   struct fileSystem *tmp = 0x0;
 
   /* Search For File System */
@@ -91,7 +91,7 @@ void *vfsSync) {
  */
   struct fileSystem *tmpFs = 0x0;
 
-  if (vfsFindFS(newFS.vfsType) != 0x0) {
+  if (vfs_findFS(newFS.vfsType) != 0x0) {
     kprintf("FS Is already Registered\n");
     return(0x1);
     }

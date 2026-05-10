@@ -50,7 +50,7 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags) {
   uint32_t *pageTable = 0x0;
   uint32_t *pageDirectory = 0x0;
 
-  pageDirectory = PD_BASE_ADDR;
+  pageDirectory = (uint32_t *)PD_BASE_ADDR;
 
   /* Get The Index To The Page Directory */
   pageDirectoryIndex = (pageAddr >> 22);

@@ -33,6 +33,8 @@
 #include <sys/types.h>
 #include <sys/device.h>
 
+struct vfs_mountPoint;
+
 #define DT_REG        8
 #define MAXNAMLEN     255
 #define ROOTINO       ((ino_t)2)
@@ -270,7 +272,7 @@ struct fs {
 };
 
 int ufs_init();
-int ufs_initialize();
+int ufs_initialize(struct vfs_mountPoint *mp);
 
 #endif
 

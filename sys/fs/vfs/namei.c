@@ -31,6 +31,10 @@
 #include <vfs/vfs.h>
 #include <ubixos/sched.h>
 
+struct inode;
+void iput(struct inode *);
+int in_group_p(gid_t grp);
+
 int follow_link(struct inode * dir, struct inode * inode, int flag, int mode, struct inode ** res_inode) {
 
   if (!dir || !inode) {

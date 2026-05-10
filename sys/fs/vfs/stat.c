@@ -32,6 +32,7 @@
 #include <vfs/file.h>
 #include <lib/kprintf.h>
 #include <sys/descrip.h>
+#include <string.h>
 
 int _sys_stat(char *path, struct stat *sb, int flags) {
   int error = 0;
