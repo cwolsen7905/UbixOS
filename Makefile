@@ -26,17 +26,17 @@ TMP_PATH=${PATH}
 ROOT=/ubixos
 ROOT_FAT=/ubixos_fat
 
-DISK_IMAGE?=ubixos.iso
+DISK_IMAGE?=ubixos.img
 
 all: kernel world install-kernel install-world
 
-# Create a bootable QEMU disk image (requires multiboot support in start.S — see feature branch).
+# Create a single bootable FAT32 disk image (GRUB + kernel + world).
 image:
 	@sh tools/mkimage.sh ${DISK_IMAGE}
 
-# Boot the disk image in QEMU.
+# Boot the disk image in QEMU (primary IDE master, boot from HD).
 run:
-	qemu-system-i386 -m 256 -cdrom ${DISK_IMAGE} -serial stdio -vga std
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 -serial stdio -vga std -device pcnet -net user
 
 kernel:
 	@cd sys;${MAKE}
