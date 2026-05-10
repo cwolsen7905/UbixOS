@@ -20,3 +20,51 @@ Look into Ubix resource management
 Work on libc
 Enhance shared libraries
 
+------------------------------------------------------------------------
+VFS IMPROVEMENTS — identified 2026-05-10
+------------------------------------------------------------------------
+These are not crash bugs but will make the VFS cleaner and easier to work
+with. See BUGS for confirmed crash/correctness bugs to fix first.
+
+[TODO-VFS-01] sys/fs/vfs/file.c:380 — fgetc: remove leftover debug kprintf
+  kprintf("[%s:%i]", __FILE__, __LINE__) fires on every character read.
+  Delete this line.
+
+[TODO-VFS-02] sys/fs/vfs/file.c:287-292 — sys_fclose: remove duplicate NULL check
+  args->FILE == NULL is checked twice in a row. Remove the second check.
+
+[TODO-VFS-03] sys/fs/vfs/file.c — fread should own offset advancement
+  Remove the dependency on each filesystem driver advancing fd->offset
+  internally. Fix BUG-VFS-04 (uncomment the offset advance), then audit
+  each fs driver to ensure it does NOT also advance the offset, so they
+  stay in sync.
+
+[TODO-VFS-04] sys/fs/vfs/mount.c — validate before adding to mount list
+  Check that device_find() and vfs_findFS() both return non-NULL before
+  calling vfs_addMount(). This also resolves BUG-VFS-08 as a side effect:
+  the mount list only ever contains fully-initialized entries.
+
+[TODO-VFS-05] sys/fs/vfs/file.c, mount.c — replace sprintf/strcpy with bounds-checked versions
+  fileName[1024] and mp->mountPoint are written with unchecked strcpy/sprintf.
+  A long path silently overflows into adjacent stack or heap. Switch to
+  strlcpy/snprintf throughout the VFS layer.
+
+[TODO-VFS-06] sys/fs/vfs/file.c:335 — kern_fseek: implement SEEK_SET/SEEK_CUR/SEEK_END
+  Once BUG-VFS-06 is fixed, kern_fseek and sys_fseek share the same logic.
+  Consider merging them into one shared helper to avoid future drift.
+
+[TODO-VFS-07] sys/fs/vfs/ — complete stub implementations
+  The following are empty or always-error stubs that block real userland use:
+    sys_rename()  — file.c
+    sysRmDir()    — file.c (empty body)
+    sysUnlink()   — file.c
+  At minimum they should return ENOSYS so callers get a clear error.
+
+[TODO-VFS-08] sys/fs/vfs/stat.c — replace hard-coded 0xDEADBEEF/0xBEEFDEAD magic values
+  sys_fstat and sys_fstatat return hard-coded fake stat values. These need
+  to be wired up to actual inode/fs data so tools like ls(1) show real info.
+
+[TODO-VFS-09] sys/fs/vfs/namei.c, inode.c — remove or complete #ifdef _IGNORE blocks
+  Large sections of pathname resolution and inode management are wrapped in
+  #ifdef _IGNORE. Either complete the implementation or delete the dead code
+  so the actual code path is clear.

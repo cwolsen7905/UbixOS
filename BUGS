@@ -10,5 +10,53 @@ Bugs:
 10/12/06 -
   UFS is hacked to get correct file size
 
-10/12/06 - 
+10/12/06 -
   usrland ld.so forces path sys:/lib/ must make more automated
+
+------------------------------------------------------------------------
+VFS BUGS — identified 2026-05-10
+------------------------------------------------------------------------
+
+[BUG-VFS-01] sys/fs/vfs/file.c:421 — fopen: char vs. string pointer comparison
+  if (path[0] == "." && path[1] == '\0')
+  Compares a char to a char* (string literal). Always evaluates false, so
+  relative paths using "." never resolve to cwd. Should be '.' (single quotes).
+
+[BUG-VFS-02] sys/fs/vfs/file.c:521-525 — fopen: spinUnlock called without holding lock
+  In the "file not found" else branch, spinUnlock(&fdTable_lock) is called
+  even though the lock is only acquired inside the success branch (line 504).
+  This corrupts spinlock state. Remove the spinUnlock from the else branch.
+
+[BUG-VFS-03] sys/fs/vfs/file.c:523 — fopen: kfree on never-allocated buffer
+  In the same "file not found" else branch, kfree(tmpFd->buffer) is called
+  but buffer was never allocated (memset to 0). Depends on kfree(NULL) being
+  safe in kmalloc implementation — but the intent is wrong regardless.
+  Remove the kfree(tmpFd->buffer) from the not-found path.
+
+[BUG-VFS-04] sys/fs/vfs/file.c:315 — fread: offset never advanced
+  fd->offset += size * nmemb is commented out. Consecutive fread calls
+  re-read from the same offset unless the filesystem driver advances its
+  internal cursor independently (FAT does; others won't). The fd->offset
+  should be the authoritative position and must be advanced here.
+
+[BUG-VFS-05] sys/fs/vfs/file.c:363 — fputc: char value cast to pointer
+  fd->mp->fs->vfsWrite(fd, (char*) ch, fd->offset, 1)
+  ch is an int being cast to char* and used as a buffer address. Should
+  be (char*)&ch. Current code is undefined behavior and likely a crash.
+
+[BUG-VFS-06] sys/fs/vfs/file.c:335-338 — kern_fseek: adds whence constant to offset
+  tmpFd->offset = offset + whence adds SEEK_CUR(1) or SEEK_END(2) directly
+  to the offset value, giving wrong results. sys_fseek has the correct
+  switch-statement logic. kern_fseek must be fixed to match.
+
+[BUG-VFS-07] sys/fs/vfs/mount.c:52-56 — vfs_mount: NULL dereference after kmalloc failure
+  If kmalloc returns NULL the error is printed but execution continues to
+  sprintf(mp->mountPoint, mountPoint) which dereferences the NULL mp.
+  Must return after the kprintf error.
+
+[BUG-VFS-08] sys/fs/vfs/mount.c:82-90 — vfs_mount: dangling pointer on vfsInitFS failure
+  vfs_addMount(mp) is called at line 82 adding mp to systemVitals->mountPoints.
+  If vfsInitFS then fails (line 88), mp is kfree'd but remains on the mount
+  list. Any subsequent vfs_findMount call walks into freed memory.
+  Fix: remove mp from the list before freeing, or add to list only after
+  vfsInitFS succeeds.
