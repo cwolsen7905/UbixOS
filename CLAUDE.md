@@ -102,6 +102,30 @@ On Intel Macs the compiler path is `/usr/local/bin/x86_64-elf-gcc` — update `c
 
 Build tasks (`Ctrl+Shift+B`): Build Kernel, Build World, Build All, Create Disk Image, Run QEMU. The debug launch config connects `x86_64-elf-gdb` to QEMU's GDB stub on `localhost:1234`.
 
+## Code Style and Tooling
+
+Coding style is **FreeBSD `style(9)`**: 8-space hard tabs, Allman braces, 80-column limit, pointer aligned to variable name (`int *foo`). Style is enforced by `.clang-format` at the repo root.
+
+Apply **file-by-file as files are touched** — do not reformat the whole tree at once (breaks `git blame`).
+
+```sh
+clang-format -i sys/vmm/paging.c   # reformat one file in place
+```
+
+**`tools/mcr.sh`** — Machine Code Review: runs clang-format + clang-tidy against changed files.
+
+```sh
+tools/mcr.sh                  # check files changed vs HEAD (default)
+tools/mcr.sh --staged         # check staged files only
+tools/mcr.sh --fix            # auto-apply clang-format fixes
+tools/mcr.sh sys/vmm/paging.c # check specific file(s)
+tools/mcr.sh --format-only    # skip clang-tidy (faster)
+```
+
+Requires: `brew install clang-format` (already in PATH) and `brew install llvm` (clang-tidy at `/opt/homebrew/opt/llvm/bin/clang-tidy`). Neither affects the cross-compiler build.
+
+VS Code formats on save automatically via `.vscode/settings.json` + `.clang-format`.
+
 ## Current State (feature/macos-build-qemu)
 
 The `feature/macos-build-qemu` branch is fully functional for macOS development. The system boots to a login prompt under QEMU:

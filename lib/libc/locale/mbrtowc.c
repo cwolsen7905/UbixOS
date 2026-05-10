@@ -1,11 +1,6 @@
 /*-
- * Copyright (c) 2002-2004 Tim J. Robbins.
+ * Copyright (c) 2002, 2003 Tim J. Robbins.
  * All rights reserved.
- *
- * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
- * Portions of this software were developed by David Chisnall
- * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,24 +25,66 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/mbrtowc.c 227753 2011-11-20 14:45:42Z theraven $");
+__FBSDID("$FreeBSD: src/lib/libc/locale/mbrtowc.c,v 1.4 2003/11/01 05:13:13 tjr Exp $");
 
+#include <errno.h>
+#include <rune.h>
+#include <stdlib.h>
 #include <wchar.h>
-#include "mblocal.h"
 
-size_t
-mbrtowc_l(wchar_t * __restrict pwc, const char * __restrict s,
-    size_t n, mbstate_t * __restrict ps, locale_t locale)
-{
-	FIX_LOCALE(locale);
-	if (ps == NULL)
-		ps = &locale->mbrtowc;
-	return (XLOCALE_CTYPE(locale)->__mbrtowc(pwc, s, n, ps));
-}
+extern size_t (*__mbrtowc)(wchar_t * __restrict, const char * __restrict,
+    size_t, mbstate_t * __restrict);
 
 size_t
 mbrtowc(wchar_t * __restrict pwc, const char * __restrict s,
     size_t n, mbstate_t * __restrict ps)
 {
-	return mbrtowc_l(pwc, s, n, ps, __get_locale());
+
+	return (__mbrtowc(pwc, s, n, ps));
+}
+
+/*
+ * Emulate the ISO C mbrtowc() function in terms of the deprecated
+ * 4.4BSD sgetrune() function.
+ */
+size_t
+__emulated_mbrtowc(wchar_t * __restrict pwc, const char * __restrict s,
+    size_t n, mbstate_t * __restrict ps __unused)
+{
+        const char *e;
+        rune_t r;
+
+	if (s == NULL) {
+		pwc = NULL;
+		s = "";
+		n = 1;
+	}
+
+	if ((r = sgetrune(s, n, &e)) == _INVALID_RUNE) {
+		/*
+		 * The design of sgetrune() doesn't give us any way to tell
+		 * between incomplete and invalid multibyte sequences.
+		 */
+
+		if (n >= (size_t)MB_CUR_MAX) {
+			/*
+			 * If we have been supplied with at least MB_CUR_MAX
+			 * bytes and still cannot find a valid character, the
+			 * data must be invalid.
+			 */
+			errno = EILSEQ;
+			return ((size_t)-1);
+		}
+
+		/*
+		 * .. otherwise, it's an incomplete character or an invalid
+		 * character we cannot detect yet.
+		 */
+		return ((size_t)-2);
+	}
+
+	if (pwc != NULL)
+		*pwc = (wchar_t)r;
+
+	return (r != 0 ? (size_t)(e - s) : 0);
 }

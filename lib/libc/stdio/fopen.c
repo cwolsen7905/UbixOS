@@ -1,99 +1,89 @@
-/*-
- * Copyright (c) 1990, 1993
- *	The Regents of the University of California.  All rights reserved.
- *
- * This code is derived from software contributed to Berkeley by
- * Chris Torek.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
+/*****************************************************************************************
+ Copyright (c) 2002-2004 The UbixOS Project
+ All rights reserved.
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)fopen.c	8.1 (Berkeley) 6/4/93";
-#endif /* LIBC_SCCS and not lint */
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fopen.c 290110 2015-10-28 14:40:02Z ache $");
+ Redistribution and use in source and binary forms, with or without modification, are
+ permitted provided that the following conditions are met:
 
-#include "namespace.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
+ Redistributions of source code must retain the above copyright notice, this list of
+ conditions, the following disclaimer and the list of authors.  Redistributions in binary
+ form must reproduce the above copyright notice, this list of conditions, the following
+ disclaimer and the list of authors in the documentation and/or other materials provided
+ with the distribution. Neither the name of the UbixOS Project nor the names of its
+ contributors may be used to endorse or promote products derived from this software
+ without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ $Id: fopen.c 158 2016-01-19 02:08:13Z reddawg $
+
+*****************************************************************************************/
+
 #include <stdio.h>
-#include <errno.h>
-#include <limits.h>
-#include "un-namespace.h"
+#include <stdlib.h>
 
-#include "local.h"
+int _fopen(const char *file, const char *mode, FILE *fp);
 
-FILE *
-fopen(const char * __restrict file, const char * __restrict mode)
-{
-	FILE *fp;
-	int f;
-	int flags, oflags;
+asm(
+  ".globl _fopen\n"
+  "_fopen:\n"
+  "movl $298,%eax\n"
+  "int $0x80\n"
+  "ret\n"
+  );
 
-	if ((flags = __sflags(mode, &oflags)) == 0)
-		return (NULL);
-	if ((fp = __sfp()) == NULL)
-		return (NULL);
-	if ((f = _open(file, oflags, DEFFILEMODE)) < 0) {
-		fp->_flags = 0;			/* release */
-		return (NULL);
-	}
-	/*
-	 * File descriptors are a full int, but _file is only a short.
-	 * If we get a valid file descriptor that is greater than
-	 * SHRT_MAX, then the fd will get sign-extended into an
-	 * invalid file descriptor.  Handle this case by failing the
-	 * open.
-	 */
-	if (f > SHRT_MAX) {
-		fp->_flags = 0;			/* release */
-		_close(f);
-		errno = EMFILE;
-		return (NULL);
-	}
-	fp->_file = f;
-	fp->_flags = flags;
-	fp->_cookie = fp;
-	fp->_read = __sread;
-	fp->_write = __swrite;
-	fp->_seek = __sseek;
-	fp->_close = __sclose;
-	/*
-	 * When opening in append mode, even though we use O_APPEND,
-	 * we need to seek to the end so that ftell() gets the right
-	 * answer.  If the user then alters the seek pointer, or
-	 * the file extends, this will fail, but there is not much
-	 * we can do about this.  (We could set __SAPP and check in
-	 * fseek and ftell.)
-	 */
-	if (oflags & O_APPEND) {
-		fp->_flags2 |= __S2OAP;
-		(void)_sseek(fp, (fpos_t)0, SEEK_END);
-	}
-	return (fp);
-}
+
+FILE *fopen(const char *file,const char *mode) {
+  FILE *fp = malloc(sizeof(FILE));
+  fp->fd = 0x0;
+
+  _fopen(file,mode,fp);
+
+  /*
+  asm volatile(
+    "int %0\n"
+    : : "i" (0x80),"a" (8),"b" (file),"c" (mode),"d" (fp)
+    );
+  */
+  return((FILE *)fp);
+  }
+
+/***
+ $Log: fopen.c,v $
+ Revision 1.1.1.1  2006/06/01 12:46:10  reddawg
+ ubix2
+
+ Revision 1.4  2006/06/01 12:42:09  reddawg
+ Getting back to the basics
+
+ Revision 1.3  2005/10/21 20:07:07  reddawg
+ Work has resumed
+
+ Revision 1.2  2005/10/12 00:13:36  reddawg
+ Removed
+
+ Revision 1.1.1.1  2005/09/26 17:22:54  reddawg
+ no message
+
+ Revision 1.4  2004/07/28 15:05:43  reddawg
+ Major:
+   Pages now have strict security enforcement.
+   Many null dereferences have been resolved.
+   When apps loaded permissions set for pages rw and ro
+
+ Revision 1.3  2004/06/17 15:16:02  reddawg
+ Made asm statements volatile
+
+ Revision 1.2  2004/06/16 19:38:26  reddawg
+ Updated CW Cleaned Out Dead Code
+
+ END
+ ***/

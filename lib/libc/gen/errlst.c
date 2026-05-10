@@ -10,6 +10,10 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *	This product includes software developed by the University of
+ *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -31,13 +35,12 @@
 static char sccsid[] = "@(#)errlst.c	8.2 (Berkeley) 11/16/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/errlst.c 275004 2014-11-25 03:50:31Z emaste $");
+__FBSDID("$FreeBSD: src/lib/libc/gen/errlst.c,v 1.7 2002/10/09 08:04:24 peter Exp $");
 
 #include <stdio.h>
-#include "errlst.h"
 
 const char *const sys_errlist[] = {
-	"No error: 0",				/*  0 - ENOERROR */
+	"Undefined error: 0",			/*  0 - ENOERROR */
 	"Operation not permitted",		/*  1 - EPERM */
 	"No such file or directory",		/*  2 - ENOENT */
 	"No such process",			/*  3 - ESRCH */
@@ -146,19 +149,5 @@ const char *const sys_errlist[] = {
 
 /* General */
 	"Programming error",			/* 88 - EDOOFUS */
-
-	"Bad message",				/* 89 - EBADMSG */
-	"Multihop attempted",			/* 90 - EMULTIHOP */
-	"Link has been severed",		/* 91 - ENOLINK */
-	"Protocol error",			/* 92 - EPROTO */
-	"Capabilities insufficient",		/* 93 - ENOTCAPABLE */
-	"Not permitted in capability mode",	/* 94 - ECAPMODE */
-	"State not recoverable",		/* 95 - ENOTRECOVERABLE */
-	"Previous owner died",			/* 96 - EOWNERDEAD */
 };
 const int sys_nerr = sizeof(sys_errlist) / sizeof(sys_errlist[0]);
-
-#ifdef PIC
-__strong_reference(sys_errlist, __hidden_sys_errlist);
-__strong_reference(sys_nerr, __hidden_sys_nerr);
-#endif
