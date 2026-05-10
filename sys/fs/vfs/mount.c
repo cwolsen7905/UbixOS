@@ -27,6 +27,7 @@
  */
 
 #include <vfs/mount.h>
+#include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
@@ -48,8 +49,18 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   struct device_node *device = 0x0;
 
   /* Allocate Memory For Mount Point */
-  if ( (mp = (struct vfs_mountPoint *) kmalloc( sizeof(struct vfs_mountPoint) )) == NULL )
+  if ( (mp = (struct vfs_mountPoint *) kmalloc( sizeof(struct vfs_mountPoint) )) == NULL ) {
     kprintf( "vfs_mount: failed to allocate mp\n" );
+    return (0x1);
+  }
+
+  /* Validate filesystem type before touching the mount list */
+  mp->fs = (struct fileSystem *) vfs_findFS( vfsType );
+  if ( mp->fs == 0x0 ) {
+    kprintf( "File System Type: %i Not Found\n", vfsType );
+    kfree( mp );
+    return (0x1);
+  }
 
   /* Copy Mount Point Into Buffer */
   sprintf( mp->mountPoint, mountPoint );
@@ -59,32 +70,23 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
 
   /* Set Up Mp Defaults */
   mp->device = device;
-  mp->fs = (struct fileSystem *) vfsFindFS( vfsType );
   mp->partition = partition;
   mp->perms = *perms;
 
-  if ( mp->fs == 0x0 ) {
-    /* sysErr(systemErr,"File System Type: %i Not Found\n",fsType); */
-    kprintf( "File System Type: %i Not Found\n", vfsType );
-    return (0x1);
-  }
-  /*What is this for? 10/6/2006 */
-  /*
-   if (device != 0x0) {
-   mp->diskLabel = (struct ubixDiskLabel *)kmalloc(512);
-   mp->device->devInfo->read(mp->device->devInfo->info,mp->diskLabel,1,1);
-   kprintf("READING SECTOR");
-   }
-   */
-
-  /* Add Mountpoint If It Fails Free And Return */
+  /* Add Mountpoint; if it fails free and return */
   if ( vfs_addMount( mp ) != 0x0 ) {
     kfree( mp );
     return (0x1);
   }
 
-  /* Initialize The File System If It Fails Return */
+  /* Initialize The File System; if it fails remove from list and free */
   if ( mp->fs->vfsInitFS( mp ) == 0x0 ) {
+    if ( systemVitals->mountPoints == mp )
+      systemVitals->mountPoints = mp->next;
+    if ( mp->prev )
+      mp->prev->next = mp->next;
+    if ( mp->next )
+      mp->next->prev = mp->prev;
     kfree( mp );
     return (0x1);
   }

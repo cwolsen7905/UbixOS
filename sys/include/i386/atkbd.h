@@ -39,7 +39,8 @@
 int atkbd_init();
 void atkbd_isr();
 
-void keyboardHandler();
+struct trapframe;
+void keyboardHandler(struct trapframe *);
 void setLED();
 
 #endif

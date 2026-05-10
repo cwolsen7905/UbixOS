@@ -1,4 +1,5 @@
 #include <sys/types.h>
+#include <string.h>
 #include <ubixos/sched.h>
 #include <ubixos/ubthread.h>
 #include <ubixos/kpanic.h>
@@ -15,6 +16,11 @@
 
 #include <ubixos/spinlock.h>
 #include <ubixos/sem.h>
+
+/* Forward-declare lwip socket functions to avoid pulling in sockets.h macros. */
+int lwip_socket(int domain, int type, int protocol);
+int lwip_setsockopt(int s, int level, int optname, const void *optval, int optlen);
+int lwip_sendto(int s, const void *dataptr, int size, unsigned int flags, const void *to, int tolen);
 
 /* Get Definitions For These */
 #define ERR_NOT_READY 0

@@ -29,7 +29,24 @@
 #include <lib/kprintf.h>
 #include <string.h>
 #include <sys/video.h>
+#include <sys/io.h>
 #include <ubixos/kpanic.h>
+
+/* COM1 serial port output for debugging */
+static void serial_putc(char c) {
+  /* Wait for transmit holding register empty (bit 5 of LSR) */
+  while ((inportByte(0x3F8 + 5) & 0x20) == 0)
+    ;
+  outportByte(0x3F8, c);
+}
+
+static void serial_puts(const char *s) {
+  while (*s) {
+    if (*s == '\n')
+      serial_putc('\r');
+    serial_putc(*s++);
+  }
+}
 
 static char *ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper);
 
@@ -256,6 +273,19 @@ u_quad_t __umoddi3(a, b)
 int printOff = 0x0;
 int ogprintOff = 0x1;
 
+static int serial_initialized = 0;
+
+static void serial_init(void) {
+  outportByte(0x3F8 + 1, 0x00); /* disable interrupts */
+  outportByte(0x3F8 + 3, 0x80); /* enable DLAB (set baud rate divisor) */
+  outportByte(0x3F8 + 0, 0x01); /* divisor lo: 115200 baud */
+  outportByte(0x3F8 + 1, 0x00); /* divisor hi */
+  outportByte(0x3F8 + 3, 0x03); /* 8 bits, no parity, one stop bit */
+  outportByte(0x3F8 + 2, 0xC7); /* enable FIFO, clear, 14-byte threshold */
+  outportByte(0x3F8 + 4, 0x03); /* RTS+DTR */
+  serial_initialized = 1;
+}
+
 int kprintf(const char *fmt, ...) {
   va_list ap;
   int retval;
@@ -266,6 +296,10 @@ int kprintf(const char *fmt, ...) {
   retval = kvprintf(fmt, NULL, &buf, 10, ap);
   buf[retval] = '\0';
   va_end(ap);
+
+  if (!serial_initialized)
+    serial_init();
+  serial_puts(buf);
 
   if (printOff == 0x0)
     kprint(buf);
@@ -279,9 +313,23 @@ int sprintf(char *buf, const char *fmt, ...) {
   va_list args;
   int i;
   va_start(args, fmt);
-  /* i = vsprintf( buf, fmt, args ); */
   i = kvprintf(fmt, NULL, buf, 10, args);
   va_end(args);
+  return (i);
+}
+
+int snprintf(char *buf, size_t size, const char *fmt, ...) {
+  char tmp[2048];
+  va_list args;
+  int i;
+  va_start(args, fmt);
+  i = kvprintf(fmt, NULL, tmp, 10, args);
+  va_end(args);
+  if (size > 0) {
+    size_t n = (size_t)i < size - 1 ? (size_t)i : size - 1;
+    memcpy(buf, tmp, n);
+    buf[n] = '\0';
+  }
   return (i);
 }
 

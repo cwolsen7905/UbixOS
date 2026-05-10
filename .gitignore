@@ -9,3 +9,9 @@ t.c
 /sys/sde/ogPixCon.cpp
 /sys/sde/ogPixelFmt.cpp
 /sys/sde/ogImage.cpp
+*.img
+ubixos.img
+.DS_Store
+serial.log
+ubixos.iso
+*.png

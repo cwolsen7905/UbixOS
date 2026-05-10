@@ -2,13 +2,23 @@ KERNEL_SRC=${.CURDIR}
 KERNEL_OBJ=${OBJ_DIR}${KERNEL_SRC}
 KERNEL_CONF=${KERNEL_SRC}/${_ARCH}/conf
 KERNEL_NAME=kernel
+
+# Use cross-compiler prefix from Makefile.incl (set for Darwin, empty on FreeBSD).
+.if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
+KERNEL_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
+.else
 KERNEL_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDUMP= OBJCOPY="objcopy" RANLIB=ranlib
+.endif
+
 KERNEL_INC=${KERNEL_SRC}/include
 
 KMAKE= ${MAKE} ${KERNEL_FLAGS} INCLUDE=${KERNEL_INC} KERNEL=${KERNEL_NAME}
 
 INCLUDES = -I${INCLUDE}
 
-CFLAGS = ${KFLAGS} -DDEBUG_SYSCTL -O -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding
+# -fno-pie / -fno-pic: prevent the compiler from generating position-independent
+# code, which would break the bare-metal fixed-address link.
+# -fno-stack-protector: no SSP; the kernel manages its own stack.
+CFLAGS = ${KFLAGS} ${CROSS_M32} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
 
 ROOT=/ubixos

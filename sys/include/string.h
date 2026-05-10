@@ -66,6 +66,7 @@ extern "C" {
 
 
   int sprintf(char *buf, const char *fmt, ...);
+  int snprintf(char *buf, size_t size, const char *fmt, ...);
 
 #ifdef __cplusplus
 }

@@ -294,7 +294,7 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
 void *vmm_getFreeKernelPage(pidType pid, uint16_t count) {
   int pdI = 0x0, ptI = 0x0, c = 0, lc = 0;
 
-  uint32_t *pageDirectory = PD_BASE_ADDR;
+  uint32_t *pageDirectory = (uint32_t *)PD_BASE_ADDR;
 
   uint32_t *pageTable = 0x0;
 
@@ -345,7 +345,7 @@ void *vmm_getFreeKernelPage(pidType pid, uint16_t count) {
 
   noPagesAvail: spinUnlock(&pdSpinLock);
 
-  return (startAddress);
+  return (void *)startAddress;
 }
 
 /************************************************************************
@@ -384,6 +384,11 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   offset = (uint32_t) ptr & 0xFFF;
   baseAddr = (uint32_t) ptr & 0xFFFFF000;
   child = schedFindTask(pid);
+  if (child == 0x0) {
+    kprintf("vmm_mapFromTask: pid %i not found\n", pid);
+    return (0x0);
+  }
+
   //Calculate The Page Table Index And Page Directory Index
   dI = (baseAddr / (1024 * 4096));
   tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
@@ -607,22 +612,8 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
             adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
             pageTableSrc[y] = 0x0;
           }
-          /*
-           else if ((pageTableSrc[y] & PAGE_STACK) == PAGE_STACK) {
-           //TODO: We need to fix this so we can clean the stack!
-           //kprintf("Page Stack!: 0x%X", (x * 0x400000) + (y * 0x1000));
-           // pageTableSrc[y] = 0x0;
-           //MrOlsen (2016-01-18) NOTE: WHat should I Do Here? kprintf( "STACK: (%i:%i)", x, y );
-           }
-           */
           else {
-            /*
-             int vmmMemoryMapIndex = ((pageTableSrc[y] & 0xFFFFF000) / 4096);
-             vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
-             vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
-             vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
-             systemVitals->freePages++;
-             */
+            freePage((uint32_t) pageTableSrc[y] & 0xFFFFF000);
             pageTableSrc[y] = 0x0;
           }
         }

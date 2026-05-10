@@ -33,7 +33,14 @@
 #include <sys/cdefs.h>
 #include <sys/_types.h>
 
-#if __has_extension(c_atomic) || __has_extension(cxx_atomic)
+/* Check GCC first: GCC 16+ supports __has_extension(c_atomic) but lacks __c11_atomic_* builtins. */
+#if defined(__GNUC__) && !defined(__clang__)
+#  if __GNUC_PREREQ__(4, 7)
+#    define __GNUC_ATOMICS
+#  else
+#    define __SYNC_ATOMICS
+#  endif
+#elif __has_extension(c_atomic) || __has_extension(cxx_atomic)
 #define	__CLANG_ATOMICS
 #elif __GNUC_PREREQ__(4, 7)
 #define	__GNUC_ATOMICS

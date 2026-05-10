@@ -74,3 +74,13 @@ void operator delete(void * ptr) {
   kfree(ptr);
   return;
 }
+
+void operator delete(void * ptr, unsigned int) {
+  kfree(ptr);
+  return;
+}
+
+void operator delete[](void * ptr, unsigned int) {
+  kfree(ptr);
+  return;
+}

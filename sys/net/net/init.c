@@ -44,14 +44,20 @@
 #include <ubixos/exec.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
+#include <pci/lnc.h>
 
 void lnc_thread();
 void shell_thread(void *);
 
-struct netif lnc_netif;
+extern struct netif lnc_netif;
 
 int net_init() {
   ip_addr_t ipaddr, netmask, gw;
+
+  if (!lnc_ready) {
+    kprintf("net: no NIC available, skipping network init\n");
+    return (0x0);
+  }
 
   tcpip_init(NULL, NULL);
 

@@ -29,6 +29,7 @@
 #include <sys/shutdown.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
+#include "../fs/fat/fat_filelib.h"
 
 
 int sys_shutdown(shutdownCMD_t cmd) {

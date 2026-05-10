@@ -63,6 +63,8 @@ int main(int argc, char **argv, char **env) {
     inBuf->argc = 0x0;
     inBuf->args = 0x0;
     inBuf->bg = 0x0;
+    inBuf->redirect_out = NULL;
+    inBuf->redirect_append = 0;
 
     parseInput(inBuf, buffer);
 

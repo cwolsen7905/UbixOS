@@ -21,7 +21,7 @@ LIBRARIIES = ../../lib/libc/libc.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
 	strip ${BUILD_DIR}/bin/$(BINARY)
 
 # Compile the source files

@@ -1,75 +1,75 @@
 # System Makefile (C) 2002 The UbixOS Project
 
-all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin muffin-bin
+all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin ls-bin #muffin-bin
 # MrOlsen (2016-01-11) ERROR: weird it didnt like -elf rtld-elf-bin
 # MrOlsen (2016-01-11) NOTE: edit-bin
-# test-bin pwd-bin de-bin ls-bin goofball-bin mount-bin
+# test-bin pwd-bin de-bin goofball-bin mount-bin
 
 init-bin: init 
-	(cd init;make)
+	(cd init;$(MAKE))
 
 login-bin: login
-	(cd login;make)
+	(cd login;$(MAKE))
 
 shell-bin: shell
-	(cd shell;make)
+	(cd shell;$(MAKE))
 
 test-bin: test
-	(cd test;make)
+	(cd test;$(MAKE))
 
 ls-bin: ls
-	(cd ls;make)
+	(cd ls;$(MAKE))
 
 pwd-bin: pwd
-	(cd pwd;make)
+	(cd pwd;$(MAKE))
 
 cat-bin: cat
-	(cd cat;make)
+	(cd cat;$(MAKE))
 
 de-bin: de
-	(cd de;make)
+	(cd de;$(MAKE))
 
 muffin-bin: muffin
-	(cd muffin;make)
+	(cd muffin;$(MAKE))
 
 goofball-bin: goofball
-	(cd goofball;make)
+	(cd goofball;$(MAKE))
 
 clock-bin: clock
-	(cd clock;make)
+	(cd clock;$(MAKE))
 
 fdisk-bin: fdisk
-	(cd fdisk;make)
+	(cd fdisk;$(MAKE))
 
 cp-bin: cp
-	(cd cp;make)
+	(cd cp;$(MAKE))
 
 format-bin: format
-	(cd format;make)
+	(cd format;$(MAKE))
 
 disklabel-bin: disklabel
-	(cd disklabel;make)
+	(cd disklabel;$(MAKE))
 
 launcher-bin: launcher
-	(cd launcher;make)
+	(cd launcher;$(MAKE))
 
 ubistry-bin: ubistry
-	(cd ubistry;make)
+	(cd ubistry;$(MAKE))
 
 edit-bin: edit
-	(cd edit;make)
+	(cd edit;$(MAKE))
 
 ttyd-bin: ttyd
-	(cd ttyd;make)
+	(cd ttyd;$(MAKE))
 
 stat-bin: stat
-	(cd stat;make)
+	(cd stat;$(MAKE))
 
 mount-bin: mount
-	(cd mount;make)
+	(cd mount;$(MAKE))
 
 sh-bin: sh
-	(cd sh;make)
+	(cd sh;$(MAKE))
 
 clean:
 	(cd cp;make clean)

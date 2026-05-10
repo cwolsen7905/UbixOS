@@ -7,26 +7,26 @@
 all: ubixfs-code devfs-code ufs-code vfs-code common-code fat-code
 
 ubixfs-code: ubixfs
-	(cd ubixfs;make)
+	(cd ubixfs;${MAKE})
 
 devfs-code: devfs
-	(cd devfs;make)
+	(cd devfs;${MAKE})
 
 vfs-code: vfs
-	(cd vfs;make)
+	(cd vfs;${MAKE})
 
 common-code: common 
-	(cd common;make)
+	(cd common;${MAKE})
 
 ufs-code: ufs
-	(cd ufs;make)
+	(cd ufs;${MAKE})
 
 fat-code: fat
-	(cd fat;make)
+	(cd fat;${MAKE})
 clean:
-	(cd ubixfs;make clean)
-	(cd vfs;make clean)
-	(cd devfs;make clean)
-	(cd ufs;make clean)
-	(cd common;make clean)
+	(cd ubixfs;${MAKE} clean)
+	(cd vfs;${MAKE} clean)
+	(cd devfs;${MAKE} clean)
+	(cd ufs;${MAKE} clean)
+	(cd common;${MAKE} clean)
 	(cd fat; make clean)

@@ -147,8 +147,12 @@ void sched() {
 
     spinUnlock(&schedulerSpinLock);
 
-    asm("sti");
     asm("ljmp $0x20,$0");
+    /* The outgoing task resumes here on its next scheduling slot.
+     * ljmp saved EFLAGS with IF=0 (from cli above) into its TSS, so
+     * we must re-enable interrupts explicitly here rather than before
+     * the ljmp (which would create a race window). */
+    asm("sti");
   }
   else {
     spinUnlock(&schedulerSpinLock);
@@ -168,6 +172,12 @@ kTask_t *schedNewTask() {
     kpanic("Error: schedNewTask() - kmalloc failed trying to initialize a new task struct\n");
 
   memset(tmpTask, 0x0, sizeof(kTask_t));
+
+  tmpTask->kernelStack = (uint32_t *) kmalloc(4096);
+  if (tmpTask->kernelStack == 0x0)
+    kpanic("Error: schedNewTask() - kmalloc failed allocating kernel stack\n");
+  tmpTask->tss.esp0 = (uint32_t) tmpTask->kernelStack + 4096;
+  tmpTask->tss.ss0  = 0x10;
 
   /* Filling in tasks attrs */
   tmpTask->usedMath = 0x0;
@@ -200,7 +210,6 @@ int sched_deleteTask(pidType id) {
 
   /* Checking each task from the prio queue */
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
-        kprintf("[%s:%i] %i:%i", __FILE__, __LINE__, tmpTask->id, id);
     if (tmpTask->id == id) {
       if (tmpTask->prev != 0x0)
         tmpTask->prev->next = tmpTask->next;
@@ -208,7 +217,6 @@ int sched_deleteTask(pidType id) {
         tmpTask->next->prev = tmpTask->prev;
       if (taskList == tmpTask)
         taskList = tmpTask->next;
-            kprintf("[%s:%i]: ??\n", __FILE__, __LINE__);
       return (0x0);
     }
   }

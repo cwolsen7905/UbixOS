@@ -35,6 +35,12 @@
 #include <lib/kmalloc.h>
 #include <assert.h>
 #include <sys/select.h>
+#include <string.h>
+
+/* Forward-declare lwip_select to avoid pulling in sockets.h macros. */
+struct timeval;
+struct fd_set;
+int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct timeval *);
 
 // XXX MrOlsen (2020-01-30) No longer needed -> static struct file *kern_files = 0x0;
 
@@ -44,8 +50,8 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
     struct file *dup_fp = 0x0;
     int i = 0;
 
-    if (td->o_files[uap->fd] == 0x0) {
-        kprintf("ERROR!!!\n");
+    if (uap->fd < 0 || uap->fd >= O_FILES || td->o_files[uap->fd] == 0x0) {
+        kprintf("fcntl: bad fd %i\n", uap->fd);
         return (-1);
     }
 
@@ -167,7 +173,10 @@ int close(struct thread *td, struct close_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
-    kprintf("[%s:%i]", __FILE__, __LINE__);
+    if (uap->fd < 0 || uap->fd >= O_FILES || td->o_files[uap->fd] == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
     kfree((void*) td->o_files[uap->fd]);
     td->o_files[uap->fd] = 0x0;
     td->td_retval[0] = 0x0;

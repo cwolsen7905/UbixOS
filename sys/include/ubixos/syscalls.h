@@ -72,37 +72,36 @@ struct syscall_entry {
  * Old Style Calls Need Updates
  *
  */
-int sysAuth();
-int sysPasswd();
-int sysAddModule();
-int sysRmModule();
-int sysGetpid();
-int sysExit();
-int sysExec();
+struct _UbixUser;
+int sysAuth(struct _UbixUser *uu);
+int sysPasswd(char *passwd);
+int sysAddModule(void);
+int sysRmModule(void);
+int sysGetpid(int *pid);
+int sysExit(int status);
+int sysExec(void);
 
-int sysCheckPid();
-int sysGetFreePage();
+int sysCheckPid(int pid, int *ptr);
+int sysGetFreePage(struct thread *, uint32_t *count);
 
-int sysFgetc();
-int sysFopen();
-int sysFclose();
-int sysFseek();
-int sysMkDir();
-int sysRmDir();
+int sysFgetc(void);
+int sysFopen(void);
+int sysFclose(void);
+int sysMkDir(void);
+int sysRmDir(void);
 
-//int sysSDE();
-int sysGetDrives();
-int sysGetCwd();
-int sysChDir();
-int sysGetUptime();
-int sysGetTime();
-int sysStartSDE();
-int sysUnlink();
-int sysMpiCreateMbox();
-int sysMpiDestroyMbox();
-int sysMpiPostMessage();
-int sysMpiFetchMessage();
-int sysMpiSpam();
+int sysGetDrives(uInt32 *ptr);
+int sysGetCwd(void);
+int sysChDir(void);
+int sysGetUptime(uInt32 *ptr);
+int sysGetTime(uInt32 *ptr);
+int sysStartSDE(void);
+int sysUnlink(const char *path, int *retVal);
+int sysMpiCreateMbox(void);
+int sysMpiDestroyMbox(void);
+int sysMpiPostMessage(void);
+int sysMpiFetchMessage(void);
+int sysMpiSpam(void);
 
 typedef int (*functionPTR)();
 

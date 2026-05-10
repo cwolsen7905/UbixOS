@@ -155,12 +155,10 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
   newProcess = schedNewTask();
   assert(newProcess);
 
-  stackAddr = vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
+  stackAddr = (uint32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
 
   /* Set All The Correct Thread Attributes */
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = 0x0;
-  newProcess->tss.ss0 = 0x0;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;
   newProcess->tss.esp2 = 0x0;
@@ -308,7 +306,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   fread(binaryHeader, sizeof(Elf_Ehdr), 1, newProcess->files[0]);
 
   /* Check If App Is A Real Application */
-  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
+  if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable3.\n");
     kfree(binaryHeader);
     fclose(newProcess->files[0]);
@@ -388,8 +386,6 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Set All The Proper Information For The Task */
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = 0xFFFFFFFF; //0x5BC000;
-  newProcess->tss.ss0 = 0x10;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;
   newProcess->tss.esp2 = 0x0;
@@ -572,7 +568,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   /* Done Loading ELF Header */
 
   /* Check If App Is A Real Application */
-  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
+  if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable7.\n");
     kfree(binaryHeader);
     fclose(fd);
@@ -646,7 +642,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         /* Now Load Section To Memory */
                 kern_fseek(fd, programHeader[i].p_offset, 0);
                 //fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
-                kprintf("[read: 0x%X, 0x%X, 0x%X, 0x%X]", round_page(programHeader[i].p_memsz), programHeader[i].p_filesz, programHeader[i].p_vaddr, fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd));
+                fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {
           for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000) {
@@ -727,12 +723,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   //iFrame->ebp = 0x0;
 
-  if (ldAddr != 0x0) {
-    iFrame->eip = ldAddr;
-  }
-  else {
-    iFrame->eip = binaryHeader->e_entry;
-  }
+  /* Always start at the binary's own entry point.
+   * If ld.so was loaded, GOT[1]/GOT[2] will be patched below
+   * so the PLT resolver trampoline calls _ld on first use. */
+  iFrame->eip = binaryHeader->e_entry;
 
   //iFrame->edx = 0x0;
 
@@ -790,9 +784,17 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   tFP->fd = _current->files[0];
 
+  /* Patch the binary's GOT so the PLT resolver trampoline works:
+   *   GOT[1] = fileDescriptor_t* the ld.so ld() stores in FILE::fd for re-reading the binary
+   *   GOT[2] = address of _ld in ld.so (the lazy PLT resolver)
+   */
+  if (ldAddr != 0x0 && ef != 0x0 && ef->got != 0x0) {
+      ef->got[1] = (Elf_Addr) _current->files[0];  /* fileDescriptor_t*, not integer fd */
+      ef->got[2] = (Elf_Addr) ldAddr;
+  }
 
   tmp[i++] = 2;
-  tmp[i++] = -1;// tFD;  // _current->imageFd;
+  tmp[i++] = tFD;  /* AT_EXECFD: fd the binary can be re-read through */
   _current->td.o_files[4] = tFP; // XXX - I had this -> _current->files[0]; not sure why changed to tFP on 2018-11-09
   //MrOlsen 2018kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
 
@@ -890,7 +892,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 
   //data_addr = 0x0; //TEMP
-    kprintf("data_addr: 0x%X", data_addr);
   taskLDT->limitLow = (0xFFFFF & 0xFFFF);
   taskLDT->baseLow = (data_addr & 0xFFFF);
   taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
@@ -902,12 +903,16 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;
 
+
   return (0x0);
 }
 
 static int elf_parse_dynamic(elf_file_t ef) {
   Elf32_Dyn *dynp;
   int plttype = DT_REL;
+
+  if (ef->dynamic == 0x0)
+    return (0);
 
   for (dynp = ef->dynamic; dynp->d_tag != 0x0; dynp++) {
     switch (dynp->d_tag) {

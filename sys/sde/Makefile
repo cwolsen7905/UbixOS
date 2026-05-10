@@ -23,7 +23,7 @@ all:
 	(cp ../../lib/objgfx40/ogPixCon.cpp ./)
 	(cp ../../lib/objgfx40/ogPixelFmt.cpp ./)
 	(cp ../../lib/objgfx40/ogImage.cpp ./)
-	(make allBuild)
+	$(MAKE) allBuild
 
 allBuild: $(OBJS)
 

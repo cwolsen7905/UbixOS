@@ -148,7 +148,7 @@ void ubixFSUnlink(char *path, struct vfs_mountPoint *mp);
 int ubixFSmkDir(char *dir, fileDescriptor_t *fd);
 
 int ubixfs_init();
-int ubixfs_initialize();
-void ubixfs_thread();
+int ubixfs_initialize(struct vfs_mountPoint *mp);
+void ubixfs_thread(struct vfs_mountPoint *mp);
 
 #endif /* END _UBIXFS_UBIXFS_H */

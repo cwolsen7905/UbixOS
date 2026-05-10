@@ -25,13 +25,17 @@ typedef struct ldLibrary_s {
 
   } ldLibrary;
 
+#define LIB_S_MAX 64
+
 extern ldLibrary *libs;
 extern int       lib_c;
-extern int       lib_s[10];
+extern int       lib_s[LIB_S_MAX];
 
 uint32_t ldFindFunc(const char *,const char *);
 ldLibrary *ldFindLibrary(const char *);
 ldLibrary *ldAddLibrary(const char *);
+
+void *getPage(int pages, int flags);
 
 /***
  END

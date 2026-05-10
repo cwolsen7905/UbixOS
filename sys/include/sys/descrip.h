@@ -136,8 +136,9 @@ int getdtablesize(struct thread *, struct getdtablesize_args *);
 int fstat(struct thread *, struct sys_fstat_args *);
 int ioctl(struct thread *, struct ioctl_args *);
 int getfd(struct thread *td, struct file **fp, int fd);
+int fdestroy(struct thread *td, struct file *fp, int fd);
 
-int_kern_openat(struct thread *, int, char *, int);
+int kern_openat(struct thread *, int, char *, int, int);
 
 #endif
 

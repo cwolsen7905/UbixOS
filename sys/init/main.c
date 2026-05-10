@@ -27,6 +27,7 @@
  */
 
 #include <ubixos/init.h>
+#include <ubixos/multiboot.h>
 #include <sys/gdt.h>
 #include <sys/video.h>
 #include <sys/tss.h>
@@ -144,33 +145,36 @@ int kmain(uint32_t rootdev) {
       kpanic("Error: Initializing System Task[%i].\n", i);
   }
 
-  /* New Root Mount Point */
-  /* Old 2 new 10 */
-  kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR(rootdev), B_CONTROLLER(rootdev), B_SLICE(rootdev), B_UNIT(rootdev), B_PARTITION(rootdev), B_TYPE(rootdev));
-  /* if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys", "rw" ) != 0x0 ) { */
-
-  if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys2", "rw") != 0x0) { //UFS FS
-    kprintf("Problem Mounting sys2 Mount Point\n");
-  }
-  else
-    kprintf("Mounted sys2\n");
-
-
-  if (vfs_mount(0x2, 0x1, 0x1, 0xFA, "sys", "rw") != 0x0) { //FAT FS
-    kprintf("Problem Mounting sys Mount Point\n");
-  }
-  else
-    kprintf("Mounted sys\n");
-
-  /* Do our mounting */
   /*
-   if (vfs_mount(0x0,0x0,0x0,0x0,"sys","rw") != 0x0) {
-   kprintf("Problem Mounting sys Mount Point\n");
-   }
-   if (vfs_mount(0x0,0x0,0x1,0x0,"tmp","rw") != 0x0) {
-   kprintf("Problem Mounting tmp Mount Point\n");
-   }
+   * Mount the boot partition as "sys:" using information passed by GRUB
+   * via the multiboot boot_device field.  This avoids hardcoded disk/
+   * partition numbers and works regardless of which IDE slot the disk
+   * ends up on.
+   *
+   * boot_device bits 31-24: BIOS drive (0x80 = first HD)
+   * boot_device bits 23-16: partition  (0-based; 0xFF = unpartitioned)
+   *
+   * _multiboot_info is zero when booted via the legacy FreeBSD loader,
+   * in which case we fall back to the old hardcoded values.
    */
+  {
+    int sys_major = 1, sys_minor = 1;
+
+    if (_multiboot_info != 0) {
+      struct multiboot_info *mbi = (struct multiboot_info *)_multiboot_info;
+      if (mbi->flags & MB_FLAG_BOOT_DEVICE) {
+        sys_major = mb_drive_to_major(mbi->boot_device);
+        sys_minor = mb_partition_to_minor(mbi->boot_device);
+        kprintf("multiboot: boot_device=0x%X -> major=%i minor=%i\n",
+                mbi->boot_device, sys_major, sys_minor);
+      }
+    }
+
+    if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "sys", "rw") != 0x0)
+      kprintf("Problem Mounting sys (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+    else
+      kprintf("Mounted sys (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+  }
 
   /* Initialize the system */
   kprintf("Free Pages: [%i]\n", systemVitals->freePages);

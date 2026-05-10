@@ -29,6 +29,9 @@
 #include <sys/cdefs.h>
 #include <sys/types.h>
 
+extern size_t strlen(const char *);
+extern int strncmp(const char *, const char *, size_t);
+
 char *strstr(const char *s, const char *find) {
   char c, sc;
   size_t len;

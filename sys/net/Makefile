@@ -4,27 +4,27 @@
 all: core-code ipv4-code ipv6-code net-code api-code netif-code
 
 core-code: core
-	(cd core;make)
+	(cd core;${MAKE})
 
 ipv4-code: core/ipv4
-	(cd core/ipv4;make)
+	(cd core/ipv4;${MAKE})
 
 ipv6-code: core/ipv6
-	(cd core/ipv6;make)
+	(cd core/ipv6;${MAKE})
 
 net-code: net
-	(cd net;make)
+	(cd net;${MAKE})
 
 api-code: api
-	(cd api;make)
+	(cd api;${MAKE})
 
 netif-code: netif
-	(cd netif;make)
+	(cd netif;${MAKE})
 
 clean:
-	(cd core;make clean)
-	(cd core/ipv4;make clean)
-	(cd core/ipv6;make clean)
-	(cd net;make clean)
-	(cd api;make clean)
-	(cd netif;make clean)
+	(cd core;${MAKE} clean)
+	(cd core/ipv4;${MAKE} clean)
+	(cd core/ipv6;${MAKE} clean)
+	(cd net;${MAKE} clean)
+	(cd api;${MAKE} clean)
+	(cd netif;${MAKE} clean)

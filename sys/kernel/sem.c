@@ -32,6 +32,7 @@
 #include <ubixos/time.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
+#include <lib/kprintf.h>
 
 int sem_close(semID_t id) {
   return(0);

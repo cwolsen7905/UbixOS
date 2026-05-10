@@ -34,6 +34,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/sched.h>
+#include <string.h>
 
 int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap) {
     vm_size_t size, pageoff;
@@ -150,9 +151,10 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
             return (0x0);
         }
 
-        td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
+        void *_mmap_tmp = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
+        td->td_retval[0] = (int)_mmap_tmp;
         //kprintf("(tmp5: 0x%X)", td->td_retval[0]);
-        bzero(td->td_retval[0], uap->len);
+        bzero(_mmap_tmp, uap->len);
         return (0x0);  //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
     }
     else {

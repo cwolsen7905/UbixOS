@@ -1,7 +1,10 @@
 # The System Makefile (C) 2002, 2017 The UbixOS Project
-MAKE=make
+# Do not override MAKE — let bmake set it to itself so recursive invocations
+# stay within bmake rather than falling back to GNU make.
 
 CURDIR=${.CURDIR}
+
+include Makefile.incl
 
 OBJ_DIR?= ${CURDIR}/build
 
@@ -10,19 +13,44 @@ CLEANDIR=clean
 WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
-WORLD_INC="-I${CURDIR}/include_old -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
-WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJDUMP= OBJCOPY="objcopy"  RANLIB=ranlib
+WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
+.if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
+WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
+.else
+WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDUMP= OBJCOPY="objcopy" RANLIB=ranlib
+.endif
 
-WMAKE=${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
+WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
 TMP_PATH=${PATH}
 ROOT=/ubixos
 ROOT_FAT=/ubixos_fat
 
+DISK_IMAGE?=ubixos.img
+
 all: kernel world install-kernel install-world
 
+# Create a single bootable FAT32 disk image (GRUB + kernel + world).
+image:
+	@sh tools/mkimage.sh ${DISK_IMAGE}
+
+# Boot the disk image in QEMU (primary IDE master, boot from HD).
+# Serial output is captured to serial.log for post-mortem inspection.
+run:
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -serial file:serial.log -vga std -device pcnet -net user
+
+# Headless debug run: no display, serial goes to stdout.  Ctrl-C to stop.
+run-debug:
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -nographic -serial stdio -device pcnet -net user
+
+# Update just the kernel in an existing disk image (faster than full image rebuild).
+kernel-to-image:
+	mcopy -o -i ${DISK_IMAGE}@@1M sys/compile/kernel ::/boot/kernel/kernel
+
 kernel:
-	@cd sys;make
+	@cd sys;${MAKE}
 
 world:
 	@echo

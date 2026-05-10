@@ -31,6 +31,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <lib/kprintf.h>
+#include <string.h>
 
 static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
 
@@ -125,10 +126,10 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) == 0x0)
       kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
 
-    bzero((map_from + (counter * PAGE_SIZE)), PAGE_SIZE);
+    bzero((void *)(map_from + (counter * PAGE_SIZE)), PAGE_SIZE);
   }
 
   doneMapping:
   spinUnlock(&fvpSpinLock);
-  return (map_from);
+  return (void *)map_from;
 }

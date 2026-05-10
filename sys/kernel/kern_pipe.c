@@ -32,6 +32,7 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <string.h>
+#include <lib/kmalloc.h>
 
 int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   int error = 0x0;
@@ -43,6 +44,11 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   struct file *nfp2 = 0x0;
 
   struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
+
+  if (pipeDesc == 0x0) {
+    thr->td_retval[0] = -1;
+    return (-1);
+  }
 
   memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
 

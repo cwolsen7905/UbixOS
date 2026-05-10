@@ -17,9 +17,9 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o findlibrary.o findfunc.o addlibrary.o entry.o
 
-# Link The Binary
+# Link The Binary — use ld directly to produce ET_DYN (gcc driver ignores -shared with -nostdlib)
 $(OUTPUT) : $(OBJS)
-	$(CC) -m32 -nostdlib -shared -Wl,-soname,$(OUTPUT) -Wl,-m,elf_i386_fbsd  -e _ld -o ../../build/libexec/$(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
+	${CROSS_PREFIX}ld -m elf_i386 -shared --soname=$(OUTPUT) -e _ld -o ../../build/libexec/$(OUTPUT) $(OBJS) $(LIBRARIES)
 #	strip $(OUTPUT)
 
 # Compile the source files

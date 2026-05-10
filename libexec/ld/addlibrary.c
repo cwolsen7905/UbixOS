@@ -20,13 +20,16 @@ ldLibrary *ldAddLibrary(const char *lib) {
     printf("malloc failed: tmpLib\n");
     exit(0x1);
     }
+  memset(tmpLib, 0x0, sizeof(ldLibrary));
+
   if (tmpLib->output == 0x0) {
     /* Hack because we have no ld path set */
-    sprintf(tmpFile,"sys:/lib/%s",lib);
+    sprintf(tmpFile, "sys:/lib/%s", lib);
     linkerFd = fopen(tmpFile,"rb");
-    if (linkerFd->fd == 0x0) {
+    if (linkerFd == 0x0) {
       printf("Could not open library: %s\n",lib);
-      exit(-1);
+      free(tmpLib);
+      return(0x0);
       }
     //if ((tmpLib->output = (char *)malloc((linkerFd->size+0x4000))) == 0x0) {
     //if ((tmpLib->output = (char *)malloc(0x111000)) == 0x0) {
@@ -35,7 +38,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
       printf("malloc failed: tmpLib->output\n");
       exit(0x1);
       }
-    sprintf(tmpLib->name,lib);
+    sprintf(tmpLib->name, "%s", lib);
     }
 
   printf("Base: {0x%X}[%i]\n",tmpLib->output, __LINE__);
@@ -121,29 +124,46 @@ ldLibrary *ldAddLibrary(const char *lib) {
     fread(tmpLib->linkerShStr,tmpLib->linkerSectionHeader[tmpLib->linkerHeader->eShstrndx].shSize,1,linkerFd);
     }
 
+  /* Pass 1: load dynstr and symtab before processing any relocations */
   for (i = 0x0;i < tmpLib->linkerHeader->eShnum;i++) {
     switch (tmpLib->linkerSectionHeader[i].shType) {
-     case 3:
+      case 3:
         if (!strcmp((tmpLib->linkerShStr + tmpLib->linkerSectionHeader[i].shName),".dynstr")) {
           if (tmpLib->linkerDynStr == 0x0) {
             if ((tmpLib->linkerDynStr = (char *)malloc(tmpLib->linkerSectionHeader[i].shSize)) == 0x0) {
-	      printf("malloc failed: tmpLib->linkerDynStr\n");
-	      exit(0x1);
-	      }
+              printf("malloc failed: tmpLib->linkerDynStr\n");
+              exit(0x1);
+              }
             fseek(linkerFd,tmpLib->linkerSectionHeader[i].shOffset,0);
             fread(tmpLib->linkerDynStr,tmpLib->linkerSectionHeader[i].shSize,1,linkerFd);
             }
           }
         break;
+      case 11:
+        if (tmpLib->linkerRelSymTab == 0x0) {
+          tmpLib->linkerRelSymTab = (elfDynSym *)malloc(tmpLib->linkerSectionHeader[i].shSize);
+          fseek(linkerFd,tmpLib->linkerSectionHeader[i].shOffset,0);
+          fread(tmpLib->linkerRelSymTab,tmpLib->linkerSectionHeader[i].shSize,1,linkerFd);
+          tmpLib->sym = i;
+          }
+        break;
+      default:
+        break;
+      }
+    }
+
+  /* Pass 2: apply relocations now that symtab is loaded */
+  for (i = 0x0;i < tmpLib->linkerHeader->eShnum;i++) {
+    switch (tmpLib->linkerSectionHeader[i].shType) {
       case 9:
         if ((tmpLib->linkerElfRel = (elfPltInfo *)malloc(tmpLib->linkerSectionHeader[i].shSize)) == 0x0) {
-	  printf("malloc failed: tmpLib->linkerElfRel\n");
-	  exit(0x1);
-	  }
+          printf("malloc failed: tmpLib->linkerElfRel\n");
+          exit(0x1);
+          }
         fseek(linkerFd,tmpLib->linkerSectionHeader[i].shOffset,0x0);
         fread(tmpLib->linkerElfRel,tmpLib->linkerSectionHeader[i].shSize,1,linkerFd);
 
-        for (x=0x0;x<tmpLib->linkerSectionHeader[i].shSize/sizeof(elfPltInfo);x++) {
+        for (x=0x0;x<(int)(tmpLib->linkerSectionHeader[i].shSize/sizeof(elfPltInfo));x++) {
           rel = ELF32_R_SYM(tmpLib->linkerElfRel[x].pltInfo);
           reMap = (uint32_t *)((uint32_t)tmpLib->output + tmpLib->linkerElfRel[x].pltOffset);
           switch (ELF32_R_TYPE(tmpLib->linkerElfRel[x].pltInfo)) {
@@ -152,8 +172,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
             case R_386_TLS_TPOFF32:
             case R_386_TLS_DTPMOD32:
             case R_386_TLS_DTPOFF32:
-              *reMap += ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
-              *reMap += ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uint32_t)reMap;
+              *reMap += (uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue;
               break;
             case R_386_PC32:
               *reMap += ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uint32_t)reMap;
@@ -165,26 +184,19 @@ ldLibrary *ldAddLibrary(const char *lib) {
               *reMap += (uint32_t)tmpLib->output;
               break;
             case R_386_GLOB_DAT:
-              *reMap = ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
+              *reMap = (uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue;
               break;
             default:
-              printf("Unhandled sym: [0x%X]\n", ELF32_R_TYPE(tmpLib->linkerElfRel[x].pltInfo));
-              while (1);
+              printf("Unhandled reloc type: [0x%X] at offset 0x%X — skipping\n",
+                ELF32_R_TYPE(tmpLib->linkerElfRel[x].pltInfo),
+                tmpLib->linkerElfRel[x].pltOffset);
               break;
             }
           }
         free(tmpLib->linkerElfRel);
-        break;
-      case 11:
-        if (tmpLib->linkerRelSymTab == 0x0) {
-          tmpLib->linkerRelSymTab = (elfDynSym *)malloc(tmpLib->linkerSectionHeader[i].shSize);
-          fseek(linkerFd,tmpLib->linkerSectionHeader[i].shOffset,0);
-          fread(tmpLib->linkerRelSymTab,tmpLib->linkerSectionHeader[i].shSize,1,linkerFd);
-          tmpLib->sym = i;
-          }
+        tmpLib->linkerElfRel = 0x0;
         break;
       default:
-        printf("[SHTYPE: 0x%X]", tmpLib->linkerSectionHeader[i].shType);
         break;
       }
     }

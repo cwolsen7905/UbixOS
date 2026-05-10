@@ -1527,20 +1527,20 @@ struct syscall_entry systemCalls_posix[] = {
         (sys_call_t*) sys_fopen,
         SYSCALL_VALID }, /* XXX - Wrong Spot 298 - fopen */
     {
-        0,
-        "fhstat",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 299 - Invalid */
+        ARG_COUNT(sys_opendir_args),
+        "opendir",
+        (sys_call_t*) sys_opendir,
+        SYSCALL_VALID }, /* 299 - opendir */
     {
-        0,
-        "modnext",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 300 - Invalid */
+        ARG_COUNT(sys_readdir_args),
+        "readdir",
+        (sys_call_t*) sys_readdir,
+        SYSCALL_VALID }, /* 300 - readdir */
     {
-        0,
-        "modstat",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 301 - Invalid */
+        ARG_COUNT(sys_closedir_args),
+        "closedir",
+        (sys_call_t*) sys_closedir,
+        SYSCALL_VALID }, /* 301 - closedir */
     {
         0,
         "modfnext",

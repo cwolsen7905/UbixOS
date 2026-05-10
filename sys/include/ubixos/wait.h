@@ -49,4 +49,9 @@ struct semaphore {
 
 #define restore_flags(x) __asm__ __volatile__("pushl %0 ; popfl": /* no output */ :"r" (x):"memory")
 
+void add_wait_queue(struct wait_queue **p, struct wait_queue *wait);
+void remove_wait_queue(struct wait_queue **p, struct wait_queue *wait);
+void wake_up(struct wait_queue **q);
+void wake_up_interruptible(struct wait_queue **q);
+
 #endif

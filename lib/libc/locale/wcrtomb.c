@@ -1,11 +1,6 @@
 /*-
- * Copyright (c) 2002-2004 Tim J. Robbins.
+ * Copyright (c) 2002, 2003 Tim J. Robbins.
  * All rights reserved.
- *
- * Copyright (c) 2011 The FreeBSD Foundation
- * All rights reserved.
- * Portions of this software were developed by David Chisnall
- * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,23 +25,42 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/wcrtomb.c 227753 2011-11-20 14:45:42Z theraven $");
+__FBSDID("$FreeBSD: src/lib/libc/locale/wcrtomb.c,v 1.5 2003/11/01 05:13:13 tjr Exp $");
 
+#include <errno.h>
+#include <limits.h>
+#include <rune.h>
+#include <stdlib.h>
 #include <wchar.h>
-#include "mblocal.h"
 
-size_t
-wcrtomb_l(char * __restrict s, wchar_t wc, mbstate_t * __restrict ps,
-		locale_t locale)
-{
-	FIX_LOCALE(locale);
-	if (ps == NULL)
-		ps = &locale->wcrtomb;
-	return (XLOCALE_CTYPE(locale)->__wcrtomb(s, wc, ps));
-}
+extern size_t (*__wcrtomb)(char * __restrict, wchar_t, mbstate_t * __restrict);
 
 size_t
 wcrtomb(char * __restrict s, wchar_t wc, mbstate_t * __restrict ps)
 {
-	return wcrtomb_l(s, wc, ps, __get_locale());
+
+	return (__wcrtomb(s, wc, ps));
+}
+
+/*
+ * Emulate the ISO C wcrtomb() function in terms of the deprecated
+ * 4.4BSD sputrune() function.
+ */
+size_t
+__emulated_wcrtomb(char * __restrict s, wchar_t wc,
+    mbstate_t * __restrict ps __unused)
+{
+	char *e;
+	char buf[MB_LEN_MAX];
+
+	if (s == NULL) {
+		s = buf;
+		wc = L'\0';
+	}
+	sputrune(wc, s, MB_CUR_MAX, &e);
+	if (e == NULL) {
+		errno = EILSEQ;
+		return ((size_t)-1);
+	}
+	return ((size_t)(e - s));
 }

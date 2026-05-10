@@ -88,6 +88,26 @@ typedef struct userFileDescriptorStruct {
     uint32_t fdSize;
 } userFileDescriptor;
 
+/* Kernel-side directory handle used by vfs_opendir/readdir/closedir */
+typedef struct kDIR {
+    struct vfs_mountPoint *mp;
+    void *dirHandle;   /* filesystem-specific state (e.g. FL_DIR* for FAT) */
+} kDIR_t;
+
+/* Userland-visible dirent / DIR passed through syscalls */
+struct kdirent {
+    uint32_t d_ino;
+    uint8_t  d_type;
+    char     d_name[256];
+};
+#define KDT_REG 8
+#define KDT_DIR 4
+
+typedef struct {
+    kDIR_t        *dd_handle;  /* kernel kDIR_t pointer */
+    struct kdirent dd_ent;
+} kDIR_user_t;
+
 extern fileDescriptor_t *fdTable;
 
 fileDescriptor_t *fopen(const char *, const char *);
@@ -109,6 +129,10 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd);
 int kern_fseek(fileDescriptor_t*, u_int32_t, int);
 
 int sysFseek(userFileDescriptor *, long, int);
+
+kDIR_t *vfs_opendir(const char *path);
+int vfs_readdir(kDIR_t *dir, struct kdirent *ent);
+int vfs_closedir(kDIR_t *dir);
 
 //Good
 //int sysChDir(const char *path);

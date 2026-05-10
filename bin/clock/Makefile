@@ -17,11 +17,11 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o
 
-LIBRARIES = ../../build/lib/libc_old.so
+LIBRARIES = ../../lib/libc/*/*.o
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
 #	strip $(BINARY)
 
 # Compile the source files

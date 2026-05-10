@@ -3,10 +3,10 @@
 all: ld-bin #rtld-elf-bin
 
 ld-bin: ld
-	(cd ld;make)
+	(cd ld;$(MAKE))
 
 rtld-elf-bin: rtld-elf
-	(cd rtld-elf;make)
+	(cd rtld-elf;$(MAKE))
 
 clean:
 	(cd ld;make clean)

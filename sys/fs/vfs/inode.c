@@ -29,6 +29,7 @@
 #include <vfs/vfs.h>
 #include <ubixos/wait.h>
 #include <ubixos/sched.h>
+#include <vmm/vmm.h>
 
 //static struct inode *first_inode = NULL;
 static struct wait_queue *inode_wait = NULL;

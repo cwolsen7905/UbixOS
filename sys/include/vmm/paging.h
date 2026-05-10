@@ -74,7 +74,7 @@
 #define ctob(x)         ((x)<<PAGE_SHIFT)
 #define btoc(x)         (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
-int vmmClearVirtualPage(uint32_t pageAddr);
+int vmm_clearVirtualPage(uint32_t pageAddr);
 
 void *vmm_mapFromTask(pidType, void *, uint32_t);
 void *vmm_copyVirtualSpace(pidType);

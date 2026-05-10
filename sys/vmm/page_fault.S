@@ -79,7 +79,8 @@ mov %eax,%fs
 cld
 push %esp
 call trap
-call _popFS
+add $0x4,%esp   /* discard frame_ptr arg — call would push a return addr on top */
+jmp _popFS      /* jmp (not call) so _popFS sees the clean register save area */
 notyet:
 pushl %eax
 sti

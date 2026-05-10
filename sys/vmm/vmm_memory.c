@@ -231,7 +231,7 @@ uint32_t vmm_findFreePage(pidType pid) {
 
   spinLock(&vmmSpinLock);
 
-  for (i = 0; i <= numPages; i++) {
+  for (i = 0; i < numPages; i++) {
 
     /*
      * If We Found A Free Page Set It To Not Available After That Set Its Own
@@ -311,6 +311,11 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 
   assert((baseAddr & 0xFFF) == 0x0);
 
+  if (vmmMemoryMapIndex < 0 || vmmMemoryMapIndex >= numPages) {
+    kprintf("adjustCowCounter: addr 0x%X out of bounds (index %i, numPages %i)\n", baseAddr, vmmMemoryMapIndex, numPages);
+    return (-1);
+  }
+
   spinLock(&vmmSpinLock);
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
@@ -352,27 +357,13 @@ void vmm_freeProcessPages(pidType pid) {
 
   spinLock(&vmmSpinLock);
 
-  /* Check Page Directory For An Avail Page Table */
-  //NOTE: This cleans all memory space up to kernel space
-#ifdef _IGNORE
-  for (i = 0; i < (PAGE_SIZE - (PAGE_SIZE / 4)); i++) {
-
-    if (tmpPageDir[i] != 0) {
-
-      /* Set Up Page Table Pointer */
-      tmpPageTable = (uint32_t *) (PT_BASE_ADDR + (i * PAGE_SIZE));
-
-      /* Check The Page Table For COW Pages */
-      for (x = 0; x < PD_ENTRIES; x++) {
-
-        /* If The Page Is COW Adjust COW Counter */
-        if (((uint32_t) tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
-          adjustCowCounter(((uint32_t) tmpPageTable[x] & 0xFFFFF000), -1);
-        }
-      }
-    }
-  }
-#endif
+  /* NOTE (BUG-COW-03): COW-shared pages owned by another PID (e.g. parent)
+   * are invisible to the pid scan below and their counters are never
+   * decremented here.  The correct fix requires walking the DEAD task's own
+   * page tables, but vmm_freeProcessPages is called from systemTask after the
+   * task has been context-switched away — PT_BASE_ADDR reflects _current (the
+   * system task), not the dying task.  Until that is addressed, leave the
+   * page-walk disabled to avoid corrupting live processes' COW counters. */
 
   /* Loop Through Pages To Find Pages Owned By Process */
   for (i = 0; i < numPages; i++) {

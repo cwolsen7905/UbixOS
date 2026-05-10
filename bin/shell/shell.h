@@ -40,6 +40,8 @@ typedef struct {
     char **argv;
     char **envp;
     uint8_t bg;
+    char *redirect_out;   /* filename for > or >>, NULL if none */
+    uint8_t redirect_append; /* 1 = >>, 0 = > */
     struct argsStruct *args;
 } inputBuffer;
 

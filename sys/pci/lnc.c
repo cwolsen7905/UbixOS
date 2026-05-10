@@ -38,6 +38,16 @@
 #include <net/net.h>
 #include <net/netif.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/sched.h>
+#include <vmm/paging.h>
+#include <string.h>
+
+struct lncInfo;
+static int lnc_nextRxPtr(struct lncInfo *lnc);
+static int lnc_nextTxPtr(struct lncInfo *lnc);
+
+int lnc_ready = 0;  /* set to 1 by lncAttach on successful NIC init */
+static int lnc_driverOwnsTX(struct lncInfo *lnc);
 
 struct netif lnc_netif;
 
@@ -120,8 +130,8 @@ int initLNC() {
     }
   }
   else {
-    kprintf("LNC Init Error\n");
-    return (-1);
+    kprintf("LNC: no card found, skipping\n");
+    return (0);
   }
 
   lncAttach(lnc, 0);
@@ -152,17 +162,17 @@ int initLNC() {
   lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
   lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
 
-  lnc->init.rdra = (uint32_t) vmm_getRealAddr(lnc->rxRing);
+  lnc->init.rdra = (uint32_t) vmm_getRealAddr((uint32_t)lnc->rxRing);
   lnc->init.rlen = 3 << 4;
-  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr(lnc->rxRing));
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr((uint32_t)lnc->rxRing));
 
-  lnc->init.tdra = (uint32_t) vmm_getRealAddr(lnc->txRing);
+  lnc->init.tdra = (uint32_t) vmm_getRealAddr((uint32_t)lnc->txRing);
   lnc->init.tlen = 3 << 4;
-  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr(lnc->txRing));
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr((uint32_t)lnc->txRing));
 
-  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr(&lnc->init));
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr((uint32_t)&lnc->init));
 
-  iW = vmm_getRealAddr(&lnc->init);
+  iW = vmm_getRealAddr((uint32_t)&lnc->init);
 
   lnc_writeCSR32(lnc, CSR1, iW & 0xFFFF);
   lnc_writeCSR32(lnc, CSR2, (iW >> 16) & 0xFFFF);
@@ -181,8 +191,8 @@ int initLNC() {
     lnc_writeCSR32(lnc, CSR0, STRT | INEA);
   }
   else {
-    kprintf("LNC: init Error\n");
-    return (-1);
+    kprintf("LNC: init Error (IDON timeout), skipping\n");
+    return (0);
   }
 
   return (0);
@@ -508,6 +518,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
     kprintf("%s", icIdent[lnc->nic.ic]);
 
   kprintf(" address %x:%x:%x:%x:%x:%x\n", lnc->arpcom.ac_enaddr[0], lnc->arpcom.ac_enaddr[1], lnc->arpcom.ac_enaddr[2], lnc->arpcom.ac_enaddr[3], lnc->arpcom.ac_enaddr[4], lnc->arpcom.ac_enaddr[5]);
+  lnc_ready = 1;
   return (1);
 }
 

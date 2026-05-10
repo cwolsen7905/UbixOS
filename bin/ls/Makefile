@@ -17,11 +17,12 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o
 
-#LIBRARIES = ../../build/lib/libc_old.so
+LIBRARIES = ../../build/lib/libc.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	${CROSS_PREFIX}ld -m elf_i386 -e _start -dynamic-linker sys:/libexec/ld.so \
+		-o ${BUILD_DIR}/bin/$@ $(STARTUP) $(OBJS) $(LIBRARIES)
 	#strip $(BINARY)
 
 # Compile the source files

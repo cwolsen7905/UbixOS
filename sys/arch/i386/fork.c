@@ -35,6 +35,7 @@
 #include <string.h>
 #include <assert.h>
 #include <lib/kprintf.h>
+#include <lib/kmalloc.h>
 #include <sys/descrip.h>
 
 int sys_fork(struct thread *td, struct sys_fork_args *args) {
@@ -77,12 +78,9 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
-  newProcess->term->owner = newProcess->id;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = _current->tss.esp0;
-  newProcess->tss.ss0 = 0x10;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;
   newProcess->tss.esp2 = 0x0;
@@ -116,13 +114,13 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space! [0x%X]\n", newProcess->tss.cr3 );
 
-  newProcess->state = FORK;
-  /* Fix gcc optimization problems */
-  while (newProcess->state == FORK)
-    sched_yield();
-
   newProcess->parent = _current;
   _current->children++;
+
+  newProcess->state = FORK;
+  /* Fix gcc optimization problems */
+  while (((volatile kTask_t *)newProcess)->state == FORK)
+    sched_yield();
 
   /* Return Id of Proccess */
   td->td_retval[0] = newProcess->id;
@@ -154,7 +152,6 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->tss.eip = eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
-  newProcess->term->owner = newProcess->id;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->tss.back_link = 0x0;

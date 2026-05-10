@@ -144,9 +144,6 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
-    //kprintf("File: %s, ", file);
-  //kprintf("Mode: 0x%X\n", fd->mode);
-
   if ((fd->mode & 0x1) == 0x1) {
     _file = fl_fopen(file, "r");
   }
@@ -185,6 +182,38 @@ int mkdir_fat() {
   return (0);
 }
 
+int fat_opendir(const char *path, kDIR_t *dir) {
+    FL_DIR *fldir = (FL_DIR *) kmalloc(sizeof(FL_DIR));
+    if (fldir == 0x0)
+        return (0x0);
+    if (fl_opendir(path, fldir) == 0x0) {
+        kfree(fldir);
+        return (0x0);
+    }
+    dir->dirHandle = fldir;
+    return (0x1);
+}
+
+int fat_readdir(kDIR_t *dir, struct kdirent *ent) {
+    fl_dirent fent;
+    if (fl_readdir((FL_DIR *)dir->dirHandle, &fent) != 0)
+        return (-1);
+    ent->d_ino = fent.cluster;
+    ent->d_type = fent.is_dir ? KDT_DIR : KDT_REG;
+    strncpy(ent->d_name, fent.filename, 255);
+    ent->d_name[255] = '\0';
+    return (0);
+}
+
+int fat_closedir(kDIR_t *dir) {
+    if (dir->dirHandle != 0x0) {
+        fl_closedir((FL_DIR *)dir->dirHandle);
+        kfree(dir->dirHandle);
+        dir->dirHandle = 0x0;
+    }
+    return (0);
+}
+
 int fat_init() {
   // Initialise File IO Library
   fl_init();
@@ -201,7 +230,10 @@ int fat_init() {
       (void*) mkdir_fat, /* vfsMakeDir  */
       NULL, /* vfsRemDir   */
       NULL, /* vfsSync     */
-      0xFA /* vfsType     */
+      0xFA, /* vfsType     */
+      (void*) fat_opendir,  /* vfsOpenDir  */
+      (void*) fat_readdir,  /* vfsReadDir  */
+      (void*) fat_closedir  /* vfsCloseDir */
   }; /* ubixFileSystem */
 
   /* Add UbixFS */

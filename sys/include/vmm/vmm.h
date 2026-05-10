@@ -126,6 +126,7 @@ extern "C" {
     int vmm_allocPageTable(uint32_t, pidType);
     void vmm_unmapPage(uint32_t, unmapFlags_t);
     void vmm_unmapPages(void*, uint32_t, unmapFlags_t);
+    int vmm_freeVirtualPage(uint32_t addr);
 
 #ifdef __cplusplus
 }
