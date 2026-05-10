@@ -1,7 +1,7 @@
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument -fPIC
 
-INCLUDES = -I../../include_old 
+INCLUDES = -I../../include
 
-LIBRARIES = ../../lib/libc_old/*/*.o
+LIBRARIES = ../../lib/libc/*/*.o
 
 STARTUP = ../../lib/ubix/*.o

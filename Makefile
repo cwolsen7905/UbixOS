@@ -13,7 +13,7 @@ CLEANDIR=clean
 WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
-WORLD_INC="-I${CURDIR}/include_old -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
+WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
 .if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
 WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
 .else

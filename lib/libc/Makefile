@@ -12,7 +12,7 @@ OBJS =
 SUBS = ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o ./math/*.o ./quad/*.o ./generic/*.o ./locale/*.o ./gen/*.o ./dirent/*.o
 
 #Output
-OUTPUT = libc_old
+OUTPUT = libc
 
 lib.so: $(OBJS)
 	(cd stdio;$(MAKE))
@@ -26,7 +26,7 @@ lib.so: $(OBJS)
 	(cd gen;$(MAKE))
 	(cd dirent;$(MAKE))
 #	$(LD) $(LDFLAGS) -o $(OUTPUT) $(OBJS) ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o
-#	$(CC) -nostdlib -shared -Wl,-soname,libc_old.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
+#	$(CC) -nostdlib -shared -Wl,-soname,libc.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
 # Use ld directly to produce ET_DYN (gcc driver ignores -shared with -nostdlib)
 	${CROSS_PREFIX}ld -m elf_i386 -shared -x --soname=$(OUTPUT).so -o ${BUILD_DIR}/lib/$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
 #	$(CC) -nostdlib -ggdb -static -Wl,-x -o ${BUILD_DIR}/$(OUTPUT).static.so -Wl,-soname,$(OUTPUT).static.so `lorder $(OBJS) $(SUBS) | tsort -q`

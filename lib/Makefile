@@ -1,17 +1,14 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: ubix_api-code libc_old-code ubix-code libcpp-code #objgfx-code #csu-code #libc-code
+all: ubix_api-code libc-code ubix-code libcpp-code #objgfx-code #csu-code
 # bin tools
 # depend kernel tools
 
 csu-code: csu
-	(cd csu;$(MAKE) MACHINE_ARCH=i386 MACHINE_CPUARCH=i386 "CFLAGS+=-I${.CURDIR}/../include_old -I${.CURDIR}/../include -I${.CURDIR}/libc/include")
+	(cd csu;$(MAKE) MACHINE_ARCH=i386 MACHINE_CPUARCH=i386 "CFLAGS+=-I${.CURDIR}/../include -I${.CURDIR}/libc/include")
 
 ubix_api-code: ubix_api
 	(cd ubix_api;$(MAKE))
-
-libc_old-code: libc_old
-	(cd libc_old;$(MAKE))
 
 libc-code: libc
 	(cd libc;$(MAKE))
@@ -44,6 +41,5 @@ clean:
 	#(cd src/sys;make clean)
 	(cd csu;make clean)
 	(cd ubix_api;make clean)
-	(cd libc_old;make clean)
 	(cd libc;make clean)
 	(cd ubix;make clean)

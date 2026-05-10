@@ -17,7 +17,7 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o
 
-#LIBRARIES = ../../lib/build/libc_old.static.so
+#LIBRARIES = ../../lib/build/libc.static.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)

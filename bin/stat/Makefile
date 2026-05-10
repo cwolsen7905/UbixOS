@@ -17,7 +17,7 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o
 
-#MrOlsen (2016-01-19) TEMP: This is just to make it static LIBRARIES = ../../build/lib/libc_old.so
+#MrOlsen (2016-01-19) TEMP: This is just to make it static LIBRARIES = ../../build/lib/libc.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
