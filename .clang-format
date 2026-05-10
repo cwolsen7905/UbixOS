@@ -1,0 +1,69 @@
+# UbixOS kernel coding style — based on FreeBSD style(9)
+# https://www.freebsd.org/cgi/man.cgi?query=style&sektion=9
+#
+# Apply file-by-file as files are touched:
+#   clang-format -i path/to/file.c
+#
+# Check without modifying (CI-style):
+#   clang-format --dry-run --Werror path/to/file.c
+
+BasedOnStyle: LLVM
+
+# FreeBSD uses hard tabs, 8-space tab stops
+UseTab: ForIndentation
+TabWidth: 8
+IndentWidth: 8
+ContinuationIndentWidth: 4
+
+# 80-column limit (style(9) §1)
+ColumnLimit: 80
+
+# Allman / BSD brace style — opening brace on its own line for functions,
+# same line for control flow (if/for/while/do)
+BreakBeforeBraces: Allman
+
+# Pointer attached to variable name: int *foo  (style(9) §22)
+PointerAlignment: Right
+
+# Space before parens in control flow; no space for function calls
+SpaceBeforeParens: ControlStatements
+
+# No space inside parentheses
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# Always use braces around single-statement bodies (if/for/while)
+# Note: clang-format cannot ADD missing braces; use -Wdangrous where possible.
+# InsertBraces is available in clang-format 15+ but can change semantics —
+# leave off by default, add manually per-file as you touch code.
+
+# Align consecutive assignments and declarations
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+
+# Short blocks / lambdas on one line: off (style(9) keeps them multi-line)
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# Break before binary operators for long expressions
+BreakBeforeBinaryOperators: None
+
+# Sort includes: off (kernel headers have load-order dependencies)
+SortIncludes: Never
+
+# No trailing commas in function parameters
+ExperimentalAutoDetectBinPacking: false
+
+# Indent case labels inside switch
+IndentCaseLabels: false
+
+# Penalty tuning to prefer breaking at sensible points
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 200
