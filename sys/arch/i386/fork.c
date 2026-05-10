@@ -78,7 +78,6 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
-  newProcess->term->owner = newProcess->id;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->tss.back_link = 0x0;
@@ -153,7 +152,6 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->tss.eip = eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
-  newProcess->term->owner = newProcess->id;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->tss.back_link = 0x0;

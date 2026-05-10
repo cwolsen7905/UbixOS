@@ -79,7 +79,7 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 
 | ID | File | Description |
 |----|------|-------------|
-| BUG-SCHED-08 | [sys/arch/i386/fork.c:81](sys/arch/i386/fork.c) | **Fork overwrites terminal owner to child before parent gets its return value.** `_current->term` and `newProcess->term` point to the same `tty_term` struct. `newProcess->term->owner = newProcess->id` immediately changes the terminal owner to the child's PID. Any code that gates on `term->owner` for terminal access (input dispatch, signal delivery) will misidentify the parent as a foreign process from this point forward — including during the remaining lines of `sys_fork` itself. Fix: do not copy `term` to the child directly; let the child inherit or acquire terminal ownership after exec via `setsid()`/`tcsetpgrp()`, or at minimum set `newProcess->term->owner` only after the fork spin-wait, once the parent has returned. |
+| ~~BUG-SCHED-08~~ | [sys/arch/i386/fork.c:81](sys/arch/i386/fork.c) | **FIXED** Removed `newProcess->term->owner = newProcess->id` from both `sys_fork` and `fork_copyProcess`. The child inherits the terminal pointer but does not take ownership. Terminal ownership is unchanged across `fork()`; it is the responsibility of `setsid()`/`tcsetpgrp()` to transfer it explicitly. |
 
 ---
 
