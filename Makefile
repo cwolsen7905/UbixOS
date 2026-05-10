@@ -4,6 +4,8 @@
 
 CURDIR=${.CURDIR}
 
+include Makefile.incl
+
 OBJ_DIR?= ${CURDIR}/build
 
 CLEANDIR=clean

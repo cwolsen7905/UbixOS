@@ -19,3 +19,9 @@ CROSS_M32?=-m32
 CROSS_PREFIX?=
 CROSS_M32?=
 .endif
+
+# Make ubix mk files findable for recursive bmake invocations (e.g. lib/csu).
+# Use ?= so this is only set at the top-level (where .CURDIR is the repo root);
+# sub-makes inherit the exported value without recomputing it.
+MAKESYSPATH?=${.CURDIR}/share/mk
+.export MAKESYSPATH

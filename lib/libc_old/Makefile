@@ -15,19 +15,19 @@ SUBS = ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o ./math/*.o ./quad/*.o ./g
 OUTPUT = libc_old
 
 lib.so: $(OBJS)
-	(cd stdio;make)
-	(cd stdlib;make)
-	(cd math;make)
-	(cd locale;make)
-	(cd quad;make)
-	(cd sys;make)
-	(cd string;make)
-	(cd generic;make)
-	(cd gen;make)
+	(cd stdio;$(MAKE))
+	(cd stdlib;$(MAKE))
+	(cd math;$(MAKE))
+	(cd locale;$(MAKE))
+	(cd quad;$(MAKE))
+	(cd sys;$(MAKE))
+	(cd string;$(MAKE))
+	(cd generic;$(MAKE))
+	(cd gen;$(MAKE))
 #	$(LD) $(LDFLAGS) -o $(OUTPUT) $(OBJS) ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o
 #	$(CC) -nostdlib -shared -Wl,-soname,libc_old.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
 # tsort -q for BSD
-	$(CC) -m32 -nostdlib -ggdb -shared -Wl,-x -o ${BUILD_DIR}/lib/$(OUTPUT).so -Wl,-soname,$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
+	$(CC) -m32 -nostdlib -ggdb -shared -Wl,-m,elf_i386 -Wl,-x -o ${BUILD_DIR}/lib/$(OUTPUT).so -Wl,-soname,$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
 #	$(CC) -nostdlib -ggdb -static -Wl,-x -o ${BUILD_DIR}/$(OUTPUT).static.so -Wl,-soname,$(OUTPUT).static.so `lorder $(OBJS) $(SUBS) | tsort -q`
 
 # Compile the source files

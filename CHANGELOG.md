@@ -14,6 +14,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sized C++ delete operators (`operator delete(void*, unsigned int)` / `operator delete[](void*, unsigned int)`) added to `sys/lib/libcpp.cc` for GCC 14+ compatibility.
 
 ### Fixed
+- **macOS world build (`feature/macos-build-qemu`)**: resolved all compile and link errors blocking `bmake world` (userland) with the `x86_64-elf-gcc` cross-compiler.
+  - **Cross-compiler propagation**: top-level `Makefile` now includes `Makefile.incl` so `CROSS_PREFIX` and toolchain overrides reach all world sub-makes.
+  - **`MAKESYSPATH` propagation**: changed assignment to `?=` with `.export` so bmake's include path is inherited by recursive sub-makes without being overwritten.
+  - **ELF architecture mismatch**: added `LDFLAGS = -Wl,-m,elf_i386` to `bin/Makefile.incl`; the baremetal cross-linker does not auto-select `elf_i386` for static links. Added `$(LDFLAGS)` to link commands in all active `bin/*/Makefile` files.
+  - **`libc_old.so` as link input**: the baremetal `x86_64-elf` toolchain cannot produce ET_DYN shared objects; `libc_old.so` was being built as ET_EXEC. Fixed `bin/clock`, `bin/cp`, `bin/disklabel`, and `bin/fdisk` Makefiles to link against `../../lib/libc_old/*/*.o` instead.
+  - **`-Wl,-m,elf_i386` in shared library links**: added to `lib/ubix_api/Makefile`, `lib/libc_old/Makefile`, and `libexec/ld/Makefile` so those shared objects use the correct 32-bit linker emulation.
+  - **`elf_i386_fbsd` linker emulation**: cross-linker only supports `elf_i386`; fixed in `libexec/ld/Makefile`.
+  - **`__progname` multiply defined**: made definition in `lib/libc_old/gen/setprogname.c` weak so it doesn't conflict with the strong definition in `lib/ubix/sstart.c`.
+  - **`vfprintf` buffer pointer**: fixed `vsprintf(&data, ...)` → `vsprintf(data, ...)` in `lib/libc_old/stdio/vfprintf.c`.
+  - **`malloc.c` missing `memset`**: added `#include <string.h>` to `lib/libc_old/stdlib/malloc.c`.
+  - **`sstart.c` implicit declarations**: added `extern int main(int, char **, char **); extern void exit(int);` forward declarations.
+  - **`getPage` undeclared**: added `void *getPage(int pages, int flags);` to `libexec/ld/ld.h`.
+  - **Bare `make` in sub-makes**: replaced all `;make)` with `;$(MAKE))` in `lib/Makefile`, `lib/libc_old/Makefile`, `bin/Makefile`, and `libexec/Makefile`.
+  - **`muffin` and `objgfx`**: disabled from world build — require hosted C++ headers (`<functional>`, `<map>`, `<iostream>`) not available in the baremetal toolchain.
+  - **`bool` typedef**: guarded in `include_old/sys/types.h` with `__STDC_VERSION__ < 202311L` check to avoid conflict with C23's built-in `bool`.
 - **macOS cross-build (`feature/macos-build-qemu`)**: resolved all compile and link errors blocking `bmake kernel` under GCC 16 with `-std=c23` defaults.
   - **C23 / GCC 16 compatibility**: updated `()` function declarations to typed signatures throughout `sys/include/ubixos/syscalls.h`, `sys/include/ubixfs/ubixfs.h`, `sys/include/ufs/ufs.h`, `sys/include/i386/atkbd.h`, `sys/include/isa/atkbd.h`, and `sys/include/ubixos/ld.h`.
   - **`stdatomic.h`**: reordered GCC vs. Clang detection so GCC 16 (which now satisfies `__has_extension(c_atomic)`) correctly uses `__GNUC_ATOMICS` instead of the missing `__c11_atomic_*` builtins.

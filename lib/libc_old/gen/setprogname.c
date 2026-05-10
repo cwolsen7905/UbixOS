@@ -6,6 +6,8 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/setprogname.c,v 1.8 2002/03/29 22:43:41 mar
 
 #include "../include/libc_private.h"
 
+const char *__progname __attribute__((weak)) = "";
+
 void
 setprogname(const char *progname)
 {

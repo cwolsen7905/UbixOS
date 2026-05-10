@@ -45,7 +45,7 @@ int vfprintf(FILE *fd,const char *fmt,vaList args) {
 
   char data[512] = {'A','B','C'};
 
-  retVal = vsprintf(&data, fmt, args);
+  retVal = vsprintf(data, fmt, args);
 
   return(_write(fd->fd, &data, 512));
 

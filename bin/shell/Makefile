@@ -21,7 +21,7 @@ OBJS = main.o error.o commands.o exec.o input.o
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
 #	strip ${BUILD_DIR}/bin/$(BINARY)
 
 # Compile the source files

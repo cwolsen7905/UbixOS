@@ -73,15 +73,15 @@ typedef __size_t        size_t;
 #define _SIZE_T_DECLARED
 #endif
 
-#ifndef NOBOOL
-#ifndef __cplusplus
-typedef enum {FALSE=0,TRUE=1}bool;
-#endif
-#else
-#ifndef __cplusplus
 #define FALSE 0
 #define TRUE  1
+/* bool is a keyword in C23; avoid redefining it. */
+#if !defined(__cplusplus) && (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L)
+#ifndef NOBOOL
+#ifndef __bool_true_false_are_defined
 typedef int bool;
+#define __bool_true_false_are_defined 1
+#endif
 #endif
 #endif
 

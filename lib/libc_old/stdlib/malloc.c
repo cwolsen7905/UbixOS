@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <sys/sys.h>
 #include <stdio.h>
+#include <string.h>
 
 struct memDescriptor {
     struct memDescriptor *prev;        //4

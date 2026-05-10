@@ -33,6 +33,8 @@ uint32_t ldFindFunc(const char *,const char *);
 ldLibrary *ldFindLibrary(const char *);
 ldLibrary *ldAddLibrary(const char *);
 
+void *getPage(int pages, int flags);
+
 /***
  END
  ***/

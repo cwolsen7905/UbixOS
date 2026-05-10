@@ -1,3 +1,6 @@
+extern int main(int, char **, char **);
+extern void exit(int);
+
 char **environ;
 const char *__progname = "";
 

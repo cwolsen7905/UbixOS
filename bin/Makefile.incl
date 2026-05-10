@@ -2,6 +2,7 @@
 BUILD_DIR?=${SRCTOP}/build
 
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument
+LDFLAGS = -Wl,-m,elf_i386
 
 INCLUDES = -I../../include_old 
 

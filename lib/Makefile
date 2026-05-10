@@ -1,41 +1,41 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: csu-code ubix_api-code libc_old-code ubix-code libcpp-code objgfx-code #libc-code# libcpp-code
+all: ubix_api-code libc_old-code ubix-code libcpp-code #objgfx-code #csu-code #libc-code
 # bin tools
 # depend kernel tools
 
 csu-code: csu
-	(cd csu;make)
+	(cd csu;$(MAKE) MACHINE_ARCH=i386 MACHINE_CPUARCH=i386 "CFLAGS+=-I${.CURDIR}/../include_old -I${.CURDIR}/../include -I${.CURDIR}/libc/include")
 
 ubix_api-code: ubix_api
-	(cd ubix_api;make)
+	(cd ubix_api;$(MAKE))
 
 libc_old-code: libc_old
-	(cd libc_old;make)
+	(cd libc_old;$(MAKE))
 
 libc-code: libc
-	(cd libc;make)
+	(cd libc;$(MAKE))
 
 objgfx-code: objgfx
-	(cd objgfx;make)
+	(cd objgfx;$(MAKE))
 
 views: src
-	(cd src/lib/views/sunlight;make)
+	(cd src/lib/views/sunlight;$(MAKE))
 
 ubix-code: ubix
-	(cd ubix;make)
+	(cd ubix;$(MAKE))
 
 libcpp-code: libcpp
-	(cd libcpp;make)
+	(cd libcpp;$(MAKE))
 
 bin: src
-	(cd src/bin;make)
+	(cd src/bin;$(MAKE))
 
 libstdc++: src
-	(cd src/lib/libstdc++;make)
+	(cd src/lib/libstdc++;$(MAKE))
 
 tools: src
-	(cd src/tools;make)
+	(cd src/tools;$(MAKE))
 
 install:
 	(cd src/sys;make install)
