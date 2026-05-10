@@ -42,22 +42,24 @@
 
 
 /* -------------------------------------------------------------------------
- * Multiboot 1 header — must appear within the first 8 KB of the kernel
- * image.  The linker script (ldscript.i386) places .multiboot first.
+ * Multiboot 1 header + kernel entry point in .text.boot
+ *
+ * The linker script places .text.boot before all other .text sections so
+ * the multiboot magic lands within the first 8 KB of the ELF file, where
+ * GRUB scans for it.  Using a named section avoids any dependency on
+ * object-file link order.
  * ------------------------------------------------------------------------- */
-.section .multiboot
+.section .text.boot, "ax"
 .align 4
 multiboot_header:
   .long MB_MAGIC
   .long MB_FLAGS
   .long MB_CHECKSUM
 
-
 /* -------------------------------------------------------------------------
  * Kernel entry point
  * ------------------------------------------------------------------------- */
 .globl _start
-.text
 .code32
 _start:
   /*
