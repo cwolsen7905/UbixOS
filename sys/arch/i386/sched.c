@@ -86,7 +86,6 @@ void sched() {
   uint32_t memAddr = 0x0;
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
-  kTask_t *prevTask = 0x0;
 
   if (spinTryLock(&schedulerSpinLock))
     return;
@@ -101,7 +100,6 @@ void sched() {
 
     if (tmpTask->state == READY) {
       _current->state = (_current->state == DEAD) ? DEAD : READY;
-      prevTask = _current;
       _current = tmpTask;
       break;
     }
@@ -149,14 +147,12 @@ void sched() {
 
     spinUnlock(&schedulerSpinLock);
 
-    /* Ensure the outgoing task resumes with interrupts enabled.
-     * ljmp saves current EFLAGS (IF=0 from cli) into prevTask's TSS.
-     * Setting IF here means when prevTask is next scheduled, it wakes
-     * with interrupts on regardless of whether an iret fixes it up. */
-    if (prevTask != 0x0)
-      prevTask->tss.eflags |= 0x200;
-
     asm("ljmp $0x20,$0");
+    /* The outgoing task resumes here on its next scheduling slot.
+     * ljmp saved EFLAGS with IF=0 (from cli above) into its TSS, so
+     * we must re-enable interrupts explicitly here rather than before
+     * the ljmp (which would create a race window). */
+    asm("sti");
   }
   else {
     spinUnlock(&schedulerSpinLock);
