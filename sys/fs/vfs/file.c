@@ -312,7 +312,7 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd) {
 
     i = fd->mp->fs->vfsRead(fd, ptr, fd->offset, size * nmemb);
 
-    //fd->offset += size * nmemb;
+    fd->offset += i;
 
     return (i);
 }
@@ -333,7 +333,17 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
 }
 
 int kern_fseek(fileDescriptor_t *tmpFd, u_int32_t offset, int whence) {
-    tmpFd->offset = offset + whence;
+    switch (whence) {
+        case 0: /* SEEK_SET */
+            tmpFd->offset = offset;
+            break;
+        case 1: /* SEEK_CUR */
+            tmpFd->offset += offset;
+            break;
+        default:
+            kprintf("kern_fseek: unsupported whence %i\n", whence);
+            break;
+    }
     return (tmpFd->offset);
 }
 
@@ -360,9 +370,10 @@ int feof(fileDescriptor_t *fd) {
  ************************************************************************/
 int fputc(int ch, fileDescriptor_t *fd) {
     if (fd != 0x0) {
-        ch = fd->mp->fs->vfsWrite(fd, (char*) ch, fd->offset, 1);
+        char c = (char) ch;
+        fd->mp->fs->vfsWrite(fd, &c, fd->offset, 1);
         fd->offset++;
-        return (ch);
+        return (unsigned char) ch;
     }
     /* Return NULL If FD Is Not Found */
     return (0x0);
@@ -418,7 +429,7 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
     path = file;
 
     /* Determine if path is relative or absolute */
-    if (path[0] == "." && path[1] == '\0')
+    if (path[0] == '.' && path[1] == '\0')
         strcpy(fileName, _current->oInfo.cwd);
     else
         strcpy(fileName, file);
@@ -519,11 +530,7 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
         return (tmpFd);
     }
     else {
-        //kprintf("Freeing");
-        kfree(tmpFd->buffer);
         kfree(tmpFd);
-        spinUnlock(&fdTable_lock);
-        //MrOlsen (2016-01-13) NOTE: We don't need this right now kprintf("File Not Found? %s\n",file);
         return (0x0);
     }
 

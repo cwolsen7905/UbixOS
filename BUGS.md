@@ -13,15 +13,15 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 
 ---
 
-## VFS (identified 2026-05-10)
+## VFS (identified 2026-05-10, fixed 2026-05-10)
 
 | ID | File | Description |
 |----|------|-------------|
-| BUG-VFS-01 | [sys/fs/vfs/file.c:421](sys/fs/vfs/file.c#L421) | `fopen`: `path[0] == "."` compares a `char` to a `char*` — always false, so relative paths using `"."` never resolve to cwd. Fix: use `'.'`. |
-| BUG-VFS-02 | [sys/fs/vfs/file.c:525](sys/fs/vfs/file.c#L525) | `fopen`: `spinUnlock` called in the "file not found" branch without ever acquiring the lock (lock is only taken in the success branch at line 504). Corrupts spinlock state. |
-| BUG-VFS-03 | [sys/fs/vfs/file.c:523](sys/fs/vfs/file.c#L523) | `fopen`: `kfree(tmpFd->buffer)` in the not-found path, but `buffer` was never allocated there (it is `NULL` from `memset`). Remove the `kfree`. |
-| BUG-VFS-04 | [sys/fs/vfs/file.c:315](sys/fs/vfs/file.c#L315) | `fread`: `fd->offset += size * nmemb` is commented out. Consecutive reads re-read from the same offset unless the filesystem driver advances its own cursor. The `fd->offset` must be advanced here. |
-| BUG-VFS-05 | [sys/fs/vfs/file.c:363](sys/fs/vfs/file.c#L363) | `fputc`: `vfsWrite(fd, (char*)ch, ...)` passes the `int` value of `ch` as a buffer address. Should be `(char*)&ch`. Current code is undefined behavior and likely a crash. |
-| BUG-VFS-06 | [sys/fs/vfs/file.c:336](sys/fs/vfs/file.c#L336) | `kern_fseek`: `tmpFd->offset = offset + whence` adds the `whence` constant (0/1/2) directly to the offset value. `sys_fseek` has the correct switch-statement logic; `kern_fseek` must be fixed to match. |
-| BUG-VFS-07 | [sys/fs/vfs/mount.c:52](sys/fs/vfs/mount.c#L52) | `vfs_mount`: if `kmalloc` returns `NULL`, the error is printed but execution continues to `sprintf(mp->mountPoint, ...)` which dereferences the NULL `mp`. Must `return` after the error print. |
-| BUG-VFS-08 | [sys/fs/vfs/mount.c:82](sys/fs/vfs/mount.c#L82) | `vfs_mount`: `vfs_addMount(mp)` adds `mp` to the mount list before `vfsInitFS` is called. If `vfsInitFS` fails, `mp` is `kfree`'d but remains linked in `systemVitals->mountPoints` as a dangling pointer. |
+| ~~BUG-VFS-01~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `fopen`: `path[0] == "."` compares a `char` to a `char*` — always false, so relative paths using `"."` never resolve to cwd. Changed to `'.'`. |
+| ~~BUG-VFS-02~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `fopen`: `spinUnlock` called in the "file not found" branch without ever acquiring the lock. Removed the spurious unlock. |
+| ~~BUG-VFS-03~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `fopen`: `kfree(tmpFd->buffer)` in the not-found path where `buffer` was never allocated. Removed the `kfree`. |
+| ~~BUG-VFS-04~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `fread`: `fd->offset` was never advanced (line was commented out). Now advances by actual bytes read (`i`). |
+| ~~BUG-VFS-05~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `fputc`: `vfsWrite(fd, (char*)ch, ...)` passed the `int` value of `ch` as a buffer address. Now uses `&c` where `c` is a `char`. |
+| ~~BUG-VFS-06~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `kern_fseek`: `offset + whence` was adding the whence constant directly. Now uses a proper switch for `SEEK_SET`/`SEEK_CUR`. |
+| ~~BUG-VFS-07~~ | [sys/fs/vfs/mount.c](sys/fs/vfs/mount.c) | **FIXED** `vfs_mount`: NULL dereference after `kmalloc` failure. Now returns immediately on allocation failure. |
+| ~~BUG-VFS-08~~ | [sys/fs/vfs/mount.c](sys/fs/vfs/mount.c) | **FIXED** `vfs_mount`: dangling pointer when `vfsInitFS` fails. Now validates fs type before adding to mount list, and unlinks `mp` before freeing if init fails. |
