@@ -1,0 +1,72 @@
+{
+    "configurations": [
+        {
+            "name": "Kernel (i386 bare-metal)",
+            "includePath": [
+                "${workspaceFolder}/sys/include",
+                "${workspaceFolder}/sys/include/ubixos",
+                "${workspaceFolder}/sys/include/sys",
+                "${workspaceFolder}/sys/include/vmm",
+                "${workspaceFolder}/sys/include/vfs",
+                "${workspaceFolder}/sys/include/net",
+                "${workspaceFolder}/sys/include/isa",
+                "${workspaceFolder}/sys/include/pci"
+            ],
+            "defines": [
+                "__i386__",
+                "DEBUG_SYSCTL",
+                "KERNEL"
+            ],
+            "compilerPath": "/opt/homebrew/bin/i386-elf-gcc",
+            "compilerArgs": [
+                "-m32",
+                "-nostdinc",
+                "-ffreestanding",
+                "-fno-builtin",
+                "-fno-pie",
+                "-fno-pic"
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x86",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/sys"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        },
+        {
+            "name": "World (userland)",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include_old",
+                "${workspaceFolder}/lib/objgfx40",
+                "${workspaceFolder}/lib/libcpp/include",
+                "${workspaceFolder}/lib/libc/include"
+            ],
+            "defines": [
+                "__i386__",
+                "__UBIXOS__"
+            ],
+            "compilerPath": "/opt/homebrew/bin/i386-elf-gcc",
+            "compilerArgs": [
+                "-m32",
+                "-nostdinc",
+                "-ffreestanding"
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-x86",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/bin",
+                    "${workspaceFolder}/lib",
+                    "${workspaceFolder}/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}

@@ -31,65 +31,65 @@ all:
 kernel-build: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code net-code sde-code kernel-img
 
 generic-code: generic
-	(cd generic;make)
+	(cd generic;${MAKE})
 
 init-code: init
-	(cd init;make)
+	(cd init;${MAKE})
 
 arch-code: arch/${_ARCH}
-	(cd arch/${_ARCH};make)
+	(cd arch/${_ARCH};${MAKE})
 	
 kernel-code: kernel
-	(cd kernel;make)
+	(cd kernel;${MAKE})
 	
 isa-code: isa
-	(cd isa;make)
+	(cd isa;${MAKE})
 
 pci-code: pci
-	(cd pci;make)
+	(cd pci;${MAKE})
 
 sys-code: sys
-	(cd sys;make)
+	(cd sys;${MAKE})
 
 vmm-code: vmm
-	(cd vmm;make)
+	(cd vmm;${MAKE})
 
 fs-code: fs
-	(cd fs;make)
+	(cd fs;${MAKE})
 
 graphics-code: graphics
-	(cd graphics;make)
+	(cd graphics;${MAKE})
 
 ld-code: ld
-	(cd ld;make)
+	(cd ld;${MAKE})
 
 lib-code: lib
-	(cd lib;make)
+	(cd lib;${MAKE})
 
 sde-code: sde
-	(cd sde;make)
+	(cd sde;${MAKE})
 
 net-code: net
-	(cd net;make)
+	(cd net;${MAKE})
 
 mpi-code: mpi
-	(cd mpi;make)
+	(cd mpi;${MAKE})
 
 kmods-code: kmods
-	(cd kmods;make)
+	(cd kmods;${MAKE})
 
 kernel-img: compile
 	(/bin/echo "/* " > ./compile/null.c)
 	(date >> ./compile/null.c)
 	(echo $user >> ./compile/null.c)
 	(/bin/echo " */" >> ./compile/null.c)
-	(cd compile;make)
+	(cd compile;${MAKE})
 
 install:
 #	(cd compile;cp ./ubix.elf /mnts/ubix/boot/loader)
-#	(cd boot;make install)
+#	(cd boot;${MAKE} install)
 #	(cd ../tools/;make format-dsk)
-	(cd ../tools/;make install-ubix)
+	(cd ../tools/;${MAKE} install-ubix)
 
 install-kernel:
 	@echo
@@ -108,22 +108,22 @@ install-kernel:
 	@echo "***************************************************************"
 
 clean:
-	(cd init;make clean)
-	(cd arch/${_ARCH};make clean)
-	(cd sys;make clean)
-	(cd kernel;make clean)
-	(cd vmm;make clean)
-	(cd mpi;make clean)
-	(cd fs;make clean)
-	(cd lib;make clean)
-	(cd isa;make clean)
-	(cd pci;make clean)
-	(cd net;make clean)
-	(cd compile;make clean)
-	(cd fs/vfs;make clean)
-	(cd sde;make clean)
-	(cd fs/devfs;make clean)
-	(cd net;make clean)
-	(cd kmods;make clean)
-	(cd fs/ufs;make clean)
-	#(cd ../tools/;make clean)
+	(cd init;${MAKE} clean)
+	(cd arch/${_ARCH};${MAKE} clean)
+	(cd sys;${MAKE} clean)
+	(cd kernel;${MAKE} clean)
+	(cd vmm;${MAKE} clean)
+	(cd mpi;${MAKE} clean)
+	(cd fs;${MAKE} clean)
+	(cd lib;${MAKE} clean)
+	(cd isa;${MAKE} clean)
+	(cd pci;${MAKE} clean)
+	(cd net;${MAKE} clean)
+	(cd compile;${MAKE} clean)
+	(cd fs/vfs;${MAKE} clean)
+	(cd sde;${MAKE} clean)
+	(cd fs/devfs;${MAKE} clean)
+	(cd net;${MAKE} clean)
+	(cd kmods;${MAKE} clean)
+	(cd fs/ufs;${MAKE} clean)
+	#(cd ../tools/;${MAKE} clean)

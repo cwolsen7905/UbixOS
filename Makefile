@@ -11,7 +11,11 @@ WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
 WORLD_INC="-I${CURDIR}/include_old -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
-WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJDUMP= OBJCOPY="objcopy"  RANLIB=ranlib
+.if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
+WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
+.else
+WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJDUMP= OBJCOPY="objcopy" RANLIB=ranlib
+.endif
 
 WMAKE=${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
@@ -19,7 +23,17 @@ TMP_PATH=${PATH}
 ROOT=/ubixos
 ROOT_FAT=/ubixos_fat
 
+DISK_IMAGE?=ubixos.img
+
 all: kernel world install-kernel install-world
+
+# Create a bootable QEMU disk image (requires multiboot support in start.S — see feature branch).
+image:
+	@sh tools/mkimage.sh ${DISK_IMAGE}
+
+# Boot the disk image in QEMU.
+run:
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide -serial stdio -vga std
 
 kernel:
 	@cd sys;make

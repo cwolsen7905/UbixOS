@@ -1,19 +1,20 @@
 # The System Makefile (C) 2002, 2017 The UbixOS Project
 # Global 'Source' Options
 
-# allow you to change your default compiler without affecting your other work
-#MrOlsen (2016-01-10) NOTE: I pass all this now
-#CFLAGS = -m32 
-#CC = cc
-#CXX = c++
-#LD = ld
-#AR = ar
-
-#Glogal Override And Defs
-_ARCH?=${MACHINE_ARCH}
-
+#Global Override And Defs
 _ARCH=i386
 
 REMOVE = rm -rf
 
 FD_DEVICE = /dev/md0
+
+# Cross-compiler prefix.
+# On macOS: install i386-elf-gcc + i386-elf-binutils via Homebrew, then build
+# with CROSS_PREFIX=i386-elf- (set automatically below when uname is Darwin).
+# On FreeBSD native: leave empty to use the host toolchain.
+UNAME_S != uname -s
+.if ${UNAME_S} == "Darwin"
+CROSS_PREFIX?=i386-elf-
+.else
+CROSS_PREFIX?=
+.endif

@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug: UbixOS kernel (QEMU + GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/sys/compile/kernel",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/opt/homebrew/bin/i386-elf-gdb",
+            "miDebuggerServerAddress": "localhost:1234",
+            "setupCommands": [
+                {
+                    "description": "Set architecture to i386",
+                    "text": "set architecture i386",
+                    "ignoreFailures": false
+                },
+                {
+                    "description": "Load symbol file",
+                    "text": "file sys/compile/kernel",
+                    "ignoreFailures": false
+                }
+            ],
+            "preLaunchTask": "Run: QEMU (debug — waits for GDB)"
+        }
+    ]
+}

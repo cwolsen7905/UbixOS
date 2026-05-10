@@ -1,0 +1,86 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build: Kernel",
+            "type": "shell",
+            "command": "bmake kernel",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "owner": "c",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build: World",
+            "type": "shell",
+            "command": "bmake world",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build: All",
+            "type": "shell",
+            "command": "bmake kernel && bmake world",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Create Disk Image",
+            "type": "shell",
+            "command": "sh tools/mkimage.sh ubixos.img",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run: QEMU",
+            "type": "shell",
+            "command": "qemu-system-i386 -m 256 -drive file=ubixos.img,format=raw,if=ide -serial stdio -vga std",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run: QEMU (debug — waits for GDB)",
+            "type": "shell",
+            "command": "qemu-system-i386 -m 256 -drive file=ubixos.img,format=raw,if=ide -serial stdio -vga std -s -S",
+            "group": "test",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
