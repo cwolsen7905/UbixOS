@@ -21,10 +21,14 @@ bmake clean      # clean everything
 
 On **macOS**, install prerequisites first:
 ```sh
-brew install i386-elf-binutils i386-elf-gcc bmake qemu mtools grub
+brew install x86_64-elf-binutils x86_64-elf-gcc bmake qemu mtools i686-elf-grub
 ```
 
-The Makefile auto-detects Darwin and sets `CROSS_PREFIX=i386-elf-` so all tool invocations use the cross toolchain. On FreeBSD the prefix is empty and the host toolchain is used directly.
+The Makefile auto-detects Darwin and sets `CROSS_PREFIX=x86_64-elf-` with `CROSS_M32=-m32` so all compilations target i386. On FreeBSD the prefix is empty and the host toolchain is used directly.
+
+> **Note**: The project uses `x86_64-elf-gcc -m32` (not `i386-elf-gcc`) because the Homebrew `i386-elf-gcc` formula is not maintained. `x86_64-elf-gcc` supports `-m32` to produce i386 output. All kernel and world CFLAGS include `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow` because the kernel never sets `CR4.OSFXSR`; executing XMM instructions in kernel or userspace triggers `#UD`.
+
+The `bmake image` target calls `tools/mkimage.sh` which creates a single FAT32 raw disk image (`ubixos.img`) with GRUB embedded in sectors 1-2047 and all world files in the FAT32 partition starting at LBA 2048. Serial output from the kernel is available on COM1 (captured with `-serial file:serial.log` in the run target).
 
 ### Install targets
 
@@ -78,7 +82,7 @@ lwIP 2.0.3, jemalloc, gdtoa (float↔ASCII), TCC (Tiny C Compiler), tzcode, NetB
 
 ## Key Architectural Constraints
 
-**Kernel entry point**: `sys/init/start.S` (`_start`) parses the FreeBSD `bootinfo` struct from the bootloader, zeroes BSS, sets up GDT segments, and calls `vmm_init()` then `kmain()`. Any change to the boot protocol (e.g. multiboot) must update both the assembly entry and `get_bootargs`.
+**Kernel entry point**: `sys/init/start.S` (`_start`) supports both multiboot (GRUB) and the legacy FreeBSD `bootinfo` protocol. On the `feature/macos-build-qemu` branch, GRUB loads via multiboot; `start.S` detects the multiboot magic (`0x2BADB002` in `%eax`) and extracts boot device info before calling `vmm_init()` then `kmain()`. Any change to the boot protocol must update both the assembly entry and `get_bootargs`.
 
 **Syscall paths**: There are two syscall tables — native (`syscalls.c` / `sys_call.S`) and POSIX (`syscalls_posix.c` / `sys_call_posix.S`). New syscalls must be added to the correct table and have their number assigned. POSIX syscall numbers follow the FreeBSD ABI layout.
 
@@ -91,13 +95,25 @@ lwIP 2.0.3, jemalloc, gdtoa (float↔ASCII), TCC (Tiny C Compiler), tzcode, NetB
 ## VS Code Integration
 
 `.vscode/c_cpp_properties.json` provides two IntelliSense configurations:
-- **Kernel** — uses `sys/include/`, `-nostdinc`, `i386-elf-gcc` at `/opt/homebrew/bin/i386-elf-gcc`
+- **Kernel** — uses `sys/include/`, `-nostdinc`, `x86_64-elf-gcc` at `/opt/homebrew/bin/x86_64-elf-gcc`
 - **World** — uses `include/`, `include_old/`, lib headers
 
-On Intel Macs the compiler path is `/usr/local/bin/i386-elf-gcc` — update `c_cpp_properties.json` if IntelliSense shows spurious errors.
+On Intel Macs the compiler path is `/usr/local/bin/x86_64-elf-gcc` — update `c_cpp_properties.json` if IntelliSense shows spurious errors.
 
-Build tasks (`Ctrl+Shift+B`): Build Kernel, Build World, Build All, Create Disk Image, Run QEMU. The debug launch config connects `i386-elf-gdb` to QEMU's GDB stub on `localhost:1234`.
+Build tasks (`Ctrl+Shift+B`): Build Kernel, Build World, Build All, Create Disk Image, Run QEMU. The debug launch config connects `x86_64-elf-gdb` to QEMU's GDB stub on `localhost:1234`.
 
-## Active Feature Branch
+## Current State (feature/macos-build-qemu)
 
-`feature/macos-build-qemu` — adds macOS cross-compilation support and a QEMU disk image pipeline. The next pending step on that branch is adding a multiboot header to `sys/init/start.S` so GRUB can load the kernel directly (currently `start.S` only handles the FreeBSD bootinfo protocol).
+The `feature/macos-build-qemu` branch is fully functional for macOS development. The system boots to a login prompt under QEMU:
+
+1. GRUB2 (i686-elf-grub) loads the kernel via multiboot from a FAT32 disk image.
+2. Kernel mounts the FAT32 partition as `sys:/` using the IDE + FAT driver stack.
+3. `init` (PID 1) execs, forks `login`, which prompts for username/password.
+4. Default credentials: `root` / `user` (from `tools/userdb`).
+
+**Key lessons learned on this branch**:
+- Use `x86_64-elf-gcc -m32` — the `i386-elf-gcc` Homebrew formula is unmaintained.
+- All code (kernel and userland) must be compiled with `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow`. The kernel never sets `CR4.OSFXSR`; GCC can silently emit `movdqa`/XMM instructions for struct copies which trigger `#UD` fault 6.
+- `kprintf` outputs to both VGA and COM1 serial. Run `bmake run` and check `serial.log` for kernel debug output.
+- The FAT library (`sys/fs/fat/fat_access.c`) treats the partition-relative sector 0 as BPB; `hdRead` adds `parOffset` (LBA 2048) transparently — do not double-add the offset.
+- `sys:/etc/userdb` must exist on the image for `login` to authenticate. `tools/mkimage.sh` copies `tools/userdb` there automatically.
