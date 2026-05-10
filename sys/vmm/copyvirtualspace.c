@@ -84,8 +84,9 @@ void *vmm_copyVirtualSpace(pidType pid) {
   for (x = 0; x < PT_ENTRIES; x++) {
     if (((parentPageTable[x]) & PAGE_PRESENT) == PAGE_PRESENT) {
 
-      /* Set Page To COW In Parent And Child Space */
-      newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | (KERNEL_PAGE_DEFAULT | PAGE_COW));
+      /* Set Page To COW In Parent And Child Space — clear PAGE_WRITE so the
+       * CPU faults on write and the COW handler fires. */
+      newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | ((KERNEL_PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
       /* Increment The COW Counter For This Page */
       if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
@@ -94,7 +95,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
       else {
         /* Add Two If This Is The First Time Setting To COW */
         adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 2);
-        parentPageTable[x] |= PAGE_COW; // newPageTable[i];
+        parentPageTable[x] = (parentPageTable[x] & ~PAGE_WRITE) | PAGE_COW;
       }
 
     }
@@ -174,7 +175,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
       bzero(newPageTable, PAGE_SIZE);
 
       /* Set Parent And New Pages To COW */
-      for (i = 0; i < PD_ENTRIES; i++) {
+      for (i = 0; i < PT_ENTRIES; i++) {
 
         /* If Page Is Mapped */
         if ((parentPageTable[i] & PAGE_PRESENT) == PAGE_PRESENT) {
@@ -201,8 +202,9 @@ void *vmm_copyVirtualSpace(pidType pid) {
           }
           else {
 
-            /* Set Page To COW In Parent And Child Space */
-            newPageTable[i] = (((uint32_t) parentPageTable[i] & 0xFFFFF000) | (PAGE_DEFAULT | PAGE_COW));
+            /* Set Page To COW In Parent And Child Space — clear PAGE_WRITE so
+             * the CPU faults on write and the COW handler fires. */
+            newPageTable[i] = (((uint32_t) parentPageTable[i] & 0xFFFFF000) | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
             /* Increment The COW Counter For This Page */
             if (((uint32_t) parentPageTable[i] & PAGE_COW) == PAGE_COW) {
@@ -211,7 +213,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
             else {
               /* Add Two If This Is The First Time Setting To COW */
               adjustCowCounter(((uint32_t) parentPageTable[i] & 0xFFFFF000), 2);
-              parentPageTable[i] |= PAGE_COW; // newPageTable[i];
+              parentPageTable[i] = (parentPageTable[i] & ~PAGE_WRITE) | PAGE_COW;
             }
           }
         }

@@ -642,7 +642,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         /* Now Load Section To Memory */
                 kern_fseek(fd, programHeader[i].p_offset, 0);
                 //fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
-                kprintf("[read: 0x%X, 0x%X, 0x%X, 0x%X]", round_page(programHeader[i].p_memsz), programHeader[i].p_filesz, programHeader[i].p_vaddr, fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd));
+                fread((void*) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, fd);
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {
           for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000) {
@@ -892,7 +892,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 
   //data_addr = 0x0; //TEMP
-    kprintf("data_addr: 0x%X", data_addr);
   taskLDT->limitLow = (0xFFFFF & 0xFFFF);
   taskLDT->baseLow = (data_addr & 0xFFFF);
   taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
@@ -904,17 +903,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;
 
-  /* Debug: dump TSS segment selectors and LDT[1] descriptor */
-  kprintf("exec done pid=%i: cs=0x%X ss=0x%X ds=0x%X gs=0x%X ldt=0x%X ldAddr=0x%X\n",
-          _current->id,
-          (uint32_t)_current->tss.cs, (uint32_t)_current->tss.ss,
-          (uint32_t)_current->tss.ds, (uint32_t)_current->tss.gs,
-          (uint32_t)_current->tss.ldt, ldAddr);
-  {
-    uint8_t *ldt1 = (uint8_t*)(VMM_USER_LDT + 8);
-    kprintf("LDT[1]: %02X%02X %02X%02X %02X %02X %02X %02X\n",
-            ldt1[1], ldt1[0], ldt1[3], ldt1[2], ldt1[4], ldt1[5], ldt1[6], ldt1[7]);
-  }
 
   return (0x0);
 }

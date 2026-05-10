@@ -56,13 +56,9 @@ uint32_t ldEnable(const char *interp) {
     Elf_Addr addr;
 
     /* Open our dynamic linker */
-    kprintf("ldEnable: interp=[%s]\n", interp);
     ldFd = fopen(interp, "rb");
-    kprintf("ldEnable: fopen(interp)=%p\n", ldFd);
-
     if (ldFd == 0x0) {
         ldFd = fopen("sys:/libexec/ld.so", "rb");
-        kprintf("ldEnable: fopen(fallback)=%p\n", ldFd);
         if (ldFd == 0x0)
             return (0x0);
     }
@@ -109,15 +105,10 @@ uint32_t ldEnable(const char *interp) {
 
                 break;
             case PT_DYNAMIC:
-                kprintf("[%s:%i] PT_DYNAMIC", __FILE__, __LINE__);
-                /* Now Load Section To Memory */
-                //fseek(ldFd, programHeader[i].p_offset, 0x0);
-                //fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
+                /* NOT IMPLEMENTED: dynamic segment is processed by ld.so at runtime */
                 break;
             case PT_GNU_STACK:
-                kprintf("[%s:%i] PT_GNU_STACK", __FILE__, __LINE__);
-                /* Tells us if the stack should be executable.  Failsafe to executable
-                 until we add checking */
+                /* NOT IMPLEMENTED: stack executable flag not yet enforced */
                 break;
             default:
                 kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].p_type);

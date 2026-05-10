@@ -44,13 +44,15 @@ static elfDynSym *binaryRelSymTab = 0x0;
 static Elf32_Dyn *binaryElf32_Dyn = 0x0;
 static elfPltInfo *binaryElfRelDyn = 0x0;
 static elfPltInfo *binaryElfRel = 0x0;
+static int binaryRel = 0x0;
+static int binaryRelDyn = 0x0;
 
 uint32_t ld( uint32_t got2, uint32_t entry ) {
   int i = 0x0;
   int x = 0x0;
   //int y = 0x0;
-  int rel = 0x0;
-  int relDyn = 0x0;
+  int rel = binaryRel;
+  int relDyn = binaryRelDyn;
   uint32_t *reMap = 0x0;
   FILE *binaryFd = 0x0;
 
@@ -104,6 +106,7 @@ uint32_t ld( uint32_t got2, uint32_t entry ) {
           //        relDyn = i;
           //    else
           rel = i;
+          binaryRel = i;
           break;
         case 11:
           if ( binaryRelSymTab == 0x0 ) {

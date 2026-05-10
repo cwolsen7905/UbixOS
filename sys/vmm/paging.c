@@ -612,22 +612,8 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
             adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
             pageTableSrc[y] = 0x0;
           }
-          /*
-           else if ((pageTableSrc[y] & PAGE_STACK) == PAGE_STACK) {
-           //TODO: We need to fix this so we can clean the stack!
-           //kprintf("Page Stack!: 0x%X", (x * 0x400000) + (y * 0x1000));
-           // pageTableSrc[y] = 0x0;
-           //MrOlsen (2016-01-18) NOTE: WHat should I Do Here? kprintf( "STACK: (%i:%i)", x, y );
-           }
-           */
           else {
-            /*
-             int vmmMemoryMapIndex = ((pageTableSrc[y] & 0xFFFFF000) / 4096);
-             vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
-             vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
-             vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
-             systemVitals->freePages++;
-             */
+            freePage((uint32_t) pageTableSrc[y] & 0xFFFFF000);
             pageTableSrc[y] = 0x0;
           }
         }

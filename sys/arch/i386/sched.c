@@ -210,7 +210,6 @@ int sched_deleteTask(pidType id) {
 
   /* Checking each task from the prio queue */
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
-        kprintf("[%s:%i] %i:%i", __FILE__, __LINE__, tmpTask->id, id);
     if (tmpTask->id == id) {
       if (tmpTask->prev != 0x0)
         tmpTask->prev->next = tmpTask->next;
@@ -218,7 +217,6 @@ int sched_deleteTask(pidType id) {
         tmpTask->next->prev = tmpTask->prev;
       if (taskList == tmpTask)
         taskList = tmpTask->next;
-            kprintf("[%s:%i]: ??\n", __FILE__, __LINE__);
       return (0x0);
     }
   }

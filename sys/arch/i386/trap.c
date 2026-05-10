@@ -109,10 +109,6 @@ void trap(struct trapframe *frame) {
   cr2 = rcr2();
 
     // kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2, _current->tss.eip, _current->tss.ldt);
-  if (_current->id == 7)
-    while (1)
-      asm("nop");
-
   if ((frame->tf_eflags & PSL_I) == 0) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
       kpanic("INT OFF! USER");
@@ -124,7 +120,11 @@ void trap(struct trapframe *frame) {
     }
   }
 
+  /* Suppress verbose print for expected user-mode COW write faults
+   * (trap 14, ERR=0x7: present+write+user).  Print everything else. */
+  if (!(frame->tf_trapno == 0xc && frame->tf_err == 0x7 && SEL_GET_PL(frame->tf_cs) == SEL_PL_USER))
     kprintf("trap _code: %i(0x%X), EIP: 0x%X, CS: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, frame->tf_cs, cr2);
+
   if (frame->tf_trapno == 0xc) {
     vmm_pageFault(frame, cr2);
   }

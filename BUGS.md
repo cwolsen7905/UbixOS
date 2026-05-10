@@ -39,6 +39,17 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 | ~~BUG-VMM-05~~ | [sys/vmm/paging.c](sys/vmm/paging.c) | **FIXED** `vmm_mapFromTask`: added NULL check on `schedFindTask(pid)` result before dereferencing `child->tss.cr3`. Returns NULL on failure. |
 | ~~BUG-VMM-06~~ | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | **FIXED** `adjustCowCounter`: added bounds check — logs error and returns -1 if `baseAddr / PAGE_SIZE` is outside `[0, numPages)`. |
 
+## COW / Fork Memory (identified 2026-05-10, fixed 2026-05-10)
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-COW-01~~ | [sys/vmm/copyvirtualspace.c](sys/vmm/copyvirtualspace.c) | **FIXED** COW PTEs retained `PAGE_WRITE` — CPU allowed writes without faulting, so COW never fired. Both parent and child PTEs now have `PAGE_WRITE` masked out when marked COW (`(PAGE_DEFAULT & ~PAGE_WRITE) \| PAGE_COW` and `(KERNEL_PAGE_DEFAULT & ~PAGE_WRITE) \| PAGE_COW`). Parent PTEs also had `\|= PAGE_COW` changed to clear the write bit at the same time. |
+| ~~BUG-COW-02~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** COW resolution remapped the new page with `memAddr & 0xFFF` (the in-page byte offset of the fault address) as the PTE flags instead of `PAGE_DEFAULT`. Wrong bits meant the new page could end up marked write-through, cache-disabled, dirty, or still COW. Changed to `PAGE_DEFAULT`. |
+| ~~BUG-COW-03~~ | [sys/kernel/endtask.c](sys/kernel/endtask.c) | **FIXED (partial)** `endTask` now calls `vmm_cleanVirtualSpace(VMM_USER_START)` before `sched_yield()`, while the dying task is still `_current` and `PT_BASE_ADDR` reflects its own page tables. This decrements COW counters for shared pages and frees private pages in the user region before the scheduler switches away — matching the FreeBSD/Linux approach of tearing down the address space from the dying task's context. TODO: extend to the kernel-mapped low region (PD index 1) and kernel stack, after which `vmm_freeProcessPages` in systemTask can be simplified or removed. |
+| ~~BUG-COW-04~~ | [sys/vmm/copyvirtualspace.c](sys/vmm/copyvirtualspace.c) | **FIXED** Inner page-table loop in the user-space COW region used `PD_ENTRIES` instead of `PT_ENTRIES` as the bound. Both are 1024 (same value) so no runtime effect, but semantically wrong. Changed to `PT_ENTRIES`. |
+| ~~BUG-COW-06~~ | [sys/vmm/paging.c](sys/vmm/paging.c) | **FIXED** `vmm_cleanVirtualSpace`: the `else` branch for non-COW present pages zeroed the PTE without calling `freePage()` — the physical page was never returned to the free pool, leaking one page per mapped non-COW page every time a process called `exec`. Replaced the commented-out open-coded free block with `freePage(pageTableSrc[y] & 0xFFFFF000)`. |
+| ~~BUG-COW-05~~ | [sys/vmm/page_fault.S](sys/vmm/page_fault.S) | **FIXED** `_vmm_pageFault`: after `call trap` returned, the stub used `call _popFS` to reach the cleanup path. `call` pushes a return address on the stack, shifting the entire `pop %gs/%fs/%es/%ds; popa` sequence off by one slot — GS and FS got kernel code/stack addresses, and all general-purpose registers were misassigned. Before BUG-COW-01 (making COW pages read-only) this path was dead: `trap()` never returned normally from a COW fault. Once COW faults became real, every write to a shared page corrupted the returning task's register state. Fixed by replacing `call _popFS` with `add $0x4,%esp; jmp _popFS` to discard the frame-pointer argument without pushing an extra word. |
+
 ---
 
 ## ld.so (identified 2026-05-10)

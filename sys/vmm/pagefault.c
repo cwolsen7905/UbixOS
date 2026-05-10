@@ -61,8 +61,6 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uint32_t eip = frame->tf_eip;
   uint32_t memAddr = cr2;
 
-//MrOlsen 2017-12-15 -
-  kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X, PID: %i\n", cr2, frame->tf_eip, frame->tf_err, _current->id);
 
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
@@ -112,8 +110,8 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
     }
     /* Adjust The COW Counter For Physical Page */
     adjustCowCounter(((uInt32) pageTable[pageTableIndex] & 0xFFFFF000), -1);
-    /* Remap In New Page */
-    pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | (memAddr & 0xFFF));
+    /* Remap In New Page — use PAGE_DEFAULT, not the fault address offset */
+    pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | PAGE_DEFAULT);
     /* Unlink From Memory Map Allocated Page */
     vmm_unmapPage((uInt32) dst, 1);
   }
@@ -160,6 +158,5 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
 
   /* Release the spin lock */
   spinUnlock(&pageFaultSpinLock);
-  kprintf("CR2-RET");
   return;
 }
