@@ -26,7 +26,7 @@ TMP_PATH=${PATH}
 ROOT=/ubixos
 ROOT_FAT=/ubixos_fat
 
-DISK_IMAGE?=ubixos.img
+DISK_IMAGE?=ubixos.iso
 
 all: kernel world install-kernel install-world
 
@@ -36,7 +36,7 @@ image:
 
 # Boot the disk image in QEMU.
 run:
-	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide -serial stdio -vga std
+	qemu-system-i386 -m 256 -cdrom ${DISK_IMAGE} -serial stdio -vga std
 
 kernel:
 	@cd sys;${MAKE}
