@@ -94,8 +94,11 @@ typedef	__uint_fast16_t		uint_fast16_t;
 typedef	__uint_fast32_t		uint_fast32_t;
 typedef	__uint_fast64_t		uint_fast64_t;
 
+#ifndef _INTMAX_T_DECLARED
 typedef	__intmax_t		intmax_t;
 typedef	__uintmax_t		uintmax_t;
+#define _INTMAX_T_DECLARED
+#endif
 
 #ifndef _INTPTR_T_DECLARED
 typedef	__intptr_t		intptr_t;

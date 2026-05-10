@@ -126,10 +126,16 @@ typedef __time_t time_t;
 #define _TIME_T_DECLARED
 #endif
 
+#ifndef _INTMAX_T_DECLARED
 typedef uint32_t uintmax_t;
 typedef int32_t intmax_t;
+#define _INTMAX_T_DECLARED
+#endif
 typedef int32_t ptrdiff_t;
+#ifndef _INTPTR_T_DECLARED
 typedef uint32_t uintptr_t;
+#define _INTPTR_T_DECLARED
+#endif
 
 #define __ULONG_MAX     0xffffffffUL
 #define __USHRT_MAX     0xffff          /* max value for an unsigned short */
