@@ -231,7 +231,7 @@ uint32_t vmm_findFreePage(pidType pid) {
 
   spinLock(&vmmSpinLock);
 
-  for (i = 0; i <= numPages; i++) {
+  for (i = 0; i < numPages; i++) {
 
     /*
      * If We Found A Free Page Set It To Not Available After That Set Its Own
@@ -310,6 +310,11 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
   int vmmMemoryMapIndex = (baseAddr / PAGE_SIZE);
 
   assert((baseAddr & 0xFFF) == 0x0);
+
+  if (vmmMemoryMapIndex < 0 || vmmMemoryMapIndex >= numPages) {
+    kprintf("adjustCowCounter: addr 0x%X out of bounds (index %i, numPages %i)\n", baseAddr, vmmMemoryMapIndex, numPages);
+    return (-1);
+  }
 
   spinLock(&vmmSpinLock);
   /* Adjust COW Counter */

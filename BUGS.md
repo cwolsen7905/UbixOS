@@ -28,13 +28,13 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 
 ---
 
-## VMM (identified 2026-05-10)
+## VMM (identified 2026-05-10, fixed 2026-05-10)
 
 | ID | File | Description |
 |----|------|-------------|
-| BUG-VMM-01 | [sys/vmm/vmm_memory.c:234](sys/vmm/vmm_memory.c#L234) | `vmm_findFreePage`: loop condition `i <= numPages` is off-by-one — reads `vmmMemoryMap[numPages]` which is one past the end of the array. Silent memory corruption on every page allocation. Fix: `i < numPages`. |
-| BUG-VMM-02 | [sys/vmm/pagefault.c:86](sys/vmm/pagefault.c#L86) | `vmm_pageFault`: double `spinUnlock` when the faulting address has no page table. The `if` branch at line 86 calls `spinUnlock` then `endTask`. After the if/else block, lines 140-146 unconditionally call `spinUnlock` again. If `endTask` returns before a context switch the lock is released twice, corrupting spinlock state for all future page faults. |
-| BUG-VMM-03 | [sys/vmm/pagefault.c:101](sys/vmm/pagefault.c#L101) | `vmm_pageFault`: COW path does not check if `vmm_getFreeVirtualPage` returned NULL before writing `dst[i] = src[i]`. If the system is out of virtual pages this immediately faults at address 0 inside the fault handler — unrecoverable. |
-| BUG-VMM-04 | [sys/vmm/unmappage.c:110](sys/vmm/unmappage.c#L110) | `vmm_unmapPages`: the inner loop `for (y = tI; y < (tI + pages); y++)` has no bound check against `PT_ENTRIES` (1024). A range that crosses a page table boundary writes past index 1023 into the next page table. Also missing the CR3 TLB flush that `vmm_unmapPage` performs, leaving stale entries in the TLB after the unmap. |
-| BUG-VMM-05 | [sys/vmm/paging.c:386](sys/vmm/paging.c#L386) | `vmm_mapFromTask`: `schedFindTask(pid)` result is used immediately at line 391 (`child->tss.cr3`) with no NULL check. If the target pid has already exited or is invalid, this dereferences NULL. |
-| BUG-VMM-06 | [sys/vmm/vmm_memory.c:310](sys/vmm/vmm_memory.c#L310) | `adjustCowCounter`: computes `vmmMemoryMapIndex = baseAddr / PAGE_SIZE` with no bounds check against `numPages`. A corrupt PTE or high physical address (e.g. MMIO range) passed in from the page fault handler produces an out-of-bounds write into the memory map array. |
+| ~~BUG-VMM-01~~ | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | **FIXED** `vmm_findFreePage`: loop `i <= numPages` was off-by-one, reading one past end of `vmmMemoryMap`. Changed to `i < numPages`. |
+| ~~BUG-VMM-02~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** `vmm_pageFault`: double `spinUnlock` when page table was missing. Restructured if/else into early-return branches so each path unlocks exactly once. |
+| ~~BUG-VMM-03~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** `vmm_pageFault`: COW path now NULL-checks `vmm_getFreeVirtualPage` result before copying. Unlocks and calls `endTask` on failure. |
+| ~~BUG-VMM-04~~ | [sys/vmm/unmappage.c](sys/vmm/unmappage.c) | **FIXED** `vmm_unmapPages`: rewrote as a loop over `vmm_unmapPage` calls, inheriting its PT-boundary safety, TLB flush, and free/keep flag logic. |
+| ~~BUG-VMM-05~~ | [sys/vmm/paging.c](sys/vmm/paging.c) | **FIXED** `vmm_mapFromTask`: added NULL check on `schedFindTask(pid)` result before dereferencing `child->tss.cr3`. Returns NULL on failure. |
+| ~~BUG-VMM-06~~ | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | **FIXED** `adjustCowCounter`: added bounds check — logs error and returns -1 if `baseAddr / PAGE_SIZE` is outside `[0, numPages)`. |

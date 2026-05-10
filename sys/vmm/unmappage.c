@@ -99,16 +99,12 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags) {
 
  ************************************************************************/
 void vmm_unmapPages(void *ptr, uint32_t size, unmapFlags_t flags) {
-  uInt32 baseAddr = (uInt32) ptr & 0xFFFFF000;
-  uInt32 dI = 0x0, tI = 0x0;
-  uInt32 y = 0x0;
-  uInt32 *pageTable = 0x0;
+  uInt32 addr = (uInt32) ptr & 0xFFFFF000;
+  uInt32 end  = addr + (((size + 4095) / 4096) * 4096);
 
-  dI = (baseAddr / (1024 * 4096));
-  tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
-  pageTable = (uInt32 *) (PT_BASE_ADDR + (4096 * dI));
-  for (y = tI; y < (tI + ((size + 4095) / 4096)); y++) {
-    pageTable[y] = 0x0;
+  while (addr < end) {
+    vmm_unmapPage(addr, flags);
+    addr += 4096;
   }
   return;
 }

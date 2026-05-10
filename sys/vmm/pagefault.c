@@ -87,56 +87,64 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
     kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
     spinUnlock(&pageFaultSpinLock);
     endTask(_current->id);
+    return;
+  }
+
+  /* Set pageTable To Point To Virtual Address Of Page Table */
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * pageDirectoryIndex));
+
+  /* Test if this is a COW on page */
+  if (((uint32_t) pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
+    /* Set Src To Base Address Of Page To Copy */
+    src = (uInt32 *) (memAddr & 0xFFFFF000);
+    /* Allocate A Free Page For Destination */
+    dst = (uInt32 *) vmm_getFreeVirtualPage(_current->id, 1, 0x1);
+    if (dst == 0x0) {
+      kprintf("vmm_pageFault: out of virtual pages during COW at 0x%X\n", memAddr);
+      spinUnlock(&pageFaultSpinLock);
+      endTask(_current->id);
+      return;
+    }
+    /* Copy Memory */
+    for (i = 0; i < PD_ENTRIES; i++) {
+      dst[i] = src[i];
+    }
+    /* Adjust The COW Counter For Physical Page */
+    adjustCowCounter(((uInt32) pageTable[pageTableIndex] & 0xFFFFF000), -1);
+    /* Remap In New Page */
+    pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | (memAddr & 0xFFF));
+    /* Unlink From Memory Map Allocated Page */
+    vmm_unmapPage((uInt32) dst, 1);
+  }
+  else if (pageTable[pageTableIndex] != 0x0) {
+    kprintf("Security failed pagetable not user permission\n");
+    kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
+    kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
+    kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
+    kpanic("SIT HERE FOR NOW");
+    die_if_kernel("SEGFAULT", frame, 0xC);
+    spinUnlock(&pageFaultSpinLock);
+    endTask(_current->id);
+    return;
+  }
+  else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
+    kprintf("THIS IS BAD");
+    die_if_kernel("SEGFAULT", frame, 0xC);
+    pageTable[pageTableIndex] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
   }
   else {
-    /* Set pageTable To Point To Virtual Address Of Page Table */
-    pageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * pageDirectoryIndex));
-
-    /* Test if this is a COW on page */
-    if (((uint32_t) pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
-      /* Set Src To Base Address Of Page To Copy */
-      src = (uInt32 *) (memAddr & 0xFFFFF000);
-      /* Allocate A Free Page For Destination */
-      /* USE vmInfo */
-      dst = (uInt32 *) vmm_getFreeVirtualPage(_current->id, 1, 0x1);
-      /* Copy Memory */
-      for (i = 0; i < PD_ENTRIES; i++) {
-        dst[i] = src[i];
-      }
-      /* Adjust The COW Counter For Physical Page */
-      adjustCowCounter(((uInt32) pageTable[pageTableIndex] & 0xFFFFF000), -1);
-      /* Remap In New Page */
-      pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | (memAddr & 0xFFF));
-      /* Unlink From Memory Map Allocated Page */
-      vmm_unmapPage((uInt32) dst, 1);
-    }
-    else if (pageTable[pageTableIndex] != 0x0) {
-      kprintf("Security failed pagetable not user permission\n");
-      kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
-      kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
-      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
-      kpanic("SIT HERE FOR NOW");
-      die_if_kernel("SEGFAULT", frame, 0xC);
-      spinUnlock(&pageFaultSpinLock);
-      endTask(_current->id);
-    }
-    else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
-      kprintf("THIS IS BAD");
-      die_if_kernel("SEGFAULT", frame, 0xC);
-      pageTable[pageTableIndex] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
-    }
-    else {
-      spinUnlock(&pageFaultSpinLock);
-      /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
-      kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
-      kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
-      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", memAddr, esp, _current->id, eip);
-      die_if_kernel("SEGFAULT", frame, 0xC);
-      kpanic("SIT HERE FOR NOW");
-      kprintf("Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000);
-      endTask(_current->id);
-    }
+    /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
+    kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
+    kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
+    kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", memAddr, esp, _current->id, eip);
+    die_if_kernel("SEGFAULT", frame, 0xC);
+    kpanic("SIT HERE FOR NOW");
+    kprintf("Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000);
+    spinUnlock(&pageFaultSpinLock);
+    endTask(_current->id);
+    return;
   }
+
   asm volatile(
     "movl %cr3,%eax\n"
     "movl %eax,%cr3\n"

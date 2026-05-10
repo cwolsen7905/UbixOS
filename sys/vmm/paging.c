@@ -384,6 +384,11 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   offset = (uint32_t) ptr & 0xFFF;
   baseAddr = (uint32_t) ptr & 0xFFFFF000;
   child = schedFindTask(pid);
+  if (child == 0x0) {
+    kprintf("vmm_mapFromTask: pid %i not found\n", pid);
+    return (0x0);
+  }
+
   //Calculate The Page Table Index And Page Directory Index
   dI = (baseAddr / (1024 * 4096));
   tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
