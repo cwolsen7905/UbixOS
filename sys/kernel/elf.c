@@ -61,7 +61,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
   fread(binaryHeader, sizeof(Elf32_Ehdr), 1, exec_fd);
 
   /* Check If App Is A Real Application */
-  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
+  if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F')) {
     ret = -1;
     goto failed;
   }

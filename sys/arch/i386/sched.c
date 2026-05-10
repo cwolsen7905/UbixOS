@@ -86,6 +86,7 @@ void sched() {
   uint32_t memAddr = 0x0;
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
+  kTask_t *prevTask = 0x0;
 
   if (spinTryLock(&schedulerSpinLock))
     return;
@@ -100,6 +101,7 @@ void sched() {
 
     if (tmpTask->state == READY) {
       _current->state = (_current->state == DEAD) ? DEAD : READY;
+      prevTask = _current;
       _current = tmpTask;
       break;
     }
@@ -147,7 +149,13 @@ void sched() {
 
     spinUnlock(&schedulerSpinLock);
 
-    asm("sti");
+    /* Ensure the outgoing task resumes with interrupts enabled.
+     * ljmp saves current EFLAGS (IF=0 from cli) into prevTask's TSS.
+     * Setting IF here means when prevTask is next scheduled, it wakes
+     * with interrupts on regardless of whether an iret fixes it up. */
+    if (prevTask != 0x0)
+      prevTask->tss.eflags |= 0x200;
+
     asm("ljmp $0x20,$0");
   }
   else {
@@ -168,6 +176,12 @@ kTask_t *schedNewTask() {
     kpanic("Error: schedNewTask() - kmalloc failed trying to initialize a new task struct\n");
 
   memset(tmpTask, 0x0, sizeof(kTask_t));
+
+  tmpTask->kernelStack = (uint32_t *) kmalloc(4096);
+  if (tmpTask->kernelStack == 0x0)
+    kpanic("Error: schedNewTask() - kmalloc failed allocating kernel stack\n");
+  tmpTask->tss.esp0 = (uint32_t) tmpTask->kernelStack + 4096;
+  tmpTask->tss.ss0  = 0x10;
 
   /* Filling in tasks attrs */
   tmpTask->usedMath = 0x0;

@@ -313,9 +313,23 @@ int sprintf(char *buf, const char *fmt, ...) {
   va_list args;
   int i;
   va_start(args, fmt);
-  /* i = vsprintf( buf, fmt, args ); */
   i = kvprintf(fmt, NULL, buf, 10, args);
   va_end(args);
+  return (i);
+}
+
+int snprintf(char *buf, size_t size, const char *fmt, ...) {
+  char tmp[2048];
+  va_list args;
+  int i;
+  va_start(args, fmt);
+  i = kvprintf(fmt, NULL, tmp, 10, args);
+  va_end(args);
+  if (size > 0) {
+    size_t n = (size_t)i < size - 1 ? (size_t)i : size - 1;
+    memcpy(buf, tmp, n);
+    buf[n] = '\0';
+  }
   return (i);
 }
 

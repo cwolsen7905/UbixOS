@@ -45,6 +45,11 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
 
   struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
 
+  if (pipeDesc == 0x0) {
+    thr->td_retval[0] = -1;
+    return (-1);
+  }
+
   memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
 
   error = falloc(thr, &nfp1, &fd1);

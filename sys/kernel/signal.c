@@ -80,13 +80,16 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *args) {
   td->td_retval[0] = -1;
 
+  if (args->sig < 1 || (size_t)args->sig >= (sizeof(td->sigact) / sizeof(td->sigact[0]))) {
+    return (0);
+  }
+
   if (args->oact != 0x0) {
     memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
     td->td_retval[0] = 0;
   }
 
   if (args->act != 0x0) {
-    //kprintf("SA: %i", args->sig);
     memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
     td->td_retval[0] = 0;
   }

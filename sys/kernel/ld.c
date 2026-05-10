@@ -56,10 +56,13 @@ uint32_t ldEnable(const char *interp) {
     Elf_Addr addr;
 
     /* Open our dynamic linker */
+    kprintf("ldEnable: interp=[%s]\n", interp);
     ldFd = fopen(interp, "rb");
+    kprintf("ldEnable: fopen(interp)=%p\n", ldFd);
 
     if (ldFd == 0x0) {
         ldFd = fopen("sys:/libexec/ld.so", "rb");
+        kprintf("ldEnable: fopen(fallback)=%p\n", ldFd);
         if (ldFd == 0x0)
             return (0x0);
     }
@@ -74,7 +77,7 @@ uint32_t ldEnable(const char *interp) {
     assert(programHeader);
 
     kern_fseek(ldFd, binaryHeader->e_phoff, 0);
-    fread(programHeader, sizeof(Elf_Shdr), binaryHeader->e_phnum, ldFd);
+    fread(programHeader, sizeof(*programHeader), binaryHeader->e_phnum, ldFd);
 
     sectionHeader = (Elf_Shdr*) kmalloc(sizeof(Elf_Shdr) * binaryHeader->e_shnum);
 
@@ -122,43 +125,15 @@ uint32_t ldEnable(const char *interp) {
         }
     }
 
+    /* Pass 1: load dynstr and dynsym before processing relocations */
     for (i = 0x0; i < binaryHeader->e_shnum; i++) {
         switch (sectionHeader[i].sh_type) {
             case SHT_STRTAB:
                 if (!strcmp((shStr + sectionHeader[i].sh_name), ".dynstr")) {
                     dynStr = (char*) kmalloc(sectionHeader[i].sh_size);
-                    //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-                    //fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
+                    kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+                    fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
                 }
-                break;
-            case SHT_REL:
-                elfRel = (Elf_Rel*) kmalloc(sectionHeader[i].sh_size);
-                //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-                //fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
-
-                for (x = 0x0; x < sectionHeader[i].sh_size / sizeof(Elf_Rel); x++) {
-                    rel = ELF32_R_SYM(elfRel[x].r_info);
-                    reMap = (uint32_t*) ((uint32_t) LD_START + elfRel[x].r_offset);
-                    switch (ELF32_R_TYPE(elfRel[x].r_info)) {
-                        case R_386_32:
-                            *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value);
-                            break;
-                        case R_386_PC32:
-                            *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value) - (uint32_t) reMap;
-                            break;
-                        case R_386_RELATIVE:
-                            *reMap += (uint32_t) LD_START;
-                            break;
-                        case R_386_NONE:
-                            kprintf("[%s:%i] R_386_NONE", __FILE__, __LINE__);
-                            break;
-                        default:
-                            kprintf("[0x%X][0x%X](%i)[%s]\n", elfRel[x].r_offset, elfRel[x].r_info, rel, elfGetRelType(ELF32_R_TYPE(elfRel[x].r_info)));
-                            kprintf("relTab [%s][0x%X][0x%X]\n", dynStr + relSymTab[rel].st_name, relSymTab[rel].st_value, relSymTab[rel].st_name);
-                            break;
-                    }
-                }
-                kfree(elfRel);
                 break;
             case SHT_DYNSYM:
                 relSymTab = (Elf_Sym*) kmalloc(sectionHeader[i].sh_size);
@@ -166,22 +141,51 @@ uint32_t ldEnable(const char *interp) {
                 fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
                 sym = i;
                 break;
-            case SHT_PROGBITS:
-                kprintf("[%s:%i] SHT_PROGBITS", __FILE__, __LINE__);
-                break;
-            case SHT_HASH:
-                kprintf("[%s:%i] SHT_HASH", __FILE__, __LINE__);
-                break;
-            case SHT_DYNAMIC:
-                kprintf("[%s:%i] SHT_DYNAMIC", __FILE__, __LINE__);
-                break;
-            case SHT_SYMTAB:
-                kprintf("[%s:%i] SHT_SYMTAB", __FILE__, __LINE__);
-                break;
             default:
-                kprintf("Invalid: %i]", sectionHeader[i].sh_type);
                 break;
         }
+    }
+
+    /* Pass 2: apply relocations now that symtab is loaded */
+    for (i = 0x0; i < binaryHeader->e_shnum; i++) {
+        if (sectionHeader[i].sh_type != SHT_REL)
+            continue;
+        elfRel = (Elf_Rel*) kmalloc(sectionHeader[i].sh_size);
+        kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+        fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
+
+        for (x = 0x0; x < (int)(sectionHeader[i].sh_size / sizeof(Elf_Rel)); x++) {
+            rel = ELF32_R_SYM(elfRel[x].r_info);
+            reMap = (uint32_t*) ((uint32_t) LD_START + elfRel[x].r_offset);
+            switch (ELF32_R_TYPE(elfRel[x].r_info)) {
+                case R_386_32:
+                    if (relSymTab != 0x0)
+                        *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value);
+                    break;
+                case R_386_PC32:
+                    if (relSymTab != 0x0)
+                        *reMap += ((uint32_t) LD_START + relSymTab[rel].st_value) - (uint32_t) reMap;
+                    break;
+                case R_386_RELATIVE:
+                    *reMap += (uint32_t) LD_START;
+                    break;
+                case R_386_GLOB_DAT:
+                    if (relSymTab != 0x0)
+                        *reMap = (uint32_t) LD_START + relSymTab[rel].st_value;
+                    break;
+                case R_386_JMP_SLOT:
+                    if (relSymTab != 0x0)
+                        *reMap = (uint32_t) LD_START + relSymTab[rel].st_value;
+                    break;
+                case R_386_NONE:
+                    break;
+                default:
+                    kprintf("ldEnable: unhandled reloc %s at 0x%X\n",
+                        elfGetRelType(ELF32_R_TYPE(elfRel[x].r_info)), elfRel[x].r_offset);
+                    break;
+            }
+        }
+        kfree(elfRel);
     }
 
     i = binaryHeader->e_entry + LD_START;

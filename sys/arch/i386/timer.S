@@ -46,10 +46,12 @@ timerInt:
 next:                     
   movl (%ecx),%eax        /* Test If quantum Has Passed If So Then    */
   movl 8(%ecx),%ebx       /* We Can CALL sched                        */
-  xor %edx,%edx           
-  div %ebx                
-  test %edx,%edx          
-  jnz done                
+  test %ebx,%ebx          /* Guard: skip if quantum == 0              */
+  jz done
+  xor %edx,%edx
+  div %ebx
+  test %edx,%edx
+  jnz done
 /*
 push %ds
 push %es

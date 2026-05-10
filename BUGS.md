@@ -53,3 +53,67 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 | ~~BUG-LD-06~~ | [libexec/ld/main.c](libexec/ld/main.c) | **FIXED** `ld`: `lib_s` grown to 64 entries (defined as `LIB_S_MAX` in `ld.h`). Bounds check added before each `lib_s[lib_c++]` write. |
 | ~~BUG-LD-07~~ | [libexec/ld/main.c](libexec/ld/main.c) | **FIXED** `ld`: guard added — returns 0x0 with an error message if `rel == 0` (no SHT_REL section found) before attempting to use it as a section index. |
 | ~~BUG-LD-08~~ | [libexec/ld/findfunc.c](libexec/ld/findfunc.c) | **FIXED** `ldFindFunc`: removed backwards NULL check, bad printf (3 args/2 specifiers), and unreachable `break` after `return`. |
+
+---
+
+## Scheduler / Fork (identified 2026-05-10)
+
+### Crashes / Correctness
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-SCHED-01~~ | [sys/arch/i386/fork.c:120-125](sys/arch/i386/fork.c) | **FIXED** `parent` and `children++` moved to before `newProcess->state = FORK`. Also fixed BUG-SCHED-02 in the same edit: spin-wait now reads through `volatile kTask_t *`. |
+| ~~BUG-SCHED-02~~ | [sys/arch/i386/fork.c:122](sys/arch/i386/fork.c) | **FIXED** Spin-wait condition changed to `((volatile kTask_t *)newProcess)->state == FORK`, matching the `volatile` workaround already used in `fork_copyProcess`. Fixed alongside BUG-SCHED-01. |
+| ~~BUG-SCHED-03~~ | [sys/arch/i386/fork.c:85](sys/arch/i386/fork.c) | **FIXED** `schedNewTask()` now allocates a dedicated 4096-byte kernel stack per task via `kmalloc`, stores the base in `kTask_t.kernelStack`, and sets `tss.esp0`/`tss.ss0` there. `fork.c`, `execFile`, and `execThread` no longer override `esp0` — all tasks get their own ring-0 stack from the point of allocation. |
+| ~~BUG-SCHED-04~~ | [sys/kernel/syscall_posix.c:67](sys/kernel/syscall_posix.c) | **FIXED** Removed the `while(1) kprintf("MFR")` debug block. Syscall 89 (`getgroups`) now falls through to the normal `SYSCALL_NOTIMP` path and returns `EINVAL`. |
+| ~~BUG-SCHED-05~~ | [sys/arch/i386/i386_exec.c:311](sys/arch/i386/i386_exec.c) | **FIXED** Changed `&&` to `\|\|` in both ELF magic checks in `i386_exec.c` (lines 309 and 571 — `execFile` and `sys_execve`). |
+
+### Races
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-SCHED-06~~ | [sys/arch/i386/sched.c:150-151](sys/arch/i386/sched.c) | **FIXED** The `asm("sti")` before `ljmp` was load-bearing: without it, `ljmp` saves EFLAGS with `IF=0` (from the preceding `cli`) into the outgoing task's TSS, causing that task to resume with interrupts permanently disabled (breaking keyboard/timer). Fixed by saving `prevTask = _current` before the scheduler update, then setting `prevTask->tss.eflags |= 0x200` (IF bit) after `spinUnlock` and before `ljmp`. The outgoing task now always resumes with interrupts enabled, with no `sti` race window. |
+| ~~BUG-SCHED-07~~ | [sys/arch/i386/timer.S:50](sys/arch/i386/timer.S) | **FIXED** Added `test %ebx,%ebx; jz done` guard before the `div %ebx` in the quantum check. Timer interrupts that fire before `vitals_init()` sets `quantum` now skip the divide entirely instead of faulting. |
+
+### Correctness
+
+| ID | File | Description |
+|----|------|-------------|
+| BUG-SCHED-08 | [sys/arch/i386/fork.c:81](sys/arch/i386/fork.c) | **Fork overwrites terminal owner to child before parent gets its return value.** `_current->term` and `newProcess->term` point to the same `tty_term` struct. `newProcess->term->owner = newProcess->id` immediately changes the terminal owner to the child's PID. Any code that gates on `term->owner` for terminal access (input dispatch, signal delivery) will misidentify the parent as a foreign process from this point forward — including during the remaining lines of `sys_fork` itself. Fix: do not copy `term` to the child directly; let the child inherit or acquire terminal ownership after exec via `setsid()`/`tcsetpgrp()`, or at minimum set `newProcess->term->owner` only after the fork spin-wait, once the parent has returned. |
+
+---
+
+## Kernel (identified 2026-05-10)
+
+### Crashes / Exploitable
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-KRN-01~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `sys_lseek` and `sys_fchdir`: moved NULL check before `fdd->fd` dereference; returns -1 early on invalid fd. |
+| ~~BUG-KRN-02~~ | [sys/kernel/kern_pipe.c](sys/kernel/kern_pipe.c) | **FIXED** `sys_pipe2`: added NULL check on `kmalloc` result before `memset`; returns -1 on OOM. |
+| ~~BUG-KRN-03~~ | [sys/kernel/descrip.c](sys/kernel/descrip.c) | **FIXED** `close` and `fcntl`: added `fd < 0 \|\| fd >= O_FILES` bounds check before array access; returns -1 on bad fd. |
+| ~~BUG-KRN-04~~ | [sys/kernel/elf.c](sys/kernel/elf.c) | **FIXED** ELF magic check: changed `&&` to `\|\|` so any wrong byte rejects the file. |
+| ~~BUG-KRN-05~~ | [sys/kernel/signal.c](sys/kernel/signal.c) | **FIXED** `sys_sigaction`: added bounds check `sig < 1 \|\| sig >= sizeof(sigact)/sizeof(sigact[0])` before indexing `td->sigact[]`. |
+| ~~BUG-KRN-06~~ | [sys/kernel/ld.c](sys/kernel/ld.c) | **FIXED** `fread` for program headers: changed `sizeof(Elf_Shdr)` to `sizeof(*programHeader)` so stride always matches the declared pointer type. |
+
+### Heap Leaks
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-KRN-07~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `fopen`: added `kfree(tmpFd)` before returning NULL when mount point is not found. |
+| ~~BUG-KRN-08~~ | [sys/kernel/ld.c](sys/kernel/ld.c) | **FIXED** `SHT_REL` handler: added `relSymTab == NULL` guard — skips relocation processing with a log message if `SHT_DYNSYM` has not yet been seen. |
+
+### Buffer Overflows
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-KRN-09~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **FIXED** `sys_chdir`: replaced unbounded `sprintf` with `snprintf(..., sizeof(cwd), ...)`. Added `snprintf` to kernel (`sys/lib/kprintf.c`) and declared in `sys/include/string.h`. |
+| ~~BUG-KRN-10~~ | [sys/kernel/gen_calls.c](sys/kernel/gen_calls.c) | **FIXED** `sys_getlogin`: clamps `namelen` to `sizeof(_current->username)` before `memcpy`. |
+
+### Logic Bugs
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-KRN-11~~ | [sys/kernel/gen_calls.c](sys/kernel/gen_calls.c) | **FIXED** `sys_setpgid`: changed `schedFindTask(pid)` to `schedFindTask(args->pid)` so the correct process is looked up. |
+| ~~BUG-KRN-12~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** COW/data-segment fault: `vmm_findFreePage` result is now checked for NULL; kills the task cleanly on OOM instead of mapping zero page writable. |
+| ~~BUG-KRN-13~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** `pageFaultSpinLock` now released before all `kpanic` calls (null address path and permission-fault path). |

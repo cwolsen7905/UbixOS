@@ -158,12 +158,12 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
 
     getfd(td, &fdd, args->fd);
 
-    fd = fdd->fd;
-
-    if (fdd == 0 || fdd->fd == 0x0) {
-        error = -1;
-        kprintf("ERROR!");
+    if (fdd == 0x0 || fdd->fd == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
     }
+
+    fd = fdd->fd;
 
     //kprintf("loffset(%i): %i:%i, whence: %i", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFFFF, args->whence);
     //kprintf("loffset(%i): %qd, whence: %i", sizeof(off_t), args->offset, args->whence);
@@ -190,12 +190,35 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
 }
 
 int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
-    if (strstr(args->path, ":") == 0x0) {
-        sprintf(_current->oInfo.cwd, "%s%s", _current->oInfo.cwd, args->path);
+    char newcwd[1024];
+    size_t len;
+    kDIR_t *dir = 0x0;
+
+    /* Build the candidate path without touching cwd yet */
+    if (strstr(args->path, ":") != 0x0) {
+        snprintf(newcwd, sizeof(newcwd), "%s", args->path);
+    } else if (args->path[0] == '/') {
+        snprintf(newcwd, sizeof(newcwd), "%s", args->path);
+    } else {
+        snprintf(newcwd, sizeof(newcwd), "%s%s", _current->oInfo.cwd, args->path);
     }
-    else {
-        sprintf(_current->oInfo.cwd, args->path);
+
+    /* ensure trailing '/' */
+    len = strlen(newcwd);
+    if (len > 0 && newcwd[len - 1] != '/' && len + 1 < sizeof(newcwd)) {
+        newcwd[len]     = '/';
+        newcwd[len + 1] = '\0';
     }
+
+    /* Validate the path exists as a directory */
+    dir = vfs_opendir(newcwd);
+    if (dir == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
+    vfs_closedir(dir);
+
+    memcpy(_current->oInfo.cwd, newcwd, sizeof(newcwd));
     td->td_retval[0] = 0;
     return (0);
 }
@@ -207,12 +230,14 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args) {
 
     getfd(td, &fdd, args->fd);
 
+    if (fdd == 0x0 || fdd->fd == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
+
     fd = fdd->fd;
 
-    if (fdd == 0 || fdd->fd == 0x0) {
-        error = -1;
-    }
-    else {
+    {
         if (strstr(fd->fileName, ":") == 0x0) {
             sprintf(_current->oInfo.cwd, "%s%s", _current->oInfo.cwd, fd->fileName);
         }
@@ -459,6 +484,7 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
 
     if (tmpFd->mp == 0x0) {
         kprintf("Mount Point Bad\n");
+        kfree(tmpFd);
         return (0x0);
     }
 
@@ -667,4 +693,95 @@ int unlink(const char *node) {
     mp->fs->vfsUnlink(path, mp);
 
     return (0x0);
+}
+
+kDIR_t *vfs_opendir(const char *path) {
+    char fileName[1024];
+    char *mountPoint = 0x0;
+    char *dirPath = 0x0;
+    struct vfs_mountPoint *mp = 0x0;
+    kDIR_t *dir = 0x0;
+
+    if (path[0] == '.' && path[1] == '\0')
+        strcpy(fileName, _current->oInfo.cwd);
+    else
+        strcpy(fileName, path);
+
+    if (strstr(fileName, ":")) {
+        mountPoint = strtok(fileName, ":");
+        dirPath = strtok(NULL, "\n");
+    } else {
+        dirPath = fileName;
+    }
+
+    if (dirPath[0] != '/')  {
+        char tmp[1024];
+        sprintf(tmp, "/%s", dirPath);
+        strcpy(fileName, tmp);
+        dirPath = fileName;
+    }
+
+    if (mountPoint == 0x0)
+        mp = vfs_findMount("sys");
+    else
+        mp = vfs_findMount(mountPoint);
+
+    if (mp == 0x0 || mp->fs->vfsOpenDir == 0x0)
+        return (0x0);
+
+    dir = (kDIR_t *) kmalloc(sizeof(kDIR_t));
+    if (dir == 0x0)
+        return (0x0);
+
+    memset(dir, 0x0, sizeof(kDIR_t));
+    dir->mp = mp;
+
+    if (mp->fs->vfsOpenDir(dirPath, dir) != 0x1) {
+        kfree(dir);
+        return (0x0);
+    }
+
+    return (dir);
+}
+
+int vfs_readdir(kDIR_t *dir, struct kdirent *ent) {
+    if (dir == 0x0 || ent == 0x0 || dir->mp == 0x0 || dir->mp->fs->vfsReadDir == 0x0)
+        return (-1);
+    return (dir->mp->fs->vfsReadDir(dir, ent));
+}
+
+int vfs_closedir(kDIR_t *dir) {
+    int ret = 0;
+    if (dir == 0x0)
+        return (-1);
+    if (dir->mp != 0x0 && dir->mp->fs->vfsCloseDir != 0x0)
+        ret = dir->mp->fs->vfsCloseDir(dir);
+    kfree(dir);
+    return (ret);
+}
+
+int sys_opendir(struct thread *td, struct sys_opendir_args *args) {
+    kDIR_t *kdir = vfs_opendir(args->path);
+    args->dir->dd_handle = kdir;
+    td->td_retval[0] = (kdir == 0x0) ? -1 : 0;
+    return (0);
+}
+
+int sys_readdir(struct thread *td, struct sys_readdir_args *args) {
+    if (args->dir == 0x0 || args->dir->dd_handle == 0x0) {
+        td->td_retval[0] = -1;
+        return (0);
+    }
+    td->td_retval[0] = vfs_readdir(args->dir->dd_handle, &args->dir->dd_ent);
+    return (0);
+}
+
+int sys_closedir(struct thread *td, struct sys_closedir_args *args) {
+    if (args->dir == 0x0 || args->dir->dd_handle == 0x0) {
+        td->td_retval[0] = -1;
+        return (0);
+    }
+    td->td_retval[0] = vfs_closedir(args->dir->dd_handle);
+    args->dir->dd_handle = 0x0;
+    return (0);
 }

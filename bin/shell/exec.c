@@ -29,12 +29,11 @@
 #include <sys/sched.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include "shell.h"
 
-static char *argv_init[2] = {
-    "1234567890123456789012345678901234567890",
-    NULL, }; // ARGV For Initial Proccess
+static char argv_init_buf[1024];
 
 static char *envp_init_old[12] = {
     "HOST=MrOlsen.uBixOS.com",
@@ -63,16 +62,39 @@ static char *envp_init[11] = {
     "LD_LIBRARY_PATH=/lib:/usr/lib",
     NULL, }; //ENVP For Initial Proccess
 
+static const char *path_dirs[] = { "/bin", "/sbin", "/usr/bin", "/usr/sbin", NULL };
+
 void execProgram(inputBuffer *data) {
   char file[1024];
   int cPid = 0x0;
+  int i;
 
   cPid = fork();
 
   if (!cPid) {
-    sprintf(file, "%s%s", cwd, data->argv[1]);
-    sprintf(argv_init[0], file);
-    execve(file, argv_init, envp_init_old);
+    char **argv = malloc(sizeof(char *) * (data->argc + 1));
+    sprintf(argv_init_buf, "%s", data->argv[1]);
+    argv[0] = argv_init_buf;
+    for (i = 1; i < data->argc; i++)
+      argv[i] = data->argv[i + 1];
+    argv[data->argc] = NULL;
+
+    if (data->argv[1][0] == '/') {
+      /* absolute path */
+      execve(data->argv[1], argv, envp_init_old);
+    } else if (strchr(data->argv[1], '/')) {
+      /* relative path with slash — relative to cwd */
+      sprintf(file, "%s%s", cwd, data->argv[1]);
+      execve(file, argv, envp_init_old);
+    } else {
+      /* bare name — search PATH */
+      for (i = 0; path_dirs[i] != NULL; i++) {
+        sprintf(file, "%s/%s", path_dirs[i], data->argv[1]);
+        execve(file, argv, envp_init_old);
+        /* execve only returns on failure; try next dir */
+      }
+    }
+    free(argv);
     printf("%s: Command Not Found.\n", data->argv[1]);
     exit(-1);
   }

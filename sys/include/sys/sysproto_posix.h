@@ -211,14 +211,36 @@ struct sys_fgetc_args {
     char FILE_r_[PADR_(userFileDescriptor*)];
 };
 
+struct sys_opendir_args {
+    char path_l_[PADL_(char *)];
+    char *path;
+    char path_r_[PADR_(char*)];
+
+    char dir_l_[PADL_(kDIR_user_t *)];
+    kDIR_user_t *dir;
+    char dir_r_[PADR_(kDIR_user_t*)];
+};
+
+struct sys_readdir_args {
+    char dir_l_[PADL_(kDIR_user_t *)];
+    kDIR_user_t *dir;
+    char dir_r_[PADR_(kDIR_user_t*)];
+};
+
+struct sys_closedir_args {
+    char dir_l_[PADL_(kDIR_user_t *)];
+    kDIR_user_t *dir;
+    char dir_r_[PADR_(kDIR_user_t*)];
+};
+
 struct sys_fseek_args {
     char FILE_l_[PADL_(userFileDescriptor *)];
     userFileDescriptor *FILE;
     char FILE_r_[PADR_(userFileDescriptor*)];
 
-    char offset_l_[PADL_(off_t)];
-    off_t offset;
-    char offset_r_[PADR_(off_t)];
+    char offset_l_[PADL_(long)];
+    long offset;  /* old libc pushes long (4 bytes), not off_t (8 bytes) */
+    char offset_r_[PADR_(long)];
 
     char whence_l_[PADL_(int)];
     int whence;
@@ -949,6 +971,9 @@ int sys_execve(struct thread *td, struct sys_execve_args*);
 int sys_fopen(struct thread *td, struct sys_fopen_args*);
 int sys_fread(struct thread *td, struct sys_fread_args*);
 int sys_fclose(struct thread *td, struct sys_fclose_args*);
+int sys_opendir(struct thread *td, struct sys_opendir_args*);
+int sys_readdir(struct thread *td, struct sys_readdir_args*);
+int sys_closedir(struct thread *td, struct sys_closedir_args*);
 int sys_fgetc(struct thread *td, struct sys_fgetc_args*);
 int sys_fseek(struct thread *td, struct sys_fseek_args*);
 int sys_lseek(struct thread *td, struct sys_lseek_args*);

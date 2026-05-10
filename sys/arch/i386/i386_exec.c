@@ -159,8 +159,6 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   /* Set All The Correct Thread Attributes */
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = 0x0;
-  newProcess->tss.ss0 = 0x0;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;
   newProcess->tss.esp2 = 0x0;
@@ -308,7 +306,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   fread(binaryHeader, sizeof(Elf_Ehdr), 1, newProcess->files[0]);
 
   /* Check If App Is A Real Application */
-  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
+  if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable3.\n");
     kfree(binaryHeader);
     fclose(newProcess->files[0]);
@@ -388,8 +386,6 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Set All The Proper Information For The Task */
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = 0xFFFFFFFF; //0x5BC000;
-  newProcess->tss.ss0 = 0x10;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;
   newProcess->tss.esp2 = 0x0;
@@ -572,7 +568,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   /* Done Loading ELF Header */
 
   /* Check If App Is A Real Application */
-  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
+  if ((binaryHeader->e_ident[1] != 'E') || (binaryHeader->e_ident[2] != 'L') || (binaryHeader->e_ident[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable7.\n");
     kfree(binaryHeader);
     fclose(fd);
@@ -727,12 +723,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   //iFrame->ebp = 0x0;
 
-  if (ldAddr != 0x0) {
-    iFrame->eip = ldAddr;
-  }
-  else {
-    iFrame->eip = binaryHeader->e_entry;
-  }
+  /* Always start at the binary's own entry point.
+   * If ld.so was loaded, GOT[1]/GOT[2] will be patched below
+   * so the PLT resolver trampoline calls _ld on first use. */
+  iFrame->eip = binaryHeader->e_entry;
 
   //iFrame->edx = 0x0;
 
@@ -790,9 +784,17 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   tFP->fd = _current->files[0];
 
+  /* Patch the binary's GOT so the PLT resolver trampoline works:
+   *   GOT[1] = fileDescriptor_t* the ld.so ld() stores in FILE::fd for re-reading the binary
+   *   GOT[2] = address of _ld in ld.so (the lazy PLT resolver)
+   */
+  if (ldAddr != 0x0 && ef != 0x0 && ef->got != 0x0) {
+      ef->got[1] = (Elf_Addr) _current->files[0];  /* fileDescriptor_t*, not integer fd */
+      ef->got[2] = (Elf_Addr) ldAddr;
+  }
 
   tmp[i++] = 2;
-  tmp[i++] = -1;// tFD;  // _current->imageFd;
+  tmp[i++] = tFD;  /* AT_EXECFD: fd the binary can be re-read through */
   _current->td.o_files[4] = tFP; // XXX - I had this -> _current->files[0]; not sure why changed to tFP on 2018-11-09
   //MrOlsen 2018kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
 
@@ -902,12 +904,27 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;
 
+  /* Debug: dump TSS segment selectors and LDT[1] descriptor */
+  kprintf("exec done pid=%i: cs=0x%X ss=0x%X ds=0x%X gs=0x%X ldt=0x%X ldAddr=0x%X\n",
+          _current->id,
+          (uint32_t)_current->tss.cs, (uint32_t)_current->tss.ss,
+          (uint32_t)_current->tss.ds, (uint32_t)_current->tss.gs,
+          (uint32_t)_current->tss.ldt, ldAddr);
+  {
+    uint8_t *ldt1 = (uint8_t*)(VMM_USER_LDT + 8);
+    kprintf("LDT[1]: %02X%02X %02X%02X %02X %02X %02X %02X\n",
+            ldt1[1], ldt1[0], ldt1[3], ldt1[2], ldt1[4], ldt1[5], ldt1[6], ldt1[7]);
+  }
+
   return (0x0);
 }
 
 static int elf_parse_dynamic(elf_file_t ef) {
   Elf32_Dyn *dynp;
   int plttype = DT_REL;
+
+  if (ef->dynamic == 0x0)
+    return (0);
 
   for (dynp = ef->dynamic; dynp->d_tag != 0x0; dynp++) {
     switch (dynp->d_tag) {

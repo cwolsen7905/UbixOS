@@ -412,7 +412,17 @@ static void _int9() {
   sched_yield();
 }
 
-static void _int10() {
+static __attribute__((optimize("O0"))) void _int10(void) {
+  uint32_t err_code = 0;
+  /* After CPU pushes error_code, the C prologue does push ebp; mov ebp,esp.
+   * So error_code sits at EBP+4. */
+  asm volatile("movl 4(%%ebp), %0" : "=r"(err_code));
+  kprintf("int10: Invalid TSS! [pid=%i, errcode=0x%X (sel=0x%X)]\n",
+          _current->id, err_code, err_code & ~0x7);
+  kprintf("  tss: cs=0x%X ss=0x%X ds=0x%X gs=0x%X ldt=0x%X\n",
+          (uint32_t)_current->tss.cs, (uint32_t)_current->tss.ss,
+          (uint32_t)_current->tss.ds, (uint32_t)_current->tss.gs,
+          (uint32_t)_current->tss.ldt);
   kpanic("int10: Invalid TSS! [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();

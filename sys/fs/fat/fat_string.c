@@ -283,12 +283,16 @@ int fatfs_compare_names(char* strA, char* strB)
         ext1 = strA+ext1Pos+1;
         ext2 = strB+ext2Pos+1;
 
+        // Use TrimLength so trailing spaces in SFN extensions don't break the match
+        int ext1Len = FileString_TrimLength(ext1, (int)strlen(ext1));
+        int ext2Len = FileString_TrimLength(ext2, (int)strlen(ext2));
+
         // Verify that the file extension lengths match!
-        if (strlen(ext1) != strlen(ext2))
+        if (ext1Len != ext2Len)
             return 0;
 
         // If they dont match
-        if (FileString_StrCmpNoCase(ext1, ext2, (int)strlen(ext1))!=0)
+        if (FileString_StrCmpNoCase(ext1, ext2, ext1Len)!=0)
             return 0;
 
         // Filelength is upto extensions

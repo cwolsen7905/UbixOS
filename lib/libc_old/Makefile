@@ -9,7 +9,7 @@ include ../Makefile.incl
 OBJS =
 
 #Sub Sections
-SUBS = ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o ./math/*.o ./quad/*.o ./generic/*.o ./locale/*.o ./gen/*.o
+SUBS = ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o ./math/*.o ./quad/*.o ./generic/*.o ./locale/*.o ./gen/*.o ./dirent/*.o
 
 #Output
 OUTPUT = libc_old
@@ -24,10 +24,11 @@ lib.so: $(OBJS)
 	(cd string;$(MAKE))
 	(cd generic;$(MAKE))
 	(cd gen;$(MAKE))
+	(cd dirent;$(MAKE))
 #	$(LD) $(LDFLAGS) -o $(OUTPUT) $(OBJS) ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o
 #	$(CC) -nostdlib -shared -Wl,-soname,libc_old.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
-# tsort -q for BSD
-	$(CC) -m32 -nostdlib -ggdb -shared -Wl,-m,elf_i386 -Wl,-x -o ${BUILD_DIR}/lib/$(OUTPUT).so -Wl,-soname,$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
+# Use ld directly to produce ET_DYN (gcc driver ignores -shared with -nostdlib)
+	${CROSS_PREFIX}ld -m elf_i386 -shared -x --soname=$(OUTPUT).so -o ${BUILD_DIR}/lib/$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
 #	$(CC) -nostdlib -ggdb -static -Wl,-x -o ${BUILD_DIR}/$(OUTPUT).static.so -Wl,-soname,$(OUTPUT).static.so `lorder $(OBJS) $(SUBS) | tsort -q`
 
 # Compile the source files
@@ -58,3 +59,4 @@ clean:
 	(cd math;make clean)
 	(cd quad;make clean)
 	(cd gen;make clean)
+	(cd dirent;make clean)

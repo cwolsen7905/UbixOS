@@ -110,7 +110,7 @@ int commands(inputBuffer *data) {
       }
     }
   else if (memcmp(data->args->arg,"echo",4) == 0) {
-    for (i=1;i<data->argc;i++) {
+    for (i=2;i<=data->argc;i++) {
       printf("%s ",argv[i]);
       }
     printf("\n");
@@ -119,26 +119,31 @@ int commands(inputBuffer *data) {
     printf("UbixOS Shell v0.99 (C) 2002\n");
     printf("Base Command Line Interface\n");
     }
+  else if (memcmp(data->args->arg,"pwd",3) == 0) {
+    printf("%s\n", cwd);
+    }
   else if (memcmp(data->args->arg,"cd",2) == 0) {
-    if (argv[1]) {
-      chdir(argv[1]);
-      getcwd(cwd,1024);
+    if (argv[2]) {
+      if (chdir(argv[2]) != 0)
+        printf("cd: no such file or directory: %s\n", argv[2]);
+      else
+        getcwd(cwd, 1024);
       }
     }
   else if (memcmp(data->args->arg,"unlink",6) == 0) {
-    if (argv[1]) {
-      unlink(argv[1]);
+    if (argv[2]) {
+      unlink(argv[2]);
       }
     }
   else if (memcmp(data->args->arg,"msg",3) == 0x0) {
-    printf("Posting Message: mbox(%s), header: 0x%X, data: %s\n", argv[2], atoi(argv[3]), argv[4]);
-    cmdMsg.header = atoi(argv[3]);
-    sprintf(cmdMsg.data,argv[4]);
-    mpi_postMessage(argv[2],0x1,&cmdMsg);
+    printf("Posting Message: mbox(%s), header: 0x%X, data: %s\n", argv[3], atoi(argv[4]), argv[5]);
+    cmdMsg.header = atoi(argv[4]);
+    sprintf(cmdMsg.data,argv[5]);
+    mpi_postMessage(argv[3],0x1,&cmdMsg);
     }
   else if (memcmp(data->args->arg,"mkdir",5) == 0x0) {
-    if (argv[1]) {
-      mkdir(argv[1],0xEAA);
+    if (argv[2]) {
+      mkdir(argv[2],0xEAA);
       }
     }
   else if (memcmp(data->args->arg,"id",2) == 0x0) {

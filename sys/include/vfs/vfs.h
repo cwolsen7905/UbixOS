@@ -68,6 +68,9 @@ struct fileSystem {
     int (*vfsRemDir)(char*); /*!< pointer to remdir routine */
     int (*vfsSync)(void); /*!< pointer to sync routine */
     int vfsType; /*!< vfs type id */
+    int (*vfsOpenDir)(const char *, kDIR_t *);   /* open directory for listing */
+    int (*vfsReadDir)(kDIR_t *, struct kdirent *); /* read next entry */
+    int (*vfsCloseDir)(kDIR_t *);                  /* close directory */
 };
 
 struct inode_operations {

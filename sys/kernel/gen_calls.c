@@ -332,7 +332,7 @@ int sys_setpgid(struct thread *td, struct sys_setpgid_args *args) {
         }
     }
     else {
-        kTask_t *tmpTask = schedFindTask(pid);
+        kTask_t *tmpTask = schedFindTask(args->pid);
 
         if (tmpTask == 0x0) {
             td->td_retval[0] = -1;
@@ -365,8 +365,12 @@ int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *args) {
 
 int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args) {
     int error = 0;
+    size_t len = args->namelen;
 
-    memcpy(args->namebuf, _current->username, args->namelen);
+    if (len > sizeof(_current->username))
+        len = sizeof(_current->username);
+
+    memcpy(args->namebuf, _current->username, len);
 
     return (error);
 }

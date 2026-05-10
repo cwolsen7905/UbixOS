@@ -73,6 +73,7 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   /* UBU - This is a temp panic for 0x0 read write later on I will handle this differently */
   if (memAddr == 0x0) {
     kprintf("Segfault At Address: [0x%X], ESP: [0x%X], PID: [%i], EIP: [0x%X]\n", memAddr, esp, _current->id, eip);
+    spinUnlock(&pageFaultSpinLock);
     kpanic("Error We Wrote To 0x0\n");
   }
 
@@ -121,16 +122,23 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
     kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
     kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
     kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
+    spinUnlock(&pageFaultSpinLock);
     kpanic("SIT HERE FOR NOW");
     die_if_kernel("SEGFAULT", frame, 0xC);
-    spinUnlock(&pageFaultSpinLock);
     endTask(_current->id);
     return;
   }
   else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
+    uInt32 newPage = vmm_findFreePage(_current->id);
     kprintf("THIS IS BAD");
     die_if_kernel("SEGFAULT", frame, 0xC);
-    pageTable[pageTableIndex] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
+    if (newPage == 0x0) {
+      kprintf("pageFault: OOM at 0x%X pid %i\n", memAddr, _current->id);
+      spinUnlock(&pageFaultSpinLock);
+      endTask(_current->id);
+      return;
+    }
+    pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
   }
   else {
     /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
@@ -138,9 +146,9 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
     kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
     kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", memAddr, esp, _current->id, eip);
     die_if_kernel("SEGFAULT", frame, 0xC);
+    spinUnlock(&pageFaultSpinLock);
     kpanic("SIT HERE FOR NOW");
     kprintf("Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000);
-    spinUnlock(&pageFaultSpinLock);
     endTask(_current->id);
     return;
   }

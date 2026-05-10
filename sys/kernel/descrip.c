@@ -50,8 +50,8 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
     struct file *dup_fp = 0x0;
     int i = 0;
 
-    if (td->o_files[uap->fd] == 0x0) {
-        kprintf("ERROR!!!\n");
+    if (uap->fd < 0 || uap->fd >= O_FILES || td->o_files[uap->fd] == 0x0) {
+        kprintf("fcntl: bad fd %i\n", uap->fd);
         return (-1);
     }
 
@@ -173,7 +173,10 @@ int close(struct thread *td, struct close_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
-    kprintf("[%s:%i]", __FILE__, __LINE__);
+    if (uap->fd < 0 || uap->fd >= O_FILES || td->o_files[uap->fd] == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
     kfree((void*) td->o_files[uap->fd]);
     td->o_files[uap->fd] = 0x0;
     td->td_retval[0] = 0x0;

@@ -8,12 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `docs/task-switching.md` — detailed documentation of the hardware TSS-based task switching mechanism, GDT/LDT layout, fork mechanics, FPU lazy save/restore, and a critical review with improvement suggestions.
+- `kTask_t.kernelStack` field — stores the base address of each task's dedicated ring-0 kernel stack for future cleanup on task exit.
 - `kprint_len(char *, size_t)` — kernel print function that writes up to a specified number of characters to the display.
 - `sys/fs/fat/Makefile` — FAT filesystem driver now has its own build file (was missing, causing fat objects to be excluded from the kernel link).
 - `sys/lib/kern_trie.c` now included in the lib build (`kern_trie.o` added to `sys/lib/Makefile`) so sysctl trie operations link correctly.
 - Sized C++ delete operators (`operator delete(void*, unsigned int)` / `operator delete[](void*, unsigned int)`) added to `sys/lib/libcpp.cc` for GCC 14+ compatibility.
 
 ### Fixed
+- **Scheduler / fork bugs (BUG-SCHED-01 through BUG-SCHED-07)** — full audit of the task switching and fork paths:
+  - **BUG-SCHED-01** (`fork.c`): `newProcess->parent` and `_current->children++` moved to before `newProcess->state = FORK`. Previously the child could run and call `getppid()`/`wait4()` before `parent` was set, causing a NULL dereference.
+  - **BUG-SCHED-02** (`fork.c`): fork spin-wait now reads `state` through `volatile kTask_t *` to prevent GCC from caching the value in a register and looping forever.
+  - **BUG-SCHED-03** (`sched.c`, `sched.h`, `fork.c`, `i386_exec.c`): each task now gets a dedicated 4096-byte ring-0 kernel stack allocated in `schedNewTask()`. The base is stored in `kTask_t.kernelStack`. Previously all user tasks shared `esp0 = 0xFFFFFFFF`, causing kernel stack corruption whenever two tasks were simultaneously in ring-0 transitions.
+  - **BUG-SCHED-04** (`syscall_posix.c`): removed `while(1) kprintf("MFR")` debug block on syscall 89 (`getgroups`) that permanently locked up the kernel.
+  - **BUG-SCHED-05** (`i386_exec.c`): ELF magic check changed from `&&` to `||` in both `execFile` and `sys_execve`. The `&&` form only rejected files where all three bytes were wrong; partial magic was silently accepted.
+  - **BUG-SCHED-06** (`sched.c`): the `sti` before `ljmp` in `sched()` was load-bearing — removing it caused `ljmp` to save EFLAGS with `IF=0` into the outgoing task's TSS, leaving that task with interrupts permanently disabled on the next schedule (breaking keyboard and timer). Fixed properly by saving `prevTask = _current` before the scheduler update and setting `prevTask->tss.eflags |= 0x200` (IF bit) after `spinUnlock`, before `ljmp`. Outgoing task now resumes with interrupts on, with no `sti` race window.
+  - **BUG-SCHED-07** (`timer.S`): added `test %ebx,%ebx; jz done` guard before `div %ebx` in the timer ISR quantum check. A `quantum` value of zero (before `vitals_init()` runs) would cause a `#DE` divide exception inside the IRQ0 handler.
 - **macOS world build (`feature/macos-build-qemu`)**: resolved all compile and link errors blocking `bmake world` (userland) with the `x86_64-elf-gcc` cross-compiler.
   - **Cross-compiler propagation**: top-level `Makefile` now includes `Makefile.incl` so `CROSS_PREFIX` and toolchain overrides reach all world sub-makes.
   - **`MAKESYSPATH` propagation**: changed assignment to `?=` with `.export` so bmake's include path is inherited by recursive sub-makes without being overwritten.
