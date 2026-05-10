@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "shell.h"
 
 static char argv_init_buf[1024];
@@ -72,6 +73,20 @@ void execProgram(inputBuffer *data) {
   cPid = fork();
 
   if (!cPid) {
+    int rfd;
+
+    /* stdout redirect: open target file and dup2 onto fd 1 */
+    if (data->redirect_out != NULL) {
+      int flags = O_WRONLY | O_CREAT | (data->redirect_append ? O_APPEND : O_TRUNC);
+      rfd = open(data->redirect_out, flags, 0644);
+      if (rfd < 0) {
+        printf("shell: cannot open %s\n", data->redirect_out);
+        exit(1);
+      }
+      dup2(rfd, 1);
+      close(rfd);
+    }
+
     char **argv = malloc(sizeof(char *) * (data->argc + 1));
     sprintf(argv_init_buf, "%s", data->argv[1]);
     argv[0] = argv_init_buf;

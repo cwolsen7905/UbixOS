@@ -505,6 +505,7 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
                 break;
             case 'a':
             case 'A':
+                tmpFd->mode |= fileWrite;
                 tmpFd->mode |= fileAppend;
                 break;
             default:

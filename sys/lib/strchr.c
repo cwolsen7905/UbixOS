@@ -26,27 +26,10 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/types.h>
-
-extern char *cwd;
-
-struct argsStruct {
-    struct argsStruct *next;
-    char *arg;
-};
-
-typedef struct {
-    int argc;
-    char **argv;
-    char **envp;
-    uint8_t bg;
-    char *redirect_out;   /* filename for > or >>, NULL if none */
-    uint8_t redirect_append; /* 1 = >>, 0 = > */
-    struct argsStruct *args;
-} inputBuffer;
-
-void parseInput(inputBuffer *, char *);
-int commands(inputBuffer *);
-void execProgram(inputBuffer *);
-void freeArgs(inputBuffer *ptr);
-void error(int errorCode, const char *errorMsg);
+char *strchr(const char *s, int c) {
+  for (; *s != '\0'; s++) {
+    if ((unsigned char)*s == (unsigned char)c)
+      return ((char *)s);
+  }
+  return (c == '\0' ? (char *)s : (char *)0x0);
+}

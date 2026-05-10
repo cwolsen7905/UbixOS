@@ -47,7 +47,7 @@ static elfPltInfo *binaryElfRel = 0x0;
 static int binaryRel = 0x0;
 static int binaryRelDyn = 0x0;
 
-uint32_t ld( uint32_t got2, uint32_t entry ) {
+uint32_t __attribute__((visibility("hidden"))) ld( uint32_t got2, uint32_t entry ) {
   int i = 0x0;
   int x = 0x0;
   //int y = 0x0;

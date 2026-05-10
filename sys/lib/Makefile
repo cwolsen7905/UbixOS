@@ -8,7 +8,7 @@ include ../Makefile.incl
 INCLUDES += -I../../lib/objgfx40/
 
 #  Objects
-OBJS = strstr.o strlen.o strncpy.o assert.o sqrt.o atan.o divdi3.o libcpp.o strtok.o kmalloc.o kprintf.o vsprintf.o string.o net.o strtol.o ogprintf.o kern_trie.o
+OBJS = strstr.o strchr.o strlen.o strncpy.o assert.o sqrt.o atan.o divdi3.o libcpp.o strtok.o kmalloc.o kprintf.o vsprintf.o string.o net.o strtol.o ogprintf.o kern_trie.o
 
 all: $(OBJS)
 

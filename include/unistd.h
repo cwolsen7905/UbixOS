@@ -63,5 +63,8 @@ int  getuid(void);
 int  getgid(void);
 int  chdir(const char *path);
 int unlink(const char *path);
+int open(const char *path, int flags, ...);
+int close(int fd);
+int dup2(int oldfd, int newfd);
 
 #endif

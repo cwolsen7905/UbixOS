@@ -40,9 +40,7 @@
 #include "../fs/fat/fat_filelib.h"
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
-  kprintf("sys_open?");
   return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
-
 }
 
 int sys_openat(struct thread *td, struct sys_openat_args *args) {
@@ -424,6 +422,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
   int error = 0x0;
   int fd = 0x0;
   struct file *nfp = 0x0;
+  int oflags = flags;
 
   /*
    * Only one of the O_EXEC, O_RDONLY, O_WRONLY and O_RDWR flags
@@ -447,31 +446,29 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
     return (error);
   }
 
-  if (flags | O_CREAT)
-    kprintf("O_CREAT\n");
-
   nfp->f_flag = flags & FMASK;
 
-  nfp->fd = fopen(path, "rwb");
-
-    kprintf("[%s:%i] o(%s)%i", __FILE__, __LINE__, path, fd);
+  if ((oflags & O_WRONLY) && (oflags & O_APPEND))
+    nfp->fd = fopen(path, "a");
+  else if (oflags & O_WRONLY)
+    nfp->fd = fopen(path, "w");
+  else if (oflags & O_RDWR)
+    nfp->fd = fopen(path, "rwb");
+  else
+    nfp->fd = fopen(path, "r");
 
   if (nfp->fd == 0x0) {
     if (fdestroy(thr, nfp, fd) != 0x0)
       kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
     thr->td_retval[0] = -1;
-
     error = -1;
   }
   else {
     thr->td_retval[0] = fd;
   }
 
-  //kprintf("sO: 0x%X:%s:", args->mode, args->path, td->td_retval[0]);
-
   return (error);
-
 }
 
 int sys_unlink(struct thread *td, struct sys_unlink_args *uap) {

@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #Objects
-OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o
+OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o open.o dup2.o close.o
 
 #Output
 OUTPUT = sys.so
@@ -21,7 +21,7 @@ $(OUTPUT): $(OBJS)
 	$(CXX) ${CFLAGS} -Wall -nostdinc -O -I../include -S -o $@ $<
  
 .c.o:
-	$(CC) ${CFLAGS} -Wall -nostdinc -O -I../include -I../../../include_old -c $<
+	$(CC) ${CFLAGS} -Wall -nostdinc -O -I../include -I../../../include -c $<
 
 .c.s:
 	$(CC) ${CFLAGS} -Wall -nostdinc -O -I../include -S -o $@ $<

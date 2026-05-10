@@ -58,12 +58,37 @@ void parseInput( inputBuffer *buffer, char *data ) {
       buffer->bg = 0x1;
     }
     else {
-      buffer->argc++;
-      tmpArgs->arg = arg;
-      if ( data != 0x0 ) {
-        tmpArgs->next = (struct argsStruct *) malloc( sizeof(struct argsStruct) );
+      char *redir = strchr( arg, '>' );
+      if ( redir != NULL ) {
+        /* redirect operator found — may be embedded (word>file, word>>file)
+         * or standalone (>, >>).  Split the token at the > and handle. */
+        if ( redir > arg ) {
+          /* text before > is part of the previous arg — but since strtok
+           * already split on spaces the only case here is word>file with no
+           * spaces.  Treat text before > as the last arg, text after as file. */
+          *redir = '\0'; /* terminate the arg portion */
+          buffer->argc++;
+          tmpArgs->arg = arg;
+          tmpArgs->next = NULL;
+        }
+        /* now parse the > or >> and filename */
+        redir++;
+        buffer->redirect_append = (*redir == '>') ? 1 : 0;
+        if ( buffer->redirect_append ) redir++;
+        if ( *redir != '\0' ) {
+          buffer->redirect_out = redir;
+        } else if ( data != NULL ) {
+          buffer->redirect_out = strtok( data, " " );
+          data = strtok( NULL, "\n" );
+        }
+      } else {
+        buffer->argc++;
+        tmpArgs->arg = arg;
+        if ( data != 0x0 ) {
+          tmpArgs->next = (struct argsStruct *) malloc( sizeof(struct argsStruct) );
+          tmpArgs = tmpArgs->next;
+        }
       }
-      tmpArgs = tmpArgs->next;
     }
   }
 
