@@ -7,6 +7,9 @@ SECTIONS
 {
         . = 0x20000 + SIZEOF_HEADERS;
 
+        /* Multiboot header must be within the first 8 KB of the image. */
+        .multiboot : { *(.multiboot) }
+
         .interp : { *(.interp) }
         .hash : { *(.hash) }
         .dynsym : { *(.dynsym) }
