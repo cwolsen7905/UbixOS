@@ -193,8 +193,6 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
 
     fd = fdd->fd;
 
-    kprintf("[lseek fd=%d whence=%d off=%d sz=%u]\n", args->fd, args->whence, (int)args->offset, fd->size);
-
     switch (args->whence) {
         case SEEK_SET:
             fd->offset = args->offset;
@@ -210,8 +208,6 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
             td->td_retval[0] = -1;
             return (-1);
     }
-
-    kprintf("[lseek -> %d]\n", (int)fd->offset);
 
     if (fd->offset < 0)
         fd->offset = 0;
@@ -229,9 +225,19 @@ int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
 
     /* Build the candidate path without touching cwd yet */
     if (strstr(args->path, ":") != 0x0) {
+        /* mountpoint-qualified: use as-is (e.g. "sys:/bin") */
         snprintf(newcwd, sizeof(newcwd), "%s", args->path);
     } else if (args->path[0] == '/') {
-        snprintf(newcwd, sizeof(newcwd), "%s", args->path);
+        /* bare absolute path: preserve current mountpoint prefix */
+        char *p = _current->oInfo.cwd;
+        while (*p && *p != ':')
+            p++;
+        if (*p == ':') {
+            int pfxlen = (int)(p - _current->oInfo.cwd) + 1;
+            snprintf(newcwd, sizeof(newcwd), "%.*s%s", pfxlen, _current->oInfo.cwd, args->path);
+        } else {
+            snprintf(newcwd, sizeof(newcwd), "%s", args->path);
+        }
     } else {
         snprintf(newcwd, sizeof(newcwd), "%s%s", _current->oInfo.cwd, args->path);
     }

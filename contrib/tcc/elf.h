@@ -969,6 +969,7 @@ typedef struct
 /* TCC-specific 16-bit relocs. */
 #define R_386_16        12              /* Direct 16 bit  */
 #define R_386_PC16      13              /* PC relative 16 bit */
+#define R_386_GOT32X    43              /* 32 bit GOT entry, relaxable (GCC >= 5) */
 
 /* SUN SPARC specific definitions.  */
 

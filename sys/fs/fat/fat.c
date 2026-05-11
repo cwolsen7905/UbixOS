@@ -50,7 +50,6 @@ int media_read(unsigned long sector, unsigned char *buffer, unsigned long sector
 
 int media_write(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
   _mp->device->devInfo->write(_mp->device->devInfo->info, buffer, sector, sector_count);
-
   return 1;
 }
 
@@ -120,13 +119,10 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
 int write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
-  kprintf("Writing: %i[%i]\n", size, offset);
   // XXX this is not supposed to happen fl_fseek(_file, offset, 0);
 
   if (fl_fwrite(data, 1, size, _file) != size)
     kprintf("ERROR: Write file failed\n");
-
-  kprintf("Wrote: %i\n", size);
 
   /* Return */
   return (size);

@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #Objects
-OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fgetc.o sprintf.o snprintf.o gets.o fclose.o fgets.o perror.o
+OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fdopen.o fgetc.o sprintf.o snprintf.o gets.o fclose.o fgets.o perror.o
 
 #Output
 OUTPUT = libc.so
@@ -32,3 +32,7 @@ $(OUTPUT): $(OBJS)
 # Clean up the junk
 clean:
 	$(REMOVE) $(OBJS) $(OUTPUT)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

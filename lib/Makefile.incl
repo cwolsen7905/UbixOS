@@ -20,12 +20,7 @@ OBJCOPY=${CROSS_PREFIX}objcopy
 RANLIB=${CROSS_PREFIX}ranlib
 
 LDFLAGS = -Bshareable
-#CFLAGS = -fpic -DPIC -O2 -fno-strict-aliasing -pipe -D__DBINTERFACE_PRIVATE -DPOSIX_MISTAKE -DBROKEN_DES -DPORTMAP -DDES_BUILTIN -DYP -DHESIOD -Wsystem-headers -Wall -Wno-format-y2k -Wno-uninitialized
-CFLAGS = -m32 -fno-builtin -Wno-uninitialized -O2 -fno-strict-aliasing -pipe 
-
-#INCLUDES = -I../include -I../i386
-#INCLUDES = -I${INCLUDE}
 
 INCLUDES = -I${SRCTOP}/include
 CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -O \
-         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -fPIC
+         -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -fPIC -MMD -MP

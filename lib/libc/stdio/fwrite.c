@@ -28,8 +28,15 @@
 *****************************************************************************************/
 
 #include <stdio.h>
+#include <unistd.h>
 
-int fwrite(const void *ptr,int size,int nmemb,FILE *fd) {
+int fwrite(const void *ptr, int size, int nmemb, FILE *fd) {
+  /* fdopen()-created FILE: fd->fd is a small integer fd, use write() */
+  if ((unsigned long)fd->fd < 65536UL) {
+    int n = write((int)fd->fd, ptr, size * nmemb);
+    return (n > 0) ? n : 0;
+  }
+  /* Legacy fopen()-created FILE: fd->fd is a kernel FL_FILE* pointer */
   int retVal = size;
   asm volatile(
     "int %0"
@@ -37,7 +44,7 @@ int fwrite(const void *ptr,int size,int nmemb,FILE *fd) {
     : "i" (0x80),"a" (23),"b" (ptr),"c" (size*nmemb),"d" (fd)
     );
   return(retVal);
-  }
+}
 
 /***
  $Log: fwrite.c,v $

@@ -43,3 +43,7 @@ $(BINARY) : $(OBJS)
 # Clean Up The junk
 clean:
 	$(REMOVE) $(OBJS) $(BUILD_DIR)/bin/$(BINARY)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

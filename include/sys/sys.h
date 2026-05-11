@@ -24,7 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #ifndef _SYS_H
 #define _SYS_H
 
-int execve(char *,char **argv,char **env);
+int execve(const char *, char * const [], char * const []);
 int pidStatus(int pid);
 void *getPage(int count);
 void *getDrives();

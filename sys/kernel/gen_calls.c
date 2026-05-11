@@ -40,6 +40,7 @@
 #include <sys/signal.h>
 #include <ubixos/version.h>
 #include <sys/sysproto_posix.h>
+#include <sys/sysproto.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
 #include <vmm/vmm.h>
@@ -145,6 +146,16 @@ int sys_invalid(struct thread *td, void *args) {
     kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
     td->td_retval[0] = -1;
     return (0);
+}
+
+int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args) {
+  kTask_t *task = schedFindTask(args->pid);
+
+  if (task != NULL && task->state != DEAD)
+    td->td_retval[0] = 1;
+  else
+    td->td_retval[0] = 0;
+  return (0);
 }
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args) {

@@ -9,5 +9,5 @@ rtld-elf-bin: rtld-elf
 	(cd rtld-elf;$(MAKE))
 
 clean:
-	(cd ld;make clean)
+	(cd ld;${MAKE} clean)
 #	(cd rtld-elf;make clean)

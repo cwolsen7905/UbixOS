@@ -29,4 +29,4 @@ clean:
 	(cd devfs;${MAKE} clean)
 	(cd ufs;${MAKE} clean)
 	(cd common;${MAKE} clean)
-	(cd fat; make clean)
+	(cd fat;${MAKE} clean)

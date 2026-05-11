@@ -25,17 +25,21 @@
  */
 
 /* wait4(pid, status, options, rusage) — syscall 7 */
+.text
 .globl wait4
+.type  wait4, @function
 wait4:
 	movl	$7, %eax
 	int	$0x80
 	ret
+.size wait4, . - wait4
 
 /*
  * waitpid(pid, status, options) — implemented as wait4 with rusage=NULL.
  * Rebuild the stack frame inserting the extra NULL rusage argument.
  */
 .globl waitpid
+.type  waitpid, @function
 waitpid:
 	pushl	%ebp
 	movl	%esp, %ebp
@@ -49,3 +53,4 @@ waitpid:
 	movl	%ebp, %esp
 	popl	%ebp
 	ret
+.size waitpid, . - waitpid

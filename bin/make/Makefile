@@ -15,3 +15,7 @@ $(PROG): $(OBJS)
 
 clean:
 	$(REMOVE) $(OBJS)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

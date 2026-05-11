@@ -1316,8 +1316,6 @@ LIBTCCAPI int tcc_set_output_type(TCCState *s, int output_type)
 {
     s->output_type = output_type;
 
-    printf("[set_output_type: nostdinc=%d paths='%s']\n",
-           s->nostdinc, CONFIG_TCC_SYSINCLUDEPATHS);
     if (!s->nostdinc) {
         /* default include paths */
         /* -isystem paths have already been handled */

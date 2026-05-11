@@ -34,12 +34,12 @@
 struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 0 - syscall
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 2 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 3 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 4 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 5 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 6 -
+  { ARG_COUNT(sys_pidStatus_args), "pidStatus", (sys_call_t *)sys_pidStatus, SYSCALL_VALID },  // 7 - pidStatus
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
@@ -73,7 +73,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 39 -
   { ARG_COUNT(sys_sde_args), "sysSDE", (sys_call_t *)sysSDE, SYSCALL_VALID },  // 40 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 41 -
+  { ARG_COUNT(sys_getvfscwd_args), "getvfscwd", (sys_call_t *)sys_getvfscwd, SYSCALL_VALID },  // 41 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -

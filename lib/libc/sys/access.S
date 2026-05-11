@@ -25,8 +25,11 @@
  */
 
 /* access(path, mode) — syscall 33 */
+.text
 .globl access
+.type  access, @function
 access:
 	movl	$33, %eax
 	int	$0x80
 	ret
+.size access, . - access

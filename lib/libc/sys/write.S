@@ -24,8 +24,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+.text
 .globl write
+.type  write, @function
 write:
 	movl	$4, %eax
 	int	$0x80
 	ret
+.size write, . - write

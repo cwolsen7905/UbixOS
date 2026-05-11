@@ -36,3 +36,7 @@ $(BINARY) : $(OBJS)
 # Clean up the junk
 clean:
 	$(REMOVE) $(OBJS) $(BINARY)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

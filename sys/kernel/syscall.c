@@ -29,6 +29,7 @@
 #include <ubixos/syscalls.h>
 #include <ubixos/syscall.h>
 #include <ubixos/sched.h>
+#include <sys/sysproto.h>
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
@@ -199,6 +200,15 @@ int sysGetUptime(uInt32 *ptr) {
 int sysGetTime(uInt32 *ptr) {
   if (ptr)
     *ptr = systemVitals->sysUptime + systemVitals->timeStart;
+  return (0);
+}
+
+int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args) {
+  if (args->buf && args->size > 0) {
+    strncpy(args->buf, _current->oInfo.cwd, args->size - 1);
+    args->buf[args->size - 1] = '\0';
+  }
+  td->td_retval[0] = 0;
   return (0);
 }
 

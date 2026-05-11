@@ -84,3 +84,7 @@ clean:
 	${REMOVE} ${OBJS} ${SHIM_OBJS} libtcc1.o alloca86.o
 	${REMOVE} ${BUILD_DIR}/bin/${BINARY}
 	${REMOVE} ${BUILD_DIR}/lib/tcc/libtcc1.a
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

@@ -24,12 +24,20 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* unlink(path) — syscall 10 */
-.text
-.globl unlink
-.type  unlink, @function
-unlink:
-	movl	$10, %eax
-	int	$0x80
-	ret
-.size unlink, . - unlink
+#include <stdio.h>
+#include <stdlib.h>
+
+/*
+ * fdopen: wrap an existing POSIX integer fd in a FILE*.
+ * FILE->fd is set to the integer fd value (always < 65536),
+ * distinguishable from fopen()-created FILEs where fd holds a
+ * kernel FL_FILE* pointer (always a large kernel-space address).
+ */
+FILE *fdopen(int fd, const char *mode) {
+    FILE *f = malloc(sizeof(FILE));
+    if (!f)
+        return NULL;
+    f->fd   = (unsigned long)fd;
+    f->size = 0;
+    return f;
+}

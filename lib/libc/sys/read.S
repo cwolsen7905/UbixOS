@@ -24,8 +24,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+.text
 .globl read
+.type  read, @function
 read:
 	movl	$3, %eax
 	int	$0x80
 	ret
+.size read, . - read

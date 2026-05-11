@@ -188,7 +188,7 @@ kTask_t *schedNewTask() {
   /* HACK */
   for (i = 0; i < 3; i++) {
     fp = (void *) kmalloc(sizeof(struct file));
-    //kprintf("DB: [0x%X]\n", (uint32_t) fp);
+    memset(fp, 0, sizeof(struct file));
     tmpTask->td.o_files[i] = (void *) fp;
     fp->f_flag = 0x4;
   }

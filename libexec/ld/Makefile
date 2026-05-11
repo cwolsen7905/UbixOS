@@ -44,3 +44,7 @@ $(OUTPUT) : $(OBJS)
 # Clean Up The junk
 clean:
 	$(REMOVE) $(OBJS) ../../build/bin/$(OUTPUT)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

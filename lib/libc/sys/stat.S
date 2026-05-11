@@ -24,14 +24,19 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+.text
 .globl stat
+.type  stat, @function
 stat:
 	movl	$188, %eax
 	int	$0x80
 	ret
+.size stat, . - stat
 
 .globl fstat
+.type  fstat, @function
 fstat:
 	movl	$189, %eax
 	int	$0x80
 	ret
+.size fstat, . - fstat

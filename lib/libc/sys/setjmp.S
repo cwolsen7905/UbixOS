@@ -48,6 +48,7 @@ setjmp:
 	movl	%eax,   20(%edx)
 	xorl	%eax,    %eax		/* return 0 */
 	ret
+.size setjmp, . - setjmp
 
 .globl longjmp
 .type  longjmp,@function
@@ -65,3 +66,4 @@ longjmp:
 	movl	20(%edx), %ecx		/* saved EIP */
 	movl	16(%edx), %esp		/* restore ESP */
 	jmp	*%ecx
+.size longjmp, . - longjmp

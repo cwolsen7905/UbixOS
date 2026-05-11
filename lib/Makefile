@@ -35,11 +35,9 @@ tools: src
 	(cd src/tools;$(MAKE))
 
 install:
-	(cd src/sys;make install)
-	
+	(cd src/sys;${MAKE} install)
+
 clean:
-	#(cd src/sys;make clean)
-	(cd csu;make clean)
-	(cd ubix_api;make clean)
-	(cd libc;make clean)
-	(cd ubix;make clean)
+	(cd ubix_api;${MAKE} clean)
+	(cd libc;${MAKE} clean)
+	(cd ubix;${MAKE} clean)

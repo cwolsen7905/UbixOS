@@ -57,8 +57,6 @@ void sys_call_posix(struct trapframe *frame) {
 
   code = frame->tf_eax;
 
-    //kprintf("SYSCALL: %i", code);
-
   if (code == 198) {
     memcpy(&code, params, sizeof(int));
     params += sizeof(quad_t);

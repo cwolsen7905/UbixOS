@@ -290,11 +290,14 @@ void keyboardHandler(struct trapframe *frame) {
         }
         break;
       case 0x3:
-        //if (tty_foreground != 0x0)
-        //  endTask(tty_foreground->owner);
-        //K_PANIC( "CTRL-C pressed\n" );
-        kprintf("FreePages: [0x%X]\n", systemVitals->freePages);
-        sched_setStatus(tty_foreground->owner, DEAD);
+        if (tty_foreground != 0x0) {
+          kTask_t *victim = schedFindTask(tty_foreground->owner);
+          if (victim != NULL) {
+            if (victim->parent != NULL)
+              tty_foreground->owner = victim->parent->id;
+            sched_setStatus(victim->id, DEAD);
+          }
+        }
         break;
       case 0x9:
                 sys_shutdown(REBOOT);

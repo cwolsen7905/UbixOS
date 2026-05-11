@@ -49,18 +49,6 @@ int remove(const char *path)
 	return -1; /* not implemented */
 }
 
-/* fdopen: wrap a raw file descriptor in a FILE* */
-FILE *fdopen(int fd, const char *mode)
-{
-	/* Our FILE struct is {u_long fd; uint32_t size} */
-	FILE *fp = malloc(sizeof(FILE));
-	if (!fp)
-		return NULL;
-	fp->fd   = (unsigned long)fd;
-	fp->size = 0;
-	(void)mode;
-	return fp;
-}
 
 int sscanf(const char *buf, const char *fmt, ...)
 {

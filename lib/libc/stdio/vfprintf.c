@@ -30,56 +30,11 @@
 #include <stdio.h>
 #include <string.h>
 
-int _write(int fd, void *ptr, size_t size);
-
-asm(
-  ".globl _write\n"
-  "_write:\n"
-  "movl $0x4,%eax\n"
-  "int $0x80\n"
-  "ret\n"
-  );
-
-int vfprintf(FILE *fd,const char *fmt,vaList args) {
-  int retVal = 0;
-
-  char data[512] = {'A','B','C'};
-
-  retVal = vsprintf(data, fmt, args);
-
-  return(_write(fd->fd, &data, 512));
-
-  /*
-  return asm volatile(
-    "movl &data,%%eax\n"
-    "push %%eax\n"
-    "movl $0x4,%%eax\n"
-    "int %0"
-    :
-    : "i" (0x80),"a" (retVal)
-    );
-  */
-
-  }
-
-/*
-int vfprintf(FILE *fd,const char *fmt,vaList args) {
-  int retVal = 0;
+int vfprintf(FILE *fd, const char *fmt, vaList args) {
   char data[512];
-  retVal = vsprintf(data,fmt,args);
-  asm volatile(
-  //  "push %4\n"
-  //  "push %3\n"
-  //  "push %2\n"
-    "int %0\n"
-    "nop\n"
-  //  "addl  $12,%%esp\n"
-    :
-    : "i" (0x90),"a" (23),"g" (&data),"g" (0x69),"g" (fd)
-    );
-  return(retVal);
-  }
-*/
+  int retVal = vsprintf(data, fmt, args);
+  return fwrite(data, 1, retVal, fd);
+}
 
 /***
  $Log: vfprintf.c,v $

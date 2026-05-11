@@ -24,12 +24,26 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* unlink(path) — syscall 10 */
-.text
-.globl unlink
-.type  unlink, @function
-unlink:
-	movl	$10, %eax
-	int	$0x80
-	ret
-.size unlink, . - unlink
+/*
+ * ubix_getcwd - UbixOS-native getcwd returning the full VFS path including
+ * mountpoint prefix (e.g. "sys:/bin").  Uses native syscall 41 (int $0x81).
+ *
+ * Implemented as a bare asm block (no C function prolog) so that the kernel's
+ * syscall handler can read buf and size directly from [esp+4] and [esp+8].
+ * Returns buf on success, NULL on error (eax != 0 from kernel).
+ */
+asm(
+  ".text                          \n"
+  ".globl ubix_getcwd             \n"
+  ".type  ubix_getcwd, @function  \n"
+  "ubix_getcwd:                   \n"
+  "  movl $41, %eax               \n"
+  "  int  $0x81                   \n"
+  "  testl %eax, %eax             \n"
+  "  jnz  ubix_getcwd_err         \n"
+  "  movl 4(%esp), %eax           \n"  /* return buf */
+  "  ret                          \n"
+  "ubix_getcwd_err:               \n"
+  "  xorl %eax, %eax              \n"  /* return NULL */
+  "  ret                          \n"
+);

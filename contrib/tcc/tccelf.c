@@ -582,6 +582,7 @@ ST_FUNC void relocate_section(TCCState *s1, Section *s)
             *(int *)ptr += val - s1->got->sh_addr;
             break;
         case R_386_GOT32:
+        case R_386_GOT32X:
             /* we load the got offset */
             *(int *)ptr += s1->sym_attrs[sym_index].got_offset;
             break;
@@ -1163,16 +1164,17 @@ ST_FUNC void build_got_entries(TCCState *s1)
             switch(type) {
 #if defined(TCC_TARGET_I386)
             case R_386_GOT32:
+            case R_386_GOT32X:
             case R_386_GOTOFF:
             case R_386_GOTPC:
             case R_386_PLT32:
                 if (!s1->got)
                     build_got(s1);
-                if (type == R_386_GOT32 || type == R_386_PLT32) {
+                if (type == R_386_GOT32 || type == R_386_GOT32X || type == R_386_PLT32) {
                     sym_index = ELFW(R_SYM)(rel->r_info);
                     sym = &((ElfW(Sym) *)symtab_section->data)[sym_index];
                     /* look at the symbol got offset. If none, then add one */
-                    if (type == R_386_GOT32)
+                    if (type == R_386_GOT32 || type == R_386_GOT32X)
                         reloc_type = R_386_GLOB_DAT;
                     else
                         reloc_type = R_386_JMP_SLOT;
@@ -1523,11 +1525,18 @@ ST_FUNC void fill_got(TCCState *s1)
 		rel_end = (ElfW_Rel *) (s->data + s->data_offset);
 		for(rel = (ElfW_Rel *) s->data; rel < rel_end; rel++) {
 			switch (ELFW(R_TYPE) (rel->r_info)) {
+#if defined(TCC_TARGET_X86_64)
 			case R_X86_64_GOT32:
 			case R_X86_64_GOTPCREL:
 			case R_X86_64_PLT32:
 				fill_got_entry(s1, rel);
 				break;
+#elif defined(TCC_TARGET_I386)
+			case R_386_GOT32:
+			case R_386_GOT32X:
+				fill_got_entry(s1, rel);
+				break;
+#endif
 			}
 		}
 	}
@@ -2194,7 +2203,7 @@ static int elf_output_file(TCCState *s1, const char *filename)
         else
             ehdr.e_entry = text_section->sh_addr; /* XXX: is it correct ? */
     }
-    if (file_type == TCC_OUTPUT_EXE && s1->static_link)
+    if (file_type == TCC_OUTPUT_EXE)
         fill_got(s1);
 
     /* write elf file */

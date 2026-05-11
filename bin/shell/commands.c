@@ -34,6 +34,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <sys/mpi.h>
+#include <api/ubix.h>
 
 #include "shell.h"
 
@@ -127,7 +128,7 @@ int commands(inputBuffer *data) {
       if (chdir(argv[2]) != 0)
         printf("cd: no such file or directory: %s\n", argv[2]);
       else
-        getcwd(cwd, 1024);
+        ubix_getcwd(cwd, 1024);
       }
     }
   else if (memcmp(data->args->arg,"unlink",6) == 0) {

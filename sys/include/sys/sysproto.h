@@ -86,12 +86,28 @@ struct sys_sde_args {
   char ptr_r_[PADR_(uint32_t)];
 };
 
+struct sys_getvfscwd_args {
+  char buf_l_[PADL_(char *)];
+  char *buf;
+  char buf_r_[PADR_(char *)];
+  char size_l_[PADL_(uint32_t)];
+  uint32_t size;
+  char size_r_[PADR_(uint32_t)];
+};
+
+struct sys_pidStatus_args {
+  char pid_l_[PADL_(int)];
+  int pid;
+  char pid_r_[PADR_(int)];
+};
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
+int sys_pidStatus(struct thread *, struct sys_pidStatus_args *);
 int sys_mpiCreateMbox(struct thread *, struct sys_mpiCreateMbox_args *);
 int sys_mpiDestroyMbox(struct thread *, struct sys_mpiDestroyMbox_args *);
 int sys_mpiFetchMessage(struct thread *, struct sys_mpiFetchMessage_args *);
 int sys_mpiPostMessage(struct thread *, struct sys_mpiPostMessage_args *);
+int sys_getvfscwd(struct thread *, struct sys_getvfscwd_args *);
 
 #endif

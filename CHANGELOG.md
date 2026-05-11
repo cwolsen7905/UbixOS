@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `sys_pidStatus` (native syscall 7) — kernel implementation in `sys/kernel/gen_calls.c`; returns 1 while a task is alive, 0 when dead or not found. Wired in `sys/kernel/syscalls.c`. Args struct in `sys/include/sys/sysproto.h`.
+- `lib/libc/stdio/fdopen.c` — `fdopen(3)` implementation for the in-kernel libc.
+- `lib/ubix_api/ubixcwd.c` — `ubix_getcwd()` native API implementation.
+
+### Fixed
+- `sys/isa/atkbd.c` — Ctrl-C now works correctly: removed stale `kprintf("FreePages…")` debug output; added NULL guard on `tty_foreground`; transfers TTY ownership to the parent process (shell) before marking the child DEAD, so the shell prompt returns immediately instead of the terminal becoming orphaned.
+- `sys/kernel/endtask.c` — on normal task exit via `endTask()`, TTY ownership is restored to the parent process so subsequent Ctrl-C presses target the correct task.
+- `sys/arch/i386/i386_exec.c` — CR3-switch inline asm was missing an `"eax"` clobber; the compiler reused `%eax` (now holding the new CR3 value) as the `newProcess` pointer immediately after the switch, causing a page fault on every boot. Replaced with a direct `movl %0, %%cr3` using the `"r"` constraint and `"memory"` clobber.
+- `bin/Makefile` — added `.PHONY: all clean ${SUBDIRS}`; bmake was treating the subdirectory names (`init`, `login`, `shell`, …) as up-to-date filesystem targets (the directories exist), so only `make` was ever built and the disk image booted to "Exec Format Error".
+
+### Added
 - `sys/include/ubixos/version.h` — single source of truth for OS version; all version strings (`kern.osrelease`, `kern.version`, boot banner) derive from macros in this one file.
 - `sys/kernel/kern_sysctl.c` — `sysctl` MIB entries for `kern.ostype`, `kern.osrelease`, `kern.version`, `kern.hostname`, `hw.machine` wired to `version.h` macros.
 - `sys/init/main.c` — boot banner (`"UbixOS 2.0.0-BETA — booting"`) derived from `UBIXOS_VERSION_STRING`.

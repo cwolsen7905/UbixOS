@@ -32,3 +32,7 @@ $(OUTPUT): $(OBJS)
 # Clean up the junk
 clean:
 	$(REMOVE) $(OBJS) $(OUTPUT)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

@@ -24,9 +24,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* _exit(status) — syscall 1; does not return */
+/* _exit(status) — syscall 1; does not reach ret */
+.text
 .globl _exit
+.type  _exit, @function
 _exit:
 	movl	$1, %eax
 	int	$0x80
-	hlt		/* should not reach here */
+	hlt
+.size _exit, . - _exit
