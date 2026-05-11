@@ -31,12 +31,6 @@ void *calloc(size_t nmemb, size_t size)
 	return p;
 }
 
-char *getenv(const char *name)
-{
-	(void)name;
-	return NULL; /* no environment on UbixOS */
-}
-
 int putenv(char *str)
 {
 	(void)str;

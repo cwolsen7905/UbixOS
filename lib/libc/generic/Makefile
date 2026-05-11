@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #Objects
-OBJS = unlink.o getcwd.o mkdir.o chdir.o
+OBJS = unlink.o getcwd.o mkdir.o rmdir.o chdir.o
 #Output
 OUTPUT = libc.so
 

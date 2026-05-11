@@ -26,7 +26,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 int mkdir(const char *path,mode_t mode) {
   asm(
     "int %0\n"
-    : : "i" (0x80),"a" (29),"b" (path)
+    : : "i" (0x80),"a" (136),"b" (path)
     );
   return(0x0);
   }

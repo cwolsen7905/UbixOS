@@ -108,10 +108,8 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
     kprintf("SEEK FAILED!");
 
   size = fl_fread(data, size, 1, _file);
-    if (size > 0)
-        fd->offset += size;
     /*
-    else
+    if (size <= 0)
         kprintf("[%s:%i] read_fat(0) FAILED!");
      */
 

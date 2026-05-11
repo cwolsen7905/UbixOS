@@ -41,6 +41,9 @@ __FBSDID("$FreeBSD: src/lib/libc/string/strerror.c,v 1.13 2003/05/01 19:03:14 ne
 #include <stdio.h>
 #include <string.h>
 
+extern const char * const sys_errlist[];
+extern const int sys_nerr;
+
 #define	UPREFIX		"Unknown error: "
 
 /*
