@@ -1038,4 +1038,11 @@ int sys_sendto(struct thread *td, struct sys_sendto_args*);
 
 int sys_pread(struct thread *td, struct sys_pread_args*);
 
+struct sys_uname_args {
+  char buf_l_[PADL_(void *)];
+  void *buf;
+  char buf_r_[PADR_(void *)];
+};
+int sys_uname(struct thread *td, struct sys_uname_args *);
+
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

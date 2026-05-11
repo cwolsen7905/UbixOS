@@ -852,10 +852,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_INVALID }, /* 163 - Invalid */
     {
-        0,
-        "old uname",
-        sys_invalid,
-        SYSCALL_INVALID }, /* 164 - Invalid */
+        ARG_COUNT(sys_uname_args),
+        "uname",
+        (sys_call_t *) sys_uname,
+        SYSCALL_VALID }, /* 164 - uname */
     {
         ARG_COUNT(sys_sysarch_args),
         "sysarch",
