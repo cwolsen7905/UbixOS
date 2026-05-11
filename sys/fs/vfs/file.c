@@ -43,6 +43,8 @@
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
 
+void sysMkDir(const char *path);
+
 fileDescriptor_t *fdTable = 0x0;
 
 fileDescriptor_t *vfs_fileTable = 0x0;
