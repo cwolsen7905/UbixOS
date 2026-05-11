@@ -37,6 +37,7 @@
 #include <string.h>
 #include <ubixos/errno.h>
 #include <lib/kern_trie.h>
+#include <ubixos/version.h>
 
 static struct sysctl_entry *ctls = 0x0;
 
@@ -90,35 +91,35 @@ static void def_ctls() {
   page_val = 0x4000;
   sysctl_add(name, name_len, "p1003_1b.pagesize", &page_val, sizeof(uint32_t));
 
-  /* XXX 1, 1 */
+  /* kern.ostype — MIB 1,1 */
   name[0] = 1;
   name[1] = 1;
   char s11[4] = "UBIX";
   sysctl_add(name, name_len, "kern.ostype", &s11, 4);
 
-  /* XXX 1, 10 */
+  /* kern.hostname — MIB 1,10 */
   name[0] = 1;
   name[1] = 10;
   char s110[16] = "devel.ubixos.com";
   sysctl_add(name, name_len, "kern.hostname", &s110, 16);
 
-  /* XXX 1, 2 */
+  /* kern.osrelease — MIB 1,2 */
   name[0] = 1;
   name[1] = 2;
-  char s12[11] = "1.0-RELEASE";
-  sysctl_add(name, name_len, "kern.hostname", &s12, 11);
+  char s12[] = UBIXOS_VERSION_RELEASE;
+  sysctl_add(name, name_len, "kern.osrelease", &s12, sizeof(s12));
 
-  /* XXX 1, 4 */
+  /* kern.version — MIB 1,4 */
   name[0] = 1;
   name[1] = 4;
-  char s14[18] = "UbixOS 1.0-RELEASE";
-  sysctl_add(name, name_len, "kern.hostname", &s14, 18);
+  char s14[] = UBIXOS_VERSION_STRING;
+  sysctl_add(name, name_len, "kern.version", &s14, sizeof(s14));
 
-  /* XXX 6, 1 */
+  /* hw.machine — MIB 6,1 */
   name[0] = 6;
   name[1] = 1;
   char s61[4] = "i386";
-  sysctl_add(name, name_len, "kern.hostname", &s61, 4);
+  sysctl_add(name, name_len, "hw.machine", &s61, 4);
 
   /* XXX 6, 2147482988 */
   name[0] = 6;

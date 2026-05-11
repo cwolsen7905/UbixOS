@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <ubixos/version.h>
 #include <ubixos/init.h>
 #include <ubixos/multiboot.h>
 #include <sys/gdt.h>
@@ -138,6 +139,8 @@ int kmain(uint32_t rootdev) {
 
   /* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
   clearScreen();
+
+  kprintf(UBIXOS_VERSION_STRING " — booting\n");
 
   /* Modify src/sys/include/ubixos/init.h to add a startup routine */
   for (i = 0x0; i < init_tasksTotal; i++) {
