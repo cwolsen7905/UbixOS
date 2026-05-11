@@ -158,9 +158,6 @@ uint32_t __attribute__((visibility("hidden"))) ld( uint32_t got2, uint32_t entry
   *reMap = ldFindFunc( binaryDynStr + binaryRelSymTab[x].dynName, binaryDynStr );
   if ( *reMap == 0x0 )
     printf("ld: WARNING symbol not found: %s\n", binaryDynStr + binaryRelSymTab[x].dynName);
-  else
-    printf( "\nld(%s:0x%X:0x%X)", binaryDynStr + binaryRelSymTab[x].dynName, reMap, *reMap );
-  //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));
 
   if ( binaryFd ) {
     fclose( binaryFd );

@@ -899,14 +899,18 @@ LIBTCCAPI TCCState *tcc_new(void)
     s = tcc_mallocz(sizeof(TCCState));
     if (!s)
         return NULL;
+    printf("[tcc_new: s=%p sizeof=%u nostdinc@4=%d]\n",
+           s, (unsigned)sizeof(TCCState), s->nostdinc);
     tcc_state = s;
 #ifdef _WIN32
     tcc_set_lib_path_w32(s);
 #else
     tcc_set_lib_path(s, CONFIG_TCCDIR);
 #endif
+    printf("[after set_lib_path: nostdinc=%d]\n", s->nostdinc);
     s->output_type = TCC_OUTPUT_MEMORY;
     preprocess_new();
+    printf("[after preprocess_new: nostdinc=%d]\n", s->nostdinc);
     s->include_stack_ptr = s->include_stack;
 
     /* we add dummy defines for some special macros to speed up tests
@@ -1312,10 +1316,13 @@ LIBTCCAPI int tcc_set_output_type(TCCState *s, int output_type)
 {
     s->output_type = output_type;
 
+    printf("[set_output_type: nostdinc=%d paths='%s']\n",
+           s->nostdinc, CONFIG_TCC_SYSINCLUDEPATHS);
     if (!s->nostdinc) {
         /* default include paths */
         /* -isystem paths have already been handled */
         tcc_add_sysinclude_path(s, CONFIG_TCC_SYSINCLUDEPATHS);
+        printf("[after add_sysinclude: nsys=%d]\n", s->nb_sysinclude_paths);
     }
 
     /* if bound checking, then add corresponding sections */

@@ -33,6 +33,7 @@
 #include <ubixos/endtask.h>
 #include <lib/kprintf.h>
 #include <sys/trap.h>
+#include <string.h>
 
 static struct spinLock pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
 
@@ -128,8 +129,6 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   }
   else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
     uInt32 newPage = vmm_findFreePage(_current->id);
-    kprintf("THIS IS BAD");
-    die_if_kernel("SEGFAULT", frame, 0xC);
     if (newPage == 0x0) {
       kprintf("pageFault: OOM at 0x%X pid %i\n", memAddr, _current->id);
       spinUnlock(&pageFaultSpinLock);
@@ -137,6 +136,9 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
       return;
     }
     pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
+    /* Flush TLB for this page so the zero-write goes to the new physical page */
+    asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
+    memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
   }
   else {
     /* Need To Create A Routine For Attempting To Access Non Mapped Memory */

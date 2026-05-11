@@ -41,7 +41,6 @@ ldLibrary *ldAddLibrary(const char *lib) {
     sprintf(tmpLib->name, "%s", lib);
     }
 
-  printf("Base: {0x%X}[%i]\n",tmpLib->output, __LINE__);
   if (tmpLib->linkerHeader == 0x0) {
     fseek(linkerFd,0x0,0x0);
     if ((tmpLib->linkerHeader = (elfHeader *)malloc(sizeof(elfHeader))) == 0x0) {
@@ -67,7 +66,6 @@ ldLibrary *ldAddLibrary(const char *lib) {
           break;
         case PT_DYNAMIC:
           dynp = (elfDynamic *)(tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output);
-          printf("dynp: 0x%X:0x%X:0x%X", dynp, tmpLib->linkerProgramHeader[i].phVaddr, tmpLib->output);
           for (;dynp->dynVal != 0x0;dynp++) {
            switch (dynp->dynVal) {
              case DT_PLTGOT:
@@ -76,8 +74,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
                 tmp[2] = 0xBEEF;
                 break;
              default:
-               printf("dV: %i", dynp->dynVal);
-                  break;
+                break;
            }
            }
           asm("nop");
@@ -88,7 +85,6 @@ ldLibrary *ldAddLibrary(const char *lib) {
             tmpLib->tlsalign = tmpLib->linkerProgramHeader[i].phAlign;//ph->p_align;
             tmpLib->tlsinitsize = tmpLib->linkerProgramHeader[i].phFilesz;//ph->p_filesz;
             tmpLib->tlsinit = (void*)(tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output);
-            printf("TLS: 0x%X, 0x%X, 0x%X, 0x%X", tmpLib->tlssize, tmpLib->tlsinitsize, tmpLib->tlsinit, tmpLib->tlsinit - (uint32_t)tmpLib->output);
 /*
           newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output;
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);
@@ -96,12 +92,10 @@ ldLibrary *ldAddLibrary(const char *lib) {
 */
           break;
 	case PT_GNU_STACK:
-          /* Tells us if the stack should be executable.  Failsafe to executable until we add checking */
-          printf("NOT DEF1\n");
+          /* NOT IMPLEMENTED: stack executable flag not yet enforced */
       	  break;
       	case PT_PAX_FLAGS:
-      		/* Not sure... */
-          printf("NOT DEF2\n");
+          /* NOT IMPLEMENTED */
 	  break;
         default:
           printf("Unhandled Header (ld.so) : %08x\n", tmpLib->linkerProgramHeader[i].phType);
@@ -181,7 +175,12 @@ ldLibrary *ldAddLibrary(const char *lib) {
               *reMap += (uint32_t)tmpLib->output;
               break;
             case R_386_JMP_SLOT:
-              *reMap += (uint32_t)tmpLib->output;
+              /* Eager resolution — GOT[2] has no valid lazy resolver. */
+              if (tmpLib->linkerRelSymTab[rel].dynValue != 0)
+                *reMap = (uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue;
+              else
+                printf("ld: WARNING unresolved JMP_SLOT sym=%d at offset 0x%X\n",
+                       rel, tmpLib->linkerElfRel[x].pltOffset);
               break;
             case R_386_GLOB_DAT:
               *reMap = (uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue;

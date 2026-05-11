@@ -24,16 +24,15 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #ifndef _STDIO_H
 #define _STDIO_H
 
-#include <sys/types.h>
-#include <wchar.h>
 #include <stdarg.h>
+#include <stddef.h>
 
 /* Type Definitions */
 
 typedef struct fileDescriptor {
-  u_long  fd;
-  uint32_t size;
-  } FILE;
+  unsigned long  fd;
+  unsigned int   size;
+} FILE;
 
 /* Definitions */
 
@@ -49,49 +48,38 @@ extern FILE fdTable[];
 
 #define EOF     (-1)
 
-/* Functions Definitions */
+/* Functions */
 
-int fprintf(FILE *, const char *,...);
-int printf(const char *, ...);
-int vfprintf(FILE *,const char *,vaList args);
-int vsprintf(char *buf,const char *fmt,vaList args);
-FILE *fopen(const char *,const char *);
-int fwrite(const void *ptr,int size,int nmemb,FILE *fd);
-int fgetc(FILE *fd);
-
-//New Functions Listed From Here On Till I'm Done Writing A libc
-int sprintf(char *string, const char *format, ...);
-char *gets(char *string);
-size_t fread(void *pointer,size_t size,size_t count, FILE *stream);
-int fclose(FILE *fp);
-int fseek(FILE *,long offset,int whence);
-
-
-/**** Proper LIBC Stuff ****/
-
-typedef    __off_t         fpos_t;
-
-extern __const int sys_nerr;
-extern __const char *__const sys_errlist[];
-
-
-int      asprintf(char **, const char *, ...) __printflike(2, 3);
-int      feof(FILE *);
-char    *fgets(char * __restrict, int, FILE * __restrict);
-int      fflush(FILE *);
-int      fputc(int, FILE *);
-int      fputs(const char *, FILE *);
-long     ftell(FILE *);
-int      ferror(FILE *);
-void     rewind(FILE *);
-int      remove(const char *);
-void     perror(const char *);
-FILE    *fdopen(int, const char *);
+int      fprintf(FILE *, const char *, ...);
+int      printf(const char *, ...);
+int      vfprintf(FILE *, const char *, va_list);
+int      vsprintf(char *, const char *, va_list);
+int      sprintf(char *, const char *, ...);
 int      snprintf(char *, size_t, const char *, ...);
 int      vsnprintf(char *, size_t, const char *, va_list);
 int      vprintf(const char *, va_list);
-int      sscanf(const char * __restrict, const char * __restrict, ...);
-/**** END ****/
+int      sscanf(const char *, const char *, ...);
+int      asprintf(char **, const char *, ...);
+
+FILE    *fopen(const char *, const char *);
+int      fclose(FILE *);
+size_t   fread(void *, size_t, size_t, FILE *);
+int      fwrite(const void *, int, int, FILE *);
+int      fseek(FILE *, long, int);
+long     ftell(FILE *);
+void     rewind(FILE *);
+int      feof(FILE *);
+int      ferror(FILE *);
+int      fgetc(FILE *);
+char    *fgets(char *, int, FILE *);
+int      fputc(int, FILE *);
+int      fputs(const char *, FILE *);
+int      fflush(FILE *);
+FILE    *fdopen(int, const char *);
+
+char    *gets(char *);
+int      remove(const char *);
+void     perror(const char *);
 
 #endif
 

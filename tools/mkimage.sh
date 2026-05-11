@@ -142,6 +142,16 @@ mmd -i "$IMG"@@1M ::/usr 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/usr/bin 2>/dev/null || true
 [ -f "$BUILD/bin/tcc" ] && mcopy -i "$IMG"@@1M "$BUILD/bin/tcc" ::/usr/bin/tcc
 
+echo "==> Installing system headers (include/)"
+mmd -i "$IMG"@@1M ::/include 2>/dev/null || true
+for f in include/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/; done
+# sys/ sub-directory of headers
+mmd -i "$IMG"@@1M ::/include/sys 2>/dev/null || true
+for f in include/sys/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/sys/; done
+# machine/ sub-directory
+mmd -i "$IMG"@@1M ::/include/machine 2>/dev/null || true
+for f in include/machine/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/machine/; done
+
 echo "==> Installing source examples (src/)"
 mmd -i "$IMG"@@1M ::/src 2>/dev/null || true
 for f in tools/src/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/src/; done

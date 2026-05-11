@@ -30,6 +30,7 @@ lseek:
 	pushl	12(%ebp)	/* off_lo   */
 	pushl	$0		/* pad      */
 	pushl	8(%ebp)		/* fd       */
+	pushl	$0		/* fake return addr (UbixOS ABI: params = esp+4) */
 	movl	$478, %eax
 	int	$0x80
 	movl	%ebp, %esp
