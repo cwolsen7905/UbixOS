@@ -8,10 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `sys/include/ubixos/version.h` — single source of truth for OS version; all version strings (`kern.osrelease`, `kern.version`, boot banner) derive from macros in this one file.
+- `sys/kernel/kern_sysctl.c` — `sysctl` MIB entries for `kern.ostype`, `kern.osrelease`, `kern.version`, `kern.hostname`, `hw.machine` wired to `version.h` macros.
+- `sys/init/main.c` — boot banner (`"UbixOS 2.0.0-BETA — booting"`) derived from `UBIXOS_VERSION_STRING`.
+- `uname(2)` syscall (POSIX syscall 164) filling `struct utsname` from `version.h` macros; kernel-side in `sys/kernel/gen_calls.c`, libc stub in `lib/libc/sys/uname.S`.
+- `sysctl(3)` and `sysctlbyname(3)` userland API in `lib/libc/sys/sysctl.c`; MIB constants in `include/sys/sysctl.h`.
+- `mkdir(2)` (syscall 136) and `rmdir(2)` (syscall 137) — kernel implementation in `sys/fs/vfs/file.c` + `sys/fs/fat/fat.c`; libc wrappers in `lib/libc/generic/`.
+- `getenv(3)`, `setenv(3)`, `unsetenv(3)` in `lib/libc/stdlib/`; `environ` now initialized in `lib/ubix/sstart.c` before `main()`.
+- `read(2)` (syscall 3) and `write(2)` (syscall 4) libc stubs in `lib/libc/sys/read.S` and `write.S`.
+- `bin/uname` — userland `uname` command supporting `-a -m -n -r -s -v`.
+- `bin/cat` — minimal `cat(1)` implementation (~75 lines) replacing the 388-line FreeBSD original that depended on unsupported headers.
+- `bin/syscheck` — runtime test binary that exercises `uname`, `sysctl`, `mkdir`, `rmdir`, `getenv`, `setenv`, and `environ`; prints PASS/FAIL per test.
+- `include/sys/utsname.h` — `struct utsname` with `_SYS_NAMELEN=256` byte fields.
 
 ### Fixed
-
-### Changed
+- `sys/fs/vfs/file.c` — forward declaration of `sysMkDir` added to resolve implicit-declaration error when `sys_mkdir` calls it before its definition later in the file.
+- `lib/libc/generic/mkdir.c` — syscall number corrected from 29 (`creat`) to 136 (`mkdir`).
+- `lib/libc/string/strerror.c` — added `extern` declarations for `sys_nerr`/`sys_errlist` (defined in `gen/errlst.c`) to fix implicit-declaration build errors.
+- `contrib/tcc/ubixos_shim/stdlib_ext.c` — removed stub `getenv` (now provided by `lib/libc/stdlib/getenv.o`).
+- `contrib/tcc/ubixos_shim/syscalls.S` — removed stub `read` (now provided by `lib/libc/sys/read.o`).
 
 ---
 
