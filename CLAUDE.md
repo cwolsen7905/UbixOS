@@ -126,6 +126,20 @@ Requires: `brew install clang-format` (already in PATH) and `brew install llvm` 
 
 VS Code formats on save automatically via `.vscode/settings.json` + `.clang-format`.
 
+## Versioning
+
+The single source of truth for the OS version is **`sys/include/ubixos/version.h`**. Edit only that file to bump the version — everything else derives from it automatically.
+
+### Version bump checklist
+
+1. Edit `UBIXOS_VERSION_MAJOR`, `MINOR`, `PATCH`, and `TAG` in [sys/include/ubixos/version.h](sys/include/ubixos/version.h).
+2. Add a dated release section to `CHANGELOG.md` (rename `[Unreleased]` → `[X.Y.Z-TAG] - YYYY-MM-DD`, add a fresh empty `[Unreleased]` above it, update the footer diff links).
+3. Rebuild: `bmake kernel world image`
+4. Commit: `git add sys/include/ubixos/version.h CHANGELOG.md && git commit -m "Release X.Y.Z-TAG"`
+5. Tag: `git tag -a vX.Y.Z-TAG -m "Release X.Y.Z-TAG" && git push && git push --tags`
+
+The boot banner (`"UbixOS 2.0.0-BETA — booting"`) and all sysctl strings (`kern.osrelease`, `kern.version`) are derived from `version.h` macros — no other files need touching.
+
 ## Current State (feature/macos-build-qemu)
 
 The `feature/macos-build-qemu` branch is fully functional for macOS development. The system boots to a login prompt under QEMU:

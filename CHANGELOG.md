@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Fixed
+
+### Changed
+
+---
+
+## [2.0.0-BETA] - 2026-05-10
+
+### Added
 - `include_old/dirent.h` and `lib/libc_old/dirent/` — userland `opendir`/`readdir`/`closedir` implementation backed by the kernel VFS `sys_opendir`/`sys_readdir`/`sys_closedir` syscalls. Provides the standard `DIR`/`struct dirent` API to dynamically-linked binaries such as `ls`.
 - `docs/task-switching.md` — detailed documentation of the hardware TSS-based task switching mechanism, GDT/LDT layout, fork mechanics, FPU lazy save/restore, and a critical review with improvement suggestions.
 - `kTask_t.kernelStack` field — stores the base address of each task's dedicated ring-0 kernel stack for future cleanup on task exit.
@@ -190,7 +200,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/acb8ba9a...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...HEAD
+[2.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/acb8ba9a...v2.0.0-BETA
 [1.1.0-CURRENT]: https://github.com/cwolsen7905/UbixOS/compare/30af09b3...acb8ba9a
 [1.24.0]: https://github.com/cwolsen7905/UbixOS/compare/6e02e5b2...30af09b3
 [0.1.0]: https://github.com/cwolsen7905/UbixOS/releases/tag/6e02e5b2
