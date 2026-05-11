@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #Objects
-OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fgetc.o sprintf.o gets.o fclose.o
+OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fgetc.o sprintf.o snprintf.o gets.o fclose.o fgets.o perror.o
 
 #Output
 OUTPUT = libc.so

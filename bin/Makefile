@@ -1,6 +1,6 @@
 # System Makefile (C) 2002 The UbixOS Project
 
-all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin ls-bin tcc-bin uname-bin cat-bin syscheck-bin #muffin-bin
+all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin ls-bin tcc-bin uname-bin cat-bin syscheck-bin make-bin #muffin-bin
 # MrOlsen (2016-01-11) ERROR: weird it didnt like -elf rtld-elf-bin
 # MrOlsen (2016-01-11) NOTE: edit-bin
 # test-bin pwd-bin de-bin goofball-bin mount-bin
@@ -76,6 +76,9 @@ cat-bin: cat
 
 syscheck-bin: syscheck
 	(cd syscheck;$(MAKE))
+
+make-bin: make
+	(cd make;$(MAKE))
 
 mount-bin: mount
 	(cd mount;$(MAKE))
