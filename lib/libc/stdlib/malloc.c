@@ -128,7 +128,7 @@ void *malloc( uint32_t len ) {
         tmpDesc2->baseAddr = tmpDesc1->baseAddr + len;
         tmpDesc2->next = 0x0;
         tmpDesc2->prev = 0x0;
-        if ( tmpDesc2->limit <= 0x0 )
+        if ( tmpDesc2->limit > 0x0 )
           insertFreeDesc( tmpDesc2 );
       }
       buf = (char *) tmpDesc1->baseAddr;
@@ -154,7 +154,7 @@ void *malloc( uint32_t len ) {
       tmpDesc2->limit = ( ( ( len + 4095 ) / 4096 ) * 4096 ) - tmpDesc1->limit;
       tmpDesc2->prev = 0x0;
       tmpDesc2->next = 0x0;
-      if ( tmpDesc2->limit <= 0x0 )
+      if ( tmpDesc2->limit > 0x0 )
         insertFreeDesc( tmpDesc2 );
     }
     buf = (char *) tmpDesc1->baseAddr;
@@ -181,6 +181,9 @@ void *malloc( uint32_t len ) {
  ************************************************************************/
 void free( void *baseAddr ) {
   struct memDescriptor *tmpDesc1 = 0x0;
+
+  if (baseAddr == 0x0)
+    return;
 
   for ( tmpDesc1 = usedKernDesc; tmpDesc1 != 0x0 ; tmpDesc1 = tmpDesc1->next ) {
     if ( tmpDesc1->baseAddr == baseAddr ) {

@@ -24,20 +24,33 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #ifndef _STDARG_H
 #define _STDARG_H
 
-/* UbixOS native names */
-typedef __builtin_va_list vaList;
+#ifdef __TINYC__
+/* TCC i386: va_list is char * */
+typedef char *va_list;
+typedef char *vaList;
 
-#define vaStart(ap, last)	__builtin_va_start((ap), (last))
-#define vaArg(ap, type)		__builtin_va_arg((ap), type)
-#define vaEnd(ap)		__builtin_va_end(ap)
-#define __va_copy(dst, src)	__builtin_va_copy((dst), (src))
+#define va_start(ap, last) \
+    ((ap) = ((char *)&(last)) + ((sizeof(last)+3)&~3))
+#define va_arg(ap, type) \
+    ((ap) += (sizeof(type)+3)&~3, *(type *)((ap) - ((sizeof(type)+3)&~3)))
+#define va_end(ap)        ((void)0)
+#define va_copy(dst, src) ((dst) = (src))
 
-/* Standard C99 names — required by third-party code (e.g. TCC) */
+#else
+/* GCC / Clang */
 typedef __builtin_va_list va_list;
+typedef __builtin_va_list vaList;
 
 #define va_start(ap, last)	__builtin_va_start((ap), (last))
 #define va_arg(ap, type)	__builtin_va_arg((ap), type)
 #define va_end(ap)		__builtin_va_end(ap)
 #define va_copy(dst, src)	__builtin_va_copy((dst), (src))
-
 #endif
+
+/* UbixOS legacy aliases */
+#define vaStart  va_start
+#define vaArg    va_arg
+#define vaEnd    va_end
+#define __va_copy va_copy
+
+#endif /* _STDARG_H */

@@ -1433,6 +1433,8 @@ ST_FUNC void preprocess(int is_bof)
         *s1->include_stack_ptr = file;
 
         n = s1->nb_include_paths + s1->nb_sysinclude_paths;
+        printf("[INC-SEARCH: '%s' n=%d ninc=%d nsys=%d]\n", buf, n,
+               s1->nb_include_paths, s1->nb_sysinclude_paths);
         for (i = -2; i < n; ++i) {
             char buf1[sizeof file->filename];
             CachedInclude *e;

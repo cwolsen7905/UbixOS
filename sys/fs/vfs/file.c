@@ -122,8 +122,6 @@ void sysRmDir() {
 }
 
 int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
-    kprintf("offset: %ld, whence: 0x%X", args->offset, args->whence);
-
     // TODO : coredump?
     if (args->FILE == NULL) {
         td->td_retval[0] = -1;

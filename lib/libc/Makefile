@@ -29,6 +29,7 @@ lib.so: $(OBJS)
 #	$(CC) -nostdlib -shared -Wl,-soname,libc.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
 # Use ld directly to produce ET_DYN (gcc driver ignores -shared with -nostdlib)
 	${CROSS_PREFIX}ld -m elf_i386 -shared -x --soname=$(OUTPUT).so -o ${BUILD_DIR}/lib/$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
+	${CROSS_PREFIX}ar rcs ${BUILD_DIR}/lib/$(OUTPUT).a `lorder $(OBJS) $(SUBS) | tsort`
 #	$(CC) -nostdlib -ggdb -static -Wl,-x -o ${BUILD_DIR}/$(OUTPUT).static.so -Wl,-soname,$(OUTPUT).static.so `lorder $(OBJS) $(SUBS) | tsort -q`
 
 # Compile the source files

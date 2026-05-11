@@ -22,10 +22,10 @@ TCC_CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin \
   -DONE_SOURCE \
   -DTCC_TARGET_I386 \
   -DCONFIG_TCC_STATIC \
-  -DCONFIG_TCCDIR=\"sys:/lib/tcc\" \
-  -DCONFIG_TCC_SYSINCLUDEPATHS=\"sys:/include:sys:/lib/tcc/include\" \
-  -DCONFIG_TCC_LIBPATHS=\"sys:/lib:sys:/lib/tcc\" \
-  -DCONFIG_TCC_CRTPREFIX=\"sys:/lib/tcc\"
+  -DCONFIG_TCCDIR=\"/lib/tcc\" \
+  -DCONFIG_TCC_SYSINCLUDEPATHS=\"/include:/lib/tcc/include\" \
+  -DCONFIG_TCC_LIBPATHS=\"/lib:/lib/tcc\" \
+  -DCONFIG_TCC_CRTPREFIX=\"/lib/tcc\"
 
 # Main TCC object
 OBJS = tcc_main.o
@@ -40,6 +40,15 @@ ${BINARY}: ${OBJS} ${SHIM_OBJS}
 	${CC} ${CFLAGS} -w -O2 -c ${TCC_SRC}/lib/libtcc1.c -o libtcc1.o
 	${CC} ${CFLAGS} -w -O2 -c ${TCC_SRC}/lib/alloca86.S -o alloca86.o
 	${CROSS_PREFIX}ar rcs ${BUILD_DIR}/lib/tcc/libtcc1.a libtcc1.o alloca86.o shim_moddi3.o
+	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -c ${TCC_SRC}/ubixos_shim/crt1.S -o ${BUILD_DIR}/lib/tcc/crt1.o
+	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -c ${TCC_SRC}/ubixos_shim/crti.S -o ${BUILD_DIR}/lib/tcc/crti.o
+	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -c ${TCC_SRC}/ubixos_shim/crtn.S -o ${BUILD_DIR}/lib/tcc/crtn.o
 	mkdir -p ${BUILD_DIR}/lib/tcc/include
 	cp ${TCC_SRC}/include/*.h ${BUILD_DIR}/lib/tcc/include/
 
