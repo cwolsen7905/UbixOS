@@ -25,7 +25,8 @@ TCC_CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin \
   -DCONFIG_TCCDIR=\"/lib/tcc\" \
   -DCONFIG_TCC_SYSINCLUDEPATHS=\"/include:/lib/tcc/include\" \
   -DCONFIG_TCC_LIBPATHS=\"/lib:/lib/tcc\" \
-  -DCONFIG_TCC_CRTPREFIX=\"/lib/tcc\"
+  -DCONFIG_TCC_CRTPREFIX=\"/lib/tcc\" \
+  -DCONFIG_TCC_ELFINTERP=\"sys:/libexec/ld.so\"
 
 # Main TCC object
 OBJS = tcc_main.o
@@ -58,25 +59,25 @@ tcc_main.o:
 SHIM_CC = ${CC} -m32 -nostdlib -nostdinc -fno-builtin \
           -mno-sse -mno-sse2 -mno-mmx -mno-3dnow ${INCLUDES} -w -O2
 
-shim_syscalls.o:
+shim_syscalls.o: ${TCC_SRC}/ubixos_shim/syscalls.S
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/syscalls.S -o shim_syscalls.o
 
-shim_stdio.o:
+shim_stdio.o: ${TCC_SRC}/ubixos_shim/stdio_ext.c
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/stdio_ext.c -o shim_stdio.o
 
-shim_stdlib.o:
+shim_stdlib.o: ${TCC_SRC}/ubixos_shim/stdlib_ext.c
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/stdlib_ext.c -o shim_stdlib.o
 
-shim_math.o:
+shim_math.o: ${TCC_SRC}/ubixos_shim/math_ext.c
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/math_ext.c -o shim_math.o
 
-shim_time.o:
+shim_time.o: ${TCC_SRC}/ubixos_shim/time_ext.c
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/time_ext.c -o shim_time.o
 
-shim_moddi3.o:
+shim_moddi3.o: ${TCC_SRC}/ubixos_shim/moddi3.c
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/moddi3.c -o shim_moddi3.o
 
-shim_misc.o:
+shim_misc.o: ${TCC_SRC}/ubixos_shim/misc_ext.c
 	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/misc_ext.c -o shim_misc.o
 
 clean:
