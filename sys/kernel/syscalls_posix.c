@@ -712,15 +712,15 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 135 - socketpair */
     {
-        0,
+        ARG_COUNT(sys_mkdir_args),
         "mkdir",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 136 - mkdir */
+        (sys_call_t *) sys_mkdir,
+        SYSCALL_VALID }, /* 136 - mkdir */
     {
-        0,
+        ARG_COUNT(sys_rmdir_args),
         "rmdir",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 137 - rmdir */
+        (sys_call_t *) sys_rmdir,
+        SYSCALL_VALID }, /* 137 - rmdir */
     {
         0,
         "utimes",

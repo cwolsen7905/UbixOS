@@ -63,6 +63,7 @@ int  setgid(int);
 int  getuid(void);
 int  getgid(void);
 int  chdir(const char *path);
+int  rmdir(const char *path);
 int unlink(const char *path);
 int execvp(const char *, char * const []);
 int open(const char *path, int flags, ...);

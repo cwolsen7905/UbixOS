@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #Objects
-OBJS = strtol.o atoi.o abs.o exit.o malloc.o rand.o getopt.o
+OBJS = strtol.o atoi.o abs.o exit.o malloc.o rand.o getopt.o getenv.o setenv.o
 
 #Output
 OUTPUT = libc.so

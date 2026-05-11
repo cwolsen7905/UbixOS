@@ -27,6 +27,7 @@
  */
 
 #include <ubixos/sched.h>
+#include <sys/sysproto_posix.h>
 #include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
@@ -117,8 +118,35 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args) {
     }
 }
 
-void sysRmDir() {
-    return;
+void sysRmDir(const char *path) {
+  char fullpath[1024];
+
+  if (strstr(path, ":") == 0x0)
+    sprintf(fullpath, "%s%s", _current->oInfo.cwd, path);
+  else
+    strncpy(fullpath, path, sizeof(fullpath) - 1);
+
+  fl_remove(fullpath);
+}
+
+int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {
+  if (args->path == 0x0) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  sysMkDir(args->path);
+  td->td_retval[0] = 0;
+  return (0);
+}
+
+int sys_rmdir(struct thread *td, struct sys_rmdir_args *args) {
+  if (args->path == 0x0) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  sysRmDir(args->path);
+  td->td_retval[0] = 0;
+  return (0);
 }
 
 int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
@@ -150,9 +178,9 @@ int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
 }
 
 int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
-    int error = 0;
     struct file *fdd = 0x0;
     fileDescriptor_t *fd = 0x0;
+    off_t newpos = 0;
 
     getfd(td, &fdd, args->fd);
 
@@ -163,28 +191,33 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
 
     fd = fdd->fd;
 
-    //kprintf("loffset(%i): %i:%i, whence: %i", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFFFF, args->whence);
-    //kprintf("loffset(%i): %qd, whence: %i", sizeof(off_t), args->offset, args->whence);
+    kprintf("[lseek fd=%d whence=%d off=%d sz=%u]\n", args->fd, args->whence, (int)args->offset, fd->size);
 
     switch (args->whence) {
         case SEEK_SET:
             fd->offset = args->offset;
-            td->td_retval[0] = fd->offset & 0xFFFFFFFF;
-            td->td_retval[1] = fd->offset >> 32;
             break;
         case SEEK_CUR:
             fd->offset += args->offset;
-            td->td_retval[0] = fd->offset & 0xFFFFFFFF;
-            td->td_retval[1] = fd->offset >> 32;
+            break;
+        case SEEK_END:
+            fd->offset = (off_t)fd->size + args->offset;
             break;
         default:
-            kprintf("seek-whence: %iqd", args->whence);
-            break;
+            kprintf("lseek: unknown whence %d\n", args->whence);
+            td->td_retval[0] = -1;
+            return (-1);
     }
 
-    // kprintf("loff: %qd:%s", fd->offset, ((FL_FILE*) fd->res)->filename);
+    kprintf("[lseek -> %d]\n", (int)fd->offset);
 
-    return (error);
+    if (fd->offset < 0)
+        fd->offset = 0;
+
+    newpos = fd->offset;
+    td->td_retval[0] = (int32_t)(newpos & 0xFFFFFFFF);
+    td->td_retval[1] = (int32_t)(newpos >> 32);
+    return (0);
 }
 
 int sys_chdir(struct thread *td, struct sys_chdir_args *args) {

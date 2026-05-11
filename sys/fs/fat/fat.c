@@ -177,9 +177,12 @@ int unlink_fat() {
   return (0);
 }
 
-int mkdir_fat() {
-    kprintf("[%s:%i] mkdir_fat");
-  return (0);
+int mkdir_fat(char *path, void *fd) {
+  return fl_createdirectory(path);
+}
+
+int rmdir_fat(char *path, void *fd) {
+  return fl_remove(path);
 }
 
 int fat_opendir(const char *path, kDIR_t *dir) {
@@ -228,7 +231,7 @@ int fat_init() {
       (void*) open_fat, /* vfsOpenFile */
       (void*) unlink_fat, /* vfsUnlink   */
       (void*) mkdir_fat, /* vfsMakeDir  */
-      NULL, /* vfsRemDir   */
+      (void*) rmdir_fat, /* vfsRemDir   */
       NULL, /* vfsSync     */
       0xFA, /* vfsType     */
       (void*) fat_opendir,  /* vfsOpenDir  */

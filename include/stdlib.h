@@ -43,8 +43,11 @@ unsigned long long  strtoull(const char * __restrict nptr, char ** __restrict en
 void  *realloc(void *, size_t);
 void  *calloc(size_t, size_t);
 char  *getenv(const char *);
+int    setenv(const char *, const char *, int);
+int    unsetenv(const char *);
 void   qsort(void *, size_t, size_t, int (*)(const void *, const void *));
 int    putenv(char *);
+extern char **environ;
 
 const char *getprogname(void);
 

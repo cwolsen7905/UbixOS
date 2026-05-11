@@ -16,6 +16,7 @@ void _start1(fptr cleanup, int argc, char *argv[])
         char **env;
 
         env = argv + argc + 1;
+        environ = env;
 /*
         handle_argv(argc, argv, env);
         if (&_DYNAMIC != NULL)
