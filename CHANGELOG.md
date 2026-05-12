@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- `sys/arch/i386/systemtask.c` (`systemTask`) — free `kTask_t.kernelStack` before `kfree(tmpTask)` to stop leaking 4 KB per task exit; NULL guard with `kprintf` warning if the pointer is unexpectedly NULL (TODO-SCHED-09).
+- `share/mk/ubix.kern.mk` — suffix rules used `${OBJDIR}/${.TARGET}` but `.PATH.o: ${OBJDIR}` caused bmake to expand `.TARGET` to the full path, doubling the output directory; changed to `${OBJDIR}/${.TARGET:T}` (basename-only).
 - `sys/fs/vfs/file.c` (`fgetc`) — removed debug `kprintf("[%s:%i]"…)` that fired on every character read (TODO-VFS-01).
 - `sys/fs/vfs/file.c` (`sys_fclose`) — removed duplicate `args->FILE == NULL` guard that ran the check twice (TODO-VFS-02).
 - `sys/mpi/mpi_syscalls.c` (`sys_mpiPostMessage`) — removed stale `kprintf("mPM: %s"…)` debug log (TODO-MPI-04).

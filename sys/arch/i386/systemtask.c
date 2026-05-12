@@ -108,8 +108,11 @@ void systemTask() {
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
       vmm_freeProcessPages(tmpTask->id);
+      if (tmpTask->kernelStack != 0x0)
+        kfree(tmpTask->kernelStack);
+      else
+        kprintf("systemTask: WARNING: task %i has NULL kernelStack\n", tmpTask->id);
       kfree(tmpTask);
-
     }
 
     if (ogprintOff == 1) {

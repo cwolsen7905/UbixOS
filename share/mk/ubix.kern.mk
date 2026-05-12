@@ -21,15 +21,15 @@ OBJDIR ?= ${OBJ_DIR}/sys/${.CURDIR:T}
 
 .cc.o .C.o .cpp.o:
 	@mkdir -p ${OBJDIR}
-	$(CXX) $(CXXFLAGS) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CXX) $(CXXFLAGS) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 all: $(OBJS)
 
