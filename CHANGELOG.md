@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- `sys/fs/vfs/file.c` (`fgetc`) — removed debug `kprintf("[%s:%i]"…)` that fired on every character read (TODO-VFS-01).
+- `sys/fs/vfs/file.c` (`sys_fclose`) — removed duplicate `args->FILE == NULL` guard that ran the check twice (TODO-VFS-02).
+- `sys/mpi/mpi_syscalls.c` (`sys_mpiPostMessage`) — removed stale `kprintf("mPM: %s"…)` debug log (TODO-MPI-04).
+- `sys/include/vmm/vmm.h` — defined `VMM_CHILD_PD_WINDOW 0x5A00000` as a named constant with a comment explaining its purpose (TODO-VMM-03).
+- `sys/vmm/paging.c` — replaced all four occurrences of `0x5A00000` with `VMM_CHILD_PD_WINDOW` (TODO-VMM-03).
+- `sys/include/mpi/mpi.h` — added `MPI_ASYNC` (0x1) and `MPI_SYNC` (0x2) named constants (TODO-MPI-06).
+- `sys/arch/i386/schedyield.S` — deleted dead file containing `sched_yield_new`, which called `iret` as a plain C call — instant stack corruption if ever reached; removed `schedyield.o` from `sys/arch/i386/Makefile` (TODO-SCHED-07).
+
 ### Added
 - `docs/architecture/vmm.md` — Virtual Memory Manager design document (converted from `doc/vmm.txt`; incorporates page-directory map from `doc/vmm/i386_vmm_map.txt`).
 - `docs/architecture/task-switching.md` — moved from `docs/` root; content unchanged.

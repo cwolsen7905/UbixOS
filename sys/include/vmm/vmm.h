@@ -68,6 +68,10 @@ extern "C" {
 #define VMM_KERN_STACK_START 0xFE000000
 #define VMM_KERN_STACK_END   0xFFFFFFFF
 
+/* Temporary virtual window used by vmm_mapFromTask to inspect another
+ * process's page directory. Must not overlap any permanent kernel mapping. */
+#define VMM_CHILD_PD_WINDOW  0x5A00000
+
     extern struct spinLock pdSpinLock;
 
     struct freebsd6_mmap_args {

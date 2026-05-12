@@ -378,7 +378,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   uint32_t i = 0x0, x = 0x0, y = 0x0, count = ((size + 4095) / 0x1000), c = 0x0;
   uInt32 dI = 0x0, tI = 0x0;
   uint32_t baseAddr = 0x0, offset = 0x0;
-  uint32_t *childPageDir = (uint32_t *) 0x5A00000;
+  uint32_t *childPageDir = (uint32_t *) VMM_CHILD_PD_WINDOW;
   uint32_t *childPageTable = 0x0;
   uint32_t *pageTableSrc = 0x0;
   offset = (uint32_t) ptr & 0xFFF;
@@ -394,7 +394,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
 
   kprintf("cr3: 0x%X\n", child->tss.cr3);
-  if (vmm_remapPage(child->tss.cr3, 0x5A00000, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
+  if (vmm_remapPage(child->tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
     K_PANIC("vmm_remapPage: Failed");
 
   for (i = 0; i < PD_ENTRIES; i++) {
@@ -452,7 +452,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
 
             }
 
-            vmm_unmapPage(0x5A00000, 1);
+            vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
 
             for (i = 0; i < 0x1000; i++) {
               vmm_unmapPage((0x5A01000 + (i * 0x1000)), 1);
@@ -475,7 +475,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
           }
 
           //Return The Address Of The Mapped In Memory
-          vmm_unmapPage(0x5A00000, 1);
+          vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
 
           for (i = 0; i < 0x1000; i++) {
             vmm_unmapPage((0x5A01000 + (i * 0x1000)), 1);

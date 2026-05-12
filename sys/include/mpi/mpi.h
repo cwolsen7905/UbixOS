@@ -34,6 +34,9 @@
 
 #define MESSAGE_LENGTH 248
 
+#define MPI_ASYNC 0x1   /* post and return immediately */
+#define MPI_SYNC  0x2   /* post and wait until receiver drains the queue */
+
 struct mpi_message {
     char data[MESSAGE_LENGTH];
     uInt32 header;
