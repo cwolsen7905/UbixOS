@@ -41,7 +41,7 @@ all: ${KERN_OUT}
 # Link the kernel statically with fixed text+data address
 ${KERN_OUT}: $(OBJS)
 	@mkdir -p ${OBJ_DIR}/boot
-	$(LD) -T ./ldscript.i386 -o ${KERN_OUT} ${_OBJS_FULL} $(KPARTS)
+	$(LD) -T ./ldscript.${_ARCH} -o ${KERN_OUT} ${_OBJS_FULL} $(KPARTS)
 
 .c.o:
 	@mkdir -p ${OBJDIR}

@@ -2,7 +2,7 @@
 # Global 'Source' Options
 
 #Global Override And Defs
-_ARCH=i386
+_ARCH?=i386
 
 REMOVE = rm -rf
 
