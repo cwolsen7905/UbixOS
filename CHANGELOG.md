@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `bin/ed/` — POSIX `ed` line editor: supports all standard address forms (`.`, `$`, `n`, `m,n`, `/re/`, `%`) and commands `p`, `n`, `l`, `=`, `a`, `i`, `c`, `d`, `j`, `m`, `s`, `e`, `E`, `r`, `w`, `f`, `q`, `Q`. Reads files via `fread` (robust against kernel `fgetc` EOF quirks). Built and linked against `ubix_api`.
+- `bin/ed/README.md` — usage guide: address syntax, command reference, limits, and worked examples.
+- `sys/kernel/syscalls.c` slot 42 — `sys_ttyctrl(cmd, val)`: kernel syscall to set TTY raw/echo mode per-terminal.
+- `lib/ubix_api/ttyctrl.c` — `tty_setraw(val)` / `tty_setecho(val)` userland API wrappers using native `int $0x81` syscall 42.
+- `include/api/ubix.h` — declarations for `tty_setraw` and `tty_setecho`.
+
+### Fixed
+- `sys/fs/vfs/file.c` (`fgetc`) — returned 0 at EOF instead of -1; `fgets` loops never terminated on short files. Now checks `vfsRead` return value and returns -1 on EOF (BUG-VFS-02).
+- `sys/isa/atkbd.c` — keyboard ISR now implements a full TTY line discipline: canonical mode (default) buffers input in `t_linebuf`, echoes characters and backspace if `t_echo=1`, and delivers the complete line to `stdin[]` on Enter; raw mode delivers each keypress immediately with no echo. This fixes missing echo in `fgets`-based programs (e.g. `ed`) without breaking password masking in `login`.
+- `sys/kernel/vfs_calls.c` (`sys_read` stdin path) — removed its own per-character echo loop; echo is now owned exclusively by the keyboard ISR line discipline to prevent double-echo.
+- `lib/libc/stdio/gets.c` — removed per-character `printf` echo; the ISR line discipline handles it.
+- `bin/login/main.c` (`pgets`) — updated to use `tty_setraw(1)` / `tty_setraw(0)` around password input so the ISR delivers raw chars for `*`-masking without line buffering.
+
+### Added
+- `sys/include/ubixos/tty.h` — `TTY_SETRAW` / `TTY_SETECHO` constants; `t_linebuf[512]`, `t_linelen`, `t_echo`, `t_raw` fields added to `tty_term` for the line discipline.
+- `sys/include/sys/sysproto.h` — `sys_ttyctrl_args` struct and `sys_ttyctrl` prototype.
+
+### Added
 - `bin/muffin/` — new C++ GUI application using `lib/objgfx`; renders a background BMP and coloured rectangles via the SDE.
 - `lib/objgfx/` — ported to bare-metal: removed all STL dependencies (`std::map`, `std::function`, `std::iostream`, `std::fstream`); replaced with plain C function pointers and POSIX I/O.
 - `lib/libc/sys/lseek.S` — `lseek(int, off_t, int)` userland stub (syscall 478).

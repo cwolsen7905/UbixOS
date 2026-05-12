@@ -74,7 +74,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 39 -
   { ARG_COUNT(sys_sde_args), "sysSDE", (sys_call_t *)sysSDE, SYSCALL_VALID },  // 40 -
   { ARG_COUNT(sys_getvfscwd_args), "getvfscwd", (sys_call_t *)sys_getvfscwd, SYSCALL_VALID },  // 41 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
+  { ARG_COUNT(sys_ttyctrl_args), "ttyctrl", (sys_call_t *)sys_ttyctrl, SYSCALL_VALID },       // 42 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -

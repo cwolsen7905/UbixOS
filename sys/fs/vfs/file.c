@@ -28,6 +28,7 @@
 
 #include <ubixos/sched.h>
 #include <sys/sysproto_posix.h>
+#include <sys/sysproto.h>
 #include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
@@ -297,6 +298,18 @@ int sysUnlink(const char *path, int *retVal) {
     return (*retVal);
 }
 
+int sys_ttyctrl(struct thread *td, struct sys_ttyctrl_args *args) {
+    tty_term *t = _current->term;
+    if (t == NULL) { td->td_retval[0] = -1; return (-1); }
+    switch (args->cmd) {
+        case TTY_SETRAW:  t->t_raw  = args->val ? 1 : 0; break;
+        case TTY_SETECHO: t->t_echo = args->val ? 1 : 0; break;
+        default: td->td_retval[0] = -1; return (-1);
+    }
+    td->td_retval[0] = 0;
+    return (0);
+}
+
 /************************************************************************
 
  Function: void sysFopen();
@@ -447,16 +460,14 @@ int fputc(int ch, fileDescriptor_t *fd) {
 
  ************************************************************************/
 int fgetc(fileDescriptor_t *fd) {
-    int ch = 0x0;
-    /* If Found Return Next Char */
+    unsigned char ch = 0x0;
     if (fd != 0x0) {
-        fd->mp->fs->vfsRead(fd, (char*) &ch, fd->offset, 1);
+        if (fd->mp->fs->vfsRead(fd, (char *) &ch, fd->offset, 1) == 0)
+            return (-1); /* EOF */
         fd->offset++;
-        return (ch);
+        return (int) ch;
     }
-
-    /* Return NULL If FD Is Not Found */
-    return (0x0);
+    return (-1);
 }
 
 /************************************************************************

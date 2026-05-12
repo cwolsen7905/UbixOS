@@ -200,37 +200,18 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
     }
   }
   else {
-    bf[1] = '\0';
-    if (_current->term == tty_foreground)
+    /* stdin: echo and line buffering handled by keyboard ISR; drain stdin[] */
+    while (_current->term == tty_foreground) {
       c = getchar();
-
-    for (x = 0; x < args->nbyte && c != '\n';) {
-      if (_current->term == tty_foreground) {
-
-        if (c != 0x0) {
-          buf[x++] = c;
-          bf[0] = c;
-          kprintf(bf);
-        }
-
-        if (c == '\n') {
-          buf[x++] = c;
+      if (c != 0x0) {
+        buf[x++] = c;
+        if (c == '\n' || x >= (int)args->nbyte)
           break;
-        }
-
-        sched_yield();
-        c = getchar();
       }
       else {
         sched_yield();
       }
     }
-    if (c == '\n')
-      buf[x++] = '\n';
-
-    bf[0] = '\n';
-    kprintf(bf);
-
     td->td_retval[0] = x;
   }
   return (0);

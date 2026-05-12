@@ -110,4 +110,7 @@ int sys_mpiFetchMessage(struct thread *, struct sys_mpiFetchMessage_args *);
 int sys_mpiPostMessage(struct thread *, struct sys_mpiPostMessage_args *);
 int sys_getvfscwd(struct thread *, struct sys_getvfscwd_args *);
 
+struct sys_ttyctrl_args { int cmd; int val; };
+int sys_ttyctrl(struct thread *, struct sys_ttyctrl_args *);
+
 #endif

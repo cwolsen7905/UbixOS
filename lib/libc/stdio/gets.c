@@ -30,22 +30,23 @@
 #include <stdio.h>
 
 char *gets(char *string) {
-  int count=0,ch=0;
-   while (1) {
+  int count = 0, ch = 0;
+  while (1) {
     ch = fgetc(stdin);
-    if(ch == 10) {
-      printf("\n");
+    if (ch == '\n' || ch == '\r')
       break;
-      }
-    else if(ch == 8 && count > 0) count-=2;
-    else if(ch == 0) count--;
-    else string[count] = ch;
-    if (ch != 8) printf("%c",ch);
-    count ++;
+    else if (ch == 8 && count > 0)
+      count--;  /* backspace already handled by kernel */
+    else if (ch == 0 || ch == -1) {
+      if (count == 0) return NULL;
+      count--;
     }
-  string[count] = '\0';
-  return(string);
+    else
+      string[count++] = ch;
   }
+  string[count] = '\0';
+  return string;
+}
 
 /***
  $Log: gets.c,v $

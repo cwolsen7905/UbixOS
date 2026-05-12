@@ -32,6 +32,7 @@
 #include <sys/sys.h>
 #include <string.h>
 #include <sys/sched.h>
+#include <api/ubix.h>
 
 struct passwd {
   char username[32];
@@ -44,22 +45,30 @@ struct passwd {
   };
 
 static char *pgets(char *string) {
-  int count=0,ch=0;
+  int count = 0, ch = 0;
+  tty_setraw(1);   /* raw: each keystroke arrives immediately, no kernel echo */
   while (1) {
     ch = fgetc(stdin);
-    if(ch == 10) {
+    if (ch == '\n' || ch == '\r') {
       printf("\n");
       break;
-      }
-    else if(ch == 8 && count > 0) count-=2;
-    else if(ch == 0) count--;
-    else string[count] = ch;
-    if (ch != 8) printf("*");
-    count++;
     }
-  string[count] = '\0';
-  return(string);
+    else if (ch == 8 && count > 0) {
+      count--;
+    }
+    else if (ch == 0 || ch == -1) {
+      if (count == 0) { tty_setraw(0); return NULL; }
+      count--;
+    }
+    else {
+      string[count++] = ch;
+      printf("*");
+    }
   }
+  tty_setraw(0);   /* restore canonical mode */
+  string[count] = '\0';
+  return string;
+}
 
 static char *argv_shell[2] = { "shell", NULL, }; // ARGV For Initial Proccess
 static char *envp_shell[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess

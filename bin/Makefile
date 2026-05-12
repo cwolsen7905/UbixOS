@@ -1,7 +1,7 @@
 # System Makefile (C) 2002 The UbixOS Project
 
 # Add a directory name here to include it in the build and clean targets.
-SUBDIRS = init login shell clock cp fdisk format disklabel ubistry ttyd stat ls tcc uname cat syscheck make filetest launcher muffin
+SUBDIRS = init login shell clock cp fdisk format disklabel ubistry ttyd stat ls tcc uname cat syscheck make filetest launcher muffin ed ttytest
 
 .PHONY: all clean ${SUBDIRS}
 

@@ -6,7 +6,8 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 #Objects
-OBJS = ubixcwd.o
+OBJS = ubixcwd.o ttyctrl.o
+
 
 #Sub Sections
 SUBS = ./test/*.o
