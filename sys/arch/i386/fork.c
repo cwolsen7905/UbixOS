@@ -78,6 +78,8 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
+  if (_current->term != NULL && _current->term->owner == _current->id)
+    _current->term->owner = newProcess->id;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->tss.back_link = 0x0;

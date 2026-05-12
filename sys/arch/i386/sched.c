@@ -110,6 +110,8 @@ void sched() {
         delTask->parent->children -= 1;
         delTask->parent->last_exit = delTask->id;
         delTask->parent->state = READY;
+        if (delTask->term != NULL && delTask->term->owner == delTask->id)
+          delTask->term->owner = delTask->parent->id;
       }
 
       tmpTask = tmpTask->next;
