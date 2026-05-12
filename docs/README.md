@@ -43,4 +43,4 @@
 
 | File | Notes |
 |------|-------|
-| `sys/sde/assets/ubix.bmp` | Background bitmap for graphical console / SDE |
+| [`sys/sde/assets/ubix.bmp`](../sys/sde/assets/ubix.bmp) | Background bitmap for the graphical framebuffer console / SDE |
