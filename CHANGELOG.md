@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- `sys/vmm/vmm_memory.c` (`vmm_freeProcessPages`) — double-decrement of COW counters caused "COW less than 0" crash on any process run after a daemonizing `fork()`+`exit()` (e.g. `ubistry`). `endTask` already decrements COW counters via `vmm_cleanVirtualSpace`; `vmm_freeProcessPages` was then scanning by `pid` and decrementing the same pages again, freeing physical pages still mapped by the surviving daemon. Removed the `adjustCowCounter(-1)` call for COW pages; surviving mappers free the physical page through their own cleanup (BUG-COW-07).
 - `sys/arch/i386/systemtask.c` (`systemTask`) — free `kTask_t.kernelStack` before `kfree(tmpTask)` to stop leaking 4 KB per task exit; NULL guard with `kprintf` warning if the pointer is unexpectedly NULL (TODO-SCHED-09).
 - `share/mk/ubix.kern.mk` — suffix rules used `${OBJDIR}/${.TARGET}` but `.PATH.o: ${OBJDIR}` caused bmake to expand `.TARGET` to the full path, doubling the output directory; changed to `${OBJDIR}/${.TARGET:T}` (basename-only).
 - `sys/fs/vfs/file.c` (`fgetc`) — removed debug `kprintf("[%s:%i]"…)` that fired on every character read (TODO-VFS-01).

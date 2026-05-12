@@ -45,6 +45,7 @@ Fix the items in [BUGS.md](BUGS.md) first.
 | ~~TODO-VMM-03~~ | [sys/vmm/paging.c:381](sys/vmm/paging.c#L381) | **Done** `vmm_mapFromTask`: `0x5A00000` replaced with `VMM_CHILD_PD_WINDOW` constant defined in `sys/include/vmm/vmm.h`. |
 | TODO-VMM-04 | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | `freePage`: `systemVitals->freePages` is updated inside `vmmSpinLock` in some paths but the `adjustCowCounter` path updates it outside any lock on `systemVitals`. Consolidate so `freePages` is always updated under `vmmSpinLock`. |
 | TODO-VMM-05 | [sys/vmm/freevirtualpage.c](sys/vmm/freevirtualpage.c) | `vmm_freeVirtualPage` is a stub (TODO comment, no implementation). Any code that expects to free individual virtual pages silently does nothing, leaking virtual address space. |
+| TODO-VMM-06 | [sys/vmm/paging.c](sys/vmm/paging.c), [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | PD[1] COW reference leak. `vmm_copyVirtualSpace` COW-shares PD[1] pages (0x400000–0x7FFFFF, kernel code region) on every fork, incrementing their counters. `vmm_cleanVirtualSpace` starts at `VMM_USER_START` (0x800000) and never decrements those references. One COW count leaks per process lifetime per page in that region. Fix: extend `vmm_cleanVirtualSpace` down to PD[1] (or handle PD[1] specially on exit), then simplify or remove `vmm_freeProcessPages`. Tracked as part of BUG-COW-03. |
 
 ---
 
