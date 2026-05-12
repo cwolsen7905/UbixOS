@@ -4,15 +4,11 @@
 
 ## Code Style
 
-UbixOS follows **FreeBSD `style(9)`**:
+See **[STYLE.md](STYLE.md)** — it is the single source of truth for
+formatting, naming conventions, and incremental migration rules.
+Tools (`.clang-format`, `.clang-tidy`, `tools/mcr.sh`) derive from it.
 
-- 8-space hard tabs (not spaces)
-- Allman braces (`{` on its own line)
-- 80-column limit
-- Pointer aligned to variable name: `int *foo`, not `int* foo`
-
-Apply formatting file-by-file as files are touched. Do not reformat the
-whole tree at once — it destroys `git blame`.
+Quick reference:
 
 ```sh
 clang-format -i sys/vmm/paging.c   # reformat one file in place
