@@ -128,3 +128,24 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 | ~~BUG-KRN-11~~ | [sys/kernel/gen_calls.c](sys/kernel/gen_calls.c) | **FIXED** `sys_setpgid`: changed `schedFindTask(pid)` to `schedFindTask(args->pid)` so the correct process is looked up. |
 | ~~BUG-KRN-12~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** COW/data-segment fault: `vmm_findFreePage` result is now checked for NULL; kills the task cleanly on OOM instead of mapping zero page writable. |
 | ~~BUG-KRN-13~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** `pageFaultSpinLock` now released before all `kpanic` calls (null address path and permission-fault path). |
+
+---
+
+## MPI (identified 2026-05-11)
+
+### Crashes
+
+| ID | File | Description |
+|----|------|-------------|
+| BUG-MPI-01 | [sys/mpi/system.c:248](sys/mpi/system.c) | `mpi_destroyMbox`: unconditional `mbox->prev->next = mbox->next` and `mbox->next->prev = mbox->prev` — NULL dereference when the mailbox is at the head of the list (`prev == NULL`) or tail (`next == NULL`). Must NULL-check both pointers and update `mboxList` if head is being removed. |
+| BUG-MPI-02 | [sys/mpi/system.c:79](sys/mpi/system.c) | `mpi_createMbox`: `mbox->msgLast` is never initialized after `kmalloc`. When the second message is posted to a mailbox, `mbox->msg != NULL` so the `else` branch runs `mbox->msgLast->next = message` — dereferences an uninitialized pointer. Add `mbox->msg = mbox->msgLast = NULL;` after allocation. |
+| BUG-MPI-03 | [sys/mpi/system.c:165](sys/mpi/system.c) | `mpi_postMessage` and `mpi_spam`: append-to-empty-queue path sets `mbox->msg = message` but never sets `mbox->msgLast = message`. On the next post, `msgLast` is still NULL/stale, and the `else` branch dereferences it. Fix: set both `mbox->msg` and `mbox->msgLast` in the empty-queue branch. |
+| BUG-MPI-04 | [sys/mpi/system.c:220](sys/mpi/system.c) | `mpi_fetchMessage`: when dequeuing the last message, `mbox->msgLast` is not reset to NULL. The next append will then use a freed pointer as the list tail. Fix: after `mbox->msg = mbox->msg->next`, add `if (mbox->msg == NULL) mbox->msgLast = NULL;`. |
+
+### Correctness
+
+| ID | File | Description |
+|----|------|-------------|
+| BUG-MPI-05 | [sys/mpi/system.c:81](sys/mpi/system.c) | `mpi_createMbox`: `sprintf(mbox->name, name)` copies the caller-supplied name with no length limit into a 64-byte field. Names longer than 63 bytes silently overflow into adjacent struct fields (`pid`, then heap metadata). Replace with `strncpy(mbox->name, name, sizeof(mbox->name) - 1)`. |
+| BUG-MPI-06 | [sys/mpi/system.c:175](sys/mpi/system.c) | `mpi_postMessage` type `0x2` synchronous wait: busy-spins on `mbox->msgLast != NULL` after releasing the spinlock. (1) `mpi_fetchMessage` never clears `msgLast` (BUG-MPI-04), so this may spin forever. (2) Reads a shared pointer without the lock — concurrent modifications are a data race. (3) No `sched_yield()` in the loop burns one full CPU core while waiting. |
+| BUG-MPI-07 | [sys/mpi/system.c:79,158,117](sys/mpi/system.c) | `mpi_createMbox`, `mpi_postMessage`, `mpi_spam`: `kmalloc` return value is used without a NULL check. On heap exhaustion the kernel will dereference NULL immediately after the allocation. |

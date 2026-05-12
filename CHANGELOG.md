@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/reference/external-specs.md` — links to ELF ABI, Intel SDM, Multiboot, and FAT specifications.
 - `docs/README.md` — documentation index.
 - `sys/sde/assets/ubix.bmp` — background bitmap for graphical console / SDE (moved from `doc/ubix.bmp`).
+- `docs/architecture/mpi.md` — full MPI audit: data structures, function-by-function walkthrough, syscall table, userland API, system mailbox registry, known bugs cross-referenced to BUGS.md, design limitations.
+- `BUGS.md` — MPI section: BUG-MPI-01 through BUG-MPI-07 covering NULL dereferences in destroy, uninitialized `msgLast`, append/drain logic errors, sprintf overflow, sync-send race, and missing kmalloc NULL checks.
+- `TODO.md` — MPI section: TODO-MPI-01 through TODO-MPI-07 covering mailbox cleanup on exit, blocking receive, queue depth limit, debug kprintf removal, missing destroyMbox stub, named type constants, and re-enabling init's receive loop.
 
 ### Removed
 - `doc/` directory fully retired: `html/` and `xml/` Doxygen output, `vmm.txt`, `vmm/i386_vmm_map.txt`, `vmm/i386_vmm_page_reference.xlsx`, `sample_driver.c`, `UbixOS_Build.txt`, `ELF_Format.pdf`, `ChangeLog`, and `ubix.bmp` — all content migrated to `docs/` as Markdown or relocated to `sys/sde/assets/`; `doc/` added to `.gitignore`.

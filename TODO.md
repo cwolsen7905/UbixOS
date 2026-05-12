@@ -92,3 +92,19 @@ Fix the crash/exploit items in [BUGS.md](BUGS.md) (BUG-KRN-01 through BUG-KRN-13
 | TODO-KRN-03 | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | Narrow `pageFaultSpinLock` critical section — currently held across the entire COW `memcpy`. Should cover only the PTE update. Also release the lock before calling `kpanic` (BUG-KRN-13). |
 | TODO-KRN-04 | [sys/kernel/ld.c](sys/kernel/ld.c) | Audit all `sizeof(Elf_Shdr)` vs `sizeof(Elf_Phdr)` usages. After fixing BUG-KRN-06, add ELF field validation (bounds on `e_phnum`, `e_shnum`, `e_shstrndx`) before using them as allocation sizes or array indices. |
 | TODO-KRN-05 | [sys/kernel/signal.c](sys/kernel/signal.c) | Add `NSIG` (or `128`) bounds check to all signal number array accesses in `sys_sigaction` and `sys_sigprocmask`. Return `EINVAL` for out-of-range signals. |
+
+---
+
+## MPI Improvements (identified 2026-05-11)
+
+Fix the crash items in [BUGS.md](BUGS.md) (BUG-MPI-01 through BUG-MPI-07) first.
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-MPI-01 | [sys/mpi/system.c](sys/mpi/system.c) | Add mailbox cleanup on task exit. When a process dies (`endTask`), scan `mboxList` for mailboxes owned by that PID and free them along with any queued messages. Without this, the name is permanently reserved and all queued messages leak. |
+| TODO-MPI-02 | [sys/mpi/system.c:175](sys/mpi/system.c) | Replace type `0x2` busy-spin with a proper blocking mechanism. The simplest fix is adding `sched_yield()` inside the spin loop. The correct fix is a per-mailbox semaphore that the sender waits on and the receiver signals on drain. |
+| TODO-MPI-03 | [sys/mpi/system.c](sys/mpi/system.c) | Add a maximum queue depth (e.g. 64 messages per mailbox). Return an error from `mpi_postMessage` when the limit is reached rather than silently exhausting kernel heap. |
+| TODO-MPI-04 | [sys/mpi/mpi_syscalls.c](sys/mpi/mpi_syscalls.c) | Remove the debug `kprintf("mPM: %s", args->name)` from `sys_mpiPostMessage`. It fires on every single post and pollutes the serial log. |
+| TODO-MPI-05 | [lib/libc/sys/](lib/libc/sys/) | Add an assembly stub for `mpi_destroyMbox` (syscall 51). Currently only create/post/fetch have stubs; destroy can only be called via inline asm from userland. |
+| TODO-MPI-06 | [sys/include/mpi/mpi.h](sys/include/mpi/mpi.h) | Define named constants for the `type` argument to `mpi_postMessage`: `MPI_ASYNC` (0x1) and `MPI_SYNC` (0x2). Currently magic numbers are used everywhere. |
+| TODO-MPI-07 | [bin/init/main.c](bin/init/main.c) | Re-enable the MPI receive loop in `init` (currently commented out). Once the crash bugs are fixed this loop is safe to restore and will allow other processes to send commands to PID 1. |

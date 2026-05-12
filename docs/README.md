@@ -7,6 +7,7 @@
 | [architecture/vmm.md](architecture/vmm.md) | Virtual Memory Manager: layout, functions, page-fault handling |
 | [architecture/task-switching.md](architecture/task-switching.md) | Task switching internals: TSS, GDT, scheduler, fork, FPU |
 | [architecture/i386-page-directory-map.md](architecture/i386-page-directory-map.md) | Full i386 page directory (PDE 0–1023) with purpose annotations |
+| [architecture/mpi.md](architecture/mpi.md) | Message Passing Interface: mailboxes, syscalls, known bugs, limitations |
 
 ## Design Specs
 
