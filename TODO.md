@@ -118,3 +118,11 @@ BUG-MPI-01 through BUG-MPI-07 are all fixed. These are the remaining improvement
 | TODO-MPI-05 | [lib/libc/sys/](lib/libc/sys/) | Add an assembly stub for `mpi_destroyMbox` (syscall 51). Currently only create/post/fetch have stubs; destroy can only be called via inline asm from userland. |
 | ~~TODO-MPI-06~~ | [sys/include/mpi/mpi.h](sys/include/mpi/mpi.h) | **Done** Added `MPI_ASYNC` (0x1) and `MPI_SYNC` (0x2) constants to `mpi.h`. |
 | TODO-MPI-07 | [bin/init/main.c](bin/init/main.c) | Re-enable the MPI receive loop in `init` (currently commented out). Once the crash bugs are fixed this loop is safe to restore and will allow other processes to send commands to PID 1. |
+
+---
+
+## SDE / Graphics (identified 2026-05-11)
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-SDE-01 | [tools/grub.cfg](tools/grub.cfg), [sys/init/start.S](sys/init/start.S), [sys/init/main.c](sys/init/main.c) | **Use the GRUB/multiboot framebuffer instead of VM86 BIOS calls.** Add `set gfxpayload=800x600x24` to `grub.cfg` so GRUB sets VESA mode before handing off. Parse `mbi->framebuffer_*` fields from the multiboot info struct in `start.S`/`main.c` and pass the LFB address + pitch + bpp to the SDE instead of going through `biosCall`. This eliminates VM86 mode entirely, works in QEMU and on real hardware without BIOS ROM quirks, and is the standard approach for modern hobby OSes. |

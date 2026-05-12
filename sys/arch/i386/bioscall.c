@@ -57,7 +57,7 @@ void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi,
   newProcess->tss.ss2 = 0x0;
   newProcess->tss.cr3 = (uint32_t)kernelPageDirectory; //vmm_createVirtualSpace(newProcess->id);
   newProcess->tss.eip = offset & 0xFFFF;
-  newProcess->tss.eflags = 2 | EFLAG_IF | EFLAG_VM;
+  newProcess->tss.eflags = 2 | EFLAG_IF | EFLAG_IOPL3 | EFLAG_VM;
   newProcess->tss.eax = eax & 0xFFFF;
   newProcess->tss.ebx = ebx & 0xFFFF;
   newProcess->tss.ecx = ecx & 0xFFFF;

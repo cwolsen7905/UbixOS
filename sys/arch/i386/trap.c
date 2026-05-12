@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/types.h>
 #include <i386/signal.h>
 #include <sys/trap.h>
 #include <sys/gdt.h>
@@ -118,6 +119,32 @@ void trap(struct trapframe *frame) {
       kpanic("INT OFF! KERN[0x%X]", trap_code);
       die_if_kernel("TEST", frame, 0x200);
     }
+  }
+
+  /*
+   * VM86 monitor: #GP (trap 0xD) from a VM86 task.
+   * With IOPL=3, INT executes directly via the real-mode IVT.  The only
+   * instruction that still traps is HLT (always privileged in VM86 mode).
+   * We use HLT as the completion signal from bios16code.S: when we see a
+   * #GP with PSL_VM set and the faulting byte is 0xF4 (HLT), the BIOS
+   * call is done — mark the task state = 0 so biosCall() can proceed.
+   */
+  if (frame->tf_trapno == 0xD && (frame->tf_eflags & PSL_VM)) {
+    uint32_t linear = (frame->tf_cs << 4) + (frame->tf_eip & 0xFFFF);
+    uint8_t  opcode = *(uint8_t *)linear;
+    if (opcode == 0xF4) {
+      /* HLT: BIOS call complete, wake biosCall() */
+      _current->state = 0;
+      sched_yield();
+      return;
+    }
+    /* Any other #GP in VM86 — kill the task */
+    kprintf("vm86: unhandled #GP opcode 0x%X at 0x%X:0x%X\n",
+            opcode, frame->tf_cs, frame->tf_eip);
+    _current->state = 0;
+    endTask(_current->id);
+    sched_yield();
+    return;
   }
 
   /* Suppress verbose print for expected user-mode COW write faults
