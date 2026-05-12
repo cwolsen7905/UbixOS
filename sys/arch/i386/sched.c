@@ -205,6 +205,15 @@ kTask_t *schedNewTask() {
   return (tmpTask);
 }
 
+void sched_killTree(pidType id) {
+  kTask_t *t;
+  for (t = taskList; t != 0x0; t = t->next) {
+    if (t->parent != 0x0 && t->parent->id == id && t->state != DEAD)
+      sched_killTree(t->id);
+  }
+  sched_setStatus(id, DEAD);
+}
+
 int sched_deleteTask(pidType id) {
   kTask_t *tmpTask = 0x0;
 

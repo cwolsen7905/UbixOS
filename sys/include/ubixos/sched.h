@@ -94,6 +94,7 @@ typedef struct taskStruct {
 
 int sched_init();
 int sched_setStatus(pidType, tState);
+void sched_killTree(pidType);
 int sched_deleteTask(pidType);
 int sched_addDelTask(kTask_t *);
 kTask_t *sched_getDelTask();

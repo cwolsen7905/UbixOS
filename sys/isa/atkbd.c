@@ -295,7 +295,7 @@ void keyboardHandler(struct trapframe *frame) {
           if (victim != NULL) {
             if (victim->parent != NULL)
               tty_foreground->owner = victim->parent->id;
-            sched_setStatus(victim->id, DEAD);
+            sched_killTree(victim->id);
           }
         }
         break;
