@@ -2,6 +2,7 @@
 t
 t.c
 *.o
+*.d
 *.so
 .depen*
 /sys/sde/objgfx40.cpp
@@ -15,3 +16,7 @@ ubixos.img
 serial.log
 ubixos.iso
 *.png
+doc/html/
+doc/xml/
+doc/ChangeLog
+doc/ubix.bmp

@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `docs/architecture/vmm.md` — Virtual Memory Manager design document (converted from `doc/vmm.txt`; incorporates page-directory map from `doc/vmm/i386_vmm_map.txt`).
+- `docs/architecture/task-switching.md` — moved from `docs/` root; content unchanged.
+- `docs/design/fbcon.md` — VESA framebuffer console spec; moved from `docs/` root.
+- `docs/drivers/writing-a-driver.md` — driver writing guide (rewritten from `doc/sample_driver.c` commentary).
+- `docs/README.md` — documentation index.
+
+### Removed
+- `doc/html/` and `doc/xml/` — Doxygen-generated output removed from git; added to `.gitignore`.
+- `doc/ChangeLog` — superseded by `CHANGELOG.md`.
+- `doc/ubix.bmp` — unused legacy image.
+
+### Added
 - `sys_pidStatus` (native syscall 7) — kernel implementation in `sys/kernel/gen_calls.c`; returns 1 while a task is alive, 0 when dead or not found. Wired in `sys/kernel/syscalls.c`. Args struct in `sys/include/sys/sysproto.h`.
 - `lib/libc/stdio/fdopen.c` — `fdopen(3)` implementation for the in-kernel libc.
 - `lib/ubix_api/ubixcwd.c` — `ubix_getcwd()` native API implementation.
