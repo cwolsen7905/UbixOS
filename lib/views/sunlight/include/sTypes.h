@@ -1,17 +1,19 @@
 #ifndef STYPES_H
 #define STYPES_H
- 
-#include <string>
+
+#include <string.h>
 #include <sStyle.h>
 #include <ogTypes.h>
 #include <objgfx40.h>
 #include <ogPixelFmt.h>
 
-class sString : public sStyle, public std::string {
+class sString : public sStyle {
  public:
-           sString(void) : std::string("") { };
-           sString(const std::string s) : std::string(s) { };
-  virtual ~sString(void) { };
+  char str[256];
+           sString(void) { str[0] = 0; }
+           sString(const char *s) { strncpy(str, s, 255); str[255] = 0; }
+  const char *c_str(void) const { return str; }
+  virtual ~sString(void) { }
 }; // sString
 
 class sBGColor : public sStyle {
@@ -25,14 +27,14 @@ class sRGB8Color : public sStyle, public ogRGB8 {
  public:
            sRGB8Color(void) { red = green = blue = 0; }
            sRGB8Color(uInt8, uInt8, uInt8);
-  virtual ~sRGB8Color(void) { };
+  virtual ~sRGB8Color(void) { }
 }; // sRGB8Color
 
 class sRGBA8Color : public sStyle, public ogRGBA8 {
  public:
            sRGBA8Color(void) { red = green = blue = alpha = 0; }
            sRGBA8Color(uInt8, uInt8, uInt8, uInt8);
-  virtual ~sRGBA8Color(void) { };
+  virtual ~sRGBA8Color(void) { }
 }; // sRGBA8Color
 
 class sSize : public sStyle {
@@ -44,16 +46,15 @@ class sSize : public sStyle {
            sSize(uInt32 _size) { size = _size; width = height = 0; }
            sSize(uInt32, uInt32);
            sSize(uInt32, uInt32, uInt32);
-  virtual ~sSize(void); 
+  virtual ~sSize(void);
 }; // sSize
 
 class sPixelFormat : public sStyle, public ogPixelFmt {
  public:
-//            sPixelFormat(void);
-            sPixelFormat(uInt8, 
-                         uInt8, uInt8, uInt8, uInt8, 
+            sPixelFormat(uInt8,
+                         uInt8, uInt8, uInt8, uInt8,
                          uInt8, uInt8, uInt8, uInt8);
-  virtual  ~sPixelFormat(void) { };
+  virtual  ~sPixelFormat(void) { }
 }; // sPixelFormat
 
 #endif

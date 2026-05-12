@@ -20,7 +20,8 @@ RANLIB=${CROSS_PREFIX}ranlib
 
 BUILD_DIR?=${SRCTOP}/build
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument \
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti \
+         -Wno-unused-command-line-argument \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP
 LDFLAGS = -Wl,-m,elf_i386
 

@@ -41,7 +41,19 @@ void operator delete(void * ptr)
     return;
 }
 
+void operator delete(void * ptr, unsigned int)
+{
+    free(ptr);
 
+    return;
+}
+
+void operator delete[](void * ptr, unsigned int)
+{
+    free(ptr);
+
+    return;
+}
 
 /* End Don't Touch */
 

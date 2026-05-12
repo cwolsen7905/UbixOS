@@ -28,7 +28,6 @@
 
 #include <objgfx/vWindow.h>
 #include <objgfx/ogImage.h>
-#include <iostream>
 
 extern "C" {
 #include <fcntl.h>

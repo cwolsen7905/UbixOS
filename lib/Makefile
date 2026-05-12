@@ -1,6 +1,6 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: ubix_api-code libc-code ubix-code libcpp-code #objgfx-code #csu-code
+all: ubix_api-code libc-code ubix-code libcpp-code objgfx40-code sunlight-code objgfx-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -25,6 +25,15 @@ ubix-code: ubix
 libcpp-code: libcpp
 	(cd libcpp;$(MAKE))
 
+objgfx40-code:
+	(cd objgfx40;$(MAKE))
+
+sunlight-code:
+	(cd views/sunlight;$(MAKE))
+
+objgfx-code:
+	(cd objgfx;$(MAKE))
+
 bin: src
 	(cd src/bin;$(MAKE))
 
@@ -42,3 +51,6 @@ clean:
 	(cd libc;${MAKE} clean)
 	(cd ubix;${MAKE} clean)
 	(cd libcpp;${MAKE} clean)
+	(cd objgfx40;${MAKE} clean)
+	(cd views/sunlight;${MAKE} clean)
+	(cd objgfx;${MAKE} clean)

@@ -9,6 +9,7 @@ extern "C" {
 #include <stdio.h>
 #include <math.h>
 }
+#define kprintf(...) ((void)0)
 #endif
 
 #ifdef __UBIXOS_KERNEL__

@@ -32,7 +32,11 @@ typedef __SIZE_TYPE__    uintptr_t;
 #endif
 
 #ifndef NULL
+#ifdef __cplusplus
+#define NULL 0
+#else
 #define NULL ((void *)0)
+#endif
 #endif
 
 #define offsetof(type, member) ((size_t)&((type *)0)->member)

@@ -1,3 +1,9 @@
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 double sqrt(double val);
 double atan(double val);
 double atan2(double y, double x);
@@ -16,3 +22,7 @@ double fmod(double x, double y);
 double ldexp(double x, int exp);
 double frexp(double x, int *exp);
 double modf(double x, double *iptr);
+
+#ifdef __cplusplus
+}
+#endif

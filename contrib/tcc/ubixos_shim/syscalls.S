@@ -4,30 +4,6 @@
  */
 .text
 
-/* lseek(int fd, off_t offset, int whence) — syscall 478
- * off_t is 64-bit; FreeBSD i386 ABI inserts a pad dword before offset.
- * Caller stack: [ret][fd][offset_lo][offset_hi][whence]
- * We need to push: [fd][pad=0][offset_lo][offset_hi][whence]
- * Trick: rebuild the call frame with the extra pad word.
- */
-.globl lseek
-.type  lseek,@function
-lseek:
-	/* args on stack (past ret addr): fd(4), off_lo(4), off_hi(4), whence(4) */
-	pushl	%ebp
-	movl	%esp, %ebp
-	/* push args matching sys_lseek_args: whence, off_hi, off_lo, fd (no pad!) */
-	pushl	20(%ebp)	/* whence   */
-	pushl	16(%ebp)	/* off_hi   */
-	pushl	12(%ebp)	/* off_lo   */
-	pushl	8(%ebp)		/* fd       */
-	pushl	$0		/* fake return addr (UbixOS ABI: params = esp+4) */
-	movl	$478, %eax
-	int	$0x80
-	movl	%ebp, %esp
-	popl	%ebp
-	ret
-
 /* mprotect(void *addr, size_t len, int prot) — syscall 74 (NOTIMP → returns 0) */
 .globl mprotect
 .type  mprotect,@function

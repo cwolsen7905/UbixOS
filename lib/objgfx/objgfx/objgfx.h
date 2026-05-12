@@ -1,8 +1,5 @@
 #pragma once
 
-#include <functional>
-#include <map>
-
 #include "ogTypes.h"
 #include "ogPixelFmt.h"
 
@@ -43,8 +40,8 @@ protected:
 	ogErrorCode  lastError;
 	ogDataState  dataState;
 
-	std::function<uInt32(void*)> getPixel;
-	std::function<void(void*, uInt32)> setPixel;
+	uInt32 (*getPixel)(void *);
+	void   (*setPixel)(void *, uInt32);
 
 	void         AARawLine(uInt32, uInt32, uInt32, uInt32, uInt32);
 	bool         ClipLine(int32&, int32&, int32&, int32&);

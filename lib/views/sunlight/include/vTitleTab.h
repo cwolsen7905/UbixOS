@@ -1,18 +1,17 @@
 #ifndef VTITLETAB_H
 #define VTITLETAB_H
 
-#include <string>
 #include <vContext.h>
 #include <ogFont.h>
 
 class vTitleTab : public vContext {
  protected:
-   ogBitFont * font;
-   std::string title;
+   ogBitFont *font;
+   char       title[256];
  public:
                vTitleTab(vContext *);
   virtual void vDraw(void);
-  void         vSetTitle(const std::string);
+  void         vSetTitle(const char *);
   virtual     ~vTitleTab(void);
 }; // vTitleTab
 

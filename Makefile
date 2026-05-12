@@ -128,6 +128,9 @@ install-world:
 	find build/libexec -maxdepth 1 -type f -exec cp {} ${MOUNT_POINT}/libexec/ \;
 	@echo "--- Step 2: System config"
 	cp -pr etc/* ${MOUNT_POINT}/etc/
+	@echo "--- Step 2b: Assets → /var"
+	mkdir -p ${MOUNT_POINT}/var/background
+	[ -f sys/sde/assets/ubix.bmp ] && cp sys/sde/assets/ubix.bmp ${MOUNT_POINT}/var/background/ubix.bmp || true
 	@echo "--- Step 3: Headers → /usr/include"
 	mkdir -p ${MOUNT_POINT}/usr/include
 	rsync -r --no-perms --no-owner --no-group \

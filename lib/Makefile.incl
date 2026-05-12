@@ -22,5 +22,5 @@ RANLIB=${CROSS_PREFIX}ranlib
 LDFLAGS = -Bshareable
 
 INCLUDES = -I${SRCTOP}/include
-CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -O \
+CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti -O \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -fPIC -MMD -MP

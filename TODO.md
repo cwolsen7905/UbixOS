@@ -97,6 +97,14 @@ Fix the crash/exploit items in [BUGS.md](BUGS.md) (BUG-KRN-01 through BUG-KRN-13
 
 ---
 
+## Build System Improvements (identified 2026-05-11)
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-BUILD-01 | [mk/ubix.prog.mk](mk/ubix.prog.mk) | **Replace the `obj/lib/*/*.o` glob with proper archive libraries.** Every statically-linked binary currently links against all compiled library objects via a wildcard, causing symbol conflicts (e.g. `lseek` clash between libc and the tcc shim) and bloated binaries. The fix is to run `ar rcs` at the end of each library's build to produce `libc.a`, `libm.a`, etc., then have each binary's Makefile declare only what it uses (`-lc`, `-lm`). Binaries with C++ or graphics dependencies (launcher, muffin) already have explicit extra link lines and model the desired pattern. |
+
+---
+
 ## MPI Improvements (identified 2026-05-11)
 
 BUG-MPI-01 through BUG-MPI-07 are all fixed. These are the remaining improvements.

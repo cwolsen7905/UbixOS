@@ -3,6 +3,6 @@
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-OBJS = atan.o sqrt.o
+OBJS = atan.o sqrt.o fabs.o
 
 .include "${UBIX_MK}/ubix.sublib.mk"

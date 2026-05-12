@@ -1,7 +1,7 @@
+#include <string.h>
 #include <sStyle.h>
 #include <sTypes.h>
 #include <objgfx40.h>
-#include <string>
 
 sBGColor::sBGColor(void) {
   memset(colors, 0, sizeof(colors));

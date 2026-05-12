@@ -34,6 +34,7 @@ typedef __size_t        size_t;
 #define _SIZE_T_DECLARED
 #endif
 
+__BEGIN_DECLS
 void    *memccpy(void * __restrict, const void * __restrict, int, size_t);
 int      memcmp(const void *, const void *, size_t);
 void    *memcpy(void * __restrict, const void * __restrict, size_t);
@@ -65,5 +66,6 @@ char    *strstr(const char *, const char *);
 char    *strtok(char * __restrict, const char * __restrict);
 char    *strtok_r(char *, const char *, char **);
 void     swab(const void *, void *, size_t);
+__END_DECLS
 
 #endif
