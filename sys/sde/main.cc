@@ -37,6 +37,7 @@ extern "C" {
 #include <ubixos/exec.h>
 #include <vmm/vmm.h>
 #include <lib/kmalloc.h>
+#include <mpi/mpi.h>
 }
 
 #include <sde/sde.h>
@@ -75,6 +76,8 @@ void sdeThread() {
   ogprintOff = (int) 0x0;
 
   screen->ogSetAntiAliasing(false);
+
+  mpi_createMbox("sde");
 
   execThread(&sdeTestThread, 0x2000, 0x0);
 
