@@ -14,7 +14,7 @@ The project uses **BSD make (`bmake`)**. On macOS use `bmake`; on FreeBSD `make`
 
 ```sh
 bmake                  # kernel + world (default)
-bmake kernel           # kernel only → sys/compile/kernel
+bmake kernel           # kernel only → build/boot/kernel
 bmake world            # userland only → build/bin/, build/lib/, build/libexec/
 bmake image            # build a fresh bootable FAT32 disk image from scratch
 bmake run              # launch QEMU with ubixos.img

@@ -14,6 +14,7 @@ AR  ?= ${CROSS_PREFIX}ar
 
 BINARY   = tcc
 TCC_SRC  = ../../contrib/tcc
+OBJ_OUT  = ${BUILD_DIR}/obj/bin/tcc
 
 # Compiler flags — strip clang-only flag before adding TCC defines
 TCC_CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin \
@@ -29,18 +30,21 @@ TCC_CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin \
   -DCONFIG_TCC_ELFINTERP=\"sys:/libexec/ld.so\"
 
 # Main TCC object
-OBJS = tcc_main.o
+OBJS = ${OBJ_OUT}/tcc_main.o
 
 # Shim objects: missing libc symbols needed by TCC
-SHIM_OBJS = shim_syscalls.o shim_stdio.o shim_stdlib.o \
-            shim_math.o shim_time.o shim_moddi3.o shim_misc.o
+SHIM_OBJS = ${OBJ_OUT}/shim_syscalls.o ${OBJ_OUT}/shim_stdio.o ${OBJ_OUT}/shim_stdlib.o \
+            ${OBJ_OUT}/shim_math.o ${OBJ_OUT}/shim_time.o ${OBJ_OUT}/shim_moddi3.o \
+            ${OBJ_OUT}/shim_misc.o
 
 ${BINARY}: ${OBJS} ${SHIM_OBJS}
+	@mkdir -p ${BUILD_DIR}/lib/tcc
 	${CC} -m32 -nostdlib ${LDFLAGS} -o ${BUILD_DIR}/bin/${BINARY} ${STARTUP} \
 	  ${LIBRARIES} ${SHIM_OBJS} ${OBJS}
-	${CC} ${CFLAGS} -w -O2 -c ${TCC_SRC}/lib/libtcc1.c -o libtcc1.o
-	${CC} ${CFLAGS} -w -O2 -c ${TCC_SRC}/lib/alloca86.S -o alloca86.o
-	${CROSS_PREFIX}ar rcs ${BUILD_DIR}/lib/tcc/libtcc1.a libtcc1.o alloca86.o shim_moddi3.o
+	${CC} ${CFLAGS} -w -O2 -c ${TCC_SRC}/lib/libtcc1.c -o ${OBJ_OUT}/libtcc1.o
+	${CC} ${CFLAGS} -w -O2 -c ${TCC_SRC}/lib/alloca86.S -o ${OBJ_OUT}/alloca86.o
+	${CROSS_PREFIX}ar rcs ${BUILD_DIR}/lib/tcc/libtcc1.a \
+	  ${OBJ_OUT}/libtcc1.o ${OBJ_OUT}/alloca86.o ${OBJ_OUT}/shim_moddi3.o
 	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
 	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
 	  -c ${TCC_SRC}/ubixos_shim/crt1.S -o ${BUILD_DIR}/lib/tcc/crt1.o
@@ -53,39 +57,42 @@ ${BINARY}: ${OBJS} ${SHIM_OBJS}
 	mkdir -p ${BUILD_DIR}/lib/tcc/include
 	cp ${TCC_SRC}/include/*.h ${BUILD_DIR}/lib/tcc/include/
 
-tcc_main.o:
-	${CC} ${TCC_CFLAGS} -c ${TCC_SRC}/tcc.c -o tcc_main.o
+${OBJ_OUT}/tcc_main.o:
+	@mkdir -p ${OBJ_OUT}
+	${CC} ${TCC_CFLAGS} -c ${TCC_SRC}/tcc.c -o ${OBJ_OUT}/tcc_main.o
 
 SHIM_CC = ${CC} -m32 -nostdlib -nostdinc -fno-builtin \
           -mno-sse -mno-sse2 -mno-mmx -mno-3dnow ${INCLUDES} -w -O2
 
-shim_syscalls.o: ${TCC_SRC}/ubixos_shim/syscalls.S
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/syscalls.S -o shim_syscalls.o
+${OBJ_OUT}/shim_syscalls.o: ${TCC_SRC}/ubixos_shim/syscalls.S
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/syscalls.S -o ${OBJ_OUT}/shim_syscalls.o
 
-shim_stdio.o: ${TCC_SRC}/ubixos_shim/stdio_ext.c
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/stdio_ext.c -o shim_stdio.o
+${OBJ_OUT}/shim_stdio.o: ${TCC_SRC}/ubixos_shim/stdio_ext.c
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/stdio_ext.c -o ${OBJ_OUT}/shim_stdio.o
 
-shim_stdlib.o: ${TCC_SRC}/ubixos_shim/stdlib_ext.c
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/stdlib_ext.c -o shim_stdlib.o
+${OBJ_OUT}/shim_stdlib.o: ${TCC_SRC}/ubixos_shim/stdlib_ext.c
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/stdlib_ext.c -o ${OBJ_OUT}/shim_stdlib.o
 
-shim_math.o: ${TCC_SRC}/ubixos_shim/math_ext.c
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/math_ext.c -o shim_math.o
+${OBJ_OUT}/shim_math.o: ${TCC_SRC}/ubixos_shim/math_ext.c
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/math_ext.c -o ${OBJ_OUT}/shim_math.o
 
-shim_time.o: ${TCC_SRC}/ubixos_shim/time_ext.c
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/time_ext.c -o shim_time.o
+${OBJ_OUT}/shim_time.o: ${TCC_SRC}/ubixos_shim/time_ext.c
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/time_ext.c -o ${OBJ_OUT}/shim_time.o
 
-shim_moddi3.o: ${TCC_SRC}/ubixos_shim/moddi3.c
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/moddi3.c -o shim_moddi3.o
+${OBJ_OUT}/shim_moddi3.o: ${TCC_SRC}/ubixos_shim/moddi3.c
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/moddi3.c -o ${OBJ_OUT}/shim_moddi3.o
 
-shim_misc.o: ${TCC_SRC}/ubixos_shim/misc_ext.c
-	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/misc_ext.c -o shim_misc.o
+${OBJ_OUT}/shim_misc.o: ${TCC_SRC}/ubixos_shim/misc_ext.c
+	@mkdir -p ${OBJ_OUT}
+	${SHIM_CC} -c ${TCC_SRC}/ubixos_shim/misc_ext.c -o ${OBJ_OUT}/shim_misc.o
 
 clean:
-	${REMOVE} ${OBJS} ${SHIM_OBJS} libtcc1.o alloca86.o
-	${REMOVE} ${OBJS:.o=.d} ${SHIM_OBJS:.o=.d} libtcc1.d alloca86.d
+	${REMOVE} ${OBJ_OUT}
 	${REMOVE} ${BUILD_DIR}/bin/${BINARY}
 	${REMOVE} ${BUILD_DIR}/lib/tcc/libtcc1.a
-
-.for _d in ${OBJS:.o=.d}
-.sinclude "${_d}"
-.endfor

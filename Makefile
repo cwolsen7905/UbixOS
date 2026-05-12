@@ -37,9 +37,12 @@ _DEV_FILE=/tmp/.ubixos_dev
 all: kernel world image
 
 kernel:
+	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@cd sys;${MAKE}
 
 world:
+	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \
+	           ${OBJ_DIR}/obj/bin ${OBJ_DIR}/obj/lib ${OBJ_DIR}/obj/libexec ${OBJ_DIR}/obj/sys
 	@echo
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Started On `LC_ALL=C date`"
@@ -98,7 +101,7 @@ install-kernel:
 	@echo "Kernel Install For ${_ARCH} Started On `LC_ALL=C date`"
 	@echo "***************************************************************"
 	@${MAKE} mount-image
-	cp sys/compile/kernel ${MOUNT_POINT}/boot/kernel/kernel
+	cp ${OBJ_DIR}/boot/kernel ${MOUNT_POINT}/boot/kernel/kernel
 	@${MAKE} unmount-image
 	@echo "***************************************************************"
 	@echo "Kernel Install Completed On `LC_ALL=C date`"
@@ -164,7 +167,7 @@ run-debug:
 
 # Update just the kernel in an existing disk image without a full rebuild.
 kernel-to-image:
-	mcopy -o -i ${DISK_IMAGE}@@1M sys/compile/kernel ::/boot/kernel/kernel
+	mcopy -o -i ${DISK_IMAGE}@@1M ${OBJ_DIR}/boot/kernel ::/boot/kernel/kernel
 
 clean-kernel:
 	(cd sys;${MAKE} clean)

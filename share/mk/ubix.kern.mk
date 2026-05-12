@@ -11,9 +11,9 @@
 #   INCLUDES  — append with INCLUDES += to add subsystem-specific paths
 #
 # Object files and dependency files are written to OBJDIR so that the source
-# tree stays clean.  OBJDIR defaults to ${OBJ_DIR}/sys/<component-basename>.
+# tree stays clean.  OBJDIR defaults to ${OBJ_DIR}/obj/sys/<component-basename>.
 
-OBJDIR ?= ${OBJ_DIR}/sys/${.CURDIR:T}
+OBJDIR ?= ${OBJ_DIR}/obj/sys/${.CURDIR:T}
 
 .PATH.o: ${OBJDIR}
 

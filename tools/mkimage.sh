@@ -20,7 +20,7 @@ set -e
 
 IMG="${1:-ubixos.img}"
 IMG_SIZE_MB=256
-KERNEL="sys/compile/kernel"
+KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"
 GRUB_LIB="/opt/homebrew/Cellar/i686-elf-grub/2.12/lib/i686-elf/grub/i386-pc"
