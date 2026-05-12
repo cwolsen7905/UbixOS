@@ -36,7 +36,7 @@ lib.so: $(OBJS)
  
 # Clean up the junk
 clean:
-	$(REMOVE) $(OBJS) ${BUILD_DIR}/$(OUTPUT)
+	$(REMOVE) $(OBJS) ${OBJS:.o=.d} ${BUILD_DIR}/$(OUTPUT)
 	(cd test;${MAKE} clean)
 
 .for _d in ${OBJS:.o=.d}

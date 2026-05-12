@@ -1,49 +1,11 @@
-# $Id: Makefile 129 2016-01-14 14:16:33Z reddawg $
-# Application Makefile (C) 2002-2004 The UbixOS Project
+# Application Makefile (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../Makefile.incl
 include ../Makefile.incl
 
-#Linker
-LD = ld
+BINARY    = cp
+OBJS      = main.o
+LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o
+POST_LINK = strip ${BUILD_DIR}/bin/${BINARY}
 
-#Binary File Name
-BINARY = cp 
-
-#Delete Program
-REMOVE = rm -f
-
-#Objects
-OBJS = main.o
-
-LIBRARIES = ../../lib/libc/*/*.o
-
-# Link The Binary
-$(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	strip ${BUILD_DIR}/bin/$(BINARY)
-
-# Compile the source files
-.cc.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
-
-.cc.s:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
- 
-.c.s:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.S.o:
-	$(CC)  -Wall $(CLFAGS) $(INCLUDES) -c -o $@ $<
- 
-# Clean Up The junk
-clean:
-	$(REMOVE) $(OBJS) $(BUILD_DIR)/bin/$(BINARY)
-
-.for _d in ${OBJS:.o=.d}
-.sinclude "${_d}"
-.endfor
+.include "${UBIX_MK}/ubix.prog.mk"

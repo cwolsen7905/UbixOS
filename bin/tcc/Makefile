@@ -82,6 +82,7 @@ shim_misc.o: ${TCC_SRC}/ubixos_shim/misc_ext.c
 
 clean:
 	${REMOVE} ${OBJS} ${SHIM_OBJS} libtcc1.o alloca86.o
+	${REMOVE} ${OBJS:.o=.d} ${SHIM_OBJS:.o=.d} libtcc1.d alloca86.d
 	${REMOVE} ${BUILD_DIR}/bin/${BINARY}
 	${REMOVE} ${BUILD_DIR}/lib/tcc/libtcc1.a
 

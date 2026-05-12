@@ -41,3 +41,4 @@ clean:
 	(cd ubix_api;${MAKE} clean)
 	(cd libc;${MAKE} clean)
 	(cd ubix;${MAKE} clean)
+	(cd libcpp;${MAKE} clean)

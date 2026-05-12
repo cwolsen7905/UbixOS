@@ -1,298 +1,63 @@
-#	from: @(#)ubix.prog.mk	5.26 (Berkeley) 6/25/91
-# $FreeBSD: releng/11.1/share/mk/ubix.prog.mk 302176 2016-06-24 18:45:16Z emaste $
+# (C) 2002-2026 The UbixOS Project
+# ubix.prog.mk — Compile and link rules for UbixOS userland programs.
+#
+# Include this at the END of a program Makefile, after BINARY and OBJS are defined.
+# Variables supplied by bin/Makefile.incl: CC, CXX, CFLAGS, LDFLAGS, INCLUDES,
+#                                          BUILD_DIR, STARTUP, LIBRARIES,
+#                                          CROSS_PREFIX, REMOVE, OBJ_DIR.
+#
+# Required variables set before .include:
+#   BINARY    — output binary name
+#   OBJS      — list of .o files to compile
+#
+# Optional variables:
+#   LINK_TYPE     — "static" (CC driver, default) or "dynamic" (ld direct)
+#   EXTRA_LDFLAGS — appended to the link command (e.g. -static for init)
+#   POST_LINK     — shell command run after linking (e.g. strip the binary)
+#
+# Object files are written to OBJDIR so the source tree stays clean.
 
-.include <ubix.init.mk>
-.include <ubix.compiler.mk>
+LINK_TYPE     ?= static
+EXTRA_LDFLAGS ?=
+POST_LINK     ?= @true
 
-.SUFFIXES: .out .o .c .cc .cpp .cxx .C .m .y .l .ln .s .S .asm
+OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
-# XXX The use of COPTS in modern makefiles is discouraged.
-.if defined(COPTS)
-.warning ${.CURDIR}: COPTS should be CFLAGS.
-CFLAGS+=${COPTS}
-.endif
+.PATH.o: ${OBJDIR}
 
-.if ${MK_ASSERT_DEBUG} == "no"
-CFLAGS+= -DNDEBUG
-NO_WERROR=
-.endif
+.SUFFIXES: .o .s .S .c .cc .C .cpp
 
-.if defined(DEBUG_FLAGS)
-CFLAGS+=${DEBUG_FLAGS}
-CXXFLAGS+=${DEBUG_FLAGS}
+.cc.o .C.o .cpp.o:
+	@mkdir -p ${OBJDIR}
+	$(CXX) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
 
-.if ${MK_CTF} != "no" && ${DEBUG_FLAGS:M-g} != ""
-CTFFLAGS+= -g
-.endif
-.endif
+.c.o:
+	@mkdir -p ${OBJDIR}
+	$(CC) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
 
-.if defined(PROG_CXX)
-PROG=	${PROG_CXX}
-.endif
+.S.o:
+	@mkdir -p ${OBJDIR}
+	$(CC) -Wall $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
 
-.if !empty(LDFLAGS:M-Wl,*--oformat,*) || !empty(LDFLAGS:M-static)
-MK_DEBUG_FILES=	no
-.endif
+_OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
-.if defined(CRUNCH_CFLAGS)
-CFLAGS+=${CRUNCH_CFLAGS}
+.if ${LINK_TYPE} == "dynamic"
+$(BINARY): $(OBJS)
+	${CROSS_PREFIX}ld -m elf_i386 -e _start -dynamic-linker sys:/libexec/ld.so \
+		-o ${BUILD_DIR}/bin/${BINARY} $(STARTUP) ${_OBJS_FULL} $(LIBRARIES)
+	${POST_LINK}
 .else
-.if ${MK_DEBUG_FILES} != "no" && empty(DEBUG_FLAGS:M-g) && \
-    empty(DEBUG_FLAGS:M-gdwarf-*)
-CFLAGS+= -g
-CTFFLAGS+= -g
-.endif
-.endif
-
-.if !defined(DEBUG_FLAGS)
-STRIP?=	-s
+$(BINARY): $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(EXTRA_LDFLAGS) \
+		-o $(BUILD_DIR)/bin/$(BINARY) $(STARTUP) $(LIBRARIES) ${_OBJS_FULL}
+	${POST_LINK}
 .endif
 
-.if defined(NO_ROOT)
-.if !defined(TAGS) || ! ${TAGS:Mpackage=*}
-TAGS+=		package=${PACKAGE:Uruntime}
-.endif
-TAG_ARGS=	-T ${TAGS:[*]:S/ /,/g}
-.endif
+all: $(BINARY)
 
-.if defined(NO_SHARED) && (${NO_SHARED} != "no" && ${NO_SHARED} != "NO")
-LDFLAGS+= -static
-.endif
+clean:
+	$(REMOVE) ${OBJDIR} $(BUILD_DIR)/bin/$(BINARY)
 
-.if ${MK_DEBUG_FILES} != "no"
-PROG_FULL=${PROG}.full
-# Use ${DEBUGDIR} for base system debug files, else .debug subdirectory
-.if defined(BINDIR) && (\
-    ${BINDIR} == "/bin" ||\
-    ${BINDIR:C%/libexec(/.*)?%/libexec%} == "/libexec" ||\
-    ${BINDIR} == "/sbin" ||\
-    ${BINDIR:C%/usr/(bin|bsdinstall|libexec|lpr|sendmail|sm.bin|sbin|tests)(/.*)?%/usr/bin%} == "/usr/bin" ||\
-    ${BINDIR} == "/usr/lib" \
-     )
-DEBUGFILEDIR=	${DEBUGDIR}${BINDIR}
-.else
-DEBUGFILEDIR?=	${BINDIR}/.debug
-.endif
-.if !exists(${DESTDIR}${DEBUGFILEDIR})
-DEBUGMKDIR=
-.endif
-.else
-PROG_FULL=	${PROG}
-.endif
-
-.if defined(PROG)
-PROGNAME?=	${PROG}
-
-.if defined(SRCS)
-
-OBJS+=  ${SRCS:N*.h:R:S/$/.o/g}
-
-.if target(beforelinking)
-beforelinking: ${OBJS}
-${PROG_FULL}: beforelinking
-.endif
-${PROG_FULL}: ${OBJS}
-.if defined(PROG_CXX)
-	${CXX:N${CCACHE_BIN}} ${CXXFLAGS:N-M*} ${LDFLAGS} -o ${.TARGET} \
-	    ${OBJS} ${LDADD}
-.else
-	${CC:N${CCACHE_BIN}} ${CFLAGS:N-M*} ${LDFLAGS} -o ${.TARGET} ${OBJS} \
-	    ${LDADD}
-.endif
-.if ${MK_CTF} != "no"
-	${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${OBJS}
-.endif
-
-.else	# !defined(SRCS)
-
-.if !target(${PROG})
-.if defined(PROG_CXX)
-SRCS=	${PROG}.cc
-.else
-SRCS=	${PROG}.c
-.endif
-
-# Always make an intermediate object file because:
-# - it saves time rebuilding when only the library has changed
-# - the name of the object gets put into the executable symbol table instead of
-#   the name of a variable temporary object.
-# - it's useful to keep objects around for crunching.
-OBJS+=	${PROG}.o
-
-.if target(beforelinking)
-beforelinking: ${OBJS}
-${PROG_FULL}: beforelinking
-.endif
-${PROG_FULL}: ${OBJS}
-.if defined(PROG_CXX)
-	${CXX:N${CCACHE_BIN}} ${CXXFLAGS:N-M*} ${LDFLAGS} -o ${.TARGET} \
-	    ${OBJS} ${LDADD}
-.else
-	${CC:N${CCACHE_BIN}} ${CFLAGS:N-M*} ${LDFLAGS} -o ${.TARGET} ${OBJS} \
-	    ${LDADD}
-.endif
-.if ${MK_CTF} != "no"
-	${CTFMERGE} ${CTFFLAGS} -o ${.TARGET} ${OBJS}
-.endif
-.endif # !target(${PROG})
-
-.endif # !defined(SRCS)
-
-.if ${MK_DEBUG_FILES} != "no"
-${PROG}: ${PROG_FULL} ${PROGNAME}.debug
-	${OBJCOPY} --strip-debug --add-gnu-debuglink=${PROGNAME}.debug \
-	    ${PROG_FULL} ${.TARGET}
-
-${PROGNAME}.debug: ${PROG_FULL}
-	${OBJCOPY} --only-keep-debug ${PROG_FULL} ${.TARGET}
-.endif
-
-.if	${MK_MAN} != "no" && !defined(MAN) && \
-	!defined(MAN1) && !defined(MAN2) && !defined(MAN3) && \
-	!defined(MAN4) && !defined(MAN5) && !defined(MAN6) && \
-	!defined(MAN7) && !defined(MAN8) && !defined(MAN9)
-MAN=	${PROG}.1
-MAN1=	${MAN}
-.endif
-.endif # defined(PROG)
-
-.if defined(_SKIP_BUILD)
-all:
-.else
-all: ${PROG} ${SCRIPTS}
-.if ${MK_MAN} != "no"
-all: all-man
-.endif
-.endif
-
-.if defined(PROG)
-CLEANFILES+= ${PROG}
-.if ${MK_DEBUG_FILES} != "no"
-CLEANFILES+=	${PROG_FULL} ${PROGNAME}.debug
-.endif
-.endif
-
-.if defined(OBJS)
-CLEANFILES+= ${OBJS}
-.endif
-
-.include <ubix.libnames.mk>
-
-.if defined(PROG)
-.if !defined(NO_EXTRADEPEND)
-_EXTRADEPEND:
-.if defined(LDFLAGS) && !empty(LDFLAGS:M-nostdlib)
-.if defined(DPADD) && !empty(DPADD)
-	echo ${PROG_FULL}: ${DPADD} >> ${DEPENDFILE}
-.endif
-.else
-	echo ${PROG_FULL}: ${LIBC} ${DPADD} >> ${DEPENDFILE}
-.if defined(PROG_CXX)
-.if ${COMPILER_TYPE} == "clang" && empty(CXXFLAGS:M-stdlib=libstdc++)
-	echo ${PROG_FULL}: ${LIBCPLUSPLUS} >> ${DEPENDFILE}
-.else
-	echo ${PROG_FULL}: ${LIBSTDCPLUSPLUS} >> ${DEPENDFILE}
-.endif
-.endif
-.endif
-.endif	# !defined(NO_EXTRADEPEND)
-.endif
-
-.if !target(install)
-
-.if defined(PRECIOUSPROG)
-.if !defined(NO_FSCHG)
-INSTALLFLAGS+= -fschg
-.endif
-INSTALLFLAGS+= -S
-.endif
-
-_INSTALLFLAGS:=	${INSTALLFLAGS}
-.for ie in ${INSTALLFLAGS_EDIT}
-_INSTALLFLAGS:=	${_INSTALLFLAGS${ie}}
+.for _d in ${OBJS:.o=.d}
+.sinclude "${OBJDIR}/${_d}"
 .endfor
-
-.if !target(realinstall) && !defined(INTERNALPROG)
-realinstall: _proginstall
-.ORDER: beforeinstall _proginstall
-_proginstall:
-.if defined(PROG)
-	${INSTALL} ${TAG_ARGS} ${STRIP} -o ${BINOWN} -g ${BINGRP} -m ${BINMODE} \
-	    ${_INSTALLFLAGS} ${PROG} ${DESTDIR}${BINDIR}/${PROGNAME}
-.if ${MK_DEBUG_FILES} != "no"
-.if defined(DEBUGMKDIR)
-	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},debug} -d ${DESTDIR}${DEBUGFILEDIR}/
-.endif
-	${INSTALL} ${TAG_ARGS:D${TAG_ARGS},debug} -o ${BINOWN} -g ${BINGRP} -m ${DEBUGMODE} \
-	    ${PROGNAME}.debug ${DESTDIR}${DEBUGFILEDIR}/${PROGNAME}.debug
-.endif
-.endif
-.endif	# !target(realinstall)
-
-.if defined(SCRIPTS) && !empty(SCRIPTS)
-realinstall: _scriptsinstall
-.ORDER: beforeinstall _scriptsinstall
-
-SCRIPTSDIR?=	${BINDIR}
-SCRIPTSOWN?=	${BINOWN}
-SCRIPTSGRP?=	${BINGRP}
-SCRIPTSMODE?=	${BINMODE}
-
-STAGE_AS_SETS+= scripts
-stage_as.scripts: ${SCRIPTS}
-FLAGS.stage_as.scripts= -m ${SCRIPTSMODE}
-STAGE_FILES_DIR.scripts= ${STAGE_OBJTOP}
-.for script in ${SCRIPTS}
-.if defined(SCRIPTSNAME)
-SCRIPTSNAME_${script:T}?=	${SCRIPTSNAME}
-.else
-SCRIPTSNAME_${script:T}?=	${script:T:R}
-.endif
-SCRIPTSDIR_${script:T}?=	${SCRIPTSDIR}
-SCRIPTSOWN_${script:T}?=	${SCRIPTSOWN}
-SCRIPTSGRP_${script:T}?=	${SCRIPTSGRP}
-SCRIPTSMODE_${script:T}?=	${SCRIPTSMODE}
-STAGE_AS_${script:T}=		${SCRIPTSDIR_${script:T}}/${SCRIPTSNAME_${script:T}}
-_scriptsinstall: _SCRIPTSINS_${script:T}
-_SCRIPTSINS_${script:T}: ${script}
-	${INSTALL} ${TAG_ARGS} -o ${SCRIPTSOWN_${.ALLSRC:T}} \
-	    -g ${SCRIPTSGRP_${.ALLSRC:T}} -m ${SCRIPTSMODE_${.ALLSRC:T}} \
-	    ${.ALLSRC} \
-	    ${DESTDIR}${SCRIPTSDIR_${.ALLSRC:T}}/${SCRIPTSNAME_${.ALLSRC:T}}
-.endfor
-.endif
-
-NLSNAME?=	${PROG}
-.include <ubix.nls.mk>
-
-.include <ubix.confs.mk>
-.include <ubix.files.mk>
-.include <ubix.incs.mk>
-.include <ubix.links.mk>
-
-.if ${MK_MAN} != "no"
-realinstall: maninstall
-.ORDER: beforeinstall maninstall
-.endif
-
-.endif	# !target(install)
-
-.if !target(lint)
-lint: ${SRCS:M*.c}
-.if defined(PROG)
-	${LINT} ${LINTFLAGS} ${CFLAGS:M-[DIU]*} ${.ALLSRC}
-.endif
-.endif
-
-.if ${MK_MAN} != "no"
-.include <ubix.man.mk>
-.endif
-
-.if defined(PROG)
-OBJS_DEPEND_GUESS+= ${SRCS:M*.h}
-.endif
-
-.include <ubix.dep.mk>
-.include <ubix.clang-analyze.mk>
-.include <ubix.obj.mk>
-.include <ubix.sys.mk>

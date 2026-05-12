@@ -44,7 +44,7 @@ allBuild: $(OBJS)
 
 # Clean up the junk
 clean:
-	$(REMOVE) $(OBJS) objgfx40.cpp ogFont.cpp ogPixCon.cpp ogPixelFmt.cpp
+	$(REMOVE) $(OBJS) ${OBJS:.o=.d} objgfx40.cpp ogFont.cpp ogPixCon.cpp ogPixelFmt.cpp
 
 .for _d in ${OBJS:.o=.d}
 .sinclude "${_d}"

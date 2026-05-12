@@ -1,50 +1,39 @@
-# $Id: Makefile 119 2016-01-14 03:06:36Z reddawg $
-# Application Makefile (C) 2002-2004 The UbixOS Project
+# Application Makefile (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../Makefile.incl
 include ../Makefile.incl
 
-#Linker
-LD = ld
-
-#Binary File Name
 OUTPUT = ld.so
+OBJS   = main.o findlibrary.o findfunc.o addlibrary.o entry.o
+OBJDIR = ${OBJ_DIR}/obj/libexec/ld
 
-#Delete Program
-REMOVE = rm -f
+_OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
-#Objects
-OBJS = main.o findlibrary.o findfunc.o addlibrary.o entry.o
+$(OUTPUT): $(OBJS)
+	${CROSS_PREFIX}ld -m elf_i386 -shared --soname=$(OUTPUT) -e _ld \
+		-o ../../build/libexec/$(OUTPUT) ${_OBJS_FULL} $(LIBRARIES)
 
-# Link The Binary — use ld directly to produce ET_DYN (gcc driver ignores -shared with -nostdlib)
-$(OUTPUT) : $(OBJS)
-	${CROSS_PREFIX}ld -m elf_i386 -shared --soname=$(OUTPUT) -e _ld -o ../../build/libexec/$(OUTPUT) $(OBJS) $(LIBRARIES)
-#	strip $(OUTPUT)
+.SUFFIXES: .o .c .cc .S
 
-# Compile the source files
-.cpp.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+.cc.o .cpp.o:
+	@mkdir -p ${OBJDIR}
+	$(CXX) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
 
-.cc.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
-
-.cc.s:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
 .c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
- 
-.c.s:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
+	@mkdir -p ${OBJDIR}
+	$(CC) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+
 .S.o:
-	$(CC)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
- 
-# Clean Up The junk
+	@mkdir -p ${OBJDIR}
+	$(CC) -Wall $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+
+.PATH.o: ${OBJDIR}
+
+all: $(OUTPUT)
+
 clean:
-	$(REMOVE) $(OBJS) ../../build/bin/$(OUTPUT)
+	$(REMOVE) ${OBJDIR} ../../build/libexec/$(OUTPUT)
 
 .for _d in ${OBJS:.o=.d}
-.sinclude "${_d}"
+.sinclude "${OBJDIR}/${_d}"
 .endfor

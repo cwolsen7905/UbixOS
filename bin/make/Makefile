@@ -1,21 +1,9 @@
-# Makefile for UbixOS minimal make
+# Application Makefile (C) 2002-2026 The UbixOS Project
+
 include ../../Makefile.incl
-include ../../bin/Makefile.incl
+include ../Makefile.incl
 
-PROG = make
-OBJS = make.o
+BINARY = make
+OBJS   = make.o
 
-$(PROG): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) \
-	    -o $(BUILD_DIR)/bin/$(PROG) \
-	    $(STARTUP) $(LIBRARIES) $(OBJS)
-
-.c.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -Wall -c -o $@ $<
-
-clean:
-	$(REMOVE) $(OBJS)
-
-.for _d in ${OBJS:.o=.d}
-.sinclude "${_d}"
-.endfor
+.include "${UBIX_MK}/ubix.prog.mk"

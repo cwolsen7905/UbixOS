@@ -26,6 +26,6 @@ LDFLAGS = -Wl,-m,elf_i386
 
 INCLUDES = -I../../include
 
-LIBRARIES = ../../lib/libc/*/*.o ../../lib/ubix_api/*.o
+LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o ../../lib/ubix_api/*.o
 
 STARTUP = ../../lib/ubix/*.o

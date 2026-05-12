@@ -20,6 +20,6 @@ CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument
 
 INCLUDES = -I../../include
 
-LIBRARIES = ../../lib/libc/*/*.o
+LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o
 
 STARTUP = ../../lib/ubix/*.o

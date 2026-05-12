@@ -1,35 +1,11 @@
-#  (C) 2002 The UbixOS Project
-#  $Id: Makefile 54 2016-01-11 01:29:55Z reddawg $
+# (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../Makefile.incl
 include ../Makefile.incl
 
+CXXFLAGS = -DNOBOOL -D__UBIXOS_KERNEL__ -fno-rtti
 INCLUDES += -I../../lib/objgfx40/
 
-#  Objects
 OBJS = strstr.o strchr.o strlen.o strncpy.o assert.o sqrt.o atan.o divdi3.o libcpp.o strtok.o kmalloc.o kprintf.o vsprintf.o string.o net.o strtol.o ogprintf.o kern_trie.o
 
-all: $(OBJS)
-
-#  Compile Types
-.cpp.o:
-	$(CXX) -DNOBOOL $(CFLAGS) -fno-rtti $(INCLUDES) -c -o $@ $<
-.cc.o:
-	$(CXX) -DNOBOOL -D__UBIXOS_KERNEL__ $(CFLAGS) -fno-rtti $(INCLUDES) -c -o $@ $<
-.cc.s:
-	$(CXX) $(CFLAGS) $(INCLUDES) -S -o $@ $<
-.c.o:
-	$(CC)  $(CFLAGS) $(INCLUDES) -c -o $@ $<
-.c.s:
-	$(CC)  $(CFLAGS) $(INCLUDES) -S -o $@ $<
-.S.o:
-	$(CC)  $(CFLAGS) -c -o $@ $<
-
-# Clean up the junk
-clean:
-	$(REMOVE) $(OBJS)
-
-.for _d in ${OBJS:.o=.d}
-.sinclude "${_d}"
-.endfor
+.include "${UBIX_MK}/ubix.kern.mk"
