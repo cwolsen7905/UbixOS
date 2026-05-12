@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `bin/muffin/` — new C++ GUI application using `lib/objgfx`; renders a background BMP and coloured rectangles via the SDE.
+- `lib/objgfx/` — ported to bare-metal: removed all STL dependencies (`std::map`, `std::function`, `std::iostream`, `std::fstream`); replaced with plain C function pointers and POSIX I/O.
+- `lib/libc/sys/lseek.S` — `lseek(int, off_t, int)` userland stub (syscall 478).
+- `lib/libc/math/fabs.c` — `fabs(double)` implementation.
+- `sys/sde/main.cc` — SDE kernel thread now calls `mpi_createMbox("sde")` once initialised, providing a named ready-signal that userland can probe.
+- `bin/muffin/main.cc` — `sde_ensure_running()` probes the `"sde"` MPI mailbox; if absent, sends `sdeStart` to `"system"` and spins until the SDE is ready before registering a window.
+- `sys/arch/i386/sched.c` — `sched_killTree(pid)`: kills a task and all its descendants, used by the Ctrl-C handler.
+
+### Fixed
+- `include/math.h` — wrapped all declarations in `extern "C"` so C++ translation units link against the unmangled `fabs` symbol.
+- `include/stddef.h` — `NULL` now defined as `0` (not `(void*)0`) in C++ mode.
+- `lib/objgfx/objgfx/ogTypes.h` — removed unused `#include <map>`; added `#include <sys/types.h>` for standalone inclusion.
+- `contrib/tcc/ubixos_shim/syscalls.S` — removed duplicate `lseek` definition now that `lib/libc/sys/lseek.S` provides it.
+- `lib/objgfx40/`, `lib/views/sunlight/` — output redirected to `build/obj/gfx/` so C++ objects do not pollute the `obj/lib/*/*.o` glob linked into plain C binaries.
+- `tools/mkimage.sh`, `Makefile` — `sys/sde/assets/ubix.bmp` now installed as `/var/background/ubix.bmp` in both `bmake image` and `bmake install-world`.
+- `bin/make/make.c` — Makefile detection replaced `access()` (kernel stub always returning 0) with direct `fopen` probes; shell path corrected from `sys:/bin/sh` to `sys:/bin/shell`.
+- `sys/isa/atkbd.c` — Ctrl-C handler now calls `sched_killTree` instead of single-process `sched_setStatus(DEAD)`, so forked recipe children are also killed.
+- `sys/arch/i386/fork.c` — `fork()` transfers `term->owner` to the child when the parent owns the terminal, so `tty_foreground->owner` tracks the actual foreground process through the `login → shell → app` chain.
+- `sys/arch/i386/sched.c` — scheduler DEAD handler now returns `term->owner` to the parent when a process dies via `sched_setStatus(DEAD)`, matching the handback that `endtask()` performs for normal exits.
+
 ### Fixed
 - `sys/vmm/vmm_memory.c` (`vmm_freeProcessPages`) — double-decrement of COW counters caused "COW less than 0" crash on any process run after a daemonizing `fork()`+`exit()` (e.g. `ubistry`). `endTask` already decrements COW counters via `vmm_cleanVirtualSpace`; `vmm_freeProcessPages` was then scanning by `pid` and decrementing the same pages again, freeing physical pages still mapped by the surviving daemon. Removed the `adjustCowCounter(-1)` call for COW pages; surviving mappers free the physical page through their own cleanup (BUG-COW-07).
 - `sys/arch/i386/systemtask.c` (`systemTask`) — free `kTask_t.kernelStack` before `kfree(tmpTask)` to stop leaking 4 KB per task exit; NULL guard with `kprintf` warning if the pointer is unexpectedly NULL (TODO-SCHED-09).
