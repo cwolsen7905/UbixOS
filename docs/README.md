@@ -6,6 +6,7 @@
 |----------|-------------|
 | [architecture/vmm.md](architecture/vmm.md) | Virtual Memory Manager: layout, functions, page-fault handling |
 | [architecture/task-switching.md](architecture/task-switching.md) | Task switching internals: TSS, GDT, scheduler, fork, FPU |
+| [architecture/i386-page-directory-map.md](architecture/i386-page-directory-map.md) | Full i386 page directory (PDE 0–1023) with purpose annotations |
 
 ## Design Specs
 
@@ -32,11 +33,14 @@
 | [../TODO.md](../TODO.md) | Work items and future plans |
 | [../CHANGELOG.md](../CHANGELOG.md) | Release history |
 
-## Legacy Reference Files
+## Reference
+
+| Document | Description |
+|----------|-------------|
+| [reference/external-specs.md](reference/external-specs.md) | Links to ELF, Intel SDM, Multiboot, and FAT specifications |
+
+## Assets
 
 | File | Notes |
 |------|-------|
-| `doc/ELF_Format.pdf` | Intel ELF ABI specification (external reference) |
-| `doc/vmm/i386_vmm_page_reference.xlsx` | Page-directory index reference spreadsheet |
-| `doc/UbixOS_Build.txt` | Historical VirtualBox workflow (superseded by BUILDING.md) |
-| `doc/sample_driver.c` | Original C driver skeleton (see drivers/writing-a-driver.md) |
+| `sys/sde/assets/ubix.bmp` | Background bitmap for graphical console / SDE |

@@ -12,12 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/architecture/task-switching.md` — moved from `docs/` root; content unchanged.
 - `docs/design/fbcon.md` — VESA framebuffer console spec; moved from `docs/` root.
 - `docs/drivers/writing-a-driver.md` — driver writing guide (rewritten from `doc/sample_driver.c` commentary).
+- `docs/architecture/i386-page-directory-map.md` — full i386 page directory (PDE 0–1023) with purpose annotations (converted from `doc/vmm/i386_vmm_page_reference.xlsx`).
+- `docs/reference/external-specs.md` — links to ELF ABI, Intel SDM, Multiboot, and FAT specifications.
 - `docs/README.md` — documentation index.
+- `sys/sde/assets/ubix.bmp` — background bitmap for graphical console / SDE (moved from `doc/ubix.bmp`).
 
 ### Removed
-- `doc/html/` and `doc/xml/` — Doxygen-generated output removed from git; added to `.gitignore`.
-- `doc/ChangeLog` — superseded by `CHANGELOG.md`.
-- `doc/ubix.bmp` — unused legacy image.
+- `doc/` directory fully retired: `html/` and `xml/` Doxygen output, `vmm.txt`, `vmm/i386_vmm_map.txt`, `vmm/i386_vmm_page_reference.xlsx`, `sample_driver.c`, `UbixOS_Build.txt`, `ELF_Format.pdf`, `ChangeLog`, and `ubix.bmp` — all content migrated to `docs/` as Markdown or relocated to `sys/sde/assets/`; `doc/` added to `.gitignore`.
 
 ### Added
 - `sys_pidStatus` (native syscall 7) — kernel implementation in `sys/kernel/gen_calls.c`; returns 1 while a task is alive, 0 when dead or not found. Wired in `sys/kernel/syscalls.c`. Args struct in `sys/include/sys/sysproto.h`.

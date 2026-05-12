@@ -16,7 +16,4 @@ ubixos.img
 serial.log
 ubixos.iso
 *.png
-doc/html/
-doc/xml/
-doc/ChangeLog
-doc/ubix.bmp
+doc/
