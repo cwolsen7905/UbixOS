@@ -71,7 +71,8 @@ Fix the crash items in [BUGS.md](BUGS.md) (BUG-SCHED-01 through BUG-SCHED-08) fi
 | ID | File | Description |
 |----|------|-------------|
 | TODO-SCHED-01 | [sys/arch/i386/fork.c:120-123](sys/arch/i386/fork.c) | **Eliminate the FORK state spin-wait.** The child's TSS is fully initialized before `newProcess->state = FORK`. The spin-wait exists only to prevent the scheduler from switching to the child before the TSS is ready — but it already is. Set `newProcess->state = READY` directly (after moving `parent`/`children` up per BUG-SCHED-01) and remove the spin-wait loop. This saves two full context switches on every `fork()`. |
-| ~~TODO-SCHED-02~~ | [sys/arch/i386/sched.c:160](sys/arch/i386/sched.c) | **Done — fixed as BUG-SCHED-03.** `schedNewTask()` now allocates a dedicated kernel stack and stores the base in `kTask_t.kernelStack`. Remaining work: free `kernelStack` in `endTask()`/`sched_deleteTask()` to avoid leaking the 4 KB on task exit. |
+| ~~TODO-SCHED-02~~ | [sys/arch/i386/sched.c:160](sys/arch/i386/sched.c) | **Done — fixed as BUG-SCHED-03.** `schedNewTask()` now allocates a dedicated kernel stack and stores the base in `kTask_t.kernelStack`. |
+| TODO-SCHED-09 | [sys/kernel/endtask.c](sys/kernel/endtask.c), [sys/arch/i386/sched.c](sys/arch/i386/sched.c) | **Free `kernelStack` on task exit.** `schedNewTask()` allocates 4 KB via `kmalloc` into `kTask_t.kernelStack` but `endTask()` never frees it — 4 KB leaks per task exit. Add `kfree((_current)->kernelStack)` in `endTask()` before `sched_yield()`, and in `sched_deleteTask()` if that path is ever reached. |
 | TODO-SCHED-03 | [sys/arch/i386/timer.S:40](sys/arch/i386/timer.S) | **Reduce the scheduling quantum from ~1 second to 10–20 ms.** The hardcoded `movl $200,%ebx` check fires `sched()` every 200 ticks. At the standard PIT divisor (~100–200 Hz) this is 1–2 seconds per task. Change the divisor from 200 to 2 (at 100 Hz = 20 ms) or make `quantum` configurable per-task for priority classes. |
 | TODO-SCHED-04 | [sys/arch/i386/sched.c:93](sys/arch/i386/sched.c) | **Add an explicit idle task to prevent infinite scheduler loop.** If no task is READY (all are blocked or dead), `sched()` spins forever via `goto schedStart`. Create an idle task during `sched_init()` that is always READY and executes `hlt` in a loop. The scheduler then always has something to switch to. |
 | TODO-SCHED-05 | [sys/include/sys/tss.h:70](sys/include/sys/tss.h) | **Remove `io_space[8192]` from `struct tssStruct`.** `tss.io_map = 0x8000` tells the CPU the IOPB is past the TSS limit, so the CPU never reads `io_space`. Carrying 8 KB of dead data in every `kTask_t` wastes ~8 KB per task. Remove the field; the I/O bitmap offset of 0x8000 is still valid and continues to deny all ring-3 I/O port access. |
@@ -89,7 +90,7 @@ Fix the crash/exploit items in [BUGS.md](BUGS.md) (BUG-KRN-01 through BUG-KRN-13
 |----|------|-------------|
 | TODO-KRN-01 | [sys/kernel/descrip.c](sys/kernel/descrip.c) | Add `O_FILES` bounds check to all fd array accesses (`sys_close`, `fcntl`, `dup2`, `read`, `write`) and return `EBADF` on out-of-range. Currently these all trust userspace. |
 | TODO-KRN-02 | [sys/fs/vfs/file.c:192](sys/fs/vfs/file.c#L192) | Replace all `sprintf` path-building in VFS/syscalls with `snprintf` using the buffer size. BUG-KRN-09 (`sys_chdir`) is the crash case; audit all other path concatenations in the same file. |
-| TODO-KRN-03 | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | Narrow `pageFaultSpinLock` critical section — currently held across the entire COW `memcpy`. Should cover only the PTE update. Also release the lock before calling `kpanic` (BUG-KRN-13). |
+| TODO-KRN-03 | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | Narrow `pageFaultSpinLock` critical section — currently held across the entire COW `memcpy`. Should cover only the PTE update. (The `kpanic` lock-release part was fixed by BUG-KRN-13.) |
 | TODO-KRN-04 | [sys/kernel/ld.c](sys/kernel/ld.c) | Audit all `sizeof(Elf_Shdr)` vs `sizeof(Elf_Phdr)` usages. After fixing BUG-KRN-06, add ELF field validation (bounds on `e_phnum`, `e_shnum`, `e_shstrndx`) before using them as allocation sizes or array indices. |
 | TODO-KRN-05 | [sys/kernel/signal.c](sys/kernel/signal.c) | Add `NSIG` (or `128`) bounds check to all signal number array accesses in `sys_sigaction` and `sys_sigprocmask`. Return `EINVAL` for out-of-range signals. |
 
@@ -97,12 +98,12 @@ Fix the crash/exploit items in [BUGS.md](BUGS.md) (BUG-KRN-01 through BUG-KRN-13
 
 ## MPI Improvements (identified 2026-05-11)
 
-Fix the crash items in [BUGS.md](BUGS.md) (BUG-MPI-01 through BUG-MPI-07) first.
+BUG-MPI-01 through BUG-MPI-07 are all fixed. These are the remaining improvements.
 
 | ID | File | Description |
 |----|------|-------------|
 | TODO-MPI-01 | [sys/mpi/system.c](sys/mpi/system.c) | Add mailbox cleanup on task exit. When a process dies (`endTask`), scan `mboxList` for mailboxes owned by that PID and free them along with any queued messages. Without this, the name is permanently reserved and all queued messages leak. |
-| TODO-MPI-02 | [sys/mpi/system.c:175](sys/mpi/system.c) | Replace type `0x2` busy-spin with a proper blocking mechanism. The simplest fix is adding `sched_yield()` inside the spin loop. The correct fix is a per-mailbox semaphore that the sender waits on and the receiver signals on drain. |
+| TODO-MPI-02 | [sys/mpi/system.c:189](sys/mpi/system.c) | Replace type `0x2` sync-send spin with a proper blocking mechanism. `sched_yield()` was added (fixes BUG-MPI-06), but the spin loop still burns CPU and can stall unrelated tasks. The correct fix is a per-mailbox semaphore that the sender sleeps on and the receiver signals when the queue drains. |
 | TODO-MPI-03 | [sys/mpi/system.c](sys/mpi/system.c) | Add a maximum queue depth (e.g. 64 messages per mailbox). Return an error from `mpi_postMessage` when the limit is reached rather than silently exhausting kernel heap. |
 | TODO-MPI-04 | [sys/mpi/mpi_syscalls.c](sys/mpi/mpi_syscalls.c) | Remove the debug `kprintf("mPM: %s", args->name)` from `sys_mpiPostMessage`. It fires on every single post and pollutes the serial log. |
 | TODO-MPI-05 | [lib/libc/sys/](lib/libc/sys/) | Add an assembly stub for `mpi_destroyMbox` (syscall 51). Currently only create/post/fetch have stubs; destroy can only be called via inline asm from userland. |
