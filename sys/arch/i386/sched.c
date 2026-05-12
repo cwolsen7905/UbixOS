@@ -28,6 +28,10 @@
 
 #include <sys/_null.h>
 #include <ubixos/sched.h>
+#include <ubixos/vitals.h>
+#include <isa/atkbd.h>
+#include <isa/pit.h>
+#include <sys/shutdown.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/endtask.h>
@@ -86,6 +90,26 @@ void sched() {
   uint32_t memAddr = 0x0;
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
+
+  /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
+   * and reboot when time is up. Runs before the spinlock to keep it simple. */
+  if (reboot_at_tick != 0) {
+    uint32_t now  = systemVitals->sysTicks;
+    uint32_t left = (reboot_at_tick > now) ? (reboot_at_tick - now) : 0;
+    uint32_t secs = (left + PIT_TIMER - 1) / PIT_TIMER;
+    static uint32_t last_printed = 0;
+
+    if (secs != last_printed) {
+      last_printed = secs;
+      if (secs > 0)
+        kprintf("Rebooting in %u...\n", secs);
+    }
+    if (left == 0) {
+      kprintf("Rebooting now.\n");
+      reboot_at_tick = 0;
+      sys_shutdown(REBOOT);
+    }
+  }
 
   if (spinTryLock(&schedulerSpinLock))
     return;

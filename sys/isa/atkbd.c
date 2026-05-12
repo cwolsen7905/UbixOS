@@ -27,6 +27,8 @@
  */
 
 #include <isa/atkbd.h>
+#include <isa/pit.h>
+#include <ubixos/vitals.h>
 #include <isa/8259.h>
 #include <sys/video.h>
 #include <sys/idt.h>
@@ -51,6 +53,8 @@ static uInt16 stdinSize;
 static uInt32 controlKeys = 0x0;
 
 static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
+
+volatile uint32_t reboot_at_tick = 0;
 
 static unsigned int keyboardMap[255][8] = {
 /*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
@@ -305,9 +309,14 @@ void keyboardHandler(struct trapframe *frame) {
           }
         }
         break;
-      case 0x9: /* Ctrl-Tab: reboot */
-      case 0x0D: /* Ctrl-M: reboot */
+      case 0x9: /* Ctrl-Tab: immediate reboot */
         sys_shutdown(REBOOT);
+        break;
+      case 0x0D: /* Ctrl-M: 5-second countdown reboot */
+        if (reboot_at_tick == 0) {
+          reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
+          kprintf("\nSystem rebooting in 5 seconds...\n");
+        }
         break;
       case 0x15: /* Ctrl-U: kill line */
         if (tty_foreground != 0x0 && !tty_foreground->t_raw) {
