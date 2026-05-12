@@ -29,15 +29,15 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
 .cc.o .C.o .cpp.o:
 	@mkdir -p ${OBJDIR}
-	$(CXX) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CXX) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CC) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) -Wall $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CC) -Wall $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
