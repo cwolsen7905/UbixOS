@@ -137,15 +137,15 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 
 | ID | File | Description |
 |----|------|-------------|
-| BUG-MPI-01 | [sys/mpi/system.c:248](sys/mpi/system.c) | `mpi_destroyMbox`: unconditional `mbox->prev->next = mbox->next` and `mbox->next->prev = mbox->prev` — NULL dereference when the mailbox is at the head of the list (`prev == NULL`) or tail (`next == NULL`). Must NULL-check both pointers and update `mboxList` if head is being removed. |
-| BUG-MPI-02 | [sys/mpi/system.c:79](sys/mpi/system.c) | `mpi_createMbox`: `mbox->msgLast` is never initialized after `kmalloc`. When the second message is posted to a mailbox, `mbox->msg != NULL` so the `else` branch runs `mbox->msgLast->next = message` — dereferences an uninitialized pointer. Add `mbox->msg = mbox->msgLast = NULL;` after allocation. |
-| BUG-MPI-03 | [sys/mpi/system.c:165](sys/mpi/system.c) | `mpi_postMessage` and `mpi_spam`: append-to-empty-queue path sets `mbox->msg = message` but never sets `mbox->msgLast = message`. On the next post, `msgLast` is still NULL/stale, and the `else` branch dereferences it. Fix: set both `mbox->msg` and `mbox->msgLast` in the empty-queue branch. |
-| BUG-MPI-04 | [sys/mpi/system.c:220](sys/mpi/system.c) | `mpi_fetchMessage`: when dequeuing the last message, `mbox->msgLast` is not reset to NULL. The next append will then use a freed pointer as the list tail. Fix: after `mbox->msg = mbox->msg->next`, add `if (mbox->msg == NULL) mbox->msgLast = NULL;`. |
+| ~~BUG-MPI-01~~ | [sys/mpi/system.c:248](sys/mpi/system.c) | **FIXED** `mpi_destroyMbox`: unconditional `mbox->prev->next` and `mbox->next->prev` — NULL dereference when mailbox is at the head or tail of the list. Added NULL checks; updates `mboxList` head when removing the first entry. |
+| ~~BUG-MPI-02~~ | [sys/mpi/system.c:79](sys/mpi/system.c) | **FIXED** `mpi_createMbox`: `mbox->msgLast` never initialized after `kmalloc`. Second post dereferences uninitialized pointer. Now explicitly sets `mbox->msg = mbox->msgLast = 0x0` after allocation. |
+| ~~BUG-MPI-03~~ | [sys/mpi/system.c:165](sys/mpi/system.c) | **FIXED** `mpi_postMessage` and `mpi_spam`: empty-queue append set `mbox->msg` but not `mbox->msgLast`. Both now set in the empty-queue branch. |
+| ~~BUG-MPI-04~~ | [sys/mpi/system.c:220](sys/mpi/system.c) | **FIXED** `mpi_fetchMessage`: `msgLast` not cleared when queue drains. Added `if (mbox->msg == 0x0) mbox->msgLast = 0x0` after dequeue. |
 
 ### Correctness
 
 | ID | File | Description |
 |----|------|-------------|
-| BUG-MPI-05 | [sys/mpi/system.c:81](sys/mpi/system.c) | `mpi_createMbox`: `sprintf(mbox->name, name)` copies the caller-supplied name with no length limit into a 64-byte field. Names longer than 63 bytes silently overflow into adjacent struct fields (`pid`, then heap metadata). Replace with `strncpy(mbox->name, name, sizeof(mbox->name) - 1)`. |
-| BUG-MPI-06 | [sys/mpi/system.c:175](sys/mpi/system.c) | `mpi_postMessage` type `0x2` synchronous wait: busy-spins on `mbox->msgLast != NULL` after releasing the spinlock. (1) `mpi_fetchMessage` never clears `msgLast` (BUG-MPI-04), so this may spin forever. (2) Reads a shared pointer without the lock — concurrent modifications are a data race. (3) No `sched_yield()` in the loop burns one full CPU core while waiting. |
-| BUG-MPI-07 | [sys/mpi/system.c:79,158,117](sys/mpi/system.c) | `mpi_createMbox`, `mpi_postMessage`, `mpi_spam`: `kmalloc` return value is used without a NULL check. On heap exhaustion the kernel will dereference NULL immediately after the allocation. |
+| ~~BUG-MPI-05~~ | [sys/mpi/system.c:81](sys/mpi/system.c) | **FIXED** `mpi_createMbox`: `sprintf(mbox->name, name)` with no bounds check. Replaced with `strncpy(..., sizeof(mbox->name) - 1)` and explicit NUL terminator. |
+| ~~BUG-MPI-06~~ | [sys/mpi/system.c:175](sys/mpi/system.c) | **FIXED** `mpi_postMessage` type `0x2` synchronous wait: changed spin condition from `mbox->msgLast != 0x0` (never cleared, infinite spin) to `mbox->msg != 0x0` (cleared by fetchMessage), and added `sched_yield()` inside the loop. |
+| ~~BUG-MPI-07~~ | [sys/mpi/system.c:79,158,117](sys/mpi/system.c) | **FIXED** `mpi_createMbox`, `mpi_postMessage`, `mpi_spam`: `kmalloc` return unchecked. All three paths now NULL-check and return an error (or `continue` in the spam loop) on allocation failure. |

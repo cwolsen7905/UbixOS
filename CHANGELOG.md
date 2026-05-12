@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/reference/external-specs.md` — links to ELF ABI, Intel SDM, Multiboot, and FAT specifications.
 - `docs/README.md` — documentation index.
 - `sys/sde/assets/ubix.bmp` — background bitmap for graphical console / SDE (moved from `doc/ubix.bmp`).
+### Fixed
+- `sys/mpi/system.c` — all seven MPI bugs fixed in one pass:
+  - `mpi_destroyMbox`: NULL-dereference when removing head or tail mailbox — added `prev`/`next` NULL guards and `mboxList` head update (BUG-MPI-01).
+  - `mpi_createMbox`: `mbox->msg` and `mbox->msgLast` now explicitly initialized to NULL after `kmalloc` (BUG-MPI-02); `sprintf` replaced with bounded `strncpy` + explicit NUL terminator (BUG-MPI-05); `kmalloc` return now NULL-checked (BUG-MPI-07).
+  - `mpi_postMessage` and `mpi_spam`: empty-queue append now sets both `mbox->msg` and `mbox->msgLast` (BUG-MPI-03); `kmalloc` NULL-checked in both paths (BUG-MPI-07); synchronous-send spin now waits on `mbox->msg` (not stale `msgLast`) and yields via `sched_yield()` (BUG-MPI-06).
+  - `mpi_fetchMessage`: resets `mbox->msgLast` to NULL when queue drains (BUG-MPI-04).
+
+### Added
 - `docs/architecture/mpi.md` — full MPI audit: data structures, function-by-function walkthrough, syscall table, userland API, system mailbox registry, known bugs cross-referenced to BUGS.md, design limitations.
 - `BUGS.md` — MPI section: BUG-MPI-01 through BUG-MPI-07 covering NULL dereferences in destroy, uninitialized `msgLast`, append/drain logic errors, sprintf overflow, sync-send race, and missing kmalloc NULL checks.
 - `TODO.md` — MPI section: TODO-MPI-01 through TODO-MPI-07 covering mailbox cleanup on exit, blocking receive, queue depth limit, debug kprintf removal, missing destroyMbox stub, named type constants, and re-enabling init's receive loop.

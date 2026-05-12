@@ -77,9 +77,16 @@ if (mpi_findMbox(name) != 0x0) {
   }
 
   mbox = (mpi_mbox_t *) kmalloc(sizeof(mpi_mbox_t));
+  if (mbox == 0x0) {
+    spinUnlock(&mpiSpinLock);
+    return (-1);
+  }
 
-sprintf(mbox->name, name);
-  mbox->pid = _current->id;
+  strncpy(mbox->name, name, sizeof(mbox->name) - 1);
+  mbox->name[sizeof(mbox->name) - 1] = '\0';
+  mbox->pid     = _current->id;
+  mbox->msg     = 0x0;
+  mbox->msgLast = 0x0;
 
   if (mboxList == 0x0) {
     mbox->prev = 0x0;
@@ -92,7 +99,6 @@ sprintf(mbox->name, name);
     mboxList->prev = mbox;
     mboxList = mbox;
   }
-
 
   spinUnlock(&mpiSpinLock);
   return (0x0);
@@ -115,13 +121,16 @@ int mpi_spam(uInt32 type, void *data) {
 
   for (mbox = mboxList; mbox; mbox = mbox->next) {
     message = (mpi_message_t *) kmalloc(sizeof(mpi_message_t));
+    if (message == 0x0)
+      continue;
 
     message->header = type;
     memcpy(message->data, data, MESSAGE_LENGTH);
     message->next = 0x0;
 
     if (mbox->msg == 0x0) {
-      mbox->msg = message;
+      mbox->msg     = message;
+      mbox->msgLast = message;
     }
     else {
       mbox->msgLast->next = message;
@@ -156,25 +165,30 @@ int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg) {
   }
 
   message = (mpi_message_t *) kmalloc(sizeof(mpi_message_t));
+  if (message == 0x0) {
+    spinUnlock(&mpiSpinLock);
+    return (0x1);
+  }
 
   message->header = msg->header;
   memcpy(message->data, msg->data, MESSAGE_LENGTH);
-  message->pid = _current->id;
+  message->pid  = _current->id;
   message->next = 0x0;
 
   if (mbox->msg == 0x0) {
-    mbox->msg = message;
+    mbox->msg     = message;
+    mbox->msgLast = message;
   }
   else {
     mbox->msgLast->next = message;
-    mbox->msgLast = message;
+    mbox->msgLast       = message;
   }
 
   spinUnlock(&mpiSpinLock);
 
   if (type == 0x2) {
-    while (mbox->msgLast != 0x0)
-      ;
+    while (mbox->msg != 0x0)
+      sched_yield();
   }
 
   return (0x0);
@@ -216,8 +230,10 @@ int mpi_fetchMessage(char *name, mpi_message_t *msg) {
   memcpy(msg->data, mbox->msg->data, MESSAGE_LENGTH);
   msg->pid = mbox->msg->pid;
 
-  tmpMsg = mbox->msg;
+  tmpMsg    = mbox->msg;
   mbox->msg = mbox->msg->next;
+  if (mbox->msg == 0x0)
+    mbox->msgLast = 0x0;
 
   kfree(tmpMsg);
 
@@ -245,8 +261,12 @@ int mpi_destroyMbox(char *name) {
         spinUnlock(&mpiSpinLock);
         return (-1);
       }
-      mbox->prev->next = mbox->next;
-      mbox->next->prev = mbox->prev;
+      if (mbox->prev != 0x0)
+        mbox->prev->next = mbox->next;
+      else
+        mboxList = mbox->next;
+      if (mbox->next != 0x0)
+        mbox->next->prev = mbox->prev;
       kfree(mbox);
       spinUnlock(&mpiSpinLock);
       return (0x0);
