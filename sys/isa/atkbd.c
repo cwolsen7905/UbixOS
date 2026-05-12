@@ -104,7 +104,7 @@ static unsigned int keyboardMap[255][8] = {
 /*     */{ 0x76, 0x56, 0, 0, 0, 0, 0, 0 },
 /* b,B */{ 0x62, 0x42, 0x02, 0, 0, 0, 0, 0 },
 /*     */{ 0x6E, 0x4E, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x6D, 0x4D, 0, 0, 0, 0, 0, 0 },
+/* m,M */{ 0x6D, 0x4D, 0x0D, 0, 0, 0, 0, 0 },
 /*     */{ 0x2C, 0x3C, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x2E, 0x3E, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x2F, 0x3F, 0, 0, 0, 0, 0, 0 },
@@ -306,6 +306,7 @@ void keyboardHandler(struct trapframe *frame) {
         }
         break;
       case 0x9: /* Ctrl-Tab: reboot */
+      case 0x0D: /* Ctrl-M: reboot */
         sys_shutdown(REBOOT);
         break;
       case 0x15: /* Ctrl-U: kill line */
@@ -318,7 +319,6 @@ void keyboardHandler(struct trapframe *frame) {
         if (tty_foreground->owner == _current->id)
           die_if_kernel("CTRL-X", frame, frame->tf_eax);
         break;
-      case '\r':
       case '\n': /* Enter: commit line to stdin */
         if (tty_foreground == 0x0) {
           stdinBuffer[stdinSize++] = '\n';
