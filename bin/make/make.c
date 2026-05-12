@@ -235,8 +235,8 @@ static int run_recipe(const char *recipe, const char *target,
     pid_t pid = fork();
     if (pid < 0) { perror("make: fork"); return 1; }
     if (pid == 0) {
-        char *argv[] = { "sh", "-c", step2, NULL };
-        execve("sys:/bin/sh", argv, environ);
+        char *argv[] = { "shell", "-c", step2, NULL };
+        execve("sys:/bin/shell", argv, environ);
         _exit(127);
     }
     int status;
@@ -533,8 +533,9 @@ int main(int argc, char *argv[]) {
     }
 
     if (!makefile) {
-        if (access("Makefile", 0) == 0)       makefile = "Makefile";
-        else if (access("makefile", 0) == 0)  makefile = "makefile";
+        FILE *_probe;
+        if ((_probe = fopen("Makefile", "r")) != NULL)  { fclose(_probe); makefile = "Makefile"; }
+        else if ((_probe = fopen("makefile", "r")) != NULL) { fclose(_probe); makefile = "makefile"; }
         else { fprintf(stderr, "make: no Makefile found\n"); return 1; }
     }
 
