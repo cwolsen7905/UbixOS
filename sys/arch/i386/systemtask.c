@@ -85,6 +85,21 @@ void systemTask() {
             vesa_draw_circle(400, 300, 150, 0xFFFFFF);
           }
           break;
+        case 0x82: {
+          /* display server: init VESA 800x600x32, reply when ready */
+          mpi_message_t reply;
+          int vesa_ok = 0;
+          if (vesa_init(0x118) == 0) {
+            vesa_map_fb();
+            vesa_ok = 1;
+          }
+          reply.header = 0x82;
+          reply.data[0] = vesa_ok ? 1 : 0;
+          reply.data[1] = '\0';
+          if (myMsg.data[0] != '\0')
+            mpi_postMessage(myMsg.data, 0x82, &reply);
+          break;
+        }
         case 0x80:
           if (!strcmp(myMsg.data, "sdeStart")) {
             kprintf("Starting SDE\n");

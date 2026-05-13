@@ -289,15 +289,15 @@ This is the path to macOS IOSurface / Metal compositing.
 
 ## Status
 
-| Phase | Status |
-|-------|--------|
+| Phase | Name | Status |
+|-------|------|--------|
 | 1 | Fix SDE build | Done |
 | 2 | `sys_mapfb()` syscall | Done |
-| 3 | `lib/libfb/` | Not started |
-| 4 | `bin/display` + taskbar | Not started |
-| 5 | MPI display protocol | Not started |
-| 6 | `vmm_share_region()` | Not started |
-| 7 | `bin/taskbar` separate process | Not started |
+| 3 | `lib/libfb/` | Done |
+| 4 | `bin/display` + taskbar | Done |
+| 5 | MPI display protocol | Done |
+| 6 | `vmm_share_region()` | Done |
+| 7 | `bin/taskbar` separate process | Done |
 | 8 | `bin/terminal` | Not started |
 | 9 | Compositor upgrade | Not started |
 | 10 | GPU surface backing | Not started |

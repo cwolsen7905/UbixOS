@@ -35,7 +35,6 @@ _DEV_FILE=/tmp/.ubixos_dev
 # ── Primary targets ──────────────────────────────────────────────────────────
 
 all: kernel world image
-
 kernel:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@cd sys;${MAKE}

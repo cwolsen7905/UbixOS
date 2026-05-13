@@ -270,6 +270,12 @@ int freePage(uint32_t pageAddr) {
   /* Find The Page Index To The Memory Map */
   pageIndex = (pageAddr / 4096);
 
+  if (pageIndex < 0 || pageIndex >= numPages) {
+    kprintf("freePage: addr 0x%X out of bounds (index %i numPages %i mmap 0x%X)\n",
+        pageAddr, pageIndex, numPages, (uint32_t)vmmMemoryMap);
+    return (-1);
+  }
+
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
 

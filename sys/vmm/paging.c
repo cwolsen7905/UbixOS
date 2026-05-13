@@ -642,14 +642,14 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
 
       for (y = 0; y < PT_ENTRIES; y++) {
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+          uint32_t phys = (uint32_t) pageTableSrc[y] & 0xFFFFF000;
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-            adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
-            pageTableSrc[y] = 0x0;
+            adjustCowCounter(phys, -1);
           }
-          else {
-            freePage((uint32_t) pageTableSrc[y] & 0xFFFFF000);
-            pageTableSrc[y] = 0x0;
+          else if ((phys >> 12) < (uint32_t) numPages) {
+            freePage(phys);
           }
+          pageTableSrc[y] = 0x0;
         }
       }
     }

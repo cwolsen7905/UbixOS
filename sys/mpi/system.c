@@ -28,6 +28,7 @@
 
 #include <mpi/mpi.h>
 #include <lib/kmalloc.h>
+#include <lib/kprintf.h>
 #include <string.h>
 #include <ubixos/spinlock.h>
 #include <sys/sysproto.h>
@@ -71,7 +72,7 @@ int mpi_createMbox(char *name) {
   mpi_mbox_t *mbox = 0x0;
 
   spinLock(&mpiSpinLock);
-if (mpi_findMbox(name) != 0x0) {
+  if (mpi_findMbox(name) != 0x0) {
     spinUnlock(&mpiSpinLock);
     return (-1);
   }

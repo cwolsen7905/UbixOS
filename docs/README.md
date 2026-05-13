@@ -4,10 +4,12 @@
 
 | Document | Description |
 |----------|-------------|
-| [architecture/vmm.md](architecture/vmm.md) | Virtual Memory Manager: layout, functions, page-fault handling |
+| [architecture/vmm.md](architecture/vmm.md) | Virtual Memory Manager: layout, functions, MMIO guards, fork PD re-sync |
 | [architecture/task-switching.md](architecture/task-switching.md) | Task switching internals: TSS, GDT, scheduler, fork, FPU |
 | [architecture/i386-page-directory-map.md](architecture/i386-page-directory-map.md) | Full i386 page directory (PDE 0–1023) with purpose annotations |
 | [architecture/mpi.md](architecture/mpi.md) | Message Passing Interface: mailboxes, syscalls, known bugs, limitations |
+| [architecture/syscalls.md](architecture/syscalls.md) | Dual syscall table design: int $0x80 (POSIX) vs int $0x81 (native) |
+| [architecture/vfs.md](architecture/vfs.md) | VFS layer, path format, dual-getcwd design, filesystem drivers |
 
 ## Design Specs
 

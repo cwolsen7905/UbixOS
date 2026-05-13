@@ -2,8 +2,6 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
- *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
  *
@@ -26,25 +24,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _ISA_MOUSE_H
-#define _ISA_MOUSE_H
-
-#include <sys/types.h>
-
-struct mouse_event {
-	int16_t  dx;
-	int16_t  dy;
-	uint8_t  buttons;  /* bit 0=left, bit 1=right, bit 2=middle */
-};
-typedef struct mouse_event mouse_event_t;
-
-int   mouseInit(void);
-void  mouseISR(void);
-void  mouseHandler(void);
-int   mouse_getEvent(mouse_event_t *ev);
-
-#define MOUSE_BTN_LEFT   0x01
-#define MOUSE_BTN_RIGHT  0x02
-#define MOUSE_BTN_MIDDLE 0x04
-
-#endif
+/* getpid — POSIX syscall 20 (FreeBSD ABI). Returns current process PID in eax. */
+.text
+.globl getpid
+.type getpid,@function
+getpid:
+	movl $20,%eax
+	int $0x80
+	ret
+.size getpid, . - getpid

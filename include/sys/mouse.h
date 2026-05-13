@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -26,14 +26,20 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef _SYS_MOUSE_H
+#define _SYS_MOUSE_H
 
-int main(int argc,char **argv) {
-  return(0);
-  }
+#include <stdint.h>
 
-/***
- END
- ***/
+struct mouse_event {
+	int16_t  dx;
+	int16_t  dy;
+	uint8_t  buttons;
+};
+typedef struct mouse_event mouse_event_t;
 
+#define MOUSE_BTN_LEFT   0x01
+#define MOUSE_BTN_RIGHT  0x02
+#define MOUSE_BTN_MIDDLE 0x04
+
+#endif

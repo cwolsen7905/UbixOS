@@ -119,9 +119,11 @@ void trap(struct trapframe *frame) {
 
   cr2 = rcr2();
 
-  kprintf("trap: tno=%d efl=0x%X cs=0x%X eip=0x%X cr2=0x%X v86=%d\n",
-    frame->tf_trapno, frame->tf_eflags, frame->tf_cs, frame->tf_eip, cr2,
-    _current->oInfo.v86Task);
+  /* Only log unexpected traps; page faults (12) are handled silently below */
+  if (frame->tf_trapno != 0xc)
+    kprintf("trap: tno=%d efl=0x%X cs=0x%X eip=0x%X cr2=0x%X v86=%d\n",
+      frame->tf_trapno, frame->tf_eflags, frame->tf_cs, frame->tf_eip, cr2,
+      _current->oInfo.v86Task);
 
   /*
    * VM86 tasks can fault with IF=0 — the BIOS uses CLI legitimately and

@@ -117,4 +117,15 @@ int sys_ttyctrl(struct thread *, struct sys_ttyctrl_args *);
 struct sys_mapfb_args { struct fb_info *info; };
 int sys_mapfb(struct thread *, struct sys_mapfb_args *);
 
+struct sys_getmouse_args { struct mouse_event *ev; };
+int sys_getmouse(struct thread *, struct sys_getmouse_args *);
+
+struct sys_shareregion_args {
+    pid_t     dst_pid;
+    void     *vaddr;
+    uint32_t  size;
+    uint32_t *out_vaddr;
+};
+int sys_shareregion(struct thread *, struct sys_shareregion_args *);
+
 #endif

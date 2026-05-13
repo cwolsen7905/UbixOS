@@ -131,6 +131,7 @@ extern "C" {
     void vmm_unmapPage(uint32_t, unmapFlags_t);
     void vmm_unmapPages(void*, uint32_t, unmapFlags_t);
     int vmm_freeVirtualPage(uint32_t addr);
+    uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid);
 
 #ifdef __cplusplus
 }

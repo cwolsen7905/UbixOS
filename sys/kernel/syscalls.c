@@ -76,13 +76,12 @@ struct syscall_entry systemCalls[] = {
   { ARG_COUNT(sys_getvfscwd_args), "getvfscwd", (sys_call_t *)sys_getvfscwd, SYSCALL_VALID },  // 41 -
   { ARG_COUNT(sys_ttyctrl_args), "ttyctrl", (sys_call_t *)sys_ttyctrl, SYSCALL_VALID },       // 42 -
   { ARG_COUNT(sys_mapfb_args), "mapfb", (sys_call_t *)sys_mapfb, SYSCALL_VALID },             // 43 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 44 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
+  { ARG_COUNT(sys_getmouse_args), "getmouse", (sys_call_t *)sys_getmouse, SYSCALL_VALID },        // 44 -
+  { ARG_COUNT(sys_shareregion_args), "shareregion", (sys_call_t *)sys_shareregion, SYSCALL_VALID }, // 45 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 46 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 47 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 48 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 49 -
   { ARG_COUNT(sys_mpiCreateMbox_args), "mpiCrateMbox", (sys_call_t *)sys_mpiCreateMbox, SYSCALL_VALID},  // 50 - mpiCreateMbox
   { ARG_COUNT(sys_mpiDestroyMbox_args), "mpiDestroyMbox", (sys_call_t *)sys_mpiDestroyMbox, SYSCALL_VALID },  // 51 - mpiDestroyMbox
   { ARG_COUNT(sys_mpiPostMessage_args), "mpiPostMessage", (sys_call_t *)sys_mpiPostMessage, SYSCALL_VALID },  // 52 - mpiPostMessage

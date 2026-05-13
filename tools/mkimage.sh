@@ -19,7 +19,7 @@
 set -e
 
 IMG="${1:-ubixos.img}"
-IMG_SIZE_MB=256
+IMG_SIZE_MB=512
 KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"

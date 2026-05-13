@@ -66,6 +66,61 @@ Forks the address space of `pid` using copy-on-write (COW):
 
 ---
 
+## MMIO Pages and the vmmMemoryMap Boundary
+
+Physical addresses at or above `numPages × PAGE_SIZE` (≥ 256 MB with the default QEMU `-m 256`
+configuration) are **MMIO** — framebuffer, PCI BARs, device registers, etc.  These frames have
+**no entry** in `vmmMemoryMap` (the array only covers RAM frames 0–numPages-1).  Passing such an
+address to any function that indexes into `vmmMemoryMap` computes an index in the billions,
+then accesses `0xC0800000 + huge_offset`, which is unmapped — causing a triple fault.
+
+Three code sites must guard against this:
+
+| Site | Guard | Without it |
+|------|-------|-----------|
+| `copyvirtualspace.c` — COW loop | `(phys >> 12) >= numPages` → share PTE as-is, skip `adjustCowCounter` | COW counter corrupted for MMIO frame |
+| `vmm_cleanVirtualSpace` (`paging.c`) — execve user-space teardown | `(phys >> 12) >= numPages` → clear PTE, skip `freePage` | `freePage(0xFD000000)` indexes `vmmMemoryMap[0xFD000]` → unmapped → kernel fault |
+| `freePage` (`vmm_memory.c`) | Explicit bounds check — returns `-1` for out-of-range index | Silent out-of-bounds array write |
+
+**MMIO detection idiom:**
+```c
+if ((phys >> 12) >= (uint32_t)numPages) {
+    /* MMIO — do not touch vmmMemoryMap */
+}
+```
+
+The framebuffer for a 1024×768×24 display at LFB=`0xFD000000` occupies 576 pages
+(0xFD000000–0xFD240000).  These are mapped into the viewing process at virtual `0x10000000`
+by `sys_mapfb` (syscall 43).  After a `fork`, these pages must be shared as-is — any attempt
+to COW or free them corrupts the kernel.
+
+---
+
+## Kernel Page Directory Desync After Fork
+
+`vmm_copyVirtualSpace` must **re-sync kernel PD entries (indices 770–1015) from the parent
+AFTER all allocations are complete**, not before.
+
+The reason: building the child's page tables calls `vmm_getFreeKernelPage` and
+`vmm_getFreePage`, which may allocate new kernel pages and, in doing so, add new PDE entries
+to the parent's kernel range (770–1015).  If the kernel PD entries are copied into the child
+*before* these allocations, any newly-added parent PDE will have no corresponding entry in
+the child — the child's PDE slot is zero.  The first time the child accesses that kernel
+address range, it takes a page fault with no handler, and the kernel triple-faults.
+
+**The fix** (already in `sys/vmm/copyvirtualspace.c`): the re-sync loop
+
+```c
+for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
+    newPageDirectory[x] = parentPageDirectory[x];
+```
+
+runs **after** all `vmm_getFreeKernelPage`/`vmm_getFreePage` calls, just before the
+PT_BASE_ADDR self-map page is filled in.  PD_BASE_ADDR and PT_BASE_ADDR (indices 768–769)
+are below VMM_KERN_START (770) and are not overwritten by this loop.
+
+---
+
 ## Page-Fault Handling
 
 **Source:** `sys/vmm/page_fault.S`, `sys/vmm/pagefault.c`

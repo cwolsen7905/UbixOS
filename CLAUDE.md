@@ -184,3 +184,9 @@ The system boots to a login prompt under QEMU:
 - The FAT library treats the partition-relative sector 0 as BPB; `hdRead` adds `parOffset` (LBA 2048) transparently — do not double-add the offset.
 - `sys:/etc/userdb` must exist on the image for `login` to authenticate. `tools/mkimage.sh` copies `tools/userdb` there automatically.
 - TCC-compiled binaries require R_386_GOT32X relocation support (patched in `contrib/tcc/tccelf.c`).
+- **MMIO pages in the VMM**: Physical addresses at or above `numPages * PAGE_SIZE` (≥ 256 MB with the default QEMU `-m 256` config) are MMIO — framebuffer, PCI BARs, etc. These frames have no entry in `vmmMemoryMap`. Three rules follow from this:
+  1. `copyvirtualspace.c` — when COW-marking pages during `fork`, check `(phys >> 12) >= numPages` and share MMIO PTEs as-is without touching the COW counter.
+  2. `vmm_cleanVirtualSpace` (paging.c) — when freeing the user address space during `execve`, skip `freePage` for MMIO pages (`(phys >> 12) >= numPages`); just clear the PTE.
+  3. `freePage` (vmm_memory.c) — has an explicit bounds check; returns `-1` for out-of-range frame indices as a safety net for any caller that passes an MMIO address.
+  Failure to guard these paths causes `freePage` to compute a `vmmMemoryMap` index in the billions, accesses memory at `0xC0800000 + huge_offset` which is unmapped, and triple-faults the kernel.
+- **Kernel PD desync after fork**: `vmm_copyVirtualSpace` re-syncs kernel PD entries (indices 770–1015) from the parent **after** all `vmm_getFreeKernelPage`/`vmm_getFreePage` allocations, just before filling the PT_BASE_ADDR self-map page. This is critical — those allocation calls may expand the parent's kernel page directory into new PD indices; copying the entries early and then allocating more leaves the child with stale (zero) PD entries for newly-expanded kernel ranges.

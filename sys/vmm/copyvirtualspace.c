@@ -84,18 +84,28 @@ void *vmm_copyVirtualSpace(pidType pid) {
   for (x = 0; x < PT_ENTRIES; x++) {
     if (((parentPageTable[x]) & PAGE_PRESENT) == PAGE_PRESENT) {
 
-      /* Set Page To COW In Parent And Child Space — clear PAGE_WRITE so the
-       * CPU faults on write and the COW handler fires. */
-      newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | ((KERNEL_PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
+      {
+        uint32_t phys = (uint32_t) parentPageTable[x] & 0xFFFFF000;
 
-      /* Increment The COW Counter For This Page */
-      if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
-        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 1);
-      }
-      else {
-        /* Add Two If This Is The First Time Setting To COW */
-        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 2);
-        parentPageTable[x] = (parentPageTable[x] & ~PAGE_WRITE) | PAGE_COW;
+        /* MMIO pages — share as-is, no COW */
+        if ((phys >> 12) >= (uint32_t) numPages) {
+          newPageTable[x] = parentPageTable[x];
+        }
+        else {
+          /* Set Page To COW In Parent And Child Space — clear PAGE_WRITE so
+           * the CPU faults on write and the COW handler fires. */
+          newPageTable[x] = (phys | ((KERNEL_PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
+
+          /* Increment The COW Counter For This Page */
+          if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
+            adjustCowCounter(phys, 1);
+          }
+          else {
+            /* Add Two If This Is The First Time Setting To COW */
+            adjustCowCounter(phys, 2);
+            parentPageTable[x] = (parentPageTable[x] & ~PAGE_WRITE) | PAGE_COW;
+          }
+        }
       }
 
     }
@@ -201,19 +211,28 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
           }
           else {
+            uint32_t phys = (uint32_t) parentPageTable[i] & 0xFFFFF000;
 
-            /* Set Page To COW In Parent And Child Space — clear PAGE_WRITE so
-             * the CPU faults on write and the COW handler fires. */
-            newPageTable[i] = (((uint32_t) parentPageTable[i] & 0xFFFFF000) | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
-
-            /* Increment The COW Counter For This Page */
-            if (((uint32_t) parentPageTable[i] & PAGE_COW) == PAGE_COW) {
-              adjustCowCounter(((uint32_t) parentPageTable[i] & 0xFFFFF000), 1);
+            /* MMIO/device pages (framebuffer etc.) live above RAM.
+             * They must not be COW'd — share the mapping as-is so
+             * the parent keeps write access after the fork. */
+            if ((phys >> 12) >= (uint32_t) numPages) {
+              newPageTable[i] = parentPageTable[i];
             }
             else {
-              /* Add Two If This Is The First Time Setting To COW */
-              adjustCowCounter(((uint32_t) parentPageTable[i] & 0xFFFFF000), 2);
-              parentPageTable[i] = (parentPageTable[i] & ~PAGE_WRITE) | PAGE_COW;
+              /* Set Page To COW In Parent And Child Space — clear PAGE_WRITE
+               * so the CPU faults on write and the COW handler fires. */
+              newPageTable[i] = (phys | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
+
+              /* Increment The COW Counter For This Page */
+              if (((uint32_t) parentPageTable[i] & PAGE_COW) == PAGE_COW) {
+                adjustCowCounter(phys, 1);
+              }
+              else {
+                /* Add Two If This Is The First Time Setting To COW */
+                adjustCowCounter(phys, 2);
+                parentPageTable[i] = (parentPageTable[i] & ~PAGE_WRITE) | PAGE_COW;
+              }
             }
           }
         }
@@ -261,6 +280,17 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
   /* Flush The Page From Garbage In Memory */
   bzero(newPageTable, PAGE_SIZE);
+
+  /*
+   * Re-sync kernel PD entries into newPageDirectory now that all
+   * vmm_getFreeKernelPage / vmm_getFreePage calls are done.  Those
+   * calls may have added new PD entries to the kernel range that were
+   * not present when the first copy was done above.  PD_BASE_ADDR and
+   * PT_BASE_ADDR (indices 768-769) are below VMM_KERN_START (770) so
+   * they are NOT overwritten by this loop.
+   */
+  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
+    newPageDirectory[x] = parentPageDirectory[x];
 
   for (x = 0; x < PD_ENTRIES; x++)
     newPageTable[x] = newPageDirectory[x];
