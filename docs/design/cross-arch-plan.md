@@ -350,15 +350,15 @@ sys/
 
 ## Status
 
-| Phase | Status |
-|-------|--------|
-| 1 | Done |
-| 2 | Done |
-| 3 | Not started |
-| 4 | Not started |
-| 5 | Not started |
-| 6 | Not started |
-| 7 | Not started |
-| 8 | Not started |
-| 9 | Not started |
-| 10 | Not started |
+| Phase | Name | Status |
+|-------|------|--------|
+| 1 | `_ARCH?=i386`, linker script parameterized | Done |
+| 2 | `sys/include/machine/` forwarding headers | Done |
+| 3 | Move `idt.c`, `io.c` to `sys/arch/i386/` | Done |
+| 4 | Split `sched.c` → `sched_core.c` + `sched_switch.c` | Not started |
+| 5 | `struct md_proc` hides TSS in `kTask_t` | Not started |
+| 6 | `machine/ansi.h`, pointer types arch-parameterized | Not started |
+| 7 | `uint32_t` → `uintptr_t` for address-typed values | Not started |
+| 8 | Move `start.S`, `main.c` to `sys/arch/i386/` | Not started |
+| 9 | `machine/vmm_layout.h` for address-space constants | Not started |
+| 10 | `sys/arch/x86_64/` skeleton, no code | Not started |
