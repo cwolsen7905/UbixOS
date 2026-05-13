@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -33,130 +33,179 @@
 #include <sys/io.h>
 #include <lib/kprintf.h>
 
-static uInt8 kbdRead() {
-  unsigned long Timeout;
-  uInt8 Stat, Data;
+/* Ring buffer for decoded mouse events */
+#define MOUSE_BUF_SIZE 64
+static mouse_event_t mouse_buf[MOUSE_BUF_SIZE];
+static volatile int  mouse_head = 0;
+static volatile int  mouse_tail = 0;
 
-  for (Timeout = 50000L; Timeout != 0; Timeout--) {
-    Stat = inportByte(0x64);
+/* PS/2 packet accumulator */
+static uint8_t  pkt[3];
+static int      pkt_idx = 0;
 
-    /* loop until 8042 output buffer full */
-    if ((Stat & 0x01) != 0) {
-      Data = inportByte(0x60);
-
-      /* loop if parity error or receive timeout */
-      if ((Stat & 0xC0) == 0)
-        return Data;
-    }
-  }
-  return -1;
+static void
+mouse_push(mouse_event_t *ev)
+{
+	int next = (mouse_head + 1) & (MOUSE_BUF_SIZE - 1);
+	if (next != mouse_tail) {
+		mouse_buf[mouse_head] = *ev;
+		mouse_head = next;
+	}
 }
 
-static void kbdWrite(uInt16 port, uInt8 data) {
-  uInt32 timeout;
-  uInt8 stat;
-
-  for (timeout = 500000L; timeout != 0; timeout--) {
-    stat = inportByte(0x64);
-
-    if ((stat & 0x02) == 0)
-      break;
-  }
-
-  if (timeout != 0)
-    outportByte(port, data);
+int
+mouse_getEvent(mouse_event_t *ev)
+{
+	if (mouse_tail == mouse_head)
+		return -1;
+	*ev = mouse_buf[mouse_tail];
+	mouse_tail = (mouse_tail + 1) & (MOUSE_BUF_SIZE - 1);
+	return 0;
 }
 
-static uInt8 kbdWriteRead(uInt16 port, uInt8 data, const char* expect) {
-  int RetVal;
+static uInt8
+kbdRead(void)
+{
+	unsigned long timeout;
+	uInt8 stat, data;
 
-  kbdWrite(port, data);
-  for (; *expect; expect++) {
-    RetVal = kbdRead();
-    if ((uInt8) *expect != RetVal) {
-      return RetVal;
-    }
-  }
-
-  return 0;
+	for (timeout = 50000L; timeout != 0; timeout--) {
+		stat = inportByte(0x64);
+		if ((stat & 0x01) != 0) {
+			data = inportByte(0x60);
+			if ((stat & 0xC0) == 0)
+				return data;
+		}
+	}
+	return (uInt8)-1;
 }
 
-int mouseInit() {
-  static uInt8 s1[] = { 0xF3, 0xC8, 0xF3, 0x64, 0xF3, 0x50, 0 };
-  static uInt8 s2[] = { 0xF6, 0xE6, 0xF4, 0xF3, 0x64, 0xE8, 0x03, 0 };
-  const uInt8* ch;
-  Int8 cmd = 0x0;
+static void
+kbdWrite(uInt16 port, uInt8 data)
+{
+	uInt32 timeout;
+	uInt8 stat;
 
-  kbdWrite(0x64, 0xA8);
-  for (ch = s1; *ch; ch++) {
-    kbdWrite(0x64, 0xD4);
-    kbdWriteRead(0x60, *ch, "\xFA");
-  }
-  for (ch = s2; *ch; ch++) {
-    kbdWrite(0x64, 0xD4);
-    kbdWriteRead(0x60, *ch, "\xFA");
-  }
-  kbdWrite(0x64, 0xD4);
-  if (kbdWriteRead(0x60, 0xF2, "\xFA") != 0x0) {
-    kprintf("Error With Mouse\n");
-  }
-  cmd = kbdRead();
-  kprintf("CMD: [0x%X]\n", cmd);
-  kbdWrite(0x64, 0xD4);
-  kbdWriteRead(0x60, 0xF4, "\xFA");
+	for (timeout = 500000L; timeout != 0; timeout--) {
+		stat = inportByte(0x64);
+		if ((stat & 0x02) == 0)
+			break;
+	}
+	if (timeout != 0)
+		outportByte(port, data);
+}
 
-  setVector(&mouseISR, mVec + 12, dPresent + dInt + dDpl3);
+static uInt8
+kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
+{
+	int retval;
 
-  outportByte( mPic, eoi);
-  outportByte( sPic, eoi);
-  irqEnable(12);
-  outportByte( mPic, eoi);
-  outportByte( sPic, eoi);
+	kbdWrite(port, data);
+	for (; *expect; expect++) {
+		retval = kbdRead();
+		if ((uInt8)*expect != retval)
+			return retval;
+	}
+	return 0;
+}
 
-  kprintf("psm0 - Address: [0x%X]\n", &mouseISR);
+int
+mouseInit(void)
+{
+	uInt8 ccb;
 
-  /* Return so we know everything went well */
-  return (0x0);
+	/* Enable the auxiliary (mouse) port */
+	kbdWrite(0x64, 0xA8);
+
+	/* Drain any stale bytes from the output buffer before reading CCB,
+	 * so a pending keyboard scancode doesn't race with our 0x20 response. */
+	while (inportByte(0x64) & 0x01)
+		inportByte(0x60);
+
+	/* Read the 8042 Command Byte, set bit 1 (aux int enable),
+	 * clear bit 5 (aux clock disable).  Explicitly keep bit 0 (kbd int)
+	 * and clear bit 4 (kbd clock disable) so the keyboard stays alive. */
+	kbdWrite(0x64, 0x20);
+	ccb = kbdRead();
+	ccb |=  0x03;  /* enable kbd interrupt (bit 0) + aux interrupt (bit 1) */
+	ccb &= ~0x30;  /* enable kbd clock (bit 4) + aux clock (bit 5) */
+	kbdWrite(0x64, 0x60);
+	kbdWrite(0x60, ccb);
+
+	/* Reset mouse to defaults */
+	kbdWrite(0x64, 0xD4);
+	kbdWriteRead(0x60, 0xF6, "\xFA");
+
+	/* Enable data reporting (mouse starts sending packets) */
+	kbdWrite(0x64, 0xD4);
+	kbdWriteRead(0x60, 0xF4, "\xFA");
+
+	setVector(&mouseISR, mVec + 12, dPresent + dInt + dDpl3);
+
+	outportByte(sPic, eoi);
+	outportByte(mPic, eoi);
+	irqEnable(12);
+
+	kprintf("psm0 - Address: [0x%X], CCB: 0x%X\n", &mouseISR, ccb);
+	return 0;
 }
 
 asm(
-  ".globl mouseISR \n"
-  "mouseISR:       \n"
-  "  pusha         \n" /* Save all registers           */
-  "  call mouseHandler \n"
-  "  popa          \n"
-  "  iret          \n" /* Exit interrupt               */
+  ".globl mouseISR   \n"
+  "mouseISR:         \n"
+  "  pusha           \n"
+  "  push %ds        \n"
+  "  push %es        \n"
+  "  push %fs        \n"
+  "  push %gs        \n"
+  "  call mouseHandler\n"
+  "  pop  %gs        \n"
+  "  pop  %fs        \n"
+  "  pop  %es        \n"
+  "  pop  %ds        \n"
+  "  popa            \n"
+  "  iret            \n"
 );
 
-void mouseHandler() {
-  kprintf("MOUSE!!!\n");
+void
+mouseHandler(void)
+{
+	static int first = 1;
+	uint8_t byte = inportByte(0x60);
+	if (first) { kprintf("psm0: IRQ12 firing, byte=0x%X\n", byte); first = 0; }
 
-  outportByte( mPic, eoi);
-  outportByte( sPic, eoi);
-  /* Return */
-  return;
+	/* Sync on start byte: bit 3 must be set in status byte */
+	if (pkt_idx == 0 && !(byte & 0x08)) {
+		outportByte(sPic, eoi);
+		outportByte(mPic, eoi);
+		return;
+	}
+
+	pkt[pkt_idx++] = byte;
+
+	if (pkt_idx == 3) {
+		pkt_idx = 0;
+
+		/* Discard overflow packets */
+		if (pkt[0] & 0xC0) {
+			outportByte(sPic, eoi);
+			outportByte(mPic, eoi);
+			return;
+		}
+
+		mouse_event_t ev;
+		ev.buttons = pkt[0] & 0x07;
+
+		/* dx: signed 9-bit from status sign bit + byte */
+		ev.dx = (int16_t)(pkt[1] ? ((pkt[0] & 0x10) ? pkt[1] - 256 : pkt[1]) : 0);
+
+		/* dy: signed 9-bit, PS/2 Y is inverted (positive = up) */
+		ev.dy = (int16_t)(pkt[2] ? ((pkt[0] & 0x20) ? pkt[2] - 256 : pkt[2]) : 0);
+		ev.dy = -ev.dy;
+
+		mouse_push(&ev);
+	}
+
+	outportByte(sPic, eoi);
+	outportByte(mPic, eoi);
 }
-
-/***
- $Log: mouse.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:12  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:02  reddawg
- no message
-
- Revision 1.3  2004/09/07 21:54:38  reddawg
- ok reverted back to old scheduling for now....
-
- Revision 1.2  2004/09/06 15:13:25  reddawg
- Last commit before FreeBSD 6.0
-
- Revision 1.1  2004/06/04 10:20:53  reddawg
- mouse drive: fixed a few bugs works a bit better now
-
- END
- ***/
-

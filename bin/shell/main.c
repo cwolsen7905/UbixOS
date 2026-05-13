@@ -49,7 +49,7 @@ int main(int argc, char **argv, char **env) {
   bzero(cwd, 1024);
 
   sprintf(machine, "uBixCube");
-  getcwd(cwd, 1024);
+  ubix_getcwd(cwd, 1024);
 
   while (1) {
     aGain:

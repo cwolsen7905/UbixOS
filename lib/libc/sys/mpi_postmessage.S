@@ -5,3 +5,4 @@ mpi_postMessage:
   movl $52,%eax
   int $0x81
   ret
+.size mpi_postMessage, . - mpi_postMessage

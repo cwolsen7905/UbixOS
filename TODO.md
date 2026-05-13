@@ -22,8 +22,8 @@ Fix the items in [BUGS.md](BUGS.md) first.
 
 | ID | File | Description |
 |----|------|-------------|
-| TODO-VFS-01 | [sys/fs/vfs/file.c:380](sys/fs/vfs/file.c#L380) | `fgetc`: remove leftover debug `kprintf("[%s:%i]", __FILE__, __LINE__)` — fires on every character read. |
-| TODO-VFS-02 | [sys/fs/vfs/file.c:290](sys/fs/vfs/file.c#L290) | `sys_fclose`: remove duplicate `NULL` check — `args->FILE == NULL` is checked twice in a row. |
+| ~~TODO-VFS-01~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **Done** `fgetc`: removed debug `kprintf("[%s:%i]"…)`. |
+| ~~TODO-VFS-02~~ | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | **Done** `sys_fclose`: removed duplicate `args->FILE == NULL` check. |
 | TODO-VFS-03 | [sys/fs/vfs/file.c](sys/fs/vfs/file.c) | `fread` should own offset advancement. After fixing BUG-VFS-04, audit each filesystem driver to ensure it does not also advance the offset independently, so `fd->offset` stays authoritative. |
 | TODO-VFS-04 | [sys/fs/vfs/mount.c](sys/fs/vfs/mount.c) | `vfs_mount`: validate `device_find()` and `vfs_findFS()` return non-NULL before calling `vfs_addMount()`. Keeps the mount list clean and resolves BUG-VFS-08 as a side effect. |
 | TODO-VFS-05 | [sys/fs/vfs/file.c](sys/fs/vfs/file.c), [mount.c](sys/fs/vfs/mount.c) | Replace unchecked `sprintf`/`strcpy` with `snprintf`/`strlcpy` throughout the VFS layer to prevent silent buffer overflows on long paths. |
@@ -42,9 +42,10 @@ Fix the items in [BUGS.md](BUGS.md) first.
 |----|------|-------------|
 | TODO-VMM-01 | [sys/vmm/unmappage.c](sys/vmm/unmappage.c) | `vmm_unmapPages`: after fixing BUG-VMM-04, audit all callers to ensure they don't pass ranges that cross page table boundaries without expecting the loop to handle the table transition correctly. Consider rewriting as repeated calls to `vmm_unmapPage` to reuse its bounds-safe logic and TLB flush. |
 | TODO-VMM-02 | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | `vmm_pageFault`: the `pageFaultSpinLock` is held across the entire COW copy (including the `memcpy`-equivalent loop). For a busy system this serializes all page faults. Consider narrowing the critical section to just the PTE update once the copy is done. |
-| TODO-VMM-03 | [sys/vmm/paging.c:381](sys/vmm/paging.c#L381) | `vmm_mapFromTask`: hardcoded virtual address `0x5A00000` for the child page directory window. This should be a named constant and validated against the kernel virtual memory layout map. |
+| ~~TODO-VMM-03~~ | [sys/vmm/paging.c:381](sys/vmm/paging.c#L381) | **Done** `vmm_mapFromTask`: `0x5A00000` replaced with `VMM_CHILD_PD_WINDOW` constant defined in `sys/include/vmm/vmm.h`. |
 | TODO-VMM-04 | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | `freePage`: `systemVitals->freePages` is updated inside `vmmSpinLock` in some paths but the `adjustCowCounter` path updates it outside any lock on `systemVitals`. Consolidate so `freePages` is always updated under `vmmSpinLock`. |
 | TODO-VMM-05 | [sys/vmm/freevirtualpage.c](sys/vmm/freevirtualpage.c) | `vmm_freeVirtualPage` is a stub (TODO comment, no implementation). Any code that expects to free individual virtual pages silently does nothing, leaking virtual address space. |
+| TODO-VMM-06 | [sys/vmm/paging.c](sys/vmm/paging.c), [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | PD[1] COW reference leak. `vmm_copyVirtualSpace` COW-shares PD[1] pages (0x400000–0x7FFFFF, kernel code region) on every fork, incrementing their counters. `vmm_cleanVirtualSpace` starts at `VMM_USER_START` (0x800000) and never decrements those references. One COW count leaks per process lifetime per page in that region. Fix: extend `vmm_cleanVirtualSpace` down to PD[1] (or handle PD[1] specially on exit), then simplify or remove `vmm_freeProcessPages`. Tracked as part of BUG-COW-03. |
 
 ---
 
@@ -71,12 +72,13 @@ Fix the crash items in [BUGS.md](BUGS.md) (BUG-SCHED-01 through BUG-SCHED-08) fi
 | ID | File | Description |
 |----|------|-------------|
 | TODO-SCHED-01 | [sys/arch/i386/fork.c:120-123](sys/arch/i386/fork.c) | **Eliminate the FORK state spin-wait.** The child's TSS is fully initialized before `newProcess->state = FORK`. The spin-wait exists only to prevent the scheduler from switching to the child before the TSS is ready — but it already is. Set `newProcess->state = READY` directly (after moving `parent`/`children` up per BUG-SCHED-01) and remove the spin-wait loop. This saves two full context switches on every `fork()`. |
-| ~~TODO-SCHED-02~~ | [sys/arch/i386/sched.c:160](sys/arch/i386/sched.c) | **Done — fixed as BUG-SCHED-03.** `schedNewTask()` now allocates a dedicated kernel stack and stores the base in `kTask_t.kernelStack`. Remaining work: free `kernelStack` in `endTask()`/`sched_deleteTask()` to avoid leaking the 4 KB on task exit. |
+| ~~TODO-SCHED-02~~ | [sys/arch/i386/sched.c:160](sys/arch/i386/sched.c) | **Done — fixed as BUG-SCHED-03.** `schedNewTask()` now allocates a dedicated kernel stack and stores the base in `kTask_t.kernelStack`. |
+| ~~TODO-SCHED-09~~ | [sys/arch/i386/systemtask.c](sys/arch/i386/systemtask.c) | **Done** `kernelStack` freed in `systemTask()` before `kfree(tmpTask)`. Fix placed here (not `endTask`) because esp0 still points into the stack while the task is dying; `systemTask` tears it down from a safe context. |
 | TODO-SCHED-03 | [sys/arch/i386/timer.S:40](sys/arch/i386/timer.S) | **Reduce the scheduling quantum from ~1 second to 10–20 ms.** The hardcoded `movl $200,%ebx` check fires `sched()` every 200 ticks. At the standard PIT divisor (~100–200 Hz) this is 1–2 seconds per task. Change the divisor from 200 to 2 (at 100 Hz = 20 ms) or make `quantum` configurable per-task for priority classes. |
 | TODO-SCHED-04 | [sys/arch/i386/sched.c:93](sys/arch/i386/sched.c) | **Add an explicit idle task to prevent infinite scheduler loop.** If no task is READY (all are blocked or dead), `sched()` spins forever via `goto schedStart`. Create an idle task during `sched_init()` that is always READY and executes `hlt` in a loop. The scheduler then always has something to switch to. |
 | TODO-SCHED-05 | [sys/include/sys/tss.h:70](sys/include/sys/tss.h) | **Remove `io_space[8192]` from `struct tssStruct`.** `tss.io_map = 0x8000` tells the CPU the IOPB is past the TSS limit, so the CPU never reads `io_space`. Carrying 8 KB of dead data in every `kTask_t` wastes ~8 KB per task. Remove the field; the I/O bitmap offset of 0x8000 is still valid and continues to deny all ring-3 I/O port access. |
 | TODO-SCHED-06 | [sys/arch/i386/fork.c:106](sys/arch/i386/fork.c), [sys/init/main.c:98](sys/init/main.c) | **Zero `tss.ldt` or commit to per-process LDTs.** Every task sets `tss.ldt = 0x18`, causing the CPU to load GDT[3] as the LDT on every task switch. No LDT entries are ever installed; the LDT is empty. Either set `tss.ldt = 0x0` (null selector, suppresses the LDT load) and remove GDT[3], or document clearly that this is a placeholder and add per-process LDT allocation. |
-| TODO-SCHED-07 | [sys/arch/i386/schedyield.S](sys/arch/i386/schedyield.S) | **Remove or fix dead `sched_yield_new` assembly.** The function pushes extra registers, calls `sched()`, then executes `iret` — but it is called as a normal C function, not from an interrupt handler. There is no interrupt frame on the stack, so `iret` pops garbage. The function is never called (the active `sched_yield()` in sched.c just calls `sched()` directly). Remove the file or rewrite it as a correct assembly yield. |
+| ~~TODO-SCHED-07~~ | [sys/arch/i386/schedyield.S](sys/arch/i386/schedyield.S) | **Done** Deleted dead `schedyield.S` (`sched_yield_new` called `iret` as a normal C function — instant crash if ever reached). Removed from `sys/arch/i386/Makefile` OBJS. |
 | TODO-SCHED-08 | [sys/arch/i386/sched.c:179](sys/arch/i386/sched.c) | **Stop allocating stdio `struct file` entries for kernel threads.** `schedNewTask()` unconditionally allocates `o_files[0..2]` (stdin/stdout/stderr) for every task, including kernel threads created via `execThread()`. Kernel threads have no use for these. Add a `flags` argument to `schedNewTask` to skip the stdio allocation for kernel threads, or create a separate `schedNewKernelTask()`. |
 
 ---
@@ -89,6 +91,38 @@ Fix the crash/exploit items in [BUGS.md](BUGS.md) (BUG-KRN-01 through BUG-KRN-13
 |----|------|-------------|
 | TODO-KRN-01 | [sys/kernel/descrip.c](sys/kernel/descrip.c) | Add `O_FILES` bounds check to all fd array accesses (`sys_close`, `fcntl`, `dup2`, `read`, `write`) and return `EBADF` on out-of-range. Currently these all trust userspace. |
 | TODO-KRN-02 | [sys/fs/vfs/file.c:192](sys/fs/vfs/file.c#L192) | Replace all `sprintf` path-building in VFS/syscalls with `snprintf` using the buffer size. BUG-KRN-09 (`sys_chdir`) is the crash case; audit all other path concatenations in the same file. |
-| TODO-KRN-03 | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | Narrow `pageFaultSpinLock` critical section — currently held across the entire COW `memcpy`. Should cover only the PTE update. Also release the lock before calling `kpanic` (BUG-KRN-13). |
+| TODO-KRN-03 | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | Narrow `pageFaultSpinLock` critical section — currently held across the entire COW `memcpy`. Should cover only the PTE update. (The `kpanic` lock-release part was fixed by BUG-KRN-13.) |
 | TODO-KRN-04 | [sys/kernel/ld.c](sys/kernel/ld.c) | Audit all `sizeof(Elf_Shdr)` vs `sizeof(Elf_Phdr)` usages. After fixing BUG-KRN-06, add ELF field validation (bounds on `e_phnum`, `e_shnum`, `e_shstrndx`) before using them as allocation sizes or array indices. |
 | TODO-KRN-05 | [sys/kernel/signal.c](sys/kernel/signal.c) | Add `NSIG` (or `128`) bounds check to all signal number array accesses in `sys_sigaction` and `sys_sigprocmask`. Return `EINVAL` for out-of-range signals. |
+
+---
+
+## Build System Improvements (identified 2026-05-11)
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-BUILD-01 | [mk/ubix.prog.mk](mk/ubix.prog.mk) | **Replace the `obj/lib/*/*.o` glob with proper archive libraries.** Every statically-linked binary currently links against all compiled library objects via a wildcard, causing symbol conflicts (e.g. `lseek` clash between libc and the tcc shim) and bloated binaries. The fix is to run `ar rcs` at the end of each library's build to produce `libc.a`, `libm.a`, etc., then have each binary's Makefile declare only what it uses (`-lc`, `-lm`). Binaries with C++ or graphics dependencies (launcher, muffin) already have explicit extra link lines and model the desired pattern. |
+
+---
+
+## MPI Improvements (identified 2026-05-11)
+
+BUG-MPI-01 through BUG-MPI-07 are all fixed. These are the remaining improvements.
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-MPI-01 | [sys/mpi/system.c](sys/mpi/system.c) | Add mailbox cleanup on task exit. When a process dies (`endTask`), scan `mboxList` for mailboxes owned by that PID and free them along with any queued messages. Without this, the name is permanently reserved and all queued messages leak. |
+| TODO-MPI-02 | [sys/mpi/system.c:189](sys/mpi/system.c) | Replace type `0x2` sync-send spin with a proper blocking mechanism. `sched_yield()` was added (fixes BUG-MPI-06), but the spin loop still burns CPU and can stall unrelated tasks. The correct fix is a per-mailbox semaphore that the sender sleeps on and the receiver signals when the queue drains. |
+| TODO-MPI-03 | [sys/mpi/system.c](sys/mpi/system.c) | Add a maximum queue depth (e.g. 64 messages per mailbox). Return an error from `mpi_postMessage` when the limit is reached rather than silently exhausting kernel heap. |
+| ~~TODO-MPI-04~~ | [sys/mpi/mpi_syscalls.c](sys/mpi/mpi_syscalls.c) | **Done** Removed debug `kprintf("mPM: %s"…)` from `sys_mpiPostMessage`. |
+| TODO-MPI-05 | [lib/libc/sys/](lib/libc/sys/) | Add an assembly stub for `mpi_destroyMbox` (syscall 51). Currently only create/post/fetch have stubs; destroy can only be called via inline asm from userland. |
+| ~~TODO-MPI-06~~ | [sys/include/mpi/mpi.h](sys/include/mpi/mpi.h) | **Done** Added `MPI_ASYNC` (0x1) and `MPI_SYNC` (0x2) constants to `mpi.h`. |
+| TODO-MPI-07 | [bin/init/main.c](bin/init/main.c) | Re-enable the MPI receive loop in `init` (currently commented out). Once the crash bugs are fixed this loop is safe to restore and will allow other processes to send commands to PID 1. |
+
+---
+
+## SDE / Graphics (identified 2026-05-11)
+
+| ID | File | Description |
+|----|------|-------------|
+| TODO-SDE-01 | [tools/grub.cfg](tools/grub.cfg), [sys/init/start.S](sys/init/start.S), [sys/init/main.c](sys/init/main.c) | **Use the GRUB/multiboot framebuffer instead of VM86 BIOS calls.** Add `set gfxpayload=800x600x24` to `grub.cfg` so GRUB sets VESA mode before handing off. Parse `mbi->framebuffer_*` fields from the multiboot info struct in `start.S`/`main.c` and pass the LFB address + pitch + bpp to the SDE instead of going through `biosCall`. This eliminates VM86 mode entirely, works in QEMU and on real hardware without BIOS ROM quirks, and is the standard approach for modern hobby OSes. |

@@ -92,16 +92,7 @@ install:
 	(cd ../tools/;${MAKE} install-ubix)
 
 install-kernel:
-	@echo
-	@echo "***************************************************************"
-	@echo "Kernel Install For ${_ARCH} Started On `LC_ALL=C date`"
-	@echo "***************************************************************"
-	@echo
-	@echo "***************************************************************"
-	@echo "Step 1: Copy Kernel"
-	@echo "***************************************************************"
-	cp compile/kernel ${ROOT}/boot/kernel/
-	sync
+	@echo "install-kernel: use 'bmake install-kernel' from the repo root"
 	@echo
 	@echo "***************************************************************"
 	@echo "Kernel Install For ${_ARCH} Completed On `LC_ALL=C date`"

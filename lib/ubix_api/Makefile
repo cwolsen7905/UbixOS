@@ -6,7 +6,8 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 #Objects
-OBJS =
+OBJS = ubixcwd.o ttyctrl.o
+
 
 #Sub Sections
 SUBS = ./test/*.o
@@ -26,7 +27,7 @@ lib.so: $(OBJS)
 	$(CXX)  -Wall -nostdinc -O -I./include -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall -nostdinc -O -I./include -c $<
+	$(CC) $(CFLAGS) -Wall -nostdinc -O -I./include -I../../include -c $<
 
 .c.s:
 	$(CC)  -Wall -nostdinc -O -I./include -S -o $@ $<
@@ -36,5 +37,9 @@ lib.so: $(OBJS)
  
 # Clean up the junk
 clean:
-	$(REMOVE) $(OBJS) ${BUILD_DIR}/$(OUTPUT)
-	(cd test;make clean)
+	$(REMOVE) $(OBJS) ${OBJS:.o=.d} ${BUILD_DIR}/$(OUTPUT)
+	(cd test;${MAKE} clean)
+
+.for _d in ${OBJS:.o=.d}
+.sinclude "${_d}"
+.endfor

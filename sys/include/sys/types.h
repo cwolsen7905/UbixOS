@@ -142,7 +142,7 @@ typedef __time_t time_t;
 typedef uint32_t uintmax_t;
 typedef int32_t intmax_t;
 typedef int32_t ptrdiff_t;
-typedef uint32_t uintptr_t;
+typedef __uintptr_t uintptr_t;
 
 #define __ULONG_MAX     0xffffffffUL
 #define __USHRT_MAX     0xffff          /* max value for an unsigned short */

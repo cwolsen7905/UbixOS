@@ -132,7 +132,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
         if (args->fd < 3)
           td->td_retval[0] = 0;
         else {
-          if (!fclose(fd->fd))
+          if (fclose(fd->fd) != 0)
             td->td_retval[0] = -1;
 
           //kprintf("DESTROY: %i!", args->fd);
@@ -196,41 +196,22 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
       default:
         //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
         //kprintf("[%s:%i]", __FILE__, __LINE__);
-        td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
+        td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
     }
   }
   else {
-    bf[1] = '\0';
-    if (_current->term == tty_foreground)
+    /* stdin: echo and line buffering handled by keyboard ISR; drain stdin[] */
+    while (_current->term == tty_foreground) {
       c = getchar();
-
-    for (x = 0; x < args->nbyte && c != '\n';) {
-      if (_current->term == tty_foreground) {
-
-        if (c != 0x0) {
-          buf[x++] = c;
-          bf[0] = c;
-          kprintf(bf);
-        }
-
-        if (c == '\n') {
-          buf[x++] = c;
+      if (c != 0x0) {
+        buf[x++] = c;
+        if (c == '\n' || x >= (int)args->nbyte)
           break;
-        }
-
-        sched_yield();
-        c = getchar();
       }
       else {
         sched_yield();
       }
     }
-    if (c == '\n')
-      buf[x++] = '\n';
-
-    bf[0] = '\n';
-    kprintf(bf);
-
     td->td_retval[0] = x;
   }
   return (0);
@@ -299,8 +280,6 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
   size_t nbytes;
 
-    //kprintf("<size_t: %i:%i>", sizeof(size_t), uap->nbyte);
-
   if (uap->fd == 2) {
     buffer = kmalloc(1024);
         //kprintf("nbyte: %i", uap->nbyte);
@@ -312,29 +291,12 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     kfree(buffer);
     td->td_retval[0] = uap->nbyte;
   }
-  else if (uap->fd == 1 && ((struct file*) td->o_files[1])->fd == 0x0) {
-        buffer = kmalloc(1025);
-        memset(buffer, '\0', 1025);
-        //kprintf("nbyte: %i", uap->nbyte);
-        memcpy(buffer, uap->buf, uap->nbyte);
-        //buffer[1024] = '\0';
-        kprint(buffer);
-
-        /*
-        if (uap->nbyte >= 786) {
-            kprint("\n");
-            kprint("^");
-            while (1)
-            asm("nop");
-         }
-         */
-        kfree(buffer);
-        //kprintf(buffer);
-        // kprintf(uap->buf);
-        //kfree(buffer);
-        //kprintf("[%s:%i]", __FILE__, __LINE__);
-        //kprint(uap->buf);
-
+  else if (uap->fd == 1) {
+    buffer = kmalloc(uap->nbyte + 1);
+    memset(buffer, '\0', uap->nbyte + 1);
+    memcpy(buffer, uap->buf, uap->nbyte);
+    kprintf("%s", buffer);
+    kfree(buffer);
     td->td_retval[0] = uap->nbyte;
   }
   else {
@@ -368,8 +330,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         break;
       default:
         if (fd->fd) {
-          kprintf("[0x%X]", fd->fd->res);
-                    td->td_retval[0] = fwrite(uap->buf, uap->nbyte, 1, fd->fd);
+          td->td_retval[0] = fwrite(uap->buf, 1, uap->nbyte, fd->fd);
         }
         else {
           kprintf("[%i]", uap->nbyte);

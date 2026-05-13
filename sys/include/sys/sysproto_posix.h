@@ -1038,4 +1038,28 @@ int sys_sendto(struct thread *td, struct sys_sendto_args*);
 
 int sys_pread(struct thread *td, struct sys_pread_args*);
 
+struct sys_uname_args {
+  char buf_l_[PADL_(void *)];
+  void *buf;
+  char buf_r_[PADR_(void *)];
+};
+int sys_uname(struct thread *td, struct sys_uname_args *);
+
+struct sys_mkdir_args {
+  char path_l_[PADL_(const char *)];
+  const char *path;
+  char path_r_[PADR_(const char *)];
+  char mode_l_[PADL_(int)];
+  int mode;
+  char mode_r_[PADR_(int)];
+};
+int sys_mkdir(struct thread *td, struct sys_mkdir_args *);
+
+struct sys_rmdir_args {
+  char path_l_[PADL_(const char *)];
+  const char *path;
+  char path_r_[PADR_(const char *)];
+};
+int sys_rmdir(struct thread *td, struct sys_rmdir_args *);
+
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

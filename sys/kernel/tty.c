@@ -52,10 +52,14 @@ int tty_init() {
     if (terms[i].tty_buffer == 0x0)
       kpanic("tty_init: Failed to allocate buffer memory. File: %s, Line: %i\n", __FILE__, __LINE__);
 
-    terms[i].tty_pointer = terms[i].tty_buffer; /* Set up tty pointer to internal buffer */
-    terms[i].tty_x = 0x0; /* Set up default X position             */
-    terms[i].tty_y = 0x0; /* Set up default Y position             */
-    terms[i].tty_colour = 0x0A + i; /* Set up default tty text colour        */
+    terms[i].tty_pointer = terms[i].tty_buffer;
+    terms[i].tty_x      = 0x0;
+    terms[i].tty_y      = 0x0;
+    terms[i].tty_colour = 0x0A + i;
+    terms[i].stdinSize  = 0;
+    terms[i].t_linelen  = 0;
+    terms[i].t_echo     = 1;
+    terms[i].t_raw      = 0;
   }
 
   /* Read tty0 current position (to migrate from kprintf). */

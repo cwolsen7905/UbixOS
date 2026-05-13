@@ -61,10 +61,11 @@ extern uint32_t _multiboot_info;
 #include <ubixos/vitals.h>
 #include <ubixos/syscalls.h>
 #include <pci/lnc.h>
+#include <isa/mouse.h>
 
 typedef int (*intFunctionPTR)(void);
 
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init, pci_init, devfs_init, tty_init, ufs_init, fat_init, initHardDisk, initLNC, net_init };
+intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, mouseInit, time_init, pci_init, devfs_init, tty_init, ufs_init, fat_init, initHardDisk, initLNC, net_init };
 
 //ne2k_init,
 //ubixfs_init,

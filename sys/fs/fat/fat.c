@@ -50,7 +50,6 @@ int media_read(unsigned long sector, unsigned char *buffer, unsigned long sector
 
 int media_write(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
   _mp->device->devInfo->write(_mp->device->devInfo->info, buffer, sector, sector_count);
-
   return 1;
 }
 
@@ -108,10 +107,8 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
     kprintf("SEEK FAILED!");
 
   size = fl_fread(data, size, 1, _file);
-    if (size > 0)
-        fd->offset += size;
     /*
-    else
+    if (size <= 0)
         kprintf("[%s:%i] read_fat(0) FAILED!");
      */
 
@@ -122,13 +119,10 @@ int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
 int write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
-  kprintf("Writing: %i[%i]\n", size, offset);
   // XXX this is not supposed to happen fl_fseek(_file, offset, 0);
 
   if (fl_fwrite(data, 1, size, _file) != size)
     kprintf("ERROR: Write file failed\n");
-
-  kprintf("Wrote: %i\n", size);
 
   /* Return */
   return (size);
@@ -177,9 +171,12 @@ int unlink_fat() {
   return (0);
 }
 
-int mkdir_fat() {
-    kprintf("[%s:%i] mkdir_fat");
-  return (0);
+int mkdir_fat(char *path, void *fd) {
+  return fl_createdirectory(path);
+}
+
+int rmdir_fat(char *path, void *fd) {
+  return fl_remove(path);
 }
 
 int fat_opendir(const char *path, kDIR_t *dir) {
@@ -228,7 +225,7 @@ int fat_init() {
       (void*) open_fat, /* vfsOpenFile */
       (void*) unlink_fat, /* vfsUnlink   */
       (void*) mkdir_fat, /* vfsMakeDir  */
-      NULL, /* vfsRemDir   */
+      (void*) rmdir_fat, /* vfsRemDir   */
       NULL, /* vfsSync     */
       0xFA, /* vfsType     */
       (void*) fat_opendir,  /* vfsOpenDir  */

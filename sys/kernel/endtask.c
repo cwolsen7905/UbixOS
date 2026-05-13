@@ -30,6 +30,7 @@
 
 #include <sys/types.h>
 #include <ubixos/sched.h>
+#include <ubixos/tty.h>
 #include <ubixos/vitals.h>
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
@@ -63,6 +64,11 @@ void endTask(pidType pid)
 	 * counters for shared pages and frees private pages before the
 	 * scheduler switches us away. */
 	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
+
+	/* Return TTY ownership to parent so the shell gets its prompt back. */
+	if (_current->term != NULL && _current->term->owner == _current->id &&
+	    _current->parent != NULL)
+		_current->term->owner = _current->parent->id;
 
 	sched_setStatus(pid, DEAD);
 	sched_yield();

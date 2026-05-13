@@ -30,6 +30,7 @@
 #define _SYS_SYSPROTO_H
 
 #include <sys/thread.h>
+#include <sys/fb.h>
 
 typedef int register_t;
 
@@ -86,12 +87,45 @@ struct sys_sde_args {
   char ptr_r_[PADR_(uint32_t)];
 };
 
+struct sys_getvfscwd_args {
+  char buf_l_[PADL_(char *)];
+  char *buf;
+  char buf_r_[PADR_(char *)];
+  char size_l_[PADL_(uint32_t)];
+  uint32_t size;
+  char size_r_[PADR_(uint32_t)];
+};
+
+struct sys_pidStatus_args {
+  char pid_l_[PADL_(int)];
+  int pid;
+  char pid_r_[PADR_(int)];
+};
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
+int sys_pidStatus(struct thread *, struct sys_pidStatus_args *);
 int sys_mpiCreateMbox(struct thread *, struct sys_mpiCreateMbox_args *);
 int sys_mpiDestroyMbox(struct thread *, struct sys_mpiDestroyMbox_args *);
 int sys_mpiFetchMessage(struct thread *, struct sys_mpiFetchMessage_args *);
 int sys_mpiPostMessage(struct thread *, struct sys_mpiPostMessage_args *);
+int sys_getvfscwd(struct thread *, struct sys_getvfscwd_args *);
+
+struct sys_ttyctrl_args { int cmd; int val; };
+int sys_ttyctrl(struct thread *, struct sys_ttyctrl_args *);
+
+struct sys_mapfb_args { struct fb_info *info; };
+int sys_mapfb(struct thread *, struct sys_mapfb_args *);
+
+struct sys_getmouse_args { struct mouse_event *ev; };
+int sys_getmouse(struct thread *, struct sys_getmouse_args *);
+
+struct sys_shareregion_args {
+    pid_t     dst_pid;
+    void     *vaddr;
+    uint32_t  size;
+    uint32_t *out_vaddr;
+};
+int sys_shareregion(struct thread *, struct sys_shareregion_args *);
 
 #endif

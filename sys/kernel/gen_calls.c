@@ -38,6 +38,9 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <sys/signal.h>
+#include <ubixos/version.h>
+#include <sys/sysproto_posix.h>
+#include <sys/sysproto.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
 #include <vmm/vmm.h>
@@ -143,6 +146,16 @@ int sys_invalid(struct thread *td, void *args) {
     kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
     td->td_retval[0] = -1;
     return (0);
+}
+
+int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args) {
+  kTask_t *task = schedFindTask(args->pid);
+
+  if (task != NULL && task->state != DEAD)
+    td->td_retval[0] = 1;
+  else
+    td->td_retval[0] = 0;
+  return (0);
 }
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
@@ -527,4 +540,36 @@ int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args) {
     }
 
     return (error);
+}
+
+/*
+ * uname(2) — syscall 164.
+ * Fills a userland struct utsname from the version macros in version.h.
+ * The layout must match include/sys/utsname.h (_SYS_NAMELEN = 256).
+ */
+struct _kern_utsname {
+  char sysname[256];
+  char nodename[256];
+  char release[256];
+  char version[256];
+  char machine[256];
+};
+
+int sys_uname(struct thread *td, struct sys_uname_args *args) {
+  struct _kern_utsname *uts = (struct _kern_utsname *)args->buf;
+
+  if (uts == 0x0) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  memset(uts, 0, sizeof(*uts));
+  strncpy(uts->sysname,  "UBIX",                    sizeof(uts->sysname)  - 1);
+  strncpy(uts->nodename, "ubixos",                   sizeof(uts->nodename) - 1);
+  strncpy(uts->release,  UBIXOS_VERSION_RELEASE,     sizeof(uts->release)  - 1);
+  strncpy(uts->version,  UBIXOS_VERSION_STRING,      sizeof(uts->version)  - 1);
+  strncpy(uts->machine,  "i386",                     sizeof(uts->machine)  - 1);
+
+  td->td_retval[0] = 0;
+  return (0);
 }

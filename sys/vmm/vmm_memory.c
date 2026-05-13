@@ -35,8 +35,7 @@
 #include <ubixos/spinlock.h>
 #include <assert.h>
 
-//MrOlsen (2016-01-11) NOTE: Need to Seperate Out CPU Specific Stuff Over Time
-#include <i386/cpu.h>
+#include <machine/cpu.h>
 
 static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
@@ -271,6 +270,12 @@ int freePage(uint32_t pageAddr) {
   /* Find The Page Index To The Memory Map */
   pageIndex = (pageAddr / 4096);
 
+  if (pageIndex < 0 || pageIndex >= numPages) {
+    kprintf("freePage: addr 0x%X out of bounds (index %i numPages %i mmap 0x%X)\n",
+        pageAddr, pageIndex, numPages, (uint32_t)vmmMemoryMap);
+    return (-1);
+  }
+
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
 
@@ -368,19 +373,20 @@ void vmm_freeProcessPages(pidType pid) {
   /* Loop Through Pages To Find Pages Owned By Process */
   for (i = 0; i < numPages; i++) {
     if (vmmMemoryMap[i].pid == pid) {
-      /* Check To See If The cowCounter Is Zero If So We Can Ree It */
       if (vmmMemoryMap[i].cowCounter == 0) {
+        /* Private page (kernel page tables, stack structures, etc.) not
+         * covered by vmm_cleanVirtualSpace — free it directly. */
         vmmMemoryMap[i].status = memAvail;
         vmmMemoryMap[i].cowCounter = 0x0;
         vmmMemoryMap[i].pid = vmmID;
         freePages++;
         systemVitals->freePages = freePages;
       }
-      else {
-        spinUnlock(&vmmSpinLock);
-        adjustCowCounter((i * PAGE_SIZE), -1);
-        spinLock(&vmmSpinLock);
-      }
+      /* cowCounter > 0: vmm_cleanVirtualSpace already decremented this page's
+       * reference count while the dying task was still _current.  Decrementing
+       * again here causes a double-free that corrupts the remaining mapper's
+       * address space (BUG-COW-07).  Skip and let the surviving task's own
+       * cleanup path free the physical page when its count reaches zero. */
     }
   }
 

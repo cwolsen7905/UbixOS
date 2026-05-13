@@ -35,6 +35,7 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <lib/bioscall.h>
+#include <lib/vesa.h>
 #include <sde/sde.h>
 #include <sys/shutdown.h>
 #include <vmm/vmm.h>
@@ -57,6 +58,7 @@ void systemTask() {
     kpanic("Error: Error creating mailbox: system\n");
   }
 
+
   while (1) {
     if (mpi_fetchMessage("system", &myMsg) == 0x0) {
       switch (myMsg.header) {
@@ -76,6 +78,28 @@ void systemTask() {
         case 31337:
           kprintf("system: backdoor opened\n");
           break;
+        case 0x81:
+          if (vesa_init(0x115) == 0) {
+            vesa_map_fb();
+            vesa_draw_test();
+            vesa_draw_circle(400, 300, 150, 0xFFFFFF);
+          }
+          break;
+        case 0x82: {
+          /* display server: init VESA 800x600x32, reply when ready */
+          mpi_message_t reply;
+          int vesa_ok = 0;
+          if (vesa_init(0x118) == 0) {
+            vesa_map_fb();
+            vesa_ok = 1;
+          }
+          reply.header = 0x82;
+          reply.data[0] = vesa_ok ? 1 : 0;
+          reply.data[1] = '\0';
+          if (myMsg.data[0] != '\0')
+            mpi_postMessage(myMsg.data, 0x82, &reply);
+          break;
+        }
         case 0x80:
           if (!strcmp(myMsg.data, "sdeStart")) {
             kprintf("Starting SDE\n");
@@ -108,8 +132,11 @@ void systemTask() {
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
       vmm_freeProcessPages(tmpTask->id);
+      if (tmpTask->kernelStack != 0x0)
+        kfree(tmpTask->kernelStack);
+      else
+        kprintf("systemTask: WARNING: task %i has NULL kernelStack\n", tmpTask->id);
       kfree(tmpTask);
-
     }
 
     if (ogprintOff == 1) {

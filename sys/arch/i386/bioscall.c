@@ -37,55 +37,86 @@
 #include <lib/kprintf.h>
 #include <vmm/paging.h>
 
-void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds) {
-  short segment = 0x0, offset = 0x0;
-  uint32_t tmpAddr = (uint32_t) &bios16Code;
+void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds, struct biosRegs *out) {
   kTask_t *newProcess = 0x0;
 
-  offset = tmpAddr & 0xF;  // lower 4 bits
-  segment = tmpAddr >> 4;
+  /*
+   * QEMU's VGA BIOS leaves a 0x25 "mode-set-in-progress" marker at
+   * physical 0xC01A4 after its own initialization.  The Bochs stdvga
+   * GetModeInfo sub-routine spins waiting for this byte to become 0.
+   * Clear it before every BIOS call so the BIOS doesn't loop forever.
+   */
+  *(volatile uint8_t *)0xC01A4 = 0x0;
+
+  /*
+   * Build a per-call 7-byte 16-bit stub at physical 0x600 (free conventional
+   * memory above the BDA).  bios16code.S has int $0x10 hardcoded; using a RAM
+   * stub lets us issue any INT number without patching kernel text.
+   *   CD <n>   — INT biosInt   (triggers GPF → __gpf emulates via IVT)
+   *   CD 69    — INT 0x69      (completion signal → __gpf sets task DEAD)
+   *   F4       — HLT           (idle while waiting to be reaped)
+   *   EB FD    — JMP -3        (loop back to HLT)
+   */
+  {
+    volatile uint8_t *stub = (volatile uint8_t *)0x600;
+    stub[0] = 0xCD;
+    stub[1] = (uint8_t)(biosInt & 0xFF);
+    stub[2] = 0xCD;
+    stub[3] = 0x69;
+    stub[4] = 0xF4;
+    stub[5] = 0xEB;
+    stub[6] = 0xFD;
+  }
 
   newProcess = schedNewTask();
   assert(newProcess);
 
-  newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = (uint32_t) vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4); // XXX I had 0xDEADBEEF I'm not sure why
-  newProcess->tss.ss0 = 0x10;
-  newProcess->tss.esp1 = 0x0;
-  newProcess->tss.ss1 = 0x0;
-  newProcess->tss.esp2 = 0x0;
-  newProcess->tss.ss2 = 0x0;
-  newProcess->tss.cr3 = (uint32_t)kernelPageDirectory; //vmm_createVirtualSpace(newProcess->id);
-  newProcess->tss.eip = offset & 0xFFFF;
-  newProcess->tss.eflags = 2 | EFLAG_IF | EFLAG_VM;
-  newProcess->tss.eax = eax & 0xFFFF;
-  newProcess->tss.ebx = ebx & 0xFFFF;
-  newProcess->tss.ecx = ecx & 0xFFFF;
-  newProcess->tss.edx = edx & 0xFFFF;
-  newProcess->tss.esp = 0x1000 & 0xFFFF;
-  newProcess->tss.ebp = 0x1000 & 0xFFFF;
-  newProcess->tss.esi = esi & 0xFFFF;
-  newProcess->tss.edi = edi & 0xFFFF;
-  newProcess->tss.es = es & 0xFFFF;
-  newProcess->tss.cs = segment & 0xFFFF;
-  newProcess->tss.ss = 0x1000 & 0xFFFF;
-  newProcess->tss.ds = ds & 0xFFFF;
-  newProcess->tss.fs = 0x0 & 0xFFFF;
-  newProcess->tss.gs = 0x0 & 0xFFFF;
-  newProcess->tss.ldt = 0x0 & 0xFFFF;
-  newProcess->tss.trace_bitmap = 0x0 & 0xFFFF;
-  newProcess->tss.io_map = 0x0 & 0xFFFF;
-  newProcess->tss.io_map = sizeof(struct tssStruct) - 8192;
+  newProcess->md.md_tss.back_link = 0x0;
+  newProcess->md.md_tss.esp0 = (uint32_t) vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4);
+  newProcess->md.md_tss.ss0 = 0x10;
+  newProcess->md.md_tss.esp1 = 0x0;
+  newProcess->md.md_tss.ss1 = 0x0;
+  newProcess->md.md_tss.esp2 = 0x0;
+  newProcess->md.md_tss.ss2 = 0x0;
+  newProcess->md.md_tss.cr3 = (uint32_t)kernelPageDirectory;
+  newProcess->md.md_tss.eip = 0x0000;        /* offset within stub paragraph */
+  newProcess->md.md_tss.eflags = 2 | EFLAG_IF | EFLAG_VM;
+  newProcess->md.md_tss.eax = eax & 0xFFFF;
+  newProcess->md.md_tss.ebx = ebx & 0xFFFF;
+  newProcess->md.md_tss.ecx = ecx & 0xFFFF;
+  newProcess->md.md_tss.edx = edx & 0xFFFF;
+  newProcess->md.md_tss.esp = 0x1000 & 0xFFFF;
+  newProcess->md.md_tss.ebp = 0x1000 & 0xFFFF;
+  newProcess->md.md_tss.esi = esi & 0xFFFF;
+  newProcess->md.md_tss.edi = edi & 0xFFFF;
+  newProcess->md.md_tss.es = es & 0xFFFF;
+  newProcess->md.md_tss.cs = 0x0060;         /* physical 0x600 = seg 0x60 * 16 */
+  newProcess->md.md_tss.ss = 0x1000 & 0xFFFF;
+  newProcess->md.md_tss.ds = ds & 0xFFFF;
+  newProcess->md.md_tss.fs = 0x0;
+  newProcess->md.md_tss.gs = 0x0;
+  newProcess->md.md_tss.ldt = 0x0;
+  newProcess->md.md_tss.trace_bitmap = 0x0;
+  newProcess->md.md_tss.io_map = sizeof(struct tssStruct) - 8192;
   newProcess->oInfo.v86Task = 0x1;
 
-  kprintf("EIP: [0x%X] 0x%X:0x%X", tmpAddr, newProcess->tss.eip, newProcess->tss.cs);
-
   newProcess->state = READY;
+
   while (newProcess->state > 0)
     sched_yield();
 
-  kprintf("EIP: [0x%X] 0x%X:0x%X!", tmpAddr, newProcess->tss.eip, newProcess->tss.cs);
-  kprintf("CALL DONE: %i 0x%X 0x%X!", newProcess->state, newProcess->tss.esp, newProcess->tss.ss);
+  if (out) {
+    out->ax = newProcess->md.md_tss.eax & 0xFFFF;
+    out->bx = newProcess->md.md_tss.ebx & 0xFFFF;
+    out->cx = newProcess->md.md_tss.ecx & 0xFFFF;
+    out->dx = newProcess->md.md_tss.edx & 0xFFFF;
+    out->si = newProcess->md.md_tss.esi & 0xFFFF;
+    out->di = newProcess->md.md_tss.edi & 0xFFFF;
+    out->es = newProcess->md.md_tss.es & 0xFFFF;
+    out->ds = newProcess->md.md_tss.ds & 0xFFFF;
+  }
+}
 
-  return;
+void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds) {
+  biosCallEx(biosInt, eax, ebx, ecx, edx, esi, edi, es, ds, 0x0);
 }

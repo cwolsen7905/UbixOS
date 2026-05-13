@@ -19,8 +19,8 @@
 set -e
 
 IMG="${1:-ubixos.img}"
-IMG_SIZE_MB=256
-KERNEL="sys/compile/kernel"
+IMG_SIZE_MB=512
+KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"
 GRUB_LIB="/opt/homebrew/Cellar/i686-elf-grub/2.12/lib/i686-elf/grub/i386-pc"
@@ -161,6 +161,14 @@ mmd -i "$IMG"@@1M ::/etc
 [ -f tools/userdb ] && mcopy -i "$IMG"@@1M tools/userdb ::/etc/userdb
 [ -f tools/fstab  ] && mcopy -i "$IMG"@@1M tools/fstab  ::/etc/fstab
 [ -f tools/motd   ] && mcopy -i "$IMG"@@1M tools/motd   ::/etc/motd
+
+echo "==> Installing assets (var/)"
+mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
+mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
+[ -f sys/sde/assets/ubix.bmp ] && mcopy -i "$IMG"@@1M sys/sde/assets/ubix.bmp ::/var/background/ubix.bmp
+mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true
+for f in tools/*.DPF; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/var/fonts/; done
+[ -f lib/objgfx40/BOLD.DPF ] && mcopy -i "$IMG"@@1M lib/objgfx40/BOLD.DPF ::/var/fonts/
 
 echo ""
 echo "Done: $IMG"

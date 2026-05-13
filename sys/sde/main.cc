@@ -37,6 +37,7 @@ extern "C" {
 #include <ubixos/exec.h>
 #include <vmm/vmm.h>
 #include <lib/kmalloc.h>
+#include <mpi/mpi.h>
 }
 
 #include <sde/sde.h>
@@ -76,6 +77,8 @@ void sdeThread() {
 
   screen->ogSetAntiAliasing(false);
 
+  mpi_createMbox("sde");
+
   execThread(&sdeTestThread, 0x2000, 0x0);
 
   //ogSurface::RawLine(100, 100, 200, 200, 0xDEADBEEF)
@@ -88,8 +91,8 @@ void sdeThread() {
     for (tmp = windows; tmp; tmp = tmp->next) {
       switch (tmp->status) {
         case registerWindow:
-          kprintf("buf->buffer 0x%X, buf->bSize: 0x%X", buf->buffer, buf->bSize);
           buf = (ogSurface *) tmp->buf;
+          kprintf("sde: registerWindow pid=%d buf=0x%X bSize=0x%X\n", tmp->pid, buf->buffer, buf->bSize);
           buf->buffer = (void *) vmm_mapFromTask(tmp->pid, buf->buffer, buf->bSize);
           if (buf->buffer == 0x0) {
             kprintf("Error: buf->buffer\n");

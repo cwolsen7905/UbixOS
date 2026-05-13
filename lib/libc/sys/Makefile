@@ -1,34 +1,10 @@
-# $Id: Makefile 148 2016-01-18 19:34:32Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+# (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-#Objects
-OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o open.o dup2.o close.o setjmp.o
+INCLUDES += -I../include
 
-#Output
-OUTPUT = sys.so
+OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o open.o dup2.o close.o setjmp.o uname.o sysctl.o read.o write.o stat.o wait.o exit.o access.o unlink.o lseek.o ioctl.o termios.o isatty.o
 
-$(OUTPUT): $(OBJS)
-
-# Compile the source files
-.cc.o:
-	$(CXX) ${CFLAGS} -Wall -nostdinc -O -I../include -c -o $@ $<
- 
-.cc.s:
-	$(CXX) ${CFLAGS} -Wall -nostdinc -O -I../include -S -o $@ $<
- 
-.c.o:
-	$(CC) ${CFLAGS} -Wall -nostdinc -O -I../include -I../../../include -c $<
-
-.c.s:
-	$(CC) ${CFLAGS} -Wall -nostdinc -O -I../include -S -o $@ $<
- 
-.S.o:
-	$(CC) ${CFLAGS} -Wall -nostdinc -c -o $@ $<
- 
-# Clean up the junk
-clean:
-	$(REMOVE) $(OBJS) $(OUTPUT)
+.include "${UBIX_MK}/ubix.sublib.mk"

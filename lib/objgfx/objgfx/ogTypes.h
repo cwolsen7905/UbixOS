@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <map>
+#include <sys/types.h>
 
 #define ogVERSION 1.0
 

@@ -1,34 +1,10 @@
-# $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+# (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-#Objects
-OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fgetc.o sprintf.o gets.o fclose.o
+INCLUDES += -I../include
 
-#Output
-OUTPUT = libc.so
+OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fdopen.o fgetc.o sprintf.o snprintf.o gets.o fclose.o fgets.o perror.o
 
-$(OUTPUT): $(OBJS)
-
-# Compile the source files
-.cc.o:
-	$(CXX) $(CFLAGS) -Wall -nostdlib -O -I../include -c -o $@ $<
- 
-.cc.s:
-	$(CXX) $(CFLAGS) -Wall -nostdlib -O -I../include -S -o $@ $<
- 
-.c.o:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O -I../include -I../../../include -c $<
-
-.c.s:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O -I../include -S -o $@ $<
- 
-.S.o:
-	$(CC) $(CFLAGS) -Wall -nostdlib -c -o $@ $<
- 
-# Clean up the junk
-clean:
-	$(REMOVE) $(OBJS) $(OUTPUT)
+.include "${UBIX_MK}/ubix.sublib.mk"

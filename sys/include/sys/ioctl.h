@@ -50,5 +50,21 @@ struct winsize {
     unsigned short ws_ypixel; /* vertical size, pixels */
 };
 
-#define       TIOCGETA        _IOR('t', 19, struct termios) /* get termios struct */
-#define       TIOCGWINSZ      _IOR('t', 104, struct winsize)  /* get window size */
+#define TIOCGETA        _IOR('t', 19, struct termios)  /* get termios struct */
+#define TIOCSETA        _IOW('t', 20, struct termios)  /* set termios struct */
+#define TIOCSETAW       _IOW('t', 21, struct termios)  /* drain, then set */
+#define TIOCSETAF       _IOW('t', 22, struct termios)  /* flush, then set */
+#define TIOCGWINSZ      _IOR('t', 104, struct winsize) /* get window size */
+#define TIOCSWINSZ      _IOW('t', 103, struct winsize) /* set window size */
+
+/* c_lflag bits */
+#define ECHOKE          0x00000001
+#define ECHOE           0x00000002
+#define ECHOK           0x00000004
+#define ECHO            0x00000008
+#define ECHONL          0x00000010
+#define ECHOPRT         0x00000020
+#define ECHOCTL         0x00000040
+#define ISIG            0x00000080
+#define ICANON          0x00000100
+#define IEXTEN          0x00000400

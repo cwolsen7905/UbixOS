@@ -1,14 +1,35 @@
-#include <map>
-#include <functional>
-#include <iostream>
-#include <fstream>
+extern "C" {
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+}
 
 #include "ogTypes.h"
 #include "ogEdgeTable.h"
 #include "ogPixCon.h"
 #include "ogPixelFmt.h"
 #include "objgfx.h"
+
+static uInt32 _gpNull(void *)            { return 0; }
+static void   _spNull(void *, uInt32)    {}
+static uInt32 _gp8(void *p)             { return *(uInt8 *)p; }
+static void   _sp8(void *p, uInt32 c)   { *(uInt8 *)p  = (uInt8)c; }
+static uInt32 _gp16(void *p)            { return *(uInt16 *)p; }
+static void   _sp16(void *p, uInt32 c)  { *(uInt16 *)p = (uInt16)c; }
+static uInt32 _gp24(void *p) {
+    uInt32 colour = 0;
+    uInt8 *src  = (uInt8 *)p, *dest = (uInt8 *)&colour;
+    *dest++ = *src++; *dest++ = *src++; *dest++ = *src++;
+    return colour;
+}
+static void _sp24(void *p, uInt32 colour) {
+    uInt8 *src  = (uInt8 *)&colour, *dest = (uInt8 *)p;
+    *dest++ = *src++; *dest++ = *src++; *dest++ = *src++;
+}
+static uInt32 _gp32(void *p)            { return *(uInt32 *)p; }
+static void   _sp32(void *p, uInt32 c)  { *(uInt32 *)p = c; }
 
 const static ogRGBA8 DEFAULT_PALETTE[256] =
 	{{0,   0,   0,   255},       // 0
@@ -335,8 +356,8 @@ ogSurface::ogSurface(void)
 
 	// Set these function pointers to do nothing (but not crash)
 	// in case somebody actually calls them.
-	setPixel = ([] (void * ptr, uint32_t p) -> void { });
-	getPixel = ([] (void * ptr) -> uint32_t { return 0; });
+	setPixel = _spNull;
+	getPixel = _gpNull;
 } // ogSurface::ogSurface()
 
 
@@ -1338,16 +1359,8 @@ void ogSurface::ogCopy(ogSurface& src)
 	uInt8  r, g, b, a;
 	void * srcPtr;
 
-std::cout << "ogCopy" << std::endl;
-
-	if (!ogAvail()) {
-std::cout << "ogAvail" << std::endl;
-          return;
-        }
-	if (!src.ogAvail()) {
-std::cout << "src.ogAvail" << std::endl;
-         return;
-        }
+	if (!ogAvail()) return;
+	if (!src.ogAvail()) return;
 
 	xCount = src.maxX+1;
 	if (xCount > maxX+1) xCount = maxX+1;
@@ -1654,37 +1667,17 @@ bool ogSurface::ogCreate(uint32_t _xRes, uInt32 _yRes, ogPixelFmt _pixFormat)
 
 	switch (_pixFormat.BPP) {
 	case 8:
-		getPixel = ([] (void * ptr) mutable -> uint32_t {	return *(reinterpret_cast<uInt8*>(ptr)); });
-		setPixel = ([] (void * ptr, uint32_t colour) -> void { *(reinterpret_cast<uInt8*>(ptr)) = colour; });
+		getPixel = _gp8;  setPixel = _sp8;
 		break;
 	case 15:
 	case 16:
-		getPixel = ([] (void * ptr) mutable -> uint32_t { return *(reinterpret_cast<uInt16*>(ptr)); });
-		setPixel = ([] (void * ptr, uint32_t colour) -> void { *(reinterpret_cast<uInt16*>(ptr)) = colour; });
+		getPixel = _gp16; setPixel = _sp16;
 		break;
 	case 24:
-		getPixel = ([] (void * ptr) -> uint32_t { 
-			uint32_t colour = 0;
-			uInt8* src = reinterpret_cast<uInt8*>(ptr);
-			uInt8* dest = reinterpret_cast<uInt8*>(&colour);
-			// This may break depending on endian-ness. TODO: Requires testing.
-			*dest++ = *src++;
-			*dest++ = *src++;
-			*dest++ = *src++;
-			return colour;
-		}); //  getPixel() 24bpp lambda
-		setPixel = ([] (void * ptr, uint32_t colour) -> void { 
-			uInt8* src = reinterpret_cast<uInt8*>(&colour);
-			uInt8* dest = reinterpret_cast<uInt8*>(ptr);
-			// This may break depending on endian-ness. TODO: Requires testing.
-			*dest++ = *src++;
-			*dest++ = *src++;
-			*dest++ = *src++;
-		}); // setPixel() 24bpp lambda
+		getPixel = _gp24; setPixel = _sp24;
 		break;
 	case 32:
-		getPixel = ([] (void * ptr) -> uint32_t { return *(reinterpret_cast<uInt32*>(ptr)); });
-		setPixel = ([] (void * ptr, uint32_t colour)  -> void { *(reinterpret_cast<uInt32*>(ptr)) = colour; });
+		getPixel = _gp32; setPixel = _sp32;
 		break;
 	default:
 		ogSetLastError(ogBadBPP);
@@ -2025,7 +2018,7 @@ uint32_t ogSurface::ogGetColorCount()
 		} // for x
 	} // for y
 
-	for (size_t index = 0; index < std::extent<decltype(colourCounter)>::value; index++)
+	for (size_t index = 0; index < sizeof(colourCounter)/sizeof(colourCounter[0]); index++)
 	{
 		if (colourCounter[index] != 0) colourCount++;
 	} // for index
@@ -2196,35 +2189,22 @@ bool ogSurface::ogLoadPalette(const char *palfile)
 	ogGetPalette(oldPalette);
 	// memcpy(&oldPalette, pal, sizeof(ogRGBA8)*256);
 
-	std::ifstream file;
-	file.open(palfile, std::ios::in | std::ios::binary);
-
-	if (!file) 
+	FILE *file = fopen(palfile, "rb");
+	if (!file)
 	{
 		ogSetLastError(ogFileNotFound);
 		return false;
-	} // if !file
-
-	size_t index = 0;
-	while (index < sizeof(pal) / sizeof(pal[0])) 
-	{
-		if (!(file >> pal[index].red)) break;
-		if (!(file >> pal[index].green)) break;
-		if (!(file >> pal[index].blue)) break;
-		if (!(file >> pal[index].alpha)) break;
-		index++;
 	}
-	//lresult = fread(pal, sizeof(ogRGBA8), 256, f);
-	result = (index == 256);
 
-	if (!result) 
+	result = (fread(pal, sizeof(ogRGBA8), 256, file) == 256);
+
+	if (!result)
 	{
 		ogSetLastError(ogFileReadError);
 		ogSetPalette(oldPalette);
-		// memcpy(pal, &oldPalette, sizeof(ogRGBA8)*256);
-	} // if
+	}
 
-	file.close();
+	fclose(file);
 	return result;
 } // bool ogSurface::ogLoadPalette()
 

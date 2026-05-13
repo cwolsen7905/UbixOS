@@ -738,6 +738,13 @@ void* fl_fopen(const char *path, const char *mode) {
       if (flags & (FILE_WRITE | FILE_APPEND))
         file = _open_file(path);
 
+  // "w"/"w+" mode: FILE_ERASE means truncate — reset length so writes start fresh
+  if (file && (flags & FILE_ERASE) && !(flags & FILE_READ)) {
+    file->filelength = 0;
+    file->bytenum = 0;
+    file->filelength_changed = 1;
+  }
+
   if (file)
     file->flags = flags;
 

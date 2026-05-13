@@ -1,6 +1,6 @@
 # UbixOS
 
-**Build:** 1.1-CURRENT &nbsp;|&nbsp; **Architecture:** i386 (x86 32-bit) &nbsp;|&nbsp; **License:** BSD 3-Clause
+**Version:** 2.0.0-BETA &nbsp;|&nbsp; **Architecture:** i386 (x86 32-bit) &nbsp;|&nbsp; **License:** BSD 3-Clause
 
 UbixOS is a hobby/research operating system for the x86 platform, developed from scratch since 2002. It implements a monolithic kernel with a modular subsystem layout, a FreeBSD-derived POSIX userland, and its own native filesystem (UbixFS).
 
@@ -22,13 +22,12 @@ UbixOS is a hobby/research operating system for the x86 platform, developed from
 ## Quick Start
 
 ```sh
-make            # Build kernel + world, then install
-make kernel     # Build kernel only
-make world      # Build userland only
-make install    # Install kernel + world to /ubixos and /ubixos_fat
+bmake           # Build kernel + world
+bmake image     # Build bootable disk image (ubixos.img)
+bmake run       # Launch in QEMU
 ```
 
-See [BUILDING.md](BUILDING.md) for full toolchain requirements and VirtualBox VM setup.
+See [BUILDING.md](BUILDING.md) for full toolchain requirements and platform-specific setup.
 
 ---
 
@@ -45,7 +44,7 @@ See [BUILDING.md](BUILDING.md) for full toolchain requirements and VirtualBox VM
 | `etc/` | System configuration files |
 | `share/` | Shared data files |
 | `tools/` | Build and installation utilities |
-| `doc/` | Documentation and Doxygen output |
+| `docs/` | Architecture, design, and driver documentation |
 | `build/` | Compiled object output (generated) |
 | `debug/` | Debugging utilities and test code |
 
@@ -58,16 +57,14 @@ For a detailed breakdown of kernel internals, see [ARCHITECTURE.md](ARCHITECTURE
 | Document | Description |
 |----------|-------------|
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Kernel subsystems, memory layout, boot sequence |
-| [BUILDING.md](BUILDING.md) | Toolchain setup, build steps, VM workflow |
-| [doc/vmm.txt](doc/vmm.txt) | Virtual memory manager internals |
-| [doc/sample_driver.c](doc/sample_driver.c) | Example device driver skeleton |
-| [COPYRIGHT](COPYRIGHT) | License terms |
+| [BUILDING.md](BUILDING.md) | Toolchain setup, build steps, QEMU and VirtualBox |
+| [SYSCALLS.md](SYSCALLS.md) | Syscall tables, ABI, and how to add a new syscall |
+| [DEBUG.md](DEBUG.md) | Debug defines, serial output, GDB |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Conventions, PR workflow, doc-sync rules |
+| [docs/](docs/README.md) | Architecture deep-dives, design specs, driver guide |
 
 ---
 
 ## Contributing
 
-1. Fork the repository and create a feature branch.
-2. Build and test in the VirtualBox development VM (see [BUILDING.md](BUILDING.md)).
-3. Ensure the kernel and world build cleanly before pushing (`make; sync`).
-4. Submit a pull request with a clear description of what changed and why.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for conventions, code style, and the doc-sync rules that keep documentation current with the source.

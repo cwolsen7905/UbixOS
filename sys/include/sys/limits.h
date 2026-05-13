@@ -29,7 +29,7 @@
 #ifndef _SYS_LIMITS_H
 #define _SYS_LIMITS_H
 
-#include <i386/limits.h>
+#include <machine/limits.h>
 
 #define       LONG_BIT        __LONG_BIT
 

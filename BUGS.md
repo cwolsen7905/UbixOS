@@ -49,6 +49,7 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 | ~~BUG-COW-04~~ | [sys/vmm/copyvirtualspace.c](sys/vmm/copyvirtualspace.c) | **FIXED** Inner page-table loop in the user-space COW region used `PD_ENTRIES` instead of `PT_ENTRIES` as the bound. Both are 1024 (same value) so no runtime effect, but semantically wrong. Changed to `PT_ENTRIES`. |
 | ~~BUG-COW-06~~ | [sys/vmm/paging.c](sys/vmm/paging.c) | **FIXED** `vmm_cleanVirtualSpace`: the `else` branch for non-COW present pages zeroed the PTE without calling `freePage()` — the physical page was never returned to the free pool, leaking one page per mapped non-COW page every time a process called `exec`. Replaced the commented-out open-coded free block with `freePage(pageTableSrc[y] & 0xFFFFF000)`. |
 | ~~BUG-COW-05~~ | [sys/vmm/page_fault.S](sys/vmm/page_fault.S) | **FIXED** `_vmm_pageFault`: after `call trap` returned, the stub used `call _popFS` to reach the cleanup path. `call` pushes a return address on the stack, shifting the entire `pop %gs/%fs/%es/%ds; popa` sequence off by one slot — GS and FS got kernel code/stack addresses, and all general-purpose registers were misassigned. Before BUG-COW-01 (making COW pages read-only) this path was dead: `trap()` never returned normally from a COW fault. Once COW faults became real, every write to a shared page corrupted the returning task's register state. Fixed by replacing `call _popFS` with `add $0x4,%esp; jmp _popFS` to discard the frame-pointer argument without pushing an extra word. |
+| ~~BUG-COW-07~~ | [sys/vmm/vmm_memory.c](sys/vmm/vmm_memory.c) | **FIXED** `vmm_freeProcessPages`: double-decrement of COW counters caused crash on next fork after any process that daemonized via `fork()`+`exit()`. `endTask` calls `vmm_cleanVirtualSpace` (correctly decrements COW counters from the dying task's page tables while it is still `_current`), but `vmm_freeProcessPages` in `systemTask` then found those same pages by `pid` scan and decremented again — driving counters negative and freeing physical pages that surviving tasks (e.g., the daemon child) still mapped. Removed the `adjustCowCounter(-1)` call from the `cowCounter > 0` branch; those pages are left for the remaining mapper to free via its own `vmm_cleanVirtualSpace` on exit. |
 
 ---
 
@@ -128,3 +129,24 @@ Known bugs in UbixOS. See [TODO.md](TODO.md) for improvements and enhancements.
 | ~~BUG-KRN-11~~ | [sys/kernel/gen_calls.c](sys/kernel/gen_calls.c) | **FIXED** `sys_setpgid`: changed `schedFindTask(pid)` to `schedFindTask(args->pid)` so the correct process is looked up. |
 | ~~BUG-KRN-12~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** COW/data-segment fault: `vmm_findFreePage` result is now checked for NULL; kills the task cleanly on OOM instead of mapping zero page writable. |
 | ~~BUG-KRN-13~~ | [sys/vmm/pagefault.c](sys/vmm/pagefault.c) | **FIXED** `pageFaultSpinLock` now released before all `kpanic` calls (null address path and permission-fault path). |
+
+---
+
+## MPI (identified 2026-05-11)
+
+### Crashes
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-MPI-01~~ | [sys/mpi/system.c:248](sys/mpi/system.c) | **FIXED** `mpi_destroyMbox`: unconditional `mbox->prev->next` and `mbox->next->prev` — NULL dereference when mailbox is at the head or tail of the list. Added NULL checks; updates `mboxList` head when removing the first entry. |
+| ~~BUG-MPI-02~~ | [sys/mpi/system.c:79](sys/mpi/system.c) | **FIXED** `mpi_createMbox`: `mbox->msgLast` never initialized after `kmalloc`. Second post dereferences uninitialized pointer. Now explicitly sets `mbox->msg = mbox->msgLast = 0x0` after allocation. |
+| ~~BUG-MPI-03~~ | [sys/mpi/system.c:165](sys/mpi/system.c) | **FIXED** `mpi_postMessage` and `mpi_spam`: empty-queue append set `mbox->msg` but not `mbox->msgLast`. Both now set in the empty-queue branch. |
+| ~~BUG-MPI-04~~ | [sys/mpi/system.c:220](sys/mpi/system.c) | **FIXED** `mpi_fetchMessage`: `msgLast` not cleared when queue drains. Added `if (mbox->msg == 0x0) mbox->msgLast = 0x0` after dequeue. |
+
+### Correctness
+
+| ID | File | Description |
+|----|------|-------------|
+| ~~BUG-MPI-05~~ | [sys/mpi/system.c:81](sys/mpi/system.c) | **FIXED** `mpi_createMbox`: `sprintf(mbox->name, name)` with no bounds check. Replaced with `strncpy(..., sizeof(mbox->name) - 1)` and explicit NUL terminator. |
+| ~~BUG-MPI-06~~ | [sys/mpi/system.c:175](sys/mpi/system.c) | **FIXED** `mpi_postMessage` type `0x2` synchronous wait: changed spin condition from `mbox->msgLast != 0x0` (never cleared, infinite spin) to `mbox->msg != 0x0` (cleared by fetchMessage), and added `sched_yield()` inside the loop. |
+| ~~BUG-MPI-07~~ | [sys/mpi/system.c:79,158,117](sys/mpi/system.c) | **FIXED** `mpi_createMbox`, `mpi_postMessage`, `mpi_spam`: `kmalloc` return unchecked. All three paths now NULL-check and return an error (or `continue` in the spam loop) on allocation failure. |

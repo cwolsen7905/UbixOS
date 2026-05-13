@@ -27,6 +27,8 @@
  */
 
 #include <ubixos/sched.h>
+#include <sys/sysproto_posix.h>
+#include <sys/sysproto.h>
 #include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
@@ -41,6 +43,8 @@
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
+
+void sysMkDir(const char *path);
 
 fileDescriptor_t *fdTable = 0x0;
 
@@ -117,8 +121,35 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args) {
     }
 }
 
-void sysRmDir() {
-    return;
+void sysRmDir(const char *path) {
+  char fullpath[1024];
+
+  if (strstr(path, ":") == 0x0)
+    sprintf(fullpath, "%s%s", _current->oInfo.cwd, path);
+  else
+    strncpy(fullpath, path, sizeof(fullpath) - 1);
+
+  fl_remove(fullpath);
+}
+
+int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {
+  if (args->path == 0x0) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  sysMkDir(args->path);
+  td->td_retval[0] = 0;
+  return (0);
+}
+
+int sys_rmdir(struct thread *td, struct sys_rmdir_args *args) {
+  if (args->path == 0x0) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  sysRmDir(args->path);
+  td->td_retval[0] = 0;
+  return (0);
 }
 
 int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
@@ -150,9 +181,9 @@ int sys_fseek(struct thread *td, struct sys_fseek_args *args) {
 }
 
 int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
-    int error = 0;
     struct file *fdd = 0x0;
     fileDescriptor_t *fd = 0x0;
+    off_t newpos = 0;
 
     getfd(td, &fdd, args->fd);
 
@@ -163,28 +194,29 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
 
     fd = fdd->fd;
 
-    //kprintf("loffset(%i): %i:%i, whence: %i", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFFFF, args->whence);
-    //kprintf("loffset(%i): %qd, whence: %i", sizeof(off_t), args->offset, args->whence);
-
     switch (args->whence) {
         case SEEK_SET:
             fd->offset = args->offset;
-            td->td_retval[0] = fd->offset & 0xFFFFFFFF;
-            td->td_retval[1] = fd->offset >> 32;
             break;
         case SEEK_CUR:
             fd->offset += args->offset;
-            td->td_retval[0] = fd->offset & 0xFFFFFFFF;
-            td->td_retval[1] = fd->offset >> 32;
+            break;
+        case SEEK_END:
+            fd->offset = (off_t)fd->size + args->offset;
             break;
         default:
-            kprintf("seek-whence: %iqd", args->whence);
-            break;
+            kprintf("lseek: unknown whence %d\n", args->whence);
+            td->td_retval[0] = -1;
+            return (-1);
     }
 
-    // kprintf("loff: %qd:%s", fd->offset, ((FL_FILE*) fd->res)->filename);
+    if (fd->offset < 0)
+        fd->offset = 0;
 
-    return (error);
+    newpos = fd->offset;
+    td->td_retval[0] = (int32_t)(newpos & 0xFFFFFFFF);
+    td->td_retval[1] = (int32_t)(newpos >> 32);
+    return (0);
 }
 
 int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
@@ -194,9 +226,19 @@ int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
 
     /* Build the candidate path without touching cwd yet */
     if (strstr(args->path, ":") != 0x0) {
+        /* mountpoint-qualified: use as-is (e.g. "sys:/bin") */
         snprintf(newcwd, sizeof(newcwd), "%s", args->path);
     } else if (args->path[0] == '/') {
-        snprintf(newcwd, sizeof(newcwd), "%s", args->path);
+        /* bare absolute path: preserve current mountpoint prefix */
+        char *p = _current->oInfo.cwd;
+        while (*p && *p != ':')
+            p++;
+        if (*p == ':') {
+            int pfxlen = (int)(p - _current->oInfo.cwd) + 1;
+            snprintf(newcwd, sizeof(newcwd), "%.*s%s", pfxlen, _current->oInfo.cwd, args->path);
+        } else {
+            snprintf(newcwd, sizeof(newcwd), "%s", args->path);
+        }
     } else {
         snprintf(newcwd, sizeof(newcwd), "%s%s", _current->oInfo.cwd, args->path);
     }
@@ -256,6 +298,18 @@ int sysUnlink(const char *path, int *retVal) {
     return (*retVal);
 }
 
+int sys_ttyctrl(struct thread *td, struct sys_ttyctrl_args *args) {
+    tty_term *t = _current->term;
+    if (t == NULL) { td->td_retval[0] = -1; return (-1); }
+    switch (args->cmd) {
+        case TTY_SETRAW:  t->t_raw  = args->val ? 1 : 0; break;
+        case TTY_SETECHO: t->t_echo = args->val ? 1 : 0; break;
+        default: td->td_retval[0] = -1; return (-1);
+    }
+    td->td_retval[0] = 0;
+    return (0);
+}
+
 /************************************************************************
 
  Function: void sysFopen();
@@ -306,9 +360,6 @@ int sys_fread(struct thread *td, struct sys_fread_args *args) {
 
  ************************************************************************/
 int sys_fclose(struct thread *td, struct sys_fclose_args *args) {
-    if (args->FILE == NULL) {
-        return (-1);
-    }
     if (args->FILE == NULL) {
         return (-1);
     }
@@ -409,17 +460,14 @@ int fputc(int ch, fileDescriptor_t *fd) {
 
  ************************************************************************/
 int fgetc(fileDescriptor_t *fd) {
-    int ch = 0x0;
-    kprintf("[%s:%i]", __FILE__, __LINE__);
-    /* If Found Return Next Char */
+    unsigned char ch = 0x0;
     if (fd != 0x0) {
-        fd->mp->fs->vfsRead(fd, (char*) &ch, fd->offset, 1);
+        if (fd->mp->fs->vfsRead(fd, (char *) &ch, fd->offset, 1) == 0)
+            return (-1); /* EOF */
         fd->offset++;
-        return (ch);
+        return (int) ch;
     }
-
-    /* Return NULL If FD Is Not Found */
-    return (0x0);
+    return (-1);
 }
 
 /************************************************************************

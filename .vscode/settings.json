@@ -4,6 +4,16 @@
   "C_Cpp.formatting": "clangFormat",
   "C_Cpp.clangFormatStyle": "file",
   "C_Cpp.clangFormatFallbackStyle": "none",
+  "C_Cpp.configurationSelector": [
+    {
+      "path": "${workspaceFolder}/sys/**",
+      "configuration": "Kernel (i386 bare-metal)"
+    },
+    {
+      "path": "${workspaceFolder}/**",
+      "configuration": "World (userland)"
+    }
+  ],
   "[c]": {
     "editor.formatOnSave": true
   },

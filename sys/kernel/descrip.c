@@ -135,6 +135,8 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 }
 
 #include <sys/ioctl.h>
+#include <ubixos/sched.h>
+#include <ubixos/tty.h>
 
 /**
  * @brief   This destroys a thread local file descriptor.
@@ -240,59 +242,85 @@ int getfd(struct thread *td, struct file **fp, int fd) {
 }
 
 int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
+    tty_term *term = _current->term;
+
     switch (args->com) {
         case TIOCGETA:
-            if (args->fd == 0 || args->fd == 1) {
-                struct termios *t = (struct termios*) args->data;
+            if ((args->fd == 0 || args->fd == 1 || args->fd == 2) && term != NULL) {
+                struct termios *t = (struct termios *)args->data;
 
                 t->c_iflag = 0x2B02;
                 t->c_oflag = 0x3;
                 t->c_cflag = 0x4B00;
-                t->c_lflag = 0x5CB;
 
-                t->c_cc[0] = 4;
-                t->c_cc[1] = 255;
-                t->c_cc[2] = 255;
-                t->c_cc[3] = 127;
-                t->c_cc[4] = 23;
-                t->c_cc[5] = 21;
-                t->c_cc[6] = 18;
-                t->c_cc[7] = 8;
-                t->c_cc[8] = 3;
-                t->c_cc[9] = 28;
-                t->c_cc[10] = 26;
-                t->c_cc[11] = 25;
-                t->c_cc[12] = 17;
-                t->c_cc[13] = 19;
-                t->c_cc[14] = 22;
-                t->c_cc[15] = 15;
-                t->c_cc[16] = 1;
-                t->c_cc[17] = 0;
-                t->c_cc[18] = 20;
-                t->c_cc[19] = 255;
+                /* Base: IEXTEN|ICANON|ISIG|ECHOCTL|ECHO|ECHOE|ECHOK|ECHOKE */
+                t->c_lflag = IEXTEN | ICANON | ISIG | ECHOCTL |
+                             ECHO | ECHOE | ECHOK | ECHOKE;
+                if (term->t_raw)
+                    t->c_lflag &= ~ICANON;
+                if (!term->t_echo)
+                    t->c_lflag &= ~(ECHO | ECHOE | ECHOK | ECHOKE | ECHOCTL);
 
-                t->c_ispeed = 0x9600;
-                t->c_ospeed = 0x9600;
+                t->c_cc[0]  = 4;   /* VEOF */
+                t->c_cc[1]  = 255; /* VEOL */
+                t->c_cc[2]  = 255; /* VEOL2 */
+                t->c_cc[3]  = 127; /* VERASE */
+                t->c_cc[4]  = 23;  /* VWERASE */
+                t->c_cc[5]  = 21;  /* VKILL */
+                t->c_cc[6]  = 18;  /* VREPRINT */
+                t->c_cc[7]  = 8;   /* spare */
+                t->c_cc[8]  = 3;   /* VINTR */
+                t->c_cc[9]  = 28;  /* VQUIT */
+                t->c_cc[10] = 26;  /* VSUSP */
+                t->c_cc[11] = 25;  /* VDSUSP */
+                t->c_cc[12] = 17;  /* VSTART */
+                t->c_cc[13] = 19;  /* VSTOP */
+                t->c_cc[14] = 22;  /* VLNEXT */
+                t->c_cc[15] = 15;  /* VDISCARD */
+                t->c_cc[16] = 1;   /* VMIN */
+                t->c_cc[17] = 0;   /* VTIME */
+                t->c_cc[18] = 20;  /* VSTATUS */
+                t->c_cc[19] = 255; /* spare */
+
+                t->c_ispeed = 9600;
+                t->c_ospeed = 9600;
 
                 td->td_retval[0] = 0;
             }
             else {
                 td->td_retval[0] = -1;
             }
-            break;
-        case TIOCGWINSZ:
-            asm("nop");
-            struct winsize *win = (struct winsize*) args->data;
-            win->ws_row = 50;
-            win->ws_col = 80;
-            break;
+            return (0);
+
+        case TIOCSETA:
+        case TIOCSETAW:
+        case TIOCSETAF:
+            if ((args->fd == 0 || args->fd == 1 || args->fd == 2) && term != NULL) {
+                struct termios *t = (struct termios *)args->data;
+                term->t_raw  = (t->c_lflag & ICANON) ? 0 : 1;
+                term->t_echo = (t->c_lflag & ECHO)   ? 1 : 0;
+                td->td_retval[0] = 0;
+            }
+            else {
+                td->td_retval[0] = -1;
+            }
+            return (0);
+
+        case TIOCGWINSZ: {
+            struct winsize *win = (struct winsize *)args->data;
+            win->ws_row    = 25;
+            win->ws_col    = 80;
+            win->ws_xpixel = 0;
+            win->ws_ypixel = 0;
+            td->td_retval[0] = 0;
+            return (0);
+        }
+
         default:
             kprintf("ioFD:%i:0x%X!", args->fd, args->com);
-            break;
+            td->td_retval[0] = -1;
+            return (0);
     }
-
-    td->td_retval[0] = 0x0;
-    return (0x0);
 }
 
 int sys_select(struct thread *td, struct sys_select_args *args) {

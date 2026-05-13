@@ -57,8 +57,6 @@ void sys_call_posix(struct trapframe *frame) {
 
   code = frame->tf_eax;
 
-    //kprintf("SYSCALL: %i", code);
-
   if (code == 198) {
     memcpy(&code, params, sizeof(int));
     params += sizeof(quad_t);
@@ -76,7 +74,13 @@ void sys_call_posix(struct trapframe *frame) {
     frame->tf_eflags |= PSL_C;
   }
   else if ((int) systemCalls_posix[code].sc_status == SYSCALL_NOTIMP) {
-    kprintf("Not Implemented Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
+    kprintf("Not Implemented Call: [%i][%s] EIP=0x%x PID=%i args=0x%x,0x%x,0x%x,0x%x\n",
+        code, systemCalls_posix[code].sc_name,
+        frame->tf_eip, _current->id,
+        *((uint32_t *)frame->tf_esp + 1),
+        *((uint32_t *)frame->tf_esp + 2),
+        *((uint32_t *)frame->tf_esp + 3),
+        *((uint32_t *)frame->tf_esp + 4));
     frame->tf_eax = 22;//-1;
     frame->tf_edx = 0x0;
     frame->tf_eflags |= PSL_C;

@@ -1,3 +1,4 @@
+// (C) 2002-2026 The UbixOS Project
 #include <vContext.h>
 #include <vDesktop.h>
 
@@ -6,32 +7,28 @@ vDesktop::vDesktop(vContext * parent) : vContext(parent) {
 } // vDesktop::vDesktop
 
 void
-vDesktop::DeleteAllStyles(void) {  
+vDesktop::DeleteAllStyles(void) {
   return;
 }
 
 bool
-vDesktop::DeleteStyle(const std::string styleName) {
+vDesktop::DeleteStyle(const char * /*styleName*/) {
   return false;
 }
 
-sStyle * 
-vDesktop::GetStyle(const std::string styleName) {
-  /*
-   * vDesktop::GetStyle
-   * This will have to send a message to the Launcher to get the actual
-   * style. For now use NULL
-   */
-  return NULL; 
+sStyle *
+vDesktop::GetStyle(const char * /*styleName*/) {
+  return NULL;
 } // vDesktop::GetStyle
 
 void
 vDesktop::SetPos(int32 newX, int32 newY) {
+  (void)newX; (void)newY;
   return;
 } // vDesktop::SetPos
 
-void 
-vDesktop::SetStyle(const std::string nameStyle, sStyle * style) {
+void
+vDesktop::SetStyle(const char * /*nameStyle*/, sStyle * /*style*/) {
   return;
 } // vDesktop::SetStyle
 

@@ -1,28 +1,11 @@
-#  (C) 2002 The UbixOS Project
-#  $Id: Makefile 54 2016-01-11 01:29:55Z reddawg $
+# (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-#  Objects
+INCLUDES += -I../../include
+
 OBJS = sys_arch.o init.o shell.o
-#shell.o udpecho.o init.o sys_arch.o bot.o
+# shell.o udpecho.o init.o sys_arch.o bot.o
 
-all: $(OBJS)
-
-#  Compile Types
-.cc.o:
-	$(CXX) ${CFLAGS} -DNOBOOL -I../../include -c -o $@ $<
-.cc.s:
-	$(CXX) ${CFLAGS} -DNOBOOL-I../../include -S -o $@ $<
-.c.o:
-	$(CC) ${CFLAGS} -I../../include -c -o $@ $<
-.c.s:
-	$(CC) ${CFLAGS} -I../../include -S -o $@ $<
-.S.o:
-	$(CC) ${CFLAGS} -c -o $@ $<
-
-# Clean up the junk
-clean:
-	$(REMOVE) $(OBJS)
+.include "${UBIX_MK}/ubix.kern.mk"

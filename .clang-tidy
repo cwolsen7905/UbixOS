@@ -1,0 +1,73 @@
+# UbixOS clang-tidy configuration
+# Enforces naming conventions from STYLE.md.
+# Run via: tools/mcr.sh [file...]
+#
+# NOTE: naming checks are warnings only during migration — existing code
+# violates them intentionally.  New code must be clean.
+
+Checks: >
+  readability-identifier-naming,
+  readability-inconsistent-newlines,
+  bugprone-macro-parentheses,
+  bugprone-integer-division,
+  bugprone-misplaced-operator-in-strlen-in-alloc,
+  bugprone-sizeof-expression,
+  bugprone-suspicious-string-compare,
+  misc-redundant-expression,
+  -clang-diagnostic-*
+
+WarningsAsErrors: ''
+
+HeaderFilterRegex: '.*\.(h|hpp)$'
+
+CheckOptions:
+
+  # ── Functions ────────────────────────────────────────────────────────────────
+  # Kernel and userland functions: snake_case (prefix handled by convention,
+  # not enforced here — clang-tidy can't express "prefix_snake_case" directly)
+  - key:   readability-identifier-naming.FunctionCase
+    value: lower_case
+
+  # ── Variables ────────────────────────────────────────────────────────────────
+  - key:   readability-identifier-naming.LocalVariableCase
+    value: lower_case
+
+  - key:   readability-identifier-naming.ParameterCase
+    value: lower_case
+
+  # Global variables: g_ prefix + snake_case
+  - key:   readability-identifier-naming.GlobalVariableCase
+    value: lower_case
+  - key:   readability-identifier-naming.GlobalVariablePrefix
+    value: g_
+
+  # Static file-scope variables: g_ prefix + snake_case
+  - key:   readability-identifier-naming.StaticVariableCase
+    value: lower_case
+  - key:   readability-identifier-naming.StaticVariablePrefix
+    value: g_
+
+  # ── Types ────────────────────────────────────────────────────────────────────
+  # Struct tags: snake_case
+  - key:   readability-identifier-naming.StructCase
+    value: lower_case
+
+  # Typedefs: snake_case with _t suffix
+  - key:   readability-identifier-naming.TypedefCase
+    value: lower_case
+  - key:   readability-identifier-naming.TypedefSuffix
+    value: _t
+
+  # Enum type names: snake_case with _t suffix
+  - key:   readability-identifier-naming.EnumCase
+    value: lower_case
+  - key:   readability-identifier-naming.EnumSuffix
+    value: _t
+
+  # Enum values: ALL_CAPS
+  - key:   readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+
+  # ── Macros ───────────────────────────────────────────────────────────────────
+  - key:   readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE

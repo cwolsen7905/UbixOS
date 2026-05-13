@@ -2,7 +2,7 @@
 # Global 'Source' Options
 
 #Global Override And Defs
-_ARCH=i386
+_ARCH?=i386
 
 REMOVE = rm -rf
 
@@ -20,8 +20,17 @@ CROSS_PREFIX?=
 CROSS_M32?=
 .endif
 
-# Make ubix mk files findable for recursive bmake invocations (e.g. lib/csu).
-# Use ?= so this is only set at the top-level (where .CURDIR is the repo root);
-# sub-makes inherit the exported value without recomputing it.
-MAKESYSPATH?=${.CURDIR}/share/mk
-.export MAKESYSPATH
+# Compute the repo root once via git; derive UBIX_MK and OBJ_DIR from it.
+# The .if !defined guard means child makes (which inherit these variables
+# from the environment via .export) skip the git call entirely.
+.if !defined(SRCTOP)
+SRCTOP != cd "${.CURDIR}" && git rev-parse --show-toplevel 2>/dev/null | tr -d '\n'
+.if empty(SRCTOP)
+SRCTOP = ${.CURDIR}
+.endif
+.export SRCTOP
+.endif
+UBIX_MK ?= ${SRCTOP}/share/mk
+.export UBIX_MK
+OBJ_DIR ?= ${SRCTOP}/build
+.export OBJ_DIR

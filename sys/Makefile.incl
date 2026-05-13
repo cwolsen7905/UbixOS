@@ -12,13 +12,16 @@ KERNEL_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm OBJD
 
 KERNEL_INC=${KERNEL_SRC}/include
 
-KMAKE= ${MAKE} ${KERNEL_FLAGS} INCLUDE=${KERNEL_INC} KERNEL=${KERNEL_NAME}
+# Default extra C++ flags for kernel code.  Components that need additional
+# flags (e.g. -fno-rtti -D__UBIXOS_KERNEL__) append or override CXXFLAGS.
+CXXFLAGS ?= -DNOBOOL
+
+KMAKE= ${MAKE} ${KERNEL_FLAGS} INCLUDE=${KERNEL_INC} KERNEL=${KERNEL_NAME} OBJ_DIR=${OBJ_DIR}
 
 INCLUDES = -I${INCLUDE}
 
 # -fno-pie / -fno-pic: prevent the compiler from generating position-independent
 # code, which would break the bare-metal fixed-address link.
 # -fno-stack-protector: no SSP; the kernel manages its own stack.
-CFLAGS = ${KFLAGS} ${CROSS_M32} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
+CFLAGS = ${KFLAGS} ${CROSS_M32} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP
 
-ROOT=/ubixos

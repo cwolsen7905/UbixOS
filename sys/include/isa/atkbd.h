@@ -29,6 +29,8 @@
 #ifndef _ISA_ATKBD_H
 #define _ISA_ATKBD_H
 
+#include <sys/types.h>
+
 #define shiftKey      1
 #define controlKey    2
 #define altKey        4
@@ -38,6 +40,8 @@
 
 int  atkbd_init();
 void atkbd_isr();
+
+extern volatile uint32_t reboot_at_tick; /* non-zero when countdown active */
 
 struct trapframe;
 void keyboardHandler(struct trapframe *);

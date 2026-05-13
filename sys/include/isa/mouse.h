@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,25 +29,22 @@
 #ifndef _ISA_MOUSE_H
 #define _ISA_MOUSE_H
 
-int mouseInit();
-void mouseISR();
-void mouseHandler();
+#include <sys/types.h>
+
+struct mouse_event {
+	int16_t  dx;
+	int16_t  dy;
+	uint8_t  buttons;  /* bit 0=left, bit 1=right, bit 2=middle */
+};
+typedef struct mouse_event mouse_event_t;
+
+int   mouseInit(void);
+void  mouseISR(void);
+void  mouseHandler(void);
+int   mouse_getEvent(mouse_event_t *ev);
+
+#define MOUSE_BTN_LEFT   0x01
+#define MOUSE_BTN_RIGHT  0x02
+#define MOUSE_BTN_MIDDLE 0x04
 
 #endif
-
-/***
- $Log: mouse.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:39  reddawg
- no message
-
- Revision 1.1  2004/06/04 10:20:53  reddawg
- mouse drive: fixed a few bugs works a bit better now
-
- END
- ***/

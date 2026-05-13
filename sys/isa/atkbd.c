@@ -27,6 +27,8 @@
  */
 
 #include <isa/atkbd.h>
+#include <isa/pit.h>
+#include <ubixos/vitals.h>
 #include <isa/8259.h>
 #include <sys/video.h>
 #include <sys/idt.h>
@@ -51,6 +53,8 @@ static uInt16 stdinSize;
 static uInt32 controlKeys = 0x0;
 
 static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
+
+volatile uint32_t reboot_at_tick = 0;
 
 static unsigned int keyboardMap[255][8] = {
 /*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
@@ -104,7 +108,7 @@ static unsigned int keyboardMap[255][8] = {
 /*     */{ 0x76, 0x56, 0, 0, 0, 0, 0, 0 },
 /* b,B */{ 0x62, 0x42, 0x02, 0, 0, 0, 0, 0 },
 /*     */{ 0x6E, 0x4E, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x6D, 0x4D, 0, 0, 0, 0, 0, 0 },
+/* m,M */{ 0x6D, 0x4D, 0x0D, 0, 0, 0, 0, 0 },
 /*     */{ 0x2C, 0x3C, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x2E, 0x3E, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x2F, 0x3F, 0, 0, 0, 0, 0, 0 },
@@ -278,39 +282,88 @@ void keyboardHandler(struct trapframe *frame) {
   /* If Key Is Not Null Add It To Handler */
   if (((uInt) (keyboardMap[key][keyMap]) > 0) && ((uInt32) (keyboardMap[key][keyMap]) < 0xFF)) {
     switch ((uInt32) keyboardMap[key][keyMap]) {
-      case 8:
-        backSpace();
+      case 8: /* backspace */
         if (tty_foreground == 0x0) {
-          stdinBuffer[stdinSize] = keyboardMap[key][keyMap];
-          stdinSize++;
+          if (stdinSize > 0) stdinSize--;
+        }
+        else if (tty_foreground->t_raw) {
+          /* raw mode: deliver backspace directly */
+          tty_foreground->stdin[tty_foreground->stdinSize++] = 8;
         }
         else {
-          tty_foreground->stdin[tty_foreground->stdinSize] = keyboardMap[key][keyMap];
-          tty_foreground->stdinSize++;
+          /* canonical: erase last char from line buffer */
+          if (tty_foreground->t_linelen > 0) {
+            tty_foreground->t_linelen--;
+            if (tty_foreground->t_echo)
+              backSpace();
+          }
         }
         break;
-      case 0x3:
-        //if (tty_foreground != 0x0)
-        //  endTask(tty_foreground->owner);
-        //K_PANIC( "CTRL-C pressed\n" );
-        kprintf("FreePages: [0x%X]\n", systemVitals->freePages);
-        sched_setStatus(tty_foreground->owner, DEAD);
+      case 0x3: /* Ctrl-C */
+        if (tty_foreground != 0x0) {
+          kTask_t *victim = schedFindTask(tty_foreground->owner);
+          if (victim != NULL) {
+            if (victim->parent != NULL)
+              tty_foreground->owner = victim->parent->id;
+            sched_killTree(victim->id);
+          }
+        }
         break;
-      case 0x9:
-                sys_shutdown(REBOOT);
+      case 0x9: /* Ctrl-Tab: immediate reboot */
+        sys_shutdown(REBOOT);
         break;
-      case 0x18:
+      case 0x0D: /* Ctrl-M: 5-second countdown reboot */
+        if (reboot_at_tick == 0) {
+          reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
+          kprintf("\nSystem rebooting in 5 seconds...\n");
+        }
+        break;
+      case 0x15: /* Ctrl-U: kill line */
+        if (tty_foreground != 0x0 && !tty_foreground->t_raw) {
+          tty_foreground->t_linelen = 0;
+          /* redraw: emit spaces to erase, but simplest is just clear the buffer */
+        }
+        break;
+      case 0x18: /* Ctrl-X */
         if (tty_foreground->owner == _current->id)
           die_if_kernel("CTRL-X", frame, frame->tf_eax);
         break;
-      default:
+      case '\n': /* Enter: commit line to stdin */
         if (tty_foreground == 0x0) {
-          stdinBuffer[stdinSize] = keyboardMap[key][keyMap];
-          stdinSize++;
+          stdinBuffer[stdinSize++] = '\n';
+        }
+        else if (tty_foreground->t_raw) {
+          tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
         }
         else {
-          tty_foreground->stdin[tty_foreground->stdinSize] = keyboardMap[key][keyMap];
-          tty_foreground->stdinSize++;
+          /* canonical: move line buffer → stdin, append newline */
+          int i;
+          char echo_nl[2] = { '\n', '\0' };
+          for (i = 0; i < tty_foreground->t_linelen && tty_foreground->stdinSize < 511; i++)
+            tty_foreground->stdin[tty_foreground->stdinSize++] = tty_foreground->t_linebuf[i];
+          if (tty_foreground->stdinSize < 511)
+            tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
+          tty_foreground->t_linelen = 0;
+          if (tty_foreground->t_echo)
+            tty_print(echo_nl, tty_foreground);
+        }
+        break;
+      default:
+        if (tty_foreground == 0x0) {
+          stdinBuffer[stdinSize++] = keyboardMap[key][keyMap];
+        }
+        else if (tty_foreground->t_raw) {
+          /* raw mode: deliver immediately, no echo */
+          tty_foreground->stdin[tty_foreground->stdinSize++] = keyboardMap[key][keyMap];
+        }
+        else {
+          /* canonical: buffer and echo */
+          if (tty_foreground->t_linelen < 511) {
+            char echo_ch[2] = { keyboardMap[key][keyMap], '\0' };
+            tty_foreground->t_linebuf[tty_foreground->t_linelen++] = keyboardMap[key][keyMap];
+            if (tty_foreground->t_echo)
+              tty_print(echo_ch, tty_foreground);
+          }
         }
         break;
     }

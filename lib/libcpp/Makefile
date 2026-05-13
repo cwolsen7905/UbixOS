@@ -31,4 +31,4 @@ all: $(OBJS)
 
 # Clean up the junk
 clean:
-	$(REMOVE) $(OBJS)
+	$(REMOVE) $(OBJS) ${OBJS:.o=.d}

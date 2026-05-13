@@ -282,6 +282,40 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
   return (source);
 }
 
+/* Map a physical MMIO page (e.g. framebuffer) to the same virtual address.
+ * Unlike vmm_remapPage, this silently overwrites an existing mapping so
+ * callers like ogDisplay_UbixOS::SetMode can be called more than once. */
+int vmm_remapIOPage(uint32_t phys, uint16_t perms, pidType pid) {
+  uint16_t pdIdx, ptIdx;
+  uint32_t *pageDir, *pageTable;
+
+  if (phys == 0x0)
+    K_PANIC("vmm_remapIOPage: phys == 0");
+
+  spinLock(&pdSpinLock);
+
+  pageDir = (uint32_t *) PD_BASE_ADDR;
+  pdIdx   = PD_INDEX(phys);
+
+  if ((pageDir[pdIdx] & PAGE_PRESENT) != PAGE_PRESENT)
+    vmm_allocPageTable(pdIdx, pid);
+
+  pageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * pdIdx));
+  ptIdx     = PT_INDEX(phys);
+
+  pageTable[ptIdx] = (uint32_t)(phys | perms);
+
+  asm volatile(
+    "push %eax     \n"
+    "movl %cr3,%eax\n"
+    "movl %eax,%cr3\n"
+    "pop  %eax     \n"
+  );
+
+  spinUnlock(&pdSpinLock);
+  return phys;
+}
+
 /************************************************************************
 
  Function: void *vmm_getFreeKernelPage(pidType pid, uint16_t count);
@@ -378,7 +412,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   uint32_t i = 0x0, x = 0x0, y = 0x0, count = ((size + 4095) / 0x1000), c = 0x0;
   uInt32 dI = 0x0, tI = 0x0;
   uint32_t baseAddr = 0x0, offset = 0x0;
-  uint32_t *childPageDir = (uint32_t *) 0x5A00000;
+  uint32_t *childPageDir = (uint32_t *) VMM_CHILD_PD_WINDOW;
   uint32_t *childPageTable = 0x0;
   uint32_t *pageTableSrc = 0x0;
   offset = (uint32_t) ptr & 0xFFF;
@@ -393,8 +427,8 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   dI = (baseAddr / (1024 * 4096));
   tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
 
-  kprintf("cr3: 0x%X\n", child->tss.cr3);
-  if (vmm_remapPage(child->tss.cr3, 0x5A00000, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
+  kprintf("cr3: 0x%X\n", child->md.md_tss.cr3);
+  if (vmm_remapPage(child->md.md_tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
     K_PANIC("vmm_remapPage: Failed");
 
   for (i = 0; i < PD_ENTRIES; i++) {
@@ -452,7 +486,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
 
             }
 
-            vmm_unmapPage(0x5A00000, 1);
+            vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
 
             for (i = 0; i < 0x1000; i++) {
               vmm_unmapPage((0x5A01000 + (i * 0x1000)), 1);
@@ -475,7 +509,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
           }
 
           //Return The Address Of The Mapped In Memory
-          vmm_unmapPage(0x5A00000, 1);
+          vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
 
           for (i = 0; i < 0x1000; i++) {
             vmm_unmapPage((0x5A01000 + (i * 0x1000)), 1);
@@ -608,14 +642,14 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
 
       for (y = 0; y < PT_ENTRIES; y++) {
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+          uint32_t phys = (uint32_t) pageTableSrc[y] & 0xFFFFF000;
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-            adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
-            pageTableSrc[y] = 0x0;
+            adjustCowCounter(phys, -1);
           }
-          else {
-            freePage((uint32_t) pageTableSrc[y] & 0xFFFFF000);
-            pageTableSrc[y] = 0x0;
+          else if ((phys >> 12) < (uint32_t) numPages) {
+            freePage(phys);
           }
+          pageTableSrc[y] = 0x0;
         }
       }
     }

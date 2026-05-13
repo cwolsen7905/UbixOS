@@ -226,7 +226,7 @@ The `init` process (PID 1) uses MPI mailboxes to communicate with child processe
 
 ### Adding a New Driver
 
-See `doc/sample_driver.c` for a skeleton that demonstrates the device registration API.
+See [docs/drivers/writing-a-driver.md](docs/drivers/writing-a-driver.md) for a skeleton and walkthrough of the `deviceAdd()` registration API.
 
 ---
 

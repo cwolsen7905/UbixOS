@@ -7,11 +7,133 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [2.0.1-BETA] - 2026-05-13
+
 ### Added
+- `bin/ed/` — POSIX `ed` line editor: supports all standard address forms (`.`, `$`, `n`, `m,n`, `/re/`, `%`) and commands `p`, `n`, `l`, `=`, `a`, `i`, `c`, `d`, `j`, `m`, `s`, `e`, `E`, `r`, `w`, `f`, `q`, `Q`. Reads files via `fread` (robust against kernel `fgetc` EOF quirks). Built and linked against `ubix_api`.
+- `bin/ed/README.md` — usage guide: address syntax, command reference, limits, and worked examples.
+- `sys/kernel/syscalls.c` slot 42 — `sys_ttyctrl(cmd, val)`: kernel syscall to set TTY raw/echo mode per-terminal.
+- `lib/ubix_api/ttyctrl.c` — `tty_setraw(val)` / `tty_setecho(val)` userland API wrappers using native `int $0x81` syscall 42.
+- `include/api/ubix.h` — declarations for `tty_setraw` and `tty_setecho`.
 
 ### Fixed
+- `sys/fs/vfs/file.c` (`fgetc`) — returned 0 at EOF instead of -1; `fgets` loops never terminated on short files. Now checks `vfsRead` return value and returns -1 on EOF (BUG-VFS-02).
+- `sys/isa/atkbd.c` — keyboard ISR now implements a full TTY line discipline: canonical mode (default) buffers input in `t_linebuf`, echoes characters and backspace if `t_echo=1`, and delivers the complete line to `stdin[]` on Enter; raw mode delivers each keypress immediately with no echo. This fixes missing echo in `fgets`-based programs (e.g. `ed`) without breaking password masking in `login`.
+- `sys/kernel/vfs_calls.c` (`sys_read` stdin path) — removed its own per-character echo loop; echo is now owned exclusively by the keyboard ISR line discipline to prevent double-echo.
+- `lib/libc/stdio/gets.c` — removed per-character `printf` echo; the ISR line discipline handles it.
+- `bin/login/main.c` (`pgets`) — updated to use `tty_setraw(1)` / `tty_setraw(0)` around password input so the ISR delivers raw chars for `*`-masking without line buffering.
 
-### Changed
+### Added
+- `sys/include/ubixos/tty.h` — `TTY_SETRAW` / `TTY_SETECHO` constants; `t_linebuf[512]`, `t_linelen`, `t_echo`, `t_raw` fields added to `tty_term` for the line discipline.
+- `sys/include/sys/sysproto.h` — `sys_ttyctrl_args` struct and `sys_ttyctrl` prototype.
+
+### Added
+- `bin/muffin/` — new C++ GUI application using `lib/objgfx`; renders a background BMP and coloured rectangles via the SDE.
+- `lib/objgfx/` — ported to bare-metal: removed all STL dependencies (`std::map`, `std::function`, `std::iostream`, `std::fstream`); replaced with plain C function pointers and POSIX I/O.
+- `lib/libc/sys/lseek.S` — `lseek(int, off_t, int)` userland stub (syscall 478).
+- `lib/libc/math/fabs.c` — `fabs(double)` implementation.
+- `sys/sde/main.cc` — SDE kernel thread now calls `mpi_createMbox("sde")` once initialised, providing a named ready-signal that userland can probe.
+- `bin/muffin/main.cc` — `sde_ensure_running()` probes the `"sde"` MPI mailbox; if absent, sends `sdeStart` to `"system"` and spins until the SDE is ready before registering a window.
+- `sys/arch/i386/sched.c` — `sched_killTree(pid)`: kills a task and all its descendants, used by the Ctrl-C handler.
+
+### Fixed
+- `include/math.h` — wrapped all declarations in `extern "C"` so C++ translation units link against the unmangled `fabs` symbol.
+- `include/stddef.h` — `NULL` now defined as `0` (not `(void*)0`) in C++ mode.
+- `lib/objgfx/objgfx/ogTypes.h` — removed unused `#include <map>`; added `#include <sys/types.h>` for standalone inclusion.
+- `contrib/tcc/ubixos_shim/syscalls.S` — removed duplicate `lseek` definition now that `lib/libc/sys/lseek.S` provides it.
+- `lib/objgfx40/`, `lib/views/sunlight/` — output redirected to `build/obj/gfx/` so C++ objects do not pollute the `obj/lib/*/*.o` glob linked into plain C binaries.
+- `tools/mkimage.sh`, `Makefile` — `sys/sde/assets/ubix.bmp` now installed as `/var/background/ubix.bmp` in both `bmake image` and `bmake install-world`.
+- `bin/make/make.c` — Makefile detection replaced `access()` (kernel stub always returning 0) with direct `fopen` probes; shell path corrected from `sys:/bin/sh` to `sys:/bin/shell`.
+- `sys/isa/atkbd.c` — Ctrl-C handler now calls `sched_killTree` instead of single-process `sched_setStatus(DEAD)`, so forked recipe children are also killed.
+- `sys/arch/i386/fork.c` — `fork()` transfers `term->owner` to the child when the parent owns the terminal, so `tty_foreground->owner` tracks the actual foreground process through the `login → shell → app` chain.
+- `sys/arch/i386/sched.c` — scheduler DEAD handler now returns `term->owner` to the parent when a process dies via `sched_setStatus(DEAD)`, matching the handback that `endtask()` performs for normal exits.
+
+### Fixed
+- `sys/vmm/vmm_memory.c` (`vmm_freeProcessPages`) — double-decrement of COW counters caused "COW less than 0" crash on any process run after a daemonizing `fork()`+`exit()` (e.g. `ubistry`). `endTask` already decrements COW counters via `vmm_cleanVirtualSpace`; `vmm_freeProcessPages` was then scanning by `pid` and decrementing the same pages again, freeing physical pages still mapped by the surviving daemon. Removed the `adjustCowCounter(-1)` call for COW pages; surviving mappers free the physical page through their own cleanup (BUG-COW-07).
+- `sys/arch/i386/systemtask.c` (`systemTask`) — free `kTask_t.kernelStack` before `kfree(tmpTask)` to stop leaking 4 KB per task exit; NULL guard with `kprintf` warning if the pointer is unexpectedly NULL (TODO-SCHED-09).
+- `share/mk/ubix.kern.mk` — suffix rules used `${OBJDIR}/${.TARGET}` but `.PATH.o: ${OBJDIR}` caused bmake to expand `.TARGET` to the full path, doubling the output directory; changed to `${OBJDIR}/${.TARGET:T}` (basename-only).
+- `sys/fs/vfs/file.c` (`fgetc`) — removed debug `kprintf("[%s:%i]"…)` that fired on every character read (TODO-VFS-01).
+- `sys/fs/vfs/file.c` (`sys_fclose`) — removed duplicate `args->FILE == NULL` guard that ran the check twice (TODO-VFS-02).
+- `sys/mpi/mpi_syscalls.c` (`sys_mpiPostMessage`) — removed stale `kprintf("mPM: %s"…)` debug log (TODO-MPI-04).
+- `sys/include/vmm/vmm.h` — defined `VMM_CHILD_PD_WINDOW 0x5A00000` as a named constant with a comment explaining its purpose (TODO-VMM-03).
+- `sys/vmm/paging.c` — replaced all four occurrences of `0x5A00000` with `VMM_CHILD_PD_WINDOW` (TODO-VMM-03).
+- `sys/include/mpi/mpi.h` — added `MPI_ASYNC` (0x1) and `MPI_SYNC` (0x2) named constants (TODO-MPI-06).
+- `sys/arch/i386/schedyield.S` — deleted dead file containing `sched_yield_new`, which called `iret` as a plain C call — instant stack corruption if ever reached; removed `schedyield.o` from `sys/arch/i386/Makefile` (TODO-SCHED-07).
+
+### Added
+- `docs/architecture/vmm.md` — Virtual Memory Manager design document (converted from `doc/vmm.txt`; incorporates page-directory map from `doc/vmm/i386_vmm_map.txt`).
+- `docs/architecture/task-switching.md` — moved from `docs/` root; content unchanged.
+- `docs/design/fbcon.md` — VESA framebuffer console spec; moved from `docs/` root.
+- `docs/drivers/writing-a-driver.md` — driver writing guide (rewritten from `doc/sample_driver.c` commentary).
+- `docs/architecture/i386-page-directory-map.md` — full i386 page directory (PDE 0–1023) with purpose annotations (converted from `doc/vmm/i386_vmm_page_reference.xlsx`).
+- `docs/reference/external-specs.md` — links to ELF ABI, Intel SDM, Multiboot, and FAT specifications.
+- `docs/README.md` — documentation index.
+- `sys/sde/assets/ubix.bmp` — background bitmap for graphical console / SDE (moved from `doc/ubix.bmp`).
+### Fixed
+- `sys/mpi/system.c` — all seven MPI bugs fixed in one pass:
+  - `mpi_destroyMbox`: NULL-dereference when removing head or tail mailbox — added `prev`/`next` NULL guards and `mboxList` head update (BUG-MPI-01).
+  - `mpi_createMbox`: `mbox->msg` and `mbox->msgLast` now explicitly initialized to NULL after `kmalloc` (BUG-MPI-02); `sprintf` replaced with bounded `strncpy` + explicit NUL terminator (BUG-MPI-05); `kmalloc` return now NULL-checked (BUG-MPI-07).
+  - `mpi_postMessage` and `mpi_spam`: empty-queue append now sets both `mbox->msg` and `mbox->msgLast` (BUG-MPI-03); `kmalloc` NULL-checked in both paths (BUG-MPI-07); synchronous-send spin now waits on `mbox->msg` (not stale `msgLast`) and yields via `sched_yield()` (BUG-MPI-06).
+  - `mpi_fetchMessage`: resets `mbox->msgLast` to NULL when queue drains (BUG-MPI-04).
+
+### Added
+- `docs/architecture/mpi.md` — full MPI audit: data structures, function-by-function walkthrough, syscall table, userland API, system mailbox registry, known bugs cross-referenced to BUGS.md, design limitations.
+- `BUGS.md` — MPI section: BUG-MPI-01 through BUG-MPI-07 covering NULL dereferences in destroy, uninitialized `msgLast`, append/drain logic errors, sprintf overflow, sync-send race, and missing kmalloc NULL checks.
+- `TODO.md` — MPI section: TODO-MPI-01 through TODO-MPI-07 covering mailbox cleanup on exit, blocking receive, queue depth limit, debug kprintf removal, missing destroyMbox stub, named type constants, and re-enabling init's receive loop.
+
+### Removed
+- `doc/` directory fully retired: `html/` and `xml/` Doxygen output, `vmm.txt`, `vmm/i386_vmm_map.txt`, `vmm/i386_vmm_page_reference.xlsx`, `sample_driver.c`, `UbixOS_Build.txt`, `ELF_Format.pdf`, `ChangeLog`, and `ubix.bmp` — all content migrated to `docs/` as Markdown or relocated to `sys/sde/assets/`; `doc/` added to `.gitignore`.
+
+### Added
+- `sys_pidStatus` (native syscall 7) — kernel implementation in `sys/kernel/gen_calls.c`; returns 1 while a task is alive, 0 when dead or not found. Wired in `sys/kernel/syscalls.c`. Args struct in `sys/include/sys/sysproto.h`.
+- `lib/libc/stdio/fdopen.c` — `fdopen(3)` implementation for the in-kernel libc.
+- `lib/ubix_api/ubixcwd.c` — `ubix_getcwd()` native API implementation.
+
+### Fixed
+- `sys/isa/atkbd.c` — Ctrl-C now works correctly: removed stale `kprintf("FreePages…")` debug output; added NULL guard on `tty_foreground`; transfers TTY ownership to the parent process (shell) before marking the child DEAD, so the shell prompt returns immediately instead of the terminal becoming orphaned.
+- `sys/kernel/endtask.c` — on normal task exit via `endTask()`, TTY ownership is restored to the parent process so subsequent Ctrl-C presses target the correct task.
+- `sys/arch/i386/i386_exec.c` — CR3-switch inline asm was missing an `"eax"` clobber; the compiler reused `%eax` (now holding the new CR3 value) as the `newProcess` pointer immediately after the switch, causing a page fault on every boot. Replaced with a direct `movl %0, %%cr3` using the `"r"` constraint and `"memory"` clobber.
+- `bin/Makefile` — added `.PHONY: all clean ${SUBDIRS}`; bmake was treating the subdirectory names (`init`, `login`, `shell`, …) as up-to-date filesystem targets (the directories exist), so only `make` was ever built and the disk image booted to "Exec Format Error".
+
+### Added
+- `sys/include/ubixos/version.h` — single source of truth for OS version; all version strings (`kern.osrelease`, `kern.version`, boot banner) derive from macros in this one file.
+- `sys/kernel/kern_sysctl.c` — `sysctl` MIB entries for `kern.ostype`, `kern.osrelease`, `kern.version`, `kern.hostname`, `hw.machine` wired to `version.h` macros.
+- `sys/init/main.c` — boot banner (`"UbixOS 2.0.0-BETA — booting"`) derived from `UBIXOS_VERSION_STRING`.
+- `uname(2)` syscall (POSIX syscall 164) filling `struct utsname` from `version.h` macros; kernel-side in `sys/kernel/gen_calls.c`, libc stub in `lib/libc/sys/uname.S`.
+- `sysctl(3)` and `sysctlbyname(3)` userland API in `lib/libc/sys/sysctl.c`; MIB constants in `include/sys/sysctl.h`.
+- `mkdir(2)` (syscall 136) and `rmdir(2)` (syscall 137) — kernel implementation in `sys/fs/vfs/file.c` + `sys/fs/fat/fat.c`; libc wrappers in `lib/libc/generic/`.
+- `getenv(3)`, `setenv(3)`, `unsetenv(3)` in `lib/libc/stdlib/`; `environ` now initialized in `lib/ubix/sstart.c` before `main()`.
+- `read(2)` (syscall 3) and `write(2)` (syscall 4) libc stubs in `lib/libc/sys/read.S` and `write.S`.
+- `bin/uname` — userland `uname` command supporting `-a -m -n -r -s -v`.
+- `bin/cat` — minimal `cat(1)` implementation (~75 lines) replacing the 388-line FreeBSD original that depended on unsupported headers.
+- `bin/syscheck` — runtime test binary that exercises `uname`, `sysctl`, `mkdir`, `rmdir`, `getenv`, `setenv`, and `environ`; prints PASS/FAIL per test.
+- `include/sys/utsname.h` — `struct utsname` with `_SYS_NAMELEN=256` byte fields.
+
+### Fixed
+- `sys/fs/vfs/file.c` — forward declaration of `sysMkDir` added to resolve implicit-declaration error when `sys_mkdir` calls it before its definition later in the file.
+- `lib/libc/generic/mkdir.c` — syscall number corrected from 29 (`creat`) to 136 (`mkdir`).
+- `lib/libc/string/strerror.c` — added `extern` declarations for `sys_nerr`/`sys_errlist` (defined in `gen/errlst.c`) to fix implicit-declaration build errors.
+- `contrib/tcc/ubixos_shim/stdlib_ext.c` — removed stub `getenv` (now provided by `lib/libc/stdlib/getenv.o`).
+- `contrib/tcc/ubixos_shim/syscalls.S` — removed stub `read` (now provided by `lib/libc/sys/read.o`).
+
+### Added
+- `bin/views/` — MPI-based display compositor: jailbar desktop, PS/2 arrow cursor, window table (up to 16 windows), DISPLAY_QUERY/CLAIM/FLIP/RELEASE/MOUSE protocol, hit-testing for mouse event routing. Launched by `views` on startup; taskbar is forked as a child.
+- `bin/taskbar/` — system taskbar: blue strip at screen bottom, live clock (HH:MM:SS), launcher button with press/release highlight, flyout menu (Terminal, About) that opens above the button on click.
+- `lib/libfb/` — shared framebuffer drawing library (`fb_rect`, `fb_blit`, `fb_text`, `fb_pixel`, `fb_set_target`, `fb_share_buffer`, `fb_poll_mouse`) used by views and display clients.
+- `include/views/display_proto.h` — MPI message structs for the display protocol shared between the compositor and clients.
+- `include/fb/fb.h` — public framebuffer API header.
+- `sys/vmm/vmm_share_region.c` — native syscall 45: maps physical pages from one process's address space into another; used by views to give display clients a shared pixel buffer.
+- `sys/isa/mouse.c` — PS/2 mouse packet decoder: relative motion accumulation, button state tracking, ring-buffer drain via `fb_poll_mouse`.
+- `include/sys/mouse.h` — `mouse_event_t` struct for the mouse ring buffer.
+
+### Fixed
+- `lib/libc/sys/getpid.S` — replaced broken `getpid.c` stub that called `exit()` (eax=1) instead of getpid (eax=20), silently terminating any process that called `getpid()`.
+- `sys/vmm/copyvirtualspace.c` — COW loop now skips `freePage` for physical frames at or above `numPages × PAGE_SIZE` (MMIO/framebuffer pages have no `vmmMemoryMap` entry); prevents triple-fault on fork when VESA framebuffer pages are mapped.
+- `sys/vmm/paging.c` (`vmm_cleanVirtualSpace`) — likewise skips `freePage` for MMIO frames during `execve` address-space teardown.
+- `sys/vmm/vmm_memory.c` (`freePage`) — explicit bounds check returns -1 for out-of-range frame indices as a safety net.
+- `sys/vmm/copyvirtualspace.c` — kernel PD entries (indices 770–1015) are re-synced from the parent **after** all `vmm_getFreeKernelPage`/`vmm_getFreePage` allocations to prevent child from inheriting stale zero PD entries for newly-expanded kernel ranges.
 
 ---
 
@@ -200,7 +322,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...HEAD
+[2.0.1-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...v2.0.1-BETA
 [2.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/acb8ba9a...v2.0.0-BETA
 [1.1.0-CURRENT]: https://github.com/cwolsen7905/UbixOS/compare/30af09b3...acb8ba9a
 [1.24.0]: https://github.com/cwolsen7905/UbixOS/compare/6e02e5b2...30af09b3

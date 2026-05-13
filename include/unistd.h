@@ -63,10 +63,15 @@ int  setgid(int);
 int  getuid(void);
 int  getgid(void);
 int  chdir(const char *path);
+int  rmdir(const char *path);
 int unlink(const char *path);
 int execvp(const char *, char * const []);
+int execve(const char *, char * const [], char * const []);
+int access(const char *path, int mode);
+void _exit(int status);
 int open(const char *path, int flags, ...);
 int close(int fd);
 int dup2(int oldfd, int newfd);
+int isatty(int fd);
 
 #endif

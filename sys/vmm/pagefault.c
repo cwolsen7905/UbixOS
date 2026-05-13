@@ -66,6 +66,23 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
 
+  /*
+   * VM86 (BIOS) tasks may fault on MMIO or BDA addresses not in the kernel
+   * page table.  Identity-map the page on demand rather than die_if_kernel.
+   */
+  if (_current->oInfo.v86Task) {
+    uint32_t physPage = memAddr & 0xFFFFF000;
+    if (vmm_remapPage(physPage, physPage, KERNEL_PAGE_DEFAULT, _current->id, 1) == 0) {
+      kprintf("v86 pageFault: remap failed for 0x%X, killing task\n", memAddr);
+      spinUnlock(&pageFaultSpinLock);
+      _current->state = DEAD;
+      sched_yield();
+      return;
+    }
+    spinUnlock(&pageFaultSpinLock);
+    return;
+  }
+
   /* Set page dir pointer to the address of the visable page directory */
   pageDir = (uint32_t *) PD_BASE_ADDR;
 

@@ -80,6 +80,9 @@ void irqEnable(uint16_t irqNo) {
     port = mImr;
   }
   else {
+    /* Slave PIC: also unmask IRQ2 (cascade) on master so slave IRQs reach CPU */
+    value = inportByte(mImr) & ~(1 << 2);
+    outportByte(mImr, value);
     port = sImr;
     irqNo -= 8;
   }

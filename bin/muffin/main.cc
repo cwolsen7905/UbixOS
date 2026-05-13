@@ -28,12 +28,32 @@
 
 #include <objgfx/vWindow.h>
 #include <objgfx/ogImage.h>
-#include <iostream>
 
 extern "C" {
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/mpi.h>
+}
+
+static void sde_ensure_running(void) {
+  mpi_message_t msg;
+
+  msg.header = 0;
+  msg.data[0] = '\0';
+
+  if (mpi_postMessage("sde", 0x1, &msg) == 0)
+    return;
+
+  msg.header = 0x80;
+  __builtin_strncpy(msg.data, "sdeStart", sizeof(msg.data) - 1);
+  msg.data[sizeof(msg.data) - 1] = '\0';
+  mpi_postMessage("system", 0x1, &msg);
+
+  msg.header = 0;
+  msg.data[0] = '\0';
+  while (mpi_postMessage("sde", 0x1, &msg) != 0)
+    ;
 }
 
 int main(int argc, char **argv) {
@@ -43,6 +63,7 @@ int main(int argc, char **argv) {
   uint16_t ii = 0x0;
   uint16_t iii = 0x0;
 
+    sde_ensure_running();
     window->vCreate();
     window->vSDECommand(1);
 

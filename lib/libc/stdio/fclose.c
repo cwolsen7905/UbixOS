@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int _fclose(FILE *fp);
 
@@ -42,16 +43,15 @@ asm(
 
 
 int fclose(FILE *fp) {
-  /*
-  asm volatile(
-    "int %0\n"
-    : : "i" (0x80),"a" (10),"b" (fp),"c" (&status)
-    );
-  free(fp);
-  return(status);
-  */
-  return(_fclose(fp));
+  if (!fp)
+    return -1;
+  if ((unsigned long)fp->fd < 65536UL) {
+    int ret = close((int)fp->fd);
+    free(fp);
+    return ret;
   }
+  return (_fclose(fp));
+}
 
 /***
  $Log: fclose.c,v $

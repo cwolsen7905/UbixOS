@@ -33,6 +33,10 @@
 
 #define TTY_MAX_TERMS 5
 
+/* tty_setmode cmd values */
+#define TTY_SETRAW   0  /* val 1 = raw, 0 = canonical */
+#define TTY_SETECHO  1  /* val 1 = echo on, 0 = echo off */
+
 typedef struct tty_termNode {
     char *tty_buffer;
     char *tty_pointer;
@@ -42,6 +46,11 @@ typedef struct tty_termNode {
     pidType owner;
     char stdin[512];
     int stdinSize;
+    /* Line discipline */
+    char t_linebuf[512]; /* canonical input buffer (ISR fills until Enter) */
+    int  t_linelen;      /* chars currently in t_linebuf */
+    uint8_t t_echo;      /* 1 = echo input to terminal (default) */
+    uint8_t t_raw;       /* 1 = raw mode: bypass line discipline */
 } tty_term;
 
 int tty_init();

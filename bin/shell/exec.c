@@ -94,8 +94,8 @@ void execProgram(inputBuffer *data) {
       argv[i] = data->argv[i + 1];
     argv[data->argc] = NULL;
 
-    if (data->argv[1][0] == '/') {
-      /* absolute path */
+    if (data->argv[1][0] == '/' || strchr(data->argv[1], ':')) {
+      /* absolute or mountpoint-qualified path (e.g. sys:/bin/hello) */
       execve(data->argv[1], argv, envp_init_old);
     } else if (strchr(data->argv[1], '/')) {
       /* relative path with slash — relative to cwd */

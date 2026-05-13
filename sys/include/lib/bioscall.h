@@ -36,7 +36,12 @@
 #define EFLAG_IOPL3      0x3000
 #define EFLAG_VM         0x20000
 
+struct biosRegs {
+  uint16_t ax, bx, cx, dx, si, di, es, ds;
+};
+
 void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds);
+void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds, struct biosRegs *out);
 void bios16Code();
 
 #endif

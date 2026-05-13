@@ -5,3 +5,4 @@ execve:
   movl $0x3B,%eax
   int $0x80
   ret
+.size execve, . - execve

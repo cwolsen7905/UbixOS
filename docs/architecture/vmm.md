@@ -1,0 +1,134 @@
+# UbixOS Virtual Memory Manager
+
+**Source:** `sys/vmm/`
+
+---
+
+## Memory Layout
+
+Each process has a private 4 GB virtual address space divided into three regions:
+
+| Range | Description |
+|-------|-------------|
+| `0x00000000 – 0x000FFFFF` | Shared read-only (1:1 identity-mapped). Contains BIOS data, VGA frame buffer, and kernel boot code. |
+| `0x00100000 – 0xBFFFFFFF` | Per-process region. Private page tables; available for code, data, heap, and stack. |
+| `0xC0000000 – 0xFFFFFFFF` | Kernel-only region. Shared across all processes but only accessible at ring 0. User-space access triggers a GPF. |
+
+### Page Directory Layout (PDE indices)
+
+| PDE index | Virtual range | Mapped to |
+|-----------|--------------|-----------|
+| 0 | `0x00000000 – 0x003FFFFF` | Kernel code |
+| 1 | `0x00400000 – 0x007FEFFF` | Kernel code (continued); `0x007FF000–0x007FFFFF` = `USER_LDT` |
+| 2–767 | `0x00800000 – 0xBFFFFFFF` | Per-process user space |
+| 768 | `0xC0000000 – 0xC03FFFFF` | Page directories |
+| 769 | `0xC0400000 – 0xC07FFFFF` | Page tables |
+| 770 | `0xC0800000 – 0xC0BFFFFF` | Kernel space start |
+| 1015 | `0xFDC00000 – 0xFDFFFFFF` | Kernel space end |
+| 1016 | `0xFE000000 – 0xFE3FFFFF` | Kernel stack start |
+| 1023 | `0xFFC00000 – 0xFFFFFFFF` | Kernel stack end |
+
+PDE entry 0x300 (page 0x768) is the self-referencing slot that maps the top 1 GB kernel region.
+
+---
+
+## Key Functions
+
+### `vmmInit()`
+
+Top-level initialization entry point. Calls `vmmMemMapInit()` then `vmmPagingInit()`. Halts on failure.
+
+### `vmmMemMapInit()`
+
+Builds the physical page-frame map — a linked list of all available physical pages. Each entry tracks:
+
+- Physical frame address
+- Owning PID
+- Reference count (for COW sharing)
+- Status flags (`free`, `allocated`, `cow-pending`)
+
+### `vmmPagingInit()`
+
+Enables hardware paging. Sets up the kernel's initial page directory, identity-maps the lower 1 MB, and maps the physical frame list into the top 1 GB so the kernel can reach it from any process context.
+
+### `vmmCreateVirtualSpace(pid)`
+
+Allocates and initializes a fresh page directory for `pid`. Returns the physical base address. The shared lower 1 MB and top 1 GB kernel mappings are pre-installed; everything between 1 MB and 3 GB starts unmapped.
+
+### `vmmCopyVirtualSpace(pid)`
+
+Forks the address space of `pid` using copy-on-write (COW):
+
+1. The entire 2 MB – 3 GB range is duplicated at the page-table level.
+2. All pages in that range are marked read-only and COW-pending in both parent and child; no physical memory is copied.
+3. On the first write to any shared page, a page fault fires.
+4. The page-fault handler allocates a new physical frame, copies the content, clears the COW flag, and rewrites the faulting PTE to the new frame.
+
+---
+
+## MMIO Pages and the vmmMemoryMap Boundary
+
+Physical addresses at or above `numPages × PAGE_SIZE` (≥ 256 MB with the default QEMU `-m 256`
+configuration) are **MMIO** — framebuffer, PCI BARs, device registers, etc.  These frames have
+**no entry** in `vmmMemoryMap` (the array only covers RAM frames 0–numPages-1).  Passing such an
+address to any function that indexes into `vmmMemoryMap` computes an index in the billions,
+then accesses `0xC0800000 + huge_offset`, which is unmapped — causing a triple fault.
+
+Three code sites must guard against this:
+
+| Site | Guard | Without it |
+|------|-------|-----------|
+| `copyvirtualspace.c` — COW loop | `(phys >> 12) >= numPages` → share PTE as-is, skip `adjustCowCounter` | COW counter corrupted for MMIO frame |
+| `vmm_cleanVirtualSpace` (`paging.c`) — execve user-space teardown | `(phys >> 12) >= numPages` → clear PTE, skip `freePage` | `freePage(0xFD000000)` indexes `vmmMemoryMap[0xFD000]` → unmapped → kernel fault |
+| `freePage` (`vmm_memory.c`) | Explicit bounds check — returns `-1` for out-of-range index | Silent out-of-bounds array write |
+
+**MMIO detection idiom:**
+```c
+if ((phys >> 12) >= (uint32_t)numPages) {
+    /* MMIO — do not touch vmmMemoryMap */
+}
+```
+
+The framebuffer for a 1024×768×24 display at LFB=`0xFD000000` occupies 576 pages
+(0xFD000000–0xFD240000).  These are mapped into the viewing process at virtual `0x10000000`
+by `sys_mapfb` (syscall 43).  After a `fork`, these pages must be shared as-is — any attempt
+to COW or free them corrupts the kernel.
+
+---
+
+## Kernel Page Directory Desync After Fork
+
+`vmm_copyVirtualSpace` must **re-sync kernel PD entries (indices 770–1015) from the parent
+AFTER all allocations are complete**, not before.
+
+The reason: building the child's page tables calls `vmm_getFreeKernelPage` and
+`vmm_getFreePage`, which may allocate new kernel pages and, in doing so, add new PDE entries
+to the parent's kernel range (770–1015).  If the kernel PD entries are copied into the child
+*before* these allocations, any newly-added parent PDE will have no corresponding entry in
+the child — the child's PDE slot is zero.  The first time the child accesses that kernel
+address range, it takes a page fault with no handler, and the kernel triple-faults.
+
+**The fix** (already in `sys/vmm/copyvirtualspace.c`): the re-sync loop
+
+```c
+for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
+    newPageDirectory[x] = parentPageDirectory[x];
+```
+
+runs **after** all `vmm_getFreeKernelPage`/`vmm_getFreePage` calls, just before the
+PT_BASE_ADDR self-map page is filled in.  PD_BASE_ADDR and PT_BASE_ADDR (indices 768–769)
+are below VMM_KERN_START (770) and are not overwritten by this loop.
+
+---
+
+## Page-Fault Handling
+
+**Source:** `sys/vmm/page_fault.S`, `sys/vmm/pagefault.c`
+
+x86 exception 14 (page fault) is routed to the VMM handler, which distinguishes three cases:
+
+| Case | Condition | Action |
+|------|-----------|--------|
+| COW fault | Write to a shared COW page | Allocate new frame, copy, update PTE, resume |
+| Demand-zero | First access to an allocated but unmapped page | Allocate zeroed frame, map, resume |
+| Invalid access | Unmapped or protected region | Deliver `SIGSEGV` to faulting process |
