@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,49 +28,26 @@
 
 #include <sys/_null.h>
 #include <ubixos/sched.h>
-#include <ubixos/vitals.h>
-#include <isa/atkbd.h>
-#include <isa/pit.h>
-#include <sys/shutdown.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
-#include <ubixos/endtask.h>
 #include <ubixos/wait.h>
-#include <vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <vmm/vmm.h>
-#include <sys/gdt.h>
-#include <sys/idt.h>
-#include <isa/8259.h>
 #include <string.h>
 #include <assert.h>
 #include <sys/descrip.h>
 
-#include <ubixos/spinlock.h>
+/* Shared with sched_switch.c via sched_internal.h — not static. */
+kTask_t *taskList = 0x0;
+struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
-static kTask_t *taskList = 0x0;
 static kTask_t *delList = 0x0;
 static uint32_t nextID = 1;
 
 kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
 
-static struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
-
 int need_resched = 0;
-
-/************************************************************************
-
- Function: int sched_init()
-
- Description: This function is used to enable the kernel scheduler
-
- Notes:
-
- 02/20/2004 - Approved for quality
-
- ************************************************************************/
 
 int sched_init() {
   taskList = (kTask_t *) kmalloc(sizeof(kTask_t));
@@ -79,112 +56,9 @@ int sched_init() {
 
   taskList->id = nextID++;
 
-  /* Print out information on scheduler */
   kprintf("sched0 - Address: [0x%X]\n", taskList);
 
-  /* Return so we know everything went well */
   return (0x0);
-}
-
-void sched() {
-  uint32_t memAddr = 0x0;
-  kTask_t *tmpTask = 0x0;
-  kTask_t *delTask = 0x0;
-
-  /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
-   * and reboot when time is up. Runs before the spinlock to keep it simple. */
-  if (reboot_at_tick != 0) {
-    uint32_t now  = systemVitals->sysTicks;
-    uint32_t left = (reboot_at_tick > now) ? (reboot_at_tick - now) : 0;
-    uint32_t secs = (left + PIT_TIMER - 1) / PIT_TIMER;
-    static uint32_t last_printed = 0;
-
-    if (secs != last_printed) {
-      last_printed = secs;
-      if (secs > 0)
-        kprintf("Rebooting in %u...\n", secs);
-    }
-    if (left == 0) {
-      kprintf("Rebooting now.\n");
-      reboot_at_tick = 0;
-      sys_shutdown(REBOOT);
-    }
-  }
-
-  if (spinTryLock(&schedulerSpinLock))
-    return;
-
-  tmpTask = ((_current == 0) ? 0 : _current->next);
-  schedStart:
-
-  /* Yield the next task from the current prio queue */
-  for (; tmpTask != 0x0; tmpTask = tmpTask->next) {
-    if (tmpTask->state == FORK)
-      tmpTask->state = READY;
-
-    if (tmpTask->state == READY) {
-      _current->state = (_current->state == DEAD) ? DEAD : READY;
-      _current = tmpTask;
-      break;
-    }
-    else if (tmpTask->state == DEAD) {
-      delTask = tmpTask;
-
-      if (delTask->parent != 0x0) {
-        delTask->parent->children -= 1;
-        delTask->parent->last_exit = delTask->id;
-        delTask->parent->state = READY;
-        if (delTask->term != NULL && delTask->term->owner == delTask->id)
-          delTask->term->owner = delTask->parent->id;
-      }
-
-      tmpTask = tmpTask->next;
-
-            sched_deleteTask(delTask->id);
-            sched_addDelTask(delTask);
-
-      goto schedStart;
-    }
-  }
-
-  /* Finished all the tasks, restarting the list */
-  if (0x0 == tmpTask) {
-    tmpTask = taskList;
-    goto schedStart;
-  }
-
-  if (_current->state == READY || _current->state == RUNNING) {
-
-    if (_current->oInfo.v86Task == 0x1) {
-      irqDisable(0x0);
-      kprintf("IRQD(%i): 0x%X*0x%X:0x%X@, esp: 0x%X:0x%X, ebp: 0x%X:0x%X ds: 0x%X", _current->id, _current->tss.eflags, _current->tss.cs, _current->tss.eip, _current->tss.ss, _current->tss.esp, _current->tss.ss, _current->tss.ebp,_current->tss.ds);
-      kprintf("ss0: 0x%X, esp0: 0x%X", _current->tss.ss0, _current->tss.esp0);
-    }
-
-    asm("cli");
-
-    memAddr = (uint32_t) &(_current->tss);
-    ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
-    ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
-    ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
-    ubixGDT[4].descriptor.access = '\x89';
-
-    _current->state = RUNNING;
-
-    spinUnlock(&schedulerSpinLock);
-
-    asm("ljmp $0x20,$0");
-    /* The outgoing task resumes here on its next scheduling slot.
-     * ljmp saved EFLAGS with IF=0 (from cli above) into its TSS, so
-     * we must re-enable interrupts explicitly here rather than before
-     * the ljmp (which would create a race window). */
-    asm("sti");
-  }
-  else {
-    spinUnlock(&schedulerSpinLock);
-  }
-
-  return;
 }
 
 kTask_t *schedNewTask() {
@@ -205,7 +79,6 @@ kTask_t *schedNewTask() {
   tmpTask->tss.esp0 = (uint32_t) tmpTask->kernelStack + 4096;
   tmpTask->tss.ss0  = 0x10;
 
-  /* Filling in tasks attrs */
   tmpTask->usedMath = 0x0;
   tmpTask->state = NEW;
 
@@ -243,7 +116,6 @@ void sched_killTree(pidType id) {
 int sched_deleteTask(pidType id) {
   kTask_t *tmpTask = 0x0;
 
-  /* Checking each task from the prio queue */
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
     if (tmpTask->id == id) {
       if (tmpTask->prev != 0x0)
@@ -289,56 +161,6 @@ kTask_t *schedFindTask(uint32_t id) {
   return (0x0);
 }
 
-/************************************************************************
-
- Function: void schedEndTask()
-
- Description: This function will end a task
-
- Notes:
-
- 02/20/2004 - Approved for quality
-
- ************************************************************************/
-void schedEndTask(pidType pid) {
-  endTask(_current->id);
-  sched_yield();
-}
-
-/************************************************************************
-
- Function: int schedEndTask()
-
- Description: This function will yield a task
-
- Notes:
-
- 02/20/2004 - Approved for quality
-
- ************************************************************************/
-
-void sched_yield() {
-  sched();
-}
-
-/*
- asm(
- ".globl sched_yield \n"
- "sched_yield:       \n"
- "  cli              \n"
- "  call sched       \n"
- );
- */
-
-/************************************************************************
-
- Function: int sched_setStatus(pidType pid,tState state)
-
- Description: Change the tasks status
-
- Notes:
-
- ************************************************************************/
 int sched_setStatus(pidType pid, tState state) {
   kTask_t *tmpTask = schedFindTask(pid);
   if (tmpTask == 0x0)
@@ -347,7 +169,7 @@ int sched_setStatus(pidType pid, tState state) {
   return (0x0);
 }
 
-void add_wait_queue(struct wait_queue ** p, struct wait_queue * wait) {
+void add_wait_queue(struct wait_queue **p, struct wait_queue *wait) {
   unsigned long flags;
 
   save_flags(flags);
@@ -363,9 +185,9 @@ void add_wait_queue(struct wait_queue ** p, struct wait_queue * wait) {
   restore_flags(flags);
 }
 
-void remove_wait_queue(struct wait_queue ** p, struct wait_queue * wait) {
+void remove_wait_queue(struct wait_queue **p, struct wait_queue *wait) {
   unsigned long flags;
-  struct wait_queue * tmp;
+  struct wait_queue *tmp;
 
   save_flags(flags);
   cli();
@@ -410,7 +232,7 @@ void wake_up_interruptible(struct wait_queue **q) {
 
 void wake_up(struct wait_queue **q) {
   struct wait_queue *tmp;
-  kTask_t * p;
+  kTask_t *p;
 
   if (!q || !(tmp = *q))
     return;
