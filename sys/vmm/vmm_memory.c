@@ -35,8 +35,7 @@
 #include <ubixos/spinlock.h>
 #include <assert.h>
 
-//MrOlsen (2016-01-11) NOTE: Need to Seperate Out CPU Specific Stuff Over Time
-#include <i386/cpu.h>
+#include <machine/cpu.h>
 
 static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;

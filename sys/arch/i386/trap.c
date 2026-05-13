@@ -27,7 +27,7 @@
  */
 
 #include <sys/types.h>
-#include <i386/signal.h>
+#include <machine/signal.h>
 #include <sys/trap.h>
 #include <sys/gdt.h>
 #include <ubixos/sched.h>
@@ -63,6 +63,16 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   unsigned long esp;
   unsigned short ss;
   unsigned long *stack;
+
+  kprintf("DIK: str=0x%X regs=0x%X err=0x%X v86=%d\n",
+    (uint32_t)str, (uint32_t)regs, (uint32_t)err, _current->oInfo.v86Task);
+
+  /* If this is a VM86 task, kill it gracefully instead of dumping */
+  if (_current->oInfo.v86Task) {
+    _current->state = DEAD;
+    endTask(_current->id);
+    return;
+  }
 
   esp = (unsigned long) &regs->tf_esp;
 
@@ -109,9 +119,25 @@ void trap(struct trapframe *frame) {
 
   cr2 = rcr2();
 
-    // kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2, _current->tss.eip, _current->tss.ldt);
+  kprintf("trap: tno=%d efl=0x%X cs=0x%X eip=0x%X cr2=0x%X v86=%d\n",
+    frame->tf_trapno, frame->tf_eflags, frame->tf_cs, frame->tf_eip, cr2,
+    _current->oInfo.v86Task);
+
+  /*
+   * VM86 tasks can fault with IF=0 — the BIOS uses CLI legitimately and
+   * __gpf virtualizes it.  Bypass the interrupt-off check entirely and
+   * handle the page fault directly, killing the task on anything unexpected.
+   */
+  if (frame->tf_eflags & PSL_VM) {
+    if (frame->tf_trapno == 0xc)
+      vmm_pageFault(frame, cr2);
+    else
+      endTask(_current->id);
+    return;
+  }
+
   if ((frame->tf_eflags & PSL_I) == 0) {
-    if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
+    if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER) {
       kpanic("INT OFF! USER");
       die_if_kernel("TEST", frame, 0x100);
     }
@@ -119,32 +145,6 @@ void trap(struct trapframe *frame) {
       kpanic("INT OFF! KERN[0x%X]", trap_code);
       die_if_kernel("TEST", frame, 0x200);
     }
-  }
-
-  /*
-   * VM86 monitor: #GP (trap 0xD) from a VM86 task.
-   * With IOPL=3, INT executes directly via the real-mode IVT.  The only
-   * instruction that still traps is HLT (always privileged in VM86 mode).
-   * We use HLT as the completion signal from bios16code.S: when we see a
-   * #GP with PSL_VM set and the faulting byte is 0xF4 (HLT), the BIOS
-   * call is done — mark the task state = 0 so biosCall() can proceed.
-   */
-  if (frame->tf_trapno == 0xD && (frame->tf_eflags & PSL_VM)) {
-    uint32_t linear = (frame->tf_cs << 4) + (frame->tf_eip & 0xFFFF);
-    uint8_t  opcode = *(uint8_t *)linear;
-    if (opcode == 0xF4) {
-      /* HLT: BIOS call complete, wake biosCall() */
-      _current->state = 0;
-      sched_yield();
-      return;
-    }
-    /* Any other #GP in VM86 — kill the task */
-    kprintf("vm86: unhandled #GP opcode 0x%X at 0x%X:0x%X\n",
-            opcode, frame->tf_cs, frame->tf_eip);
-    _current->state = 0;
-    endTask(_current->id);
-    sched_yield();
-    return;
   }
 
   /* Suppress verbose print for expected user-mode COW write faults

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -26,11 +26,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _SYS_LIMITS_H
-#define _SYS_LIMITS_H
+#ifndef _MACHINE_LIMITS_H
+#define _MACHINE_LIMITS_H
 
-#include <machine/limits.h>
+#include <i386/limits.h>
 
-#define       LONG_BIT        __LONG_BIT
-
-#endif /* END _SYS_LIMITS_H */
+#endif /* _MACHINE_LIMITS_H */
