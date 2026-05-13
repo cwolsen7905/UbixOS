@@ -35,6 +35,7 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <lib/bioscall.h>
+#include <lib/vesa.h>
 #include <sde/sde.h>
 #include <sys/shutdown.h>
 #include <vmm/vmm.h>
@@ -57,6 +58,7 @@ void systemTask() {
     kpanic("Error: Error creating mailbox: system\n");
   }
 
+
   while (1) {
     if (mpi_fetchMessage("system", &myMsg) == 0x0) {
       switch (myMsg.header) {
@@ -75,6 +77,13 @@ void systemTask() {
           break;
         case 31337:
           kprintf("system: backdoor opened\n");
+          break;
+        case 0x81:
+          if (vesa_init(0x115) == 0) {
+            vesa_map_fb();
+            vesa_draw_test();
+            vesa_draw_circle(400, 300, 150, 0xFFFFFF);
+          }
           break;
         case 0x80:
           if (!strcmp(myMsg.data, "sdeStart")) {

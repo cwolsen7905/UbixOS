@@ -198,6 +198,12 @@ int commands(inputBuffer *data)
 		cmdMsg.data[sizeof(cmdMsg.data) - 1] = '\0';
 		mpi_postMessage("system", 0x1, &cmdMsg);
 	}
+	else if (argv[1] != 0x0 && !strcmp(argv[1], "gfx-test"))
+	{
+		cmdMsg.header = 0x81;
+		cmdMsg.data[0] = '\0';
+		mpi_postMessage("system", 0x1, &cmdMsg);
+	}
 	else
 	{
 		return (0);

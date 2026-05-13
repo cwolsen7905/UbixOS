@@ -455,6 +455,7 @@ void __gpf(struct trapframe *frame) {
   static uint32_t gpfIterCount = 0;
 
   gpfEnter:
+  asm("cli");
   isOperand32 = FALSE;
   isAddress32 = FALSE;
   /* Kill VM86 tasks that spin for too long (e.g. BIOS busy-wait loops).
@@ -564,7 +565,6 @@ void __gpf(struct trapframe *frame) {
         _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 2) & 0xffff;
       }
       _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
-      /* kprintf("popf [0x%X]\n",_current->id); */
     break;
     case 0xFA:
       _current->oInfo.v86If = FALSE;

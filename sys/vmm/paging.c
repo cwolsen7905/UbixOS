@@ -282,6 +282,40 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
   return (source);
 }
 
+/* Map a physical MMIO page (e.g. framebuffer) to the same virtual address.
+ * Unlike vmm_remapPage, this silently overwrites an existing mapping so
+ * callers like ogDisplay_UbixOS::SetMode can be called more than once. */
+int vmm_remapIOPage(uint32_t phys, uint16_t perms, pidType pid) {
+  uint16_t pdIdx, ptIdx;
+  uint32_t *pageDir, *pageTable;
+
+  if (phys == 0x0)
+    K_PANIC("vmm_remapIOPage: phys == 0");
+
+  spinLock(&pdSpinLock);
+
+  pageDir = (uint32_t *) PD_BASE_ADDR;
+  pdIdx   = PD_INDEX(phys);
+
+  if ((pageDir[pdIdx] & PAGE_PRESENT) != PAGE_PRESENT)
+    vmm_allocPageTable(pdIdx, pid);
+
+  pageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * pdIdx));
+  ptIdx     = PT_INDEX(phys);
+
+  pageTable[ptIdx] = (uint32_t)(phys | perms);
+
+  asm volatile(
+    "push %eax     \n"
+    "movl %cr3,%eax\n"
+    "movl %eax,%cr3\n"
+    "pop  %eax     \n"
+  );
+
+  spinUnlock(&pdSpinLock);
+  return phys;
+}
+
 /************************************************************************
 
  Function: void *vmm_getFreeKernelPage(pidType pid, uint16_t count);

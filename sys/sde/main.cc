@@ -91,8 +91,8 @@ void sdeThread() {
     for (tmp = windows; tmp; tmp = tmp->next) {
       switch (tmp->status) {
         case registerWindow:
-          kprintf("buf->buffer 0x%X, buf->bSize: 0x%X", buf->buffer, buf->bSize);
           buf = (ogSurface *) tmp->buf;
+          kprintf("sde: registerWindow pid=%d buf=0x%X bSize=0x%X\n", tmp->pid, buf->buffer, buf->bSize);
           buf->buffer = (void *) vmm_mapFromTask(tmp->pid, buf->buffer, buf->bSize);
           if (buf->buffer == 0x0) {
             kprintf("Error: buf->buffer\n");

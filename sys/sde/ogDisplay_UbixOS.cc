@@ -73,6 +73,9 @@ void ogDisplay_UbixOS::GetVESAInfo(void) {
   VESAInfo->VBESignature[2] = 'E';
   VESAInfo->VBESignature[3] = '2';
   biosCall(0x10, 0x4F00, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1100, 0x0);
+  kprintf("VBE: sig=%.4s ver=%d.%d mem=%dKB\n",
+    VESAInfo->VBESignature, VESAInfo->majVersion, VESAInfo->minVersion,
+    VESAInfo->totalMemory * 64);
   return;
 } // ogDisplay_UbixOS::GetVESAInfo
 
@@ -82,17 +85,25 @@ uint16_t ogDisplay_UbixOS::FindMode(uint32_t _xRes, uint32_t _yRes, uint32_t _BP
   if ((_xRes == 320) && (_yRes == 200) && (_BPP == 8))
     return 0x13;
 
-//  if ((VESAInfo==NULL) || (VESAInfo->videoModePtr==NULL)) return 0;
-
   if (modeInfo == NULL)
     return 0;
 
-  for (mode = 0x100; mode < 0x1FF; mode++) {
+  kprintf("VBE: searching for %dx%dx%d\n", _xRes, _yRes, _BPP);
+
+  uint16_t seg = (VESAInfo->videoModePtr >> 16) & 0xFFFF;
+  uint16_t off = VESAInfo->videoModePtr & 0xFFFF;
+  uint16_t *modeList = (uint16_t *)(uintptr_t)(((uint32_t)seg << 4) + off);
+
+  for (int i = 0; modeList[i] != 0xFFFF; i++) {
+    mode = modeList[i];
     GetModeInfo(mode);
+    kprintf("VBE: mode 0x%X: %dx%dx%d phys=0x%X\n",
+      mode, modeInfo->xRes, modeInfo->yRes, modeInfo->bitsPerPixel, modeInfo->physBasePtr);
     if ((modeInfo->xRes >= _xRes) && (modeInfo->yRes >= _yRes) && (modeInfo->bitsPerPixel == _BPP))
       return mode;
   }
 
+  kprintf("VBE: no mode found for %dx%dx%d\n", _xRes, _yRes, _BPP);
   return 0;
 } // ogDisplay_UbixOS::FindMode
 
@@ -127,7 +138,9 @@ void ogDisplay_UbixOS::SetMode(uint16_t mode) {
   else {
     buffer = NULL;
     mode |= 0x4000;  // attempt lfb
-    GetModeInfo(mode);
+    GetModeInfo(mode & 0x1FF);  // strip flags for query
+    kprintf("VBE: SetMode 0x%X phys=0x%X %dx%d\n",
+      mode, modeInfo->physBasePtr, modeInfo->xRes, modeInfo->yRes);
     if (modeInfo->physBasePtr == 0)
       return;
     buffer = (void *) modeInfo->physBasePtr;
@@ -166,8 +179,9 @@ void ogDisplay_UbixOS::SetMode(uint16_t mode) {
 
   printOff = 0;
   for (i = 0x0; i < ((size) / 4096); i++) {
-    if ((vmm_remapPage(modeInfo->physBasePtr + (i * 0x1000), modeInfo->physBasePtr + (i * 0x1000), KERNEL_PAGE_DEFAULT, -2, 0)) == 0x0)
-      kpanic("Error: vmm_remapPage failed\n");
+    if (vmm_remapIOPage(modeInfo->physBasePtr + (i * 0x1000),
+        KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, -2) == 0x0)
+      kpanic("Error: vmm_remapIOPage failed\n");
   } // for i
 
   owner = this;
