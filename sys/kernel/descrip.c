@@ -111,6 +111,7 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
     int i = 0;
 
     fp = (struct file*) kmalloc(sizeof(struct file));
+    memset(fp, 0, sizeof(struct file));
 
     /* First 5 Descriptors Are Reserved */
     for (i = 5; i < MAX_FILES; i++) {
@@ -396,20 +397,28 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
         return (-1);
     }
     else if (td->o_files[to] != 0x0) {
-
-        fclose(((struct file*) td->o_files[to])->fd);
-        if (fdestroy(td, (struct file*) td->o_files[to], to) != 0x0)
+        struct file *old = (struct file*) td->o_files[to];
+        if (old->fd_type != 3 && old->fd != 0x0)
+            fclose(old->fd);
+        if (fdestroy(td, old, to) != 0x0)
             kprintf("[%s:%i] Error with fdestroy!", __FILE__, __LINE__);
     }
 
     fp = (struct file*) td->o_files[from];
-    dup_fp = (struct file*) kmalloc(sizeof(struct file));
+    if (fp == 0x0) {
+        kprintf("dup2: from fd %u is not open\n", from);
+        return (-1);
+    }
+    if (from == to)
+        return (0x0);
 
+    dup_fp = (struct file*) kmalloc(sizeof(struct file));
     memcpy(dup_fp, fp, sizeof(struct file));
 
     td->o_files[to] = (void*) dup_fp;
 
-    ((struct file*) td->o_files[from])->fd->dup++;
+    if (fp->fd != 0x0)
+        fp->fd->dup++;
 
     return (0x0);
 }

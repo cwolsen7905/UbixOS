@@ -33,6 +33,7 @@
 #include <sys/video.h>
 #include <sys/pipe.h>
 #include <sys/errno.h>
+#include <sys/fcntl.h>
 #include <string.h>
 #include <ufs/ufs.h>
 #include <lib/kprintf.h>
@@ -167,15 +168,18 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
   /* Check fd_type first so dup2'd pipe fds work on stdin slot (0-3) */
   if (fd != 0x0 && fd->fd_type == 3) {
     pFD = fd->data;
-    while (pFD->bCNT == 0 && rpCNT < 100) {
-      sched_yield();
-      rpCNT++;
+    if (fd->f_flag & O_NONBLOCK) {
+      /* Non-blocking: return 0 immediately if no data */
+      if (pFD->bCNT == 0) {
+        td->td_retval[0] = 0;
+        return (0);
+      }
+    } else {
+      /* Blocking: wait until data arrives */
+      while (pFD->bCNT == 0)
+        sched_yield();
     }
-
-    if (rpCNT >= 100 && pFD->bCNT == 0) {
-      td->td_retval[0] = 0;
-    }
-    else {
+    {
       nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
       memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
       pFD->headPB->offset += nbytes;

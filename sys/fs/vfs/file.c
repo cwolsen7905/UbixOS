@@ -39,6 +39,7 @@
 #include <lib/kprintf.h>
 #include <assert.h>
 #include <sys/descrip.h>
+#include <sys/pipe.h>
 #include "../fat/fat_filelib.h"
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
@@ -86,32 +87,39 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args) {
     char c;
 
     if (args->FILE->fd == 0x0) {
+        /* stdin: check if it has been redirected to a pipe */
+        struct file *stdinf = (struct file *)td->o_files[0];
+        if (stdinf != 0x0 && stdinf->fd_type == 3) {
+            /* pipe-backed stdin: block until a byte arrives */
+            struct pipeInfo *pFD = (struct pipeInfo *)stdinf->data;
+            while (pFD->bCNT == 0)
+                sched_yield();
+            /* read one byte from the pipe */
+            struct pipeBuf *pb = pFD->headPB;
+            c = pb->buffer[pb->offset++];
+            if (pb->offset >= pb->nbytes) {
+                pFD->headPB = pb->next;
+                kfree(pb->buffer);
+                kfree(pb);
+                pFD->bCNT--;
+            }
+            td->td_retval[0] = (unsigned char)c;
+            return (0);
+        }
 
+        /* TTY-backed stdin */
         while (1) {
-
             if (_current->term == tty_foreground) {
                 c = getchar();
-
                 if (c != 0x0) {
                     td->td_retval[0] = c;
                     return (0);
                 }
-
                 sched_yield();
-
             }
             else {
                 sched_yield();
             }
-            /*
-             else {
-             kprintf("Waking Task: %i\n",tty_foreground->owner);
-             sched_setStatus(tty_foreground->owner,READY);
-             kprintf("Sleeping Task: %i\n",_current->id);
-             sched_setStatus(_current->id,WAIT);
-             sched_yield();
-             }
-             */
         }
     }
     else {

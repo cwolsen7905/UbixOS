@@ -11,36 +11,25 @@ typedef struct {
 
 typedef void (*fptr)(void);
 
+static void handle_static_init(void) {
+        typedef void (*ctor_t)(void);
+        extern ctor_t __init_array_start[];
+        extern ctor_t __init_array_end[];
+        ctor_t *fn;
+        for (fn = __init_array_start; fn < __init_array_end; fn++) {
+                if (*fn && (unsigned long)(void *)*fn != (unsigned long)-1)
+                        (*fn)();
+        }
+}
+
 void _start1(fptr cleanup, int argc, char *argv[])
 {
         char **env;
 
         env = argv + argc + 1;
         environ = env;
-/*
-        handle_argv(argc, argv, env);
-        if (&_DYNAMIC != NULL)
-                atexit(cleanup);
-        else
-                _init_tls();
 
-#ifdef GCRT
-        atexit(_mcleanup);
-        monstartup(&eprol, &etext);
-__asm__("eprol:");
-#endif
-
-        handle_static_init(argc, argv, env);
-*/
-/*
-asm(
-  "pushl %eax\n"
-  "movl $0xDEADBEEF,%eax\n"
-  "pushl %eax\n"
-  "movl (%eax),%eax\n"
-  "pushl %eax\n"
-);
-*/
+        handle_static_init();
         exit(main(argc, argv, env));
 }
 

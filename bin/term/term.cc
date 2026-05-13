@@ -31,6 +31,7 @@ extern "C" {
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/sys.h>
 #include <sys/sched.h>
 #include <sys/mpi.h>
@@ -47,7 +48,12 @@ extern "C" {
 #define TERM_FG_R   0xC0u
 #define TERM_FG_G   0xC0u
 #define TERM_FG_B   0xC0u
-#define FONT_PATH   "sys:/lib/fonts/ROM8X8.DPF"
+#define FONT_PATH   "sys:/var/fonts/ROM8X8.DPF"
+
+#define TITLE_BG    0x00284870u   /* dark navy blue */
+#define TITLE_HI    0x004070A8u   /* lighter blue highlight (top edge) */
+#define TITLE_SEP   0x00102030u   /* dark separator line (bottom edge) */
+#define TITLE_PAD   3             /* pixels above/below text in title bar */
 
 /* ------------------------------------------------------------------ */
 /* Screen cell grid                                                     */
@@ -62,6 +68,7 @@ static char       g_views[] = "views";
 
 static int  g_cols, g_rows;
 static int  g_cur_col = 0, g_cur_row = 0;
+static int  g_title_h = 0;   /* pixel height of the title bar */
 
 /* Simple circular line buffer — each cell is one character */
 #define MAX_ROWS 128
@@ -71,10 +78,30 @@ static int  g_top = 0;   /* index of first visible row */
 static void
 term_redraw(void)
 {
-	g_surf.ogFillRect(0, 0, TERM_W - 1, TERM_H - 1, TERM_BG);
-
 	int fw = (int)g_font.GetWidth();
 	int fh = (int)g_font.GetHeight();
+	int text_top = g_title_h + 1;   /* first pixel of the text area */
+
+	/* ---- title bar ---- */
+	/* top highlight edge */
+	g_surf.ogHLine(0, TERM_W - 1, 0, TITLE_HI);
+	/* main fill */
+	g_surf.ogFillRect(0, 1, TERM_W - 1, g_title_h - 2, TITLE_BG);
+	/* bottom separator */
+	g_surf.ogHLine(0, TERM_W - 1, g_title_h - 1, TITLE_SEP);
+
+	/* title text — white, centered */
+	g_font.SetFGColor(0xEF, 0xEF, 0xEF, 255);
+	g_font.SetBGColor(
+	    (TITLE_BG >> 16) & 0xFF,
+	    (TITLE_BG >>  8) & 0xFF,
+	     TITLE_BG        & 0xFF,
+	    255);
+	int ty = (g_title_h - fh) / 2;
+	g_font.CenterTextX(g_surf, ty, "Terminal");
+
+	/* ---- text area ---- */
+	g_surf.ogFillRect(0, text_top, TERM_W - 1, TERM_H - 1, TERM_BG);
 
 	g_font.SetFGColor(TERM_FG_R, TERM_FG_G, TERM_FG_B, 255);
 	g_font.SetBGColor(
@@ -85,16 +112,15 @@ term_redraw(void)
 
 	for (int r = 0; r < g_rows; r++) {
 		int line_idx = (g_top + r) % MAX_ROWS;
-		int y = r * fh;
+		int y = text_top + r * fh;
 		g_font.PutString(g_surf, 0, y, g_lines[line_idx]);
 		(void)fw;
 	}
 
 	/* cursor block */
-	int cx = g_cur_col * (int)g_font.GetWidth();
-	int cy = g_cur_row * (int)g_font.GetHeight();
-	g_surf.ogFillRect(cx, cy, cx + (int)g_font.GetWidth() - 1,
-	    cy + (int)g_font.GetHeight() - 1, 0x00C0C0C0u);
+	int cx = g_cur_col * fw;
+	int cy = text_top + g_cur_row * fh;
+	g_surf.ogFillRect(cx, cy, cx + fw - 1, cy + fh - 1, 0x00C0C0C0u);
 }
 
 static void
@@ -293,13 +319,18 @@ main(int argc, char **argv)
 		return 1;
 	}
 
-	g_cols = TERM_W / (int)g_font.GetWidth();
-	g_rows = TERM_H / (int)g_font.GetHeight();
+	g_cols    = TERM_W / (int)g_font.GetWidth();
+	g_title_h = (int)g_font.GetHeight() + TITLE_PAD * 2;
+	g_rows    = (TERM_H - g_title_h - 1) / (int)g_font.GetHeight();
 	if (g_rows > MAX_ROWS) g_rows = MAX_ROWS;
 
 	memset(g_lines, 0, sizeof(g_lines));
 
 	shell_spawn();
+
+	/* Poll shell output without blocking the event loop */
+	if (g_shell_out >= 0)
+		fcntl(g_shell_out, F_SETFL, O_NONBLOCK);
 
 	term_redraw();
 	send_flip();

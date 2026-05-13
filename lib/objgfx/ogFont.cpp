@@ -129,8 +129,8 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
   delete[] fontData;
 
   infile = fopen(fontFile, "r");
-
-  //fseek(infile, offset, SEEK_SET);
+  if (!infile)
+    return false;
 
   lresult = fread(&header, sizeof(header), 1, infile);
   width = header.width;

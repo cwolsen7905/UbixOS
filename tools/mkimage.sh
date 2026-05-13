@@ -167,8 +167,8 @@ mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
 [ -f sys/sde/assets/ubix.bmp ] && mcopy -i "$IMG"@@1M sys/sde/assets/ubix.bmp ::/var/background/ubix.bmp
 mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true
-for f in tools/*.DPF; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/var/fonts/; done
-[ -f lib/objgfx40/BOLD.DPF ] && mcopy -i "$IMG"@@1M lib/objgfx40/BOLD.DPF ::/var/fonts/
+for f in tools/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
+for f in lib/objgfx40/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
 
 echo ""
 echo "Done: $IMG"
