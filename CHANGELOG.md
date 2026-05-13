@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [2.0.1-BETA] - 2026-05-13
+
 ### Added
 - `bin/ed/` — POSIX `ed` line editor: supports all standard address forms (`.`, `$`, `n`, `m,n`, `/re/`, `%`) and commands `p`, `n`, `l`, `=`, `a`, `i`, `c`, `d`, `j`, `m`, `s`, `e`, `E`, `r`, `w`, `f`, `q`, `Q`. Reads files via `fread` (robust against kernel `fgetc` EOF quirks). Built and linked against `ubix_api`.
 - `bin/ed/README.md` — usage guide: address syntax, command reference, limits, and worked examples.
@@ -113,6 +117,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `lib/libc/string/strerror.c` — added `extern` declarations for `sys_nerr`/`sys_errlist` (defined in `gen/errlst.c`) to fix implicit-declaration build errors.
 - `contrib/tcc/ubixos_shim/stdlib_ext.c` — removed stub `getenv` (now provided by `lib/libc/stdlib/getenv.o`).
 - `contrib/tcc/ubixos_shim/syscalls.S` — removed stub `read` (now provided by `lib/libc/sys/read.o`).
+
+### Added
+- `bin/views/` — MPI-based display compositor: jailbar desktop, PS/2 arrow cursor, window table (up to 16 windows), DISPLAY_QUERY/CLAIM/FLIP/RELEASE/MOUSE protocol, hit-testing for mouse event routing. Launched by `views` on startup; taskbar is forked as a child.
+- `bin/taskbar/` — system taskbar: blue strip at screen bottom, live clock (HH:MM:SS), launcher button with press/release highlight, flyout menu (Terminal, About) that opens above the button on click.
+- `lib/libfb/` — shared framebuffer drawing library (`fb_rect`, `fb_blit`, `fb_text`, `fb_pixel`, `fb_set_target`, `fb_share_buffer`, `fb_poll_mouse`) used by views and display clients.
+- `include/views/display_proto.h` — MPI message structs for the display protocol shared between the compositor and clients.
+- `include/fb/fb.h` — public framebuffer API header.
+- `sys/vmm/vmm_share_region.c` — native syscall 45: maps physical pages from one process's address space into another; used by views to give display clients a shared pixel buffer.
+- `sys/isa/mouse.c` — PS/2 mouse packet decoder: relative motion accumulation, button state tracking, ring-buffer drain via `fb_poll_mouse`.
+- `include/sys/mouse.h` — `mouse_event_t` struct for the mouse ring buffer.
+
+### Fixed
+- `lib/libc/sys/getpid.S` — replaced broken `getpid.c` stub that called `exit()` (eax=1) instead of getpid (eax=20), silently terminating any process that called `getpid()`.
+- `sys/vmm/copyvirtualspace.c` — COW loop now skips `freePage` for physical frames at or above `numPages × PAGE_SIZE` (MMIO/framebuffer pages have no `vmmMemoryMap` entry); prevents triple-fault on fork when VESA framebuffer pages are mapped.
+- `sys/vmm/paging.c` (`vmm_cleanVirtualSpace`) — likewise skips `freePage` for MMIO frames during `execve` address-space teardown.
+- `sys/vmm/vmm_memory.c` (`freePage`) — explicit bounds check returns -1 for out-of-range frame indices as a safety net.
+- `sys/vmm/copyvirtualspace.c` — kernel PD entries (indices 770–1015) are re-synced from the parent **after** all `vmm_getFreeKernelPage`/`vmm_getFreePage` allocations to prevent child from inheriting stale zero PD entries for newly-expanded kernel ranges.
 
 ---
 
@@ -301,7 +322,8 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...HEAD
+[2.0.1-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...v2.0.1-BETA
 [2.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/acb8ba9a...v2.0.0-BETA
 [1.1.0-CURRENT]: https://github.com/cwolsen7905/UbixOS/compare/30af09b3...acb8ba9a
 [1.24.0]: https://github.com/cwolsen7905/UbixOS/compare/6e02e5b2...30af09b3
