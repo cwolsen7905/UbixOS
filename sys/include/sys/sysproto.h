@@ -30,6 +30,7 @@
 #define _SYS_SYSPROTO_H
 
 #include <sys/thread.h>
+#include <sys/fb.h>
 
 typedef int register_t;
 
@@ -112,5 +113,8 @@ int sys_getvfscwd(struct thread *, struct sys_getvfscwd_args *);
 
 struct sys_ttyctrl_args { int cmd; int val; };
 int sys_ttyctrl(struct thread *, struct sys_ttyctrl_args *);
+
+struct sys_mapfb_args { struct fb_info *info; };
+int sys_mapfb(struct thread *, struct sys_mapfb_args *);
 
 #endif

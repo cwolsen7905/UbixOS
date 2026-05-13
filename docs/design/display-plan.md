@@ -291,8 +291,8 @@ This is the path to macOS IOSurface / Metal compositing.
 
 | Phase | Status |
 |-------|--------|
-| 1 | Fix SDE build | Not started |
-| 2 | `sys_mapfb()` syscall | Not started |
+| 1 | Fix SDE build | Done |
+| 2 | `sys_mapfb()` syscall | Done |
 | 3 | `lib/libfb/` | Not started |
 | 4 | `bin/display` + taskbar | Not started |
 | 5 | MPI display protocol | Not started |
