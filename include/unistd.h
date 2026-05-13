@@ -72,6 +72,7 @@ void _exit(int status);
 int open(const char *path, int flags, ...);
 int close(int fd);
 int dup2(int oldfd, int newfd);
+int pipe(int fds[2]);
 int isatty(int fd);
 
 #endif

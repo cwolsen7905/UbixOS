@@ -164,40 +164,34 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
   getfd(td, &fd, args->fd);
 
-  if (args->fd > 3) {
-    switch (fd->fd_type) {
-      case 3: /* XXX - Pipe2 Handling */
-        pFD = fd->data;
-        while (pFD->bCNT == 0 && rpCNT < 100) {
-          sched_yield();
-          rpCNT++;
-        }
-
-        if (rpCNT >= 100 && pFD->bCNT == 0) {
-          td->td_retval[0] = 0;
-        }
-        else {
-          nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
-          //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
-          //kprintf("PR: []", nbytes);
-          memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
-          pFD->headPB->offset += nbytes;
-
-          if (pFD->headPB->offset >= pFD->headPB->nbytes) {
-            rpFD = pFD->headPB;
-            pFD->headPB = pFD->headPB->next;
-            kfree(rpFD);
-            pFD->bCNT--;
-          }
-
-          td->td_retval[0] = nbytes;
-        }
-        break;
-      default:
-        //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
-        //kprintf("[%s:%i]", __FILE__, __LINE__);
-        td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
+  /* Check fd_type first so dup2'd pipe fds work on stdin slot (0-3) */
+  if (fd != 0x0 && fd->fd_type == 3) {
+    pFD = fd->data;
+    while (pFD->bCNT == 0 && rpCNT < 100) {
+      sched_yield();
+      rpCNT++;
     }
+
+    if (rpCNT >= 100 && pFD->bCNT == 0) {
+      td->td_retval[0] = 0;
+    }
+    else {
+      nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
+      memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
+      pFD->headPB->offset += nbytes;
+
+      if (pFD->headPB->offset >= pFD->headPB->nbytes) {
+        rpFD = pFD->headPB;
+        pFD->headPB = pFD->headPB->next;
+        kfree(rpFD);
+        pFD->bCNT--;
+      }
+
+      td->td_retval[0] = nbytes;
+    }
+  }
+  else if (args->fd > 3) {
+    td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
   }
   else {
     /* stdin: echo and line buffering handled by keyboard ISR; drain stdin[] */
@@ -280,9 +274,34 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
   size_t nbytes;
 
-  if (uap->fd == 2) {
+  getfd(td, &fd, uap->fd);
+
+  /* Check fd_type first so dup2'd pipe fds work on stdout/stderr slots */
+  if (fd != 0x0 && fd->fd_type == 3) {
+    pFD = fd->data;
+    pBuf = (struct pipeBuf*) kmalloc(sizeof(struct pipeBuf));
+    pBuf->buffer = kmalloc(uap->nbyte);
+    pBuf->next = 0x0;
+    pBuf->offset = 0;
+
+    memcpy(pBuf->buffer, uap->buf, uap->nbyte);
+
+    pBuf->nbytes = uap->nbyte;
+
+    if (pFD->tailPB)
+      pFD->tailPB->next = pBuf;
+
+    pFD->tailPB = pBuf;
+
+    if (!pFD->headPB)
+      pFD->headPB = pBuf;
+
+    pFD->bCNT++;
+
+    td->td_retval[0] = uap->nbyte;
+  }
+  else if (uap->fd == 2) {
     buffer = kmalloc(1024);
-        //kprintf("nbyte: %i", uap->nbyte);
 
     memcpy(buffer, uap->buf, uap->nbyte);
     printColor += 1;
@@ -300,48 +319,12 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     td->td_retval[0] = uap->nbyte;
   }
   else {
-    getfd(td, &fd, uap->fd);
-
-    //kprintf("[fd: %i:0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
-
-    switch (fd->fd_type) {
-      case 3: /* XXX - Temp Pipe Stuff */
-
-        pFD = fd->data;
-        pBuf = (struct pipeBuf*) kmalloc(sizeof(struct pipeBuf));
-        pBuf->buffer = kmalloc(uap->nbyte);
-
-        memcpy(pBuf->buffer, uap->buf, uap->nbyte);
-
-        pBuf->nbytes = uap->nbyte;
-
-        if (pFD->tailPB)
-          pFD->tailPB->next = pBuf;
-
-        pFD->tailPB = pBuf;
-
-        if (!pFD->headPB)
-          pFD->headPB = pBuf;
-
-        pFD->bCNT++;
-
-        td->td_retval[0] = nbytes;
-
-        break;
-      default:
-        if (fd->fd) {
-          td->td_retval[0] = fwrite(uap->buf, 1, uap->nbyte, fd->fd);
-        }
-        else {
-          kprintf("[%i]", uap->nbyte);
-          buffer = kmalloc(uap->nbyte);
-          memcpy(buffer, uap->buf, uap->nbyte);
-          kprintf("(%i) %s", uap->fd, uap->buf);
-          kfree(buffer);
-          td->td_retval[0] = uap->nbyte;
-        }
+    if (fd && fd->fd) {
+      td->td_retval[0] = fwrite(uap->buf, 1, uap->nbyte, fd->fd);
     }
-
+    else {
+      td->td_retval[0] = uap->nbyte;
+    }
   }
   return (0x0);
 }

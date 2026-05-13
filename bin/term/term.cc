@@ -164,6 +164,46 @@ key_to_ascii(uint32_t kc, uint8_t pressed)
 }
 
 /* ------------------------------------------------------------------ */
+/* Shell subprocess                                                     */
+/* ------------------------------------------------------------------ */
+
+static int g_shell_in  = -1;   /* term writes here → shell stdin  */
+static int g_shell_out = -1;   /* term reads here  ← shell stdout */
+
+static void
+shell_spawn(void)
+{
+	int to_shell[2];   /* to_shell[0] = read end (shell stdin)  */
+	int from_shell[2]; /* from_shell[1] = write end (shell stdout) */
+
+	if (pipe(to_shell) != 0 || pipe(from_shell) != 0)
+		return;
+
+	pid_t pid = fork();
+	if (pid == 0) {
+		/* Child: wire pipes to stdin/stdout, exec shell */
+		dup2(to_shell[0],   0);
+		dup2(from_shell[1], 1);
+		dup2(from_shell[1], 2);
+		close(to_shell[0]);
+		close(to_shell[1]);
+		close(from_shell[0]);
+		close(from_shell[1]);
+
+		char *argv[] = { (char *)"shell", NULL };
+		char *envp[] = { NULL };
+		execve("sys:/bin/shell", argv, envp);
+		_exit(1);
+	}
+
+	/* Parent: keep the write end for stdin, read end for stdout */
+	close(to_shell[0]);
+	close(from_shell[1]);
+	g_shell_in  = to_shell[1];
+	g_shell_out = from_shell[0];
+}
+
+/* ------------------------------------------------------------------ */
 /* Simple line-input buffer                                             */
 /* ------------------------------------------------------------------ */
 
@@ -174,10 +214,12 @@ static int  g_linelen = 0;
 static void
 linebuf_flush(void)
 {
-	g_linebuf[g_linelen] = '\0';
-	term_puts(g_linebuf);
-	term_putchar('\n');
-	/* TODO: pipe g_linebuf to shell subprocess */
+	g_linebuf[g_linelen++] = '\n';
+	g_linebuf[g_linelen]   = '\0';
+
+	if (g_shell_in >= 0)
+		write(g_shell_in, g_linebuf, g_linelen);
+
 	g_linelen = 0;
 }
 
@@ -257,13 +299,25 @@ main(int argc, char **argv)
 
 	memset(g_lines, 0, sizeof(g_lines));
 
-	term_puts("UbixOS Terminal\n");
-	term_puts("# ");
+	shell_spawn();
 
 	term_redraw();
 	send_flip();
 
+	int dirty = 0;
 	for (;;) {
+		/* Drain shell output */
+		if (g_shell_out >= 0) {
+			char outbuf[128];
+			int n = read(g_shell_out, outbuf, sizeof(outbuf) - 1);
+			if (n > 0) {
+				outbuf[n] = '\0';
+				term_puts(outbuf);
+				dirty = 1;
+			}
+		}
+
+		/* Process keyboard events */
 		while (mpi_fetchMessage(g_mbox, &reply) == 0) {
 			if (reply.header != DISPLAY_KEY)
 				continue;
@@ -274,8 +328,8 @@ main(int argc, char **argv)
 				continue;
 
 			if (ch == '\n') {
+				term_putchar('\n');
 				linebuf_flush();
-				term_puts("# ");
 			} else if (ch == '\b') {
 				if (g_linelen > 0) {
 					g_linelen--;
@@ -285,9 +339,13 @@ main(int argc, char **argv)
 				g_linebuf[g_linelen++] = ch;
 				term_putchar(ch);
 			}
+			dirty = 1;
+		}
 
+		if (dirty) {
 			term_redraw();
 			send_flip();
+			dirty = 0;
 		}
 
 		sched_yield();
