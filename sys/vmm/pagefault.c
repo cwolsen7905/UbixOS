@@ -63,9 +63,6 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uint32_t memAddr = cr2;
 
 
-  kprintf("vmm_pageFault: pid=%d cr2=0x%X eip=0x%X v86=%d\n",
-    _current->id, cr2, eip, _current->oInfo.v86Task);
-
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
 
@@ -75,7 +72,6 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
    */
   if (_current->oInfo.v86Task) {
     uint32_t physPage = memAddr & 0xFFFFF000;
-    kprintf("v86 pageFault: pid=%d addr=0x%X eip=0x%X\n", _current->id, memAddr, eip);
     if (vmm_remapPage(physPage, physPage, KERNEL_PAGE_DEFAULT, _current->id, 1) == 0) {
       kprintf("v86 pageFault: remap failed for 0x%X, killing task\n", memAddr);
       spinUnlock(&pageFaultSpinLock);

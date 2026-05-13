@@ -100,10 +100,6 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
   newProcess->md.md_tss.io_map = sizeof(struct tssStruct) - 8192;
   newProcess->oInfo.v86Task = 0x1;
 
-  kprintf("biosCallEx: pid=%d esp0=0x%X ss0=0x%X cs=0x%X eip=0x%X eflags=0x%X\n",
-      newProcess->id, newProcess->md.md_tss.esp0, newProcess->md.md_tss.ss0,
-      newProcess->md.md_tss.cs, newProcess->md.md_tss.eip, newProcess->md.md_tss.eflags);
-
   newProcess->state = READY;
 
   while (newProcess->state > 0)

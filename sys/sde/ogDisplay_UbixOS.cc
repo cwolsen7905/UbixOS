@@ -97,8 +97,6 @@ uint16_t ogDisplay_UbixOS::FindMode(uint32_t _xRes, uint32_t _yRes, uint32_t _BP
   for (int i = 0; modeList[i] != 0xFFFF; i++) {
     mode = modeList[i];
     GetModeInfo(mode);
-    kprintf("VBE: mode 0x%X: %dx%dx%d phys=0x%X\n",
-      mode, modeInfo->xRes, modeInfo->yRes, modeInfo->bitsPerPixel, modeInfo->physBasePtr);
     if ((modeInfo->xRes >= _xRes) && (modeInfo->yRes >= _yRes) && (modeInfo->bitsPerPixel == _BPP))
       return mode;
   }

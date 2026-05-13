@@ -105,11 +105,8 @@ void sched() {
 
   if (_current->state == READY || _current->state == RUNNING) {
 
-    if (_current->oInfo.v86Task == 0x1) {
-      irqDisable(0x0);
-      kprintf("IRQD(%i): 0x%X*0x%X:0x%X@, esp: 0x%X:0x%X, ebp: 0x%X:0x%X ds: 0x%X", _current->id, _current->md.md_tss.eflags, _current->md.md_tss.cs, _current->md.md_tss.eip, _current->md.md_tss.ss, _current->md.md_tss.esp, _current->md.md_tss.ss, _current->md.md_tss.ebp,_current->md.md_tss.ds);
-      kprintf("ss0: 0x%X, esp0: 0x%X", _current->md.md_tss.ss0, _current->md.md_tss.esp0);
-    }
+    if (_current->oInfo.v86Task == 0x1)
+      irqDisable(0x0);  /* mask timer while v86 task runs; irqEnable(0) on INT 0x69 exit */
 
     asm("cli");
 

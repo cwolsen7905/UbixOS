@@ -488,8 +488,7 @@ void __gpf(struct trapframe *frame) {
     case 0xCD: /* INT n */
       switch (ip[1]) {
         case 0x69:
-          kprintf("Exit Bios [0x%X]\n", _current->id);
-          //while (1) asm("hlt");
+          irqEnable(0);   /* restore timer IRQ masked by sched before v86 switch */
           _current->state = DEAD;
         break;
         case 0x20:
@@ -593,8 +592,6 @@ void __gpf(struct trapframe *frame) {
         _current->oInfo.v86If = (stack[2] & EFLAG_IF) != 0;
         _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 6) & 0xffff;
       }
-      kprintf("iret pid=%d → cs=0x%X ip=0x%X eflags=0x%X\n",
-          _current->id, _current->md.md_tss.cs, _current->md.md_tss.eip, _current->md.md_tss.eflags);
     break;
     case 0xC3: /* RET near */
       _current->md.md_tss.eip = stack[0];
