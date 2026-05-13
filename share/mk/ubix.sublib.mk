@@ -18,15 +18,15 @@ OBJDIR ?= ${OBJ_DIR}/obj/lib/${.CURDIR:T}
 
 .cc.o .C.o .cpp.o:
 	@mkdir -p ${OBJDIR}
-	$(CXX) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CXX) $(CFLAGS) $(INCLUDES) -MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CC) $(CFLAGS) $(INCLUDES) -MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET} ${.IMPSRC}
+	$(CC) $(CFLAGS) $(INCLUDES) -MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 all: $(OBJS)
 

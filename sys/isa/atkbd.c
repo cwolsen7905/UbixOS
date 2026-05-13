@@ -28,6 +28,7 @@
 
 #include <isa/atkbd.h>
 #include <isa/pit.h>
+#include <isa/kbd.h>
 #include <ubixos/vitals.h>
 #include <isa/8259.h>
 #include <sys/video.h>
@@ -48,6 +49,33 @@ static int atkbd_scan();
 
 static unsigned int keyMap = 0x0;
 static unsigned int ledStatus = 0x0;
+
+/* Keyboard event ring buffer — fed by keyboardHandler, drained by sys_getkbd */
+#define KBD_RING_SIZE  64
+static kbd_event_t  kbd_ring[KBD_RING_SIZE];
+static int          kbd_ring_head = 0;
+static int          kbd_ring_tail = 0;
+
+static void
+kbd_ring_push(uint32_t keycode, uint8_t pressed)
+{
+  int next = (kbd_ring_head + 1) % KBD_RING_SIZE;
+  if (next == kbd_ring_tail)
+    return; /* full — drop */
+  kbd_ring[kbd_ring_head].keycode = keycode;
+  kbd_ring[kbd_ring_head].pressed = pressed;
+  kbd_ring_head = next;
+}
+
+int
+kbd_getEvent(kbd_event_t *ev)
+{
+  if (kbd_ring_tail == kbd_ring_head)
+    return (-1);
+  *ev = kbd_ring[kbd_ring_tail];
+  kbd_ring_tail = (kbd_ring_tail + 1) % KBD_RING_SIZE;
+  return (0);
+}
 static char stdinBuffer[512];
 static uInt16 stdinSize;
 static uInt32 controlKeys = 0x0;
@@ -377,6 +405,13 @@ void keyboardHandler(struct trapframe *frame) {
       default:
         break;
     }
+  }
+
+  /* Push key-down events into the graphical keyboard ring */
+  if (key < 0x80) {
+    uint32_t kc = keyboardMap[key][keyMap];
+    if (kc > 0 && kc < 0xFF)
+      kbd_ring_push(kc, 1);
   }
 
   /* Return */

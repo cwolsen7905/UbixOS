@@ -120,6 +120,9 @@ int sys_mapfb(struct thread *, struct sys_mapfb_args *);
 struct sys_getmouse_args { struct mouse_event *ev; };
 int sys_getmouse(struct thread *, struct sys_getmouse_args *);
 
+struct sys_getkbd_args { struct kbd_event *ev; };
+int sys_getkbd(struct thread *, struct sys_getkbd_args *);
+
 struct sys_shareregion_args {
     pid_t     dst_pid;
     void     *vaddr;

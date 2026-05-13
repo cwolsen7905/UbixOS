@@ -31,6 +31,7 @@
 
 #include <stdint.h>
 #include <sys/mouse.h>
+#include <sys/kbd.h>
 
 struct fb_info {
     void     *base;
@@ -58,6 +59,7 @@ void fb_blit(int dx, int dy, int w, int h, const uint32_t *src, int src_stride);
 void fb_text(int x, int y, const char *s, uint32_t fg, uint32_t bg);
 void fb_char(int x, int y, char c, uint32_t fg, uint32_t bg);
 int  fb_poll_mouse(mouse_event_t *ev);
+int  fb_poll_kbd(kbd_event_t *ev);
 
 /*
  * fb_share_buffer — share a buffer allocated by this process with another

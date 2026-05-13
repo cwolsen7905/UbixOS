@@ -78,7 +78,7 @@ struct syscall_entry systemCalls[] = {
   { ARG_COUNT(sys_mapfb_args), "mapfb", (sys_call_t *)sys_mapfb, SYSCALL_VALID },             // 43 -
   { ARG_COUNT(sys_getmouse_args), "getmouse", (sys_call_t *)sys_getmouse, SYSCALL_VALID },        // 44 -
   { ARG_COUNT(sys_shareregion_args), "shareregion", (sys_call_t *)sys_shareregion, SYSCALL_VALID }, // 45 -
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 46 -
+  { ARG_COUNT(sys_getkbd_args), "getkbd", (sys_call_t *)sys_getkbd, SYSCALL_VALID },              // 46 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 47 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 48 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 49 -

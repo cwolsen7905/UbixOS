@@ -325,6 +325,8 @@ main(int argc, char **argv)
 
 		/* Process incoming events */
 		while (mpi_fetchMessage("taskbar", &reply) == 0) {
+			if (reply.header == DISPLAY_KEY)
+				continue;
 			if (reply.header != DISPLAY_MOUSE)
 				continue;
 			struct display_mouse_ev *me =

@@ -51,6 +51,7 @@ typedef struct {
 
 static win_t    windows[MAX_WINDOWS];
 static uint32_t next_win_id = 1;
+static win_t   *focused_win = NULL;
 
 static win_t *
 win_alloc(void)
@@ -256,6 +257,22 @@ main(int argc, char **argv)
 	mpi_message_t msg;
 
 	for (;;) {
+		/* Forward keyboard events to the focused window */
+		kbd_event_t kev;
+		while (fb_poll_kbd(&kev) == 0) {
+			if (focused_win && focused_win->mbox[0]) {
+				mpi_message_t kmsg;
+				struct display_key *dk =
+				    (struct display_key *)kmsg.data;
+				kmsg.header   = DISPLAY_KEY;
+				dk->window_id = focused_win->id;
+				dk->keycode   = kev.keycode;
+				dk->pressed   = kev.pressed;
+				mpi_postMessage(focused_win->mbox,
+				    DISPLAY_KEY, &kmsg);
+			}
+		}
+
 		/* Drain all pending mouse events */
 		mouse_event_t ev;
 		while (fb_poll_mouse(&ev) == 0) {
@@ -270,6 +287,9 @@ main(int argc, char **argv)
 						continue;
 					if (cur_y < w->y || cur_y >= w->y + w->h)
 						continue;
+					/* Focus follows click */
+					if (ev.buttons & 1)
+						focused_win = w;
 					mpi_message_t mev;
 					struct display_mouse_ev *me =
 					    (struct display_mouse_ev *)mev.data;

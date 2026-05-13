@@ -35,6 +35,7 @@
 #include <lib/kprintf.h>
 #include <ubixos/sched.h>
 #include <isa/mouse.h>
+#include <isa/kbd.h>
 
 int sys_mapfb(struct thread *td, struct sys_mapfb_args *args) {
   struct fb_info *out = args->info;
@@ -101,6 +102,22 @@ int sys_getmouse(struct thread *td, struct sys_getmouse_args *args) {
   out->dx      = ev.dx;
   out->dy      = ev.dy;
   out->buttons = ev.buttons;
+
+  td->td_retval[0] = 0;
+  return (0);
+}
+
+int sys_getkbd(struct thread *td, struct sys_getkbd_args *args) {
+  kbd_event_t *out = args->ev;
+  kbd_event_t ev;
+
+  if (kbd_getEvent(&ev) != 0) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  out->keycode = ev.keycode;
+  out->pressed = ev.pressed;
 
   td->td_retval[0] = 0;
   return (0);
