@@ -28,7 +28,6 @@
 
 #include <ubixos/syscalls.h>
 #include <sys/sysproto.h>
-#include <sde/sde.h>
 
 /* System Calls List */
 struct syscall_entry systemCalls[] = {
@@ -72,7 +71,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 39 -
-  { ARG_COUNT(sys_sde_args), "sysSDE", (sys_call_t *)sysSDE, SYSCALL_VALID },  // 40 -
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 40 - (retired: sysSDE)
   { ARG_COUNT(sys_getvfscwd_args), "getvfscwd", (sys_call_t *)sys_getvfscwd, SYSCALL_VALID },  // 41 -
   { ARG_COUNT(sys_ttyctrl_args), "ttyctrl", (sys_call_t *)sys_ttyctrl, SYSCALL_VALID },       // 42 -
   { ARG_COUNT(sys_mapfb_args), "mapfb", (sys_call_t *)sys_mapfb, SYSCALL_VALID },             // 43 -

@@ -54,6 +54,7 @@ public:
 	
 				 ogSurface(void);
 	virtual bool ogAlias(ogSurface&, uInt32, uInt32, uInt32, uInt32);
+	bool         ogAttach(void *buf, uInt32 w, uInt32 h, struct ogPixelFmt fmt);
 	virtual bool ogAvail(void);
 	void         ogArc(int32, int32, uInt32, uInt32, uInt32, uInt32);
 	void         ogBSpline(uInt32, ogPoint2d*, uInt32, uInt32);

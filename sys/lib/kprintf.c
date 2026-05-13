@@ -271,7 +271,7 @@ u_quad_t __umoddi3(a, b)
 }
 
 int printOff = 0x0;
-int ogprintOff = 0x1;
+int ogprintOff = 0x1;  /* retained for ABI; ogPrintf is retired */
 
 static int serial_initialized = 0;
 
@@ -303,8 +303,6 @@ int kprintf(const char *fmt, ...) {
 
   if (printOff == 0x0)
     kprint(buf);
-  if (ogprintOff == 0x0)
-    ogPrintf(buf);
 
   return (retval);
 }

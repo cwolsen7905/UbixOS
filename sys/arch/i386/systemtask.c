@@ -36,7 +36,6 @@
 #include <lib/kprintf.h>
 #include <lib/bioscall.h>
 #include <lib/vesa.h>
-#include <sde/sde.h>
 #include <sys/shutdown.h>
 #include <vmm/vmm.h>
 #include <mpi/mpi.h>
@@ -101,11 +100,7 @@ void systemTask() {
           break;
         }
         case 0x80:
-          if (!strcmp(myMsg.data, "sdeStart")) {
-            kprintf("Starting SDE\n");
-            execThread(sdeThread, 0x2000, 0x0);
-          }
-          else if (!strcmp(myMsg.data, "freePage")) {
+          if (!strcmp(myMsg.data, "freePage")) {
             kprintf("kkk Free Pages");
           }
           else if (!strcmp(myMsg.data, "sdeStop")) {

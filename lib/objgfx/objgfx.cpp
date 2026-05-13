@@ -1168,7 +1168,57 @@ bool ogSurface::ogAlias(ogSurface& src, uint32_t x1, uInt32 y1, uInt32 x2, uInt3
 	return true;
 } // bool ogSurface::ogAlias()
 
-void ogSurface::ogArc(int32 xCenter, int32 yCenter, uint32_t radius, 
+bool ogSurface::ogAttach(void *buf, uInt32 w, uInt32 h, ogPixelFmt fmt)
+{
+	if (dataState == ogOwner) {
+		delete[] lineOfs;
+		free(buffer);
+	}
+
+	switch (fmt.BPP) {
+	case 32: getPixel = _gp32; setPixel = _sp32; break;
+	case 24: getPixel = _gp24; setPixel = _sp24; break;
+	case 16: getPixel = _gp16; setPixel = _sp16; break;
+	case  8: getPixel = _gp8;  setPixel = _sp8;  break;
+	default: return false;
+	}
+
+	buffer      = reinterpret_cast<uInt8 *>(buf);
+	xRes        = w;
+	yRes        = h;
+	maxX        = w - 1;
+	maxY        = h - 1;
+	BPP         = fmt.BPP;
+	bytesPerPix = (fmt.BPP + 7) >> 3;
+	pixFmtID    = fmt.BPP;
+
+	redFieldPosition   = fmt.redFieldPosition;
+	greenFieldPosition = fmt.greenFieldPosition;
+	blueFieldPosition  = fmt.blueFieldPosition;
+	alphaFieldPosition = fmt.alphaFieldPosition;
+	redShifter         = fmt.redMaskSize;
+	greenShifter       = fmt.greenMaskSize;
+	blueShifter        = fmt.blueMaskSize;
+	alphaShifter       = fmt.alphaMaskSize;
+	alphaMasker        = 0xFF;
+
+	lineOfs  = new ptrdiff_t[h];
+	lSize    = h * sizeof(ptrdiff_t);
+	for (uInt32 i = 0; i < h; i++)
+		lineOfs[i] = (ptrdiff_t)(i * w * bytesPerPix);
+
+	bSize     = w * h * bytesPerPix;
+	owner     = NULL;
+	dataState = ogAliasing;
+
+	if (!attributes)
+		attributes = new ogAttribute();
+
+	lastError = ogOK;
+	return true;
+}
+
+void ogSurface::ogArc(int32 xCenter, int32 yCenter, uint32_t radius,
 					  uint32_t sAngle, uInt32 eAngle, uInt32 colour) 
 {
 	int32 p;

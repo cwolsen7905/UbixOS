@@ -42,6 +42,7 @@
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/include_old",
+                "${workspaceFolder}/lib/objgfx",
                 "${workspaceFolder}/lib/objgfx40",
                 "${workspaceFolder}/lib/libcpp/include",
                 "${workspaceFolder}/lib/libc/include"
