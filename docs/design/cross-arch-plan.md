@@ -357,7 +357,7 @@ sys/
 | 3 | Move `idt.c`, `io.c` to `sys/arch/i386/` | Done |
 | 4 | Split `sched.c` → `sched_core.c` + `sched_switch.c` | Done |
 | 5 | `struct md_proc` hides TSS in `kTask_t` | Done |
-| 6 | `machine/ansi.h`, pointer types arch-parameterized | Not started |
+| 6 | `machine/ansi.h`, pointer types arch-parameterized | Done |
 | 7 | `uint32_t` → `uintptr_t` for address-typed values | Not started |
 | 8 | Move `start.S`, `main.c` to `sys/arch/i386/` | Not started |
 | 9 | `machine/vmm_layout.h` for address-space constants | Not started |
