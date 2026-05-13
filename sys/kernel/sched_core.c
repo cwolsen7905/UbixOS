@@ -76,8 +76,8 @@ kTask_t *schedNewTask() {
   tmpTask->kernelStack = (uint32_t *) kmalloc(4096);
   if (tmpTask->kernelStack == 0x0)
     kpanic("Error: schedNewTask() - kmalloc failed allocating kernel stack\n");
-  tmpTask->tss.esp0 = (uint32_t) tmpTask->kernelStack + 4096;
-  tmpTask->tss.ss0  = 0x10;
+  tmpTask->md.md_tss.esp0 = (uint32_t) tmpTask->kernelStack + 4096;
+  tmpTask->md.md_tss.ss0  = 0x10;
 
   tmpTask->usedMath = 0x0;
   tmpTask->state = NEW;

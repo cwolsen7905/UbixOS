@@ -75,46 +75,46 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
     }
 
   /* Set Up Task State */
-  newProcess->tss.eip = td->frame->tf_eip;
+  newProcess->md.md_tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
   if (_current->term != NULL && _current->term->owner == _current->id)
     _current->term->owner = newProcess->id;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
-  newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp1 = 0x0;
-  newProcess->tss.ss1 = 0x0;
-  newProcess->tss.esp2 = 0x0;
-  newProcess->tss.ss2 = 0x0;
-  newProcess->tss.eflags = td->frame->tf_eflags;
-  newProcess->tss.eax = 0x0;
-  newProcess->tss.ebx = td->frame->tf_ebx;
-  newProcess->tss.ecx = td->frame->tf_ecx;
-  newProcess->tss.edx = td->frame->tf_edx;
-  newProcess->tss.esi = td->frame->tf_esi;
-  newProcess->tss.edi = td->frame->tf_edi;
-  newProcess->tss.ebp = td->frame->tf_ebp;
-  newProcess->tss.esp = td->frame->tf_esp;
-  newProcess->tss.cs = td->frame->tf_cs; // & 0xFF;
-  newProcess->tss.ss = td->frame->tf_ss; // & 0xFF;
-  newProcess->tss.ds = td->frame->tf_ds; //_current->tss.ds & 0xFF;
-  newProcess->tss.fs = td->frame->tf_fs; //_current->tss.fs & 0xFF;
-  newProcess->tss.gs = _current->tss.gs & 0xFF;
-  newProcess->tss.es = td->frame->tf_es; //_current->tss.es & 0xFF;
-  newProcess->tss.ldt = 0x18;
-  newProcess->tss.trace_bitmap = 0x0000;
-  newProcess->tss.io_map = 0x8000;
+  newProcess->md.md_tss.back_link = 0x0;
+  newProcess->md.md_tss.esp1 = 0x0;
+  newProcess->md.md_tss.ss1 = 0x0;
+  newProcess->md.md_tss.esp2 = 0x0;
+  newProcess->md.md_tss.ss2 = 0x0;
+  newProcess->md.md_tss.eflags = td->frame->tf_eflags;
+  newProcess->md.md_tss.eax = 0x0;
+  newProcess->md.md_tss.ebx = td->frame->tf_ebx;
+  newProcess->md.md_tss.ecx = td->frame->tf_ecx;
+  newProcess->md.md_tss.edx = td->frame->tf_edx;
+  newProcess->md.md_tss.esi = td->frame->tf_esi;
+  newProcess->md.md_tss.edi = td->frame->tf_edi;
+  newProcess->md.md_tss.ebp = td->frame->tf_ebp;
+  newProcess->md.md_tss.esp = td->frame->tf_esp;
+  newProcess->md.md_tss.cs = td->frame->tf_cs; // & 0xFF;
+  newProcess->md.md_tss.ss = td->frame->tf_ss; // & 0xFF;
+  newProcess->md.md_tss.ds = td->frame->tf_ds; //_current->md.md_tss.ds & 0xFF;
+  newProcess->md.md_tss.fs = td->frame->tf_fs; //_current->md.md_tss.fs & 0xFF;
+  newProcess->md.md_tss.gs = _current->md.md_tss.gs & 0xFF;
+  newProcess->md.md_tss.es = td->frame->tf_es; //_current->md.md_tss.es & 0xFF;
+  newProcess->md.md_tss.ldt = 0x18;
+  newProcess->md.md_tss.trace_bitmap = 0x0000;
+  newProcess->md.md_tss.io_map = 0x8000;
 
   newProcess->td.vm_tsize = _current->td.vm_tsize;
   newProcess->td.vm_taddr = _current->td.vm_taddr;
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  //kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
+  //kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->md.md_tss.esp0, newProcess->md.md_tss.esp, newProcess->md.md_tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
 
-  newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
-  //kprintf( "Copied Mem Space! [0x%X]\n", newProcess->tss.cr3 );
+  newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
+  //kprintf( "Copied Mem Space! [0x%X]\n", newProcess->md.md_tss.cr3 );
 
   newProcess->parent = _current;
   _current->children++;
@@ -151,36 +151,36 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   memcpy(newProcess->oInfo.cwd, _current->oInfo.cwd, 1024);
   //kprintf( "Initializing New CWD!\n" );
 
-  newProcess->tss.eip = eip;
+  newProcess->md.md_tss.eip = eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
   newProcess->term = _current->term;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
-  newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = _current->tss.esp0;
-  newProcess->tss.ss0 = 0x10;
-  newProcess->tss.esp1 = 0x0;
-  newProcess->tss.ss1 = 0x0;
-  newProcess->tss.esp2 = 0x0;
-  newProcess->tss.ss2 = 0x0;
-  newProcess->tss.eflags = eflags;
-  newProcess->tss.eax = 0x0;
-  newProcess->tss.ebx = ebx;
-  newProcess->tss.ecx = ecx;
-  newProcess->tss.edx = edx;
-  newProcess->tss.esi = esi;
-  newProcess->tss.edi = edi;
-  newProcess->tss.ebp = ebp;
-  newProcess->tss.esp = esp;
-  newProcess->tss.cs = cs & 0xFF;
-  newProcess->tss.ss = ss & 0xFF;
-  newProcess->tss.ds = _current->tss.ds & 0xFF;
-  newProcess->tss.fs = _current->tss.fs & 0xFF;
-  newProcess->tss.gs = _current->tss.gs & 0xFF;
-  newProcess->tss.es = _current->tss.es & 0xFF;
-  newProcess->tss.ldt = 0x18;
-  newProcess->tss.trace_bitmap = 0x0000;
-  newProcess->tss.io_map = 0x8000;
+  newProcess->md.md_tss.back_link = 0x0;
+  newProcess->md.md_tss.esp0 = _current->md.md_tss.esp0;
+  newProcess->md.md_tss.ss0 = 0x10;
+  newProcess->md.md_tss.esp1 = 0x0;
+  newProcess->md.md_tss.ss1 = 0x0;
+  newProcess->md.md_tss.esp2 = 0x0;
+  newProcess->md.md_tss.ss2 = 0x0;
+  newProcess->md.md_tss.eflags = eflags;
+  newProcess->md.md_tss.eax = 0x0;
+  newProcess->md.md_tss.ebx = ebx;
+  newProcess->md.md_tss.ecx = ecx;
+  newProcess->md.md_tss.edx = edx;
+  newProcess->md.md_tss.esi = esi;
+  newProcess->md.md_tss.edi = edi;
+  newProcess->md.md_tss.ebp = ebp;
+  newProcess->md.md_tss.esp = esp;
+  newProcess->md.md_tss.cs = cs & 0xFF;
+  newProcess->md.md_tss.ss = ss & 0xFF;
+  newProcess->md.md_tss.ds = _current->md.md_tss.ds & 0xFF;
+  newProcess->md.md_tss.fs = _current->md.md_tss.fs & 0xFF;
+  newProcess->md.md_tss.gs = _current->md.md_tss.gs & 0xFF;
+  newProcess->md.md_tss.es = _current->md.md_tss.es & 0xFF;
+  newProcess->md.md_tss.ldt = 0x18;
+  newProcess->md.md_tss.trace_bitmap = 0x0000;
+  newProcess->md.md_tss.io_map = 0x8000;
 
   newProcess->td.vm_tsize = _current->td.vm_tsize;
   newProcess->td.vm_taddr = _current->td.vm_taddr;
@@ -188,8 +188,8 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
   /* Create A Copy Of The VM Space For New Task */
-  //MrOlsen 2018kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr);
-  newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
+  //MrOlsen 2018kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->md.md_tss.esp0, newProcess->md.md_tss.esp, newProcess->md.md_tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr);
+  newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space!\n" );
 
   newProcess->state = FORK;

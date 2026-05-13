@@ -37,7 +37,7 @@ extern "C" {
 #include <vfs/file.h>
 #include <ubixos/tty.h>
 
-#include <sys/tss.h>
+#include <machine/proc.h>
 #include <sys/thread.h>
 
 #define NO_GROUP -1
@@ -64,8 +64,7 @@ typedef struct taskStruct {
     char name[256];
     struct taskStruct *prev;
     struct taskStruct *next;
-    struct tssStruct tss;
-    struct i387Struct i387;
+    struct md_proc md;
     struct osInfo oInfo;
     //fileDescriptor *imageFd;
     fileDescriptor_t *files[MAX_OFILES];

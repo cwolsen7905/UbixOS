@@ -107,13 +107,13 @@ void sched() {
 
     if (_current->oInfo.v86Task == 0x1) {
       irqDisable(0x0);
-      kprintf("IRQD(%i): 0x%X*0x%X:0x%X@, esp: 0x%X:0x%X, ebp: 0x%X:0x%X ds: 0x%X", _current->id, _current->tss.eflags, _current->tss.cs, _current->tss.eip, _current->tss.ss, _current->tss.esp, _current->tss.ss, _current->tss.ebp,_current->tss.ds);
-      kprintf("ss0: 0x%X, esp0: 0x%X", _current->tss.ss0, _current->tss.esp0);
+      kprintf("IRQD(%i): 0x%X*0x%X:0x%X@, esp: 0x%X:0x%X, ebp: 0x%X:0x%X ds: 0x%X", _current->id, _current->md.md_tss.eflags, _current->md.md_tss.cs, _current->md.md_tss.eip, _current->md.md_tss.ss, _current->md.md_tss.esp, _current->md.md_tss.ss, _current->md.md_tss.ebp,_current->md.md_tss.ds);
+      kprintf("ss0: 0x%X, esp0: 0x%X", _current->md.md_tss.ss0, _current->md.md_tss.esp0);
     }
 
     asm("cli");
 
-    memAddr = (uint32_t) &(_current->tss);
+    memAddr = (uint32_t) &(_current->md.md_tss);
     ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
     ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
     ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);

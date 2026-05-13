@@ -358,7 +358,7 @@ static void _int5() {
 void __int6(struct trapframe *frame) {
   if (_current->oInfo.v86Task)
     kprintf("__int6: v86 pid=%d tss.cs=0x%X tss.eip=0x%X\n",
-        _current->id, (uint16_t)_current->tss.cs, _current->tss.eip);
+        _current->id, (uint16_t)_current->md.md_tss.cs, _current->md.md_tss.eip);
   die_if_kernel("invalid_opcode", frame, 6);
   endTask(_current->id);
   sched_yield();
@@ -423,9 +423,9 @@ static __attribute__((optimize("O0"))) void _int10(void) {
   kprintf("int10: Invalid TSS! [pid=%i, errcode=0x%X (sel=0x%X)]\n",
           _current->id, err_code, err_code & ~0x7);
   kprintf("  tss: cs=0x%X ss=0x%X ds=0x%X gs=0x%X ldt=0x%X\n",
-          (uint32_t)_current->tss.cs, (uint32_t)_current->tss.ss,
-          (uint32_t)_current->tss.ds, (uint32_t)_current->tss.gs,
-          (uint32_t)_current->tss.ldt);
+          (uint32_t)_current->md.md_tss.cs, (uint32_t)_current->md.md_tss.ss,
+          (uint32_t)_current->md.md_tss.ds, (uint32_t)_current->md.md_tss.gs,
+          (uint32_t)_current->md.md_tss.ldt);
   kpanic("int10: Invalid TSS! [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
@@ -455,6 +455,8 @@ void __gpf(struct trapframe *frame) {
   static uint32_t gpfIterCount = 0;
 
   gpfEnter:
+  isOperand32 = FALSE;
+  isAddress32 = FALSE;
   /* Kill VM86 tasks that spin for too long (e.g. BIOS busy-wait loops).
    * The Bochs stdvga GetModeInfo printf processes ~100+ characters × 3 GPFs
    * each (PUSHF, POPF, OUT), requiring ~400 iterations minimum.  4096 gives
@@ -465,7 +467,7 @@ void __gpf(struct trapframe *frame) {
   }
   if (++gpfIterCount > 4096) {
     kprintf("GPF: timeout pid=%d iter=%d at 0x%X:0x%X, killing\n",
-        _current->id, gpfIterCount, (uint16_t)_current->tss.cs, _current->tss.eip);
+        _current->id, gpfIterCount, (uint16_t)_current->md.md_tss.cs, _current->md.md_tss.eip);
     _current->state = DEAD;
     gpfLastPid = -1;
     gpfIterCount = 0;
@@ -474,11 +476,11 @@ void __gpf(struct trapframe *frame) {
     goto gpfEnter;
   }
 
-  ip = FP_TO_LINEAR(_current->tss.cs, _current->tss.eip);
+  ip = FP_TO_LINEAR(_current->md.md_tss.cs, _current->md.md_tss.eip);
 
   ivt = (uint16_t *) 0x0;
 
-  stack = (uint16_t *) FP_TO_LINEAR(_current->tss.ss, _current->tss.esp);
+  stack = (uint16_t *) FP_TO_LINEAR(_current->md.md_tss.ss, _current->md.md_tss.esp);
   stack32 = (uint32_t *) stack;
 
   gpfStart: switch (ip[0]) {
@@ -495,247 +497,249 @@ void __gpf(struct trapframe *frame) {
         break;
         default:
           stack -= 3;
-          _current->tss.esp = ((_current->tss.esp & 0xffff) - 6) & 0xffff;
-          stack[0] = (uint16_t) (_current->tss.eip + 2);
-          stack[1] = _current->tss.cs;
-          stack[2] = (uint16_t) _current->tss.eflags;
+          _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) - 6) & 0xffff;
+          stack[0] = (uint16_t) (_current->md.md_tss.eip + 2);
+          stack[1] = _current->md.md_tss.cs;
+          stack[2] = (uint16_t) _current->md.md_tss.eflags;
           if (_current->oInfo.v86If)
             stack[2] |= EFLAG_IF;
           else
             stack[2] &= ~EFLAG_IF;
 
-          _current->tss.cs = ivt[ip[1] * 2 + 1] & 0xFFFF;
-          _current->tss.eip = ivt[ip[1] * 2] & 0xFFFF;
+          _current->md.md_tss.cs = ivt[ip[1] * 2 + 1] & 0xFFFF;
+          _current->md.md_tss.eip = ivt[ip[1] * 2] & 0xFFFF;
         break;
       }
     break;
     case 0x66:
       isOperand32 = TRUE;
       ip++;
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
-      kprintf("0x66");
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
       goto gpfStart;
     break;
     case 0x67:
       isAddress32 = TRUE;
       ip++;
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
-      kprintf("0x67");
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
       goto gpfStart;
     break;
     case 0xF0: /* LOCK prefix — harmless in VM86; skip and re-dispatch */
       ip++;
-      _current->tss.eip = (uInt16)(_current->tss.eip + 1);
+      _current->md.md_tss.eip = (uInt16)(_current->md.md_tss.eip + 1);
       goto gpfStart;
     break;
     case 0x9C:
       if (isOperand32 == TRUE) {
-        _current->tss.esp = ((_current->tss.esp & 0xffff) - 4) & 0xffff;
+        _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) - 4) & 0xffff;
         stack32--;
-        stack32[0] = _current->tss.eflags & 0xDFF;
+        stack32[0] = _current->md.md_tss.eflags & 0xDFF;
         if (_current->oInfo.v86If == TRUE)
           stack32[0] |= EFLAG_IF;
         else
           stack32[0] &= ~EFLAG_IF;
-        _current->tss.eip = (uInt16)(_current->tss.eip + 1);
+        _current->md.md_tss.eip = (uInt16)(_current->md.md_tss.eip + 1);
       }
       else {
-        _current->tss.esp = ((_current->tss.esp & 0xffff) - 2) & 0xffff;
+        _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) - 2) & 0xffff;
         stack--;
 
-        stack[0] = (uInt16) _current->tss.eflags;
+        stack[0] = (uInt16) _current->md.md_tss.eflags;
         if (_current->oInfo.v86If == TRUE)
           stack[0] |= EFLAG_IF;
         else
           stack[0] &= ~EFLAG_IF;
-        _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+        _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
 
       }
     break;
     case 0x9D:
       if (isOperand32 == TRUE) {
-        _current->tss.eflags = EFLAG_IF | EFLAG_VM | (stack32[0] & 0xDFF);
+        _current->md.md_tss.eflags = EFLAG_IF | EFLAG_VM | (stack32[0] & 0xDFF);
         _current->oInfo.v86If = (stack32[0] & EFLAG_IF) != 0;
-        _current->tss.esp = ((_current->tss.esp & 0xffff) + 4) & 0xffff;
+        _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 4) & 0xffff;
       }
       else {
-        _current->tss.eflags = EFLAG_IF | EFLAG_VM | stack[0];
+        _current->md.md_tss.eflags = EFLAG_IF | EFLAG_VM | stack[0];
         _current->oInfo.v86If = (stack[0] & EFLAG_IF) != 0;
-        _current->tss.esp = ((_current->tss.esp & 0xffff) + 2) & 0xffff;
+        _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 2) & 0xffff;
       }
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
       /* kprintf("popf [0x%X]\n",_current->id); */
     break;
     case 0xFA:
       _current->oInfo.v86If = FALSE;
-      _current->tss.eflags &= ~EFLAG_IF;
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      _current->md.md_tss.eflags &= ~EFLAG_IF;
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
       _current->oInfo.timer = 0x1;
     break;
     case 0xFB:
       _current->oInfo.v86If = TRUE;
-      _current->tss.eflags |= EFLAG_IF;
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      _current->md.md_tss.eflags |= EFLAG_IF;
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
       _current->oInfo.timer = 0x0;
       /* kprintf("sti [0x%X]\n",_current->id); */
     break;
     case 0xCF:
       if (isOperand32 == TRUE) { /* IRETD: pops 32-bit EIP, CS, EFLAGS */
-        _current->tss.eip = stack32[0];
-        _current->tss.cs  = stack32[1] & 0xFFFF;
-        _current->tss.eflags = EFLAG_IF | EFLAG_VM | (stack32[2] & 0xDFFF);
+        _current->md.md_tss.eip = stack32[0];
+        _current->md.md_tss.cs  = stack32[1] & 0xFFFF;
+        _current->md.md_tss.eflags = EFLAG_IF | EFLAG_VM | (stack32[2] & 0xDFFF);
         _current->oInfo.v86If = (stack32[2] & EFLAG_IF) != 0;
-        _current->tss.esp = ((_current->tss.esp & 0xffff) + 12) & 0xffff;
+        _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 12) & 0xffff;
       } else {
-        _current->tss.eip = stack[0];
-        _current->tss.cs  = stack[1];
-        _current->tss.eflags = EFLAG_IF | EFLAG_VM | stack[2];
+        _current->md.md_tss.eip = stack[0];
+        _current->md.md_tss.cs  = stack[1];
+        _current->md.md_tss.eflags = EFLAG_IF | EFLAG_VM | stack[2];
         _current->oInfo.v86If = (stack[2] & EFLAG_IF) != 0;
-        _current->tss.esp = ((_current->tss.esp & 0xffff) + 6) & 0xffff;
+        _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 6) & 0xffff;
       }
-      kprintf("iret [0x%X]\n", _current->id);
+      kprintf("iret pid=%d → cs=0x%X ip=0x%X eflags=0x%X\n",
+          _current->id, _current->md.md_tss.cs, _current->md.md_tss.eip, _current->md.md_tss.eflags);
     break;
     case 0xC3: /* RET near */
-      _current->tss.eip = stack[0];
-      _current->tss.esp = ((_current->tss.esp & 0xffff) + 2) & 0xffff;
+      _current->md.md_tss.eip = stack[0];
+      _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 2) & 0xffff;
     break;
     case 0xC2: /* RET near imm16 */
-      _current->tss.eip = stack[0];
-      _current->tss.esp = ((_current->tss.esp & 0xffff) + 2 + ip[1] + (ip[2] << 8)) & 0xffff;
+      _current->md.md_tss.eip = stack[0];
+      _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 2 + ip[1] + (ip[2] << 8)) & 0xffff;
     break;
     case 0xCB: /* RETF */
-      _current->tss.eip = stack[0];
-      _current->tss.cs  = stack[1];
-      _current->tss.esp = ((_current->tss.esp & 0xffff) + 4) & 0xffff;
+      _current->md.md_tss.eip = stack[0];
+      _current->md.md_tss.cs  = stack[1];
+      _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 4) & 0xffff;
     break;
     case 0xCA: /* RETF imm16 */
-      _current->tss.eip = stack[0];
-      _current->tss.cs  = stack[1];
-      _current->tss.esp = ((_current->tss.esp & 0xffff) + 4 + ip[1] + (ip[2] << 8)) & 0xffff;
+      _current->md.md_tss.eip = stack[0];
+      _current->md.md_tss.cs  = stack[1];
+      _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) + 4 + ip[1] + (ip[2] << 8)) & 0xffff;
     break;
     case 0x9A: /* CALLF ptr16:16 — direct far call */
-      _current->tss.esp = ((_current->tss.esp & 0xffff) - 4) & 0xffff;
+      _current->md.md_tss.esp = ((_current->md.md_tss.esp & 0xffff) - 4) & 0xffff;
       stack -= 2;
-      stack[0] = (uint16_t)(_current->tss.eip + 5);
-      stack[1] = (uint16_t)(_current->tss.cs);
-      _current->tss.cs  = ip[3] | ((uint16_t)ip[4] << 8);
-      _current->tss.eip = ip[1] | ((uint16_t)ip[2] << 8);
+      stack[0] = (uint16_t)(_current->md.md_tss.eip + 5);
+      stack[1] = (uint16_t)(_current->md.md_tss.cs);
+      _current->md.md_tss.cs  = ip[3] | ((uint16_t)ip[4] << 8);
+      _current->md.md_tss.eip = ip[1] | ((uint16_t)ip[2] << 8);
     break;
     case 0xE4: /* IN AL, imm8 */
-      _current->tss.eax = (_current->tss.eax & ~0xFF) | inportByte(ip[1]);
-      _current->tss.eip = (uInt16)(_current->tss.eip + 2);
+      _current->md.md_tss.eax = (_current->md.md_tss.eax & ~0xFF) | inportByte(ip[1]);
+      _current->md.md_tss.eip = (uInt16)(_current->md.md_tss.eip + 2);
     break;
     case 0xE5: /* IN AX, imm8 */
-      _current->tss.eax = (_current->tss.eax & ~0xFFFF) | inportWord(ip[1]);
-      _current->tss.eip = (uInt16)(_current->tss.eip + 2);
+      _current->md.md_tss.eax = (_current->md.md_tss.eax & ~0xFFFF) | inportWord(ip[1]);
+      _current->md.md_tss.eip = (uInt16)(_current->md.md_tss.eip + 2);
     break;
     case 0xE6: /* OUT imm8, AL */
-      outportByte(ip[1], _current->tss.eax & 0xFF);
-      _current->tss.eip = (uInt16)(_current->tss.eip + 2);
+      outportByte(ip[1], _current->md.md_tss.eax & 0xFF);
+      _current->md.md_tss.eip = (uInt16)(_current->md.md_tss.eip + 2);
     break;
     case 0xE7: /* OUT imm8, AX */
-      outportWord(ip[1], _current->tss.eax & 0xFFFF);
-      _current->tss.eip = (uInt16)(_current->tss.eip + 2);
+      outportWord(ip[1], _current->md.md_tss.eax & 0xFFFF);
+      _current->md.md_tss.eip = (uInt16)(_current->md.md_tss.eip + 2);
     break;
     case 0xEC: /* IN AL,DX */
-      _current->tss.eax = (_current->tss.eax & ~0xFF) | inportByte(_current->tss.edx);
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      _current->md.md_tss.eax = (_current->md.md_tss.eax & ~0xFF) | inportByte(_current->md.md_tss.edx);
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
     break;
     case 0xED: /* IN AX,DX */
-      _current->tss.eax = (_current->tss.eax & ~0xFFFF) | inportWord(_current->tss.edx);
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      _current->md.md_tss.eax = (_current->md.md_tss.eax & ~0xFFFF) | inportWord(_current->md.md_tss.edx);
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
     break;
     case 0xEE: /* OUT DX,AL */
-      outportByte(_current->tss.edx, _current->tss.eax & 0xFF);
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      outportByte(_current->md.md_tss.edx, _current->md.md_tss.eax & 0xFF);
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
     break;
     case 0xEF:
-      outportWord(_current->tss.edx, _current->tss.eax);
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      outportWord(_current->md.md_tss.edx, _current->md.md_tss.eax);
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
     break;
     case 0x6C: /* INSB: IN byte from DX into ES:[DI] */
     {
-      uint8_t *dst = (uint8_t *)FP_TO_LINEAR(_current->tss.es, _current->tss.edi & 0xFFFF);
-      *dst = inportByte(_current->tss.edx & 0xFFFF);
-      _current->tss.edi = (_current->tss.edi + 1) & 0xFFFF;
-      _current->tss.eip = (uint16_t)(_current->tss.eip + 1);
+      uint8_t *dst = (uint8_t *)FP_TO_LINEAR(_current->md.md_tss.es, _current->md.md_tss.edi & 0xFFFF);
+      *dst = inportByte(_current->md.md_tss.edx & 0xFFFF);
+      _current->md.md_tss.edi = (_current->md.md_tss.edi + 1) & 0xFFFF;
+      _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 1);
     }
     break;
     case 0x6D: /* INSW: IN word from DX into ES:[DI] */
     {
-      uint16_t *dst = (uint16_t *)FP_TO_LINEAR(_current->tss.es, _current->tss.edi & 0xFFFF);
-      *dst = inportWord(_current->tss.edx & 0xFFFF);
-      _current->tss.edi = (_current->tss.edi + 2) & 0xFFFF;
-      _current->tss.eip = (uint16_t)(_current->tss.eip + 1);
+      uint16_t *dst = (uint16_t *)FP_TO_LINEAR(_current->md.md_tss.es, _current->md.md_tss.edi & 0xFFFF);
+      *dst = inportWord(_current->md.md_tss.edx & 0xFFFF);
+      _current->md.md_tss.edi = (_current->md.md_tss.edi + 2) & 0xFFFF;
+      _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 1);
     }
     break;
     case 0x6E: /* OUTSB: OUT byte from DS:[SI] to DX */
     {
-      uint8_t *src = (uint8_t *)FP_TO_LINEAR(_current->tss.ds, _current->tss.esi & 0xFFFF);
-      outportByte(_current->tss.edx & 0xFFFF, *src);
-      _current->tss.esi = (_current->tss.esi + 1) & 0xFFFF;
-      _current->tss.eip = (uint16_t)(_current->tss.eip + 1);
+      uint8_t *src = (uint8_t *)FP_TO_LINEAR(_current->md.md_tss.ds, _current->md.md_tss.esi & 0xFFFF);
+      outportByte(_current->md.md_tss.edx & 0xFFFF, *src);
+      _current->md.md_tss.esi = (_current->md.md_tss.esi + 1) & 0xFFFF;
+      _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 1);
     }
     break;
     case 0x6F: /* OUTSW: OUT word from DS:[SI] to DX */
     {
-      uint16_t *src = (uint16_t *)FP_TO_LINEAR(_current->tss.ds, _current->tss.esi & 0xFFFF);
-      outportWord(_current->tss.edx & 0xFFFF, *src);
-      _current->tss.esi = (_current->tss.esi + 2) & 0xFFFF;
-      _current->tss.eip = (uint16_t)(_current->tss.eip + 1);
+      uint16_t *src = (uint16_t *)FP_TO_LINEAR(_current->md.md_tss.ds, _current->md.md_tss.esi & 0xFFFF);
+      outportWord(_current->md.md_tss.edx & 0xFFFF, *src);
+      _current->md.md_tss.esi = (_current->md.md_tss.esi + 2) & 0xFFFF;
+      _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 1);
     }
     break;
     case 0xF3: /* REP prefix — only privileged for REP INS/OUTS */
     {
       uint8_t next = ip[1];
-      uint16_t cx = _current->tss.ecx & 0xFFFF;
-      uint16_t dx = _current->tss.edx & 0xFFFF;
+      uint16_t cx = _current->md.md_tss.ecx & 0xFFFF;
+      uint16_t dx = _current->md.md_tss.edx & 0xFFFF;
       if (next == 0x6C) { /* REP INSB */
         while (cx--) {
-          uint8_t *dst = (uint8_t *)FP_TO_LINEAR(_current->tss.es, _current->tss.edi & 0xFFFF);
+          uint8_t *dst = (uint8_t *)FP_TO_LINEAR(_current->md.md_tss.es, _current->md.md_tss.edi & 0xFFFF);
           *dst = inportByte(dx);
-          _current->tss.edi = (_current->tss.edi + 1) & 0xFFFF;
+          _current->md.md_tss.edi = (_current->md.md_tss.edi + 1) & 0xFFFF;
         }
-        _current->tss.ecx = 0;
-        _current->tss.eip = (uint16_t)(_current->tss.eip + 2);
+        _current->md.md_tss.ecx = 0;
+        _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 2);
       } else if (next == 0x6D) { /* REP INSW */
         while (cx--) {
-          uint16_t *dst = (uint16_t *)FP_TO_LINEAR(_current->tss.es, _current->tss.edi & 0xFFFF);
+          uint16_t *dst = (uint16_t *)FP_TO_LINEAR(_current->md.md_tss.es, _current->md.md_tss.edi & 0xFFFF);
           *dst = inportWord(dx);
-          _current->tss.edi = (_current->tss.edi + 2) & 0xFFFF;
+          _current->md.md_tss.edi = (_current->md.md_tss.edi + 2) & 0xFFFF;
         }
-        _current->tss.ecx = 0;
-        _current->tss.eip = (uint16_t)(_current->tss.eip + 2);
+        _current->md.md_tss.ecx = 0;
+        _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 2);
       } else if (next == 0x6E) { /* REP OUTSB */
         while (cx--) {
-          uint8_t *src = (uint8_t *)FP_TO_LINEAR(_current->tss.ds, _current->tss.esi & 0xFFFF);
+          uint8_t *src = (uint8_t *)FP_TO_LINEAR(_current->md.md_tss.ds, _current->md.md_tss.esi & 0xFFFF);
           outportByte(dx, *src);
-          _current->tss.esi = (_current->tss.esi + 1) & 0xFFFF;
+          _current->md.md_tss.esi = (_current->md.md_tss.esi + 1) & 0xFFFF;
         }
-        _current->tss.ecx = 0;
-        _current->tss.eip = (uint16_t)(_current->tss.eip + 2);
+        _current->md.md_tss.ecx = 0;
+        _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 2);
       } else if (next == 0x6F) { /* REP OUTSW */
         while (cx--) {
-          uint16_t *src = (uint16_t *)FP_TO_LINEAR(_current->tss.ds, _current->tss.esi & 0xFFFF);
+          uint16_t *src = (uint16_t *)FP_TO_LINEAR(_current->md.md_tss.ds, _current->md.md_tss.esi & 0xFFFF);
           outportWord(dx, *src);
-          _current->tss.esi = (_current->tss.esi + 2) & 0xFFFF;
+          _current->md.md_tss.esi = (_current->md.md_tss.esi + 2) & 0xFFFF;
         }
-        _current->tss.ecx = 0;
-        _current->tss.eip = (uint16_t)(_current->tss.eip + 2);
+        _current->md.md_tss.ecx = 0;
+        _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 2);
       } else {
         /* REP + non-privileged string op: shouldn't GPF, skip REP and retry */
         ip++;
-        _current->tss.eip = (uint16_t)(_current->tss.eip + 1);
+        _current->md.md_tss.eip = (uint16_t)(_current->md.md_tss.eip + 1);
         goto gpfStart;
       }
     }
     break;
     case 0xF4:
-      _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      _current->md.md_tss.eip = (uInt16) (_current->md.md_tss.eip + 1);
     break;
     default: /* something wrong */
-      kprintf("GPF unhandled op=0x%X at 0x%X:0x%X id=%d\n",
-        ip[0], _current->tss.cs, _current->tss.eip, _current->id);
+      kprintf("GPF unhandled op=0x%X [%02X %02X %02X %02X] at 0x%X:0x%X esp=0x%X:0x%X id=%d\n",
+        ip[0], ip[1], ip[2], ip[3], ip[4],
+        (uint16_t)_current->md.md_tss.cs, _current->md.md_tss.eip,
+        (uint16_t)_current->md.md_tss.ss, (uint16_t)_current->md.md_tss.esp,
+        _current->id);
       _current->state = DEAD;
     break;
   }
@@ -904,9 +908,9 @@ void __security(struct trapframe *frame) {
   kprintf("SECURITY: frame=%p rawESP=0x%X v86=%d cs=0x%X eip=0x%X esp0=0x%X\n",
       frame, rawESP,
       (_current && _current->oInfo.v86Task) ? 1 : 0,
-      _current ? _current->tss.cs  : 0xDEAD,
-      _current ? _current->tss.eip : 0xDEAD,
-      _current ? _current->tss.esp0 : 0xDEAD);
+      _current ? _current->md.md_tss.cs  : 0xDEAD,
+      _current ? _current->md.md_tss.eip : 0xDEAD,
+      _current ? _current->md.md_tss.esp0 : 0xDEAD);
   kprintf("SECURITY: tf_eip=0x%X tf_cs=0x%X tf_eflags=0x%X tf_esp=0x%X tf_ss=0x%X tf_err=0x%X\n",
       frame ? frame->tf_eip : 0, frame ? frame->tf_cs : 0,
       frame ? frame->tf_eflags : 0, frame ? frame->tf_esp : 0,
@@ -941,14 +945,14 @@ void mathStateRestore() {
     asm(
       "fnsave %0"
       :
-      : "m" (_usedMath->i387)
+      : "m" (_usedMath->md.md_i387)
     );
   }
   if (_current->usedMath != 0x0) {
     asm(
       "frstor %0"
       :
-      : "m" (_current->i387)
+      : "m" (_current->md.md_i387)
     );
   }
   else {

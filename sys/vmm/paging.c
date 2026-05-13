@@ -393,8 +393,8 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   dI = (baseAddr / (1024 * 4096));
   tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
 
-  kprintf("cr3: 0x%X\n", child->tss.cr3);
-  if (vmm_remapPage(child->tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
+  kprintf("cr3: 0x%X\n", child->md.md_tss.cr3);
+  if (vmm_remapPage(child->md.md_tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
     K_PANIC("vmm_remapPage: Failed");
 
   for (i = 0; i < PD_ENTRIES; i++) {

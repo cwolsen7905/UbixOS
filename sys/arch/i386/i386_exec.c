@@ -176,40 +176,40 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg)
 	    (uint32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
 
 	/* Set All The Correct Thread Attributes */
-	newProcess->tss.back_link = 0x0;
-	newProcess->tss.esp1 = 0x0;
-	newProcess->tss.ss1 = 0x0;
-	newProcess->tss.esp2 = 0x0;
-	newProcess->tss.ss2 = 0x0;
-	newProcess->tss.cr3 = (unsigned int)kernelPageDirectory;
-	newProcess->tss.eip = (unsigned int)tproc;
-	newProcess->tss.eflags = 0x206;
-	newProcess->tss.esp = stackAddr + (stack - 0x4); // stack;
-	newProcess->tss.ebp = 0x0;                       // stack;
-	newProcess->tss.esi = 0x0;
-	newProcess->tss.edi = 0x0;
+	newProcess->md.md_tss.back_link = 0x0;
+	newProcess->md.md_tss.esp1 = 0x0;
+	newProcess->md.md_tss.ss1 = 0x0;
+	newProcess->md.md_tss.esp2 = 0x0;
+	newProcess->md.md_tss.ss2 = 0x0;
+	newProcess->md.md_tss.cr3 = (unsigned int)kernelPageDirectory;
+	newProcess->md.md_tss.eip = (unsigned int)tproc;
+	newProcess->md.md_tss.eflags = 0x206;
+	newProcess->md.md_tss.esp = stackAddr + (stack - 0x4); // stack;
+	newProcess->md.md_tss.ebp = 0x0;                       // stack;
+	newProcess->md.md_tss.esi = 0x0;
+	newProcess->md.md_tss.edi = 0x0;
 
 	/* Ring 3 Selectors */
 	/*
-	 newProcess->tss.es           = 0x30+3;
-	 newProcess->tss.cs           = 0x28+3;
-	 newProcess->tss.ss           = 0x30+3;
-	 newProcess->tss.ds           = 0x30+3;
-	 newProcess->tss.fs           = 0x30+3;
-	 newProcess->tss.gs           = 0x30+3;
+	 newProcess->md.md_tss.es           = 0x30+3;
+	 newProcess->md.md_tss.cs           = 0x28+3;
+	 newProcess->md.md_tss.ss           = 0x30+3;
+	 newProcess->md.md_tss.ds           = 0x30+3;
+	 newProcess->md.md_tss.fs           = 0x30+3;
+	 newProcess->md.md_tss.gs           = 0x30+3;
 	 */
 
 	/* Ring 0 Selectors */
-	newProcess->tss.es = 0x10;
-	newProcess->tss.cs = 0x08;
-	newProcess->tss.ss = 0x10;
-	newProcess->tss.ds = 0x10;
-	newProcess->tss.fs = 0x10;
-	newProcess->tss.gs = 0x10;
+	newProcess->md.md_tss.es = 0x10;
+	newProcess->md.md_tss.cs = 0x08;
+	newProcess->md.md_tss.ss = 0x10;
+	newProcess->md.md_tss.ds = 0x10;
+	newProcess->md.md_tss.fs = 0x10;
+	newProcess->md.md_tss.gs = 0x10;
 
-	newProcess->tss.ldt = 0x18;
-	newProcess->tss.trace_bitmap = 0x0000;
-	newProcess->tss.io_map = 0x8000;
+	newProcess->md.md_tss.ldt = 0x18;
+	newProcess->md.md_tss.trace_bitmap = 0x0000;
+	newProcess->md.md_tss.io_map = 0x8000;
 	newProcess->oInfo.vmStart = 0x6400000;
 
 	if (newProcess->files[0] != 0x0)
@@ -232,7 +232,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg)
 	             "movl   %%ecx,%%esp  \n"
 	             "popa                \n"
 	             :
-	             : "b"(arg), "m"(newProcess->tss.esp));
+	             : "b"(arg), "m"(newProcess->md.md_tss.esp));
 
 	/* Put new thread into the READY state */
 	sched_setStatus(newProcess->id, READY);
@@ -290,13 +290,13 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->term->owner = newProcess->id;
 
 	/* Now We Must Create A Virtual Space For This Proccess To Run In */
-	newProcess->tss.cr3 = (uint32_t)vmm_createVirtualSpace(newProcess->id);
+	newProcess->md.md_tss.cr3 = (uint32_t)vmm_createVirtualSpace(newProcess->id);
 
 	/* To Better Load This Application We Will Switch Over To Its VM Space
 	 */
 	asm volatile("movl %0,%%cr3\n"
 	             :
-	             : "r"(newProcess->tss.cr3)
+	             : "r"(newProcess->md.md_tss.cr3)
 	             : "memory");
 
 	/* Lets Find The File */
@@ -451,29 +451,29 @@ void execFile(char *file, char **argv, char **envp, int console)
 	*/
 
 	/* Set All The Proper Information For The Task */
-	newProcess->tss.back_link = 0x0;
-	newProcess->tss.esp1 = 0x0;
-	newProcess->tss.ss1 = 0x0;
-	newProcess->tss.esp2 = 0x0;
-	newProcess->tss.ss2 = 0x0;
-	newProcess->tss.eip = (long)binaryHeader->e_entry;
-	newProcess->tss.eflags = 0x206;
-	newProcess->tss.esp = STACK_ADDR;
-	newProcess->tss.ebp = 0x0; // STACK_ADDR;
-	newProcess->tss.esi = 0x0;
-	newProcess->tss.edi = 0x0;
+	newProcess->md.md_tss.back_link = 0x0;
+	newProcess->md.md_tss.esp1 = 0x0;
+	newProcess->md.md_tss.ss1 = 0x0;
+	newProcess->md.md_tss.esp2 = 0x0;
+	newProcess->md.md_tss.ss2 = 0x0;
+	newProcess->md.md_tss.eip = (long)binaryHeader->e_entry;
+	newProcess->md.md_tss.eflags = 0x206;
+	newProcess->md.md_tss.esp = STACK_ADDR;
+	newProcess->md.md_tss.ebp = 0x0; // STACK_ADDR;
+	newProcess->md.md_tss.esi = 0x0;
+	newProcess->md.md_tss.edi = 0x0;
 
 	/* Set these up to be ring 3 tasks */
-	newProcess->tss.es = 0x30 + 3;
-	newProcess->tss.cs = 0x28 + 3;
-	newProcess->tss.ss = 0x30 + 3;
-	newProcess->tss.ds = 0x30 + 3;
-	newProcess->tss.fs = 0x30 + 3;
-	newProcess->tss.gs = 0x8 + 3 + 4; // 0x50 + 3; //0x30 + 3;
+	newProcess->md.md_tss.es = 0x30 + 3;
+	newProcess->md.md_tss.cs = 0x28 + 3;
+	newProcess->md.md_tss.ss = 0x30 + 3;
+	newProcess->md.md_tss.ds = 0x30 + 3;
+	newProcess->md.md_tss.fs = 0x30 + 3;
+	newProcess->md.md_tss.gs = 0x8 + 3 + 4; // 0x50 + 3; //0x30 + 3;
 
-	newProcess->tss.ldt = 0x18;
-	newProcess->tss.trace_bitmap = 0x0000;
-	newProcess->tss.io_map = 0x8000;
+	newProcess->md.md_tss.ldt = 0x18;
+	newProcess->md.md_tss.trace_bitmap = 0x0000;
+	newProcess->md.md_tss.io_map = 0x8000;
 
 	// sched_setStatus(newProcess->id, READY);
 
@@ -482,15 +482,15 @@ void execFile(char *file, char **argv, char **envp, int console)
 	fclose(newProcess->files[0]);
 	newProcess->files[0] = 0x0;
 
-	tmp = (uint32_t *)newProcess->tss.esp0 - 5;
+	tmp = (uint32_t *)newProcess->md.md_tss.esp0 - 5;
 
 	tmp[0] = binaryHeader->e_entry;
 	tmp[3] = STACK_ADDR - 12;
 
-	newProcess->tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
+	newProcess->md.md_tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
 	                      (argc + 1) - (envc + 1) - STACK_PAD;
 
-	tmp = (uint32_t *)newProcess->tss.esp;
+	tmp = (uint32_t *)newProcess->md.md_tss.esp;
 
 	tmp[0] = argc;
 
@@ -548,7 +548,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	sprintf(newProcess->oInfo.cwd, "sys:/");
 
 	// MrOlsen 2018 kprintf("execFile Return: 0x%X - %i\n",
-	// newProcess->tss.eip, newProcess->id);
+	// newProcess->md.md_tss.eip, newProcess->id);
 
 	/* Put new thread into the READY state */
 	sched_setStatus(newProcess->id, READY);
@@ -856,7 +856,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	// asm("cld");
 	// irqDisable(0);
-	iFrame = (struct i386_frame *)(_current->tss.esp0 -
+	iFrame = (struct i386_frame *)(_current->md.md_tss.esp0 -
 	                               sizeof(struct i386_frame));
 
 	// iFrame->ebp = 0x0;
@@ -1005,16 +1005,16 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	// asm("sti");
 
 	/*
-	 _current->tss.es = 0x30 + 3;
-	 _current->tss.cs = 0x28 + 3;
-	 _current->tss.ss = 0x30 + 3;
-	 _current->tss.ds = 0x30 + 3;
-	 _current->tss.fs = 0x30 + 3;
-	 _current->tss.gs = 0x50 + 3; //0x30 + 3;
+	 _current->md.md_tss.es = 0x30 + 3;
+	 _current->md.md_tss.cs = 0x28 + 3;
+	 _current->md.md_tss.ss = 0x30 + 3;
+	 _current->md.md_tss.ds = 0x30 + 3;
+	 _current->md.md_tss.fs = 0x30 + 3;
+	 _current->md.md_tss.gs = 0x50 + 3; //0x30 + 3;
 
-	 _current->tss.ldt = 0x18;
-	 _current->tss.trace_bitmap = 0x0000;
-	 _current->tss.io_map = 0x8000;
+	 _current->md.md_tss.ldt = 0x18;
+	 _current->md.md_tss.trace_bitmap = 0x0000;
+	 _current->md.md_tss.io_map = 0x8000;
 	 */
 
 	/*
@@ -1056,7 +1056,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	    ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
 	taskLDT->baseHigh = data_addr >> 24;
 
-	_current->tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
+	_current->md.md_tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
 	_current->pgrp = _current->id;
 
 	return (0x0);
