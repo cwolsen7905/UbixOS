@@ -36,6 +36,18 @@
 #include <fb/fb.h>
 #include <views/display_proto.h>
 
+static void
+launch(const char *path)
+{
+	pid_t pid = fork();
+	if (pid == 0) {
+		char *argv[] = { (char *)path, NULL };
+		char *envp[] = { NULL };
+		execve(path, argv, envp);
+		_exit(1);
+	}
+}
+
 #define TB_H        32
 #define TB_BG       FB_RGB(0x00, 0x3C, 0x8C)
 #define TB_BTN      FB_RGB(0x00, 0x50, 0xB0)
@@ -333,6 +345,18 @@ main(int argc, char **argv)
 			    (struct display_mouse_ev *)reply.data;
 
 			int pressed = (me->buttons & 1) != 0;
+
+			if (me->window_id == g_fly_id) {
+				/* Click released inside flyout */
+				if (!pressed && g_fly_open) {
+					int item = me->y / FLY_ITEM_H;
+					hide_flyout();
+					if (item == 0)
+						launch("sys:/bin/term");
+				}
+				continue;
+			}
+
 			if (pressed != btn_pressed) {
 				btn_pressed = pressed;
 				draw_taskbar(btn_pressed);
