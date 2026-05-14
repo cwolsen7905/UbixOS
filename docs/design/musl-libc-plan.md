@@ -239,12 +239,15 @@ in QEMU.
 used by `login` and `shell` (which remain statically linked for now).
 
 Migration order (simplest first):
-1. `format`, `stat`, `clock` — printf + 1-2 syscalls
-2. `cp`, `ed`, `disklabel`, `fdisk` — full stdio
-3. `ttyd`, `ttytest`, `ubistry` — MPI + terminal
-4. `views`, `taskbar`, `muffin` — libfb + MPI + Views protocol
-5. `shell`, `login` — last; these stay static so they switch to
-   linking `libc.a` (musl static archive) rather than `libc.so`
+1. ✅ `format`, `clock`, `cp`, `ls`, `cat`, `uname`, `syscheck`, `make`, `filetest`, `ed`, `ttytest` — stdio + basic syscalls
+2. ✅ `disklabel`, `fdisk` — full stdio; fixed `gets()→fgets()` and missing `stdint.h`
+3. ✅ `ttyd`, `ubistry` — MPI + terminal; extended `ubix_api.a` with `mpi_destroyMbox` + `gettime`
+4. ✅ `init`, `login`, `shell` — boot chain; fixed fread item-count bug in login, added fflush calls throughout
+5. ✅ `tcc` — custom Makefile; dropped old-libc shims; expanded `moddi3.c` with full 64-bit division helpers to avoid host libgcc (elf64, can't link into i386 binary)
+6. ✅ `term` — C++/objgfx; already updated to clean `ubix.prog.mk` form
+7. 🔄 `views`, `taskbar` — C++/objgfx; remaining old-libc binaries in active build
+8. ⬜ Orphaned (`kill`, `printf`, `test`, `edit`, `mount`) — triage: port, rewrite, or remove before Phase 4
+9. Removed: `sh` (superseded by `shell`), `muffin` (orphaned, kept as reference), `stat` (to be rewritten)
 
 As each app migrates, audit which headers it needed from `include/`. Once
 nothing uses a header from `include/` that musl provides, delete it.
@@ -343,16 +346,16 @@ These are never replaced by musl or libc++:
 
 ## Status
 
-Last updated: 2026-05-13
+Last updated: 2026-05-14
 
 | Phase | Description | Status | Notes |
 |-------|-------------|--------|-------|
-| Phase 0 | Syscall groundwork | ✅ Done | obreak@17, kill@37, mprotect@74, clock_gettime@232, futex@350, set_thread_area@351, exit_group@352, getdents@272 wired; musl will remap Linux numbers via syscall.h.in in Phase 1 |
-| Phase 1 | musl in tree, builds for i386 | ⬜ Not started | |
-| Phase 2 | First app on musl | ⬜ Not started | |
-| Phase 3 | App-by-app migration | ⬜ Not started | |
-| Phase 4 | Retire lib/libc/ | ⬜ Not started | |
-| Phase 5 | libc++ (C++ standard library) | ⬜ Not started | |
+| Phase 0 | Syscall groundwork | ✅ Done | obreak@17, kill@37, mprotect@74, clock_gettime@232, futex@350, set_thread_area@351, exit_group@352, getdents@272 wired |
+| Phase 1 | musl in tree, builds for i386 | ✅ Done | `contrib/musl/` builds `build/lib/musl.a`; FreeBSD ABI syscall layer in place; TIOCGWINSZ fixed via `arch/i386/bits/ioctl.h` |
+| Phase 2 | First app on musl | ✅ Done | `clock` was first; full boot chain (init→login→shell) verified in QEMU |
+| Phase 3 | App-by-app migration | 🔄 In progress | All binaries migrated except `views` and `taskbar`; `muffin` orphaned from build; `sh` removed; `tcc` migrated with self-contained 64-bit division shim; `stat` removed from build (to be rewritten later) |
+| Phase 4 | Retire lib/libc/ | ⬜ Not started | Blocked on views + taskbar migration; orphaned bins (kill, printf, test, edit, mount) need triage |
+| Phase 5 | libc++ (C++ standard library) | ⬜ Not started | Blocked on Phase 4 |
 | Phase 6 | New architecture port | ⬜ Not started | |
 
 ### Legend
