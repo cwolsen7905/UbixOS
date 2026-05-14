@@ -1,9 +1,18 @@
 #ifndef __LIBCPP_H
 #define __LIBCPP_H
 
-void * operator new(unsigned size);
-void   operator delete(void * ptr);
-void * operator new[](unsigned size);
-void   operator delete[](void * ptr);
+/* Heap allocation */
+void *operator new(unsigned size);
+void *operator new[](unsigned size);
+void  operator delete(void *ptr);
+void  operator delete[](void *ptr);
+void  operator delete(void *ptr, unsigned size);
+void  operator delete[](void *ptr, unsigned size);
 
-#endif
+/* Placement new/delete */
+void *operator new(unsigned, void *ptr);
+void *operator new[](unsigned, void *ptr);
+void  operator delete(void *, void *);
+void  operator delete[](void *, void *);
+
+#endif /* __LIBCPP_H */

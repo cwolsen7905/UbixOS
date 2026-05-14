@@ -10,8 +10,7 @@ OBJS = libcpp.o
 
 #Include
 
-INCLUDE += -I../libcpp/include/
-#-I../../include -I./include -I../libc/include
+INCLUDE += -I../libcpp/include/ -I../../include
 
 all: $(OBJS)
 

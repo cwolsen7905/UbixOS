@@ -40,9 +40,6 @@ libfb-code:
 bin: src
 	(cd src/bin;$(MAKE))
 
-libstdc++: src
-	(cd src/lib/libstdc++;$(MAKE))
-
 tools: src
 	(cd src/tools;$(MAKE))
 
