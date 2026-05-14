@@ -1,33 +1,25 @@
-#  (C) 2002 The UbixOS Project
-#  $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
+#  (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../Makefile.incl
 include ../Makefile.incl
 
-#  Objects
+MUSL_SRC = ${SRCTOP}/contrib/musl
+MUSL_OBJ = ${OBJ_DIR}/obj/musl
+
 OBJS = libcpp.o
 
-#Include
-
-INCLUDE += -I../libcpp/include/ -I../../include
+INCLUDE = -I../libcpp/include/ \
+          -I${MUSL_SRC}/include \
+          -I${MUSL_OBJ}/obj/include \
+          -I${MUSL_SRC}/arch/i386 \
+          -I${MUSL_SRC}/arch/generic
 
 all: $(OBJS)
 
-#  Compile Types
-.cpp.o:
-	$(CXX) ${CFLAGS} -Wall -DNOBOOL -fno-exceptions -g -c $(INCLUDE) -o $@ $<
 .cc.o:
-	$(CXX) ${CFLAGS} -Wall -DNOBOOL -D__HMM -nostdinc -fno-builtin -fno-rtti -fno-exceptions -fomit-frame-pointer -O $(INCLUDE) -c -o $@ $<
-.cc.s:
-	$(CXX) ${CFLAGS} -Wall -fomit-frame-pointer -O $(INCLUDE) -S -o $@ $<
-.c.o:
-	$(CC)  ${CFLAGS} -Wall -fomit-frame-pointer -O $(INCLUDE) -c -o $@ $<
-.c.s:
-	$(CC)  ${CFLAGS} -Wall -fomit-frame-pointer -O $(INCLUDE) -S -o $@ $<
-.S.o:
-	$(CC)  ${CFLAGS} -Wall -fomit-frame-pointer -c -o $@ $<
+	$(CXX) ${CROSS_M32} -Wall -nostdinc -fno-builtin -fno-rtti -fno-exceptions \
+		-mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+		-fomit-frame-pointer -O $(INCLUDE) -c -o $@ $<
 
-# Clean up the junk
 clean:
 	$(REMOVE) $(OBJS) ${OBJS:.o=.d}
