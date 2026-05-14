@@ -36,8 +36,8 @@ musl lives in `contrib/musl/` as a git subtree, not a submodule. This means:
 ```sh
 git subtree add \
   --prefix=contrib/musl \
-  https://git.musl-libc.org/cgit/musl \
-  v1.2.5 --squash
+  https://git.musl-libc.org/git/musl \
+  v1.2.6 --squash
 ```
 
 ### Update to a new release
@@ -45,8 +45,8 @@ git subtree add \
 ```sh
 git subtree pull \
   --prefix=contrib/musl \
-  https://git.musl-libc.org/cgit/musl \
-  v1.2.6 --squash
+  https://git.musl-libc.org/git/musl \
+  v1.2.7 --squash
 ```
 
 Git merges the upstream diff. UbixOS-specific files in `arch/i386/` that
@@ -203,17 +203,19 @@ set_thread_area stub, brk/obreak mapping) are implemented in the kernel.
 
 ---
 
-### Phase 1 — musl in the tree, builds for i386
-**Done when:** `contrib/musl/` builds a static `libc.a` and `libc.so` for
-i386 UbixOS. No apps use it yet.
+### Phase 1 — musl in the tree, builds for i386 ✅ Done
+**Done when:** `contrib/musl/` builds a static `libc.a` for i386 UbixOS.
+No apps use it yet.
 
-- `git subtree add` musl at a tagged release
-- Write `arch/i386/bits/syscall.h.in` with the UbixOS→Linux number mapping
-- Write `arch/i386/syscall_arch.h` (keeps `int $0x80`, remaps numbers)
-- Patch `arch/i386/__init_tls.c`: change `entry_number*8+3` → `entry_number*8+7` so the LDT TI bit is set and `%gs` resolves to LDT[1] (selector 0xF)
-- Add `contrib/musl/Makefile` that integrates with `bmake world`
-- Add `contrib/musl/` output to `build/lib/` alongside existing `libc.so`
-- Ship both `libc.so` (old) and `musl.so` (new) on the disk image
+- ✅ `git subtree add` musl v1.2.6 (`contrib/musl/`)
+- ✅ Write `arch/i386/bits/syscall.h.in` — Linux→UbixOS (FreeBSD slot) number remapping via `#undef`/`#define` overrides at end of file; sed step in musl Makefile generates matching `SYS_*` aliases
+- ✅ Replace `arch/i386/syscall_arch.h` — declares `__syscall0`..`__syscall6` extern; `SYSCALL_NO_TLS=1` forces `int $0x80` path; no register ABI
+- ✅ Write `src/thread/i386/ubixos_syscall.S` — `__syscall0`..`__syscall6` for FreeBSD stack ABI (`pushl args; pushl $0; int $0x80; addl $N; jnc/negl`)
+- ✅ Replace `src/thread/i386/__set_thread_area.s` — FreeBSD ABI call to slot 351; kernel sets `%gs=0xF`, no selector reload needed
+- ✅ Replace `src/thread/i386/syscall_cp.s` — cancellable syscall with FreeBSD frame; `__cp_begin`/`__cp_end` mark cancellation window
+- ✅ Add `contrib/musl/Makefile.ubixos` wrapper (`bmake -f contrib/musl/Makefile.ubixos`)
+- ✅ `build/lib/musl.a` — 1.9 MB static archive, all UbixOS shim symbols present
+- Note: `entry_number*8+7` fix in `__init_tls.c` not needed — kernel already sets `%gs=0xF` before returning from `set_thread_area`; musl's selector formula is never executed for the TLS load path we use
 
 **Unblocks:** Phase 2.
 

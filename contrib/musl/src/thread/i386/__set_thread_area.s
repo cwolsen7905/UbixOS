@@ -1,47 +1,34 @@
+/*
+ * __set_thread_area.s — UbixOS i386 TLS setup
+ *
+ * Calls UbixOS POSIX syscall slot 351 (set_thread_area) using the
+ * FreeBSD stack-based ABI: push the user_desc pointer, push a fake
+ * return address, set eax=351, int $0x80.
+ *
+ * The kernel (sys_set_thread_area in gen_calls.c):
+ *   1. Reads base_addr from the user_desc
+ *   2. Writes an LDT[1] data segment descriptor with that base
+ *   3. Loads %gs = 0xF (LDT entry 1, TI=1, RPL=3)
+ *   4. Sets entry_number = 1 in the user_desc
+ *
+ * Because the kernel already loads %gs, we do not need to compute
+ * and reload the selector here.  We just call the syscall and return
+ * 0 on success or a negative errno on failure.
+ */
 .text
 .global __set_thread_area
 .hidden __set_thread_area
 .type   __set_thread_area,@function
 __set_thread_area:
-	push %ebx
-	push $0x51
-	push $0xfffff
-	push 16(%esp)
-	call 1f
-1:	addl $4f-1b,(%esp)
-	pop %ecx
-	mov (%ecx),%edx
-	push %edx
-	mov %esp,%ebx
-	xor %eax,%eax
-	mov $243,%al
-	int $128
-	testl %eax,%eax
-	jnz 2f
-	movl (%esp),%edx
-	movl %edx,(%ecx)
-	leal 3(,%edx,8),%edx
-3:	movw %dx,%gs
-1:
-	addl $16,%esp
-	popl %ebx
+	movl 4(%esp), %ecx	/* user_desc ptr (arg from caller) */
+	pushl %ecx		/* FreeBSD ABI arg1 → lands at esp+4 */
+	pushl $0		/* fake return address at esp+0 */
+	movl $351, %eax		/* UbixOS slot 351 = set_thread_area */
+	int  $0x80
+	addl $8, %esp		/* restore stack */
+	jnc  1f			/* CF=0: success */
+	negl %eax		/* CF=1: negate errno for musl */
 	ret
-2:
-	mov %ebx,%ecx
-	xor %eax,%eax
-	xor %ebx,%ebx
-	xor %edx,%edx
-	mov %ebx,(%esp)
-	mov $1,%bl
-	mov $16,%dl
-	mov $123,%al
-	int $128
-	testl %eax,%eax
-	jnz 1b
-	mov $7,%dl
-	inc %al
-	jmp 3b
-
-.data
-	.align 4
-4:	.long -1
+1:	xorl %eax, %eax		/* return 0 on success */
+	ret
+.size __set_thread_area, .-__set_thread_area

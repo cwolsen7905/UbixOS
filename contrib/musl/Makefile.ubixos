@@ -1,0 +1,59 @@
+# Makefile.ubixos — UbixOS build wrapper for musl libc
+#
+# Usage (from the UbixOS top-level Makefile):
+#   bmake -f contrib/musl/Makefile.ubixos UBIXOS_ROOT=/path/to/ubixos
+#
+# Output:
+#   build/lib/musl.so    — dynamic musl (for future dynamic-linking apps)
+#   build/lib/musl.a     — static musl  (for static apps after Phase 4)
+#
+# This wrapper runs musl's own configure + GNU make under the cross-compiler
+# settings already established by the UbixOS build environment.
+
+MUSL_DIR    != realpath $(dir $(lastword $(MAKEFILE_LIST)))
+UBIXOS_ROOT ?= $(realpath $(MUSL_DIR)/../..)
+BUILD_DIR   ?= $(UBIXOS_ROOT)/build
+MUSL_OBJ    ?= $(BUILD_DIR)/obj/musl
+
+# Cross-compiler settings (matches UbixOS top-level Makefile)
+CROSS_PREFIX ?= x86_64-elf-
+CC           := $(CROSS_PREFIX)gcc
+AR           := $(CROSS_PREFIX)ar
+RANLIB       := $(CROSS_PREFIX)ranlib
+
+# musl configure flags for UbixOS i386
+MUSL_CFLAGS := -m32 \
+               -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+               -ffreestanding -fno-pie -fno-pic \
+               -fno-stack-protector
+
+.PHONY: all clean musl-configure musl-build install-musl
+
+all: musl-build
+
+$(MUSL_OBJ)/config.mak: $(MUSL_DIR)/configure
+	mkdir -p $(MUSL_OBJ)
+	cd $(MUSL_OBJ) && $(MUSL_DIR)/configure \
+		--srcdir=$(MUSL_DIR) \
+		--target=i386-ubixos \
+		--disable-shared \
+		--enable-static \
+		CC="$(CC) $(MUSL_CFLAGS)" \
+		CROSS_COMPILE=$(CROSS_PREFIX) \
+		LIBCC="" \
+		CFLAGS="$(MUSL_CFLAGS)"
+
+musl-configure: $(MUSL_OBJ)/config.mak
+
+musl-build: musl-configure
+	$(MAKE) -C $(MUSL_OBJ) -f $(MUSL_DIR)/Makefile \
+		srcdir=$(MUSL_DIR) \
+		ARCH=i386 \
+		obj=$(MUSL_OBJ)
+
+install-musl: musl-build
+	mkdir -p $(BUILD_DIR)/lib
+	cp $(MUSL_OBJ)/lib/libc.a $(BUILD_DIR)/lib/musl.a
+
+clean:
+	rm -rf $(MUSL_OBJ)
