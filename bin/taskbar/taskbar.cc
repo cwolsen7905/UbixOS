@@ -225,15 +225,57 @@ send_flip(uint32_t win_id)
 /* Process launch                                                       */
 /* ------------------------------------------------------------------ */
 
+/*
+ * Launcher helper: forked once at startup before any shared memory is
+ * mapped.  Taskbar writes null-terminated paths down the pipe; the helper
+ * forks+execs each one.  This keeps taskbar's COW-free shared buffers
+ * intact across repeated launches.
+ */
+static int g_launcher_fd = -1;
+
+static void
+launcher_init(void)
+{
+	int pfd[2];
+	if (pipe(pfd) != 0)
+		return;
+
+	if (fork() == 0) {
+		close(pfd[1]);
+		char path[256];
+		int  len = 0;
+		char ch;
+		for (;;) {
+			if (read(pfd[0], &ch, 1) <= 0)
+				_exit(0);
+			if (ch != '\0') {
+				if (len < (int)sizeof(path) - 1)
+					path[len++] = ch;
+				continue;
+			}
+			if (len == 0)
+				continue;
+			path[len] = '\0';
+			len = 0;
+			if (fork() == 0) {
+				char *argv[] = { path, NULL };
+				char *envp[] = { NULL };
+				execve(path, argv, envp);
+				_exit(1);
+			}
+		}
+	}
+
+	close(pfd[0]);
+	g_launcher_fd = pfd[1];
+}
+
 static void
 launch(const char *path)
 {
-	if (fork() == 0) {
-		char *argv[] = { (char *)path, NULL };
-		char *envp[] = { NULL };
-		execve(path, argv, envp);
-		_exit(1);
-	}
+	if (g_launcher_fd < 0)
+		return;
+	write(g_launcher_fd, path, strlen(path) + 1);
 }
 
 /* ------------------------------------------------------------------ */
@@ -307,6 +349,8 @@ int
 main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
+
+	launcher_init();
 
 	static char tb_mbox[]    = "taskbar";
 	static char views_mbox[] = "views";
