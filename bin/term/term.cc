@@ -266,6 +266,7 @@ main(int argc, char **argv)
 
 	/* Claim window */
 	mpi_message_t msg;
+	memset(&msg, 0, sizeof(msg));
 	struct display_claim_req *creq = (struct display_claim_req *)msg.data;
 	msg.header       = DISPLAY_CLAIM;
 	creq->x          = 20;
