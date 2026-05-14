@@ -154,6 +154,17 @@ static ogSurface g_tb_surf;
 static ogSurface g_fly_surf;
 static ogBitFont g_font;
 
+/* Window list tracked via DISPLAY_NOTIFY */
+#define MAX_TRACKED  14
+#define WIN_BTN_W    96
+
+struct TrackedWin {
+	uint32_t id;
+	char     title[32];
+};
+static TrackedWin g_tracked[MAX_TRACKED];
+static int        g_tracked_n = 0;
+
 /* ------------------------------------------------------------------ */
 /* Drawing                                                              */
 /* ------------------------------------------------------------------ */
@@ -174,15 +185,84 @@ draw_taskbar(int btn_pressed)
 	font_bg(g_font, btn_color);
 	g_font.PutString(g_tb_surf, 10, 12, "UbixOS");
 
+	/* Window list buttons */
+	int wx = 2 + BTN_W + 4;
+	int clock_x = sw - CLOCK_W - 2;
+	for (int i = 0; i < g_tracked_n; i++) {
+		if (wx + WIN_BTN_W > clock_x - 4)
+			break;
+		g_tb_surf.ogFillRect(wx, 2, wx + WIN_BTN_W - 1,
+		    TB_H - 3, TB_BTN_N);
+		g_tb_surf.ogRect(wx, 2, wx + WIN_BTN_W - 1,
+		    TB_H - 3, TB_SEP);
+		font_fg(g_font, COL_WHITE);
+		font_bg(g_font, TB_BTN_N);
+		g_font.PutString(g_tb_surf, wx + 4, 12, g_tracked[i].title);
+		wx += WIN_BTN_W + 2;
+	}
+
 	/* Clock */
 	char tstr[12];
 	get_time_str(tstr);
-	int cx = sw - CLOCK_W - 2;
-	g_tb_surf.ogFillRect(cx, 2, cx + CLOCK_W - 1, TB_H - 3, TB_BTN_N);
-	g_tb_surf.ogRect(cx, 2, cx + CLOCK_W - 1, TB_H - 3, TB_SEP);
+	g_tb_surf.ogFillRect(clock_x, 2, clock_x + CLOCK_W - 1,
+	    TB_H - 3, TB_BTN_N);
+	g_tb_surf.ogRect(clock_x, 2, clock_x + CLOCK_W - 1,
+	    TB_H - 3, TB_SEP);
 	font_fg(g_font, COL_WHITE);
 	font_bg(g_font, TB_BTN_N);
-	g_font.PutString(g_tb_surf, cx + 8, 12, tstr);
+	g_font.PutString(g_tb_surf, clock_x + 8, 12, tstr);
+}
+
+static void
+win_add(uint32_t id, const char *title)
+{
+	if (g_tracked_n >= MAX_TRACKED)
+		return;
+	g_tracked[g_tracked_n].id = id;
+	strncpy(g_tracked[g_tracked_n].title, title,
+	    sizeof(g_tracked[0].title) - 1);
+	g_tracked[g_tracked_n].title[sizeof(g_tracked[0].title) - 1] = '\0';
+	g_tracked_n++;
+}
+
+static void
+win_remove(uint32_t id)
+{
+	for (int i = 0; i < g_tracked_n; i++) {
+		if (g_tracked[i].id != id)
+			continue;
+		for (int j = i; j < g_tracked_n - 1; j++)
+			g_tracked[j] = g_tracked[j + 1];
+		g_tracked_n--;
+		return;
+	}
+}
+
+/* Return index of window button hit at taskbar-relative x, or -1 */
+static int
+winbtn_hit(int mx)
+{
+	int wx = 2 + BTN_W + 4;
+	int clock_x = (int)g_sw - CLOCK_W - 2;
+	for (int i = 0; i < g_tracked_n; i++) {
+		if (wx + WIN_BTN_W > clock_x - 4)
+			break;
+		if (mx >= wx && mx < wx + WIN_BTN_W)
+			return i;
+		wx += WIN_BTN_W + 2;
+	}
+	return -1;
+}
+
+static void
+raise_window(uint32_t id)
+{
+	static char views_mbox[] = "views";
+	mpi_message_t msg;
+	struct display_raise *dr = (struct display_raise *)msg.data;
+	msg.header    = DISPLAY_RAISE;
+	dr->window_id = id;
+	mpi_postMessage(views_mbox, DISPLAY_RAISE, &msg);
 }
 
 static void
@@ -441,6 +521,19 @@ main(int argc, char **argv)
 		while (mpi_fetchMessage(tb_mbox, &reply) == 0) {
 			if (reply.header == DISPLAY_KEY)
 				continue;
+
+			if (reply.header == DISPLAY_NOTIFY) {
+				struct display_notify *dn =
+				    (struct display_notify *)reply.data;
+				if (dn->added)
+					win_add(dn->window_id, dn->title);
+				else
+					win_remove(dn->window_id);
+				draw_taskbar(btn_pressed);
+				send_flip(g_win_id);
+				continue;
+			}
+
 			if (reply.header != DISPLAY_MOUSE)
 				continue;
 
@@ -462,6 +555,15 @@ main(int argc, char **argv)
 				btn_pressed = pressed;
 				draw_taskbar(btn_pressed);
 				send_flip(g_win_id);
+
+				/* Window list button click */
+				if (!pressed) {
+					int wi = winbtn_hit(me->x);
+					if (wi >= 0) {
+						raise_window(g_tracked[wi].id);
+						continue;
+					}
+				}
 
 				int in_btn = (me->x >= 2 &&
 				    me->x < 2 + BTN_W);

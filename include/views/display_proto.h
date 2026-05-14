@@ -48,6 +48,7 @@
 #define DISPLAY_FLIP    2   /* buffer updated, please composite */
 #define DISPLAY_RELEASE 3   /* window closing */
 #define DISPLAY_QUERY   8   /* request screen geometry */
+#define DISPLAY_RAISE   11  /* ask compositor to raise/focus a window */
 
 /* display → client */
 #define DISPLAY_ACK     4   /* region granted; carries window_id + shm token */
@@ -56,6 +57,7 @@
 #define DISPLAY_MOUSE   7   /* mouse event forwarded to focused window */
 #define DISPLAY_INFO    9   /* response to DISPLAY_QUERY */
 #define DISPLAY_CLOSE   10  /* compositor closed the window (close button) */
+#define DISPLAY_NOTIFY  12  /* window added or removed (sent to taskbar) */
 
 /* Height of the server-drawn title bar (0 for no_decor windows) */
 #define DECOR_H         18
@@ -150,6 +152,25 @@ struct display_info {
     uint32_t screen_w;
     uint32_t screen_h;
     uint8_t  bpp;
+};
+
+/*
+ * DISPLAY_RAISE payload (client → display).
+ * Ask the compositor to raise and focus the given window.
+ */
+struct display_raise {
+    uint32_t window_id;
+};
+
+/*
+ * DISPLAY_NOTIFY payload (display → taskbar).
+ * Sent whenever a decorated window is added or removed.
+ * added=1: window opened; added=0: window closed.
+ */
+struct display_notify {
+    uint32_t window_id;
+    uint8_t  added;
+    char     title[64];
 };
 
 #endif /* _DISPLAY_PROTO_H */

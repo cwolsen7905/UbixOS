@@ -432,10 +432,14 @@ static const uint32_t jailbar_colors[4] = {
 	FB_RGB(0x00, 0x1A, 0x1A),
 };
 
+#define CASCADE_STEP  24
+#define CASCADE_START 20
+
 class WindowManager {
 	Framebuffer  fb;
 	Window       windows[MAX_WINDOWS];
 	uint32_t     next_win_id;
+	int          cascade_x, cascade_y;
 
 	Window      *z_stack[MAX_WINDOWS];
 	int          z_count;
@@ -582,6 +586,18 @@ class WindowManager {
 		mpi_postMessage(w->mbox, DISPLAY_MOUSE, &mev);
 	}
 
+	void notify_taskbar(Window *w, uint8_t added) {
+		static char tb[] = "taskbar";
+		mpi_message_t nm;
+		struct display_notify *dn = (struct display_notify *)nm.data;
+		nm.header     = DISPLAY_NOTIFY;
+		dn->window_id = w->id;
+		dn->added     = added;
+		strncpy(dn->title, w->title, sizeof(dn->title) - 1);
+		dn->title[sizeof(dn->title) - 1] = '\0';
+		mpi_postMessage(tb, DISPLAY_NOTIFY, &nm);
+	}
+
 	void close_window(Window *w) {
 		if (w->mbox[0]) {
 			mpi_message_t cm;
@@ -591,6 +607,8 @@ class WindowManager {
 			dc->window_id = w->id;
 			mpi_postMessage(w->mbox, DISPLAY_CLOSE, &cm);
 		}
+		if (w->decor_h > 0)
+			notify_taskbar(w, 0);
 		free(w->raw);
 		w->active = false;
 		z_remove(w);
@@ -600,7 +618,8 @@ class WindowManager {
 
 public:
 	WindowManager()
-	    : next_win_id(1), z_count(0), focused(NULL),
+	    : next_win_id(1), cascade_x(CASCADE_START), cascade_y(CASCADE_START),
+	      z_count(0), focused(NULL),
 	      dragging(false), drag_win(NULL),
 	      drag_off_x(0), drag_off_y(0),
 	      cur_x(0), cur_y(0), cur_drawn(false), prev_buttons(0)
@@ -690,6 +709,19 @@ public:
 
 		int32_t wx = creq->x, wy = creq->y;
 		int32_t ww = creq->w, wh = creq->h;
+
+		if (dh > 0) {
+			wx = (int32_t)cascade_x;
+			wy = (int32_t)cascade_y;
+			cascade_x += CASCADE_STEP;
+			cascade_y += CASCADE_STEP;
+			if (cascade_x + ww > (int32_t)fb.width ||
+			    cascade_y + dh + wh > (int32_t)fb.height) {
+				cascade_x = CASCADE_START;
+				cascade_y = CASCADE_START;
+			}
+		}
+
 		if (wx < 0) wx = 0;
 		if (wy < 0) wy = 0;
 		if (wx + ww > (int32_t)fb.width)
@@ -741,6 +773,8 @@ public:
 		printf("views: window %u pid %d %dx%d+%d+%d shm=0x%X\n",
 		    w->id, creq->sender_pid, ww, wh, wx, wy, client_vaddr);
 
+		if (dh > 0)
+			notify_taskbar(w, 1);
 		composite_all();
 	}
 
@@ -772,6 +806,8 @@ public:
 	void handle_release(struct display_release *rel) {
 		Window *w = win_find(rel->window_id);
 		if (!w) return;
+		if (w->decor_h > 0)
+			notify_taskbar(w, 0);
 		free(w->raw);
 		w->active = false;
 		z_remove(w);
@@ -831,6 +867,14 @@ public:
 		}
 
 		prev_buttons = ev.buttons;
+	}
+
+	void handle_raise(struct display_raise *dr) {
+		Window *w = win_find(dr->window_id);
+		if (!w) return;
+		z_raise(w);
+		focused = w;
+		composite_all();
 	}
 
 	void handle_kbd(kbd_event_t &kev) {
@@ -925,6 +969,10 @@ main(int argc, char **argv)
 			case DISPLAY_RELEASE:
 				wm.handle_release(
 				    (struct display_release *)msg.data);
+				break;
+			case DISPLAY_RAISE:
+				wm.handle_raise(
+				    (struct display_raise *)msg.data);
 				break;
 			default:
 				break;
