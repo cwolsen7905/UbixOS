@@ -28,6 +28,7 @@
 
 #include <ubixos/syscalls.h>
 #include <sys/sysproto_posix.h>
+#include <sys/pipe.h>
 
 /* System Calls List */
 struct syscall_entry systemCalls_posix[] = {
@@ -242,10 +243,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP },  // 41 - dup
     {
-        0,
-        "No Call",
-        sys_invalid,
-        SYSCALL_INVALID },  // 42
+        ARG_COUNT(pipe_args),
+        "pipe",
+        (sys_call_t *) pipe,
+        SYSCALL_VALID },  // 42 - pipe
     {
         ARG_COUNT(sys_getegid_args),
         "getegid",

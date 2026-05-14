@@ -402,7 +402,9 @@ struct fcntl_args {
 };
 
 struct pipe_args {
-    register_t dummy;
+    char fildes_l_[PADL_(int *)];
+    int *fildes;
+    char fildes_r_[PADR_(int *)];
 };
 
 struct readlink_args {

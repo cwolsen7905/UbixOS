@@ -618,6 +618,10 @@
 #undef  __NR_openat
 #define __NR_openat		499
 
+/* fcntl: Linux=55, UbixOS=92 */
+#undef  __NR_fcntl
+#define __NR_fcntl		92
+
 /* pipe2: Linux=331, UbixOS=542 */
 #undef  __NR_pipe2
 #define __NR_pipe2		542
