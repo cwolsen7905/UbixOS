@@ -180,8 +180,58 @@ int sys_futex(struct thread *td, struct sys_futex_args *uap) {
     return (0);
 }
 
-/* set_thread_area stub — return 0 so musl TLS init continues */
+/*
+ * set_thread_area — Linux TLS setup syscall.
+ *
+ * musl calls this during __init_tls() with a user_desc requesting a segment
+ * whose base points at the thread block.  We write LDT[1] (the per-process LDT
+ * at VMM_USER_LDT) with a ring-3 data descriptor whose base is ud->base_addr,
+ * then reload %gs with selector 0xF (LDT index 1, TI=1, RPL=3).  Setting %gs
+ * in the kernel syscall handler persists to userland through iret.
+ *
+ * musl Phase-1 note: musl computes the selector as entry_number*8+3 (GDT, no
+ * TI bit).  The arch/i386/__init_tls.c patch for UbixOS must use entry_number*8+7
+ * so the TI bit is set and the CPU looks in the LDT, giving 1*8+7 = 0xF.
+ */
 int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap) {
+    struct gdtDescriptor *tlsDesc = 0x0;
+    uint32_t base_addr = 0x0;
+
+    /* user_desc first two fields: entry_number (uint), base_addr (uint) */
+    struct {
+        unsigned int entry_number;
+        unsigned int base_addr;
+    } *ud = uap->u_info;
+
+    if (ud == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
+
+    base_addr = ud->base_addr;
+
+    /* Write LDT[1] — second entry in the per-process LDT page */
+    tlsDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
+
+    tlsDesc->limitLow    = 0xFFFF;
+    tlsDesc->limitHigh   = 0xF;
+    tlsDesc->baseLow     = (base_addr & 0xFFFF);
+    tlsDesc->baseMed     = ((base_addr >> 16) & 0xFF);
+    tlsDesc->access      = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+    tlsDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+    tlsDesc->baseHigh    = (base_addr >> 24);
+
+    /* Load LDT (GDT[3] = 0x18) and point %gs at LDT[1] (selector 0xF) */
+    asm(
+        "push %eax\n"
+        "mov  $0x18,%ax\n"
+        "lldt %ax\n"
+        "mov  $0xF,%eax\n"
+        "mov  %eax,%gs\n"
+        "pop  %eax\n"
+    );
+
+    ud->entry_number = 1;
     td->td_retval[0] = 0;
     return (0);
 }

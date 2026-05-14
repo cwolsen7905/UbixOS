@@ -195,9 +195,9 @@ set_thread_area stub, brk/obreak mapping) are implemented in the kernel.
 - Add `lseek` to `int $0x80` table
 - Add `mprotect` to `int $0x80` table
 - Alias `exit_group` to `sys_exit`
-- Stub `set_thread_area` (return 0)
-- Stub `futex` (return 0 for single-threaded)
-- Map `brk` → `obreak`
+- Implement `set_thread_area` (slot 351): writes LDT[1] with the TLS base address from the `user_desc`, loads `%gs = 0xF` (LDT entry 1, ring 3). Persists to userland through `iret`. Returns `entry_number = 1`.
+- Stub `futex` (slot 350): return 0 — single-threaded musl never blocks on a futex
+- Map `brk` → `obreak` (slot 17): returns current break on brk(0); Linux ABI compatible
 
 **Unblocks:** Phase 1. Without these, musl fails to initialise at all.
 
@@ -210,7 +210,7 @@ i386 UbixOS. No apps use it yet.
 - `git subtree add` musl at a tagged release
 - Write `arch/i386/bits/syscall.h.in` with the UbixOS→Linux number mapping
 - Write `arch/i386/syscall_arch.h` (keeps `int $0x80`, remaps numbers)
-- Stub TLS init in `src/env/__init_tls.c`
+- Patch `arch/i386/__init_tls.c`: change `entry_number*8+3` → `entry_number*8+7` so the LDT TI bit is set and `%gs` resolves to LDT[1] (selector 0xF)
 - Add `contrib/musl/Makefile` that integrates with `bmake world`
 - Add `contrib/musl/` output to `build/lib/` alongside existing `libc.so`
 - Ship both `libc.so` (old) and `musl.so` (new) on the disk image
