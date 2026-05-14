@@ -50,9 +50,15 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	uint32_t  n, i, old_cr3, dst_vaddr;
 	uint32_t  phys[256];
 	kTask_t  *dst;
+	uint32_t  page_off;
 
 	if (vaddr == 0 || size == 0)
 		return 0;
+
+	/* Preserve the within-page offset so non-page-aligned buffers work. */
+	page_off = (uint32_t)(vaddr & (PAGE_SIZE - 1));
+	vaddr   &= ~(uintptr_t)(PAGE_SIZE - 1);
+	size    += page_off;
 
 	n = (uint32_t)((size + PAGE_SIZE - 1) / PAGE_SIZE);
 	if (n > 256) {
@@ -107,8 +113,8 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	asm volatile("movl %0, %%cr3" :: "r"(old_cr3));
 	asm volatile("sti");
 
-	kprintf("vmm_share_region: src vaddr 0x%X -> pid %d vaddr 0x%X (%u pages)\n",
-	    vaddr, dst_pid, dst_vaddr, n);
+	kprintf("vmm_share_region: src vaddr 0x%X+%u -> pid %d vaddr 0x%X (%u pages)\n",
+	    vaddr, page_off, dst_pid, dst_vaddr + page_off, n);
 
-	return (uintptr_t)dst_vaddr;
+	return (uintptr_t)(dst_vaddr + page_off);
 }
