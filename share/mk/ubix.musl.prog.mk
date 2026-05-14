@@ -52,6 +52,7 @@ $(BINARY): $(OBJS)
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
 		${OBJ_DIR}/lib/musl.a \
+		${LIBGCC} \
 		${MUSL_LIB}/crtn.o \
 		-o ${OBJ_DIR}/bin/${BINARY}
 

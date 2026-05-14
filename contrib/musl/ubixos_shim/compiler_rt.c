@@ -44,3 +44,23 @@ uint64 __udivmoddi4(uint64 a, uint64 b, uint64 *rem_p)
 		*rem_p = r;
 	return q;
 }
+
+/* __udivdi3 — unsigned 64-bit division (no remainder). */
+uint64 __udivdi3(uint64 a, uint64 b)
+{
+	return __udivmoddi4(a, b, 0);
+}
+
+/* __divdi3 — signed 64-bit division. */
+typedef long long int64;
+int64 __divdi3(int64 a, int64 b)
+{
+	int neg = 0;
+	uint64 ua, ub, q;
+
+	if (a < 0) { ua = (uint64)(-a); neg ^= 1; } else { ua = (uint64)a; }
+	if (b < 0) { ub = (uint64)(-b); neg ^= 1; } else { ub = (uint64)b; }
+
+	q = __udivmoddi4(ua, ub, 0);
+	return neg ? -(int64)q : (int64)q;
+}
