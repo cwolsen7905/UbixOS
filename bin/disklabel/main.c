@@ -29,7 +29,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/sys.h>
 #include <string.h>
 
 #include "ubixfs.h"
@@ -58,19 +57,19 @@ int main(int argc, char **argv) {
     i = atoi(argv[2]);
     printf("d->partitions[%i].p_size   = %i, ", i, d->partitions[i].p_size);
     printf("New Value: ");
-    gets((char *) &buf);
+    fgets((char *)&buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
     d->partitions[i].p_size = atoi(buf);
     printf("d->partitions[%i].p_offset = %i, ", i, d->partitions[i].p_offset);
     printf("New Value: ");
-    gets((char *) &buf);
+    fgets((char *)&buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
     d->partitions[i].p_offset = atoi(buf);
     printf("d->partitions[%i].p_fstype = %i, ", i, d->partitions[i].p_fstype);
     printf("New Value: ");
-    gets((char *) &buf);
+    fgets((char *)&buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
     d->partitions[i].p_fstype = atoi(buf);
     printf("d->partitions[%i].p_bsize  = %i, ", i, d->partitions[i].p_bsize);
     printf("New Value: ");
-    gets((char *) &buf);
+    fgets((char *)&buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
     d->partitions[i].p_bsize = atoi(buf);
     printf("\n");
     printf("d->partitions[%i].p_size   = %i\n", i, d->partitions[i].p_size);

@@ -32,7 +32,7 @@ extern "C" {
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/signal.h>
+#include <signal.h>
 #include <sys/sys.h>
 #include <sys/sched.h>
 #include <sys/mpi.h>

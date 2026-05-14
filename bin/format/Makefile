@@ -5,8 +5,5 @@ include ../Makefile.incl
 
 BINARY    = format
 OBJS      = main.o
-LINK_TYPE = dynamic
-LIBRARIES = ../../build/lib/libc.so
-POST_LINK = strip ${BUILD_DIR}/bin/${BINARY}
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.prog.mk"

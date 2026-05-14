@@ -13,7 +13,8 @@ OBJS_SO = ubixcwd.o ttyctrl.o
 # land in the source tree where LIBRARIES globs would pick them up.
 OBJS_A  = ubixcwd.o ttyctrl.o \
           pidstatus.o \
-          mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o
+          mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_destroymbox.o \
+          sys_gettimeofday.o gettime.o
 
 SUBS    = ./test/*.o
 OUTPUT  = ubix_api.so

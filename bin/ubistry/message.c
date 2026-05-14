@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <sys/sys.h>
 #include <sys/mpi.h>
 #include "./include/ubistry.h"
 

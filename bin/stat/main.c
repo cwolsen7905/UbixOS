@@ -28,10 +28,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/sys.h>
-#include <sys/sched.h>
 
-void print2(char *string, int, int);
+int gettime(void);
 
 #define MINUTE 60
 #define HOUR (60*MINUTE)
@@ -81,9 +79,7 @@ int main(int argc, char **argv) {
     : "eax"
   );
   printf("FS: [0x%X]\n", x);
-  exit(0);
 
-  //start:
   sysTime = gettime();
 
   year = (sysTime / YEAR) + 1970;

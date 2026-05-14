@@ -3,10 +3,7 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY    = fdisk
-OBJS      = main.o
-LINK_TYPE = dynamic
-LIBRARIES = ../../build/lib/libc.so
-POST_LINK = strip ${BUILD_DIR}/bin/${BINARY}
+BINARY = fdisk
+OBJS   = main.o
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.prog.mk"
