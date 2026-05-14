@@ -332,7 +332,7 @@ Last updated: 2026-05-13
 
 | Phase | Description | Status | Notes |
 |-------|-------------|--------|-------|
-| Phase 0 | Syscall groundwork | ⬜ Not started | Need: `mprotect`, `lseek`, `exit_group`, `futex` stub, `set_thread_area` stub, `brk`/`obreak` mapping |
+| Phase 0 | Syscall groundwork | ✅ Done | obreak@17, kill@37, mprotect@74, clock_gettime@232, futex@350, set_thread_area@351, exit_group@352, getdents@272 wired; musl will remap Linux numbers via syscall.h.in in Phase 1 |
 | Phase 1 | musl in tree, builds for i386 | ⬜ Not started | |
 | Phase 2 | First app on musl | ⬜ Not started | |
 | Phase 3 | App-by-app migration | ⬜ Not started | |

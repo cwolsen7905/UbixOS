@@ -142,6 +142,56 @@ int mprotect(struct thread *td, struct mprotect_args *uap) {
     return (error);
 }
 
+int sys_kill(struct thread *td, struct sys_kill_args *uap) {
+    kTask_t *target = schedFindTask(uap->pid);
+
+    if (target == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
+
+    /* SIGTERM/SIGKILL: end the task; other signals are silently accepted */
+    if (uap->signum == 15 || uap->signum == 9) {
+        endTask(uap->pid);
+    }
+
+    td->td_retval[0] = 0;
+    return (0);
+}
+
+int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap) {
+    struct timeval tv;
+
+    if (uap->tp == 0x0) {
+        td->td_retval[0] = -1;
+        return (-1);
+    }
+
+    gettimeofday(&tv, 0x0);
+    uap->tp->tv_sec  = tv.tv_sec;
+    uap->tp->tv_nsec = tv.tv_usec * 1000;
+    td->td_retval[0] = 0;
+    return (0);
+}
+
+/* futex stub — always succeeds for single-threaded musl */
+int sys_futex(struct thread *td, struct sys_futex_args *uap) {
+    td->td_retval[0] = 0;
+    return (0);
+}
+
+/* set_thread_area stub — return 0 so musl TLS init continues */
+int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap) {
+    td->td_retval[0] = 0;
+    return (0);
+}
+
+/* exit_group — exit all threads in the process (alias to sys_exit) */
+int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap) {
+    endTask(_current->id);
+    return (0);
+}
+
 int sys_invalid(struct thread *td, void *args) {
     kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
     td->td_retval[0] = -1;

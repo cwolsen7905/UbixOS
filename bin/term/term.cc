@@ -62,6 +62,7 @@ static char       g_mbox[]  = "term";
 static char       g_views[] = "views";
 
 static int  g_cols, g_rows;
+static int  g_act_w, g_act_h;
 static int  g_cur_col = 0, g_cur_row = 0;
 
 /* Simple circular line buffer — each cell is one character */
@@ -75,7 +76,7 @@ term_redraw(void)
 	int fw = (int)g_font.GetWidth();
 	int fh = (int)g_font.GetHeight();
 
-	g_surf.ogFillRect(0, 0, TERM_W - 1, TERM_H - 1, TERM_BG);
+	g_surf.ogFillRect(0, 0, g_act_w - 1, g_act_h - 1, TERM_BG);
 
 	g_font.SetFGColor(TERM_FG_R, TERM_FG_G, TERM_FG_B, 255);
 	g_font.SetBGColor(
@@ -278,23 +279,25 @@ main(int argc, char **argv)
 	struct display_ack *da = (struct display_ack *)reply.data;
 	g_win_id = da->window_id;
 	g_shm    = da->shm_base;
+	g_act_w  = da->w;
+	g_act_h  = da->h;
 
-	if (!g_shm)
+	if (!g_shm || g_act_w <= 0 || g_act_h <= 0)
 		return 1;
 
-	/* Attach ogSurface to the shared window buffer */
-	g_surf.ogAttach(g_shm, TERM_W, TERM_H, OG_PIXFMT_32BPP);
+	/* Attach ogSurface to the shared window buffer using actual dimensions */
+	g_surf.ogAttach(g_shm, (uint32_t)g_act_w, (uint32_t)g_act_h, OG_PIXFMT_32BPP);
 
 	/* Load bitmap font */
 	if (!g_font.Load(FONT_PATH, 0)) {
 		/* fallback: just clear to bg and show a solid block */
-		g_surf.ogFillRect(0, 0, TERM_W - 1, TERM_H - 1, TERM_BG);
+		g_surf.ogFillRect(0, 0, g_act_w - 1, g_act_h - 1, TERM_BG);
 		send_flip();
 		return 1;
 	}
 
-	g_cols = TERM_W / (int)g_font.GetWidth();
-	g_rows = TERM_H / (int)g_font.GetHeight();
+	g_cols = g_act_w / (int)g_font.GetWidth();
+	g_rows = g_act_h / (int)g_font.GetHeight();
 	if (g_rows > MAX_ROWS) g_rows = MAX_ROWS;
 
 	memset(g_lines, 0, sizeof(g_lines));

@@ -483,6 +483,7 @@ struct obreak_args {
     char *nsize;
     char nsize_r_[PADR_(char*)];
 };
+int obreak(struct thread *td, struct obreak_args *uap);
 
 struct sigaction_args {
     char sig_l_[PADL_(int)];
@@ -1061,5 +1062,52 @@ struct sys_rmdir_args {
   char path_r_[PADR_(const char *)];
 };
 int sys_rmdir(struct thread *td, struct sys_rmdir_args *);
+
+struct sys_kill_args {
+  char pid_l_[PADL_(int)];
+  int pid;
+  char pid_r_[PADR_(int)];
+  char signum_l_[PADL_(int)];
+  int signum;
+  char signum_r_[PADR_(int)];
+};
+int sys_kill(struct thread *td, struct sys_kill_args *uap);
+
+struct sys_clock_gettime_args {
+  char clk_id_l_[PADL_(int)];
+  int clk_id;
+  char clk_id_r_[PADR_(int)];
+  char tp_l_[PADL_(struct timespec *)];
+  struct timespec *tp;
+  char tp_r_[PADR_(struct timespec *)];
+};
+int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap);
+
+struct sys_futex_args {
+  char uaddr_l_[PADL_(int *)];
+  int *uaddr;
+  char uaddr_r_[PADR_(int *)];
+  char op_l_[PADL_(int)];
+  int op;
+  char op_r_[PADR_(int)];
+  char val_l_[PADL_(int)];
+  int val;
+  char val_r_[PADR_(int)];
+};
+int sys_futex(struct thread *td, struct sys_futex_args *uap);
+
+struct sys_set_thread_area_args {
+  char u_info_l_[PADL_(void *)];
+  void *u_info;
+  char u_info_r_[PADR_(void *)];
+};
+int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap);
+
+struct sys_exit_group_args {
+  char status_l_[PADL_(int)];
+  int status;
+  char status_r_[PADR_(int)];
+};
+int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap);
 
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

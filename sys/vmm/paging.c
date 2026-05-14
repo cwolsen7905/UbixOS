@@ -592,36 +592,37 @@ int obreak(struct thread *td, struct obreak_args *uap) {
   vm_offset_t base = 0x0;
   vm_offset_t new = 0x0;
 
-  /*
-   #ifdef _VMM_DEBUG
-   */
-  kprintf("vm_offset_t: [%i]\n", sizeof(vm_offset_t));
-  kprintf("nsize:    [0x%X]\n", uap->nsize);
-  kprintf("vm_daddr: [0x%X]\n", td->vm_daddr);
-  kprintf("vm_dsize: [0x%X]\n", td->vm_dsize);
-  kprintf("total:    [0x%X]\n", td->vm_daddr + td->vm_dsize);
-  /*
-   #endif
-   */
+  base = round_page((vm_offset_t)td->vm_daddr);
+  old  = base + ctob(td->vm_dsize);
 
-  new = round_page((vm_offset_t )uap->nsize);
+  /* brk(0): return current break (Linux ABI compatible) */
+  if (uap->nsize == 0) {
+    td->td_retval[0] = old;
+    return (0x0);
+  }
 
-  base = round_page((vm_offset_t ) td->vm_daddr);
+  new = round_page((vm_offset_t)uap->nsize);
 
-  old = base + ctob(td->vm_dsize);
-
-  if (new < base)
-    K_PANIC("EINVAL");
+  /* Invalid address below data segment — return old break to signal failure */
+  if (new < base) {
+    td->td_retval[0] = old;
+    return (0x0);
+  }
 
   if (new > old) {
     for (i = old; i < new; i += 0x1000) {
-      if (vmm_remapPage(vmm_findFreePage(_current->id), i, PAGE_DEFAULT, _current->id, 0) == 0x0)
-        K_PANIC("remap Failed");
+      if (vmm_remapPage(vmm_findFreePage(_current->id), i, PAGE_DEFAULT, _current->id, 0) == 0x0) {
+        td->td_retval[0] = old;
+        return (0x0);
+      }
     }
     td->vm_dsize += btoc(new - old);
+    td->td_retval[0] = new;
   } else if (new < old) {
-    K_PANIC("new < old");
-    td->vm_dsize -= btoc(old - new);
+    /* Shrinking not yet supported — return old break */
+    td->td_retval[0] = old;
+  } else {
+    td->td_retval[0] = old;
   }
 
   return (0x0);

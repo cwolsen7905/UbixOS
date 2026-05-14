@@ -117,10 +117,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 16 */
     {
-        0,
+        ARG_COUNT(obreak_args),
         "break",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 17 */
+        (sys_call_t*) obreak,
+        SYSCALL_VALID }, /* 17 */
     {
         0,
         "No Call",
@@ -217,10 +217,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP },  // 36 - sync
     {
-        0,
+        ARG_COUNT(sys_kill_args),
         "kill",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 37 - kill
+        (sys_call_t*) sys_kill,
+        SYSCALL_VALID },  // 37 - kill
     {
         0,
         "No Call",
@@ -402,10 +402,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_munmap,
         SYSCALL_VALID }, /* 73 */
     {
-        0,
+        ARG_COUNT(mprotect_args),
         "mprotect",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 74 */
+        (sys_call_t*) mprotect,
+        SYSCALL_VALID }, /* 74 */
     {
         0,
         "madvise",
@@ -1192,10 +1192,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 231 - Invalid */
     {
-        0,
+        ARG_COUNT(sys_clock_gettime_args),
         "clock_gettime",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 232 - Invalid */
+        (sys_call_t*) sys_clock_gettime,
+        SYSCALL_VALID }, /* 232 */
     {
         0,
         "clock_settime",
@@ -1392,10 +1392,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_INVALID }, /* 271 - Invalid */
     {
-        0,
+        ARG_COUNT(sys_getdirentries_args),
         "getdents",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 272 - Invalid */
+        (sys_call_t*) sys_getdirentries,
+        SYSCALL_VALID }, /* 272 - alias to getdirentries */
     {
         0,
         "No Call",
@@ -1782,20 +1782,20 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 349 - Invalid */
     {
-        0,
-        "__acl_set_fd",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 350 - Invalid */
+        ARG_COUNT(sys_futex_args),
+        "futex",
+        (sys_call_t*) sys_futex,
+        SYSCALL_VALID }, /* 350 - futex stub (musl threading) */
     {
-        0,
-        "__acl_delete_file",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 351 - Invalid */
+        ARG_COUNT(sys_set_thread_area_args),
+        "set_thread_area",
+        (sys_call_t*) sys_set_thread_area,
+        SYSCALL_VALID }, /* 351 - set_thread_area stub (musl TLS) */
     {
-        0,
-        "__acl_delete_fd",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 352 - Invalid */
+        ARG_COUNT(sys_exit_group_args),
+        "exit_group",
+        (sys_call_t*) sys_exit_group,
+        SYSCALL_VALID }, /* 352 - exit_group (musl exit) */
     {
         0,
         "__acl_aclcheck_file",
