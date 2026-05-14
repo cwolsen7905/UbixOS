@@ -173,6 +173,7 @@ show_flyout(void)
 	creq->w           = FLY_W;
 	creq->h           = FLY_H;
 	creq->sender_pid  = getpid();
+	creq->no_decor    = 1;
 	strncpy(creq->title, "flyout", sizeof(creq->title) - 1);
 	creq->title[sizeof(creq->title) - 1] = '\0';
 	strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
@@ -291,6 +292,7 @@ main(int argc, char **argv)
 	creq->w           = (int32_t)sw;
 	creq->h           = TB_H;
 	creq->sender_pid  = getpid();
+	creq->no_decor    = 1;
 	strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 	creq->title[sizeof(creq->title) - 1] = '\0';
 	strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
