@@ -353,9 +353,9 @@ Last updated: 2026-05-14
 | Phase 0 | Syscall groundwork | ✅ Done | obreak@17, kill@37, mprotect@74, clock_gettime@232, futex@350, set_thread_area@351, exit_group@352, getdents@272 wired |
 | Phase 1 | musl in tree, builds for i386 | ✅ Done | `contrib/musl/` builds `build/lib/musl.a`; FreeBSD ABI syscall layer in place; TIOCGWINSZ fixed via `arch/i386/bits/ioctl.h` |
 | Phase 2 | First app on musl | ✅ Done | `clock` was first; full boot chain (init→login→shell) verified in QEMU |
-| Phase 3 | App-by-app migration | 🔄 In progress | All binaries migrated except `views` and `taskbar`; `muffin` orphaned from build; `sh` removed; `tcc` migrated with self-contained 64-bit division shim; `stat` removed from build (to be rewritten later) |
-| Phase 4 | Retire lib/libc/ | ⬜ Not started | Blocked on views + taskbar migration; orphaned bins (kill, printf, test, edit, mount) need triage |
-| Phase 5 | libc++ (C++ standard library) | ⬜ Not started | Blocked on Phase 4 |
+| Phase 3 | App-by-app migration | ✅ Done | All active binaries on musl; `sh` removed; `muffin` orphaned; `tcc` migrated with self-contained 64-bit division shim |
+| Phase 4 | Retire lib/libc/ | ✅ Done | `lib/libc/` deleted; `include/` stripped of all standard C headers; only UbixOS-specific headers remain; orphaned bins (kill, printf, test, edit, mount) deferred |
+| Phase 5 | libc++ (C++ standard library) | 🔄 Partial | `lib/libcpp/` updated to compile against musl; `include/` fully clean; full LLVM libc++/libc++abi port deferred as a future project (see tcsh-port-plan.md pattern) |
 | Phase 6 | New architecture port | ⬜ Not started | |
 
 ### Legend
