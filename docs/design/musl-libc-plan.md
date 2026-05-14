@@ -323,3 +323,25 @@ These are never replaced by musl or libc++:
 - Dynamic linking infrastructure (`libexec/ld.so`) is already working.
   musl ships its own dynamic linker (`musl-libc/lib/ld-musl-i386.so.1`)
   which should eventually replace the existing `libexec/ld.so`.
+
+---
+
+## Status
+
+Last updated: 2026-05-13
+
+| Phase | Description | Status | Notes |
+|-------|-------------|--------|-------|
+| Phase 0 | Syscall groundwork | ⬜ Not started | Need: `mprotect`, `lseek`, `exit_group`, `futex` stub, `set_thread_area` stub, `brk`/`obreak` mapping |
+| Phase 1 | musl in tree, builds for i386 | ⬜ Not started | |
+| Phase 2 | First app on musl | ⬜ Not started | |
+| Phase 3 | App-by-app migration | ⬜ Not started | |
+| Phase 4 | Retire lib/libc/ | ⬜ Not started | |
+| Phase 5 | libc++ (C++ standard library) | ⬜ Not started | |
+| Phase 6 | New architecture port | ⬜ Not started | |
+
+### Legend
+- ✅ Done
+- 🔄 In progress
+- ⬜ Not started
+- ❌ Blocked
