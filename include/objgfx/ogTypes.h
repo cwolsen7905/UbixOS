@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <sys/types.h>
+#include <stdint.h>
 
 #define ogVERSION 1.0
 

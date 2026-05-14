@@ -1,6 +1,6 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: ubix_api-code libc-code ubix-code libcpp-code objgfx-code #csu-code
+all: ubix_api-code ubix-code libcpp-code objgfx-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -9,9 +9,6 @@ csu-code: csu
 
 ubix_api-code: ubix_api
 	(cd ubix_api;$(MAKE))
-
-libc-code: libc
-	(cd libc;$(MAKE))
 
 objgfx-code: objgfx
 	(cd objgfx;$(MAKE))
@@ -33,7 +30,6 @@ install:
 
 clean:
 	(cd ubix_api;${MAKE} clean)
-	(cd libc;${MAKE} clean)
 	(cd ubix;${MAKE} clean)
 	(cd libcpp;${MAKE} clean)
 	(cd objgfx;${MAKE} clean)

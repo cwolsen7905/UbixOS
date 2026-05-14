@@ -32,6 +32,10 @@ OUTPUT  = ubix_api.so
 .c.o:
 	@mkdir -p ${OBJDIR}
 	$(CC) $(CFLAGS) ${CROSS_M32} -Wall -nostdinc -O -I./include -I../../include \
+		-I${SRCTOP}/contrib/musl/include \
+		-I${OBJ_DIR}/obj/musl/obj/include \
+		-I${SRCTOP}/contrib/musl/arch/i386 \
+		-I${SRCTOP}/contrib/musl/arch/generic \
 		-MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} \
 		-c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
