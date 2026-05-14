@@ -241,12 +241,73 @@ No client changes needed. The MPI protocol is identical to Phase 5.
 
 ---
 
-### Phase 10 — Future: GPU Surface Backing
+### Phase 10 — Graphics Stack Refactor (C++ + libfb merge)
+**Visible result:** None — internal refactor only. Behaviour identical.
+**Risk:** Low (pure userspace, build-time only).
+
+Consolidate the graphics stack to match the macOS two-layer model:
+- **views** becomes a full C++ compositor (`Framebuffer` + `Window` + `WindowManager` classes). libfb dissolves into views as a private `Framebuffer` class.
+- **objGFX** becomes the stable public app-side rendering API (equivalent to Core Graphics).
+- **taskbar** ported to C++; renders via `ogSurface` instead of libfb directly.
+- **libfb** removed as a public library.
+
+Target layer diagram:
+```
+┌─────────────────────────────────────┐
+│  Apps (term, taskbar, future apps)  │
+│  render with objGFX (ogSurface)     │
+├─────────────────────────────────────┤
+│  views (WindowManager)              │
+│  ┌─────────────┐  ┌───────────────┐ │
+│  │   Window    │  │  Framebuffer  │ │
+│  │  (per win)  │  │ (owns screen) │ │
+│  └─────────────┘  └───────────────┘ │
+├─────────────────────────────────────┤
+│  Kernel: VESA + sys_mapfb           │
+└─────────────────────────────────────┘
+```
+
+Sub-steps:
+
+**10a — Port views to C++**
+- [ ] `bin/views/views.c` → `views.cc`
+- [ ] Wrap C headers in `extern "C" {}`
+- [ ] `Framebuffer` class (wraps libfb internally for now)
+- [ ] `Window` class (replaces `win_t` struct + free functions)
+- [ ] `WindowManager` class (replaces globals + event dispatch)
+- [ ] Update `bin/views/Makefile` for `.cc`
+- [ ] Build and test — identical behaviour
+
+**10b — Absorb libfb into views**
+- [ ] Move libfb pixel primitives into `Framebuffer` class directly
+- [ ] Move `font8x8` data into views as a private static array
+- [ ] Remove libfb from views Makefile link line
+- [ ] Build and test
+
+**10c — Port taskbar to C++**
+- [ ] `bin/taskbar/taskbar.c` → `taskbar.cc`
+- [ ] Wrap C headers in `extern "C" {}`
+- [ ] Replace `fb_set_target` + libfb calls with `ogSurface` rendering
+- [ ] Remove libfb from taskbar Makefile link line
+- [ ] Build and test
+
+**10d — Remove libfb as public library**
+- [ ] Confirm no app outside views links libfb
+- [ ] Remove `lib/libfb/` from world build
+- [ ] Update CLAUDE.md architecture section
+
+**10e — Clean up objGFX**
+- [ ] Remove font8x8 duplication between libfb and objGFX
+- [ ] Audit and document objGFX as the stable app-side surface API
+
+---
+
+### Phase 11 — Future: GPU Surface Backing
 **Visible result:** Hardware-accelerated compositing.
 
 When a GPU driver exists:
 - Replace the `malloc`-backed shared buffer with a GPU surface.
-- `display` uses the GPU blitter instead of CPU blit.
+- `Framebuffer` uses the GPU blitter instead of CPU blit.
 - Protocol unchanged: clients still just call `DISPLAY_FLIP`.
 
 This is the path to macOS IOSurface / Metal compositing.
@@ -265,12 +326,13 @@ This is the path to macOS IOSurface / Metal compositing.
 | 6 | `vmm_share_region()` | Apps can draw windows | Medium |
 | 7 | `bin/taskbar` as separate process | Cleaner architecture | Low |
 | 8 | `bin/terminal` | Windowed terminal | Medium |
-| 9 | Compositor upgrade | Layering, alpha | Low |
-| 10 | GPU surface backing | HW acceleration | Future |
+| 9 | Compositor upgrade | Layering, alpha, drag, close | Low |
+| 10 | C++ refactor + libfb merge | Clean two-layer stack | Low |
+| 11 | GPU surface backing | HW acceleration | Future |
 
 **Taskbar is on screen after Phase 4.**
 **Full window system is working after Phase 8.**
-**macOS upgrade path stays open through Phase 10.**
+**macOS upgrade path stays open through Phase 11.**
 
 ---
 
@@ -278,12 +340,14 @@ This is the path to macOS IOSurface / Metal compositing.
 
 1. **MPI carries signals, not drawing commands.** If you find yourself putting
    pixel coordinates in an MPI message, stop — that's the BeOS trap.
-2. **`display` is the only process that calls `sys_mapfb()`.** Everyone else
-   gets a shared region. Enforced in Phase 5+.
+2. **`views` is the only process that calls `sys_mapfb()`.** Everyone else
+   gets a shared region.
 3. **`vmm_share_region` is the only shared memory primitive.** No ad-hoc
    physical address passing between processes.
 4. **The MPI protocol is versioned from day one.** First field in every
    message is `uint32_t msg_type`. Easy to extend without breaking old clients.
+5. **Apps render with objGFX. views owns the framebuffer.** No app ever calls
+   libfb or writes to the physical framebuffer directly.
 
 ---
 
@@ -298,6 +362,11 @@ This is the path to macOS IOSurface / Metal compositing.
 | 5 | MPI display protocol | Done |
 | 6 | `vmm_share_region()` | Done |
 | 7 | `bin/taskbar` separate process | Done |
-| 8 | `bin/terminal` | Not started |
-| 9 | Compositor upgrade | Not started |
-| 10 | GPU surface backing | Not started |
+| 8 | `bin/terminal` | Done |
+| 9 | Compositor upgrade (SSD, z-order, drag, close) | Done |
+| 10a | views → C++ (Framebuffer/Window/WindowManager) | Not started |
+| 10b | Absorb libfb into views | Not started |
+| 10c | taskbar → C++ + ogSurface | Not started |
+| 10d | Remove libfb as public library | Not started |
+| 10e | Clean up objGFX | Not started |
+| 11 | GPU surface backing | Future |
