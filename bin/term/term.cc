@@ -58,7 +58,7 @@ static ogSurface  g_surf;
 static ogBitFont  g_font;
 static uint32_t   g_win_id;
 static void      *g_shm     = NULL;
-static char       g_mbox[]  = "term";
+static char       g_mbox[32];
 static char       g_views[] = "views";
 
 static int  g_cols, g_rows;
@@ -251,6 +251,8 @@ int
 main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
+
+	snprintf(g_mbox, sizeof(g_mbox), "term.%d", (int)getpid());
 
 	if (mpi_createMbox(g_mbox) != 0)
 		return 1;

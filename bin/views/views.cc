@@ -52,6 +52,8 @@ extern "C" {
 /* Decoration colours */
 #define DECOR_BG        FB_RGB(0x28, 0x48, 0x70)
 #define DECOR_HI        FB_RGB(0x40, 0x70, 0xA8)
+#define DECOR_BG_INACT  FB_RGB(0x28, 0x28, 0x38)
+#define DECOR_HI_INACT  FB_RGB(0x38, 0x38, 0x50)
 #define DECOR_SEP       FB_RGB(0x10, 0x20, 0x30)
 #define DECOR_CLOSE_BG  FB_RGB(0x90, 0x22, 0x22)
 
@@ -382,12 +384,14 @@ public:
 		return in_decor(cx, cy) && cx >= x + w - decor_h;
 	}
 
-	void draw_decor(Framebuffer &fb) const {
-		fb.rect(x, y,              w, decor_h,     DECOR_BG);
-		fb.rect(x, y,              w, 1,            DECOR_HI);
-		fb.rect(x, y + decor_h - 1, w, 1,          DECOR_SEP);
+	void draw_decor(Framebuffer &fb, bool is_focused) const {
+		uint32_t bg = is_focused ? DECOR_BG    : DECOR_BG_INACT;
+		uint32_t hi = is_focused ? DECOR_HI    : DECOR_HI_INACT;
+		fb.rect(x, y,               w, decor_h, bg);
+		fb.rect(x, y,               w, 1,       hi);
+		fb.rect(x, y + decor_h - 1, w, 1,       DECOR_SEP);
 		fb.text(x + 6, y + (decor_h - FB_FONT_H) / 2,
-		    title, FB_WHITE, DECOR_BG);
+		    title, FB_WHITE, bg);
 		int cbx = x + w - decor_h;
 		fb.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
 		fb.ch(cbx + (decor_h - FB_FONT_W) / 2,
@@ -523,7 +527,7 @@ class WindowManager {
 			if (w->decor_h > 0 &&
 			    rx < w->x + w->w && rx + rw > w->x &&
 			    ry < w->y + w->decor_h && ry + rh > w->y)
-				w->draw_decor(fb);
+				w->draw_decor(fb, w == focused);
 		}
 	}
 
@@ -623,7 +627,7 @@ public:
 		for (int i = 0; i < z_count; i++) {
 			z_stack[i]->blit_to(fb);
 			if (z_stack[i]->decor_h > 0)
-				z_stack[i]->draw_decor(fb);
+				z_stack[i]->draw_decor(fb, z_stack[i] == focused);
 		}
 		cursor_save(cur_x, cur_y);
 		cursor_draw(cur_x, cur_y);
