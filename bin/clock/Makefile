@@ -5,6 +5,7 @@ include ../Makefile.incl
 
 BINARY    = clock
 OBJS      = main.o
-LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o
+LINK_TYPE = dynamic
+LIBRARIES = ../../build/lib/libc.so
 
 .include "${UBIX_MK}/ubix.prog.mk"

@@ -3,7 +3,9 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY = ed
-OBJS   = ed.o
+BINARY    = ed
+OBJS      = ed.o
+LINK_TYPE = dynamic
+LIBRARIES = ../../build/lib/libc.so
 
 .include "${UBIX_MK}/ubix.prog.mk"
