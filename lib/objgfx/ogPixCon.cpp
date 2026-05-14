@@ -1,5 +1,5 @@
-#include "objgfx.h"
-#include "ogPixCon.h"
+#include <objgfx/objgfx.h>
+#include <objgfx/ogPixCon.h>
 
 // ogPixCon constructor
 ogPixCon::ogPixCon(ogPixelFmt srcPixFmt, ogPixelFmt dstPixFmt) {

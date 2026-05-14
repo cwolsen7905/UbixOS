@@ -1,5 +1,5 @@
-#include "ogFont.h"
-#include "objgfx.h"
+#include <objgfx/ogFont.h>
+#include <objgfx/objgfx.h>
 
 extern "C" {
 #ifdef __UBIXOS_KERNEL__

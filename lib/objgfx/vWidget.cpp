@@ -1,4 +1,4 @@
-#include "vWidget.h"
+#include <objgfx/vWidget.h>
 
 bool 
 vWidget::vSetActive(bool _active) {

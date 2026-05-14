@@ -284,21 +284,23 @@ Sub-steps:
 - [x] Remove libfb from views Makefile link line
 - [x] Build and test
 
-**10c — Port taskbar to C++**
-- [ ] `bin/taskbar/taskbar.c` → `taskbar.cc`
-- [ ] Wrap C headers in `extern "C" {}`
-- [ ] Replace `fb_set_target` + libfb calls with `ogSurface` rendering
-- [ ] Remove libfb from taskbar Makefile link line
-- [ ] Build and test
+**10c — Port taskbar to C++** ✓
+- [x] `bin/taskbar/taskbar.c` → `taskbar.cc`
+- [x] Wrap C headers in `extern "C" {}`
+- [x] Replace `fb_set_target` + libfb calls with `ogSurface` rendering
+- [x] Remove libfb from taskbar Makefile link line
+- [x] Build and test
 
-**10d — Remove libfb as public library**
-- [ ] Confirm no app outside views links libfb
-- [ ] Remove `lib/libfb/` from world build
-- [ ] Update CLAUDE.md architecture section
+**10d — Remove libfb as public library** ✓
+- [x] Confirm no app outside views links libfb
+- [x] Remove `lib/libfb/` from world build
+- [x] Update CLAUDE.md architecture section
 
-**10e — Clean up objGFX**
-- [ ] Remove font8x8 duplication between libfb and objGFX
-- [ ] Audit and document objGFX as the stable app-side surface API
+**10e — Clean up objGFX** ✓
+- [x] Remove launcher, objgfx40, and sunlight (all dead code)
+- [x] Merge headers from lib/objgfx/objgfx/ into include/objgfx/
+- [x] Update all app Makefiles to -I../../include
+- [x] Drop lib/objgfx internal include path; single canonical header location
 
 ---
 
@@ -366,7 +368,7 @@ This is the path to macOS IOSurface / Metal compositing.
 | 9 | Compositor upgrade (SSD, z-order, drag, close) | Done |
 | 10a | views → C++ (Framebuffer/Window/WindowManager) | Done |
 | 10b | Absorb libfb into views | Done |
-| 10c | taskbar → C++ + ogSurface | Not started |
-| 10d | Remove libfb as public library | Not started |
-| 10e | Clean up objGFX | Not started |
+| 10c | taskbar → C++ + ogSurface | Done |
+| 10d | Remove libfb as public library | Done |
+| 10e | Clean up objGFX | Done |
 | 11 | GPU surface backing | Future |

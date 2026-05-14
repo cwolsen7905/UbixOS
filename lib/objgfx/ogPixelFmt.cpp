@@ -1,5 +1,5 @@
-#include "ogPixelFmt.h"
-#include "objgfx.h"
+#include <objgfx/ogPixelFmt.h>
+#include <objgfx/objgfx.h>
 
 ogPixelFmt::ogPixelFmt(void) : 
 	BPP(0),

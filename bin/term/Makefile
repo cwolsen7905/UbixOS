@@ -6,7 +6,7 @@ include ../Makefile.incl
 BINARY = term
 OBJS   = term.o
 
-INCLUDES += -I../../lib/objgfx
+INCLUDES += -I../../include
 
 LIBRARIES += ${OBJ_DIR}/obj/gfx/objgfx/*.o \
              ../../lib/libcpp/libcpp.o

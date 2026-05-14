@@ -121,8 +121,14 @@ BUG-MPI-01 through BUG-MPI-07 are all fixed. These are the remaining improvement
 
 ---
 
-## SDE / Graphics (identified 2026-05-11)
+## Graphics / Display (identified 2026-05-11, updated 2026-05-13)
+
+The kernel-side SDE (`sys/sde/`) was retired in May 2026. The full display
+stack (phases 1–10) is complete. See [docs/design/display-plan.md](docs/design/display-plan.md)
+and [docs/architecture/display.md](docs/architecture/display.md).
 
 | ID | File | Description |
 |----|------|-------------|
-| TODO-SDE-01 | [tools/grub.cfg](tools/grub.cfg), [sys/init/start.S](sys/init/start.S), [sys/init/main.c](sys/init/main.c) | **Use the GRUB/multiboot framebuffer instead of VM86 BIOS calls.** Add `set gfxpayload=800x600x24` to `grub.cfg` so GRUB sets VESA mode before handing off. Parse `mbi->framebuffer_*` fields from the multiboot info struct in `start.S`/`main.c` and pass the LFB address + pitch + bpp to the SDE instead of going through `biosCall`. This eliminates VM86 mode entirely, works in QEMU and on real hardware without BIOS ROM quirks, and is the standard approach for modern hobby OSes. |
+| TODO-GFX-01 | [tools/grub.cfg](tools/grub.cfg), [sys/init/start.S](sys/init/start.S) | **Use the GRUB/multiboot framebuffer instead of VM86 BIOS calls.** Add `set gfxpayload=800x600x24` to `grub.cfg` so GRUB sets VESA mode before handing off. Parse `mbi->framebuffer_*` fields from the multiboot info struct and pass LFB address + pitch + bpp directly instead of going through `biosCall`. Eliminates VM86 mode, works on real hardware without BIOS ROM quirks. |
+| TODO-GFX-02 | [bin/views/views.cc](bin/views/views.cc) | **Mouse cursor shape.** views composites the cursor position but draws no visible cursor sprite. Add a 16×16 software cursor blit at the current mouse coordinates, saved/restored from the underlying desktop buffer. |
+| TODO-GFX-03 | [bin/taskbar/taskbar.cc](bin/taskbar/taskbar.cc) | **Window list in taskbar.** Taskbar currently shows only the launcher button and clock. Add a center region that displays running window titles, with click-to-focus. Requires views to broadcast a window-list update message on CLAIM/RELEASE. |

@@ -105,6 +105,23 @@ Built separately from the kernel with different flags. Libraries build first, th
 - `libexec/` — runtime dynamic linker (`ld.so`); at runtime it expects libraries at `sys:/lib/`
 - `bin/init/` — PID 1; uses MPI mailboxes, spawns `login`
 
+### Display stack
+
+Two-layer graphical system modelled after macOS WindowServer + Core Graphics:
+
+| Layer | Component | Role |
+|-------|-----------|------|
+| Compositor | `bin/views/` (C++) | Owns the VESA framebuffer via `sys_mapfb()`. Manages windows, server-side decorations, Z-order, drag, close. Composites shared-memory buffers to screen. |
+| App rendering | `lib/objgfx/` (C++) | Surface drawing API (`ogSurface`, `ogBitFont`). Apps render into their shared-memory window buffer using this library. |
+
+**Rules:**
+- `views` is the only process that calls `sys_mapfb()`. All other processes get a `vmm_share_region` buffer.
+- Apps draw with `objGFX` (`ogSurface`/`ogBitFont`). No app writes to the framebuffer directly.
+- MPI carries only signals (`DISPLAY_CLAIM`, `DISPLAY_FLIP`, `DISPLAY_RELEASE`), never drawing commands.
+- objGFX headers live in `include/objgfx/`. Apps include with `<objgfx/objgfx.h>` and pass `-I../../include` (not `-I../../lib/objgfx`).
+
+Display protocol header: `include/views/display_proto.h`. Design document: `docs/design/display-plan.md`.
+
 ### Third-party (`contrib/`)
 
 lwIP 2.0.3, jemalloc, gdtoa (float↔ASCII), TCC (Tiny C Compiler), tzcode, NetBSD test suite. These are integrated into the kernel or world build but are not modified.

@@ -6,11 +6,11 @@ extern "C" {
 #include <limits.h>
 }
 
-#include "ogTypes.h"
-#include "ogEdgeTable.h"
-#include "ogPixCon.h"
-#include "ogPixelFmt.h"
-#include "objgfx.h"
+#include <objgfx/ogTypes.h>
+#include <objgfx/ogEdgeTable.h>
+#include <objgfx/ogPixCon.h>
+#include <objgfx/ogPixelFmt.h>
+#include <objgfx/objgfx.h>
 
 static uInt32 _gpNull(void *)            { return 0; }
 static void   _spNull(void *, uInt32)    {}

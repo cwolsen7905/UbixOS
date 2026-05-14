@@ -41,8 +41,8 @@
  */
 
 #define UBIXOS_VERSION_MAJOR  2
-#define UBIXOS_VERSION_MINOR  0
-#define UBIXOS_VERSION_PATCH  1
+#define UBIXOS_VERSION_MINOR  1
+#define UBIXOS_VERSION_PATCH  0
 #define UBIXOS_VERSION_TAG    "BETA"
 
 /* Internal stringify helpers — do not use directly. */

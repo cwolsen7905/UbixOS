@@ -17,8 +17,8 @@ foundation.
 | Screen output | VGA text mode (80×25), written directly via `0xB8000` |
 | kprintf path | Writes to VGA text buffer + COM1 serial |
 | Userspace write() | `sys_write` → TTY layer → VGA text buffer |
-| Boot handoff | GRUB multiboot, no framebuffer request in header |
-| Graphics subsystem | `sys/sde/` exists (C++ SDE) but is not wired to the console |
+| Boot handoff | GRUB multiboot, VESA mode set via VM86 BIOS call in `vesa_init()` |
+| Graphics subsystem | Userland compositor (`bin/views`) owns VESA framebuffer via `sys_mapfb`; kernel console still uses VGA text mode |
 
 ---
 
@@ -295,8 +295,6 @@ anywhere in PCI space and may need a dedicated VMM mapping call.
 - Hardware-specific drivers (Intel GMA, AMD, virtio-gpu) to replace or
   supplement the VBE LFB.
 - Multiple virtual consoles (one per TTY).
-- SDE integration — once the LFB is established the SDE C++ graphics layer
-  (`sys/sde/`) can draw directly into the same buffer.
 - Hardware scroll offset register (avoid `memmove` on scroll).
 - Coloured output in `kprintf` (e.g. red for panics).
 - Runtime font selection.

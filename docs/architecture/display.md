@@ -27,20 +27,22 @@ GPU-accelerated compositing open without changing the protocol.
   └───────────────────────────┬─────────────────────────────┘
                               │ syscalls / shared memory
   ┌───────────────────────────▼─────────────────────────────┐
-  │  bin/views  (compositor)                                │
+  │  bin/views  (compositor — C++)                          │
   │                                                         │
   │  • Owns the physical framebuffer (via sys_mapfb)        │
-  │  • Maintains win_t list: id, x/y/w/h, shm, mbox        │
-  │  • Polls mouse (fb_poll_mouse) and kbd (fb_poll_kbd)    │
+  │  • Maintains Window list: id, x/y/w/h, shm, mbox       │
+  │  • Polls mouse and kbd via inline syscall stubs         │
   │  • Dispatches DISPLAY_MOUSE / DISPLAY_KEY to focused win│
   │  • On DISPLAY_CLAIM: vmm_share_region → client gets shm │
   │  • On DISPLAY_FLIP: composites client buffer onto screen│
   │  • On DISPLAY_RELEASE: repaints desktop, reblit others  │
-  │  • focus-follows-click: left click sets focused_win     │
+  │  • Server-side decorations: draws title bar + close btn │
+  │  • focus-follows-click: left click sets focused window  │
   └──────┬────────────────────────────────┬─────────────────┘
          │ MPI                            │ MPI
   ┌──────▼──────────┐           ┌─────────▼───────────────┐
   │  bin/taskbar    │           │  bin/term  (and others)  │
+  │  (C++)          │           │  (C++)                   │
   │                 │           │                          │
   │  DISPLAY_CLAIM  │           │  DISPLAY_CLAIM           │
   │  DISPLAY_FLIP   │           │  DISPLAY_FLIP            │
@@ -48,8 +50,9 @@ GPU-accelerated compositing open without changing the protocol.
   │  DISPLAY_KEY    │           │  DISPLAY_KEY             │
   │  DISPLAY_MOUSE  │           │  DISPLAY_MOUSE           │
   │                 │           │                          │
-  │  libfb: fb_rect │           │  objgfx: ogSurface       │
-  │         fb_text │           │           ogBitFont      │
+  │  objgfx:        │           │  objgfx:                 │
+  │    ogSurface    │           │    ogSurface             │
+  │    ogBitFont    │           │    ogBitFont             │
   └─────────────────┘           └──────────────────────────┘
 ```
 
@@ -83,7 +86,7 @@ struct display_claim_req *creq = (struct display_claim_req *)msg.data;
 msg.header       = DISPLAY_CLAIM;
 creq->x          = 100;  creq->y = 100;
 creq->w          = 320;  creq->h = 240;
-creq->sender_pid = getpid();          // needed for vmm_share_region
+creq->sender_pid = getpid();
 strncpy(creq->title, "My Window", sizeof(creq->title) - 1);
 strncpy(creq->reply,  "myapp",    sizeof(creq->reply)  - 1);
 mpi_postMessage("views", DISPLAY_CLAIM, &msg);
@@ -98,12 +101,16 @@ uint32_t win_id   = da->window_id;
 void    *shm_base = da->shm_base;   // draw here
 ```
 
+Set `creq->no_decor = 1` to suppress the server-side title bar (used by
+taskbar and flyout panels).
+
 ### Rendering and flipping
 
-```c
-// Draw into shm_base however you like (libfb, objgfx, raw pixels)
-fb_set_target(shm_base, w, h, w * 4, 32);  // if using libfb
-fb_rect(0, 0, w, h, 0x001A1A2E);
+```cpp
+// Attach an ogSurface to the shared buffer and draw
+ogSurface surf;
+surf.ogAttach(shm_base, w, h, OG_PIXFMT_32BPP);
+surf.ogFillRect(0, 0, w-1, h-1, 0x001A1A2E);
 
 // Signal the compositor
 struct display_flip *fl = (struct display_flip *)msg.data;
@@ -129,49 +136,54 @@ into the client's address space:
 
 ---
 
-## Drawing libraries
+## Drawing library: objgfx  (`lib/objgfx/`, headers in `include/objgfx/`)
 
-### libfb  (`lib/libfb/`)
+C++, statically linked. Used by all GUI apps (taskbar, term, muffin, etc.).
 
-C, statically linked. Best for simple taskbar-style UIs.
-
-```c
-fb_set_target(shm, w, h, w * 4, 32);  // redirect all draws to shm buffer
-fb_rect(x, y, w, h, color);           // filled rectangle
-fb_rect_outline(x, y, w, h, color);   // outline only
-fb_text(x, y, "Hello", fg, bg);       // 8×8 fixed bitmap font
-```
-
-Also provides input polling wrappers around the native syscalls:
-```c
-fb_poll_mouse(&ev);   // wraps sys_getmouse (syscall 44)
-fb_poll_kbd(&ev);     // wraps sys_getkbd   (syscall 46)
-```
-
-### objgfx  (`lib/objgfx/`)
-
-C++, statically linked. For richer apps (terminal, image viewer, custom widgets).
-
-Key entry point — attach to a shared memory window buffer:
+Attach to a shared memory window buffer:
 
 ```cpp
 ogSurface surf;
 surf.ogAttach(shm_base, w, h, OG_PIXFMT_32BPP);
 
-// Then draw:
-surf.ogFillRect(0, 0, w-1, h-1, 0x00101010);
-surf.ogRect(10, 10, 100, 50, 0x00FFFFFF);
-surf.ogLine(0, 0, w-1, h-1, 0x00FF0000);
+surf.ogFillRect(0, 0, w-1, h-1, 0x00101010);  // filled rect (inclusive)
+surf.ogRect(10, 10, 100, 50, 0x00FFFFFF);      // outline rect
+surf.ogLine(0, 0, w-1, h-1, 0x00FF0000);       // line
+surf.ogSetPixel(x, y, color);                  // single pixel
 ```
 
-Load and render a bitmap font (`.DPF` files live at `sys:/lib/fonts/`):
+Load and render a bitmap font (`.DPF` files live at `sys:/var/fonts/`):
 
 ```cpp
 ogBitFont font;
-font.Load("sys:/lib/fonts/ROM8X8.DPF", 0);
-font.SetFGColor(192, 192, 192, 255);
+font.Load("sys:/var/fonts/ROM8X8.DPF", 0);
+font.SetFGColor(192, 192, 192, 255);  // R, G, B, A
+font.SetBGColor(0, 0, 0, 255);
 font.PutString(surf, x, y, "Hello");
+font.PutChar(surf, x, y, 'A');
 ```
+
+Color helpers when packing `uint32_t` colors from separate R/G/B components:
+
+```cpp
+static void font_fg(ogBitFont &f, uint32_t c) {
+    f.SetFGColor((c>>16)&0xFF, (c>>8)&0xFF, c&0xFF, 255);
+}
+```
+
+---
+
+## Server-side decorations
+
+`views` draws the title bar and close button on behalf of the app. Apps receive
+a shared buffer sized to their *content* area (not including the title bar).
+`views` composites the decoration above the content buffer when blitting to the
+screen.
+
+- Title bar height: `DECOR_H` (18px), defined in `display_proto.h`
+- Close button: top-right corner of the title bar; click sends `DISPLAY_RELEASE`
+  back to views which tears down the window
+- `no_decor = 1` in `display_claim_req` skips decorations (used by taskbar)
 
 ---
 
@@ -181,20 +193,19 @@ font.PutString(surf, x, y, "Hello");
 AT keyboard ISR (atkbd.c)
   └─ kbd_ring_push(keycode, pressed)   ← 64-entry ring buffer
         └─ sys_getkbd (syscall 46)
-              └─ fb_poll_kbd() in libfb
+              └─ inline poll_kbd() in views
                     └─ views event loop
                           └─ DISPLAY_KEY → focused window's MPI mailbox
-                                └─ client reads display_key.keycode / .pressed
 
 PS/2 mouse ISR (mouse.c)
   └─ mouse ring buffer
         └─ sys_getmouse (syscall 44)
-              └─ fb_poll_mouse() in libfb
+              └─ inline poll_mouse() in views
                     └─ views event loop
                           └─ cursor move + DISPLAY_MOUSE → focused window
 ```
 
-Focus is set by left-click on a window (`focused_win` pointer in views).
+Focus is set by left-click on a window (`focused_win` in WindowManager).
 
 ### Key constants  (`include/sys/kbd.h`)
 
@@ -229,14 +240,13 @@ Focus is set by left-click on a window (`focused_win` pointer in views).
 
 ## Adding a new GUI application
 
-1. Create `bin/myapp/` with a `Makefile` (copy `bin/taskbar/Makefile` for libfb
-   or `bin/term/Makefile` for objgfx).
-2. Add `myapp` to the `SUBDIRS` list in `bin/Makefile`.
-3. Create your MPI mailbox, claim a window, draw into `shm_base`, send FLIPs.
+1. Create `bin/myapp/` with a `Makefile` — copy `bin/taskbar/Makefile` as a template.
+2. Add `myapp` to `SUBDIRS` in `bin/Makefile`.
+3. In your source: create the MPI mailbox, send `DISPLAY_QUERY` to get screen
+   dimensions, send `DISPLAY_CLAIM`, draw into `shm_base` with `ogSurface`,
+   send `DISPLAY_FLIP` to show it.
 4. Handle `DISPLAY_KEY` and `DISPLAY_MOUSE` in your event loop.
 5. Send `DISPLAY_RELEASE` on exit.
-
-To install and test:
 
 ```sh
 bmake world && bmake image && bmake run

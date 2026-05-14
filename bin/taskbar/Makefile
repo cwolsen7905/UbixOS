@@ -5,7 +5,11 @@ include ../Makefile.incl
 
 BINARY = taskbar
 OBJS   = taskbar.o
+SRCS   = taskbar.cc
 
-LIBRARIES += ../../lib/libfb/fb.o ../../lib/libfb/font8x8.o
+INCLUDES += -I../../include
+
+LIBRARIES += ${OBJ_DIR}/obj/gfx/objgfx/*.o \
+             ../../lib/libcpp/libcpp.o
 
 .include "${UBIX_MK}/ubix.prog.mk"

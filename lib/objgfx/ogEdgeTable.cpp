@@ -1,5 +1,5 @@
 #include <math.h>
-#include "ogEdgeTable.h"
+#include <objgfx/ogEdgeTable.h>
 
 void ogEdgeTable::AdvanceAET(void) 
 {

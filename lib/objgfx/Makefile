@@ -5,7 +5,7 @@ include ../Makefile.incl
 
 OBJS = objgfx.o ogEdgeTable.o ogImage.o ogPixCon.o ogPixelFmt.o vWindow.o ogFont.o vWidget.o
 
-INCLUDES += -I./objgfx
+INCLUDES += -I../../include
 
 OBJDIR = ${OBJ_DIR}/obj/gfx/objgfx
 

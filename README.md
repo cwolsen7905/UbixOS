@@ -14,7 +14,8 @@ UbixOS is a hobby/research operating system for the x86 platform, developed from
 - **Networking:** lwIP 2.0.3 TCP/IP stack; NE2000 and Lance NIC drivers
 - **IPC:** Custom MPI message passing, POSIX pipes, semaphores
 - **Drivers:** AT keyboard, PIT, PIC (8259), floppy, serial (RS-232), PCI hard disk, mouse
-- **Userland:** 24+ utilities, FreeBSD-derived libc, C++ runtime, graphics library
+- **GUI:** Composited window system (`views`), taskbar, VT100 terminal — all via shared-memory MPI protocol
+- **Userland:** 24+ utilities, FreeBSD-derived libc, C++ runtime, objgfx rendering library
 - **ELF loader:** Loads and executes standard i386 ELF binaries
 
 ---

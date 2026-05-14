@@ -52,7 +52,7 @@ sys/
 ├── net/            - Network stack (lwIP integration)
 ├── isa/            - ISA bus device drivers
 ├── pci/            - PCI bus enumeration and drivers
-├── sde/            - Software display environment (graphics)
+├── isa/fb.c        - VESA framebuffer syscalls (sys_mapfb, sys_shareregion)
 ├── lib/            - Kernel library (kprintf, kmalloc, etc.)
 ├── sys/            - Core system services (DMA, IDT, I/O ports, video)
 ├── include/        - All kernel-internal headers
@@ -257,21 +257,19 @@ Supported NICs: NE2000 (`sys/isa/ne2k.c`), Lance LNC (`sys/pci/lnc.c`).
 | `edit` | Text editor |
 | `clock` | System clock display |
 | `ttyd` | TTY daemon |
-| `views` | Graphics viewer |
-| `launcher` | Application launcher |
+| `views` | GUI compositor — owns framebuffer, composites windows, routes input |
+| `taskbar` | Taskbar panel with launcher button and clock |
+| `term` | Windowed VT100 terminal emulator |
+| `muffin` | Demo/test app for the display stack |
 
 ### Libraries (`lib/`)
 
 | Library | Description |
 |---------|-------------|
 | `libc/` | FreeBSD-derived POSIX C library |
-| `libstdc++/` | C++ standard library |
-| `libcpp/` | C++ runtime support |
+| `libcpp/` | C++ runtime support (static constructors, new/delete) |
 | `msun/` | Math library |
-| `libmd/` | Message digest (MD5, SHA) |
-| `libedit/` | BSD editline (readline-compatible) |
-| `objgfx40/` | Object graphics library |
-| `views/` | GUI framework |
+| `objgfx/` | C++ surface rendering API (`ogSurface`, `ogBitFont`) — headers in `include/objgfx/` |
 | `ubix_api/` | UbixOS-specific API |
 | `ubix/` | Core library with static startup code |
 

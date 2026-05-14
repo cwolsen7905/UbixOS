@@ -39,7 +39,6 @@
 #include <vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <sde/sde.h>
 
 #define B_ADAPTORSHIFT          24
 #define B_ADAPTORMASK           0x0f

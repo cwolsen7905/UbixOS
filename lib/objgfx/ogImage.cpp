@@ -7,8 +7,8 @@ extern "C" {
 #include <string.h>
 }
 
-#include "ogImage.h"
-#include "objgfx.h"
+#include <objgfx/ogImage.h>
+#include <objgfx/objgfx.h>
 
 static bool fd_read(int fd, void *buf, size_t n)
 {

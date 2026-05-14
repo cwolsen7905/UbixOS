@@ -9,6 +9,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0-BETA] - 2026-05-13
+
+### Added
+- Full composited window system (`bin/views/` C++ rewrite): `Framebuffer`, `Window`, `WindowManager` classes; server-side decorations with title bar, close button, drag; Z-order; focus-follows-click.
+- `bin/taskbar/taskbar.cc` — taskbar ported to C++ with `ogSurface`/`ogBitFont`; flyout launcher menu; clock.
+- `bin/term/term.cc` — windowed VT100 terminal emulator using `ogSurface` and `ogBitFont`.
+- `include/objgfx/` — canonical public location for objgfx headers (moved from `lib/objgfx/objgfx/`).
+- `include/views/display_proto.h` — MPI display protocol: `DISPLAY_CLOSE`, `DISPLAY_QUERY`/`DISPLAY_INFO`, `no_decor` flag, `DECOR_H` constant.
+- `tools/*.DPF` — all bitmap font files consolidated into `tools/` (were split between `tools/` and `lib/objgfx40/`).
+- `docs/architecture/display.md` — updated architecture document reflecting completed display stack.
+- `docs/design/display-plan.md` — Phase 10 (C++ refactor) fully documented and marked complete.
+
+### Removed
+- `bin/launcher/` — dead pre-2019 application, never integrated with MPI display stack.
+- `lib/objgfx40/` — older objgfx fork; superseded by `lib/objgfx/`.
+- `lib/views/sunlight/` — widget toolkit tied to objgfx40; unused since launcher removal.
+- `lib/libfb/` — removed from world build; no longer a public library. Pixel primitives absorbed into `bin/views` `Framebuffer` class.
+- `sys/sde/` — kernel-side Software Display Environment retired; replaced by userland compositor.
+- `sys/include/sde/` — SDE kernel headers removed.
+- `sys/lib/ogprintf.cc` — retired kernel graphics printf; use `kprintf` for serial/VGA debug output.
+
+### Changed
+- `bin/views/views.cc` replaces `views.c`: C++ compositor with native pixel ops, no libfb dependency.
+- `bin/muffin/main.cc` replaces `main.c`: ported to C++ with `ogSurface`.
+- `lib/objgfx/Makefile` — now includes from `../../include` (canonical path) instead of `./objgfx`.
+- `tools/mkimage.sh` — font copy path updated; `lib/objgfx40` reference removed.
+
+---
+
 ## [2.0.1-BETA] - 2026-05-13
 
 ### Added
