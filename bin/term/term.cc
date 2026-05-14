@@ -96,6 +96,7 @@ term_redraw(void)
 	int cx = g_cur_col * fw;
 	int cy = g_cur_row * fh;
 	g_surf.ogFillRect(cx, cy, cx + fw - 1, cy + fh - 1, 0x00C0C0C0u);
+
 }
 
 static void
@@ -237,8 +238,8 @@ send_flip(void)
 	fl->window_id = g_win_id;
 	fl->dirty_x   = 0;
 	fl->dirty_y   = 0;
-	fl->dirty_w   = 0;
-	fl->dirty_h   = 0;
+	fl->dirty_w   = g_act_w;
+	fl->dirty_h   = g_act_h;
 	mpi_postMessage(g_views, DISPLAY_FLIP, &msg);
 }
 
@@ -253,6 +254,10 @@ main(int argc, char **argv)
 
 	if (mpi_createMbox(g_mbox) != 0)
 		return 1;
+
+	/* Fork the shell before claiming any shared memory so COW never
+	 * marks shared pages read-only and breaks the mapping. */
+	shell_spawn();
 
 	/* Claim window */
 	mpi_message_t msg;
@@ -301,8 +306,6 @@ main(int argc, char **argv)
 	if (g_rows > MAX_ROWS) g_rows = MAX_ROWS;
 
 	memset(g_lines, 0, sizeof(g_lines));
-
-	shell_spawn();
 
 	/* Poll shell output without blocking the event loop */
 	if (g_shell_out >= 0)

@@ -58,6 +58,8 @@ extern "C" {
 #define CUR_W  12
 #define CUR_H  12
 
+#define PAGE_SIZE 4096
+
 /* ------------------------------------------------------------------ */
 /* Syscall stubs                                                        */
 /* ------------------------------------------------------------------ */
@@ -358,7 +360,8 @@ public:
 	uint32_t  id;
 	int32_t   x, y, w, h;
 	uint32_t  pitch;
-	void     *buf;
+	void     *raw;   /* original malloc pointer (may differ from buf) */
+	void     *buf;   /* page-aligned region shared with client */
 	bool      active;
 	int       decor_h;
 	char      title[64];
@@ -584,7 +587,7 @@ class WindowManager {
 			dc->window_id = w->id;
 			mpi_postMessage(w->mbox, DISPLAY_CLOSE, &cm);
 		}
-		free(w->buf);
+		free(w->raw);
 		w->active = false;
 		z_remove(w);
 		focused = (z_count > 0) ? z_stack[z_count - 1] : NULL;
@@ -692,20 +695,25 @@ public:
 
 		uint32_t pitch    = (uint32_t)ww * WIN_BPP;
 		uint32_t buf_size = pitch * (uint32_t)wh;
-		void *buf = malloc(buf_size);
-		if (!buf) { deny(); return; }
+		/* Over-allocate so we can align to a page boundary.
+		 * vmm_share_region requires a page-aligned src address. */
+		void *raw = malloc(buf_size + PAGE_SIZE);
+		if (!raw) { deny(); return; }
+		void *buf = (void *)(((uintptr_t)raw + PAGE_SIZE - 1)
+		    & ~(uintptr_t)(PAGE_SIZE - 1));
 		memset(buf, 0, buf_size);
 
 		uint32_t client_vaddr = 0;
 		if (share_buffer(creq->sender_pid, buf,
 		    buf_size, &client_vaddr) != 0) {
-			free(buf); deny(); return;
+			free(raw); deny(); return;
 		}
 
 		w->id      = next_win_id++;
 		w->x       = wx;   w->y = wy;
 		w->w       = ww;   w->h = wh;
 		w->pitch   = pitch;
+		w->raw     = raw;
 		w->buf     = buf;
 		w->active  = true;
 		w->decor_h = dh;
@@ -732,15 +740,35 @@ public:
 		composite_all();
 	}
 
+	void partial_composite(int sx, int sy, int sw, int sh) {
+		desktop_fill_rect(sx, sy, sw, sh);
+		reblit_rect(sx, sy, sw, sh);
+		if (cur_x < sx + sw && cur_x + CUR_W > sx &&
+		    cur_y < sy + sh && cur_y + CUR_H > sy) {
+			cursor_save(cur_x, cur_y);
+			cursor_draw(cur_x, cur_y);
+			cur_drawn = true;
+		}
+	}
+
 	void handle_flip(struct display_flip *fl) {
-		if (win_find(fl->window_id))
+		Window *w = win_find(fl->window_id);
+		if (!w)
+			return;
+		if (fl->dirty_w > 0 && fl->dirty_h > 0) {
+			int sx = w->x + (int)fl->dirty_x;
+			int sy = w->y + w->decor_h + (int)fl->dirty_y;
+			partial_composite(sx, sy,
+			    (int)fl->dirty_w, (int)fl->dirty_h);
+		} else {
 			composite_all();
+		}
 	}
 
 	void handle_release(struct display_release *rel) {
 		Window *w = win_find(rel->window_id);
 		if (!w) return;
-		free(w->buf);
+		free(w->raw);
 		w->active = false;
 		z_remove(w);
 		if (focused == w)
