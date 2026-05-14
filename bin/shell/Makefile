@@ -6,4 +6,4 @@ include ../Makefile.incl
 BINARY = shell
 OBJS   = main.o error.o commands.o exec.o input.o
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.ubix.prog.mk"

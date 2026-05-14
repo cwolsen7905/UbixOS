@@ -992,8 +992,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	tmp[i++] = 19; // NCPUS
 	tmp[i++] = 0x1;
 
-	tmp[i++] = 23; // STACKPROT
-	tmp[i++] = 0x3;
+	tmp[i++] = 23; // AT_SECURE (musl: 0 = not setuid, skip poll(fds,3,0) safety check)
+	tmp[i++] = 0x0;
 
 	tmp[i++] = 0;
 	tmp[i++] = 0;

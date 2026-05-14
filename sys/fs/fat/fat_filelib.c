@@ -961,9 +961,9 @@ int fl_fread(void *buffer, int size, int length, void *f) {
   if (!count)
     return 0;
 
-  // Check if read starts past end of file
+  // Check if read starts past end of file (EOF is not an error — return 0)
   if (file->bytenum >= file->filelength)
-    return -1;
+    return 0;
 
   // Limit to file size
   if ((file->bytenum + count) > file->filelength)

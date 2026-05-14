@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,16 +28,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/sys.h>
-#include <sys/sched.h>
-
-void print2(char *string, int, int);
+#include <time.h>
 
 #define MINUTE 60
 #define HOUR (60*MINUTE)
 #define DAY (24*HOUR)
 #define YEAR (365*DAY)
-extern const char *__progname;
 
 static int monthSecs[12] = { 0,
 DAY * (31),
@@ -53,17 +49,22 @@ DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31),
 DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30) };
 
 int main(int argc, char **argv) {
-  int sysTime = 0x0;
-  int i = 0x0;
+  struct timespec ts;
+  int sysTime = 0;
+  int i = 0;
 
-  int year = 0x0;
-  int month = 0x0;
-  int day = 0x0;
-  int hour = 0x0;
-  int min = 0x0;
-  int sec = 0x0;
+  int year = 0;
+  int month = 0;
+  int day = 0;
+  int hour = 0;
+  int min = 0;
+  int sec = 0;
 
-  sysTime = gettime();
+  if (clock_gettime(CLOCK_REALTIME, &ts) != 0) {
+    fprintf(stderr, "clock: clock_gettime failed\n");
+    return 1;
+  }
+  sysTime = (int)ts.tv_sec;
 
   year = (sysTime / YEAR) + 1970;
   sysTime -= (YEAR * (year - 1970));
@@ -75,7 +76,7 @@ int main(int argc, char **argv) {
     }
   }
   sysTime -= monthSecs[i];
-  if (((month > 1) && (((year - 1970) + 2) % 4)) == 0x0) {
+  if (((month > 1) && (((year - 1970) + 2) % 4)) == 0) {
     sysTime += DAY;
   }
 
@@ -87,11 +88,7 @@ int main(int argc, char **argv) {
   sysTime -= (min * MINUTE);
   sec = sysTime;
 
-  printf("[%s][%02d/%02d/%i, %02d:%02d.%02d]\n", argv[0], month, day, year, hour, min, sec);
-  return (0);
+  printf("[%s][%02d/%02d/%i, %02d:%02d.%02d]\n",
+         argv[0], month, day, year, hour, min, sec);
+  return 0;
 }
-
-/***
- END
- ***/
-

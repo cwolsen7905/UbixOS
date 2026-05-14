@@ -29,10 +29,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/sys.h>
 #include <string.h>
-#include <sys/sched.h>
+#include <sched.h>
 #include <api/ubix.h>
+
+int pidStatus(int pid);
 
 struct passwd {
   char username[32];
@@ -63,6 +64,7 @@ static char *pgets(char *string) {
     else {
       string[count++] = ch;
       printf("*");
+      fflush(stdout);
     }
   }
   tty_setraw(0);   /* restore canonical mode */
@@ -108,12 +110,15 @@ int main(int argc, char **argv, char **env) {
     }
 
   fd = fopen("sys:/etc/userdb","r");
-  if (fd->fd == 0x0) {
+  if (fd == NULL) {
     printf("Missing User Database.\n");
     exit(0x1);
     }
      
-  users = fread(data,0x1000,0x1,fd) / sizeof(struct passwd);
+  {
+    size_t nread = fread(data, 1, 0x1000, fd);
+    users = (int)(nread / sizeof(struct passwd));
+  }
 
 
   fclose(fd);
@@ -127,12 +132,15 @@ int main(int argc, char **argv, char **env) {
   printf("\nUbixOS/IA-32 (devel.ubixos.com) (console)");
   getUsername:
   printf("\n\nLogin: ");
-  gets((char *)&userName);
+  fflush(stdout);
+  fgets((char *)&userName, sizeof(userName), stdin);
+  { int _n = strlen(userName); if (_n > 0 && userName[_n-1] == '\n') userName[_n-1] = '\0'; }
 
   if (userName[0] == '\0')
     goto getUsername;
 
   printf("Password: ");
+  fflush(stdout);
   pgets((char *)&passWord);
 
 
@@ -157,12 +165,15 @@ int main(int argc, char **argv, char **env) {
             printf("No MOTD");
             }
           else {
-            fread(data2,384,1,fd);
-            printf("%s\n",data2);
+            size_t mread = fread(data2, 1, 383, fd);
+            data2[mread] = '\0';
+            if (mread > 0)
+              printf("%s\n", data2);
             }
           fclose(fd);          
           //chdir(data[i].path);
           chdir("sys:/bin/");
+          fflush(stdout);
           execve(data[i].shell,argv_shell,envp_init);
           printf("Error: Problem Starting Shell\n");
           exit(-1);

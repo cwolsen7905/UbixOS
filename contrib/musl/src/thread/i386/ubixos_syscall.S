@@ -27,7 +27,7 @@ __syscall0:
 	movl 4(%esp), %eax
 	pushl $0		/* fake return addr — no args follow */
 	int  $0x80
-	addl $4, %esp
+	leal 4(%esp), %esp	/* restore stack — leal preserves CF from int $0x80 */
 	jnc  1f
 	negl %eax
 1:	ret
@@ -44,7 +44,7 @@ __syscall1:
 	pushl %ecx
 	pushl $0
 	int  $0x80
-	addl $8, %esp
+	leal 8(%esp), %esp
 	jnc  1f
 	negl %eax
 1:	ret
@@ -63,7 +63,7 @@ __syscall2:
 	pushl %ecx
 	pushl $0
 	int  $0x80
-	addl $12, %esp
+	leal 12(%esp), %esp
 	jnc  1f
 	negl %eax
 1:	ret
@@ -85,7 +85,7 @@ __syscall3:
 	pushl %ecx
 	pushl $0
 	int  $0x80
-	addl $16, %esp
+	leal 16(%esp), %esp
 	jnc  1f
 	negl %eax
 1:	popl %esi
@@ -111,7 +111,7 @@ __syscall4:
 	pushl %ecx
 	pushl $0
 	int  $0x80
-	addl $20, %esp
+	leal 20(%esp), %esp
 	jnc  1f
 	negl %eax
 1:	popl %edi
@@ -141,7 +141,7 @@ __syscall5:
 	pushl %ecx
 	pushl $0
 	int  $0x80
-	addl $24, %esp
+	leal 24(%esp), %esp
 	jnc  1f
 	negl %eax
 1:	popl %ebx
@@ -175,7 +175,7 @@ __syscall6:
 	pushl %ecx
 	pushl $0
 	int  $0x80
-	addl $28, %esp
+	leal 28(%esp), %esp
 	jnc  1f
 	negl %eax
 1:	popl %ebp

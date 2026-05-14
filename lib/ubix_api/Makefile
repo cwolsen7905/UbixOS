@@ -1,45 +1,61 @@
-# $Id: Makefile 121 2016-01-14 03:18:20Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+# (C) 2002-2026 The UbixOS Project
 
-# Include Global 'Source' Options
 include ../../Makefile.incl
 include ../Makefile.incl
 
-#Objects
-OBJS = ubixcwd.o ttyctrl.o
+OBJDIR  = ${OBJ_DIR}/obj/ubix_api
 
+# Objects for the dynamic .so (original ABI — picked up by old-libc programs)
+OBJS_SO = ubixcwd.o ttyctrl.o
 
-#Sub Sections
-SUBS = ./test/*.o
+# Objects for the static ubix_api.a used by musl-linked programs.
+# pidStatus and MPI stubs duplicate symbols in the old libc; they must NOT
+# land in the source tree where LIBRARIES globs would pick them up.
+OBJS_A  = ubixcwd.o ttyctrl.o \
+          pidstatus.o \
+          mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o
 
-#Output
-OUTPUT = ubix_api.so
+SUBS    = ./test/*.o
+OUTPUT  = ubix_api.so
 
-lib.so: $(OBJS)
-	(cd test;$(MAKE))
-	$(CC) -m32 -nostdlib -shared -Wl,-soname,ubix_api.so -Wl,-m,elf_i386 -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
+.PATH.o: ${OBJDIR}
 
-# Compile the source files
+.SUFFIXES: .o .c .S .cc
+
 .cc.o:
-	$(CXX)  -Wall -nostdinc -O -I./include -c -o $@ $<
- 
-.cc.s:
-	$(CXX)  -Wall -nostdinc -O -I./include -S -o $@ $<
- 
-.c.o:
-	$(CC) $(CFLAGS) -Wall -nostdinc -O -I./include -I../../include -c $<
+	@mkdir -p ${OBJDIR}
+	$(CXX) -Wall -nostdinc -O -I./include \
+		-MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} \
+		-c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
-.c.s:
-	$(CC)  -Wall -nostdinc -O -I./include -S -o $@ $<
- 
+.c.o:
+	@mkdir -p ${OBJDIR}
+	$(CC) $(CFLAGS) ${CROSS_M32} -Wall -nostdinc -O -I./include -I../../include \
+		-MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} \
+		-c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+
 .S.o:
-	$(CC)  -Wall -nostdinc -c -o $@ $<
- 
-# Clean up the junk
+	@mkdir -p ${OBJDIR}
+	$(CC) ${CROSS_M32} -Wall -nostdinc \
+		-c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+
+all: lib.so lib.a
+
+lib.so: $(OBJS_SO)
+	(cd test;$(MAKE))
+	$(CC) -m32 -nostdlib -shared -Wl,-soname,ubix_api.so -Wl,-m,elf_i386 \
+		-o ${OBJ_DIR}/lib/$(OUTPUT) \
+		${OBJS_SO:S|^|${OBJDIR}/|} $(SUBS)
+
+lib.a: $(OBJS_A)
+	$(AR) rcs ${OBJ_DIR}/lib/ubix_api.a \
+		${OBJS_A:S|^|${OBJDIR}/|}
+
 clean:
-	$(REMOVE) $(OBJS) ${OBJS:.o=.d} ${BUILD_DIR}/$(OUTPUT)
+	$(REMOVE) ${OBJDIR} \
+		${OBJ_DIR}/lib/$(OUTPUT) ${OBJ_DIR}/lib/ubix_api.a
 	(cd test;${MAKE} clean)
 
-.for _d in ${OBJS:.o=.d}
-.sinclude "${_d}"
+.for _d in ${OBJS_A:.o=.d}
+.sinclude "${OBJDIR}/${_d}"
 .endfor

@@ -90,6 +90,7 @@ int main(int argc,char **argv, char **envp) {
 
   if (0 == i) {
     printf("Starting Login Daemon.\n");
+    fflush(stdout);
     execve("sys:/bin/login", argv_login, envp_login);
     printf("Error Starting System\n");
     exit(0x0);

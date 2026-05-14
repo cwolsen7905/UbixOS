@@ -55,8 +55,6 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
         return (-1);
     }
 
-    kprintf("CMD: %i", uap->cmd);
-
     fp = (struct file*) td->o_files[uap->fd];
 
     switch (uap->cmd) {
@@ -90,12 +88,16 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
                 fp->f_flag = O_RDWR & O_ACCMODE;
             td->td_retval[0] = fp->f_flag;
             break;
+        case 2:
+            /* F_SETFD: store close-on-exec and other fd flags; silently accept */
+            td->td_retval[0] = 0;
+            break;
         case 4:
             fp->f_flag &= ~FCNTLFLAGS;
             fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
             break;
         default:
-            kprintf("ERROR DEFAULT: [%i]", uap->fd);
+            kprintf("fcntl: unhandled cmd=%i fd=%i\n", uap->cmd, uap->fd);
     }
 
     return (0x0);

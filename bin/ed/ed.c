@@ -135,17 +135,15 @@ static int parse_addrs(const char **pp, int *a1, int *a2) {
 
 static int read_file(const char *path) {
   FILE *f = fopen(path, "r");
-  /* UbixOS fopen never returns NULL; check fd to detect failure */
-  if (!f || !f->fd) {
+  if (!f) {
     fprintf(stderr, "%s: cannot open\n", path);
-    if (f) free(f);
     return -1;
   }
 
-  /* Read the whole file in one shot — fgetc returns 0 at EOF (not -1),
-   * so a fgetc/fgets loop never terminates.  fread returns bytes read,
-   * which drops to 0 at EOF and gives us a clean stopping point. */
-  size_t filesz = f->size ? f->size : 65536;
+  fseek(f, 0, SEEK_END);
+  long fsz = ftell(f);
+  rewind(f);
+  size_t filesz = (fsz > 0) ? (size_t)fsz : 65536;
   char *buf = malloc(filesz + 1);
   if (!buf) { fclose(f); return -1; }
 

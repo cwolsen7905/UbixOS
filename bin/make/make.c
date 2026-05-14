@@ -49,6 +49,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
 /* ------------------------------------------------------------------ limits */
 #define MAX_VARS     256
 #define MAX_RULES    512

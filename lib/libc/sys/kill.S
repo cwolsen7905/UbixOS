@@ -1,8 +1,6 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
- *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,58 +24,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/sys.h>
-#include <string.h>
-#include <api/ubix.h>
-#include "shell.h"
-
-char *machine = 0x0;
-char *cwd = 0x0;
-char *cwc = 0x0;
-
-int main(int argc, char **argv, char **env) {
-  unsigned int *segbase = 0x0;
-
-  char *buffer = (char *) malloc(512);
-  inputBuffer *inBuf = (inputBuffer *) malloc(sizeof(inputBuffer));
-
-  machine = (char *) malloc(32);
-  cwd = (char *) malloc(1024);
-  bzero(cwd, 1024);
-
-  sprintf(machine, "uBixCube");
-  ubix_getcwd(cwd, 1024);
-
-  while (1) {
-    aGain:
-
-    ubix_getcwd(cwd, 1024);
-    printf("%s@%s# ", machine, cwd);
-    fflush(stdout);
-    fgets((char *) buffer, 512, stdin);
-    /* strip trailing newline */
-    { int _n = strlen(buffer); if (_n > 0 && buffer[_n-1] == '\n') buffer[_n-1] = '\0'; }
-
-    if (buffer[0] == 0x0)
-      goto aGain;
-
-    inBuf->argc = 0x0;
-    inBuf->args = 0x0;
-    inBuf->bg = 0x0;
-    inBuf->redirect_out = NULL;
-    inBuf->redirect_append = 0;
-
-    parseInput(inBuf, buffer);
-
-    if (inBuf->args->arg != 0x0) {
-      if (!commands(inBuf))
-        execProgram(inBuf);
-    }
-
-    freeArgs(inBuf);
-  }
-  return (0x0);
-}
+.text
+.globl kill
+.type  kill, @function
+kill:
+	movl	$37, %eax
+	int	$0x80
+	ret
+.size kill, . - kill

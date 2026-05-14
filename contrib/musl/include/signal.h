@@ -27,9 +27,10 @@ extern "C" {
 
 #include <bits/alltypes.h>
 
-#define SIG_BLOCK     0
-#define SIG_UNBLOCK   1
-#define SIG_SETMASK   2
+/* FreeBSD/UbixOS values — must match sys/include/sys/signal.h */
+#define SIG_BLOCK     1
+#define SIG_UNBLOCK   2
+#define SIG_SETMASK   3
 
 #define SI_ASYNCNL (-60)
 #define SI_TKILL (-6)

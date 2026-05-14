@@ -632,15 +632,15 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 119 - resuba */
     {
-        0,
+        ARG_COUNT(sys_readv_args),
         "readv",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 120 - readv */
+        (sys_call_t *) sys_readv,
+        SYSCALL_VALID }, /* 120 - readv */
     {
-        0,
+        ARG_COUNT(sys_writev_args),
         "writev",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 121 - writev */
+        (sys_call_t*) sys_writev,
+        SYSCALL_VALID }, /* 121 - writev */
     {
         0,
         "settimeofday",
@@ -1322,10 +1322,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 257 - Invalid */
     {
-        0,
-        "No Call",
-        sys_invalid,
-        SYSCALL_INVALID }, /* 258 - Invalid */
+        ARG_COUNT(sys_set_tid_address_args),
+        "set_tid_address",
+        (sys_call_t *) sys_set_tid_address,
+        SYSCALL_VALID }, /* 258 - set_tid_address */
     {
         0,
         "No Call",
@@ -2050,7 +2050,7 @@ struct syscall_entry systemCalls_posix[] = {
         0,
         "ksem_trywait",
         sys_invalid,
-        SYSCALL_NOTIMP }, /* 403 - Invalid */
+        SYSCALL_INVALID }, /* 403 - FreeBSD: ksem_trywait (not implemented) */
     {
         0,
         "ksem_init",

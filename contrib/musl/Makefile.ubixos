@@ -51,9 +51,16 @@ musl-build: musl-configure
 		ARCH=i386 \
 		obj=$(MUSL_OBJ)
 
-install-musl: musl-build
+SHIM_DIR  = $(MUSL_DIR)/ubixos_shim
+SHIM_OBJS = $(MUSL_OBJ)/compiler_rt.o
+
+$(MUSL_OBJ)/compiler_rt.o: $(SHIM_DIR)/compiler_rt.c
+	$(CC) $(MUSL_CFLAGS) -nostdinc -ffreestanding -Wa,--noexecstack -c -o $@ $<
+
+install-musl: musl-build $(SHIM_OBJS)
 	mkdir -p $(BUILD_DIR)/lib
 	cp $(MUSL_OBJ)/lib/libc.a $(BUILD_DIR)/lib/musl.a
+	$(AR) rcs $(BUILD_DIR)/lib/musl.a $(SHIM_OBJS)
 
 clean:
 	rm -rf $(MUSL_OBJ)

@@ -3,9 +3,7 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY    = uname
-OBJS      = main.o
-LINK_TYPE = dynamic
-LIBRARIES = ../../build/lib/libc.so
+BINARY = uname
+OBJS   = main.o
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.prog.mk"

@@ -1083,6 +1083,7 @@ struct sys_clock_gettime_args {
 };
 int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap);
 
+
 struct sys_futex_args {
   char uaddr_l_[PADL_(int *)];
   int *uaddr;
@@ -1109,5 +1110,46 @@ struct sys_exit_group_args {
   char status_r_[PADR_(int)];
 };
 int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap);
+
+#ifndef _STRUCT_IOVEC_DEFINED
+#define _STRUCT_IOVEC_DEFINED
+struct iovec {
+  void   *iov_base;
+  size_t  iov_len;
+};
+#endif
+
+struct sys_writev_args {
+  char fd_l_[PADL_(int)];
+  int fd;
+  char fd_r_[PADR_(int)];
+  char iov_l_[PADL_(const struct iovec *)];
+  const struct iovec *iov;
+  char iov_r_[PADR_(const struct iovec *)];
+  char iovcnt_l_[PADL_(int)];
+  int iovcnt;
+  char iovcnt_r_[PADR_(int)];
+};
+int sys_writev(struct thread *td, struct sys_writev_args *uap);
+
+struct sys_readv_args {
+  char fd_l_[PADL_(int)];
+  int fd;
+  char fd_r_[PADR_(int)];
+  char iov_l_[PADL_(const struct iovec *)];
+  const struct iovec *iov;
+  char iov_r_[PADR_(const struct iovec *)];
+  char iovcnt_l_[PADL_(int)];
+  int iovcnt;
+  char iovcnt_r_[PADR_(int)];
+};
+int sys_readv(struct thread *td, struct sys_readv_args *uap);
+
+struct sys_set_tid_address_args {
+  char tidptr_l_[PADL_(int *)];
+  int *tidptr;
+  char tidptr_r_[PADR_(int *)];
+};
+int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap);
 
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

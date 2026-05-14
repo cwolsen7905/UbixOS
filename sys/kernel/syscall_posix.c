@@ -36,6 +36,7 @@
 #include <string.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/errno.h>
 
 struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
@@ -69,7 +70,7 @@ void sys_call_posix(struct trapframe *frame) {
   }
   else if ((int) systemCalls_posix[code].sc_status == SYSCALL_INVALID) {
     kprintf("Invalid Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
-    frame->tf_eax = -1;
+    frame->tf_eax = ENOSYS;
     frame->tf_edx = 0x0;
     frame->tf_eflags |= PSL_C;
   }
@@ -81,7 +82,7 @@ void sys_call_posix(struct trapframe *frame) {
         *((uint32_t *)frame->tf_esp + 2),
         *((uint32_t *)frame->tf_esp + 3),
         *((uint32_t *)frame->tf_esp + 4));
-    frame->tf_eax = 22;//-1;
+    frame->tf_eax = ENOSYS;
     frame->tf_edx = 0x0;
     frame->tf_eflags |= PSL_C;
   }

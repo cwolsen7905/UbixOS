@@ -120,7 +120,7 @@
 #define __NR_sigreturn		119
 #define __NR_clone		120
 #define __NR_setdomainname	121
-#define __NR_uname		122
+#define __NR_uname		164	/* UbixOS: FreeBSD slot 164 (Linux uses 122) */
 #define __NR_modify_ldt		123
 #define __NR_adjtimex		124
 #define __NR_mprotect		125
@@ -394,7 +394,7 @@
 #define __NR_msgsnd		400
 #define __NR_msgrcv		401
 #define __NR_msgctl		402
-#define __NR_clock_gettime64	403
+/* __NR_clock_gettime64 (403) omitted — FreeBSD slot 403 is ksem_trywait; use SYS_clock_gettime (232) */
 #define __NR_clock_settime64	404
 #define __NR_clock_adjtime64	405
 #define __NR_clock_getres_time64 406
@@ -488,9 +488,9 @@
 #undef  __NR_execve
 #define __NR_execve		59
 
-/* munmap: Linux=91, UbixOS=72 */
+/* munmap: Linux=91, UbixOS=73 */
 #undef  __NR_munmap
-#define __NR_munmap		72
+#define __NR_munmap		73
 
 /* mprotect: Linux=125, UbixOS=74 */
 #undef  __NR_mprotect
@@ -625,6 +625,14 @@
 /* clock_gettime (32-bit): Linux=265, UbixOS=232 */
 #undef  __NR_clock_gettime32
 #define __NR_clock_gettime32	232
+
+/* readv: Linux=145, UbixOS=120 */
+#undef  __NR_readv
+#define __NR_readv		120
+
+/* writev: Linux=146, UbixOS=121 */
+#undef  __NR_writev
+#define __NR_writev		121
 
 /* futex: Linux=240, UbixOS=350 (stub) */
 #undef  __NR_futex

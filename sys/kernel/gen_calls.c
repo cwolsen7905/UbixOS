@@ -161,13 +161,14 @@ int sys_kill(struct thread *td, struct sys_kill_args *uap) {
 
 int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap) {
     struct timeval tv;
+    struct timezone tz;
 
     if (uap->tp == 0x0) {
         td->td_retval[0] = -1;
         return (-1);
     }
 
-    gettimeofday(&tv, 0x0);
+    gettimeofday(&tv, &tz);
     uap->tp->tv_sec  = tv.tv_sec;
     uap->tp->tv_nsec = tv.tv_usec * 1000;
     td->td_retval[0] = 0;
@@ -236,6 +237,53 @@ int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
     return (0);
 }
 
+/* writev — scatter-gather write: loop over iov[] calling sys_write for each */
+int sys_writev(struct thread *td, struct sys_writev_args *uap) {
+    struct sys_write_args wa;
+    int i;
+    ssize_t total = 0;
+
+    wa.fd = uap->fd;
+    for (i = 0; i < uap->iovcnt; i++) {
+        wa.buf   = uap->iov[i].iov_base;
+        wa.nbyte = uap->iov[i].iov_len;
+        if (wa.nbyte == 0)
+            continue;
+        sys_write(td, &wa);
+        if (td->td_retval[0] < 0) {
+            td->td_retval[0] = total > 0 ? total : td->td_retval[0];
+            return (-1);
+        }
+        total += td->td_retval[0];
+    }
+    td->td_retval[0] = total;
+    return (0);
+}
+
+int sys_readv(struct thread *td, struct sys_readv_args *uap) {
+    struct sys_read_args ra;
+    int i;
+    ssize_t total = 0;
+
+    ra.fd = uap->fd;
+    for (i = 0; i < uap->iovcnt; i++) {
+        ra.buf   = uap->iov[i].iov_base;
+        ra.nbyte = uap->iov[i].iov_len;
+        if (ra.nbyte == 0)
+            continue;
+        sys_read(td, &ra);
+        if (td->td_retval[0] < 0) {
+            td->td_retval[0] = total > 0 ? total : td->td_retval[0];
+            return (-1);
+        }
+        total += td->td_retval[0];
+        if ((size_t)td->td_retval[0] < ra.nbyte)
+            break;
+    }
+    td->td_retval[0] = total;
+    return (0);
+}
+
 /* exit_group — exit all threads in the process (alias to sys_exit) */
 int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap) {
     endTask(_current->id);
@@ -278,18 +326,28 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
         td->td_retval[1] = 0x8;
     }
     else {
+        kTask_t *tmpTask = NULL;
+        int retries;
 
-        kTask_t *tmpTask = schedFindTask(args->pid);
+        /*
+         * Retry briefly: a just-forked child may not appear in the scheduler
+         * until after the parent's next yield (fork-to-schedule race).
+         */
+        for (retries = 0; retries < 100; retries++) {
+            tmpTask = schedFindTask(args->pid);
+            if (tmpTask != NULL)
+                break;
+            sched_yield();
+        }
 
-        if (tmpTask != 0x0) {
+        if (tmpTask != NULL) {
             sched_setStatus(_current->id, WAIT);
-            while (tmpTask != 0x0) {
+            while (tmpTask != NULL) {
                 sched_yield();
                 tmpTask = schedFindTask(args->pid);
             }
             td->td_retval[0] = args->pid;
-        }
-        else {
+        } else {
             td->td_retval[0] = -1;
             error = -1;
         }
@@ -671,5 +729,11 @@ int sys_uname(struct thread *td, struct sys_uname_args *args) {
   strncpy(uts->machine,  "i386",                     sizeof(uts->machine)  - 1);
 
   td->td_retval[0] = 0;
+  return (0);
+}
+
+/* set_tid_address(2) — Linux 258. Store tidptr; return current TID (PID). */
+int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap) {
+  td->td_retval[0] = _current->id;
   return (0);
 }

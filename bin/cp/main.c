@@ -36,12 +36,8 @@ int main(int argc, char **argv) {
   FILE *out = 0x0;
   in = fopen(argv[1], "rb");
   out = fopen(argv[2], "wb");
-  /*
-   while (!feof(in)) {
-   */
-  for (i = 0; i < 21; i++) {
-    fread(buffer, 0x1000, 1, in);
-    fwrite(buffer, 0x1000, 1, out);
+  while ((i = fread(buffer, 1, 0x2000, in)) > 0) {
+    fwrite(buffer, 1, i, out);
   }
   fclose(in);
   fclose(out);

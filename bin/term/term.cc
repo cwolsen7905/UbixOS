@@ -32,6 +32,7 @@ extern "C" {
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/signal.h>
 #include <sys/sys.h>
 #include <sys/sched.h>
 #include <sys/mpi.h>
@@ -169,8 +170,9 @@ key_to_ascii(uint32_t kc, uint8_t pressed)
 /* Shell subprocess                                                     */
 /* ------------------------------------------------------------------ */
 
-static int g_shell_in  = -1;   /* term writes here → shell stdin  */
-static int g_shell_out = -1;   /* term reads here  ← shell stdout */
+static int   g_shell_in  = -1;   /* term writes here → shell stdin  */
+static int   g_shell_out = -1;   /* term reads here  ← shell stdout */
+static pid_t g_shell_pid = -1;
 
 static void
 shell_spawn(void)
@@ -182,6 +184,7 @@ shell_spawn(void)
 		return;
 
 	pid_t pid = fork();
+	g_shell_pid = pid;
 	if (pid == 0) {
 		/* Child: wire pipes to stdin/stdout, exec shell */
 		dup2(to_shell[0],   0);
@@ -331,6 +334,14 @@ main(int argc, char **argv)
 
 		/* Process keyboard events */
 		while (mpi_fetchMessage(g_mbox, &reply) == 0) {
+			if (reply.header == DISPLAY_CLOSE) {
+				if (g_shell_pid > 0)
+					kill(g_shell_pid, SIGKILL);
+				if (g_shell_in  >= 0) close(g_shell_in);
+				if (g_shell_out >= 0) close(g_shell_out);
+				mpi_destroyMbox(g_mbox);
+				return 0;
+			}
 			if (reply.header != DISPLAY_KEY)
 				continue;
 

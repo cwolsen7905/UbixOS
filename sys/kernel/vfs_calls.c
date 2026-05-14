@@ -38,7 +38,10 @@
 #include <ufs/ufs.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <vfs/file.h>
 #include "../fs/fat/fat_filelib.h"
+
+#define FD_TYPE_DIR 4
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
   return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
@@ -67,31 +70,11 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
       kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
     td->td_retval[0] = -1;
-    error = -1;
-    /*
-
-     kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
-
-     if ((args->flag & O_RDONLY) == O_RDONLY)
-     kprintf("O_RDONLY");
-
-     if ((args->flag & O_WRONLY) == O_WRONLY)
-     kprintf("O_WRONLY");
-
-     if ((args->flag & O_RDWR) == O_RDWR)
-     kprintf("O_RDWR");
-
-     if ((args->flag & O_ACCMODE) == O_ACCMODE)
-     kprintf("O_ACCMODE");
-     */
-
-  }
-  else {
-        //   kprintf("[%s:%i] o(%s)%i", __FILE__, __LINE__, args->path, fd);
-    td->td_retval[0] = fd;
+    return (ENOENT);
   }
 
-  return (error);
+  td->td_retval[0] = fd;
+  return (0);
 }
 
 int sys_close(struct thread *td, struct sys_close_args *args) {
@@ -112,6 +95,14 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   }
   else {
     switch (fd->fd_type) {
+      case FD_TYPE_DIR:
+        if (fd->data != NULL) {
+          vfs_closedir((kDIR_t *)fd->data);
+          fd->data = NULL;
+        }
+        fdestroy(td, fd, args->fd);
+        td->td_retval[0] = 0;
+        break;
       case 3:
         pFD = fd->data;
         if (args->fd == pFD->rFD) {
@@ -341,18 +332,54 @@ int sys_access(struct thread *td, struct sys_access_args *args) {
 }
 
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
-
-  struct file *fd = 0x0;
+  struct file *fd = NULL;
+  struct kdirent kent;
+  uint8_t *buf;
+  uint32_t remaining, total, namelen, reclen;
 
   getfd(td, &fd, args->fd);
 
-  char buf[DEV_BSIZE];
-  struct dirent *d;
-  char *s;
-  ssize_t n;
+  if (fd == NULL || fd->fd_type != FD_TYPE_DIR) {
+    td->td_retval[0] = -1;
+    return (EBADF);
+  }
 
-  td->td_retval[0] = fread(args->buf, args->count, 1, fd->fd);
+  buf       = (uint8_t *)args->buf;
+  remaining = args->count;
+  total     = 0;
 
+  while (remaining > 0) {
+    if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0)
+      break;
+
+    namelen = strlen(kent.d_name);
+    /*
+     * linux_dirent64 layout (musl/Linux i386 ABI):
+     *   d_ino    uint64_t  offset 0  (8 bytes)
+     *   d_off    int64_t   offset 8  (8 bytes)
+     *   d_reclen uint16_t  offset 16 (2 bytes)
+     *   d_type   uint8_t   offset 18 (1 byte)
+     *   d_name   char[]    offset 19 (variable, NUL-terminated)
+     * Total header = 19 bytes; reclen aligned to 8.
+     */
+    reclen = (19 + namelen + 1 + 7) & ~7u;
+
+    if (reclen > remaining)
+      break;
+
+    uint8_t *p = buf + total;
+    memset(p, 0, reclen);
+    *(uint64_t *)(p + 0)  = (uint64_t)kent.d_ino;   /* d_ino */
+    *(uint64_t *)(p + 8)  = (uint64_t)(total + reclen); /* d_off */
+    *(uint16_t *)(p + 16) = (uint16_t)reclen;
+    *(uint8_t  *)(p + 18) = kent.d_type;
+    memcpy(p + 19, kent.d_name, namelen + 1);
+
+    total     += reclen;
+    remaining -= reclen;
+  }
+
+  td->td_retval[0] = (int)total;
   return (0);
 }
 
@@ -396,6 +423,21 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
 
   nfp->f_flag = flags & FMASK;
 
+  /* Directory open: use VFS dir layer instead of fopen */
+  if (oflags & O_DIRECTORY) {
+    kDIR_t *kdir = vfs_opendir(path);
+    if (kdir == NULL) {
+      fdestroy(thr, nfp, fd);
+      thr->td_retval[0] = -1;
+      return (ENOTDIR);
+    }
+    nfp->fd_type = FD_TYPE_DIR;
+    nfp->data    = kdir;
+    nfp->fd      = NULL;
+    thr->td_retval[0] = fd;
+    return (0);
+  }
+
   if ((oflags & O_WRONLY) && (oflags & O_APPEND))
     nfp->fd = fopen(path, "a");
   else if (oflags & O_WRONLY)
@@ -410,13 +452,11 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
       kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
     thr->td_retval[0] = -1;
-    error = -1;
-  }
-  else {
-    thr->td_retval[0] = fd;
+    return (ENOENT);
   }
 
-  return (error);
+  thr->td_retval[0] = fd;
+  return (0);
 }
 
 int sys_unlink(struct thread *td, struct sys_unlink_args *uap) {

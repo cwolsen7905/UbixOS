@@ -111,8 +111,10 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp) {
   tp->tv_sec  = systemVitals->timeStart + systemVitals->sysUptime;
   tp->tv_usec = 0x0;
 
-  tzp->tz_minuteswest = (-5 * 60);
-  tzp->tz_dsttime = 0x0;
+  if (tzp != 0x0) {
+    tzp->tz_minuteswest = (-5 * 60);
+    tzp->tz_dsttime = 0x0;
+  }
 
   return (0x0);
 }
