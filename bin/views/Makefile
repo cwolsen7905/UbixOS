@@ -5,6 +5,7 @@ include ../Makefile.incl
 
 BINARY = views
 OBJS   = views.o
+SRCS   = views.cc
 
 LIBRARIES += ../../lib/libfb/fb.o ../../lib/libfb/font8x8.o
 
