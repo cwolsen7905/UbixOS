@@ -296,6 +296,19 @@ The payoff of the entire migration effort.
 
 ---
 
+### Post-Phase 6 — Kernel cleanup
+Once a second architecture exists, arch-specific syscall code in `sys/kernel/gen_calls.c`
+should be split out:
+
+- Move `sys_set_thread_area` (and any future TLS/GDT helpers) from `gen_calls.c`
+  into `sys/arch/i386/tls.c` with a header at `sys/include/machine/tls.h`.
+  The i386 implementation uses LDT[1] and the `0xF` selector — none of that
+  belongs in a generic file once a second arch has its own equivalent.
+- Repeat for any other i386-specific calls that accumulate in `gen_calls.c`
+  during Phases 1–5.
+
+---
+
 ## What Stays UbixOS-Specific Forever
 
 These are never replaced by musl or libc++:
