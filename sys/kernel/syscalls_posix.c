@@ -2426,7 +2426,7 @@ struct syscall_entry systemCalls_posix[] = {
         ARG_COUNT(sys_lseek_args),
         "lseek",
         (sys_call_t*) sys_lseek,
-        SYSCALL_DEBUG }, /* 478 - sys_lseek */
+        SYSCALL_VALID }, /* 478 - sys_lseek */
     {
         0,
         "truncate",

@@ -622,6 +622,14 @@
 #undef  __NR_fcntl
 #define __NR_fcntl		92
 
+/* lseek: Linux=19 (32-bit only), UbixOS=478 (FreeBSD 64-bit lseek).
+ * Undefine _llseek so musl uses SYS_lseek; remap lseek to slot 478.
+ * sys_lseek_args: (fd, off_t offset, whence) — 64-bit offset maps
+ * directly to the two 32-bit stack words musl pushes for off_t. */
+#undef  __NR__llseek
+#undef  __NR_lseek
+#define __NR_lseek		478
+
 /* pipe2: Linux=331, UbixOS=542 */
 #undef  __NR_pipe2
 #define __NR_pipe2		542
