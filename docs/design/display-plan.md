@@ -269,20 +269,20 @@ Target layer diagram:
 
 Sub-steps:
 
-**10a — Port views to C++**
-- [ ] `bin/views/views.c` → `views.cc`
-- [ ] Wrap C headers in `extern "C" {}`
-- [ ] `Framebuffer` class (wraps libfb internally for now)
-- [ ] `Window` class (replaces `win_t` struct + free functions)
-- [ ] `WindowManager` class (replaces globals + event dispatch)
-- [ ] Update `bin/views/Makefile` for `.cc`
-- [ ] Build and test — identical behaviour
+**10a — Port views to C++** ✓
+- [x] `bin/views/views.c` → `views.cc`
+- [x] Wrap C headers in `extern "C" {}`
+- [x] `Framebuffer` class (wraps libfb internally for now)
+- [x] `Window` class (replaces `win_t` struct + free functions)
+- [x] `WindowManager` class (replaces globals + event dispatch)
+- [x] Update `bin/views/Makefile` for `.cc`
+- [x] Build and test — identical behaviour
 
-**10b — Absorb libfb into views**
-- [ ] Move libfb pixel primitives into `Framebuffer` class directly
-- [ ] Move `font8x8` data into views as a private static array
-- [ ] Remove libfb from views Makefile link line
-- [ ] Build and test
+**10b — Absorb libfb into views** ✓
+- [x] Move libfb pixel primitives into `Framebuffer` class directly
+- [x] Move `font8x8` data into views as a private static array
+- [x] Remove libfb from views Makefile link line
+- [x] Build and test
 
 **10c — Port taskbar to C++**
 - [ ] `bin/taskbar/taskbar.c` → `taskbar.cc`
@@ -364,8 +364,8 @@ This is the path to macOS IOSurface / Metal compositing.
 | 7 | `bin/taskbar` separate process | Done |
 | 8 | `bin/terminal` | Done |
 | 9 | Compositor upgrade (SSD, z-order, drag, close) | Done |
-| 10a | views → C++ (Framebuffer/Window/WindowManager) | Not started |
-| 10b | Absorb libfb into views | Not started |
+| 10a | views → C++ (Framebuffer/Window/WindowManager) | Done |
+| 10b | Absorb libfb into views | Done |
 | 10c | taskbar → C++ + ogSurface | Not started |
 | 10d | Remove libfb as public library | Not started |
 | 10e | Clean up objGFX | Not started |
