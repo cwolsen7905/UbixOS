@@ -155,6 +155,7 @@ main(int argc, char **argv)
 		while (mbox.try_fetch(msg))
 			wm.dispatch(msg.header, msg.data);
 
+		wm.flush();
 		ubix::yield();
 	}
 

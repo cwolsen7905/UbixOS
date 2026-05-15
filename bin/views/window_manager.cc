@@ -101,7 +101,7 @@ WindowManager::close_window(Window *w)
 	reg_.set_focused(
 	    reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
 	reg_.destroy(w);   /* w is dangling after this point */
-	comp_.composite_all();
+	comp_.invalidate_all();
 }
 
 void
@@ -194,7 +194,7 @@ WindowManager::handle_claim(struct display_claim_req *creq)
 
 	if (dh > 0)
 		notify_taskbar(w, 1);
-	comp_.composite_all();
+	comp_.invalidate_all();
 }
 
 void
@@ -206,10 +206,9 @@ WindowManager::handle_flip(struct display_flip *fl)
 	if (fl->dirty_w > 0 && fl->dirty_h > 0) {
 		int sx = w->x + (int)fl->dirty_x;
 		int sy = w->y + w->decor_h + (int)fl->dirty_y;
-		comp_.partial_composite(sx, sy,
-		    (int)fl->dirty_w, (int)fl->dirty_h);
+		comp_.invalidate(sx, sy, (int)fl->dirty_w, (int)fl->dirty_h);
 	} else {
-		comp_.composite_all();
+		comp_.invalidate_all();
 	}
 }
 
@@ -226,7 +225,7 @@ WindowManager::handle_release(struct display_release *rel)
 		reg_.set_focused(
 		    reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
 	reg_.destroy(w);   /* w is dangling after this point */
-	comp_.composite_all();
+	comp_.invalidate_all();
 }
 
 void
@@ -236,7 +235,13 @@ WindowManager::handle_raise(struct display_raise *dr)
 	if (!w) return;
 	reg_.z_raise(w);
 	reg_.set_focused(w);
-	comp_.composite_all();
+	comp_.invalidate_all();
+}
+
+void
+WindowManager::flush()
+{
+	comp_.flush();
 }
 
 void

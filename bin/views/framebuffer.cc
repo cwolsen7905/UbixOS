@@ -26,6 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <cstdlib>
+#include <cstring>
 #include "framebuffer.hh"
 
 /* ------------------------------------------------------------------ */
@@ -165,7 +167,37 @@ Framebuffer::open()
 	pitch  = info.pitch;
 	bpp    = info.bpp;
 	base   = info.base;
+	shadow_ = nullptr;
 	return 0;
+}
+
+int
+Framebuffer::init_shadow()
+{
+	shadow_ = (uint32_t *)std::malloc(width * height * sizeof(uint32_t));
+	return shadow_ ? 0 : -1;
+}
+
+void
+Framebuffer::flush_to_lf(int x, int y, int w, int h)
+{
+	if (!shadow_) return;
+	if (x < 0) { w += x; x = 0; }
+	if (y < 0) { h += y; y = 0; }
+	if (x + w > (int)width)  w = (int)width  - x;
+	if (y + h > (int)height) h = (int)height - y;
+	if (w <= 0 || h <= 0) return;
+	for (int r = y; r < y + h; r++) {
+		const uint32_t *src = shadow_ + (uint32_t)r * width + (uint32_t)x;
+		if (bpp == 32) {
+			uint32_t *dst = (uint32_t *)row_ptr(r) + x;
+			std::memcpy(dst, src, (uint32_t)w * sizeof(uint32_t));
+		} else {
+			uint8_t *dst_row = row_ptr(r);
+			for (int c = 0; c < w; c++)
+				put(dst_row, x + c, src[c]);
+		}
+	}
 }
 
 void
@@ -174,7 +206,10 @@ Framebuffer::pixel(int x, int y, uint32_t color)
 	if (x < 0 || y < 0 ||
 	    (uint32_t)x >= width || (uint32_t)y >= height)
 		return;
-	put(row_ptr(y), x, color);
+	if (shadow_)
+		shadow_[(uint32_t)y * width + (uint32_t)x] = color;
+	else
+		put(row_ptr(y), x, color);
 }
 
 void
@@ -182,10 +217,18 @@ Framebuffer::rect(int x, int y, int w, int h, uint32_t color)
 {
 	for (int r = y; r < y + h; r++) {
 		if (r < 0 || (uint32_t)r >= height) continue;
-		uint8_t *p = row_ptr(r);
-		for (int c = x; c < x + w; c++) {
-			if (c < 0 || (uint32_t)c >= width) continue;
-			put(p, c, color);
+		if (shadow_) {
+			uint32_t *row = shadow_ + (uint32_t)r * width;
+			for (int c = x; c < x + w; c++) {
+				if (c < 0 || (uint32_t)c >= width) continue;
+				row[c] = color;
+			}
+		} else {
+			uint8_t *p = row_ptr(r);
+			for (int c = x; c < x + w; c++) {
+				if (c < 0 || (uint32_t)c >= width) continue;
+				put(p, c, color);
+			}
 		}
 	}
 }
@@ -197,13 +240,21 @@ Framebuffer::blit(int dx, int dy, int w, int h,
 	for (int r = 0; r < h; r++) {
 		int dst_y = dy + r;
 		if (dst_y < 0 || (uint32_t)dst_y >= height) continue;
-		uint8_t *dst_row = row_ptr(dst_y);
 		const uint32_t *src_row = src + r * src_stride;
-		for (int c = 0; c < w; c++) {
-			int dst_x = dx + c;
-			if (dst_x < 0 || (uint32_t)dst_x >= width)
-				continue;
-			put(dst_row, dst_x, src_row[c]);
+		if (shadow_) {
+			uint32_t *dst_row = shadow_ + (uint32_t)dst_y * width;
+			for (int c = 0; c < w; c++) {
+				int dst_x = dx + c;
+				if (dst_x < 0 || (uint32_t)dst_x >= width) continue;
+				dst_row[dst_x] = src_row[c];
+			}
+		} else {
+			uint8_t *dst_row = row_ptr(dst_y);
+			for (int c = 0; c < w; c++) {
+				int dst_x = dx + c;
+				if (dst_x < 0 || (uint32_t)dst_x >= width) continue;
+				put(dst_row, dst_x, src_row[c]);
+			}
 		}
 	}
 }
@@ -240,6 +291,8 @@ Framebuffer::read(int x, int y) const
 	if (x < 0 || y < 0 ||
 	    (uint32_t)x >= width || (uint32_t)y >= height)
 		return 0;
+	if (shadow_)
+		return shadow_[(uint32_t)y * width + (uint32_t)x];
 	const uint8_t *p = row_ptr(y);
 	if (bpp == 32)
 		return ((const uint32_t *)p)[x];

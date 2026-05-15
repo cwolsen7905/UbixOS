@@ -60,11 +60,16 @@ class Framebuffer : public ICanvas {
 	void     put(uint8_t *row, int x, uint32_t color) const;
 	uint8_t *row_ptr(int y) const;
 
+	uint32_t *shadow_;
+
 public:
 	uint32_t  width, height, pitch, bpp;
 	void     *base;
 
 	int      open();
+	int      init_shadow();
+	void     flush_to_lf(int x, int y, int w, int h);
+
 	void     pixel(int x, int y, uint32_t color);
 	void     rect(int x, int y, int w, int h, uint32_t color);
 	void     blit(int dx, int dy, int w, int h,

@@ -39,16 +39,25 @@
 /* ------------------------------------------------------------------ */
 
 class Compositor {
+	/* Axis-aligned bounding box of all pending damage this tick.
+	 * Events call invalidate*(); flush() renders once at tick end. */
+	struct DamageRect {
+		int  x, y, w, h;
+		bool valid;
+	};
+
 	Framebuffer     fb_;
 	WindowRegistry &reg_;
 
-	uint32_t cur_saved_[CUR_H * CUR_W];
-	int      cur_x_;
-	int      cur_y_;
-	bool     cur_drawn_;
+	uint32_t   cur_saved_[CUR_H * CUR_W];
+	int        cur_x_;
+	int        cur_y_;
+	bool       cur_drawn_;
+	DamageRect damage_;
 
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
+	bool rect_covered(int rx, int ry, int rw, int rh);
 	void reblit_rect(int rx, int ry, int rw, int rh);
 	void cursor_save(int x, int y);
 	void cursor_erase(int x, int y);
@@ -59,6 +68,13 @@ public:
 
 	int  init();
 	void startup();
+
+	/* Deferred rendering: accumulate damage, render once per tick. */
+	void invalidate(int x, int y, int w, int h);
+	void invalidate_all();
+	void flush();
+
+	/* Immediate rendering: used by cursor_move so cursor stays snappy. */
 	void composite_all();
 	void partial_composite(int sx, int sy, int sw, int sh);
 	void cursor_move(int dx, int dy);

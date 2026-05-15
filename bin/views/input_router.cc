@@ -73,7 +73,7 @@ InputRouter::handle_mouse(mouse_event_t &ev)
 		drag_win_->y = comp_.cur_y() - drag_off_y_;
 		if (drag_win_->x < 0) drag_win_->x = 0;
 		if (drag_win_->y < 0) drag_win_->y = 0;
-		comp_.composite_all();
+		comp_.invalidate_all();
 	}
 
 	if (ev.buttons == prev_buttons_)
@@ -99,7 +99,7 @@ InputRouter::handle_mouse(mouse_event_t &ev)
 		if (hit) {
 			reg_.z_raise(hit);
 			reg_.set_focused(hit);
-			comp_.composite_all();
+			comp_.invalidate_all();
 
 			if (hit->in_close_btn(cx, cy)) {
 				close_window(hit);

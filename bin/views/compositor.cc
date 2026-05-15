@@ -28,7 +28,7 @@
 
 #include "compositor.hh"
 
-static const uint8_t cursor_mask[CUR_H][CUR_W] = {
+static const uint8_t g_cursor_mask[CUR_H][CUR_W] = {
 	{ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 	{ 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 	{ 1, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
@@ -43,7 +43,7 @@ static const uint8_t cursor_mask[CUR_H][CUR_W] = {
 	{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 };
 
-static const uint32_t jailbar_colors[4] = {
+static const uint32_t g_jailbar_colors[4] = {
 	FB_RGB(0x1A, 0x1A, 0x2E),
 	FB_RGB(0x1A, 0x2E, 0x00),
 	FB_RGB(0x2E, 0x00, 0x1A),
@@ -52,12 +52,15 @@ static const uint32_t jailbar_colors[4] = {
 
 Compositor::Compositor(WindowRegistry &reg)
     : reg_(reg), cur_x_(0), cur_y_(0), cur_drawn_(false)
+    , damage_{0, 0, 0, 0, false}
 {}
 
 int
 Compositor::init()
 {
-	return fb_.open();
+	int r = fb_.open();
+	if (r != 0) return r;
+	return fb_.init_shadow();
 }
 
 void
@@ -69,6 +72,7 @@ Compositor::startup()
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);
 	cur_drawn_ = true;
+	fb_.flush_to_lf(0, 0, (int)fb_.width, (int)fb_.height);
 }
 
 void
@@ -81,13 +85,26 @@ Compositor::desktop_fill_rect(int x, int y, int w, int h)
 	if (y2 > (int)fb_.height) y2 = (int)fb_.height;
 	for (int py = y; py < y2; py++)
 		for (int px = x; px < x2; px++)
-			fb_.pixel(px, py, jailbar_colors[px & 3]);
+			fb_.pixel(px, py, g_jailbar_colors[px & 3]);
 }
 
 void
 Compositor::draw_desktop()
 {
 	desktop_fill_rect(0, 0, (int)fb_.width, (int)fb_.height);
+}
+
+bool
+Compositor::rect_covered(int rx, int ry, int rw, int rh)
+{
+	for (auto *w : reg_.z_stack()) {
+		int cy = w->y + w->decor_h;
+		if (w->x <= rx && w->y <= ry &&
+		    w->x + w->w >= rx + rw &&
+		    cy  + w->h  >= ry + rh)
+			return true;
+	}
+	return false;
 }
 
 void
@@ -143,7 +160,7 @@ Compositor::cursor_draw(int x, int y)
 {
 	for (int row = 0; row < CUR_H; row++) {
 		for (int col = 0; col < CUR_W; col++) {
-			uint8_t m = cursor_mask[row][col];
+			uint8_t m = g_cursor_mask[row][col];
 			if (m == 2)
 				continue;
 			uint32_t color = (m == 1)
@@ -171,13 +188,63 @@ Compositor::composite_all()
 void
 Compositor::partial_composite(int sx, int sy, int sw, int sh)
 {
-	desktop_fill_rect(sx, sy, sw, sh);
+	if (!rect_covered(sx, sy, sw, sh))
+		desktop_fill_rect(sx, sy, sw, sh);
 	reblit_rect(sx, sy, sw, sh);
 	if (cur_x_ < sx + sw && cur_x_ + CUR_W > sx &&
 	    cur_y_ < sy + sh && cur_y_ + CUR_H > sy) {
 		cursor_save(cur_x_, cur_y_);
 		cursor_draw(cur_x_, cur_y_);
 		cur_drawn_ = true;
+	}
+}
+
+void
+Compositor::invalidate(int x, int y, int w, int h)
+{
+	if (!damage_.valid) {
+		damage_ = {x, y, w, h, true};
+		return;
+	}
+	int x2 = (damage_.x + damage_.w > x + w) ? damage_.x + damage_.w : x + w;
+	int y2 = (damage_.y + damage_.h > y + h) ? damage_.y + damage_.h : y + h;
+	damage_.x = (damage_.x < x) ? damage_.x : x;
+	damage_.y = (damage_.y < y) ? damage_.y : y;
+	damage_.w = x2 - damage_.x;
+	damage_.h = y2 - damage_.y;
+}
+
+void
+Compositor::invalidate_all()
+{
+	damage_ = {0, 0, (int)fb_.width, (int)fb_.height, true};
+}
+
+void
+Compositor::flush()
+{
+	if (!damage_.valid)
+		return;
+
+	int x = damage_.x, y = damage_.y;
+	int w = damage_.w, h = damage_.h;
+	damage_.valid = false;
+
+	/* Clamp to screen bounds */
+	if (x < 0) { w += x; x = 0; }
+	if (y < 0) { h += y; y = 0; }
+	if (x + w > (int)fb_.width)  w = (int)fb_.width  - x;
+	if (y + h > (int)fb_.height) h = (int)fb_.height - y;
+	if (w <= 0 || h <= 0)
+		return;
+
+	if (x == 0 && y == 0 &&
+	    w >= (int)fb_.width && h >= (int)fb_.height) {
+		composite_all();
+		fb_.flush_to_lf(0, 0, (int)fb_.width, (int)fb_.height);
+	} else {
+		partial_composite(x, y, w, h);
+		fb_.flush_to_lf(x, y, w, h);
 	}
 }
 
@@ -198,10 +265,18 @@ Compositor::cursor_move(int dx, int dy)
 	if (cur_y_ >= (int)fb_.height - CUR_H)
 		cur_y_ = (int)fb_.height - CUR_H;
 
-	desktop_fill_rect(old_x, old_y, CUR_W, CUR_H);
+	if (!rect_covered(old_x, old_y, CUR_W, CUR_H))
+		desktop_fill_rect(old_x, old_y, CUR_W, CUR_H);
 	reblit_rect(old_x, old_y, CUR_W, CUR_H);
 
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);
 	cur_drawn_ = true;
+
+	/* Flush bounding box of old + new cursor position to LFB immediately. */
+	int fx  = (old_x < cur_x_) ? old_x : cur_x_;
+	int fy  = (old_y < cur_y_) ? old_y : cur_y_;
+	int fx2 = (old_x + CUR_W > cur_x_ + CUR_W) ? old_x + CUR_W : cur_x_ + CUR_W;
+	int fy2 = (old_y + CUR_H > cur_y_ + CUR_H) ? old_y + CUR_H : cur_y_ + CUR_H;
+	fb_.flush_to_lf(fx, fy, fx2 - fx, fy2 - fy);
 }

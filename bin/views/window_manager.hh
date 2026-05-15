@@ -56,6 +56,7 @@ public:
 	 * Adding a new message type only requires updating the handler
 	 * table in window_manager.cc — views.cc is never touched. */
 	void dispatch(uint32_t id, void *data);
+	void flush();
 
 	void handle_query(struct display_query *dq);
 	void handle_claim(struct display_claim_req *creq);
