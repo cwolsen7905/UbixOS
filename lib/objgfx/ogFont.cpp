@@ -2,15 +2,8 @@
 #include <objgfx/objgfx.h>
 
 extern "C" {
-#ifdef __UBIXOS_KERNEL__
-#include <vfs/file.h>
-#include <sys/types.h>
-#include <lib/kprintf.h>
-#else
 #include <stdlib.h>
 #include <stdio.h>
-#endif
-
 #include <string.h>
 }
 
@@ -118,11 +111,7 @@ void ogBitFont::JustifyText(ogSurface& dest, ogTextAlign horiz, ogTextAlign vert
 } // ogBitFont::JustifyText
 
 bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
-#ifdef __UBIXOS_KERNEL__
-  fileDescriptor_t *infile;
-#else
   FILE * infile;
-#endif
   ogDPFHeader header;
   uint32_t lresult, size;
 
