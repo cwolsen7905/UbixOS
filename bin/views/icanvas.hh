@@ -29,47 +29,26 @@
 #pragma once
 
 #include <stdint.h>
-#include "icanvas.hh"
-
-/* Pixel construction and font constants */
-#define FB_RGB(r,g,b) \
-    (((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint32_t)(b))
-#define FB_WHITE   0x00FFFFFFu
-#define FB_FONT_W  8
-#define FB_FONT_H  8
-
-/* Shared window buffers are always 32bpp BGRX */
-#define WIN_BPP    4
-
-/* sys_mapfb return struct */
-struct _fb_map {
-	void     *base;
-	uint32_t  width;
-	uint32_t  height;
-	uint16_t  pitch;
-	uint8_t   bpp;
-};
-
-extern "C" int _sys_mapfb(struct _fb_map *info);
 
 /* ------------------------------------------------------------------ */
-/* Framebuffer — native pixel operations directly on the VESA LFB     */
+/* ICanvas — abstract pixel surface                                    */
+/*                                                                     */
+/* Decouples Window rendering from the concrete Framebuffer so future  */
+/* backends (double-buffer, off-screen surface) require no changes to  */
+/* Window or any code that draws into a canvas.                        */
 /* ------------------------------------------------------------------ */
 
-class Framebuffer : public ICanvas {
-	void     put(uint8_t *row, int x, uint32_t color) const;
-	uint8_t *row_ptr(int y) const;
-
+class ICanvas {
 public:
-	uint32_t  width, height, pitch, bpp;
-	void     *base;
+	virtual void     pixel(int x, int y, uint32_t color)            = 0;
+	virtual void     rect(int x, int y, int w, int h, uint32_t color) = 0;
+	virtual void     blit(int dx, int dy, int w, int h,
+	                      const uint32_t *src, int src_stride)       = 0;
+	virtual void     ch(int x, int y, char c,
+	                    uint32_t fg, uint32_t bg)                    = 0;
+	virtual void     text(int x, int y, const char *s,
+	                      uint32_t fg, uint32_t bg)                  = 0;
+	virtual uint32_t read(int x, int y) const                       = 0;
 
-	int      open();
-	void     pixel(int x, int y, uint32_t color);
-	void     rect(int x, int y, int w, int h, uint32_t color);
-	void     blit(int dx, int dy, int w, int h,
-	              const uint32_t *src, int src_stride);
-	void     ch(int x, int y, char c, uint32_t fg, uint32_t bg);
-	void     text(int x, int y, const char *s, uint32_t fg, uint32_t bg);
-	uint32_t read(int x, int y) const;
+	virtual ~ICanvas() {}
 };

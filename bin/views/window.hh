@@ -29,6 +29,7 @@
 #pragma once
 
 #include <string>
+#include "icanvas.hh"
 #include "framebuffer.hh"
 
 /* Decoration colour palette */
@@ -68,23 +69,23 @@ public:
 		return in_decor(cx, cy) && cx >= x + w - decor_h;
 	}
 
-	void draw_decor(Framebuffer &fb, bool is_focused) const {
+	void draw_decor(ICanvas &canvas, bool is_focused) const {
 		uint32_t bg = is_focused ? DECOR_BG    : DECOR_BG_INACT;
 		uint32_t hi = is_focused ? DECOR_HI    : DECOR_HI_INACT;
-		fb.rect(x, y,               w, decor_h, bg);
-		fb.rect(x, y,               w, 1,       hi);
-		fb.rect(x, y + decor_h - 1, w, 1,       DECOR_SEP);
-		fb.text(x + 6, y + (decor_h - FB_FONT_H) / 2,
+		canvas.rect(x, y,               w, decor_h, bg);
+		canvas.rect(x, y,               w, 1,       hi);
+		canvas.rect(x, y + decor_h - 1, w, 1,       DECOR_SEP);
+		canvas.text(x + 6, y + (decor_h - FB_FONT_H) / 2,
 		    title.c_str(), FB_WHITE, bg);
 		int cbx = x + w - decor_h;
-		fb.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
-		fb.ch(cbx + (decor_h - FB_FONT_W) / 2,
+		canvas.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
+		canvas.ch(cbx + (decor_h - FB_FONT_W) / 2,
 		    y + (decor_h - FB_FONT_H) / 2,
 		    'X', FB_WHITE, DECOR_CLOSE_BG);
 	}
 
-	void blit_to(Framebuffer &fb) const {
-		fb.blit(x, y + decor_h, w, h,
+	void blit_to(ICanvas &canvas) const {
+		canvas.blit(x, y + decor_h, w, h,
 		    (const uint32_t *)buf,
 		    (int)(pitch / WIN_BPP));
 	}

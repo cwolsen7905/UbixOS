@@ -152,32 +152,8 @@ main(int argc, char **argv)
 		while (poll_mouse(&ev) == 0)
 			wm.handle_mouse(ev);
 
-		while (mbox.try_fetch(msg)) {
-			switch (msg.header) {
-			case DISPLAY_QUERY:
-				wm.handle_query(
-				    (struct display_query *)msg.data);
-				break;
-			case DISPLAY_CLAIM:
-				wm.handle_claim(
-				    (struct display_claim_req *)msg.data);
-				break;
-			case DISPLAY_FLIP:
-				wm.handle_flip(
-				    (struct display_flip *)msg.data);
-				break;
-			case DISPLAY_RELEASE:
-				wm.handle_release(
-				    (struct display_release *)msg.data);
-				break;
-			case DISPLAY_RAISE:
-				wm.handle_raise(
-				    (struct display_raise *)msg.data);
-				break;
-			default:
-				break;
-			}
-		}
+		while (mbox.try_fetch(msg))
+			wm.dispatch(msg.header, msg.data);
 
 		ubix::yield();
 	}

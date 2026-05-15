@@ -250,3 +250,33 @@ WindowManager::handle_kbd(kbd_event_t &ev)
 {
 	input_.handle_kbd(ev);
 }
+
+void
+WindowManager::dispatch(uint32_t id, void *data)
+{
+	using Fn = void (*)(WindowManager &, void *);
+	static const struct { uint32_t id; Fn fn; } table[] = {
+		{ DISPLAY_QUERY,
+		  [](WindowManager &wm, void *d) {
+		      wm.handle_query((struct display_query *)d);
+		  } },
+		{ DISPLAY_CLAIM,
+		  [](WindowManager &wm, void *d) {
+		      wm.handle_claim((struct display_claim_req *)d);
+		  } },
+		{ DISPLAY_FLIP,
+		  [](WindowManager &wm, void *d) {
+		      wm.handle_flip((struct display_flip *)d);
+		  } },
+		{ DISPLAY_RELEASE,
+		  [](WindowManager &wm, void *d) {
+		      wm.handle_release((struct display_release *)d);
+		  } },
+		{ DISPLAY_RAISE,
+		  [](WindowManager &wm, void *d) {
+		      wm.handle_raise((struct display_raise *)d);
+		  } },
+	};
+	for (const auto &e : table)
+		if (e.id == id) { e.fn(*this, data); return; }
+}

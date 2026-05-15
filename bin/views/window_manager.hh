@@ -52,6 +52,11 @@ public:
 	void startup();
 	void composite_all();
 
+	/* Route an incoming MPI message to the appropriate handler.
+	 * Adding a new message type only requires updating the handler
+	 * table in window_manager.cc — views.cc is never touched. */
+	void dispatch(uint32_t id, void *data);
+
 	void handle_query(struct display_query *dq);
 	void handle_claim(struct display_claim_req *creq);
 	void handle_flip(struct display_flip *fl);
