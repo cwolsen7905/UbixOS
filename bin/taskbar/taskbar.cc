@@ -26,16 +26,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern "C" {
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/sys.h>
-#include <sys/sched.h>
-#include <sys/mpi.h>
-#include <views/display_proto.h>
-}
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <cstdio>
+#include <cstring>
+#include <ubix/mailbox.hh>
+#include <ubix/sched.hh>
+#include <ubix/process.hh>
+#include <views/display.hh>
 #include <objgfx/objgfx.h>
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
@@ -142,6 +141,8 @@ get_time_str(char *buf)
 /* State                                                                */
 /* ------------------------------------------------------------------ */
 
+static ubix::Mailbox g_tb_mbox;
+
 static uint32_t  g_sw, g_sh;
 static uint32_t  g_win_id;
 static void     *g_tb_shm  = NULL;
@@ -155,15 +156,13 @@ static ogSurface g_fly_surf;
 static ogBitFont g_font;
 
 /* Window list tracked via DISPLAY_NOTIFY */
-#define MAX_TRACKED  14
 #define WIN_BTN_W    96
 
 struct TrackedWin {
-	uint32_t id;
-	char     title[32];
+	uint32_t    id;
+	std::string title;
 };
-static TrackedWin g_tracked[MAX_TRACKED];
-static int        g_tracked_n = 0;
+static std::vector<TrackedWin> g_tracked;
 
 /* ------------------------------------------------------------------ */
 /* Drawing                                                              */
@@ -188,7 +187,7 @@ draw_taskbar(int btn_pressed)
 	/* Window list buttons */
 	int wx = 2 + BTN_W + 4;
 	int clock_x = sw - CLOCK_W - 2;
-	for (int i = 0; i < g_tracked_n; i++) {
+	for (const auto &tw : g_tracked) {
 		if (wx + WIN_BTN_W > clock_x - 4)
 			break;
 		g_tb_surf.ogFillRect(wx, 2, wx + WIN_BTN_W - 1,
@@ -197,7 +196,7 @@ draw_taskbar(int btn_pressed)
 		    TB_H - 3, TB_SEP);
 		font_fg(g_font, COL_WHITE);
 		font_bg(g_font, TB_BTN_N);
-		g_font.PutString(g_tb_surf, wx + 4, 12, g_tracked[i].title);
+		g_font.PutString(g_tb_surf, wx + 4, 12, tw.title.c_str());
 		wx += WIN_BTN_W + 2;
 	}
 
@@ -216,26 +215,16 @@ draw_taskbar(int btn_pressed)
 static void
 win_add(uint32_t id, const char *title)
 {
-	if (g_tracked_n >= MAX_TRACKED)
-		return;
-	g_tracked[g_tracked_n].id = id;
-	strncpy(g_tracked[g_tracked_n].title, title,
-	    sizeof(g_tracked[0].title) - 1);
-	g_tracked[g_tracked_n].title[sizeof(g_tracked[0].title) - 1] = '\0';
-	g_tracked_n++;
+	g_tracked.push_back({id, std::string(title)});
 }
 
 static void
 win_remove(uint32_t id)
 {
-	for (int i = 0; i < g_tracked_n; i++) {
-		if (g_tracked[i].id != id)
-			continue;
-		for (int j = i; j < g_tracked_n - 1; j++)
-			g_tracked[j] = g_tracked[j + 1];
-		g_tracked_n--;
-		return;
-	}
+	auto it = std::find_if(g_tracked.begin(), g_tracked.end(),
+	    [id](const TrackedWin &w) { return w.id == id; });
+	if (it != g_tracked.end())
+		g_tracked.erase(it);
 }
 
 /* Return index of window button hit at taskbar-relative x, or -1 */
@@ -244,7 +233,7 @@ winbtn_hit(int mx)
 {
 	int wx = 2 + BTN_W + 4;
 	int clock_x = (int)g_sw - CLOCK_W - 2;
-	for (int i = 0; i < g_tracked_n; i++) {
+	for (int i = 0; i < (int)g_tracked.size(); i++) {
 		if (wx + WIN_BTN_W > clock_x - 4)
 			break;
 		if (mx >= wx && mx < wx + WIN_BTN_W)
@@ -257,12 +246,11 @@ winbtn_hit(int mx)
 static void
 raise_window(uint32_t id)
 {
-	static char views_mbox[] = "views";
 	mpi_message_t msg;
 	struct display_raise *dr = (struct display_raise *)msg.data;
 	msg.header    = DISPLAY_RAISE;
 	dr->window_id = id;
-	mpi_postMessage(views_mbox, DISPLAY_RAISE, &msg);
+	ubix::post_message("views", DISPLAY_RAISE, msg);
 }
 
 static void
@@ -297,8 +285,7 @@ send_flip(uint32_t win_id)
 	fl->dirty_y   = 0;
 	fl->dirty_w   = 0;
 	fl->dirty_h   = 0;
-	static char views_mbox[] = "views";
-	mpi_postMessage(views_mbox, DISPLAY_FLIP, &msg);
+	ubix::post_message("views", DISPLAY_FLIP, msg);
 }
 
 /* ------------------------------------------------------------------ */
@@ -317,17 +304,17 @@ static void
 launcher_init(void)
 {
 	int pfd[2];
-	if (pipe(pfd) != 0)
+	if (::pipe(pfd) != 0)
 		return;
 
-	if (fork() == 0) {
-		close(pfd[1]);
+	if (::fork() == 0) {
+		::close(pfd[1]);
 		char path[256];
 		int  len = 0;
 		char ch;
 		for (;;) {
-			if (read(pfd[0], &ch, 1) <= 0)
-				_exit(0);
+			if (::read(pfd[0], &ch, 1) <= 0)
+				::_exit(0);
 			if (ch != '\0') {
 				if (len < (int)sizeof(path) - 1)
 					path[len++] = ch;
@@ -337,16 +324,16 @@ launcher_init(void)
 				continue;
 			path[len] = '\0';
 			len = 0;
-			if (fork() == 0) {
-				char *argv[] = { path, NULL };
-				char *envp[] = { NULL };
-				execve(path, argv, envp);
-				_exit(1);
+			if (::fork() == 0) {
+				char *argv[] = { path, nullptr };
+				char *envp[] = { nullptr };
+				::execve(path, argv, envp);
+				::_exit(1);
 			}
 		}
 	}
 
-	close(pfd[0]);
+	::close(pfd[0]);
 	g_launcher_fd = pfd[1];
 }
 
@@ -355,7 +342,7 @@ launch(const char *path)
 {
 	if (g_launcher_fd < 0)
 		return;
-	write(g_launcher_fd, path, strlen(path) + 1);
+	::write(g_launcher_fd, path, std::strlen(path) + 1);
 }
 
 /* ------------------------------------------------------------------ */
@@ -368,7 +355,6 @@ show_flyout(void)
 	if (g_fly_open)
 		return;
 
-	static char tb_mbox[] = "taskbar";
 	mpi_message_t claim;
 	struct display_claim_req *creq = (struct display_claim_req *)claim.data;
 	claim.header      = DISPLAY_CLAIM;
@@ -376,19 +362,18 @@ show_flyout(void)
 	creq->y           = (int32_t)(g_sh - TB_H - FLY_H);
 	creq->w           = FLY_W;
 	creq->h           = FLY_H;
-	creq->sender_pid  = getpid();
+	creq->sender_pid  = ubix::pid();
 	creq->no_decor    = 1;
-	strncpy(creq->title, "flyout", sizeof(creq->title) - 1);
+	std::strncpy(creq->title, "flyout", sizeof(creq->title) - 1);
 	creq->title[sizeof(creq->title) - 1] = '\0';
-	strncpy(creq->reply, tb_mbox, sizeof(creq->reply) - 1);
+	std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
 	creq->reply[sizeof(creq->reply) - 1] = '\0';
 
-	static char views_mbox[] = "views";
-	mpi_postMessage(views_mbox, DISPLAY_CLAIM, &claim);
+	ubix::post_message("views", DISPLAY_CLAIM, claim);
 
 	mpi_message_t reply;
-	while (mpi_fetchMessage(tb_mbox, &reply) != 0)
-		sched_yield();
+	while (!g_tb_mbox.try_fetch(reply))
+		ubix::yield();
 
 	if (reply.header != DISPLAY_ACK)
 		return;
@@ -409,12 +394,11 @@ hide_flyout(void)
 	if (!g_fly_open)
 		return;
 
-	static char views_mbox[] = "views";
 	mpi_message_t msg;
 	struct display_release *rel = (struct display_release *)msg.data;
 	msg.header     = DISPLAY_RELEASE;
 	rel->window_id = g_fly_id;
-	mpi_postMessage(views_mbox, DISPLAY_RELEASE, &msg);
+	ubix::post_message("views", DISPLAY_RELEASE, msg);
 
 	g_fly_open = 0;
 	g_fly_id   = 0;
@@ -432,11 +416,9 @@ main(int argc, char **argv)
 
 	launcher_init();
 
-	static char tb_mbox[]    = "taskbar";
-	static char views_mbox[] = "views";
-
-	if (mpi_createMbox(tb_mbox) != 0) {
-		printf("taskbar: mpi_createMbox failed\n");
+	g_tb_mbox.assign("taskbar");
+	if (!g_tb_mbox.create()) {
+		std::printf("taskbar: mpi_createMbox failed\n");
 		return 1;
 	}
 
@@ -444,16 +426,16 @@ main(int argc, char **argv)
 	mpi_message_t msg;
 	struct display_query *dq = (struct display_query *)msg.data;
 	msg.header = DISPLAY_QUERY;
-	strncpy(dq->reply, tb_mbox, sizeof(dq->reply) - 1);
+	std::strncpy(dq->reply, "taskbar", sizeof(dq->reply) - 1);
 	dq->reply[sizeof(dq->reply) - 1] = '\0';
-	mpi_postMessage(views_mbox, DISPLAY_QUERY, &msg);
+	ubix::post_message("views", DISPLAY_QUERY, msg);
 
 	mpi_message_t reply;
-	while (mpi_fetchMessage(tb_mbox, &reply) != 0)
-		sched_yield();
+	while (!g_tb_mbox.try_fetch(reply))
+		ubix::yield();
 
 	if (reply.header != DISPLAY_INFO) {
-		printf("taskbar: unexpected reply to DISPLAY_QUERY\n");
+		std::printf("taskbar: unexpected reply to DISPLAY_QUERY\n");
 		return 1;
 	}
 
@@ -469,19 +451,19 @@ main(int argc, char **argv)
 	creq->y           = (int32_t)(g_sh - TB_H);
 	creq->w           = (int32_t)g_sw;
 	creq->h           = TB_H;
-	creq->sender_pid  = getpid();
+	creq->sender_pid  = ubix::pid();
 	creq->no_decor    = 1;
-	strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
+	std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
 	creq->title[sizeof(creq->title) - 1] = '\0';
-	strncpy(creq->reply, tb_mbox, sizeof(creq->reply) - 1);
+	std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
 	creq->reply[sizeof(creq->reply) - 1] = '\0';
-	mpi_postMessage(views_mbox, DISPLAY_CLAIM, &claim);
+	ubix::post_message("views", DISPLAY_CLAIM, claim);
 
-	while (mpi_fetchMessage(tb_mbox, &reply) != 0)
-		sched_yield();
+	while (!g_tb_mbox.try_fetch(reply))
+		ubix::yield();
 
 	if (reply.header != DISPLAY_ACK) {
-		printf("taskbar: DISPLAY_CLAIM denied\n");
+		std::printf("taskbar: DISPLAY_CLAIM denied\n");
 		return 1;
 	}
 
@@ -490,18 +472,18 @@ main(int argc, char **argv)
 	g_tb_shm  = da->shm_base;
 
 	if (!g_tb_shm) {
-		printf("taskbar: shm_base is NULL\n");
+		std::printf("taskbar: shm_base is NULL\n");
 		return 1;
 	}
 
 	g_tb_surf.ogAttach(g_tb_shm, g_sw, TB_H, OG_PIXFMT_32BPP);
 
 	if (!g_font.Load(FONT_PATH, 0)) {
-		printf("taskbar: font load failed\n");
+		std::printf("taskbar: font load failed\n");
 		return 1;
 	}
 
-	printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
+	std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
 	    g_win_id, (uint32_t)(uintptr_t)g_tb_shm,
 	    da->w, da->h, da->x, da->y);
 
@@ -518,7 +500,7 @@ main(int argc, char **argv)
 			send_flip(g_win_id);
 		}
 
-		while (mpi_fetchMessage(tb_mbox, &reply) == 0) {
+		while (g_tb_mbox.try_fetch(reply)) {
 			if (reply.header == DISPLAY_KEY)
 				continue;
 
@@ -576,7 +558,7 @@ main(int argc, char **argv)
 			}
 		}
 
-		sched_yield();
+		ubix::yield();
 	}
 
 	return 0;

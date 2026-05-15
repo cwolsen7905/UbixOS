@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `contrib/libcxxabi/` — self-contained minimal Itanium C++ ABI (`cxxabi.cc`): `new`/`delete`, construction guards, pure/deleted virtual, `__dso_handle`. Builds `build/lib/libcxxabi.a`. (Phase 5)
+- `contrib/libcxx/` — LLVM libc++ 18.1.8 subset: `<string>`, `<vector>`, `<map>`, `<memory>`, `<algorithm>`, `<any>`, `<optional>`, `<variant>`, charconv/ryu. Builds `build/lib/libcxx.a`. Hand-written `__config_site` + `__assertion_handler`; GCC-16 `__decay` built-in patch applied. (Phase 6)
+- `share/mk/ubix.musl.cxx.prog.mk` — BSD make snippet for C++ programs using STL: sets `-std=c++20 -nostdinc -nostdinc++ -fno-rtti -fno-exceptions`, wires libcxx/libcxxabi/musl include paths and link group.
+- `include/ubix/mailbox.hh` — C++ RAII wrapper for MPI mailboxes (`ubix::Mailbox`); `owned_` flag prevents destructor from destroying non-owning instances. `ubix::post_message` free functions.
+- `include/ubix/sched.hh` — `ubix::yield()` and `ubix::pid()` thin wrappers over `sched_yield`/`getpid`.
+- `include/ubix/process.hh` — `ubix::Shell` RAII class: encapsulates `fork`, `pipe`, `dup2`, `execve`, `kill`, `fcntl` for shell subprocess management. Defines `_POSIX_SOURCE` so musl exposes `kill()`.
+- `include/views/display.hh` — single include that gates all C display-protocol headers (`sys/mouse.h`, `sys/kbd.h`, `views/display_proto.h`) behind `extern "C"`.
+
+### Changed
+- `bin/views/views.cc` — migrated to STL: `std::vector<Window>`, `std::string` title, `std::aligned_alloc` for page-aligned shared buffers (replaces `malloc` + manual alignment + `void *raw` field). All C stdlib includes replaced with `<cstdio>`, `<cstdlib>`, `<cstring>` via wrapper headers. `ubix::Mailbox` replaces raw `mpi_createMbox`/`mpi_fetchMessage` calls; `ubix::yield()` replaces `sched_yield()`.
+- `bin/taskbar/taskbar.cc` — migrated to STL: `static ubix::Mailbox g_tb_mbox` replaces scattered `static char tb_mbox[]` locals; `ubix::post_message` replaces `mpi_postMessage`; `ubix::yield()`/`ubix::pid()` replace raw calls; `std::strncpy`/`std::strlen`/`std::printf` replace bare C names.
+- `bin/term/term.cc` — migrated to STL: ring-buffer globals replaced with `std::vector<std::string> g_lines`; `g_shell_in`/`g_shell_out`/`g_shell_pid` + `shell_spawn()` replaced with `static ubix::Shell g_shell`; `ubix::Mailbox g_mbox` replaces raw MPI calls; `msg = {}` replaces `memset`.
+- `include/sys/mpi.h` — all mailbox-name parameters changed from `char *` to `const char *` for const-correctness.
+
+### Removed
+- `lib/libcpp/` — minimal hand-rolled C++ ABI shim (`libcpp.cc`, `libcpp.h`, `Makefile`) retired; replaced by `contrib/libcxxabi/`.
+
 ---
 
 ## [2.1.0-BETA] - 2026-05-13

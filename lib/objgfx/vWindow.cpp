@@ -1,5 +1,5 @@
 extern "C" {
-  #include <stdio.h>
+#include <stdio.h>
 }
 
 #include <objgfx/vWindow.h>

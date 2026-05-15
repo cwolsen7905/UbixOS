@@ -26,18 +26,17 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern "C" {
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/sys.h>
-#include <sys/sched.h>
-#include <sys/mpi.h>
-#include <sys/mouse.h>
-#include <sys/kbd.h>
-#include <views/display_proto.h>
-}
+#include <algorithm>
+#include <memory>
+#include <string>
+#include <vector>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ubix/mailbox.hh>
+#include <ubix/sched.hh>
+#include <ubix/process.hh>
+#include <views/display.hh>
 
 /* Colour helpers (were in fb/fb.h) */
 #define FB_RGB(r,g,b) \
@@ -46,7 +45,6 @@ extern "C" {
 #define FB_FONT_W      8
 #define FB_FONT_H      8
 
-#define MAX_WINDOWS  16
 #define WIN_BPP       4   /* shared buffers always 32bpp BGRX */
 
 /* Decoration colours */
@@ -359,15 +357,13 @@ public:
 
 class Window {
 public:
-	uint32_t  id;
-	int32_t   x, y, w, h;
-	uint32_t  pitch;
-	void     *raw;   /* original malloc pointer (may differ from buf) */
-	void     *buf;   /* page-aligned region shared with client */
-	bool      active;
-	int       decor_h;
-	char      title[64];
-	char      mbox[64];
+	uint32_t     id;
+	int32_t      x, y, w, h;
+	uint32_t     pitch;
+	void        *buf;   /* page-aligned region shared with client */
+	int          decor_h;
+	std::string  title;
+	std::string  mbox;
 
 	bool hit_test(int cx, int cy) const {
 		return cx >= x && cx < x + w &&
@@ -391,7 +387,7 @@ public:
 		fb.rect(x, y,               w, 1,       hi);
 		fb.rect(x, y + decor_h - 1, w, 1,       DECOR_SEP);
 		fb.text(x + 6, y + (decor_h - FB_FONT_H) / 2,
-		    title, FB_WHITE, bg);
+		    title.c_str(), FB_WHITE, bg);
 		int cbx = x + w - decor_h;
 		fb.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
 		fb.ch(cbx + (decor_h - FB_FONT_W) / 2,
@@ -437,39 +433,35 @@ static const uint32_t jailbar_colors[4] = {
 
 class WindowManager {
 	Framebuffer  fb;
-	Window       windows[MAX_WINDOWS];
-	uint32_t     next_win_id;
-	int          cascade_x, cascade_y;
 
-	Window      *z_stack[MAX_WINDOWS];
-	int          z_count;
-	Window      *focused;
+	/* Window storage — heap-allocated, stable pointers. */
+	std::vector<std::unique_ptr<Window>> windows;
 
-	bool         dragging;
-	Window      *drag_win;
-	int          drag_off_x, drag_off_y;
+	/* Z-order: back=bottom, front=top. Pointers into windows storage. */
+	std::vector<Window *> z_stack;
 
-	int          cur_x, cur_y;
-	uint32_t     cur_saved[CUR_H * CUR_W];
-	bool         cur_drawn;
-	uint8_t      prev_buttons;
+	uint32_t  next_win_id;
+	int       cascade_x, cascade_y;
+
+	Window   *focused;
+
+	bool      dragging;
+	Window   *drag_win;
+	int       drag_off_x, drag_off_y;
+
+	int       cur_x, cur_y;
+	uint32_t  cur_saved[CUR_H * CUR_W];
+	bool      cur_drawn;
+	uint8_t   prev_buttons;
 
 	/* -- Z-order ---------------------------------------------------- */
 
-	void z_push(Window *w) {
-		if (z_count < MAX_WINDOWS)
-			z_stack[z_count++] = w;
-	}
+	void z_push(Window *w) { z_stack.push_back(w); }
 
 	void z_remove(Window *w) {
-		for (int i = 0; i < z_count; i++) {
-			if (z_stack[i] != w)
-				continue;
-			for (int j = i; j < z_count - 1; j++)
-				z_stack[j] = z_stack[j + 1];
-			z_count--;
-			return;
-		}
+		auto it = std::find(z_stack.begin(), z_stack.end(), w);
+		if (it != z_stack.end())
+			z_stack.erase(it);
 	}
 
 	void z_raise(Window *w) { z_remove(w); z_push(w); }
@@ -477,17 +469,26 @@ class WindowManager {
 	/* -- Window table ---------------------------------------------- */
 
 	Window *win_alloc() {
-		for (int i = 0; i < MAX_WINDOWS; i++)
-			if (!windows[i].active)
-				return &windows[i];
-		return NULL;
+		auto w   = std::make_unique<Window>();
+		Window *p = w.get();
+		windows.push_back(std::move(w));
+		return p;
+	}
+
+	void win_destroy(Window *w) {
+		auto it = std::find_if(windows.begin(), windows.end(),
+		    [w](const std::unique_ptr<Window> &p) {
+			    return p.get() == w;
+		    });
+		if (it != windows.end())
+			windows.erase(it);
 	}
 
 	Window *win_find(uint32_t id) {
-		for (int i = 0; i < MAX_WINDOWS; i++)
-			if (windows[i].active && windows[i].id == id)
-				return &windows[i];
-		return NULL;
+		for (auto &w : windows)
+			if (w->id == id)
+				return w.get();
+		return nullptr;
 	}
 
 	/* -- Desktop ---------------------------------------------------- */
@@ -510,8 +511,7 @@ class WindowManager {
 	/* -- Compositing ------------------------------------------------ */
 
 	void reblit_rect(int rx, int ry, int rw, int rh) {
-		for (int i = 0; i < z_count; i++) {
-			Window *w = z_stack[i];
+		for (auto *w : z_stack) {
 			int cy = w->y + w->decor_h;
 
 			int x1 = (rx    > w->x)       ? rx    : w->x;
@@ -571,7 +571,7 @@ class WindowManager {
 	/* -- Mouse helper ---------------------------------------------- */
 
 	void send_mouse(Window *w, int cx, int cy, uint8_t buttons) {
-		if (!w->mbox[0])
+		if (w->mbox.empty())
 			return;
 		mpi_message_t mev;
 		struct display_mouse_ev *me =
@@ -583,52 +583,47 @@ class WindowManager {
 		me->dx        = 0;
 		me->dy        = 0;
 		me->buttons   = buttons;
-		mpi_postMessage(w->mbox, DISPLAY_MOUSE, &mev);
+		ubix::post_message(w->mbox, DISPLAY_MOUSE, mev);
 	}
 
 	void notify_taskbar(Window *w, uint8_t added) {
-		static char tb[] = "taskbar";
+		static const char tb[] = "taskbar";
 		mpi_message_t nm;
 		struct display_notify *dn = (struct display_notify *)nm.data;
 		nm.header     = DISPLAY_NOTIFY;
 		dn->window_id = w->id;
 		dn->added     = added;
-		strncpy(dn->title, w->title, sizeof(dn->title) - 1);
+		std::strncpy(dn->title, w->title.c_str(), sizeof(dn->title) - 1);
 		dn->title[sizeof(dn->title) - 1] = '\0';
-		mpi_postMessage(tb, DISPLAY_NOTIFY, &nm);
+		ubix::post_message(tb, DISPLAY_NOTIFY, nm);
 	}
 
 	void close_window(Window *w) {
-		if (w->mbox[0]) {
+		if (!w->mbox.empty()) {
 			mpi_message_t cm;
 			struct display_close *dc =
 			    (struct display_close *)cm.data;
 			cm.header     = DISPLAY_CLOSE;
 			dc->window_id = w->id;
-			mpi_postMessage(w->mbox, DISPLAY_CLOSE, &cm);
+			ubix::post_message(w->mbox, DISPLAY_CLOSE, cm);
 		}
 		if (w->decor_h > 0)
 			notify_taskbar(w, 0);
-		free(w->raw);
-		w->active = false;
+		std::free(w->buf);
 		z_remove(w);
-		focused = (z_count > 0) ? z_stack[z_count - 1] : NULL;
+		focused = z_stack.empty() ? nullptr : z_stack.back();
+		win_destroy(w);   /* w is dangling after this point */
 		composite_all();
 	}
 
 public:
 	WindowManager()
 	    : next_win_id(1), cascade_x(CASCADE_START), cascade_y(CASCADE_START),
-	      z_count(0), focused(NULL),
-	      dragging(false), drag_win(NULL),
+	      focused(nullptr),
+	      dragging(false), drag_win(nullptr),
 	      drag_off_x(0), drag_off_y(0),
 	      cur_x(0), cur_y(0), cur_drawn(false), prev_buttons(0)
-	{
-		for (int i = 0; i < MAX_WINDOWS; i++) {
-			windows[i].active = false;
-			z_stack[i] = NULL;
-		}
-	}
+	{}
 
 	int init() { return fb.open(); }
 
@@ -643,10 +638,10 @@ public:
 
 	void composite_all() {
 		draw_desktop();
-		for (int i = 0; i < z_count; i++) {
-			z_stack[i]->blit_to(fb);
-			if (z_stack[i]->decor_h > 0)
-				z_stack[i]->draw_decor(fb, z_stack[i] == focused);
+		for (auto *w : z_stack) {
+			w->blit_to(fb);
+			if (w->decor_h > 0)
+				w->draw_decor(fb, w == focused);
 		}
 		cursor_save(cur_x, cur_y);
 		cursor_draw(cur_x, cur_y);
@@ -685,7 +680,7 @@ public:
 		di->screen_w = fb.width;
 		di->screen_h = fb.height;
 		di->bpp      = (uint8_t)fb.bpp;
-		mpi_postMessage(dq->reply, DISPLAY_INFO, &info);
+		ubix::post_message(dq->reply, DISPLAY_INFO, info);
 	}
 
 	void handle_claim(struct display_claim_req *creq) {
@@ -695,13 +690,11 @@ public:
 		auto deny = [&]() {
 			ack.header = DISPLAY_DENIED;
 			if (creq->reply[0])
-				mpi_postMessage(creq->reply,
-				    DISPLAY_DENIED, &ack);
+				ubix::post_message(creq->reply,
+				    DISPLAY_DENIED, ack);
 		};
 
-		Window *w = win_alloc();
-		if (!w || creq->sender_pid <= 0 ||
-		    creq->w <= 0 || creq->h <= 0) {
+		if (creq->sender_pid <= 0 || creq->w <= 0 || creq->h <= 0) {
 			deny(); return;
 		}
 
@@ -733,30 +726,27 @@ public:
 		uint32_t buf_size = pitch * (uint32_t)wh;
 		/* Over-allocate so we can align to a page boundary.
 		 * vmm_share_region requires a page-aligned src address. */
-		void *raw = malloc(buf_size + PAGE_SIZE);
-		if (!raw) { deny(); return; }
-		void *buf = (void *)(((uintptr_t)raw + PAGE_SIZE - 1)
-		    & ~(uintptr_t)(PAGE_SIZE - 1));
-		memset(buf, 0, buf_size);
+		uint32_t alloc_size = (buf_size + PAGE_SIZE - 1)
+		    & ~(uint32_t)(PAGE_SIZE - 1);
+		void *buf = std::aligned_alloc(PAGE_SIZE, alloc_size);
+		if (!buf) { deny(); return; }
+		std::memset(buf, 0, buf_size);
 
 		uint32_t client_vaddr = 0;
 		if (share_buffer(creq->sender_pid, buf,
 		    buf_size, &client_vaddr) != 0) {
-			free(raw); deny(); return;
+			std::free(buf); deny(); return;
 		}
 
+		Window *w  = win_alloc();
 		w->id      = next_win_id++;
 		w->x       = wx;   w->y = wy;
 		w->w       = ww;   w->h = wh;
 		w->pitch   = pitch;
-		w->raw     = raw;
 		w->buf     = buf;
-		w->active  = true;
 		w->decor_h = dh;
-		strncpy(w->title, creq->title, sizeof(w->title) - 1);
-		w->title[sizeof(w->title) - 1] = '\0';
-		strncpy(w->mbox, creq->reply,  sizeof(w->mbox)  - 1);
-		w->mbox[sizeof(w->mbox) - 1]   = '\0';
+		w->title   = creq->title;
+		w->mbox    = creq->reply;
 
 		z_push(w);
 		focused = w;
@@ -768,9 +758,9 @@ public:
 		da->x = wx;  da->y = wy + dh;
 		da->w = ww;  da->h = wh;
 		if (creq->reply[0])
-			mpi_postMessage(creq->reply, DISPLAY_ACK, &ack);
+			ubix::post_message(creq->reply, DISPLAY_ACK, ack);
 
-		printf("views: window %u pid %d %dx%d+%d+%d shm=0x%X\n",
+		std::printf("views: window %u pid %d %dx%d+%d+%d shm=0x%X\n",
 		    w->id, creq->sender_pid, ww, wh, wx, wy, client_vaddr);
 
 		if (dh > 0)
@@ -808,11 +798,11 @@ public:
 		if (!w) return;
 		if (w->decor_h > 0)
 			notify_taskbar(w, 0);
-		free(w->raw);
-		w->active = false;
+		std::free(w->buf);
 		z_remove(w);
 		if (focused == w)
-			focused = (z_count > 0) ? z_stack[z_count - 1] : NULL;
+			focused = z_stack.empty() ? nullptr : z_stack.back();
+		win_destroy(w);   /* w is dangling after this point */
 		composite_all();
 	}
 
@@ -834,14 +824,15 @@ public:
 
 		if (!pressed && dragging) {
 			dragging = false;
-			drag_win = NULL;
+			drag_win = nullptr;
 		}
 
 		if (pressed) {
-			Window *hit = NULL;
-			for (int i = z_count - 1; i >= 0; i--) {
-				if (z_stack[i]->hit_test(cur_x, cur_y)) {
-					hit = z_stack[i];
+			Window *hit = nullptr;
+			for (auto it = z_stack.rbegin();
+			    it != z_stack.rend(); ++it) {
+				if ((*it)->hit_test(cur_x, cur_y)) {
+					hit = *it;
 					break;
 				}
 			}
@@ -858,7 +849,8 @@ public:
 					drag_off_x = cur_x - hit->x;
 					drag_off_y = cur_y - hit->y;
 				} else {
-					send_mouse(hit, cur_x, cur_y, ev.buttons);
+					send_mouse(hit, cur_x, cur_y,
+					    ev.buttons);
 				}
 			}
 		} else {
@@ -878,7 +870,7 @@ public:
 	}
 
 	void handle_kbd(kbd_event_t &kev) {
-		if (!focused || !focused->mbox[0])
+		if (!focused || focused->mbox.empty())
 			return;
 		mpi_message_t kmsg;
 		struct display_key *dk = (struct display_key *)kmsg.data;
@@ -886,7 +878,7 @@ public:
 		dk->window_id = focused->id;
 		dk->keycode   = kev.keycode;
 		dk->pressed   = kev.pressed;
-		mpi_postMessage(focused->mbox, DISPLAY_KEY, &kmsg);
+		ubix::post_message(focused->mbox, DISPLAY_KEY, kmsg);
 	}
 };
 
@@ -899,11 +891,10 @@ main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
-	static char mbox_views[]   = "views";
-	static char mbox_system[]  = "system";
-
-	if (mpi_createMbox(mbox_views) != 0) {
-		printf("views: mpi_createMbox failed\n");
+	ubix::Mailbox g_mbox;
+	g_mbox.assign("views");
+	if (!g_mbox.create()) {
+		std::printf("views: mpi_createMbox failed\n");
 		return 1;
 	}
 
@@ -911,33 +902,33 @@ main(int argc, char **argv)
 	req.header  = 0x82;
 	req.data[0] = 'v'; req.data[1] = 'i'; req.data[2] = 'e';
 	req.data[3] = 'w'; req.data[4] = 's'; req.data[5] = '\0';
-	mpi_postMessage(mbox_system, 0x82, &req);
+	ubix::post_message("system", 0x82, req);
 
 	mpi_message_t reply;
-	while (mpi_fetchMessage(mbox_views, &reply) != 0)
-		sched_yield();
+	while (!g_mbox.try_fetch(reply))
+		ubix::yield();
 
 	if (reply.data[0] == 0) {
-		printf("views: VESA init failed\n");
+		std::printf("views: VESA init failed\n");
 		return 1;
 	}
 
 	WindowManager wm;
 	if (wm.init() != 0) {
-		printf("views: fb_open failed\n");
+		std::printf("views: fb_open failed\n");
 		return 1;
 	}
 	wm.startup();
 
 	/* Launch taskbar */
 	{
-		int pid = fork();
+		int pid = ::fork();
 		if (pid == 0) {
-			char *argv_tb[] = { (char *)"taskbar", NULL };
-			char *envp_tb[] = { NULL };
-			execve("sys:/bin/taskbar", argv_tb, envp_tb);
-			printf("views: failed to exec taskbar\n");
-			exit(1);
+			char *argv_tb[] = { (char *)"taskbar", nullptr };
+			char *envp_tb[] = { nullptr };
+			::execve("sys:/bin/taskbar", argv_tb, envp_tb);
+			std::printf("views: failed to exec taskbar\n");
+			std::exit(1);
 		}
 	}
 
@@ -952,7 +943,7 @@ main(int argc, char **argv)
 		while (poll_mouse(&ev) == 0)
 			wm.handle_mouse(ev);
 
-		while (mpi_fetchMessage(mbox_views, &msg) == 0) {
+		while (g_mbox.try_fetch(msg)) {
 			switch (msg.header) {
 			case DISPLAY_QUERY:
 				wm.handle_query(
@@ -979,7 +970,7 @@ main(int argc, char **argv)
 			}
 		}
 
-		sched_yield();
+		ubix::yield();
 	}
 
 	return 0;

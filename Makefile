@@ -13,7 +13,7 @@ CLEANDIR=clean
 WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
-WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
+WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/contrib/libcxxabi/include"
 .if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
 WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
 .else
@@ -46,6 +46,16 @@ world:
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Started On `LC_ALL=C date`"
 	@echo "***************************************************************"
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 1a: Build libcxxabi (C++ ABI)"
+	@echo "***************************************************************"
+	cd ${CURDIR}/contrib/libcxxabi; ${MAKE} all
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 1b: Build libcxx (LLVM libc++)"
+	@echo "***************************************************************"
+	cd ${CURDIR}/contrib/libcxx; ${MAKE} all
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 1: Build World Libraries"
@@ -179,3 +189,5 @@ clean:
 	(cd bin;${WMAKE} clean)
 	(cd lib;${WMAKE} clean)
 	(cd libexec;${WMAKE} clean)
+	(cd contrib/libcxxabi;${MAKE} clean)
+	(cd contrib/libcxx;${MAKE} clean)

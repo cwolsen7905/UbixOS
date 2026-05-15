@@ -245,7 +245,7 @@ Migration order (simplest first):
 4. ✅ `init`, `login`, `shell` — boot chain; fixed fread item-count bug in login, added fflush calls throughout
 5. ✅ `tcc` — custom Makefile; dropped old-libc shims; expanded `moddi3.c` with full 64-bit division helpers to avoid host libgcc (elf64, can't link into i386 binary)
 6. ✅ `term` — C++/objgfx; already updated to clean `ubix.prog.mk` form
-7. 🔄 `views`, `taskbar` — C++/objgfx; remaining old-libc binaries in active build
+7. ✅ `views`, `taskbar` — C++/objgfx; fully migrated to STL + libcxx wrapper headers
 8. ⬜ Orphaned (`kill`, `printf`, `test`, `edit`, `mount`) — triage: port, rewrite, or remove before Phase 4
 9. Removed: `sh` (superseded by `shell`), `muffin` (orphaned, kept as reference), `stat` (to be rewritten)
 
@@ -264,31 +264,70 @@ nothing uses a header from `include/` that musl provides, delete it.
 
 ---
 
-### Phase 5 — libc++ (C++ standard library)
-**Done when:** `<string>`, `<vector>`, `<algorithm>` etc. work in userland C++.
+### Phase 5 — C++ ABI (libc++abi)
+**Done when:** `lib/libcpp/` is retired and all C++ binaries link a proper ABI layer.
 
-Uses LLVM libc++ (Apache 2.0) + libc++abi (replaces `lib/libcpp/`).
-
-- `git subtree add` libc++abi into `contrib/libcxxabi/`
-  - Provides all `__cxa_*` ABI symbols, RTTI, exception infrastructure
-  - Direct replacement for `lib/libcpp/libcpp.o`
-- `git subtree add` libc++ into `contrib/libcxx/`
-  - Provides `<string>`, `<vector>`, `<algorithm>`, `<memory>` etc.
-  - Depends on libc++abi + musl
-- Include path gains a third layer:
-  ```
-  -I../../contrib/libcxx/include      ← <string>, <vector> etc.
-  -I../../contrib/musl/include        ← <stdio.h>, <stdlib.h> etc.
-  -I../../include                     ← UbixOS-specific
-  ```
-- Retire `lib/libcpp/` once libc++abi is wired in
-
-SerenityOS, Managarm, and others have done this exact stack. It is the
-standard path for hobby OSes that want real C++ without GPL entanglement.
+✅ **Complete.** `contrib/libcxxabi/cxxabi.cc` provides a self-contained minimal
+Itanium C++ ABI (new/delete, guards, pure/deleted virtual, `__dso_handle`).
+Builds `build/lib/libcxxabi.a`. `views`, `taskbar`, and `term` all link it.
+`__cxa_atexit`/`__cxa_finalize` removed — musl provides the real implementations.
 
 ---
 
-### Phase 6 — New architecture port (ARM / x86_64)
+### Phase 6 — LLVM libc++ (C++ standard library)
+**Done when:** `<string>`, `<vector>`, `<map>`, `<memory>`, `<algorithm>` work in
+`views` and any other C++ userland binary.
+
+**Motivation:** `views` (the compositor) is currently constrained to C-style arrays
+and fixed-size structures because it has no STL. Adding libc++ unlocks proper window
+lists, title strings, Z-order maps, and smart pointer ownership — enabling the next
+stage of views development.
+
+**Strategy:** views-first subset. We do not need `<iostream>`, `<fstream>`,
+`<regex>`, or locale for this phase — those are the hard parts. The target subset:
+
+| Header group | Compile units | Notes |
+|---|---|---|
+| `<string>`, `<string_view>`, `<charconv>` | `string.cpp`, `charconv.cpp` | Heap string type |
+| `<vector>`, `<deque>`, `<array>` | header-only | Dynamic arrays |
+| `<map>`, `<set>`, `<unordered_map>` | header-only | Associative containers |
+| `<memory>` (unique_ptr, shared_ptr) | `memory.cpp` | Ownership semantics |
+| `<algorithm>`, `<functional>`, `<utility>` | header-only | Algorithms + lambdas |
+| `<optional>`, `<variant>`, `<tuple>` | header-only | Value types |
+
+**Build flags:**
+```
+-D_LIBCPP_HAS_NO_EXCEPTIONS        # abort() instead of throw bad_alloc etc.
+-D_LIBCPP_HAS_NO_THREADS           # no pthread dependency
+-D_LIBCPP_BUILDING_LIBRARY         # building the .a, not consuming it
+-nostdinc++                        # don't pull in host libc++ headers
+```
+
+**Include path for C++ binaries:**
+```
+-I${SRCTOP}/contrib/libcxx/include      ← <string>, <vector> etc.
+-I${SRCTOP}/contrib/musl/include        ← <stdio.h>, <stdlib.h> etc.
+-I${SRCTOP}/include                     ← UbixOS-specific
+-I${SRCTOP}/contrib/libcxxabi/include   ← cxxabi.h
+```
+
+**Steps:**
+1. Extract `libcxx-18.1.8.src` into `contrib/libcxx/`
+2. Write `contrib/libcxx/Makefile` building the ~5 compile units above into
+   `build/lib/libcxx.a`
+3. Wire threading and atomic stubs (single-threaded: stubs that just do the op)
+4. Fix per-file compilation errors against musl (expect 30–60 scattered issues)
+5. Add `ubix.musl.cxx.prog.mk` — like `ubix.musl.prog.mk` but links `libcxx.a`
+6. Port `views` to use STL where it was previously C-style
+7. Update `taskbar` and `term` similarly
+
+SerenityOS, Managarm, and Haiku have all done this exact stack (musl or newlib +
+libc++ + minimal cxxabi). It is the standard path for hobby OSes that want real
+C++ without GPL entanglement.
+
+---
+
+### Phase 7 — New architecture port (ARM / x86_64)
 **Done when:** UbixOS boots on a second architecture.
 
 With musl the new work is:
@@ -296,12 +335,12 @@ With musl the new work is:
 2. Write `arch/<newarch>/bits/syscall.h.in` — syscall number table
 3. Kernel: implement the new arch's exception/syscall entry path
 
-All of libc, libcpp, libc++, and userland apps recompile untouched.
+All of libc, libcxx, and userland apps recompile untouched.
 The payoff of the entire migration effort.
 
 ---
 
-### Post-Phase 6 — Kernel cleanup
+### Post-Phase 7 — Kernel cleanup
 Once a second architecture exists, arch-specific syscall code in `sys/kernel/gen_calls.c`
 should be split out:
 
@@ -310,7 +349,7 @@ should be split out:
   The i386 implementation uses LDT[1] and the `0xF` selector — none of that
   belongs in a generic file once a second arch has its own equivalent.
 - Repeat for any other i386-specific calls that accumulate in `gen_calls.c`
-  during Phases 1–5.
+  during Phases 1–6.
 
 ---
 
@@ -346,7 +385,7 @@ These are never replaced by musl or libc++:
 
 ## Status
 
-Last updated: 2026-05-14
+Last updated: 2026-05-14 (Phases 5 and 6 complete)
 
 | Phase | Description | Status | Notes |
 |-------|-------------|--------|-------|
@@ -355,8 +394,9 @@ Last updated: 2026-05-14
 | Phase 2 | First app on musl | ✅ Done | `clock` was first; full boot chain (init→login→shell) verified in QEMU |
 | Phase 3 | App-by-app migration | ✅ Done | All active binaries on musl; `sh` removed; `muffin` orphaned; `tcc` migrated with self-contained 64-bit division shim |
 | Phase 4 | Retire lib/libc/ | ✅ Done | `lib/libc/` deleted; `include/` stripped of all standard C headers; only UbixOS-specific headers remain; orphaned bins (kill, printf, test, edit, mount) deferred |
-| Phase 5 | libc++ (C++ standard library) | 🔄 Partial | `lib/libcpp/` updated to compile against musl; `include/` fully clean; full LLVM libc++/libc++abi port deferred as a future project (see tcsh-port-plan.md pattern) |
-| Phase 6 | New architecture port | ⬜ Not started | |
+| Phase 5 | C++ ABI (libc++abi) | ✅ Done | `lib/libcpp/` retired; `contrib/libcxxabi/cxxabi.cc` is a self-contained minimal Itanium C++ ABI (new/delete, guards, pure/deleted virtual, `__dso_handle`); builds `build/lib/libcxxabi.a`; views/taskbar/term all link against it; `__cxa_atexit`/`__cxa_finalize` removed (musl provides them) |
+| Phase 6 | LLVM libc++ (C++ standard library) | ✅ Done | `contrib/libcxx/` (LLVM 18.1.8) builds `build/lib/libcxx.a`; views-first subset: `<string>`, `<vector>`, `<map>`, `<memory>`, `<algorithm>`, `<any>`, `<optional>`, `<variant>` + charconv/ryu; hand-written `__config_site` + `__assertion_handler`; GCC-16 `__decay` built-in patch; `ubix.musl.cxx.prog.mk` for C++ programs using STL |
+| Phase 7 | New architecture port | ⬜ Not started | |
 
 ### Legend
 - ✅ Done

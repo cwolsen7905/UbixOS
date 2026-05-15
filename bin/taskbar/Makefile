@@ -10,18 +10,29 @@ OBJDIR  = ${OBJ_DIR}/obj/bin/taskbar
 MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_LIB = ${OBJ_DIR}/obj/musl/lib
 
-INCLUDES = -I${MUSL_SRC}/include \
-           -I${OBJ_DIR}/obj/musl/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
-           -I${MUSL_SRC}/arch/generic \
-           -I../../include
+LIBCXX_SRC = ${SRCTOP}/contrib/libcxx
+
+INCLUDES = \
+	-I${LIBCXX_SRC}/include \
+	-I${SRCTOP}/contrib/libcxxabi/include \
+	-I${MUSL_SRC}/include \
+	-I${OBJ_DIR}/obj/musl/obj/include \
+	-I${MUSL_SRC}/arch/i386 \
+	-I${MUSL_SRC}/arch/generic \
+	-I../../include
 
 OBJGFX_OBJS != ls ${OBJ_DIR}/obj/gfx/objgfx/*.o 2>/dev/null
 
 .SUFFIXES: .o .cc
 .cc.o:
 	@mkdir -p ${OBJDIR}
-	$(CXX) -Wall -O $(CFLAGS) $(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CXX) -std=c++20 -Wall -O $(CFLAGS) \
+		-nostdinc -nostdinc++ -fno-builtin \
+		-fno-rtti -fno-exceptions \
+		-mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+		-D_LIBCPP_HAS_NO_EXCEPTIONS \
+		-MMD -MP \
+		$(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 all: ${BINARY}
 
@@ -38,7 +49,8 @@ ${BINARY}: ${OBJS}
 		${OBJ_DIR}/obj/ubix_api/sys_gettimeofday.o \
 		${OBJ_DIR}/obj/musl/compiler_rt.o \
 		${OBJGFX_OBJS} \
-		../../lib/libcpp/libcpp.o \
+		${OBJ_DIR}/lib/libcxx.a \
+		${OBJ_DIR}/lib/libcxxabi.a \
 		${OBJDIR}/taskbar.o \
 		${OBJ_DIR}/lib/musl.a \
 		-Wl,--end-group \

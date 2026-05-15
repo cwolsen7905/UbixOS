@@ -26,19 +26,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern "C" {
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <sys/sys.h>
-#include <sys/sched.h>
-#include <sys/mpi.h>
-#include <sys/kbd.h>
-#include <views/display_proto.h>
-}
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <cstdio>
+#include <cstring>
+#include <ubix/mailbox.hh>
+#include <ubix/sched.hh>
+#include <ubix/process.hh>
+#include <views/display.hh>
 #include <objgfx/objgfx.h>
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
@@ -59,17 +55,14 @@ static ogSurface  g_surf;
 static ogBitFont  g_font;
 static uint32_t   g_win_id;
 static void      *g_shm     = NULL;
-static char       g_mbox[32];
-static char       g_views[] = "views";
+static ubix::Mailbox g_mbox;
+static const char    g_views[] = "views";
 
 static int  g_cols, g_rows;
 static int  g_act_w, g_act_h;
 static int  g_cur_col = 0, g_cur_row = 0;
 
-/* Simple circular line buffer — each cell is one character */
-#define MAX_ROWS 128
-static char g_lines[MAX_ROWS][256];
-static int  g_top = 0;   /* index of first visible row */
+static std::vector<std::string> g_lines;
 
 static void
 term_redraw(void)
@@ -86,10 +79,10 @@ term_redraw(void)
 	     TERM_BG        & 0xFF,
 	    255);
 
-	for (int r = 0; r < g_rows; r++) {
-		int line_idx = (g_top + r) % MAX_ROWS;
+	int nrows = (int)g_lines.size();
+	for (int r = 0; r < nrows; r++) {
 		int y = r * fh;
-		g_font.PutString(g_surf, 0, y, g_lines[line_idx]);
+		g_font.PutString(g_surf, 0, y, g_lines[r].c_str());
 		(void)fw;
 	}
 
@@ -103,8 +96,8 @@ term_redraw(void)
 static void
 term_scroll(void)
 {
-	g_top = (g_top + 1) % MAX_ROWS;
-	memset(g_lines[(g_top + g_rows - 1) % MAX_ROWS], 0, g_cols + 1);
+	g_lines.erase(g_lines.begin());
+	g_lines.push_back(std::string(g_cols, ' '));
 	g_cur_row = g_rows - 1;
 }
 
@@ -122,14 +115,13 @@ term_putchar(char c)
 	if (c == '\b') {
 		if (g_cur_col > 0) {
 			g_cur_col--;
-			g_lines[(g_top + g_cur_row) % MAX_ROWS][g_cur_col] = ' ';
+			g_lines[g_cur_row][g_cur_col] = ' ';
 		}
 		return;
 	}
 
-	int line_idx = (g_top + g_cur_row) % MAX_ROWS;
 	if (g_cur_col < g_cols) {
-		g_lines[line_idx][g_cur_col] = c;
+		g_lines[g_cur_row][g_cur_col] = c;
 		g_cur_col++;
 	}
 	if (g_cur_col >= g_cols) {
@@ -170,62 +162,20 @@ key_to_ascii(uint32_t kc, uint8_t pressed)
 /* Shell subprocess                                                     */
 /* ------------------------------------------------------------------ */
 
-static int   g_shell_in  = -1;   /* term writes here → shell stdin  */
-static int   g_shell_out = -1;   /* term reads here  ← shell stdout */
-static pid_t g_shell_pid = -1;
-
-static void
-shell_spawn(void)
-{
-	int to_shell[2];   /* to_shell[0] = read end (shell stdin)  */
-	int from_shell[2]; /* from_shell[1] = write end (shell stdout) */
-
-	if (pipe(to_shell) != 0 || pipe(from_shell) != 0)
-		return;
-
-	pid_t pid = fork();
-	g_shell_pid = pid;
-	if (pid == 0) {
-		/* Child: wire pipes to stdin/stdout, exec shell */
-		dup2(to_shell[0],   0);
-		dup2(from_shell[1], 1);
-		dup2(from_shell[1], 2);
-		close(to_shell[0]);
-		close(to_shell[1]);
-		close(from_shell[0]);
-		close(from_shell[1]);
-
-		char *argv[] = { (char *)"shell", NULL };
-		char *envp[] = { NULL };
-		execve("sys:/bin/shell", argv, envp);
-		_exit(1);
-	}
-
-	/* Parent: keep the write end for stdin, read end for stdout */
-	close(to_shell[0]);
-	close(from_shell[1]);
-	g_shell_in  = to_shell[1];
-	g_shell_out = from_shell[0];
-}
+static ubix::Shell g_shell;
 
 /* ------------------------------------------------------------------ */
 /* Simple line-input buffer                                             */
 /* ------------------------------------------------------------------ */
 
-#define LINEBUF 255
-static char g_linebuf[LINEBUF + 1];
-static int  g_linelen = 0;
+static std::string g_linebuf;
 
 static void
 linebuf_flush(void)
 {
-	g_linebuf[g_linelen++] = '\n';
-	g_linebuf[g_linelen]   = '\0';
-
-	if (g_shell_in >= 0)
-		write(g_shell_in, g_linebuf, g_linelen);
-
-	g_linelen = 0;
+	g_linebuf += '\n';
+	g_shell.write(g_linebuf.c_str(), (int)g_linebuf.size());
+	g_linebuf.clear();
 }
 
 /* ------------------------------------------------------------------ */
@@ -243,7 +193,7 @@ send_flip(void)
 	fl->dirty_y   = 0;
 	fl->dirty_w   = g_act_w;
 	fl->dirty_h   = g_act_h;
-	mpi_postMessage(g_views, DISPLAY_FLIP, &msg);
+	ubix::post_message(g_views, DISPLAY_FLIP, msg);
 }
 
 /* ------------------------------------------------------------------ */
@@ -255,34 +205,32 @@ main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
-	snprintf(g_mbox, sizeof(g_mbox), "term.%d", (int)getpid());
-
-	if (mpi_createMbox(g_mbox) != 0)
+	g_mbox.assign("term." + std::to_string(ubix::pid()));
+	if (!g_mbox.create())
 		return 1;
 
 	/* Fork the shell before claiming any shared memory so COW never
 	 * marks shared pages read-only and breaks the mapping. */
-	shell_spawn();
+	g_shell.spawn("sys:/bin/shell");
 
 	/* Claim window */
-	mpi_message_t msg;
-	memset(&msg, 0, sizeof(msg));
+	mpi_message_t msg = {};
 	struct display_claim_req *creq = (struct display_claim_req *)msg.data;
 	msg.header       = DISPLAY_CLAIM;
 	creq->x          = 20;
 	creq->y          = 20;
 	creq->w          = TERM_W;
 	creq->h          = TERM_H;
-	creq->sender_pid = getpid();
-	strncpy(creq->title, "Terminal", sizeof(creq->title) - 1);
+	creq->sender_pid = ubix::pid();
+	std::strncpy(creq->title, "Terminal", sizeof(creq->title) - 1);
 	creq->title[sizeof(creq->title) - 1] = '\0';
-	strncpy(creq->reply, g_mbox, sizeof(creq->reply) - 1);
+	std::strncpy(creq->reply, g_mbox.c_str(), sizeof(creq->reply) - 1);
 	creq->reply[sizeof(creq->reply) - 1] = '\0';
-	mpi_postMessage(g_views, DISPLAY_CLAIM, &msg);
+	ubix::post_message(g_views, DISPLAY_CLAIM, msg);
 
 	mpi_message_t reply;
-	while (mpi_fetchMessage(g_mbox, &reply) != 0)
-		sched_yield();
+	while (!g_mbox.try_fetch(reply))
+		ubix::yield();
 
 	if (reply.header != DISPLAY_ACK)
 		return 1;
@@ -309,13 +257,10 @@ main(int argc, char **argv)
 
 	g_cols = g_act_w / (int)g_font.GetWidth();
 	g_rows = g_act_h / (int)g_font.GetHeight();
-	if (g_rows > MAX_ROWS) g_rows = MAX_ROWS;
-
-	memset(g_lines, 0, sizeof(g_lines));
+	g_lines.assign(g_rows, std::string(g_cols, ' '));
 
 	/* Poll shell output without blocking the event loop */
-	if (g_shell_out >= 0)
-		fcntl(g_shell_out, F_SETFL, O_NONBLOCK);
+	g_shell.set_nonblock();
 
 	term_redraw();
 	send_flip();
@@ -323,9 +268,9 @@ main(int argc, char **argv)
 	int dirty = 0;
 	for (;;) {
 		/* Drain shell output */
-		if (g_shell_out >= 0) {
+		if (g_shell.valid()) {
 			char outbuf[128];
-			int n = read(g_shell_out, outbuf, sizeof(outbuf) - 1);
+			int n = g_shell.read(outbuf, sizeof(outbuf) - 1);
 			if (n > 0) {
 				outbuf[n] = '\0';
 				term_puts(outbuf);
@@ -334,13 +279,11 @@ main(int argc, char **argv)
 		}
 
 		/* Process keyboard events */
-		while (mpi_fetchMessage(g_mbox, &reply) == 0) {
+		while (g_mbox.try_fetch(reply)) {
 			if (reply.header == DISPLAY_CLOSE) {
-				if (g_shell_pid > 0)
-					kill(g_shell_pid, SIGKILL);
-				if (g_shell_in  >= 0) close(g_shell_in);
-				if (g_shell_out >= 0) close(g_shell_out);
-				mpi_destroyMbox(g_mbox);
+				g_shell.kill();
+				g_shell.close_fds();
+				g_mbox.destroy();
 				return 0;
 			}
 			if (reply.header != DISPLAY_KEY)
@@ -355,12 +298,12 @@ main(int argc, char **argv)
 				term_putchar('\n');
 				linebuf_flush();
 			} else if (ch == '\b') {
-				if (g_linelen > 0) {
-					g_linelen--;
+				if (!g_linebuf.empty()) {
+					g_linebuf.pop_back();
 					term_putchar('\b');
 				}
-			} else if (g_linelen < LINEBUF) {
-				g_linebuf[g_linelen++] = ch;
+			} else {
+				g_linebuf += ch;
 				term_putchar(ch);
 			}
 			dirty = 1;
@@ -372,7 +315,7 @@ main(int argc, char **argv)
 			dirty = 0;
 		}
 
-		sched_yield();
+		ubix::yield();
 	}
 
 	return 0;
