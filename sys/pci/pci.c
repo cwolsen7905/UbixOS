@@ -27,6 +27,7 @@
  */
 
 #include <pci/pci.h>
+#include <pci/e1000.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -255,6 +256,16 @@ int pci_init() {
       for (func = 0; func < 8; func++) {
         pcfg = (struct pciConfig *) pciProbe(bus, dev, func);
         if (pcfg != 0x0) {
+          /* Intel 82540EM Gigabit Ethernet (e1000) */
+          if (pcfg->vendorID == E1000_VENDOR_ID && pcfg->deviceID == E1000_DEVICE_82540EM) {
+            uint32_t cmd = pciRead(bus, dev, func, 0x04, 4);
+            cmd |= 0x06; /* Memory Space Enable + Bus Master Enable */
+            pciWrite(bus, dev, func, 0x04, cmd, 4);
+            kprintf("pci: found e1000 @ BAR0=0x%X IRQ=%u\n",
+                pcfg->bar[0] & ~0xFu, pcfg->intLine);
+            initE1000(pcfg->bar[0] & ~0xFu, pcfg->intLine);
+          }
+
           for (i = 0x0; i < countof(pciClasses); i++) {
             if (pcfg->classCode == pciClasses[i].baseClass && pcfg->subClass == pciClasses[i].subClass && pcfg->progIf == pciClasses[i].interface) {
               if (pcfg->vendorID == 0x1022) {

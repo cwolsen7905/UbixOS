@@ -2,8 +2,6 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
- *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
  *
@@ -26,52 +24,14 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/types.h>
-#include <ubixos/sched.h>
-#include <ubixos/endtask.h>
-#include <ubixos/sem.h>
+#ifndef _NETIF_E1000NETIF_H
+#define _NETIF_E1000NETIF_H
 
-#include <net/sys.h>
-#include <net/mem.h>
-#include <net/memp.h>
-#include <net/tcpip.h>
-#include <net/ip_addr.h>
+#include "net/netif.h"
 
-#include <netif/ethernet.h>
-#include <netif/e1000netif.h>
+extern struct netif e1000_netif;
 
-#include <ubixos/exec.h>
-#include <lib/kmalloc.h>
-#include <lib/kprintf.h>
-#include <pci/e1000.h>
+err_t e1000netif_init(struct netif *netif);
+void  e1000netif_input(struct netif *netif);
 
-void e1000_thread(void);
-void shell_thread(void *);
-
-int net_init(void) {
-	ip_addr_t ipaddr, netmask, gw;
-
-	if (!e1000_ready) {
-		kprintf("net: no NIC available, skipping network init\n");
-		return 0;
-	}
-
-	tcpip_init(NULL, NULL);
-
-	/* Zero IP/mask/gw — DHCP will fill these in once enabled */
-	IP4_ADDR(&ipaddr,  0, 0, 0, 0);
-	IP4_ADDR(&netmask, 0, 0, 0, 0);
-	IP4_ADDR(&gw,      0, 0, 0, 0);
-
-	netif_add(&e1000_netif, &ipaddr, &netmask, &gw, NULL,
-	    e1000netif_init, tcpip_input);
-	netif_set_link_up(&e1000_netif);
-	netif_set_up(&e1000_netif);
-	netif_set_default(&e1000_netif);
-
-	sys_thread_new("e1000Thread", (void *)e1000_thread, NULL, 0x1000, 0);
-	sys_thread_new("shellThread", (void *)shell_thread, NULL, 0x1000, 0);
-
-	kprintf("net: lwIP started, waiting for DHCP\n");
-	return 0;
-}
+#endif /* _NETIF_E1000NETIF_H */

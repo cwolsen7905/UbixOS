@@ -5,7 +5,7 @@ include ../../Makefile.incl
 
 INCLUDES += -I../../include
 
-OBJS = ethernet.o ethernetif.o
+OBJS = ethernet.o ethernetif.o e1000netif.o
 # loopif.o arp.o tcpdump.o
 
 .include "${UBIX_MK}/ubix.kern.mk"

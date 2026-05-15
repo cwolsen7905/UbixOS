@@ -168,12 +168,14 @@ install: install-world install-kernel
 # Serial output is captured to serial.log for post-mortem inspection.
 run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -serial file:serial.log -vga std -device pcnet -net user
+	  -serial file:serial.log -vga std \
+	  -device e1000,netdev=net0 -netdev user,id=net0
 
 # Headless run: no display, serial to stdout.  Ctrl-C to stop.
 run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -nographic -serial stdio -device pcnet -net user
+	  -nographic -serial stdio \
+	  -device e1000,netdev=net0 -netdev user,id=net0
 
 # ── Maintenance ───────────────────────────────────────────────────────────────
 
