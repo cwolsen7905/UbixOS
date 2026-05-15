@@ -39,26 +39,27 @@
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
 
-#define FONT_PATH   "sys:/var/fonts/ROM8X8.DPF"
+#define FONT_PATH  "sys:/var/fonts/ROM8X8.DPF"
 
 /* Taskbar geometry */
-#define TB_H        32
-#define BTN_W       80
-#define CLOCK_W     80
+#define TB_H       32
+#define BTN_W      80
+#define CLOCK_W    80
+#define WIN_BTN_W  96
 
 /* Flyout geometry */
-#define FLY_W       120
-#define FLY_H        80
-#define FLY_ITEM_H  (FLY_H / 2)
+#define FLY_W      120
+#define FLY_H       80
+#define FLY_ITEM_H (FLY_H / 2)
 
-/* Colours: format matches FB_RGB(r,g,b) = (r<<16)|(g<<8)|b */
-static const uint32_t TB_BG        = 0x003C8Cu;
-static const uint32_t TB_BTN_N     = 0x0050B0u;
-static const uint32_t TB_BTN_P     = 0x0070D0u;
-static const uint32_t TB_SEP       = 0x002868u;
-static const uint32_t FLY_BG_C     = 0x002860u;
-static const uint32_t FLY_ITEM_C   = 0x004080u;
-static const uint32_t COL_WHITE     = 0x00FFFFFFu;
+/* Colours: (r<<16)|(g<<8)|b */
+static const uint32_t TB_BG      = 0x003C8Cu;
+static const uint32_t TB_BTN_N   = 0x0050B0u;
+static const uint32_t TB_BTN_P   = 0x0070D0u;
+static const uint32_t TB_SEP     = 0x002868u;
+static const uint32_t FLY_BG_C   = 0x002860u;
+static const uint32_t FLY_ITEM_C = 0x004080u;
+static const uint32_t COL_WHITE  = 0x00FFFFFFu;
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                              */
@@ -80,10 +81,10 @@ font_bg(ogBitFont &f, uint32_t c)
 /* Time formatting                                                      */
 /* ------------------------------------------------------------------ */
 
-#define MINUTE  60
-#define HOUR    (60 * MINUTE)
-#define DAY     (24 * HOUR)
-#define YEAR    (365 * DAY)
+#define MINUTE 60
+#define HOUR   (60 * MINUTE)
+#define DAY    (24 * HOUR)
+#define YEAR   (365 * DAY)
 
 static const int month_secs[12] = {
 	0,
@@ -138,146 +139,13 @@ get_time_str(char *buf)
 }
 
 /* ------------------------------------------------------------------ */
-/* State                                                                */
-/* ------------------------------------------------------------------ */
-
-static ubix::Mailbox g_tb_mbox;
-
-static uint32_t  g_sw, g_sh;
-static uint32_t  g_win_id;
-static void     *g_tb_shm  = NULL;
-
-static uint32_t  g_fly_id  = 0;
-static void     *g_fly_shm = NULL;
-static int       g_fly_open = 0;
-
-static ogSurface g_tb_surf;
-static ogSurface g_fly_surf;
-static ogBitFont g_font;
-
-/* Window list tracked via DISPLAY_NOTIFY */
-#define WIN_BTN_W    96
-
-struct TrackedWin {
-	uint32_t    id;
-	std::string title;
-};
-static std::vector<TrackedWin> g_tracked;
-
-/* ------------------------------------------------------------------ */
-/* Drawing                                                              */
+/* MPI flip helper (stateless, takes win_id)                           */
 /* ------------------------------------------------------------------ */
 
 static void
-draw_taskbar(int btn_pressed)
+send_flip_msg(uint32_t win_id)
 {
-	uint32_t btn_color = btn_pressed ? TB_BTN_P : TB_BTN_N;
-	int sw = (int)g_sw;
-
-	g_tb_surf.ogFillRect(0, 0, sw - 1, TB_H - 1, TB_BG);
-	g_tb_surf.ogFillRect(0, 0, sw - 1, 0, TB_SEP);
-
-	/* Launcher button */
-	g_tb_surf.ogFillRect(2, 2, 2 + BTN_W - 1, TB_H - 3, btn_color);
-	g_tb_surf.ogRect(2, 2, 2 + BTN_W - 1, TB_H - 3, TB_SEP);
-	font_fg(g_font, COL_WHITE);
-	font_bg(g_font, btn_color);
-	g_font.PutString(g_tb_surf, 10, 12, "UbixOS");
-
-	/* Window list buttons */
-	int wx = 2 + BTN_W + 4;
-	int clock_x = sw - CLOCK_W - 2;
-	for (const auto &tw : g_tracked) {
-		if (wx + WIN_BTN_W > clock_x - 4)
-			break;
-		g_tb_surf.ogFillRect(wx, 2, wx + WIN_BTN_W - 1,
-		    TB_H - 3, TB_BTN_N);
-		g_tb_surf.ogRect(wx, 2, wx + WIN_BTN_W - 1,
-		    TB_H - 3, TB_SEP);
-		font_fg(g_font, COL_WHITE);
-		font_bg(g_font, TB_BTN_N);
-		g_font.PutString(g_tb_surf, wx + 4, 12, tw.title.c_str());
-		wx += WIN_BTN_W + 2;
-	}
-
-	/* Clock */
-	char tstr[12];
-	get_time_str(tstr);
-	g_tb_surf.ogFillRect(clock_x, 2, clock_x + CLOCK_W - 1,
-	    TB_H - 3, TB_BTN_N);
-	g_tb_surf.ogRect(clock_x, 2, clock_x + CLOCK_W - 1,
-	    TB_H - 3, TB_SEP);
-	font_fg(g_font, COL_WHITE);
-	font_bg(g_font, TB_BTN_N);
-	g_font.PutString(g_tb_surf, clock_x + 8, 12, tstr);
-}
-
-static void
-win_add(uint32_t id, const char *title)
-{
-	g_tracked.push_back({id, std::string(title)});
-}
-
-static void
-win_remove(uint32_t id)
-{
-	auto it = std::find_if(g_tracked.begin(), g_tracked.end(),
-	    [id](const TrackedWin &w) { return w.id == id; });
-	if (it != g_tracked.end())
-		g_tracked.erase(it);
-}
-
-/* Return index of window button hit at taskbar-relative x, or -1 */
-static int
-winbtn_hit(int mx)
-{
-	int wx = 2 + BTN_W + 4;
-	int clock_x = (int)g_sw - CLOCK_W - 2;
-	for (int i = 0; i < (int)g_tracked.size(); i++) {
-		if (wx + WIN_BTN_W > clock_x - 4)
-			break;
-		if (mx >= wx && mx < wx + WIN_BTN_W)
-			return i;
-		wx += WIN_BTN_W + 2;
-	}
-	return -1;
-}
-
-static void
-raise_window(uint32_t id)
-{
-	mpi_message_t msg;
-	struct display_raise *dr = (struct display_raise *)msg.data;
-	msg.header    = DISPLAY_RAISE;
-	dr->window_id = id;
-	ubix::post_message("views", DISPLAY_RAISE, msg);
-}
-
-static void
-draw_flyout(void)
-{
-	g_fly_surf.ogFillRect(0, 0, FLY_W - 1, FLY_H - 1, FLY_BG_C);
-
-	g_fly_surf.ogFillRect(2, 2, FLY_W - 3, FLY_ITEM_H - 3, FLY_ITEM_C);
-	font_fg(g_font, COL_WHITE);
-	font_bg(g_font, FLY_ITEM_C);
-	g_font.PutString(g_fly_surf, 8, 10, "Terminal");
-
-	g_fly_surf.ogFillRect(2, FLY_ITEM_H + 2,
-	    FLY_W - 3, FLY_H - 3, FLY_ITEM_C);
-	font_fg(g_font, COL_WHITE);
-	font_bg(g_font, FLY_ITEM_C);
-	g_font.PutString(g_fly_surf, 8, FLY_ITEM_H + 10, "About");
-}
-
-/* ------------------------------------------------------------------ */
-/* MPI helpers                                                          */
-/* ------------------------------------------------------------------ */
-
-static void
-send_flip(uint32_t win_id)
-{
-	mpi_message_t msg;
+	mpi_message_t msg = {};
 	struct display_flip *fl = (struct display_flip *)msg.data;
 	msg.header    = DISPLAY_FLIP;
 	fl->window_id = win_id;
@@ -289,124 +157,337 @@ send_flip(uint32_t win_id)
 }
 
 /* ------------------------------------------------------------------ */
-/* Process launch                                                       */
+/* TrackedWin                                                           */
 /* ------------------------------------------------------------------ */
 
-/*
- * Launcher helper: forked once at startup before any shared memory is
- * mapped.  Taskbar writes null-terminated paths down the pipe; the helper
- * forks+execs each one.  This keeps taskbar's COW-free shared buffers
- * intact across repeated launches.
- */
-static int g_launcher_fd = -1;
+struct TrackedWin {
+	uint32_t    id;
+	std::string title;
+};
 
-static void
-launcher_init(void)
-{
-	int pfd[2];
-	if (::pipe(pfd) != 0)
-		return;
+/* ------------------------------------------------------------------ */
+/* Launcher — owns the pipe-based process spawning helper              */
+/* ------------------------------------------------------------------ */
 
-	if (::fork() == 0) {
-		::close(pfd[1]);
-		char path[256];
-		int  len = 0;
-		char ch;
-		for (;;) {
-			if (::read(pfd[0], &ch, 1) <= 0)
-				::_exit(0);
-			if (ch != '\0') {
-				if (len < (int)sizeof(path) - 1)
-					path[len++] = ch;
-				continue;
+class Launcher {
+	int fd_ = -1;
+
+public:
+	void init() {
+		int pfd[2];
+		if (::pipe(pfd) != 0)
+			return;
+
+		if (::fork() == 0) {
+			::close(pfd[1]);
+			char path[256];
+			int  len = 0;
+			char ch;
+			for (;;) {
+				if (::read(pfd[0], &ch, 1) <= 0)
+					::_exit(0);
+				if (ch != '\0') {
+					if (len < (int)sizeof(path) - 1)
+						path[len++] = ch;
+					continue;
+				}
+				if (len == 0)
+					continue;
+				path[len] = '\0';
+				len = 0;
+				if (::fork() == 0) {
+					char *argv[] = { path, nullptr };
+					char *envp[] = { nullptr };
+					::execve(path, argv, envp);
+					::_exit(1);
+				}
 			}
-			if (len == 0)
-				continue;
-			path[len] = '\0';
-			len = 0;
-			if (::fork() == 0) {
-				char *argv[] = { path, nullptr };
-				char *envp[] = { nullptr };
-				::execve(path, argv, envp);
-				::_exit(1);
+		}
+
+		::close(pfd[0]);
+		fd_ = pfd[1];
+	}
+
+	void launch(const char *path) {
+		if (fd_ < 0)
+			return;
+		::write(fd_, path, std::strlen(path) + 1);
+	}
+};
+
+/* ------------------------------------------------------------------ */
+/* Flyout — owns the pop-up menu surface and its window lifecycle      */
+/* ------------------------------------------------------------------ */
+
+class Flyout {
+	ogSurface surf_;
+	uint32_t  win_id_ = 0;
+	bool      open_   = false;
+
+	void draw(ogBitFont &font) {
+		surf_.ogFillRect(0, 0, FLY_W - 1, FLY_H - 1, FLY_BG_C);
+
+		surf_.ogFillRect(2, 2, FLY_W - 3, FLY_ITEM_H - 3, FLY_ITEM_C);
+		font_fg(font, COL_WHITE);
+		font_bg(font, FLY_ITEM_C);
+		font.PutString(surf_, 8, 10, "Terminal");
+
+		surf_.ogFillRect(2, FLY_ITEM_H + 2, FLY_W - 3, FLY_H - 3, FLY_ITEM_C);
+		font_fg(font, COL_WHITE);
+		font_bg(font, FLY_ITEM_C);
+		font.PutString(surf_, 8, FLY_ITEM_H + 10, "About");
+	}
+
+public:
+	bool     is_open() const { return open_; }
+	uint32_t win_id()  const { return win_id_; }
+	int      hit_item(int y) const { return open_ ? (y / FLY_ITEM_H) : -1; }
+
+	void show(uint32_t sh, ubix::Mailbox &mbox, ogBitFont &font) {
+		if (open_)
+			return;
+
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header     = DISPLAY_CLAIM;
+		creq->x          = 2;
+		creq->y          = (int32_t)(sh - TB_H - FLY_H);
+		creq->w          = FLY_W;
+		creq->h          = FLY_H;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor   = 1;
+		std::strncpy(creq->title, "flyout", sizeof(creq->title) - 1);
+		creq->title[sizeof(creq->title) - 1] = '\0';
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		creq->reply[sizeof(creq->reply) - 1] = '\0';
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		mpi_message_t reply;
+		while (!mbox.try_fetch(reply))
+			ubix::yield();
+		if (reply.header != DISPLAY_ACK)
+			return;
+
+		struct display_ack *da = (struct display_ack *)reply.data;
+		win_id_ = da->window_id;
+		surf_.ogAttach(da->shm_base, FLY_W, FLY_H, OG_PIXFMT_32BPP);
+		open_ = true;
+		draw(font);
+		send_flip_msg(win_id_);
+	}
+
+	void hide() {
+		if (!open_)
+			return;
+
+		mpi_message_t msg = {};
+		struct display_release *rel = (struct display_release *)msg.data;
+		msg.header     = DISPLAY_RELEASE;
+		rel->window_id = win_id_;
+		ubix::post_message("views", DISPLAY_RELEASE, msg);
+
+		open_   = false;
+		win_id_ = 0;
+	}
+};
+
+/* ------------------------------------------------------------------ */
+/* Taskbar — owns the strip surface, font, window list, and event      */
+/*           routing; delegates to Flyout and Launcher                 */
+/* ------------------------------------------------------------------ */
+
+class Taskbar {
+	ogSurface               surf_;
+	ogBitFont               font_;
+	uint32_t                win_id_      = 0;
+	uint32_t                sw_          = 0;
+	uint32_t                sh_          = 0;
+	std::vector<TrackedWin> tracked_;
+	Flyout                  fly_;
+	Launcher                launcher_;
+	bool                    btn_pressed_ = false;
+
+	void draw_strip() {
+		uint32_t btn_color = btn_pressed_ ? TB_BTN_P : TB_BTN_N;
+		int sw = (int)sw_;
+
+		surf_.ogFillRect(0, 0, sw - 1, TB_H - 1, TB_BG);
+		surf_.ogFillRect(0, 0, sw - 1, 0, TB_SEP);
+
+		/* Launcher button */
+		surf_.ogFillRect(2, 2, 2 + BTN_W - 1, TB_H - 3, btn_color);
+		surf_.ogRect(2, 2, 2 + BTN_W - 1, TB_H - 3, TB_SEP);
+		font_fg(font_, COL_WHITE);
+		font_bg(font_, btn_color);
+		font_.PutString(surf_, 10, 12, "UbixOS");
+
+		/* Window list */
+		int wx = 2 + BTN_W + 4;
+		int clock_x = sw - CLOCK_W - 2;
+		for (const auto &tw : tracked_) {
+			if (wx + WIN_BTN_W > clock_x - 4)
+				break;
+			surf_.ogFillRect(wx, 2, wx + WIN_BTN_W - 1, TB_H - 3, TB_BTN_N);
+			surf_.ogRect(wx, 2, wx + WIN_BTN_W - 1, TB_H - 3, TB_SEP);
+			font_fg(font_, COL_WHITE);
+			font_bg(font_, TB_BTN_N);
+			font_.PutString(surf_, wx + 4, 12, tw.title.c_str());
+			wx += WIN_BTN_W + 2;
+		}
+
+		/* Clock */
+		char tstr[12];
+		get_time_str(tstr);
+		surf_.ogFillRect(clock_x, 2, clock_x + CLOCK_W - 1, TB_H - 3, TB_BTN_N);
+		surf_.ogRect(clock_x, 2, clock_x + CLOCK_W - 1, TB_H - 3, TB_SEP);
+		font_fg(font_, COL_WHITE);
+		font_bg(font_, TB_BTN_N);
+		font_.PutString(surf_, clock_x + 8, 12, tstr);
+	}
+
+	int winbtn_hit(int mx) const {
+		int wx = 2 + BTN_W + 4;
+		int clock_x = (int)sw_ - CLOCK_W - 2;
+		for (int i = 0; i < (int)tracked_.size(); i++) {
+			if (wx + WIN_BTN_W > clock_x - 4)
+				break;
+			if (mx >= wx && mx < wx + WIN_BTN_W)
+				return i;
+			wx += WIN_BTN_W + 2;
+		}
+		return -1;
+	}
+
+	void raise_window(uint32_t id) {
+		mpi_message_t msg = {};
+		struct display_raise *dr = (struct display_raise *)msg.data;
+		msg.header    = DISPLAY_RAISE;
+		dr->window_id = id;
+		ubix::post_message("views", DISPLAY_RAISE, msg);
+	}
+
+public:
+	bool init(ubix::Mailbox &mbox, const char *font_path) {
+		launcher_.init();
+
+		/* Query screen geometry */
+		mpi_message_t msg = {};
+		struct display_query *dq = (struct display_query *)msg.data;
+		msg.header = DISPLAY_QUERY;
+		std::strncpy(dq->reply, "taskbar", sizeof(dq->reply) - 1);
+		dq->reply[sizeof(dq->reply) - 1] = '\0';
+		ubix::post_message("views", DISPLAY_QUERY, msg);
+
+		mpi_message_t reply;
+		while (!mbox.try_fetch(reply))
+			ubix::yield();
+		if (reply.header != DISPLAY_INFO) {
+			std::printf("taskbar: unexpected reply to DISPLAY_QUERY\n");
+			return false;
+		}
+		struct display_info *di = (struct display_info *)reply.data;
+		sw_ = di->screen_w;
+		sh_ = di->screen_h;
+
+		/* Claim bottom strip */
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header     = DISPLAY_CLAIM;
+		creq->x          = 0;
+		creq->y          = (int32_t)(sh_ - TB_H);
+		creq->w          = (int32_t)sw_;
+		creq->h          = TB_H;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor   = 1;
+		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
+		creq->title[sizeof(creq->title) - 1] = '\0';
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		creq->reply[sizeof(creq->reply) - 1] = '\0';
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		while (!mbox.try_fetch(reply))
+			ubix::yield();
+		if (reply.header != DISPLAY_ACK) {
+			std::printf("taskbar: DISPLAY_CLAIM denied\n");
+			return false;
+		}
+
+		struct display_ack *da = (struct display_ack *)reply.data;
+		win_id_ = da->window_id;
+		void *shm = da->shm_base;
+
+		if (!shm) {
+			std::printf("taskbar: shm_base is NULL\n");
+			return false;
+		}
+
+		surf_.ogAttach(shm, sw_, TB_H, OG_PIXFMT_32BPP);
+
+		if (!font_.Load(font_path, 0)) {
+			std::printf("taskbar: font load failed\n");
+			return false;
+		}
+
+		std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
+		    win_id_, (uint32_t)(uintptr_t)shm,
+		    da->w, da->h, da->x, da->y);
+
+		return true;
+	}
+
+	void draw() { draw_strip(); }
+
+	void send_flip() { send_flip_msg(win_id_); }
+
+	void win_add(uint32_t id, const char *title) {
+		tracked_.push_back({id, std::string(title)});
+	}
+
+	void win_remove(uint32_t id) {
+		auto it = std::find_if(tracked_.begin(), tracked_.end(),
+		    [id](const TrackedWin &w) { return w.id == id; });
+		if (it != tracked_.end())
+			tracked_.erase(it);
+	}
+
+	void on_mouse(const display_mouse_ev *me, ubix::Mailbox &mbox) {
+		/* Flyout-targeted event */
+		if (me->window_id == fly_.win_id()) {
+			if (!(me->buttons & 1) && fly_.is_open()) {
+				int item = fly_.hit_item(me->y);
+				fly_.hide();
+				if (item == 0)
+					launcher_.launch("sys:/bin/term");
+			}
+			return;
+		}
+
+		bool pressed = (me->buttons & 1) != 0;
+		if (pressed == btn_pressed_)
+			return;
+		btn_pressed_ = pressed;
+		draw_strip();
+		send_flip();
+
+		if (!pressed) {
+			int wi = winbtn_hit(me->x);
+			if (wi >= 0) {
+				raise_window(tracked_[wi].id);
+				return;
+			}
+			bool in_btn = (me->x >= 2 && me->x < 2 + BTN_W);
+			if (in_btn) {
+				if (fly_.is_open())
+					fly_.hide();
+				else
+					fly_.show(sh_, mbox, font_);
 			}
 		}
 	}
-
-	::close(pfd[0]);
-	g_launcher_fd = pfd[1];
-}
-
-static void
-launch(const char *path)
-{
-	if (g_launcher_fd < 0)
-		return;
-	::write(g_launcher_fd, path, std::strlen(path) + 1);
-}
+};
 
 /* ------------------------------------------------------------------ */
-/* Flyout open / close                                                  */
-/* ------------------------------------------------------------------ */
-
-static void
-show_flyout(void)
-{
-	if (g_fly_open)
-		return;
-
-	mpi_message_t claim;
-	struct display_claim_req *creq = (struct display_claim_req *)claim.data;
-	claim.header      = DISPLAY_CLAIM;
-	creq->x           = 2;
-	creq->y           = (int32_t)(g_sh - TB_H - FLY_H);
-	creq->w           = FLY_W;
-	creq->h           = FLY_H;
-	creq->sender_pid  = ubix::pid();
-	creq->no_decor    = 1;
-	std::strncpy(creq->title, "flyout", sizeof(creq->title) - 1);
-	creq->title[sizeof(creq->title) - 1] = '\0';
-	std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
-	creq->reply[sizeof(creq->reply) - 1] = '\0';
-
-	ubix::post_message("views", DISPLAY_CLAIM, claim);
-
-	mpi_message_t reply;
-	while (!g_tb_mbox.try_fetch(reply))
-		ubix::yield();
-
-	if (reply.header != DISPLAY_ACK)
-		return;
-
-	struct display_ack *da = (struct display_ack *)reply.data;
-	g_fly_id   = da->window_id;
-	g_fly_shm  = da->shm_base;
-	g_fly_open = 1;
-
-	g_fly_surf.ogAttach(g_fly_shm, FLY_W, FLY_H, OG_PIXFMT_32BPP);
-	draw_flyout();
-	send_flip(g_fly_id);
-}
-
-static void
-hide_flyout(void)
-{
-	if (!g_fly_open)
-		return;
-
-	mpi_message_t msg;
-	struct display_release *rel = (struct display_release *)msg.data;
-	msg.header     = DISPLAY_RELEASE;
-	rel->window_id = g_fly_id;
-	ubix::post_message("views", DISPLAY_RELEASE, msg);
-
-	g_fly_open = 0;
-	g_fly_id   = 0;
-	g_fly_shm  = NULL;
-}
-
-/* ------------------------------------------------------------------ */
-/* main                                                                 */
+/* main — thin event loop                                               */
 /* ------------------------------------------------------------------ */
 
 int
@@ -414,93 +495,31 @@ main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
-	launcher_init();
-
-	g_tb_mbox.assign("taskbar");
-	if (!g_tb_mbox.create()) {
+	ubix::Mailbox mbox;
+	mbox.assign("taskbar");
+	if (!mbox.create()) {
 		std::printf("taskbar: mpi_createMbox failed\n");
 		return 1;
 	}
 
-	/* Query screen geometry */
-	mpi_message_t msg;
-	struct display_query *dq = (struct display_query *)msg.data;
-	msg.header = DISPLAY_QUERY;
-	std::strncpy(dq->reply, "taskbar", sizeof(dq->reply) - 1);
-	dq->reply[sizeof(dq->reply) - 1] = '\0';
-	ubix::post_message("views", DISPLAY_QUERY, msg);
-
-	mpi_message_t reply;
-	while (!g_tb_mbox.try_fetch(reply))
-		ubix::yield();
-
-	if (reply.header != DISPLAY_INFO) {
-		std::printf("taskbar: unexpected reply to DISPLAY_QUERY\n");
+	Taskbar tb;
+	if (!tb.init(mbox, FONT_PATH))
 		return 1;
-	}
 
-	struct display_info *di = (struct display_info *)reply.data;
-	g_sw = di->screen_w;
-	g_sh = di->screen_h;
-
-	/* Claim bottom strip */
-	mpi_message_t claim;
-	struct display_claim_req *creq = (struct display_claim_req *)claim.data;
-	claim.header      = DISPLAY_CLAIM;
-	creq->x           = 0;
-	creq->y           = (int32_t)(g_sh - TB_H);
-	creq->w           = (int32_t)g_sw;
-	creq->h           = TB_H;
-	creq->sender_pid  = ubix::pid();
-	creq->no_decor    = 1;
-	std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
-	creq->title[sizeof(creq->title) - 1] = '\0';
-	std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
-	creq->reply[sizeof(creq->reply) - 1] = '\0';
-	ubix::post_message("views", DISPLAY_CLAIM, claim);
-
-	while (!g_tb_mbox.try_fetch(reply))
-		ubix::yield();
-
-	if (reply.header != DISPLAY_ACK) {
-		std::printf("taskbar: DISPLAY_CLAIM denied\n");
-		return 1;
-	}
-
-	struct display_ack *da = (struct display_ack *)reply.data;
-	g_win_id  = da->window_id;
-	g_tb_shm  = da->shm_base;
-
-	if (!g_tb_shm) {
-		std::printf("taskbar: shm_base is NULL\n");
-		return 1;
-	}
-
-	g_tb_surf.ogAttach(g_tb_shm, g_sw, TB_H, OG_PIXFMT_32BPP);
-
-	if (!g_font.Load(FONT_PATH, 0)) {
-		std::printf("taskbar: font load failed\n");
-		return 1;
-	}
-
-	std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
-	    g_win_id, (uint32_t)(uintptr_t)g_tb_shm,
-	    da->w, da->h, da->x, da->y);
-
-	int btn_pressed = 0;
-	draw_taskbar(0);
-	send_flip(g_win_id);
+	tb.draw();
+	tb.send_flip();
 
 	int last_sec = -1;
 	for (;;) {
 		int t = gettime() % 60;
 		if (t != last_sec) {
 			last_sec = t;
-			draw_taskbar(btn_pressed);
-			send_flip(g_win_id);
+			tb.draw();
+			tb.send_flip();
 		}
 
-		while (g_tb_mbox.try_fetch(reply)) {
+		mpi_message_t reply;
+		while (mbox.try_fetch(reply)) {
 			if (reply.header == DISPLAY_KEY)
 				continue;
 
@@ -508,11 +527,11 @@ main(int argc, char **argv)
 				struct display_notify *dn =
 				    (struct display_notify *)reply.data;
 				if (dn->added)
-					win_add(dn->window_id, dn->title);
+					tb.win_add(dn->window_id, dn->title);
 				else
-					win_remove(dn->window_id);
-				draw_taskbar(btn_pressed);
-				send_flip(g_win_id);
+					tb.win_remove(dn->window_id);
+				tb.draw();
+				tb.send_flip();
 				continue;
 			}
 
@@ -521,41 +540,7 @@ main(int argc, char **argv)
 
 			struct display_mouse_ev *me =
 			    (struct display_mouse_ev *)reply.data;
-			int pressed = (me->buttons & 1) != 0;
-
-			if (me->window_id == g_fly_id) {
-				if (!pressed && g_fly_open) {
-					int item = me->y / FLY_ITEM_H;
-					hide_flyout();
-					if (item == 0)
-						launch("sys:/bin/term");
-				}
-				continue;
-			}
-
-			if (pressed != btn_pressed) {
-				btn_pressed = pressed;
-				draw_taskbar(btn_pressed);
-				send_flip(g_win_id);
-
-				/* Window list button click */
-				if (!pressed) {
-					int wi = winbtn_hit(me->x);
-					if (wi >= 0) {
-						raise_window(g_tracked[wi].id);
-						continue;
-					}
-				}
-
-				int in_btn = (me->x >= 2 &&
-				    me->x < 2 + BTN_W);
-				if (!pressed && in_btn) {
-					if (g_fly_open)
-						hide_flyout();
-					else
-						show_flyout();
-				}
-			}
+			tb.on_mouse(me, mbox);
 		}
 
 		ubix::yield();

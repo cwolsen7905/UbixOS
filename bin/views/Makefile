@@ -4,7 +4,8 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 BINARY  = views
-OBJS    = views.o
+OBJS    = views.o framebuffer.o window_registry.o compositor.o \
+          input_router.o window_manager.o
 OBJDIR  = ${OBJ_DIR}/obj/bin/views
 
 MUSL_SRC = ${SRCTOP}/contrib/musl
@@ -49,7 +50,7 @@ ${BINARY}: ${OBJS}
 		${OBJGFX_OBJS} \
 		${OBJ_DIR}/lib/libcxx.a \
 		${OBJ_DIR}/lib/libcxxabi.a \
-		${OBJDIR}/views.o \
+		${OBJS:S|^|${OBJDIR}/|} \
 		${OBJ_DIR}/lib/musl.a \
 		-Wl,--end-group \
 		${MUSL_LIB}/crtn.o
