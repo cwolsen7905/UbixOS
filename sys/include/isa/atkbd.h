@@ -41,6 +41,7 @@
 
 int  atkbd_init();
 void atkbd_isr();
+void atkbd_inject(uint32_t keycode); /* feed a key-press into the active TTY */
 
 extern struct ubx_driver atkbd_ubx_driver;
 

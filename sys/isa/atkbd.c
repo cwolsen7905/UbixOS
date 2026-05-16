@@ -521,6 +521,78 @@ int getchar()
 	return (retKey);
 }
 
+/*
+ * atkbd_inject — feed one key-press into the active TTY's input path.
+ * Mirrors the PS/2 ISR's canonical/raw handling so USB and PS/2 keyboards
+ * are interchangeable from the shell's perspective.
+ * Safe to call from interrupt context (same as the PS/2 ISR).
+ */
+void
+atkbd_inject(uint32_t keycode)
+{
+	char ch;
+	char echo_buf[2];
+
+	if (keycode >= 0x100) {
+		/* Special keys (KEY_F1, KEY_UP …) — kbd_ring for GUI apps */
+		kbd_ring_push(keycode, 1);
+		return;
+	}
+
+	ch = (char)(uint8_t)keycode;
+	echo_buf[0] = ch;
+	echo_buf[1] = '\0';
+
+	switch (ch) {
+	case '\b':
+		if (tty_foreground == 0x0) {
+			if (stdinSize > 0)
+				stdinSize--;
+		} else if (tty_foreground->t_raw) {
+			tty_foreground->stdin[tty_foreground->stdinSize++] = '\b';
+		} else {
+			if (tty_foreground->t_linelen > 0) {
+				tty_foreground->t_linelen--;
+				if (tty_foreground->t_echo)
+					backSpace();
+			}
+		}
+		break;
+	case '\n':
+		if (tty_foreground == 0x0) {
+			stdinBuffer[stdinSize++] = '\n';
+		} else if (tty_foreground->t_raw) {
+			tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
+		} else {
+			int i;
+			char nl[2] = {'\n', '\0'};
+			for (i = 0; i < tty_foreground->t_linelen &&
+			    tty_foreground->stdinSize < 511; i++)
+				tty_foreground->stdin[tty_foreground->stdinSize++] =
+				    tty_foreground->t_linebuf[i];
+			if (tty_foreground->stdinSize < 511)
+				tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
+			tty_foreground->t_linelen = 0;
+			if (tty_foreground->t_echo)
+				tty_print(nl, tty_foreground);
+		}
+		break;
+	default:
+		if (tty_foreground == 0x0) {
+			stdinBuffer[stdinSize++] = ch;
+		} else if (tty_foreground->t_raw) {
+			tty_foreground->stdin[tty_foreground->stdinSize++] = ch;
+		} else {
+			if (tty_foreground->t_linelen < 511) {
+				tty_foreground->t_linebuf[tty_foreground->t_linelen++] = ch;
+				if (tty_foreground->t_echo)
+					tty_print(echo_buf, tty_foreground);
+			}
+		}
+		break;
+	}
+}
+
 static int atkbd_ubx_probe(struct ubx_device *dev)
 {
 	(void)dev;
