@@ -19,10 +19,12 @@ between them — editing two files on the disk image is enough.
 |------|-----------|----------|-------|
 | `10-logd` | enabled | enabled | kernel log drain, always on |
 | `15-ubistry` | enabled | enabled | registry service, always on |
+| `16-authd` | enabled | enabled | authentication service, always on |
 | `20-views` | enabled | disabled | compositor; owns the entire graphical path |
 | `30-ttyd` | optional | enabled | serial terminal on COM1 |
 
 `guilogin` is **not** an init.d entry — views owns it internally (see below).
+authd must be running before views forks guilogin and before ttyd forks login.
 
 ---
 
@@ -147,7 +149,73 @@ ttyd be tested without physical hardware.
 
 ---
 
+## authd — authentication service
+
+All clients (login, guilogin, future sudo/ssh) talk to authd via MPI.
+authd is the only process that reads `sys:/etc/userdb`.
+
+### MPI protocol
+
+Mailbox name: `"authd"`
+
+```c
+/* include/authd.h */
+#define AUTHD_MSG_REQUEST   1
+#define AUTHD_MSG_RESPONSE  2
+
+#define AUTH_MAX_USER  32
+#define AUTH_MAX_PASS  32
+#define AUTH_MAX_SHELL 128
+#define AUTH_MAX_HOME  256
+
+struct auth_request {
+    char username[AUTH_MAX_USER];
+    char password[AUTH_MAX_PASS];
+};
+
+struct auth_response {
+    int  ok;       /* 1 = success, 0 = failure */
+    int  uid;
+    int  gid;
+    char shell[AUTH_MAX_SHELL];
+    char home[AUTH_MAX_HOME];
+};
+```
+
+### authd lifecycle
+
+1. Opens MPI mailbox `"authd"`.
+2. Reads `sys:/etc/userdb` into memory once at startup.
+3. Poll loop: `mpi_fetchMessage` → compare credentials → `mpi_postMessage` response.
+4. On klog: logs every auth attempt (success + username, or failure + username).
+5. Never exits; restartable (re-reads userdb on restart).
+
+### Client flow (login / guilogin)
+
+```
+client                          authd
+  │── mpi_postMessage("authd") ──►│
+  │   AUTH_REQUEST{user,pass}      │── strcmp credentials
+  │                                │── klog result
+  │◄── mpi_fetchMessage ───────────│
+  │   AUTH_RESPONSE{ok,uid,gid,…}  │
+  │                                │
+  │  [if ok: setuid/setgid, exec shell or taskbar]
+```
+
+---
+
 ## Implementation phases
+
+### Phase 0 — authd
+
+1. `include/authd.h`: shared message structs.
+2. `bin/authd/main.c`: MPI mailbox, userdb load, poll + respond.
+3. `bin/authd/Makefile`.
+4. `bin/Makefile`: add `authd` to SUBDIRS.
+5. `tools/initd/16-authd`: enabled by default.
+6. `bin/login/main.c`: replace inline userdb read with MPI call to authd.
+7. Build + test: boot, confirm authd starts, login authenticates via MPI.
 
 ### Phase 1 — Serial terminal (headless path)
 
@@ -209,6 +277,15 @@ ttyd be tested without physical hardware.
 | `tools/initd/20-views` | ✅ done | present but commented out (enable for graphical boot) |
 | mkimage.sh installs /etc/init.d/ | ✅ done | copies tools/initd/* to image |
 | Design document (`boot-modes-plan.md`) | ✅ done | this file |
+
+### Phase 0 — authd (authentication service)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| `include/authd.h` — shared MPI message types | ⬜ todo | AUTH_REQUEST / AUTH_RESPONSE |
+| `bin/authd` — auth daemon | ⬜ todo | MPI mailbox, userdb read, credential check |
+| `tools/initd/16-authd` | ⬜ todo | always enabled |
+| `bin/login` — replace inline auth with MPI call | ⬜ todo | ~20 lines changed |
 
 ### Phase 1 — Serial terminal (headless path)
 
