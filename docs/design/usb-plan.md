@@ -16,9 +16,9 @@ for a hobby OS).
 | 2 | PCI bus driver refactor (e1000) | Done | pci_device_from_cfg(), e1000_ubx_probe/attach, pci_drv_table[] |
 | 2b | Migrate remaining PCI drivers (lnc only) | Done | lnc_ubx_probe/attach, lnc_ubx_driver in lnc.c; hd.c is ISA-style, moves to 2c |
 | 2c | PCI IDE probe + ISA bus driver + migrate ISA drivers | Done | ide_ubx_driver in hd.c; isa_bus.h/isa_bus.c; atkbd+mouse migrated; fdc/ne2k/rs232 remain commented out |
-| 2d | Migrate devfs / VFS device lookup | In progress | |
-| 2e | Remove old device_node / device_interface | Not started | |
-| 3 | DMA-safe allocator | Not started | |
+| 2d | Migrate devfs / VFS device lookup | Done | ubx_blk_ops wrappers in hd.c/fdc.c; all VFS/FS call sites updated |
+| 2e | Remove old device_node / device_interface | Done | device.c removed from build; device.h stubbed to redirect to sys/bus.h |
+| 3 | DMA-safe allocator | Done | sys/include/sys/dma_mem.h + sys/sys/dma_mem.c; dma_alloc/dma_free with PAGE_CACHE_DISABLED |
 | 4 | UHCI host controller | Not started | |
 | 5 | USB core + enumeration | Not started | |
 | 6 | HID keyboard | Not started | |

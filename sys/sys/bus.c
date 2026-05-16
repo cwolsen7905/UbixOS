@@ -156,6 +156,43 @@ ubx_alloc_irq(struct ubx_device *dev, uint8_t irq, void (*isr)(void))
 	return (0);
 }
 
+#define UBX_BLK_MAXDEV 32
+
+struct ubx_blk_entry {
+	int			 major;
+	int			 minor;
+	struct ubx_device	*dev;
+};
+
+static struct ubx_blk_entry	blk_table[UBX_BLK_MAXDEV];
+static int			blk_ndev;
+
+int
+ubx_device_register_block(struct ubx_device *dev, int major, int minor,
+    struct ubx_blk_ops *ops)
+{
+	if (dev == NULL || blk_ndev >= UBX_BLK_MAXDEV)
+		return (-1);
+	dev->dev_blk_ops = ops;
+	blk_table[blk_ndev].major = major;
+	blk_table[blk_ndev].minor = minor;
+	blk_table[blk_ndev].dev  = dev;
+	blk_ndev++;
+	return (0);
+}
+
+struct ubx_device *
+ubx_device_find(int major, int minor)
+{
+	int i;
+
+	for (i = 0; i < blk_ndev; i++) {
+		if (blk_table[i].major == major && blk_table[i].minor == minor)
+			return (blk_table[i].dev);
+	}
+	return (NULL);
+}
+
 int
 ubx_bus_probe_and_attach(struct ubx_device *dev,
     struct ubx_driver * const *drivers)

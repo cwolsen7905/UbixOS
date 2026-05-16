@@ -30,7 +30,7 @@
 #define	_GPT_H_
 
 #include <sys/uuid.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 #include <string.h>
 
 #define bcopy(src, dst, len)    memcpy((dst), (src), (len))
@@ -110,8 +110,8 @@ struct gpt_ent {
  #include <drv.h>
  */
 
- int gptread(const uuid_t *uuid, struct device_interface *devInfo, char *buf);
- int gptfind(const uuid_t *uuid, struct device_interface *devInfo, int part);
- void gptbootfailed(struct device_interface *devInfo);
+ int gptread(const uuid_t *uuid, struct ubx_device *dev, char *buf);
+ int gptfind(const uuid_t *uuid, struct ubx_device *dev, int part);
+ void gptbootfailed(struct ubx_device *dev);
 
 #endif	/* !_GPT_H_ */

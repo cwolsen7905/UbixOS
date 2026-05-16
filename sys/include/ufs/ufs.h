@@ -31,7 +31,7 @@
 #define _UFS_H
 
 #include <sys/types.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 
 struct vfs_mountPoint;
 

@@ -26,10 +26,30 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _SYS_DEVICE_H
-#define _SYS_DEVICE_H
+#ifndef _SYS_DMA_MEM_H
+#define _SYS_DMA_MEM_H
 
-/* Replaced by sys/bus.h — this header is retained only to avoid breaking old #includes. */
-#include <sys/bus.h>
+#include <sys/types.h>
 
-#endif /* END _SYS_DEVICE_H */
+/*
+ * Physically contiguous, cache-disabled memory for hardware DMA descriptors.
+ * On UbixOS kernel pages are identity-mapped, so db_vaddr == db_paddr.
+ * Maximum allocation size is one page (4096 bytes).
+ */
+struct dma_buf {
+	void		*db_vaddr;	/* kernel virtual address */
+	uint32_t	 db_paddr;	/* physical address */
+	uint32_t	 db_size;	/* allocation size in bytes */
+};
+
+int	 dma_alloc(uint32_t size, uint32_t align, struct dma_buf *buf);
+void	 dma_free(struct dma_buf *buf);
+
+/* Convert a kernel virtual address to its physical address. */
+static inline uint32_t
+dma_paddr(void *vaddr)
+{
+	return ((uint32_t)vaddr);
+}
+
+#endif /* _SYS_DMA_MEM_H */

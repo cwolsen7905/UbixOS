@@ -28,7 +28,7 @@
 
 #include <devfs/devfs.h>
 #include <vfs/vfs.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
@@ -69,7 +69,7 @@ static void devfs_initialize(struct vfs_mountPoint *mp) {
 static int devfs_open(char *file, fileDescriptor_t *fd) {
   struct devfs_info *fsInfo = fd->mp->fsInfo;
   struct devfs_devices *tmpDev = 0x0;
-  struct device_node *device = 0x0;
+  struct ubx_device *device = 0x0;
 
   spinLock(&devfsSpinLock);
 
@@ -86,9 +86,8 @@ static int devfs_open(char *file, fileDescriptor_t *fd) {
       switch ((fd->mode & 0x3)) {
         case 0:
         case 1:
-          device = device_find(tmpDev->devMajor, tmpDev->devMinor);
+          device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
           fd->start = (uint32_t)(uintptr_t) tmpDev; /* MrOlsen (2016-01-19) FIX: I Don't Understand This */
-          fd->size = device->devInfo->size;
         break;
         default:
           kprintf("Invalid File Mode\n");
@@ -113,7 +112,7 @@ static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) 
   int i = 0x0, x = 0x0;
   uInt32 sectors = 0x0;
   uInt16 diff = 0x0;
-  struct device_node *device = 0x0;
+  struct ubx_device *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;
 
   if (tmpDev == -1) {
@@ -126,13 +125,13 @@ static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) 
     return (size);
   }
 
-  device = device_find(tmpDev->devMajor, tmpDev->devMinor);
+  device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
 
   sectors = ((size + 511) / 512);
   diff = (offset - ((offset / 512) * 512));
 
   for (i = 0x0; i < sectors; i++) {
-    device->devInfo->read(device->devInfo->info, fd->buffer, i + (offset / 512), 1);
+    device->dev_blk_ops->read(device, i + (offset / 512), 1, fd->buffer);
     for (x = 0x0; x < (size - (i * 512)); x++) {
       if (diff > 0) {
         data[x] = fd->buffer[x + diff];
@@ -157,16 +156,16 @@ static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) 
  ************************************************************************/
 static int devfs_write(fileDescriptor_t *fd, char *data, long offset, long size) {
   int i = 0x0, x = 0x0;
-  struct device_node *device = 0x0;
+  struct ubx_device *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;
 
-  device = device_find(tmpDev->devMajor, tmpDev->devMinor);
+  device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
   for (i = 0x0; i < ((size + 511) / 512); i++) {
-    device->devInfo->read(device->devInfo->info, fd->buffer, i + (offset / 512), 1);
+    device->dev_blk_ops->read(device, i + (offset / 512), 1, fd->buffer);
     for (x = 0x0; ((x < 512) && ((x + (i * 512)) < size)); x++) {
       fd->buffer[x] = data[x];
     }
-    device->devInfo->write(device->devInfo->info, fd->buffer, i + (offset / 512), 1);
+    device->dev_blk_ops->write(device, i + (offset / 512), 1, fd->buffer);
     data += 512;
   }
   return (size);

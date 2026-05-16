@@ -32,7 +32,7 @@
 
 #include <sys/types.h>
 #include <vfs/vfs.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 
 int ffs_read(fileDescriptor_t *,char *,uint32_t,long);
 

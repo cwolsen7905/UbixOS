@@ -31,7 +31,7 @@
 #define _BUF_H
 
 #include <vfs/vfs.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 
 struct buf {
   };

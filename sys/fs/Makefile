@@ -2,7 +2,6 @@
 # Kernel Makefile (C) 2002 The UbixOS Project
 
 #all: ubixfs-code pci-code ufs-code vfs-code isa-code kernel-code lib-code vmm-code sys-code init-code devfs-code mpi-code kmods-code kernel-img
-#ubixfs-code
 
 all: ubixfs-code devfs-code ufs-code vfs-code common-code fat-code
 

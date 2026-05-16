@@ -31,6 +31,8 @@
 
 #include <sys/types.h>
 
+struct ubx_device;
+
 #define MFSNAMELEN      16              /* length of type name including null */
 #define MNAMELEN        88              /* size of on/from name bufs */
 
@@ -67,7 +69,7 @@ struct vfs_mountPoint {
     struct vfs_mountPoint *prev;
     struct vfs_mountPoint *next;
     struct fileSystem *fs;
-    struct device_node *device;
+    struct ubx_device *device;
     struct ubixDiskLabel *diskLabel;
     void *fsInfo;
     int partition;

@@ -28,6 +28,7 @@
  *****************************************************************************************/
 
 #include <vfs/vfs.h>
+#include <sys/bus.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/exec.h>
@@ -43,13 +44,12 @@ fileDescriptor_t *_fd;
 struct vfs_mountPoint *_mp;
 
 int media_read(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
-  _mp->device->devInfo->read(_mp->device->devInfo->info, buffer, sector, sector_count);
-
+  _mp->device->dev_blk_ops->read(_mp->device, sector, sector_count, buffer);
   return 1;
 }
 
 int media_write(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
-  _mp->device->devInfo->write(_mp->device->devInfo->info, buffer, sector, sector_count);
+  _mp->device->dev_blk_ops->write(_mp->device, sector, sector_count, buffer);
   return 1;
 }
 
@@ -134,8 +134,8 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd);
   assert(fd->mp);
   assert(fd->mp->device);
-  assert(fd->mp->device->devInfo);
-  assert(fd->mp->device->devInfo->read);
+  assert(fd->mp->device->dev_blk_ops);
+  assert(fd->mp->device->dev_blk_ops->read);
   assert(file);
 
   if ((fd->mode & 0x1) == 0x1) {

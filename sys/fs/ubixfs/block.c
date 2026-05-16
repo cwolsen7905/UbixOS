@@ -67,13 +67,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************************/
 
 #include <ubixfs/ubixfs.h>
+#include <sys/bus.h>
 #include <vfs/file.h>
 #include <vfs/mount.h>
 
 
 void syncBat(struct vfs_mountPoint *mp) {
   struct ubixFSInfo *fsInfo = mp->fsInfo;
-  mp->device->devInfo->write(mp->device->devInfo->info,fsInfo->blockAllocationTable,mp->diskLabel->partitions[mp->partition].pOffset,mp->diskLabel->partitions[mp->partition].pBatSize);
+  mp->device->dev_blk_ops->write(mp->device, mp->diskLabel->partitions[mp->partition].pOffset, mp->diskLabel->partitions[mp->partition].pBatSize, fsInfo->blockAllocationTable);
   }
 
 int freeBlocks(int block,fileDescriptor_t *fd) {

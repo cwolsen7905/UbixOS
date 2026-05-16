@@ -31,7 +31,7 @@
 
 #include <sys/types.h>
 #include <vfs/vfs.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 #include <mpi/mpi.h>
 #include <ubixfs/dirCache.h>
 

@@ -57,6 +57,17 @@ struct ubx_resource {
 struct ubx_device;
 
 /*
+ * Block-device I/O operations.  Registered via ubx_device_register_block().
+ * Argument order: (dev, lba, count, buf) — matches standard block-driver convention.
+ */
+struct ubx_blk_ops {
+	int	(*read) (struct ubx_device *dev, uint32_t lba,
+		    uint32_t count, void *buf);
+	int	(*write)(struct ubx_device *dev, uint32_t lba,
+		    uint32_t count, void *buf);
+};
+
+/*
  * Driver descriptor registered per bus.
  * Analogous to FreeBSD's driver_t.
  *
@@ -81,7 +92,7 @@ struct ubx_device {
 	struct ubx_device	*dev_parent;		/* owning bus; NULL for root */
 	struct ubx_driver	*dev_driver;		/* matched driver; NULL before probe */
 	void			*dev_softc;		/* driver private state */
-	void			*dev_blk_ops;		/* block ops (Phase 2d); NULL for now */
+	struct ubx_blk_ops	*dev_blk_ops;		/* block-device ops; NULL for non-block devices */
 	char			 dev_nameunit[32];	/* e.g. "uhci0", "ata0" */
 
 	struct ubx_resource	 dev_res[UBX_MAX_RESOURCES];
@@ -150,5 +161,19 @@ int			 ubx_alloc_irq(struct ubx_device *dev, uint8_t irq,
  */
 int			 ubx_bus_probe_and_attach(struct ubx_device *dev,
 			    struct ubx_driver * const *drivers);
+
+/*
+ * Register dev as a block device accessible by (major, minor).
+ * Sets dev->dev_blk_ops = ops.
+ * Returns 0 on success, -1 if the table is full or dev is NULL.
+ */
+int			 ubx_device_register_block(struct ubx_device *dev,
+			    int major, int minor, struct ubx_blk_ops *ops);
+
+/*
+ * Look up a block device by (major, minor).
+ * Returns the ubx_device *, or NULL if not found.
+ */
+struct ubx_device	*ubx_device_find(int major, int minor);
 
 #endif /* _SYS_BUS_H */

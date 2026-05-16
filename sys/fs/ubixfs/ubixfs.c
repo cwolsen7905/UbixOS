@@ -28,6 +28,7 @@
 *****************************************************************************************/
 
 #include <ubixfs/ubixfs.h>
+#include <sys/bus.h>
 #include <ubixfs/dirCache.h>
 #include <vfs/vfs.h>
 #include <ubixos/sched.h>
@@ -57,8 +58,8 @@ static int openFileUbixFS(const char *file, fileDescriptor_t *fd) {
   assert(fd);
   assert(fd->mp);
   assert(fd->mp->device);
-  assert(fd->mp->device->devInfo);
-  assert(fd->mp->device->devInfo->read);
+  assert(fd->mp->device->dev_blk_ops);
+  assert(fd->mp->device->dev_blk_ops->read);
   assert(fsInfo);
   assert(fsInfo->dirCache);
   assert(file);
@@ -158,15 +159,15 @@ int writeFileByte(int ch, fileDescriptor_t *fd, long offset) {
       }
     /* fd->mp->drive->read(fd->mp->drive->driveInfoStruct,diskLabel->partitions[0].pOffset+blockAllocationTable[batIndex].realSector,8,fd->buffer); */
     fd->buffer[offset-(blockCount*4096)] = ch;
-    fd->mp->device->devInfo->write(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8);
+    fd->mp->device->dev_blk_ops->write(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8,fd->buffer);
     }
   else {
     if (fd->status != fdRead) {    
-      fd->mp->device->devInfo->read(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8);
+      fd->mp->device->dev_blk_ops->read(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8,fd->buffer);
       fd->status = fdRead;
       }
     fd->buffer[offset-(blockCount*4096)] = ch;
-    fd->mp->device->devInfo->write(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8);
+    fd->mp->device->dev_blk_ops->write(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8,fd->buffer);
     }    
   if ((uInt32)offset > fd->size) {
     fd->size = offset;
@@ -240,7 +241,7 @@ int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
   assert(fd->mp);
   assert(fd->mp->fsInfo);
   assert(fd->mp->device);
-  assert(fd->mp->device->devInfo);
+  assert(fd->mp->device->dev_blk_ops);
 
   blockIndex = blockIndexPrev = fd->start;
   fsInfo = fd->mp->fsInfo;
@@ -260,7 +261,7 @@ int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
       }
     }
 
-  fd->mp->device->devInfo->read(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize);
+  fd->mp->device->dev_blk_ops->read(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize,fd->buffer);
   for (i = 0x0;i < (uInt32)size;i++) {
 
     fd->buffer[(offset- (blockOffset *0x1000))] = data[i];
@@ -268,7 +269,7 @@ int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
 
     if (offset%4096 == 0x0) {
       blockOffset++;
-      fd->mp->device->devInfo->write(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize);
+      fd->mp->device->dev_blk_ops->write(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize,fd->buffer);
  
       if (fsInfo->blockAllocationTable[blockIndex].nextBlock == EOBC) {
         blockIndexPrev = blockIndex;
@@ -278,11 +279,11 @@ int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
         }
       else {
         blockIndex = fsInfo->blockAllocationTable[blockIndex].nextBlock;
-        fd->mp->device->devInfo->read(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize);
+        fd->mp->device->dev_blk_ops->read(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize,fd->buffer);
         }
       }
     }
-  fd->mp->device->devInfo->write(fd->mp->device->devInfo->info,fd->buffer,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize);
+  fd->mp->device->dev_blk_ops->write(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize,fd->buffer);
 
   if ((uInt32)offset > fd->size) {
     fd->size = offset;
@@ -310,13 +311,13 @@ void ubixFSUnlink(char *path,struct vfs_mountPoint *mp) {
   struct directoryEntry *dirEntry = (struct directoryEntry *)kmalloc(0x1000);
   struct ubixFSInfo *fsInfo = mp->fsInfo;
   
-  mp->device->devInfo->read(mp->device->devInfo->info,dirEntry,(mp->diskLabel->partitions[mp->partition].pOffset+fsInfo->blockAllocationTable[fsInfo->rootDir].realSector),8);
+  mp->device->dev_blk_ops->read(mp->device,(mp->diskLabel->partitions[mp->partition].pOffset+fsInfo->blockAllocationTable[fsInfo->rootDir].realSector),8,dirEntry);
 
   for (x=0;(uInt32)x<(4096/sizeof(struct directoryEntry));x++) {
     if ((int)!strcmp(dirEntry[x].fileName,path)) {
       dirEntry[x].attributes |= typeDeleted;
       dirEntry[x].fileName[0] = '?';
-      mp->device->devInfo->write(mp->device->devInfo->info,dirEntry,(mp->diskLabel->partitions[mp->partition].pOffset+fsInfo->blockAllocationTable[fsInfo->rootDir].realSector),8);
+      mp->device->dev_blk_ops->write(mp->device,(mp->diskLabel->partitions[mp->partition].pOffset+fsInfo->blockAllocationTable[fsInfo->rootDir].realSector),8,dirEntry);
       return;
       }
     }
@@ -356,7 +357,7 @@ static int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 ba
     if (i != 0x0)
       batIndex = fsInfo->blockAllocationTable[batIndex].nextBlock;
   /* Read data in from media */
-    fd->mp->device->devInfo->read(fd->mp->device->devInfo->info,data+i,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,blockSize);
+    fd->mp->device->dev_blk_ops->read(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,blockSize,data+i);
     }
   /* Return */
   return(0x0);
@@ -398,11 +399,11 @@ int ubixfs_initialize(struct vfs_mountPoint *mp) {
     fsInfo->batEntries = (mp->diskLabel->partitions[mp->partition].pBatSize*512) / sizeof(struct blockAllocationTableEntry);
 
     /* Read the BAT to memory */
-    assert(mp->device->devInfo->read);
-    mp->device->devInfo->read(mp->device->devInfo->info, 
-                             fsInfo->blockAllocationTable,
+    assert(mp->device->dev_blk_ops->read);
+    mp->device->dev_blk_ops->read(mp->device,
                              mp->diskLabel->partitions[mp->partition].pOffset,
-                             mp->diskLabel->partitions[mp->partition].pBatSize);
+                             mp->diskLabel->partitions[mp->partition].pBatSize,
+                             fsInfo->blockAllocationTable);
     
     /* Set up root directory cache */
     fsInfo->dirCache = ubixfs_cacheNew("/");
@@ -419,10 +420,10 @@ int ubixfs_initialize(struct vfs_mountPoint *mp) {
     
     assert(fsInfo->dirCache->info);
     /* Read root dir in from disk it is always 0x4000 bytes long */
-    mp->device->devInfo->read(mp->device->devInfo->info,
-                              fsInfo->dirCache->info,
+    mp->device->dev_blk_ops->read(mp->device,
                               (mp->diskLabel->partitions[mp->partition].pOffset+fsInfo->blockAllocationTable[fsInfo->rootDir].realSector),
-                              0x4000 / 512);
+                              0x4000 / 512,
+                              fsInfo->dirCache->info);
 
     /* Start our ubixfs_thread to manage the mount point */
     /*

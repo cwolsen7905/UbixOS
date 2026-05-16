@@ -33,7 +33,7 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 
 /************************************************************************
 
@@ -46,7 +46,7 @@
  ************************************************************************/
 int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoint, char *perms ) {
   struct vfs_mountPoint *mp = 0x0;
-  struct device_node *device = 0x0;
+  struct ubx_device *device = 0x0;
 
   /* Allocate Memory For Mount Point */
   if ( (mp = (struct vfs_mountPoint *) kmalloc( sizeof(struct vfs_mountPoint) )) == NULL ) {
@@ -66,7 +66,7 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   sprintf( mp->mountPoint, mountPoint );
 
   /* Set Pointer To Physical Drive */
-  device = device_find( major, minor );
+  device = ubx_device_find( major, minor );
 
   /* Set Up Mp Defaults */
   mp->device = device;

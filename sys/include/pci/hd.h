@@ -191,7 +191,7 @@ int hdIoctl();
 int hdStart();
 int hdStop();
 int hdStandby();
-int hdInit(struct device_node *dev);
+int hdInit(struct driveInfo *hdd);
 
 struct dos_partition {
     unsigned char dp_flag; /* bootstrap flags */
