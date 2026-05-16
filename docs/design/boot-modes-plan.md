@@ -282,10 +282,10 @@ client                          authd
 
 | Item | Status | Notes |
 |------|--------|-------|
-| `include/authd.h` — shared MPI message types | ⬜ todo | AUTH_REQUEST / AUTH_RESPONSE |
-| `bin/authd` — auth daemon | ⬜ todo | MPI mailbox, userdb read, credential check |
-| `tools/initd/16-authd` | ⬜ todo | always enabled |
-| `bin/login` — replace inline auth with MPI call | ⬜ todo | ~20 lines changed |
+| `include/authd.h` — shared MPI message types | ✅ done | AUTH_REQUEST 96b / AUTH_RESPONSE 220b |
+| `bin/authd` — auth daemon | ✅ done | MPI mailbox, userdb load, poll + respond |
+| `tools/initd/16-authd` | ✅ done | always enabled |
+| `bin/login` — replace inline auth with MPI call | ✅ done | do_auth() via MPI, envp from response |
 
 ### Phase 1 — Serial terminal (headless path)
 
