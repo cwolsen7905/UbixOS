@@ -31,6 +31,7 @@
 
 #include <sys/thread.h>
 #include <sys/fb.h>
+#include <sys/klog.h>
 
 typedef int register_t;
 
@@ -122,5 +123,12 @@ struct sys_shareregion_args {
     uint32_t *out_vaddr;
 };
 int sys_shareregion(struct thread *, struct sys_shareregion_args *);
+
+struct sys_klog_read_args {
+    struct klog_entry *buf;        /* userspace array to fill */
+    int                max_entries;
+    uint32_t           start_seq;  /* read entries with seq >= start_seq */
+};
+int sys_klog_read(struct thread *, struct sys_klog_read_args *);
 
 #endif

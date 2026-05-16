@@ -36,6 +36,8 @@
 static char *argv_login[2] = { "login", NULL, };
 static char *envp_login[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, };
 
+static char *argv_logd[2] = { "logd", NULL, };
+
 int main(int argc,char **argv, char **envp) {
   int i=0x0;
   mpi_message_t myMsg;
@@ -54,6 +56,14 @@ int main(int argc,char **argv, char **envp) {
     }
 
   printf("Initializing UbixOS\n");
+
+  /* Start kernel log daemon */
+  i = fork();
+  if (0x0 == i) {
+    execve("sys:/bin/logd", argv_logd, envp_login);
+    printf("Error: Could not start logd\n");
+    exit(0x0);
+  }
 
   /* Start TTYD */
   #ifdef _IGNORE

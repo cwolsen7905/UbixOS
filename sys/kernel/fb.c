@@ -28,6 +28,7 @@
 
 #include <sys/fb.h>
 #include <sys/sysproto.h>
+#include <sys/klog.h>
 #include <sys/thread.h>
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
@@ -126,5 +127,20 @@ int sys_getkbd(struct thread *td, struct sys_getkbd_args *args)
 	out->pressed = ev.pressed;
 
 	td->td_retval[0] = 0;
+	return (0);
+}
+
+int sys_klog_read(struct thread *td, struct sys_klog_read_args *args)
+{
+	int n;
+
+	if (args->buf == NULL || args->max_entries <= 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	n = klog_read(args->buf, args->max_entries, args->start_seq);
+	td->td_retval[0] = n;
 	return (0);
 }
