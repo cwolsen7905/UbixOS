@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -26,54 +26,41 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _UBIXOS_INIT_H
-#define _UBIXOS_INIT_H
+#ifndef _SYS_ISA_BUS_H
+#define _SYS_ISA_BUS_H
 
-#include <sys/types.h>
+#include <sys/bus.h>
 
 /*
- * Set by start.S when the kernel is loaded by a multiboot-compliant
- * bootloader (e.g. GRUB).  Zero when booted via the FreeBSD loader.
- * Cast to a struct multiboot_info * to inspect boot-time memory map etc.
+ * Static resource declaration for an ISA device.
+ * ISA has no config space; resources are declared by the driver itself.
+ * Terminate the array with an entry whose ir_type == 0.
  */
-extern uint32_t _multiboot_info;
+struct isa_res_decl {
+	int		 ir_type;	/* UBX_RES_IOPORT, UBX_RES_IRQ, or 0 (terminator) */
+	uint32_t	 ir_start;	/* I/O base address or IRQ number */
+	uint32_t	 ir_size;	/* range size in bytes; 0 for IRQ entries */
+};
 
-#include <vmm/vmm.h>
-#include <vfs/vfs.h>
-#include <isa/8259.h>
-#include <sys/idt.h>
-#include <ubixos/sched.h>
-#include <isa/pit.h>
-#include <isa/atkbd.h>
-#include <ubixos/time.h>
-#include <net/net.h>
-#include <isa/ne2k.h>
-#include <devfs/devfs.h>
-#include <pci/pci.h>
-#include <ubixfs/ubixfs.h>
-#include <isa/fdc.h>
-#include <ubixos/tty.h>
-#include <ufs/ufs.h>
-#include <fat/fat.h>
-#include <ubixos/static.h>
-#include <pci/hd.h>
-#include <sys/kern_sysctl.h>
-#include <ubixos/vitals.h>
-#include <ubixos/syscalls.h>
-#include <pci/e1000.h>
-#include <isa/mouse.h>
-#include <sys/isa_bus.h>
+/*
+ * ISA driver table entry.
+ * isa_bus_init() allocates one ubx_device per entry, fills dev_res[] from
+ * ide_res[], then calls ubx_bus_probe_and_attach() against the single driver.
+ */
+struct isa_drv_entry {
+	struct ubx_driver		*ide_driver;	/* the driver; must be non-NULL */
+	const struct isa_res_decl	*ide_res;	/* static resource list; may be NULL */
+};
 
-typedef int (*intFunctionPTR)(void);
+/*
+ * Initialize the ISA pseudo-bus.
+ * Iterates isa_drv_table[] (defined in sys/sys/isa_bus.c), allocates an
+ * ubx_device per entry, and probe+attaches the associated driver.
+ *
+ * ORDERING NOTE: i8259_init and pit_init run directly from init_tasks[] before
+ * this function.  isa_bus_init() must run after idt_init and sched_init so that
+ * drivers which install ISRs (atkbd, mouse) find a valid interrupt descriptor table.
+ */
+int	isa_bus_init(void);
 
-/* devfs_init must precede pci_init: ide_ubx_attach calls initHardDisk which calls devfs_makeNode */
-/* isa_bus_init replaces atkbd_init + mouseInit; runs after pit_init so ISRs find a valid IDT */
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, isa_bus_init, time_init, devfs_init, pci_init, tty_init, ufs_init, fat_init, net_init };
-
-//ne2k_init,
-//ubixfs_init,
-//fdc_init,
-
-int init_tasksTotal = sizeof(init_tasks) / sizeof(intFunctionPTR);
-
-#endif /* END _UBIXOS_INIT_H */
+#endif /* _SYS_ISA_BUS_H */

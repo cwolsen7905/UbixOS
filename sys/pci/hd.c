@@ -27,6 +27,7 @@
  */
 
 #include <pci/hd.h>
+#include <sys/bus.h>
 #include <sys/io.h>
 #include <sys/device.h>
 #include <lib/kmalloc.h>
@@ -44,6 +45,7 @@ static int _initHardDisk(int hdD);
 int initHardDisk() {
   _initHardDisk(0xE0);
   _initHardDisk(0xF0);
+  return (0);
 }
 
 int _initHardDisk(int hdD) {
@@ -62,6 +64,32 @@ int _initHardDisk(int hdD) {
 
   //GPT
   char *secbuf = 0x0;
+
+  /*
+   * ATA drive-existence check (ATA-6 §6.1):
+   * Select the device, wait 400 ns (four alternate-status reads), then
+   * poll for DRDY (bit 6) or ERR (bit 0) for up to ~100 ms.
+   * 0xFF → floating bus (no device).
+   * BUSY never clears and DRDY never sets → no device.
+   */
+  {
+    int chk;
+    uint8_t st;
+    outportByte(0x1F0 + ATA_DRIVE, (uint8_t)hdD);
+    for (chk = 0; chk < 4; chk++)
+      inportByte(0x1F0 + hdStat);
+    st = inportByte(0x1F0 + hdStat);
+    if (st == 0xFF)
+      return (0);
+    /* Wait up to ~100 ms for DRDY or ERR; if neither, no drive. */
+    for (chk = 0; chk < 100000; chk++) {
+      st = inportByte(0x1F0 + hdStat);
+      if (st & (ATA_S_READY | ATA_S_ERROR))
+        break;
+    }
+    if (!(st & (ATA_S_READY | ATA_S_ERROR)))
+      return (0);
+  }
 
   hdd = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
   hdd->ata_identify = (struct ata_identify_data *) kmalloc(sizeof(struct ata_identify_data));
@@ -488,6 +516,35 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
   }
   return (0);
 }
+
+/*
+ * PCI IDE controller probe/attach (class 0x01, subclass 0x01).
+ * Matches any IDE controller in legacy/compatibility mode.  The actual
+ * ATA I/O is done through the fixed legacy ports (0x1F0 / 0x170) which
+ * the controller continues to decode after probe — no mode switching.
+ */
+static int
+ide_ubx_probe(struct ubx_device *dev)
+{
+	if (dev->dev_class == 0x01 && dev->dev_subclass == 0x01)
+		return (0);
+	return (-1);
+}
+
+static int
+ide_ubx_attach(struct ubx_device *dev)
+{
+	(void)dev;
+	initHardDisk();
+	return (0);
+}
+
+struct ubx_driver ide_ubx_driver = {
+	.drv_name   = "ide",
+	.drv_probe  = ide_ubx_probe,
+	.drv_attach = ide_ubx_attach,
+	.drv_detach = NULL,
+};
 
 /***
  $Log: hd.c,v $

@@ -36,6 +36,7 @@
 #include <net/memp.h>
 #include <net/tcpip.h>
 #include <net/ip_addr.h>
+#include <net/dhcp.h>
 
 #include <netif/ethernet.h>
 #include <netif/e1000netif.h>
@@ -45,33 +46,64 @@
 #include <lib/kprintf.h>
 #include <pci/e1000.h>
 
-void e1000_thread(void);
-void shell_thread(void *);
+static void e1000_thread_trampoline(void *arg) {
+	(void)arg;
+	void e1000_thread(void);
+	e1000_thread();
+}
 
-int net_init(void) {
-	ip_addr_t ipaddr, netmask, gw;
-
-	if (!e1000_ready) {
-		kprintf("net: no NIC available, skipping network init\n");
-		return 0;
+/*
+ * Called from inside the tcpip thread once it is running.
+ * All netif and DHCP setup must happen here in threaded mode (NO_SYS=0)
+ * to satisfy lwIP's core-lock assertions.
+ */
+static void net_status_cb(struct netif *netif) {
+	if (!ip4_addr_isany(netif_ip4_addr(netif))) {
+		kprintf("net: DHCP bound — IP=%d.%d.%d.%d mask=%d.%d.%d.%d gw=%d.%d.%d.%d\n",
+		    ip4_addr1(netif_ip4_addr(netif)),
+		    ip4_addr2(netif_ip4_addr(netif)),
+		    ip4_addr3(netif_ip4_addr(netif)),
+		    ip4_addr4(netif_ip4_addr(netif)),
+		    ip4_addr1(netif_ip4_netmask(netif)),
+		    ip4_addr2(netif_ip4_netmask(netif)),
+		    ip4_addr3(netif_ip4_netmask(netif)),
+		    ip4_addr4(netif_ip4_netmask(netif)),
+		    ip4_addr1(netif_ip4_gw(netif)),
+		    ip4_addr2(netif_ip4_gw(netif)),
+		    ip4_addr3(netif_ip4_gw(netif)),
+		    ip4_addr4(netif_ip4_gw(netif)));
 	}
+}
 
-	tcpip_init(NULL, NULL);
+static void net_tcpip_init_done(void *arg) {
+	ip_addr_t ipaddr, netmask, gw;
+	(void)arg;
 
-	/* Zero IP/mask/gw — DHCP will fill these in once enabled */
 	IP4_ADDR(&ipaddr,  0, 0, 0, 0);
 	IP4_ADDR(&netmask, 0, 0, 0, 0);
 	IP4_ADDR(&gw,      0, 0, 0, 0);
 
 	netif_add(&e1000_netif, &ipaddr, &netmask, &gw, NULL,
 	    e1000netif_init, tcpip_input);
+	netif_set_status_callback(&e1000_netif, net_status_cb);
 	netif_set_link_up(&e1000_netif);
 	netif_set_up(&e1000_netif);
 	netif_set_default(&e1000_netif);
 
-	sys_thread_new("e1000Thread", (void *)e1000_thread, NULL, 0x1000, 0);
-	sys_thread_new("shellThread", (void *)shell_thread, NULL, 0x1000, 0);
+	dhcp_start(&e1000_netif);
+	kprintf("net: DHCP requested\n");
+}
 
-	kprintf("net: lwIP started, waiting for DHCP\n");
+int net_init(void) {
+	if (!e1000_ready) {
+		kprintf("net: no NIC available, skipping network init\n");
+		return 0;
+	}
+
+	tcpip_init(net_tcpip_init_done, NULL);
+
+	sys_thread_new("e1000Thread", e1000_thread_trampoline, NULL, 0x1000, 0);
+
+	kprintf("net: lwIP started\n");
 	return 0;
 }

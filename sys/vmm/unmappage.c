@@ -45,40 +45,39 @@
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags) {
-  int pageDirectoryIndex = 0, pageTableIndex = 0;
-  uint32_t *pageTable = 0x0;
-  uint32_t *pageDirectory = 0x0;
+void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags)
+{
+	int pageDirectoryIndex = 0, pageTableIndex = 0;
+	uint32_t *pageTable = 0x0;
+	uint32_t *pageDirectory = 0x0;
 
-  pageDirectory = (uint32_t *)PD_BASE_ADDR;
+	pageDirectory = (uint32_t *)PD_BASE_ADDR;
 
-  /* Get The Index To The Page Directory */
-  pageDirectoryIndex = (pageAddr >> 22);
+	/* Get The Index To The Page Directory */
+	pageDirectoryIndex = (pageAddr >> 22);
 
-  if ((pageDirectory[pageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT)
-    return;
+	if ((pageDirectory[pageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+		return;
 
-  //Calculate The Page Table Index
-  pageTableIndex = ((pageAddr >> 12) & 0x3FF);
+	// Calculate The Page Table Index
+	pageTableIndex = ((pageAddr >> 12) & 0x3FF);
 
-  /* Set pageTable To The Virtual Address Of Table */
-  pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+	/* Set pageTable To The Virtual Address Of Table */
+	pageTable = (uint32_t *)(PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
 
-  /* Free The Physical Page If Flags Is 0 */
-  if (flags == 0)
-    freePage((uint32_t) (pageTable[pageTableIndex] & 0xFFFFF000));
+	/* Free The Physical Page If Flags Is 0 */
+	if (flags == 0)
+		freePage((uint32_t)(pageTable[pageTableIndex] & 0xFFFFF000));
 
-  /* Unmap The Page */
-  pageTable[pageTableIndex] = 0x0;
+	/* Unmap The Page */
+	pageTable[pageTableIndex] = 0x0;
 
-  /* Rehash The Page Directory */
-  asm volatile(
-    "movl %cr3,%eax\n"
-    "movl %eax,%cr3\n"
-  );
+	/* Rehash The Page Directory */
+	asm volatile("movl %cr3,%eax\n"
+	             "movl %eax,%cr3\n");
 
-  /* Return */
-  return;
+	/* Return */
+	return;
 }
 
 /************************************************************************
@@ -98,13 +97,15 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags) {
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPages(void *ptr, uint32_t size, unmapFlags_t flags) {
-  uInt32 addr = (uInt32) ptr & 0xFFFFF000;
-  uInt32 end  = addr + (((size + 4095) / 4096) * 4096);
+void vmm_unmapPages(void *ptr, uint32_t size, unmapFlags_t flags)
+{
+	uInt32 addr = (uInt32)ptr & 0xFFFFF000;
+	uInt32 end = addr + (((size + 4095) / 4096) * 4096);
 
-  while (addr < end) {
-    vmm_unmapPage(addr, flags);
-    addr += 4096;
-  }
-  return;
+	while (addr < end)
+	{
+		vmm_unmapPage(addr, flags);
+		addr += 4096;
+	}
+	return;
 }

@@ -29,6 +29,7 @@
  * Run this binary on the live UbixOS image.  Each test prints PASS or FAIL.
  */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

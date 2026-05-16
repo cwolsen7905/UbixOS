@@ -116,14 +116,17 @@ uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout) {
   ubthread_mutex_lock(&(sem->mutex));
   while (sem->signaled <= 0) {
     if (timeout > 0) {
+      /*
+       * cond_wait returns 0 on timeout (ETIMEDOUT from the underlying
+       * ubthread_cond_timedwait) and non-zero elapsed-ms when woken by
+       * a signal.  Map the 0-means-timeout convention to SYS_ARCH_TIMEOUT
+       * so that lwIP's timer infrastructure (sys_timeouts_mbox_fetch) works.
+       */
       time_needed = cond_wait(&(sem->cond), &(sem->mutex), timeout);
-
-      if (time_needed == SYS_ARCH_TIMEOUT) {
+      if (time_needed == 0) {
         ubthread_mutex_unlock(&(sem->mutex));
         return SYS_ARCH_TIMEOUT;
       }
-      /*      ubthread_mutex_unlock(&(sem->mutex));
-       return time_needed; */
     }
     else {
       cond_wait(&(sem->cond), &(sem->mutex), 0);
@@ -421,40 +424,55 @@ struct thread_start_param {
 };
 
 static uint32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint32_t timeout) {
-  unsigned int tdiff;
-  unsigned long sec, usec;
-  struct timeval rtime1, rtime2;
-  struct timespec ts;
+  ubthread_cond_t ubcond = *cond;
+  struct timeval rtime1, rtime2, deadline;
   struct timezone tz;
-  int retval;
+  unsigned int tdiff;
+
+  /*
+   * Arm the cond before releasing the mutex.  ubthread_cond_signal /
+   * ubthread_cond_broadcast set lock=FALSE; we spin here waiting for
+   * that transition.  Without arming first the lock starts FALSE and
+   * the spin exits immediately without ever waiting.
+   */
+  ubcond->lock = TRUE;
 
   if (timeout > 0) {
-    /* Get a timestamp and add the timeout value. */
     gettimeofday(&rtime1, &tz);
-    sec = rtime1.tv_sec;
-    usec = rtime1.tv_usec;
-    usec += timeout % 1000 * 1000;
-    sec += (int) (timeout / 1000) + (int) (usec / 1000000);
-    usec = usec % 1000000;
-    ts.tv_nsec = usec * 1000;
-    ts.tv_sec = sec;
+    deadline.tv_sec  = rtime1.tv_sec  + (long)(timeout / 1000);
+    deadline.tv_usec = rtime1.tv_usec + (long)((timeout % 1000) * 1000);
+    if (deadline.tv_usec >= 1000000L) {
+      deadline.tv_sec++;
+      deadline.tv_usec -= 1000000L;
+    }
 
-    retval = ubthread_cond_timedwait(cond, mutex, &ts);
-    if (retval == ETIMEDOUT) {
-      return 0;
-    }
-    else {
-      /* Calculate for how long we waited for the cond. */
+    ubthread_mutex_unlock(mutex);
+
+    for (;;) {
+      if (ubcond->lock == FALSE)
+        break;
       gettimeofday(&rtime2, &tz);
-      tdiff = (rtime2.tv_sec - rtime1.tv_sec) * 1000 + (rtime2.tv_usec - rtime1.tv_usec) / 1000;
-      if (tdiff == 0) {
-        return 1;
-      }
-      return tdiff;
+      if (rtime2.tv_sec > deadline.tv_sec ||
+          (rtime2.tv_sec == deadline.tv_sec &&
+           rtime2.tv_usec >= deadline.tv_usec))
+        break;
+      sched_yield();
     }
-  }
-  else {
-    ubthread_cond_wait(cond, mutex);
+
+    ubthread_mutex_lock(mutex);
+
+    if (ubcond->lock == TRUE)
+      return 0;   /* timed out — caller maps 0 to SYS_ARCH_TIMEOUT */
+
+    gettimeofday(&rtime2, &tz);
+    tdiff = (rtime2.tv_sec - rtime1.tv_sec) * 1000 +
+            (rtime2.tv_usec - rtime1.tv_usec) / 1000;
+    return tdiff > 0 ? tdiff : 1;
+  } else {
+    ubthread_mutex_unlock(mutex);
+    while (ubcond->lock == TRUE)
+      sched_yield();
+    ubthread_mutex_lock(mutex);
     return 0;
   }
 }

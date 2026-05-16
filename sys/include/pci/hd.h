@@ -30,6 +30,7 @@
 #define _PCI_HD_H_
 
 #include <sys/types.h>
+#include <sys/bus.h>
 #include <ubixfs/ubixfs.h>
 
 #define hdData     0x0
@@ -483,5 +484,7 @@ static const char * const part_types[256] = {
   [0xFB] = "VMware VMFS",
   [0xFE] = "SpeedStor >1024 cyl. or LANstep",
   [0xFF] = "Xenix bad blocks table", };
+
+extern struct ubx_driver ide_ubx_driver;
 
 #endif

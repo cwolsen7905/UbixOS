@@ -36,6 +36,7 @@
 
 #include <pci/e1000.h>
 #include <pci/pci.h>
+#include <sys/bus.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/types.h>
@@ -59,9 +60,13 @@ uint8_t      e1000_mac[6];
 /* Kernel-virtual base of the 128 KB MMIO region */
 static volatile uint8_t *e1000_mmio = NULL;
 
-/* Descriptor rings — 16-byte aligned via padding */
-static uint8_t rx_desc_mem[E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc) + 16];
-static uint8_t tx_desc_mem[E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc) + 16];
+/* Descriptor ring backing memory — allocated from heap to ensure physical
+ * addresses are above 1 MB where QEMU's DMA path reliably accesses guest RAM.
+ * BSS-resident descriptors at low physical addresses (< 1 MB) appear to be
+ * silently zero-read by pci_dma_read, possibly due to QEMU's PC memory map
+ * treating that range differently for DMA. */
+static uint8_t *rx_desc_mem_heap;
+static uint8_t *tx_desc_mem_heap;
 
 static struct e1000_rx_desc *rx_descs;
 static struct e1000_tx_desc *tx_descs;
@@ -108,30 +113,21 @@ static int e1000_wait_bit(uint32_t reg, uint32_t mask, int set, int limit) {
  * --------------------------------------------------------------------- */
 
 /*
- * Map 128 KB of physical MMIO space into kernel virtual address space.
- * We allocate kernel virtual pages and remap them to the physical BAR.
- * PAGE_CACHE_DISABLED is critical — MMIO must not be cached.
+ * Identity-map the 128 KB MMIO BAR into kernel virtual space.
+ * vmm_remapIOPage maps phys->phys and silently overwrites existing PTEs,
+ * avoiding the panic that vmm_remapPage emits when a page is already present
+ * (vmm_getFreeKernelPage pre-populates its range with real RAM pages).
+ * PAGE_CACHE_DISABLED is required — MMIO must never be cached.
  */
 static int e1000_map_mmio(uint32_t phys) {
 	uint32_t pages = 32; /* 128 KB / 4 KB */
-	uint32_t virt;
 	uint32_t i;
 
-	void *vbase = vmm_getFreeKernelPage(sysID, pages);
-	if (!vbase) {
-		kprintf("e1000: cannot allocate kernel virtual pages for MMIO\n");
-		return -1;
-	}
-	virt = (uint32_t)vbase;
+	for (i = 0; i < pages; i++)
+		vmm_remapIOPage(phys + i * 0x1000,
+		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
 
-	for (i = 0; i < pages; i++) {
-		if (vmm_remapPage(phys + i * 0x1000, virt + i * 0x1000,
-		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID, 0) == 0) {
-			kprintf("e1000: vmm_remapPage failed at page %u\n", i);
-			return -1;
-		}
-	}
-	e1000_mmio = (volatile uint8_t *)virt;
+	e1000_mmio = (volatile uint8_t *)phys;
 	return 0;
 }
 
@@ -142,9 +138,15 @@ static int e1000_map_mmio(uint32_t phys) {
 static int e1000_init_rx(void) {
 	uint32_t i;
 
-	/* Align descriptor array to 16 bytes */
+	/* Allocate descriptor ring from heap — heap addresses are above 1 MB
+	 * and reliably DMA-accessible by QEMU's pci_dma_read. */
+	rx_desc_mem_heap = kmalloc(E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc) + 16);
+	if (!rx_desc_mem_heap) {
+		kprintf("e1000: cannot allocate RX descriptor ring\n");
+		return -1;
+	}
 	rx_descs = (struct e1000_rx_desc *)
-	    (((uint32_t)rx_desc_mem + 15u) & ~15u);
+	    (((uint32_t)rx_desc_mem_heap + 15u) & ~15u);
 
 	for (i = 0; i < E1000_NUM_RX_DESC; i++) {
 		rx_bufs[i] = kmalloc(E1000_BUF_SIZE);
@@ -158,6 +160,8 @@ static int e1000_init_rx(void) {
 	rx_tail = 0;
 
 	uint32_t rdba = vmm_getRealAddr((uint32_t)rx_descs);
+	kprintf("e1000: RX ring virt=0x%X phys=0x%X\n", (uint32_t)rx_descs, rdba);
+
 	e1000_write(E1000_REG_RDBAL, rdba);
 	e1000_write(E1000_REG_RDBAH, 0);
 	e1000_write(E1000_REG_RDLEN, E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc));
@@ -176,10 +180,15 @@ static int e1000_init_rx(void) {
 }
 
 static int e1000_init_tx(void) {
-	uint32_t i;
+	uint32_t i, tdba;
 
+	tx_desc_mem_heap = kmalloc(E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc) + 16);
+	if (!tx_desc_mem_heap) {
+		kprintf("e1000: cannot allocate TX descriptor ring\n");
+		return -1;
+	}
 	tx_descs = (struct e1000_tx_desc *)
-	    (((uint32_t)tx_desc_mem + 15u) & ~15u);
+	    (((uint32_t)tx_desc_mem_heap + 15u) & ~15u);
 
 	for (i = 0; i < E1000_NUM_TX_DESC; i++) {
 		tx_bufs[i] = kmalloc(E1000_BUF_SIZE);
@@ -188,16 +197,23 @@ static int e1000_init_tx(void) {
 			return -1;
 		}
 		tx_descs[i].addr   = (uint64_t)vmm_getRealAddr((uint32_t)tx_bufs[i]);
-		tx_descs[i].status = E1000_TXD_STAT_DD; /* mark all as done initially */
+		tx_descs[i].status = E1000_TXD_STAT_DD;
 	}
 	tx_tail = 0;
 
-	uint32_t tdba = vmm_getRealAddr((uint32_t)tx_descs);
+	tdba = vmm_getRealAddr((uint32_t)tx_descs);
+	kprintf("e1000: TX ring virt=0x%X phys=0x%X buf[0]=0x%X\n",
+	    (uint32_t)tx_descs, tdba,
+	    (uint32_t)(tx_descs[0].addr & 0xFFFFFFFF));
+
 	e1000_write(E1000_REG_TDBAL, tdba);
 	e1000_write(E1000_REG_TDBAH, 0);
 	e1000_write(E1000_REG_TDLEN, E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc));
 	e1000_write(E1000_REG_TDH, 0);
 	e1000_write(E1000_REG_TDT, 0);
+
+	/* No descriptor write-back batching — write back each descriptor immediately. */
+	e1000_write(E1000_REG_TXDCTL, 0);
 
 	/* Recommended TIPG for 802.3 (from Intel manual) */
 	e1000_write(E1000_REG_TIPG, 0x0060200Au);
@@ -206,7 +222,7 @@ static int e1000_init_tx(void) {
 	    E1000_TCTL_EN |
 	    E1000_TCTL_PSP |
 	    (0x0F << 4)  |   /* CT: collision threshold */
-	    (0x3F << 12));   /* COLD: collision distance (full duplex) */
+	    (0x40 << 12));   /* COLD: 64 byte slot time for full-duplex gigabit */
 
 	return 0;
 }
@@ -224,13 +240,25 @@ void e1000_send_packet(const void *data, uint16_t len) {
 		return;
 	}
 
-	/* Wait for the descriptor to be free (DD set by hardware) */
-	for (i = 0; i < 10000; i++) {
-		if (tx_descs[tail].status & E1000_TXD_STAT_DD)
+	/* One-shot: print CR3 on first send to verify address space context. */
+	if (tail == 0) {
+		uint32_t cr3;
+		asm volatile("movl %%cr3, %0" : "=r"(cr3));
+		kprintf("e1000: send CR3=0x%X desc_virt=0x%X desc_phys=0x%X\n",
+		    cr3, (uint32_t)tx_descs,
+		    vmm_getRealAddr((uint32_t)tx_descs));
+	}
+
+	/* Wait for the descriptor to be free (DD set by hardware).
+	 * Volatile cast: QEMU writes DD via DMA; compiler cannot observe the change. */
+	for (i = 0; i < 100000; i++) {
+		if (*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)
 			break;
 	}
-	if (!(tx_descs[tail].status & E1000_TXD_STAT_DD)) {
-		kprintf("e1000: TX timeout, dropping packet\n");
+	if (!(*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)) {
+		kprintf("e1000: TX timeout desc[%u] TDH=%u TDT=%u TCTL=0x%X\n",
+		    tail, e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT),
+		    e1000_read(E1000_REG_TCTL));
 		return;
 	}
 
@@ -240,8 +268,40 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	tx_descs[tail].cmd    = E1000_TXD_CMD_EOP | E1000_TXD_CMD_IFCS | E1000_TXD_CMD_RS;
 	tx_descs[tail].status = 0;
 
+	/* Full memory barrier: descriptor stores must be globally visible before
+	 * the TDT MMIO write triggers QEMU's DMA read of the descriptor. */
+	__sync_synchronize();
+
+	/* Dump raw descriptor bytes via virtual address to verify what QEMU
+	 * should read at this physical address via pci_dma_read. */
+	{
+		uint8_t *raw = (uint8_t *)&tx_descs[tail];
+		uint32_t phys = vmm_getRealAddr((uint32_t)&tx_descs[tail]);
+		kprintf("e1000: desc[%u] phys=0x%X raw: "
+		    "%02X%02X%02X%02X%02X%02X%02X%02X "
+		    "%02X%02X%02X%02X%02X%02X%02X%02X\n",
+		    tail, phys,
+		    raw[0],  raw[1],  raw[2],  raw[3],
+		    raw[4],  raw[5],  raw[6],  raw[7],
+		    raw[8],  raw[9],  raw[10], raw[11],
+		    raw[12], raw[13], raw[14], raw[15]);
+	}
+
 	tx_tail = (tail + 1) % E1000_NUM_TX_DESC;
-	e1000_write(E1000_REG_TDT, tx_tail);
+	if (tail == 0) {
+		kprintf("e1000: ring TDBAL=0x%X TDLEN=%u TDH=%u TDT(pre)=%u TCTL=0x%X\n",
+		    e1000_read(E1000_REG_TDBAL), e1000_read(E1000_REG_TDLEN),
+		    e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT),
+		    e1000_read(E1000_REG_TCTL));
+	}
+	{
+		uint32_t tdh_before = e1000_read(E1000_REG_TDH);
+		e1000_write(E1000_REG_TDT, tx_tail);
+		uint32_t tdh_after = e1000_read(E1000_REG_TDH);
+		kprintf("e1000: TX len=%u desc[%u] TDH %u->%u ICR=0x%X\n",
+		    len, tail, tdh_before, tdh_after,
+		    e1000_read(E1000_REG_ICR));
+	}
 }
 
 /* -----------------------------------------------------------------------
@@ -256,8 +316,8 @@ void e1000_send_packet(const void *data, uint16_t len) {
 static int e1000_rx_process(void) {
 	int count = 0;
 
-	while (rx_descs[rx_tail].status & E1000_RXD_STAT_DD) {
-		if (rx_descs[rx_tail].status & E1000_RXD_STAT_EOP) {
+	while (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD) {
+		if (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_EOP) {
 			uint16_t len = rx_descs[rx_tail].length;
 			if (len <= E1000_BUF_SIZE) {
 				memcpy(e1000_rx_packet, rx_bufs[rx_tail], len);
@@ -303,6 +363,11 @@ void e1000_thread(void) {
 			e1000_irq_pending = 0;
 			e1000_rx_process();
 		}
+		/* Poll ring directly — catch packets if IRQ is not firing.
+		 * Volatile cast prevents the compiler from hoisting the status
+		 * read out of this loop (QEMU DMA is invisible to the optimizer). */
+		if (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD)
+			e1000_rx_process();
 		sched_yield();
 	}
 }
@@ -351,23 +416,30 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	if (e1000_map_mmio(bar0_phys) != 0)
 		return -1;
 
-	/* Device reset */
+	/* Disable all interrupts before reset */
+	e1000_write(E1000_REG_IMC, 0xFFFFFFFFu);
+
+	/* Software reset — puts the device into a known state so QEMU's DMA
+	 * state machine is ready.  PCI config space (bus master, BAR addresses)
+	 * is unaffected by CTRL.RST; the caller re-enables bus master after we
+	 * return. */
 	e1000_write(E1000_REG_CTRL, e1000_read(E1000_REG_CTRL) | E1000_CTRL_RST);
-	for (i = 0; i < 10000; i++) {
+	for (i = 0; i < 20000; i++) {
 		if (!(e1000_read(E1000_REG_CTRL) & E1000_CTRL_RST))
 			break;
 	}
-	if (e1000_read(E1000_REG_CTRL) & E1000_CTRL_RST) {
-		kprintf("e1000: reset timeout\n");
-		return -1;
-	}
+	if (e1000_read(E1000_REG_CTRL) & E1000_CTRL_RST)
+		kprintf("e1000: reset did not clear — continuing anyway\n");
 
-	/* Disable all interrupts while we configure */
+	/* Disable interrupts again (reset re-enables them) */
 	e1000_write(E1000_REG_IMC, 0xFFFFFFFFu);
 
-	/* Set link up, auto-speed detection */
+	/* Set full-duplex, link up, auto-speed detection; clear ILOS/LRST */
 	e1000_write(E1000_REG_CTRL,
-	    e1000_read(E1000_REG_CTRL) | E1000_CTRL_SLU | E1000_CTRL_ASDE);
+	    (e1000_read(E1000_REG_CTRL) | E1000_CTRL_SLU | E1000_CTRL_ASDE | E1000_CTRL_FD)
+	    & ~(E1000_CTRL_LRST | E1000_CTRL_ILOS));
+	kprintf("e1000: CTRL=0x%X STATUS=0x%X\n",
+	    e1000_read(E1000_REG_CTRL), e1000_read(E1000_REG_STATUS));
 
 	/* Clear multicast table */
 	for (i = 0; i < 128; i++)
@@ -384,9 +456,10 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	e1000_mac[4] = (rah >>  0) & 0xFF;
 	e1000_mac[5] = (rah >>  8) & 0xFF;
 
-	kprintf("e1000: MAC %02X:%02X:%02X:%02X:%02X:%02X\n",
+	kprintf("e1000: MAC %02X:%02X:%02X:%02X:%02X:%02X STATUS=0x%X\n",
 	    e1000_mac[0], e1000_mac[1], e1000_mac[2],
-	    e1000_mac[3], e1000_mac[4], e1000_mac[5]);
+	    e1000_mac[3], e1000_mac[4], e1000_mac[5],
+	    e1000_read(E1000_REG_STATUS));
 
 	if (e1000_init_rx() != 0) return -1;
 	if (e1000_init_tx() != 0) return -1;
@@ -396,8 +469,11 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	setVector(&e1000_isr, vec, dInt + dPresent + dDpl3);
 	irqEnable(irq);
 
-	/* Enable RX timer and link change interrupts */
+	/* Enable RX timer, RX overrun, and link-change interrupts.
+	 * TXDW (TX descriptor written back) is not needed — we poll DD in send. */
 	e1000_write(E1000_REG_IMS, E1000_ICR_RXT0 | E1000_ICR_RXO | E1000_ICR_LSC);
+	kprintf("e1000: vec=0x%X irq=%u IMS=0x%X\n",
+	    vec, irq, e1000_read(E1000_REG_IMS));
 
 	e1000_ready = 1;
 	kprintf("e1000: ready\n");
@@ -412,3 +488,58 @@ const uint8_t *e1000_get_rx_packet(uint16_t *out_len) {
 	*out_len = e1000_rx_len;
 	return e1000_rx_packet;
 }
+
+/* -----------------------------------------------------------------------
+ * newbus-lite PCI driver registration
+ * --------------------------------------------------------------------- */
+
+static int
+e1000_ubx_probe(struct ubx_device *dev)
+{
+	if (dev->dev_vendor == E1000_VENDOR_ID &&
+	    dev->dev_device_id == E1000_DEVICE_82540EM)
+		return (0);
+	return (-1);
+}
+
+static int
+e1000_ubx_attach(struct ubx_device *dev)
+{
+	uint32_t bar0, cmd;
+	uint8_t irq;
+	int i, ret;
+
+	bar0 = 0;
+	irq  = 0;
+
+	for (i = 0; i < dev->dev_nres; i++) {
+		if (dev->dev_res[i].r_type == UBX_RES_MEMORY && bar0 == 0)
+			bar0 = dev->dev_res[i].r_start;
+		else if (dev->dev_res[i].r_type == UBX_RES_IRQ)
+			irq = (uint8_t)dev->dev_res[i].r_start;
+	}
+
+	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4);
+	cmd |= 0x06; /* Memory Space Enable + Bus Master Enable */
+	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 4);
+
+	kprintf("pci: found e1000 @ BAR0=0x%X IRQ=%u\n", bar0, irq);
+	ret = initE1000(bar0, irq);
+
+	/* Re-enable bus mastering — CTRL.RST inside initE1000 may have cleared it. */
+	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4);
+	cmd |= 0x06;
+	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 4);
+	kprintf("pci: e1000 PCI CMD after init=0x%X (bus master %s)\n",
+	    pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4),
+	    (cmd & 0x04) ? "on" : "OFF");
+
+	return (ret);
+}
+
+struct ubx_driver e1000_ubx_driver = {
+	.drv_name   = "e1000",
+	.drv_probe  = e1000_ubx_probe,
+	.drv_attach = e1000_ubx_attach,
+	.drv_detach = NULL,
+};

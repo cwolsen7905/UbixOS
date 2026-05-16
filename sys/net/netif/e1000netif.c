@@ -32,6 +32,7 @@
  */
 
 #include <pci/e1000.h>
+#include <lib/kprintf.h>
 #include <string.h>
 
 #include "net/opt.h"
@@ -90,6 +91,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p) {
 		total += q->len;
 	}
 
+	kprintf("net: TX %u bytes\n", total);
 	e1000_send_packet(tx_scratch, total);
 
 	MIB2_STATS_NETIF_ADD(netif, ifoutoctets, p->tot_len);

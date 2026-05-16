@@ -28,6 +28,7 @@
 
 #include <isa/atkbd.h>
 #include <isa/pit.h>
+#include <sys/bus.h>
 #include <isa/kbd.h>
 #include <ubixos/vitals.h>
 #include <isa/8259.h>
@@ -477,3 +478,24 @@ int getchar() {
   //spinUnlock(&atkbdSpinLock);
   return (retKey);
 }
+
+static int
+atkbd_ubx_probe(struct ubx_device *dev)
+{
+	(void)dev;
+	return (0);	/* AT keyboard is always present on i386 */
+}
+
+static int
+atkbd_ubx_attach(struct ubx_device *dev)
+{
+	(void)dev;
+	return (atkbd_init());
+}
+
+struct ubx_driver atkbd_ubx_driver = {
+	.drv_name   = "atkbd",
+	.drv_probe  = atkbd_ubx_probe,
+	.drv_attach = atkbd_ubx_attach,
+	.drv_detach = NULL,
+};

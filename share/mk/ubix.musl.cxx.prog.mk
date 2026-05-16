@@ -40,22 +40,22 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
 .cc.o:
 	@mkdir -p ${OBJDIR}
-	$(CXX) $(CXX_CFLAGS) $(LIBCXX_INC) $(MUSL_INC) -I${SRCTOP}/include -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CXX) $(CXX_CFLAGS) $(LIBCXX_INC) $(MUSL_INC) -I${SRCTOP}/include -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .cpp.o:
 	@mkdir -p ${OBJDIR}
-	$(CXX) $(CXX_CFLAGS) $(LIBCXX_INC) $(MUSL_INC) -I${SRCTOP}/include -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CXX) $(CXX_CFLAGS) $(LIBCXX_INC) $(MUSL_INC) -I${SRCTOP}/include -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
 	$(CC) ${CROSS_M32} -nostdlib -nostdinc -fno-builtin \
 		-mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP -Wall -O \
-		$(MUSL_INC) -I${SRCTOP}/include -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+		$(MUSL_INC) -I${SRCTOP}/include -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
 	$(CC) ${CROSS_M32} -nostdlib -nostdinc -Wall \
-		-c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+		-MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 

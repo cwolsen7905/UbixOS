@@ -83,7 +83,10 @@ struct pciConfig {
     uint8_t bus;
     uint8_t dev;
     uint8_t func;
+    uint8_t _pad;
 
+    /* Decoded BAR sizes (filled by pciProbe after BAR size discovery) */
+    uint32_t barSize[6];
 };
 
 struct confadd {
@@ -96,6 +99,12 @@ struct confadd {
 };
 
 #define countof(a)     (sizeof(a) / sizeof(a[0]))
+
+struct pci_driver {
+    uint16_t vendor;
+    uint16_t device;
+    int (*init)(struct pciConfig *);
+};
 
 int pci_init();
 

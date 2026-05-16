@@ -32,11 +32,11 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 

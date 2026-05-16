@@ -24,7 +24,8 @@ MUSL_LIB  = ${MUSL_OBJ}/lib
 MUSL_INC  = -I${MUSL_SRC}/include \
             -I${MUSL_OBJ}/obj/include \
             -I${MUSL_SRC}/arch/i386 \
-            -I${MUSL_SRC}/arch/generic
+            -I${MUSL_SRC}/arch/generic \
+            -I${SRCTOP}/include
 
 MUSL_CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin \
               -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP \
@@ -38,11 +39,11 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 

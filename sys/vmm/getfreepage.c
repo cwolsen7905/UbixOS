@@ -43,39 +43,43 @@ static struct spinLock vmmGFPlock = SPIN_LOCK_INITIALIZER;
  07/30/02 - This Returns A Free Page In The Top 1GB For The Kernel
 
  ************************************************************************/
-void *vmm_getFreePage(pidType pid) {
-  uInt16 x = 0x0, y = 0x0;
-  uInt32 *pageTableSrc = 0x0;
+void *vmm_getFreePage(pidType pid)
+{
+	uInt16 x = 0x0, y = 0x0;
+	uInt32 *pageTableSrc = 0x0;
 
-  spinLock(&vmmGFPlock);
+	spinLock(&vmmGFPlock);
 
-  /* Lets Search For A Free Page */
-  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
+	/* Lets Search For A Free Page */
+	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
+	{
 
-    /* Set Page Table Address */
-    pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * x));
+		/* Set Page Table Address */
+		pageTableSrc = (uInt32 *)(PT_BASE_ADDR + (0x1000 * x));
 
-    for (y = 0x0; y < 1024; y++) {
+		for (y = 0x0; y < 1024; y++)
+		{
 
-      /* Loop Through The Page Table Find An UnAllocated Page */
-      if ((uInt32) pageTableSrc[y] == (uInt32) 0x0) {
+			/* Loop Through The Page Table Find An UnAllocated Page */
+			if ((uInt32)pageTableSrc[y] == (uInt32)0x0)
+			{
 
-        /* Map A Physical Page To The Virtual Page */
-        if ((vmm_remapPage(vmm_findFreePage(pid), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT, pid, 0)) == 0x0)
-          kpanic("vmmRemapPage: vmm_getFreePage\n");
+				/* Map A Physical Page To The Virtual Page */
+				if ((vmm_remapPage(vmm_findFreePage(pid), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT, pid, 0)) == 0x0)
+					kpanic("vmmRemapPage: vmm_getFreePage\n");
 
-        /* Clear This Page So No Garbage Is There */
-        vmm_clearVirtualPage((uInt32) ((x * 0x400000) + (y * 0x1000)));
+				/* Clear This Page So No Garbage Is There */
+				vmm_clearVirtualPage((uInt32)((x * 0x400000) + (y * 0x1000)));
 
-        /* Return The Address Of The Newly Allocate Page */
-        spinUnlock(&vmmGFPlock);
-        return ((void *) ((x * 0x400000) + (y * 0x1000)));
-      }
-    }
-  }
+				/* Return The Address Of The Newly Allocate Page */
+				spinUnlock(&vmmGFPlock);
+				return ((void *)((x * 0x400000) + (y * 0x1000)));
+			}
+		}
+	}
 
-  /* If No Free Page Was Found Return NULL */
-  spinUnlock(&vmmGFPlock);
+	/* If No Free Page Was Found Return NULL */
+	spinUnlock(&vmmGFPlock);
 
-  return (0x0);
+	return (0x0);
 }

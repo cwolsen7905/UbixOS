@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,6 +28,9 @@
 
 #include <pci/pci.h>
 #include <pci/e1000.h>
+#include <pci/hd.h>
+#include <pci/lnc.h>
+#include <sys/bus.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -141,7 +144,6 @@ void pciWrite(int bus, int dev, int func, int reg, uInt32 v, int bytes) {
 
 uint32_t pciProbe(int bus, int dev, int func) {
   struct pciConfig *cfg = 0x0;
-  uint32_t v;
   int i;
 
   cfg = kmalloc(sizeof(struct pciConfig));
@@ -185,6 +187,21 @@ uint32_t pciProbe(int bus, int dev, int func) {
     case 0x0: /* normal device */
       for (i = 4; i <= 16; i++) {
         word[i] = pciRead(bus, dev, func, 4 * i, 4);
+      }
+      /* BAR size discovery: write all-ones, read back mask, restore. */
+      for (i = 0; i < 6; i++) {
+        uint32_t orig = cfg->bar[i];
+        if (!orig) {
+          cfg->barSize[i] = 0;
+          continue;
+        }
+        pciWrite(bus, dev, func, 0x10 + i * 4, 0xFFFFFFFFu, 4);
+        uint32_t mask = pciRead(bus, dev, func, 0x10 + i * 4, 4);
+        pciWrite(bus, dev, func, 0x10 + i * 4, orig, 4);
+        if (orig & 1u)
+          cfg->barSize[i] = (~(mask & ~3u) + 1u) & 0xFFFFu; /* I/O */
+        else
+          cfg->barSize[i] = ~(mask & ~15u) + 1u;             /* memory */
       }
       if (cfg->vendorID == 0x1022) {
         kprintf("Device Info: /bus/pci/%d/%d/%d\n", bus, dev, func);
@@ -244,37 +261,115 @@ uint32_t pciProbe(int bus, int dev, int func) {
   return ((uint32_t) cfg);
 }
 
+static struct ubx_driver * const pci_drv_table[] = {
+	&e1000_ubx_driver,
+	&ide_ubx_driver,
+	&lnc_ubx_driver,
+	NULL,
+};
+
+/*
+ * Populate an ubx_device from a probed pciConfig.
+ * Records all valid BARs and the interrupt line as resources.
+ * The pciConfig is freed after this call; do not use it afterwards.
+ */
+static struct ubx_device *
+pci_device_from_cfg(struct pciConfig *cfg)
+{
+	struct ubx_device *dev;
+	struct ubx_resource *res;
+	char nameunit[32];
+	int i;
+
+	snprintf(nameunit, sizeof(nameunit), "pci%u.%u.%u",
+	    cfg->bus, cfg->dev, cfg->func);
+
+	dev = ubx_device_alloc(NULL, nameunit);
+	if (dev == NULL) {
+		kfree(cfg);
+		return (NULL);
+	}
+
+	dev->dev_vendor    = cfg->vendorID;
+	dev->dev_device_id = cfg->deviceID;
+	dev->dev_class     = cfg->classCode;
+	dev->dev_subclass  = cfg->subClass;
+	dev->dev_progif    = cfg->progIf;
+	dev->dev_bus       = cfg->bus;
+	dev->dev_slot      = cfg->dev;
+	dev->dev_func      = cfg->func;
+
+	/* Record BARs as typed resources (not yet mapped). */
+	for (i = 0; i < 6 && dev->dev_nres < UBX_MAX_RESOURCES; i++) {
+		if (cfg->bar[i] == 0)
+			continue;
+		res = &dev->dev_res[dev->dev_nres++];
+		if (cfg->bar[i] & 1u) {
+			res->r_type  = UBX_RES_IOPORT;
+			res->r_start = cfg->bar[i] & ~3u;
+		} else {
+			res->r_type  = UBX_RES_MEMORY;
+			res->r_start = cfg->bar[i] & ~0xFu;
+		}
+		res->r_size  = cfg->barSize[i];
+		res->r_vaddr = NULL;
+	}
+
+	/* Record interrupt line. */
+	if (cfg->intLine != 0 && cfg->intLine != 0xFF &&
+	    dev->dev_nres < UBX_MAX_RESOURCES) {
+		res = &dev->dev_res[dev->dev_nres++];
+		res->r_type  = UBX_RES_IRQ;
+		res->r_start = cfg->intLine;
+		res->r_size  = 0;
+		res->r_vaddr = NULL;
+	}
+
+	kfree(cfg);
+	return (dev);
+}
+
 int pci_init() {
   uint16_t bus, dev, func;
-
-  int i = 0x0;
+  int i;
 
   struct pciConfig *pcfg;
+  struct ubx_device *udev;
 
   for (bus = 0x0; bus < 0x2; bus++) {
     for (dev = 0; dev < 32; dev++) {
+      int multifunction = 0;
       for (func = 0; func < 8; func++) {
-        pcfg = (struct pciConfig *) pciProbe(bus, dev, func);
-        if (pcfg != 0x0) {
-          /* Intel 82540EM Gigabit Ethernet (e1000) */
-          if (pcfg->vendorID == E1000_VENDOR_ID && pcfg->deviceID == E1000_DEVICE_82540EM) {
-            uint32_t cmd = pciRead(bus, dev, func, 0x04, 4);
-            cmd |= 0x06; /* Memory Space Enable + Bus Master Enable */
-            pciWrite(bus, dev, func, 0x04, cmd, 4);
-            kprintf("pci: found e1000 @ BAR0=0x%X IRQ=%u\n",
-                pcfg->bar[0] & ~0xFu, pcfg->intLine);
-            initE1000(pcfg->bar[0] & ~0xFu, pcfg->intLine);
-          }
+        /* Only scan functions 1-7 if function 0 advertised multi-function. */
+        if (func != 0 && !multifunction)
+          break;
 
-          for (i = 0x0; i < countof(pciClasses); i++) {
-            if (pcfg->classCode == pciClasses[i].baseClass && pcfg->subClass == pciClasses[i].subClass && pcfg->progIf == pciClasses[i].interface) {
-              if (pcfg->vendorID == 0x1022) {
-                kprintf("PCI Device: %s @ IRQ: 0x%X.0x%X\n", pciClasses[i].name, pcfg->intPin, pcfg->intLine);
-              }
-              break;
-            }
+        pcfg = (struct pciConfig *) pciProbe(bus, dev, func);
+        if (pcfg == NULL) {
+          if (func == 0) break; /* no device here at all */
+          continue;
+        }
+
+        if (func == 0)
+          multifunction = (pcfg->headerType & 0x80) ? 1 : 0;
+
+        for (i = 0x0; i < (int)countof(pciClasses); i++) {
+          if (pcfg->classCode == pciClasses[i].baseClass &&
+              pcfg->subClass  == pciClasses[i].subClass  &&
+              pcfg->progIf    == pciClasses[i].interface) {
+            kprintf("pci: %u:%u.%u %04X:%04X %s IRQ %u\n",
+                pcfg->bus, pcfg->dev, pcfg->func,
+                pcfg->vendorID, pcfg->deviceID,
+                pciClasses[i].name, pcfg->intLine);
+            break;
           }
         }
+
+        udev = pci_device_from_cfg(pcfg); /* pcfg freed inside */
+        if (udev == NULL)
+          continue;
+
+        ubx_bus_probe_and_attach(udev, pci_drv_table);
       }
     }
   }

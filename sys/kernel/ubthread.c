@@ -34,6 +34,7 @@
 #include <ubixos/time.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
+#include <ubixos/errno.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
@@ -128,8 +129,6 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
 
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime) {
     ubthread_cond_t ubcond = *cond;
-    ubthread_mutex_t ubmutex = *mutex;
-
     uint32_t enterTime = systemVitals->sysUptime + 20;
 
     ubthread_mutex_unlock(mutex);
@@ -142,7 +141,9 @@ int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, cons
 
     ubthread_mutex_lock(mutex);
 
-    return (0x0);
+    if (ubcond->lock == TRUE)
+        return ETIMEDOUT;
+    return 0;
 }
 
 int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {

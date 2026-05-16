@@ -226,8 +226,8 @@ main(int argc, char **argv)
 	for (;;) {
 		if (shell.valid()) {
 			char outbuf[128];
-			int n = shell.read(outbuf, sizeof(outbuf) - 1);
-			if (n > 0) {
+			int n;
+			while ((n = shell.read(outbuf, sizeof(outbuf) - 1)) > 0) {
 				outbuf[n] = '\0';
 				tv.puts(outbuf);
 				dirty = 1;

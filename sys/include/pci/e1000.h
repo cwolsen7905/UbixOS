@@ -30,6 +30,7 @@
 #define _PCI_E1000_H
 
 #include <sys/types.h>
+#include <sys/bus.h>
 
 /* PCI identification */
 #define E1000_VENDOR_ID         0x8086u
@@ -55,13 +56,17 @@
 #define E1000_REG_TDLEN  0x3808u  /* TX Descriptor Ring Length (bytes) */
 #define E1000_REG_TDH    0x3810u  /* TX Descriptor Head */
 #define E1000_REG_TDT    0x3818u  /* TX Descriptor Tail */
+#define E1000_REG_TXDCTL 0x3828u  /* TX Descriptor Control */
 #define E1000_REG_MTA    0x5200u  /* Multicast Table Array (128 x u32) */
 #define E1000_REG_RAL0   0x5400u  /* Receive Address Low 0 (MAC bytes 0-3) */
 #define E1000_REG_RAH0   0x5404u  /* Receive Address High 0 (MAC bytes 4-5 + AV) */
 
 /* CTRL bits */
+#define E1000_CTRL_FD    (1u << 0)   /* Full Duplex */
+#define E1000_CTRL_LRST  (1u << 3)   /* Link Reset */
 #define E1000_CTRL_ASDE  (1u << 5)   /* Auto-Speed Detection Enable */
 #define E1000_CTRL_SLU   (1u << 6)   /* Set Link Up */
+#define E1000_CTRL_ILOS  (1u << 7)   /* Invert Loss-of-Signal */
 #define E1000_CTRL_RST   (1u << 26)  /* Device Reset */
 
 /* ICR / IMS bits */
@@ -129,6 +134,9 @@ extern volatile int    e1000_irq_pending;
 
 /* Public API */
 int             initE1000(uint32_t bar0_phys, uint8_t irq);
+
+/* newbus-lite driver registration — referenced by pci_drv_table[] in pci.c */
+extern struct ubx_driver e1000_ubx_driver;
 void            e1000_send_packet(const void *data, uint16_t len);
 void            e1000_handle_irq(void);
 void            e1000_thread(void);

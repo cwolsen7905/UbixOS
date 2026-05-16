@@ -31,6 +31,7 @@
  */
 
 #include <net/opt.h>
+#include <lib/kprintf.h>
 
 #if !NO_SYS /* don't build if not configured for use in lwipopts.h */
 
@@ -85,6 +86,7 @@ static void tcpip_thread(void *arg) {
     tcpip_init_done(tcpip_init_done_arg);
   }
 
+  kprintf("net: tcpip_thread entering main loop\n");
   LOCK_TCPIP_CORE();
   while (1) { /* MAIN Loop */
     UNLOCK_TCPIP_CORE();

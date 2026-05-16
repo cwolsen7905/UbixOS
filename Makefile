@@ -169,13 +169,34 @@ install: install-world install-kernel
 run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -serial file:serial.log -vga std \
-	  -device e1000,netdev=net0 -netdev user,id=net0
+	  -device e1000,netdev=net0 -netdev user,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap \
+	  -d guest_errors,unimp -D /tmp/qemu_debug.log \
+	  --trace "e1000_*"
 
 # Headless run: no display, serial to stdout.  Ctrl-C to stop.
 run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -nographic -serial stdio \
-	  -device e1000,netdev=net0 -netdev user,id=net0
+	  -device e1000,netdev=net0 -netdev user,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
+
+# Bridge NIC to en0 (requires sudo on macOS — vmnet-bridged needs entitlements).
+# The VM appears on your LAN and gets a real IP from your router's DHCP server.
+# Use this to bypass QEMU SLIRP and verify the e1000 driver against a real DHCP.
+run-en0:
+	sudo qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -serial file:serial.log -vga std \
+	  -device e1000,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=en0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
+
+# vmnet-shared: macOS NAT + its own DHCP server, also requires sudo.
+# Useful when en0 is Wi-Fi and bridged mode is unreliable.
+run-shared:
+	sudo qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -serial file:serial.log -vga std \
+	  -device e1000,netdev=net0 -netdev vmnet-shared,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
 # ── Maintenance ───────────────────────────────────────────────────────────────
 

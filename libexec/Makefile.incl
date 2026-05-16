@@ -18,7 +18,13 @@ RANLIB=${CROSS_PREFIX}ranlib
 
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument -fPIC -MMD -MP
 
-INCLUDES = -I../../include
+MUSL_SRC = ${SRCTOP}/contrib/musl
+MUSL_OBJ = ${OBJ_DIR}/obj/musl
+INCLUDES = -I${MUSL_SRC}/include \
+           -I${MUSL_OBJ}/obj/include \
+           -I${MUSL_SRC}/arch/i386 \
+           -I${MUSL_SRC}/arch/generic \
+           -I${SRCTOP}/include
 
 LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o
 

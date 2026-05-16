@@ -34,7 +34,7 @@
 /* 8×8 bitmap font (printable ASCII 0x20–0x7F)                        */
 /* ------------------------------------------------------------------ */
 
-static const uint8_t font8x8[96][8] = {
+static const uint8_t g_font8x8[96][8] = {
 	{ 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 }, /* 0x20 space */
 	{ 0x10,0x10,0x10,0x10,0x10,0x00,0x10,0x00 }, /* 0x21 ! */
 	{ 0x28,0x28,0x00,0x00,0x00,0x00,0x00,0x00 }, /* 0x22 " */
@@ -215,20 +215,21 @@ Framebuffer::pixel(int x, int y, uint32_t color)
 void
 Framebuffer::rect(int x, int y, int w, int h, uint32_t color)
 {
+	if (x < 0) { w += x; x = 0; }
+	if (y < 0) { h += y; y = 0; }
+	if (x + w > (int)width)  w = (int)width  - x;
+	if (y + h > (int)height) h = (int)height - y;
+	if (w <= 0 || h <= 0) return;
+
 	for (int r = y; r < y + h; r++) {
-		if (r < 0 || (uint32_t)r >= height) continue;
 		if (shadow_) {
-			uint32_t *row = shadow_ + (uint32_t)r * width;
-			for (int c = x; c < x + w; c++) {
-				if (c < 0 || (uint32_t)c >= width) continue;
+			uint32_t *row = shadow_ + (uint32_t)r * width + (uint32_t)x;
+			for (int c = 0; c < w; c++)
 				row[c] = color;
-			}
 		} else {
 			uint8_t *p = row_ptr(r);
-			for (int c = x; c < x + w; c++) {
-				if (c < 0 || (uint32_t)c >= width) continue;
-				put(p, c, color);
-			}
+			for (int c = 0; c < w; c++)
+				put(p, x + c, color);
 		}
 	}
 }
@@ -237,24 +238,24 @@ void
 Framebuffer::blit(int dx, int dy, int w, int h,
     const uint32_t *src, int src_stride)
 {
+	if (dx < 0) { src += -dx;                       w += dx; dx = 0; }
+	if (dy < 0) { src += (uint32_t)(-dy) * src_stride; h += dy; dy = 0; }
+	if (dx + w > (int)width)  w = (int)width  - dx;
+	if (dy + h > (int)height) h = (int)height - dy;
+	if (w <= 0 || h <= 0) return;
+
 	for (int r = 0; r < h; r++) {
-		int dst_y = dy + r;
-		if (dst_y < 0 || (uint32_t)dst_y >= height) continue;
-		const uint32_t *src_row = src + r * src_stride;
+		const uint32_t *src_row = src + (uint32_t)r * src_stride;
 		if (shadow_) {
-			uint32_t *dst_row = shadow_ + (uint32_t)dst_y * width;
-			for (int c = 0; c < w; c++) {
-				int dst_x = dx + c;
-				if (dst_x < 0 || (uint32_t)dst_x >= width) continue;
-				dst_row[dst_x] = src_row[c];
-			}
+			uint32_t *dst_row = shadow_ + (uint32_t)(dy + r) * width + (uint32_t)dx;
+			std::memcpy(dst_row, src_row, (uint32_t)w * sizeof(uint32_t));
+		} else if (bpp == 32) {
+			uint32_t *dst_row = (uint32_t *)row_ptr(dy + r) + dx;
+			std::memcpy(dst_row, src_row, (uint32_t)w * sizeof(uint32_t));
 		} else {
-			uint8_t *dst_row = row_ptr(dst_y);
-			for (int c = 0; c < w; c++) {
-				int dst_x = dx + c;
-				if (dst_x < 0 || (uint32_t)dst_x >= width) continue;
-				put(dst_row, dst_x, src_row[c]);
-			}
+			uint8_t *dst_row = row_ptr(dy + r);
+			for (int c = 0; c < w; c++)
+				put(dst_row, dx + c, src_row[c]);
 		}
 	}
 }
@@ -264,7 +265,7 @@ Framebuffer::ch(int x, int y, char c, uint32_t fg, uint32_t bg)
 {
 	uint8_t idx = (uint8_t)c;
 	if (idx < 0x20 || idx > 0x7F) idx = 0x20;
-	const uint8_t *glyph = font8x8[idx - 0x20];
+	const uint8_t *glyph = g_font8x8[idx - 0x20];
 	for (int row = 0; row < FB_FONT_H; row++) {
 		uint8_t bits = glyph[row];
 		for (int col = 0; col < FB_FONT_W; col++) {

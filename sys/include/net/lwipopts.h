@@ -45,8 +45,8 @@
 
 /* Core locking and MPU */
 #define LWIP_MPU_COMPATIBLE           0
-#define LWIP_TCPIP_CORE_LOCKING       1
-#define LWIP_TCPIP_CORE_LOCKING_INPUT 1
+#define LWIP_TCPIP_CORE_LOCKING       0
+#define LWIP_TCPIP_CORE_LOCKING_INPUT 0
 #define SYS_LIGHTWEIGHT_PROT          0
 
 
@@ -142,7 +142,7 @@
 
 #define RAW_TTL   (IP_DEFAULT_TTL)
 
-#define LWIP_DHCP   0
+#define LWIP_DHCP   1
 #define DHCP_DOES_ARP_CHECK   ((LWIP_DHCP) && (LWIP_ARP))
 #define LWIP_DHCP_BOOTP_FILE   0
 #define LWIP_DHCP_GET_NTP_SRV   0
@@ -216,7 +216,7 @@
 
 #define LWIP_NETIF_API 0
 
-#define LWIP_NETIF_STATUS_CALLBACK 0
+#define LWIP_NETIF_STATUS_CALLBACK 1
 
 #define LWIP_NETIF_LINK_CALLBACK 0
 

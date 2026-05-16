@@ -25,6 +25,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #define _ELF_H
 
 #include <sys/types.h>
+#include <stdint.h>
 
 #define elfExecutable 0x002
 #define elfLibrary    0x003

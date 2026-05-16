@@ -27,6 +27,8 @@
  */
 
 #include <pci/lnc.h>
+#include <pci/pci.h>
+#include <sys/bus.h>
 #include <sys/io.h>
 #include <sys/types.h>
 #include <sys/idt.h>
@@ -101,7 +103,7 @@ uint32_t lnc_readBCR32(struct lncInfo *lnc, uint32_t port) {
   return (inportDWord(lnc->ioAddr + BDP32));
 }
 
-int initLNC() {
+int initLNC(uint32_t ioAddr) {
   int i = 0x0;
 
   char data[64] = "abcDEFghiJKLmnoPQRstuVWXyz";
@@ -110,7 +112,7 @@ int initLNC() {
   memset(lnc, 0x0, sizeof(struct lncInfo));
 
   lnc->bufferSize = 1548;
-  lnc->ioAddr = 0xD020;
+  lnc->ioAddr = (ioAddr != 0) ? ioAddr : 0xD020;
 
   lnc->nic.ic = lnc_probe(lnc);
 
@@ -616,5 +618,61 @@ int lnc_switchDWord(struct lncInfo *lnc) {
   lnc_writeCSR32(lnc, CSR58, _csr58);
 
   return (0);
-
 }
+
+/* -----------------------------------------------------------------------
+ * newbus-lite PCI driver registration
+ *
+ * AMD PCnet-PCI II: vendor 0x1022, device 0x2000.
+ * The I/O BAR (bar[0], bit 0 set) carries the base port address.
+ * --------------------------------------------------------------------- */
+
+#define LNC_VENDOR_AMD   0x1022u
+#define LNC_DEVICE_PCNET 0x2000u
+
+static int
+lnc_ubx_probe(struct ubx_device *dev)
+{
+	if (dev->dev_vendor == LNC_VENDOR_AMD &&
+	    dev->dev_device_id == LNC_DEVICE_PCNET)
+		return (0);
+	return (-1);
+}
+
+static int
+lnc_ubx_attach(struct ubx_device *dev)
+{
+	uint32_t iobase = 0;
+	uint32_t cmd;
+	int i;
+
+	for (i = 0; i < dev->dev_nres; i++) {
+		if (dev->dev_res[i].r_type == UBX_RES_IOPORT) {
+			iobase = dev->dev_res[i].r_start;
+			break;
+		}
+	}
+
+	if (iobase == 0) {
+		kprintf("lnc: no I/O BAR found\n");
+		return (-1);
+	}
+
+	/* Enable I/O Space + Bus Master */
+	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4);
+	cmd |= 0x05;
+	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 4);
+
+	kprintf("pci: found PCnet @ I/O 0x%X IRQ %u\n",
+	    iobase, dev->dev_res[0].r_type == UBX_RES_IRQ ?
+	    (uint8_t)dev->dev_res[0].r_start : 0);
+
+	return (initLNC(iobase));
+}
+
+struct ubx_driver lnc_ubx_driver = {
+	.drv_name   = "lnc",
+	.drv_probe  = lnc_ubx_probe,
+	.drv_attach = lnc_ubx_attach,
+	.drv_detach = NULL,
+};

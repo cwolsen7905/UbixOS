@@ -28,6 +28,7 @@
 
 #include <isa/mouse.h>
 #include <isa/8259.h>
+#include <sys/bus.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/io.h>
@@ -209,3 +210,24 @@ mouseHandler(void)
 	outportByte(sPic, eoi);
 	outportByte(mPic, eoi);
 }
+
+static int
+mouse_ubx_probe(struct ubx_device *dev)
+{
+	(void)dev;
+	return (0);	/* PS/2 mouse presence verified during mouseInit() */
+}
+
+static int
+mouse_ubx_attach(struct ubx_device *dev)
+{
+	(void)dev;
+	return (mouseInit());
+}
+
+struct ubx_driver mouse_ubx_driver = {
+	.drv_name   = "psm",
+	.drv_probe  = mouse_ubx_probe,
+	.drv_attach = mouse_ubx_attach,
+	.drv_detach = NULL,
+};

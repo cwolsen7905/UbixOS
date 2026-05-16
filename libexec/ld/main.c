@@ -57,8 +57,7 @@ uint32_t __attribute__((visibility("hidden"))) ld( uint32_t got2, uint32_t entry
   FILE *binaryFd = 0x0;
 
   if ( binaryHeader == 0x0 ) {
-    binaryFd = malloc( sizeof(FILE) );
-    binaryFd->fd = (uint32_t) got2;
+    binaryFd = fdopen( (int)got2, "rb" );
     fseek( binaryFd, 0x0, 0x0 );
     binaryHeader = (elfHeader *) malloc( sizeof(elfHeader) );
     fread( binaryHeader, sizeof(elfHeader), 1, binaryFd );

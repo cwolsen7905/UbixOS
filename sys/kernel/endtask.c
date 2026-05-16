@@ -66,8 +66,7 @@ void endTask(pidType pid)
 	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
 
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
-	if (_current->term != NULL && _current->term->owner == _current->id &&
-	    _current->parent != NULL)
+	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
 		_current->term->owner = _current->parent->id;
 
 	sched_setStatus(pid, DEAD);

@@ -30,6 +30,7 @@
 #define _ISA_ATKBD_H
 
 #include <sys/types.h>
+#include <sys/bus.h>
 
 #define shiftKey      1
 #define controlKey    2
@@ -40,6 +41,8 @@
 
 int  atkbd_init();
 void atkbd_isr();
+
+extern struct ubx_driver atkbd_ubx_driver;
 
 extern volatile uint32_t reboot_at_tick; /* non-zero when countdown active */
 

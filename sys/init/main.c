@@ -4,26 +4,28 @@
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * 1) Redistributions of source code must retain the above copyright notice, this list of
- *    conditions, the following disclaimer and the list of authors.
- * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
- *    conditions, the following disclaimer and the list of authors in the documentation and/or
- *    other materials provided with the distribution.
- * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
- *    endorse or promote products derived from this software without specific prior written
- *    permission.
+ * 1) Redistributions of source code must retain the above copyright notice,
+ * this list of conditions, the following disclaimer and the list of authors. 2)
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions, the following disclaimer and the list of authors in
+ * the documentation and/or other materials provided with the distribution. 3)
+ * Neither the name of the UbixOS Project nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
+ * specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <ubixos/version.h>
@@ -40,12 +42,12 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 
-#define B_ADAPTORSHIFT          24
-#define B_ADAPTORMASK           0x0f
-#define B_ADAPTOR(val)          (((val) >> B_ADAPTORSHIFT) & B_ADAPTORMASK)
-#define B_CONTROLLERSHIFT       20
-#define B_CONTROLLERMASK        0xf
-#define B_CONTROLLER(val)       (((val)>>B_CONTROLLERSHIFT) & B_CONTROLLERMASK)
+#define B_ADAPTORSHIFT 24
+#define B_ADAPTORMASK 0x0f
+#define B_ADAPTOR(val) (((val) >> B_ADAPTORSHIFT) & B_ADAPTORMASK)
+#define B_CONTROLLERSHIFT 20
+#define B_CONTROLLERMASK 0xf
+#define B_CONTROLLER(val) (((val) >> B_CONTROLLERSHIFT) & B_CONTROLLERMASK)
 /*
  * Constants for converting boot-style device number to type,
  * adaptor (uba, mba, etc), unit number and partition number.
@@ -58,19 +60,18 @@
  *      |MA | SLICE | UN| PART  | TYPE |
  *      --------------------------------
  */
-#define B_SLICESHIFT            20
-#define B_SLICEMASK             0xff
-#define B_SLICE(val)            (((val)>>B_SLICESHIFT) & B_SLICEMASK)
-#define B_UNITSHIFT             16
-#define B_UNITMASK              0xf
-#define B_UNIT(val)             (((val) >> B_UNITSHIFT) & B_UNITMASK)
-#define B_PARTITIONSHIFT        8
-#define B_PARTITIONMASK         0xff
-#define B_PARTITION(val)        (((val) >> B_PARTITIONSHIFT) & B_PARTITIONMASK)
-#define B_TYPESHIFT             0
-#define B_TYPEMASK              0xff
-#define B_TYPE(val)             (((val) >> B_TYPESHIFT) & B_TYPEMASK)
-
+#define B_SLICESHIFT 20
+#define B_SLICEMASK 0xff
+#define B_SLICE(val) (((val) >> B_SLICESHIFT) & B_SLICEMASK)
+#define B_UNITSHIFT 16
+#define B_UNITMASK 0xf
+#define B_UNIT(val) (((val) >> B_UNITSHIFT) & B_UNITMASK)
+#define B_PARTITIONSHIFT 8
+#define B_PARTITIONMASK 0xff
+#define B_PARTITION(val) (((val) >> B_PARTITIONSHIFT) & B_PARTITIONMASK)
+#define B_TYPESHIFT 0
+#define B_TYPEMASK 0xff
+#define B_TYPE(val) (((val) >> B_TYPESHIFT) & B_TYPEMASK)
 
 /*****************************************************************************************
  Desc: The Kernels Descriptor table:
@@ -91,36 +92,34 @@
  MrOlsen: test
 
  *****************************************************************************************/
-ubixDescriptorTable(ubixGDT, 11) {
-{ .dummy = 0},
-ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
-ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
-ubixStandardDescriptor(VMM_USER_LDT, 0xFFFFF, (dLdt)),
-ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
-ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
-ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
-ubixStandardDescriptor(0x5200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
-ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
-ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
-ubixStandardDescriptor(0xBFC00000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+ubixDescriptorTable(ubixGDT, 11){
+    {.dummy = 0},
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
+    ubixStandardDescriptor(VMM_USER_LDT, 0xFFFFF, (dLdt)),
+    ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+    ubixStandardDescriptor(0x5200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
+    ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
+    ubixStandardDescriptor(0xBFC00000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
 };
 
-struct {
-  unsigned short limit __attribute__ ((packed));
-  union descriptorTableUnion *gdt __attribute__ ((packed));
-} loadGDT = { (11 * sizeof(union descriptorTableUnion) - 1), ubixGDT };
+struct
+{
+	unsigned short limit __attribute__((packed));
+	union descriptorTableUnion *gdt __attribute__((packed));
+} loadGDT = {(11 * sizeof(union descriptorTableUnion) - 1), ubixGDT};
 
 static char *argv_init[2] = {
     "init",
-    0x0, }; /* ARGV For Initial Process */
+    0x0,
+}; /* ARGV For Initial Process */
 
 static char *envp_init[6] = {
-    "HOME=/",
-    "PWD=/",
-    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
-    "USER=root",
-    "GROUP=admin",
-    0x0, }; /* ENVP For Initial Process */
+    "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", 0x0,
+}; /* ENVP For Initial Process */
 
 struct bootinfo _bootinfo;
 char _kernelname[512];
@@ -128,84 +127,86 @@ u_long _bootdev;
 u_long _boothowto;
 
 /**
- * \brief This is the entry point into the os where all of the kernels sub systems are started up.
+ * \brief This is the entry point into the os where all of the kernels sub
+ * systems are started up.
  *
  * \param rootdev address of root device structure
  */
-int kmain(uint32_t rootdev) {
-  /* Set up counter for startup routine */
-  int i = 0x0;
+int kmain(uint32_t rootdev)
+{
+	/* Set up counter for startup routine */
+	int i = 0x0;
 
-  /* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
-  clearScreen();
+	/* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
+	clearScreen();
 
-  kprintf(UBIXOS_VERSION_STRING " — booting\n");
+	kprintf(UBIXOS_VERSION_STRING " — booting\n");
 
-  /* Modify src/sys/include/ubixos/init.h to add a startup routine */
-  for (i = 0x0; i < init_tasksTotal; i++) {
-    if (init_tasks[i]() != 0x0)
-      kpanic("Error: Initializing System Task[%i].\n", i);
-  }
+	/* Modify src/sys/include/ubixos/init.h to add a startup routine */
+	for (i = 0x0; i < init_tasksTotal; i++)
+	{
+		if (init_tasks[i]() != 0x0)
+			kpanic("Error: Initializing System Task[%i].\n", i);
+	}
 
-  /*
-   * Mount the boot partition as "sys:" using information passed by GRUB
-   * via the multiboot boot_device field.  This avoids hardcoded disk/
-   * partition numbers and works regardless of which IDE slot the disk
-   * ends up on.
-   *
-   * boot_device bits 31-24: BIOS drive (0x80 = first HD)
-   * boot_device bits 23-16: partition  (0-based; 0xFF = unpartitioned)
-   *
-   * _multiboot_info is zero when booted via the legacy FreeBSD loader,
-   * in which case we fall back to the old hardcoded values.
-   */
-  {
-    int sys_major = 1, sys_minor = 1;
+	/*
+	 * Mount the boot partition as "sys:" using information passed by GRUB
+	 * via the multiboot boot_device field.  This avoids hardcoded disk/
+	 * partition numbers and works regardless of which IDE slot the disk
+	 * ends up on.
+	 *
+	 * boot_device bits 31-24: BIOS drive (0x80 = first HD)
+	 * boot_device bits 23-16: partition  (0-based; 0xFF = unpartitioned)
+	 *
+	 * _multiboot_info is zero when booted via the legacy FreeBSD loader,
+	 * in which case we fall back to the old hardcoded values.
+	 */
+	{
+		int sys_major = 1, sys_minor = 1;
 
-    if (_multiboot_info != 0) {
-      struct multiboot_info *mbi = (struct multiboot_info *)_multiboot_info;
-      if (mbi->flags & MB_FLAG_BOOT_DEVICE) {
-        sys_major = mb_drive_to_major(mbi->boot_device);
-        sys_minor = mb_partition_to_minor(mbi->boot_device);
-        kprintf("multiboot: boot_device=0x%X -> major=%i minor=%i\n",
-                mbi->boot_device, sys_major, sys_minor);
-      }
-    }
+		if (_multiboot_info != 0)
+		{
+			struct multiboot_info *mbi = (struct multiboot_info *)_multiboot_info;
+			if (mbi->flags & MB_FLAG_BOOT_DEVICE)
+			{
+				sys_major = mb_drive_to_major(mbi->boot_device);
+				sys_minor = mb_partition_to_minor(mbi->boot_device);
+				kprintf("multiboot: boot_device=0x%X -> "
+				        "major=%i minor=%i\n",
+				        mbi->boot_device, sys_major, sys_minor);
+			}
+		}
 
-    if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "sys", "rw") != 0x0)
-      kprintf("Problem Mounting sys (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
-    else
-      kprintf("Mounted sys (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
-  }
+		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "sys", "rw") != 0x0)
+			kprintf("Problem Mounting sys (FAT) from major=%i "
+			        "minor=%i\n",
+			        sys_major, sys_minor);
+		else
+			kprintf("Mounted sys (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+	}
 
-  /* Initialize the system */
-  kprintf("Free Pages: [%i]\n", systemVitals->freePages);
-  kprintf("MemoryMap:  [0x%X]\n", vmmMemoryMap);
-  kprintf("Starting OS\n");
+	/* Initialize the system */
+	kprintf("Free Pages: [%i]\n", systemVitals->freePages);
+	kprintf("MemoryMap:  [0x%X]\n", vmmMemoryMap);
+	kprintf("Starting OS\n");
 
+	kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
+	kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));
+	kprintf("_bootinfo.bi_version: 0x%X\n", _bootinfo.bi_version);
+	kprintf("_bootinfo.bi_size: 0x%X\n", _bootinfo.bi_size);
+	kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
-  /* kprintf("SDE Thread Start! [0x%X]\n", &sdeThread); */
-  /* execThread(&sdeThread, 0x2000,0x0); */
+	execThread(systemTask, 0x2000, 0x0);
 
-  kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
-  kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));
-  kprintf("_bootinfo.bi_version: 0x%X\n", _bootinfo.bi_version);
-  kprintf("_bootinfo.bi_size: 0x%X\n", _bootinfo.bi_size);
-  kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
+	execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 
-  execThread(systemTask, 0x2000, 0x0);
+	irqEnable(0x0);
 
-  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+	while (0x1)
+		asm("hlt");
 
-  //execFile("fat:/bin/init", argv_init, envp_init, 0x0);
+	/* Keep haulting until the scheduler reacts */
 
-  irqEnable(0x0);
-
-  while (0x1)
-    asm("hlt");
-
-  /* Keep haulting until the scheduler reacts */
-
-  /* Return to start however we should never get this far */
-  return (0x0);
+	/* Return to start however we should never get this far */
+	return (0x0);
 }

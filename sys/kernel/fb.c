@@ -37,88 +37,94 @@
 #include <isa/mouse.h>
 #include <isa/kbd.h>
 
-int sys_mapfb(struct thread *td, struct sys_mapfb_args *args) {
-  struct fb_info *out = args->info;
-  uint32_t paddr, end, addr, vaddr;
-  pidType pid = _current->id;
+int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
+{
+	struct fb_info *out = args->info;
+	uint32_t paddr, end, addr, vaddr;
+	pidType pid = _current->id;
 
-  if (!vesa_fb_paddr || !vesa_pitch || !vesa_width || !vesa_height || !vesa_bpp) {
-    kprintf("sys_mapfb: VESA not initialised — send MPI 0x82 to system first\n");
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (!vesa_fb_paddr || !vesa_pitch || !vesa_width || !vesa_height || !vesa_bpp)
+	{
+		kprintf("sys_mapfb: VESA not initialised — send MPI 0x82 to system first\n");
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  /*
-   * Map framebuffer physical pages into the calling process at a fixed
-   * user-space virtual address.  The LFB physical address (e.g. 0xFD000000)
-   * is above the 3 GB kernel/user split so we cannot use it as a virtual
-   * address — map it at 0x10000000 instead, which is safely in user space.
-   */
-  paddr = vesa_fb_paddr & ~0xFFFU;
-  end   = vesa_fb_paddr + (uint32_t)vesa_pitch * vesa_height;
-  vaddr = 0x10000000U;
+	/*
+	 * Map framebuffer physical pages into the calling process at a fixed
+	 * user-space virtual address.  The LFB physical address (e.g. 0xFD000000)
+	 * is above the 3 GB kernel/user split so we cannot use it as a virtual
+	 * address — map it at 0x10000000 instead, which is safely in user space.
+	 */
+	paddr = vesa_fb_paddr & ~0xFFFU;
+	end = vesa_fb_paddr + (uint32_t)vesa_pitch * vesa_height;
+	vaddr = 0x10000000U;
 
-  for (addr = paddr; addr < end; addr += 0x1000, vaddr += 0x1000)
-    vmm_remapPage(addr, vaddr, PAGE_DEFAULT | PAGE_CACHE_DISABLED, pid, 0);
+	for (addr = paddr; addr < end; addr += 0x1000, vaddr += 0x1000)
+		vmm_remapPage(addr, vaddr, PAGE_DEFAULT | PAGE_CACHE_DISABLED, pid, 0);
 
-  out->base   = (void *)0x10000000U;
-  out->width  = vesa_width;
-  out->height = vesa_height;
-  out->pitch  = vesa_pitch;
-  out->bpp    = vesa_bpp;
+	out->base = (void *)0x10000000U;
+	out->width = vesa_width;
+	out->height = vesa_height;
+	out->pitch = vesa_pitch;
+	out->bpp = vesa_bpp;
 
-  kprintf("sys_mapfb: pid %d mapped fb paddr=0x%X vaddr=0x10000000 %dx%d bpp=%d\n",
-      pid, vesa_fb_paddr, vesa_width, vesa_height, vesa_bpp);
+	kprintf("sys_mapfb: pid %d mapped fb paddr=0x%X vaddr=0x10000000 %dx%d bpp=%d\n", pid, vesa_fb_paddr, vesa_width, vesa_height, vesa_bpp);
 
-  td->td_retval[0] = 0;
-  return (0);
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_shareregion(struct thread *td, struct sys_shareregion_args *args) {
-  uintptr_t client_vaddr;
+int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
+{
+	uintptr_t client_vaddr;
 
-  client_vaddr = vmm_share_region((uintptr_t)args->vaddr,
-      (size_t)args->size, (pidType)args->dst_pid);
+	client_vaddr = vmm_share_region((uintptr_t)args->vaddr, (size_t)args->size, (pidType)args->dst_pid);
 
-  if (client_vaddr == 0) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (client_vaddr == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  *args->out_vaddr = (uint32_t)client_vaddr;
-  td->td_retval[0] = 0;
-  return (0);
+	*args->out_vaddr = (uint32_t)client_vaddr;
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_getmouse(struct thread *td, struct sys_getmouse_args *args) {
-  mouse_event_t *out = args->ev;
-  mouse_event_t ev;
+int sys_getmouse(struct thread *td, struct sys_getmouse_args *args)
+{
+	mouse_event_t *out = args->ev;
+	mouse_event_t ev;
 
-  if (mouse_getEvent(&ev) != 0) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (mouse_getEvent(&ev) != 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  out->dx      = ev.dx;
-  out->dy      = ev.dy;
-  out->buttons = ev.buttons;
+	out->dx = ev.dx;
+	out->dy = ev.dy;
+	out->buttons = ev.buttons;
 
-  td->td_retval[0] = 0;
-  return (0);
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_getkbd(struct thread *td, struct sys_getkbd_args *args) {
-  kbd_event_t *out = args->ev;
-  kbd_event_t ev;
+int sys_getkbd(struct thread *td, struct sys_getkbd_args *args)
+{
+	kbd_event_t *out = args->ev;
+	kbd_event_t ev;
 
-  if (kbd_getEvent(&ev) != 0) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (kbd_getEvent(&ev) != 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  out->keycode = ev.keycode;
-  out->pressed = ev.pressed;
+	out->keycode = ev.keycode;
+	out->pressed = ev.pressed;
 
-  td->td_retval[0] = 0;
-  return (0);
+	td->td_retval[0] = 0;
+	return (0);
 }

@@ -28,7 +28,8 @@
 
 #include <sys/types.h>
 
-int vmm_freeVirtualPage(uint32_t addr) {
-  //TODO: Implement this
-  return (0);
+int vmm_freeVirtualPage(uint32_t addr)
+{
+	// TODO: Implement this
+	return (0);
 }
