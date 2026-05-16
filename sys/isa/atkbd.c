@@ -591,6 +591,9 @@ atkbd_inject(uint32_t keycode)
 		}
 		break;
 	}
+
+	/* Also feed the graphical keyboard ring so views/term see the keystroke */
+	kbd_ring_push(keycode, 1);
 }
 
 static int atkbd_ubx_probe(struct ubx_device *dev)

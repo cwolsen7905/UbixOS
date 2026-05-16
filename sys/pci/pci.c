@@ -291,19 +291,13 @@ uint32_t pciProbe(int bus, int dev, int func)
 		return 0x0;
 	}
 
-	cfg->bus = bus;
-	cfg->dev = dev;
-	cfg->func = func;
-
-	/*
-	 if (cfg->vendorID == 0x1022)
-	 pciWrite(bus, dev, func, 0x3C, 0x5,1);
-	 */
-
 	switch (cfg->headerType & 0x7F)
 	{
 	case 0x0: /* normal device */
-		for (i = 4; i <= 16; i++)
+		/* Read standard PCI header DWORDs 4..15 (offsets 0x10..0x3C).
+		 * Stop at i<16: word[16] would land at struct offset 0x40 which
+		 * overlaps cfg->bus/dev/func and must NOT be overwritten here. */
+		for (i = 4; i < 16; i++)
 		{
 			word[i] = pciRead(bus, dev, func, 4 * i, 4);
 		}
@@ -342,6 +336,12 @@ uint32_t pciProbe(int bus, int dev, int func)
 		kprintf("  * Unknown Header Type\n");
 		break;
 	}
+
+	/* Set bus/dev/func AFTER reading all header DWORDs so they are not
+	 * accidentally overwritten by the loop above. */
+	cfg->bus  = bus;
+	cfg->dev  = dev;
+	cfg->func = func;
 
 	/*
 	 switch (cfg->headerType & 0x7F) {
