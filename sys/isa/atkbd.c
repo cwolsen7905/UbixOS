@@ -75,8 +75,6 @@ int kbd_getEvent(kbd_event_t *ev)
 	kbd_ring_tail = (kbd_ring_tail + 1) % KBD_RING_SIZE;
 	return (0);
 }
-static char stdinBuffer[512];
-static uInt16 stdinSize;
 static uInt32 controlKeys = 0x0;
 
 static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
@@ -199,7 +197,7 @@ int atkbd_init()
 	irqEnable(0x1);
 
 	/* Print out information on keyboard */
-	kprintf("atkbd0: isr=0x%X buf=0x%X bufsz=512\n", &atkbd_isr, &stdinBuffer);
+	kprintf("atkbd0: isr=0x%X\n", &atkbd_isr);
 
 	/* Return so we know everything went well */
 	return (0x0);
@@ -249,209 +247,96 @@ static int atkbd_scan()
 
 void keyboardHandler(struct trapframe *frame)
 {
-	int key = 0x0;
+	int      key;
+	uint32_t kc;
 
 	if (spinTryLock(&atkbdSpinLock))
 		return;
 
 	key = atkbd_scan();
-
-	if (key > 255)
+	if (key > 255) {
+		spinUnlock(&atkbdSpinLock);
 		return;
+	}
 
-	/* Control Key */
+	/* Modifier key state tracking */
 	if (key == 0x1D && !(controlKeys & controlKey))
-	{
 		controlKeys |= controlKey;
-	}
 	if (key == 0x80 + 0x1D)
-	{
-		controlKeys &= (0xFF - controlKey);
-	}
-	/* ALT Key */
+		controlKeys &= ~controlKey;
 	if (key == 0x38 && !(controlKeys & altKey))
-	{
 		controlKeys |= altKey;
-	}
 	if (key == 0x80 + 0x38)
-	{
-		controlKeys &= (0xFF - altKey);
-	}
-	/* Shift Key */
+		controlKeys &= ~altKey;
 	if ((key == 0x2A || key == 0x36) && !(controlKeys & shiftKey))
-	{
 		controlKeys |= shiftKey;
-	}
 	if ((key == 0x80 + 0x2A) || (key == 0x80 + 0x36))
-	{
-		controlKeys &= (0xFF - shiftKey);
-	}
-	/* Caps Lock */
-	if (key == 0x3A)
-	{
-		ledStatus ^= ledCapslock;
-		setLED();
-	}
-	/* Num Lock */
-	if (key == 0x45)
-	{
-		ledStatus ^= ledNumlock;
-		setLED();
-	}
-	/* Scroll Lock */
-	if (key == 0x46)
-	{
-		ledStatus ^= ledScrolllock;
-		setLED();
-	}
-	/* Pick Which Key Map */
-	if (controlKeys == 0)
-	{
-		keyMap = 0;
-	}
-	else if (controlKeys == 1)
-	{
-		keyMap = 1;
-	}
-	else if (controlKeys == 2)
-	{
-		keyMap = 2;
-	}
-	else if (controlKeys == 4)
-	{
-		keyMap = 3;
-	}
-	/* If Key Is Not Null Add It To Handler */
-	if (((uInt)(keyboardMap[key][keyMap]) > 0) && ((uInt32)(keyboardMap[key][keyMap]) < 0xFF))
-	{
-		switch ((uInt32)keyboardMap[key][keyMap])
-		{
-		case 8: /* backspace */
-			if (tty_foreground == 0x0)
-			{
-				if (stdinSize > 0)
-					stdinSize--;
-			}
-			else if (tty_foreground->t_raw)
-			{
-				/* raw mode: deliver backspace directly */
-				tty_foreground->stdin[tty_foreground->stdinSize++] = 8;
-			}
-			else
-			{
-				/* canonical: erase last char from line buffer */
-				if (tty_foreground->t_linelen > 0)
-				{
-					tty_foreground->t_linelen--;
-					if (tty_foreground->t_echo)
-						backSpace();
-				}
-			}
-			break;
-		case 0x3: /* Ctrl-C */
-			if (tty_foreground != 0x0)
-			{
-				kTask_t *victim = schedFindTask(tty_foreground->owner);
-				if (victim != NULL)
-				{
-					if (victim->parent != NULL)
-						tty_foreground->owner = victim->parent->id;
-					sched_killTree(victim->id);
-				}
-			}
-			break;
-		case 0x9: /* Ctrl-Tab: immediate reboot */
-			sys_shutdown(REBOOT);
-			break;
-		case 0x0D: /* Ctrl-M: 5-second countdown reboot */
-			if (reboot_at_tick == 0)
-			{
-				reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
-				kprintf("\nSystem rebooting in 5 seconds...\n");
-			}
-			break;
-		case 0x15: /* Ctrl-U: kill line */
-			if (tty_foreground != 0x0 && !tty_foreground->t_raw)
-			{
-				tty_foreground->t_linelen = 0;
-				/* redraw: emit spaces to erase, but simplest is just clear the buffer */
-			}
-			break;
-		case 0x18: /* Ctrl-X */
-			if (tty_foreground->owner == _current->id)
-				die_if_kernel("CTRL-X", frame, frame->tf_eax);
-			break;
-		case '\n': /* Enter: commit line to stdin */
-			if (tty_foreground == 0x0)
-			{
-				stdinBuffer[stdinSize++] = '\n';
-			}
-			else if (tty_foreground->t_raw)
-			{
-				tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
-			}
-			else
-			{
-				/* canonical: move line buffer → stdin, append newline */
-				int i;
-				char echo_nl[2] = {'\n', '\0'};
-				for (i = 0; i < tty_foreground->t_linelen && tty_foreground->stdinSize < 511; i++)
-					tty_foreground->stdin[tty_foreground->stdinSize++] = tty_foreground->t_linebuf[i];
-				if (tty_foreground->stdinSize < 511)
-					tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
-				tty_foreground->t_linelen = 0;
-				if (tty_foreground->t_echo)
-					tty_print(echo_nl, tty_foreground);
-			}
-			break;
-		default:
-			if (tty_foreground == 0x0)
-			{
-				stdinBuffer[stdinSize++] = keyboardMap[key][keyMap];
-			}
-			else if (tty_foreground->t_raw)
-			{
-				/* raw mode: deliver immediately, no echo */
-				tty_foreground->stdin[tty_foreground->stdinSize++] = keyboardMap[key][keyMap];
-			}
-			else
-			{
-				/* canonical: buffer and echo */
-				if (tty_foreground->t_linelen < 511)
-				{
-					char echo_ch[2] = {keyboardMap[key][keyMap], '\0'};
-					tty_foreground->t_linebuf[tty_foreground->t_linelen++] = keyboardMap[key][keyMap];
-					if (tty_foreground->t_echo)
-						tty_print(echo_ch, tty_foreground);
-				}
-			}
-			break;
-		}
-	}
-	else
-	{
-		switch ((keyboardMap[key][keyMap] >> 8))
-		{
-		case 0x30:
-			tty_change(keyboardMap[key][keyMap] & 0xFF);
-			// kprintf("Changing Consoles[0x%X:0x%X]\n",_current->id,_current);
-			break;
-		default:
-			break;
-		}
+		controlKeys &= ~shiftKey;
+
+	/* Lock keys */
+	if (key == 0x3A) { ledStatus ^= ledCapslock;   setLED(); }
+	if (key == 0x45) { ledStatus ^= ledNumlock;     setLED(); }
+	if (key == 0x46) { ledStatus ^= ledScrolllock;  setLED(); }
+
+	/* keyMap index */
+	if (controlKeys == 0)      keyMap = 0;
+	else if (controlKeys == 1) keyMap = 1;
+	else if (controlKeys == 2) keyMap = 2;
+	else if (controlKeys == 4) keyMap = 3;
+
+	/* Ignore key-up after updating modifier state */
+	if (key >= 0x80) {
+		spinUnlock(&atkbdSpinLock);
+		return;
 	}
 
-	/* Push key-down events into the graphical keyboard ring */
-	if (key < 0x80)
-	{
-		uint32_t kc = keyboardMap[key][keyMap];
-		if (kc > 0 && kc < 0xFF)
-			kbd_ring_push(kc, 1);
+	kc = keyboardMap[key][keyMap];
+	if (kc == 0) {
+		spinUnlock(&atkbdSpinLock);
+		return;
 	}
 
-	/* Return */
+	/* Console switch (F1-F5 → 0x3000-0x3004) */
+	if ((kc >> 8) == 0x30) {
+		tty_change(kc & 0xFF);
+		spinUnlock(&atkbdSpinLock);
+		return;
+	}
+
+	/* ISR-context emergency keys: handle and do not forward to ring */
+	switch (kc) {
+	case 0x03: /* Ctrl-C: kill foreground task */
+		if (tty_foreground != NULL) {
+			kTask_t *victim = schedFindTask(tty_foreground->owner);
+			if (victim != NULL) {
+				if (victim->parent != NULL)
+					tty_foreground->owner = victim->parent->id;
+				sched_killTree(victim->id);
+			}
+		}
+		spinUnlock(&atkbdSpinLock);
+		return;
+	case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */
+		sys_shutdown(REBOOT);
+		break;
+	case 0x0D: /* Ctrl-M: 5-second countdown reboot */
+		if (reboot_at_tick == 0) {
+			reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
+			kprintf("\nSystem rebooting in 5 seconds...\n");
+		}
+		spinUnlock(&atkbdSpinLock);
+		return;
+	case 0x18: /* Ctrl-X: kernel panic */
+		if (tty_foreground != NULL &&
+		    tty_foreground->owner == _current->id)
+			die_if_kernel("CTRL-X", frame, frame->tf_eax);
+		spinUnlock(&atkbdSpinLock);
+		return;
+	}
+
+	/* All other keys: push to ring — TTY and GUI both read from there */
+	kbd_ring_push(kc, 1);
 	spinUnlock(&atkbdSpinLock);
-	return;
 }
 
 void setLED()
@@ -464,108 +349,48 @@ void setLED()
 		;
 }
 
-/* Temp */
-int getchar()
-{
-	// uInt8 retKey = 0x0;
-	int retKey = 0x0;
-	uInt32 i = 0x0;
-
-	/*
-	 if ((stdinSize <= 0) && (tty_foreground == 0x0)) {
-	 sched_yield();
-	 }
-	 if ((tty_foreground != 0x0) && (tty_foreground->stdinSize <= 0x0)) {
-	 sched_yield();
-	 }
-	 */
-
-	/*
-	 if (spinTryLock(&atkbdSpinLock))
-	 return(0x0);
-	 */
-
-	if (tty_foreground == 0x0)
-	{
-		if (stdinSize == 0x0)
-		{
-			//  spinUnlock(&atkbdSpinLock);
-			return (0x0);
-		}
-
-		retKey = stdinBuffer[0];
-		stdinSize--;
-
-		for (i = 0x0; i < stdinSize; i++)
-		{
-			stdinBuffer[i] = stdinBuffer[i + 0x1];
-		}
-	}
-	else
-	{
-		if (tty_foreground->stdinSize == 0x0)
-		{
-			//   spinUnlock(&atkbdSpinLock);
-			return (0x0);
-		}
-
-		retKey = tty_foreground->stdin[0];
-		tty_foreground->stdinSize--;
-
-		for (i = 0x0; i < tty_foreground->stdinSize; i++)
-		{
-			tty_foreground->stdin[i] = tty_foreground->stdin[i + 0x1];
-		}
-	}
-	// spinUnlock(&atkbdSpinLock);
-	return (retKey);
-}
-
 /*
- * atkbd_inject — feed one key-press into the active TTY's input path.
- * Mirrors the PS/2 ISR's canonical/raw handling so USB and PS/2 keyboards
- * are interchangeable from the shell's perspective.
- * Safe to call from interrupt context (same as the PS/2 ISR).
+ * kbd_apply_event — apply one translated key event through the TTY line
+ * discipline into tty_foreground->stdin[].
+ *
+ * Called only from process context (getchar, never from interrupt context).
+ * The ISR only writes to kbd_ring; this function is the single owner of
+ * the canonical/raw editing state.
  */
-void
-atkbd_inject(uint32_t keycode)
+static void
+kbd_apply_event(uint32_t kc)
 {
-	char ch;
-	char echo_buf[2];
+	char     ch, echo_buf[2];
+	int      i;
 
-	if (keycode >= 0x100) {
-		/* Special keys (KEY_F1, KEY_UP …) — kbd_ring for GUI apps */
-		kbd_ring_push(keycode, 1);
+	/* KEY_* specials (>= 0x100) and null keycodes are not TTY characters */
+	if (kc == 0 || kc >= 0x100 || tty_foreground == NULL)
 		return;
-	}
 
-	ch = (char)(uint8_t)keycode;
+	ch = (char)(uint8_t)kc;
 	echo_buf[0] = ch;
 	echo_buf[1] = '\0';
 
 	switch (ch) {
 	case '\b':
-		if (tty_foreground == 0x0) {
-			if (stdinSize > 0)
-				stdinSize--;
-		} else if (tty_foreground->t_raw) {
-			tty_foreground->stdin[tty_foreground->stdinSize++] = '\b';
-		} else {
-			if (tty_foreground->t_linelen > 0) {
-				tty_foreground->t_linelen--;
-				if (tty_foreground->t_echo)
-					backSpace();
-			}
+		if (tty_foreground->t_raw) {
+			if (tty_foreground->stdinSize < 511)
+				tty_foreground->stdin[tty_foreground->stdinSize++] = '\b';
+		} else if (tty_foreground->t_linelen > 0) {
+			tty_foreground->t_linelen--;
+			if (tty_foreground->t_echo)
+				backSpace();
 		}
 		break;
+	case 0x15: /* Ctrl-U: kill current input line */
+		if (!tty_foreground->t_raw)
+			tty_foreground->t_linelen = 0;
+		break;
 	case '\n':
-		if (tty_foreground == 0x0) {
-			stdinBuffer[stdinSize++] = '\n';
-		} else if (tty_foreground->t_raw) {
-			tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
+		if (tty_foreground->t_raw) {
+			if (tty_foreground->stdinSize < 511)
+				tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
 		} else {
-			int i;
-			char nl[2] = {'\n', '\0'};
 			for (i = 0; i < tty_foreground->t_linelen &&
 			    tty_foreground->stdinSize < 511; i++)
 				tty_foreground->stdin[tty_foreground->stdinSize++] =
@@ -574,14 +399,15 @@ atkbd_inject(uint32_t keycode)
 				tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
 			tty_foreground->t_linelen = 0;
 			if (tty_foreground->t_echo)
-				tty_print(nl, tty_foreground);
+				tty_print("\n", tty_foreground);
 		}
 		break;
 	default:
-		if (tty_foreground == 0x0) {
-			stdinBuffer[stdinSize++] = ch;
-		} else if (tty_foreground->t_raw) {
-			tty_foreground->stdin[tty_foreground->stdinSize++] = ch;
+		if (ch < 0x20)
+			break; /* other control chars: discard */
+		if (tty_foreground->t_raw) {
+			if (tty_foreground->stdinSize < 511)
+				tty_foreground->stdin[tty_foreground->stdinSize++] = ch;
 		} else {
 			if (tty_foreground->t_linelen < 511) {
 				tty_foreground->t_linebuf[tty_foreground->t_linelen++] = ch;
@@ -591,9 +417,32 @@ atkbd_inject(uint32_t keycode)
 		}
 		break;
 	}
+}
 
-	/* Also feed the graphical keyboard ring so views/term see the keystroke */
-	kbd_ring_push(keycode, 1);
+int
+getchar()
+{
+	kbd_event_t ev;
+	int         retKey;
+	uInt32      i;
+
+	if (tty_foreground == NULL)
+		return (0);
+
+	/* Drain pending key events from the ring through the line discipline */
+	while (kbd_getEvent(&ev) == 0)
+		if (ev.pressed)
+			kbd_apply_event(ev.keycode);
+
+	if (tty_foreground->stdinSize == 0)
+		return (0);
+
+	retKey = (unsigned char)tty_foreground->stdin[0];
+	tty_foreground->stdinSize--;
+	for (i = 0; i < (uInt32)tty_foreground->stdinSize; i++)
+		tty_foreground->stdin[i] = tty_foreground->stdin[i + 1];
+
+	return (retKey);
 }
 
 static int atkbd_ubx_probe(struct ubx_device *dev)

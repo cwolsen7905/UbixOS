@@ -47,7 +47,7 @@ typedef struct tty_termNode {
     char stdin[512];
     int stdinSize;
     /* Line discipline */
-    char t_linebuf[512]; /* canonical input buffer (ISR fills until Enter) */
+    char t_linebuf[512]; /* canonical input buffer (getchar fills until Enter) */
     int  t_linelen;      /* chars currently in t_linebuf */
     uint8_t t_echo;      /* 1 = echo input to terminal (default) */
     uint8_t t_raw;       /* 1 = raw mode: bypass line discipline */

@@ -36,7 +36,6 @@
 #include <usb/usb.h>
 #include <usb/usb_driver.h>
 #include <usb/uhci.h>
-#include <isa/atkbd.h>
 #include <isa/kbd.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -198,7 +197,7 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 		{
 			kc = hid_to_key(cur->keycode[i], shifted);
 			if (kc != 0)
-				atkbd_inject(kc); /* feeds tty_foreground same as PS/2 ISR */
+				kbd_ring_push(kc, 1);
 		}
 	}
 
