@@ -169,6 +169,7 @@ install: install-world install-kernel
 run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc,usb=on \
+	  -device usb-kbd \
 	  -serial file:serial.log -vga std \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap \
@@ -179,6 +180,7 @@ run:
 run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc,usb=on \
+	  -device usb-kbd \
 	  -nographic -serial stdio \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
