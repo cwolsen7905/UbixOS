@@ -26,43 +26,27 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _ISA_KBD_H
-#define _ISA_KBD_H
+#ifndef _USB_HID_H
+#define _USB_HID_H
 
 #include <sys/types.h>
 
-struct kbd_event {
-	uint32_t keycode;   /* translated ASCII or KEY_* special value */
-	uint8_t  pressed;   /* 1 = key down, 0 = key up */
-};
-typedef struct kbd_event kbd_event_t;
+/* 8-byte HID boot-protocol keyboard report */
+struct hid_kbd_report {
+	uint8_t modifier;   /* bit 0=LCtrl 1=LShift 2=LAlt 3=LMeta 4=RCtrl 5=RShift 6=RAlt 7=RMeta */
+	uint8_t reserved;
+	uint8_t keycode[6]; /* up to 6 simultaneous keys; 0 = no key */
+} __attribute__((packed));
 
-/* Special key codes (>= 0x100 to avoid ASCII clash) */
-#define KEY_UP     0x100
-#define KEY_DOWN   0x101
-#define KEY_LEFT   0x102
-#define KEY_RIGHT  0x103
-#define KEY_F1     0x104
-#define KEY_F2     0x105
-#define KEY_F3     0x106
-#define KEY_F4     0x107
-#define KEY_F5     0x108
-#define KEY_F6     0x109
-#define KEY_F7     0x10A
-#define KEY_F8     0x10B
-#define KEY_F9     0x10C
-#define KEY_F10    0x10D
-#define KEY_F11    0x10E
-#define KEY_F12    0x10F
-#define KEY_HOME   0x110
-#define KEY_END    0x111
-#define KEY_PGUP   0x112
-#define KEY_PGDN   0x113
-#define KEY_INS    0x114
-#define KEY_DEL    0x115
-#define KEY_ESC    0x1B
+#define HID_MOD_LCTRL  0x01
+#define HID_MOD_LSHIFT 0x02
+#define HID_MOD_LALT   0x04
+#define HID_MOD_LMETA  0x08
+#define HID_MOD_RCTRL  0x10
+#define HID_MOD_RSHIFT 0x20
+#define HID_MOD_RALT   0x40
+#define HID_MOD_RMETA  0x80
 
-int  kbd_getEvent(kbd_event_t *ev);
-void kbd_ring_push(uint32_t keycode, uint8_t pressed);
+#define HID_MOD_SHIFT  (HID_MOD_LSHIFT | HID_MOD_RSHIFT)
 
-#endif /* _ISA_KBD_H */
+#endif /* _USB_HID_H */

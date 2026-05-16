@@ -591,7 +591,7 @@ struct uhci_qh *uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr,
 
 ---
 
-## Phase 5 — USB Core and Device Enumeration
+## Phase 5 — USB Core and Device Enumeration ✓ DONE
 
 **Goal:** `usb_new_device()` performs the full USB enumeration sequence: port reset →
 address assignment → descriptor reading → configuration selection → class driver binding.
@@ -651,7 +651,7 @@ struct usb_driver {
 
 ---
 
-## Phase 6 — HID Boot-Protocol Keyboard
+## Phase 6 — HID Boot-Protocol Keyboard ✓ DONE
 
 **Goal:** USB HID keyboard driver using the fixed 8-byte boot report format.
 Feeds the existing `kbd_ring[]` in `sys/isa/atkbd.c`.

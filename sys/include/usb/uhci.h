@@ -129,8 +129,24 @@ struct uhci_td
  * Driver soft state
  * --------------------------------------------------------------------- */
 #define UHCI_FRAMELIST_COUNT 1024
-#define UHCI_TD_POOL_COUNT 64
-#define UHCI_QH_POOL_COUNT 16
+#define UHCI_TD_POOL_COUNT   64
+#define UHCI_QH_POOL_COUNT   16
+#define UHCI_INTR_SLOTS      4
+/* Pool indices 0-2 = skeleton QHs; 3..3+SLOTS-1 = interrupt slots; above = ctl/bulk */
+#define UHCI_CTRL_BASE       (3 + UHCI_INTR_SLOTS)
+
+struct uhci_intr_slot {
+	struct uhci_qh *is_qh;
+	struct uhci_td *is_td;
+	struct dma_buf  is_buf;
+	void          (*is_cb)(void *arg, uint8_t *data, int len);
+	void           *is_arg;
+	uint16_t        is_maxpkt;
+	uint8_t         is_addr;
+	uint8_t         is_ep;
+	uint8_t         is_toggle;
+	int             is_used;
+};
 
 struct uhci_softc
 {
@@ -149,6 +165,7 @@ struct uhci_softc
 	int sc_qh_used;
 	int sc_td_used;
 	int sc_running;
+	struct uhci_intr_slot sc_intr[UHCI_INTR_SLOTS];
 };
 
 /* -----------------------------------------------------------------------

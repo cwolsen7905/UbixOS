@@ -57,7 +57,7 @@ static kbd_event_t kbd_ring[KBD_RING_SIZE];
 static int kbd_ring_head = 0;
 static int kbd_ring_tail = 0;
 
-static void kbd_ring_push(uint32_t keycode, uint8_t pressed)
+void kbd_ring_push(uint32_t keycode, uint8_t pressed)
 {
 	int next = (kbd_ring_head + 1) % KBD_RING_SIZE;
 	if (next == kbd_ring_tail)

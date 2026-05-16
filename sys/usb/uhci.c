@@ -33,6 +33,7 @@
  */
 
 #include <usb/uhci.h>
+#include <usb/usb.h>
 #include <sys/bus.h>
 #include <sys/dma_mem.h>
 #include <sys/io.h>
@@ -159,10 +160,40 @@ void uhci_isr_handler(void)
 	sts = uhci_rd16(sc, UHCI_USBSTS);
 	uhci_wr16(sc, UHCI_USBSTS, sts);
 
-	if (sts & UHCI_STS_USBINT)
-		kprintf("uhci: IOC interrupt\n");
-	if (sts & UHCI_STS_ERRINT)
-		kprintf("uhci: error interrupt (sts=0x%X)\n", sts);
+	if (sts & (UHCI_STS_USBINT | UHCI_STS_ERRINT)) {
+		int i;
+		for (i = 0; i < UHCI_INTR_SLOTS; i++) {
+			struct uhci_intr_slot *slot = &sc->sc_intr[i];
+			uint32_t actlen_raw;
+			int actual;
+
+			if (!slot->is_used)
+				continue;
+			if (slot->is_td->td_status & UHCI_TD_ACTIVE)
+				continue;
+
+			/* TD completed — call driver callback if no error */
+			if (!(slot->is_td->td_status & UHCI_TD_STATUS_MASK) &&
+			    slot->is_cb != NULL) {
+				actlen_raw = (slot->is_td->td_status >> 16) & 0x7FFu;
+				actual = (actlen_raw == 0x7FFu) ? 0 : (int)(actlen_raw + 1);
+				slot->is_cb(slot->is_arg,
+				    (uint8_t *)slot->is_buf.db_vaddr, actual);
+			}
+
+			/* Re-arm: toggle DATA, mark active again */
+			slot->is_toggle ^= 1;
+			slot->is_td->td_token = UHCI_TOKEN(slot->is_maxpkt,
+			    slot->is_toggle, slot->is_ep, slot->is_addr,
+			    UHCI_PID_IN);
+			slot->is_td->td_buffer = slot->is_buf.db_paddr;
+			slot->is_td->td_link   = UHCI_PTR_T;
+			slot->is_td->td_status = UHCI_TD_ACTIVE | UHCI_TD_IOC |
+			    UHCI_TD_ERRCNT(3) | UHCI_TD_SPD;
+			slot->is_qh->qh_elt = (uint32_t)slot->is_td;
+		}
+	}
+
 	if (sts & UHCI_STS_HCERR)
 		kprintf("uhci: HC process error\n");
 
@@ -220,8 +251,8 @@ void uhci_root_port_init(struct uhci_softc *sc)
 
 		kprintf("uhci: port %d enabled (%s speed)\n", port + 1, (portsc & UHCI_PORTSC_LSDA) ? "low" : "full");
 
-		/* USB core enumeration will be called here in Phase 5 */
-		/* usb_new_device(sc, port, (portsc & UHCI_PORTSC_LSDA) ? USB_SPEED_LOW : USB_SPEED_FULL); */
+		usb_new_device(sc, port,
+		    (portsc & UHCI_PORTSC_LSDA) ? USB_SPEED_LOW : USB_SPEED_FULL);
 	}
 }
 
@@ -315,7 +346,7 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
 		setup_td->td_link = (uint32_t)status_td;
 
 	/* Allocate a QH for this transfer and wire it in */
-	sc->sc_qh_used = 3; /* preserve the 3 skeleton QHs */
+	sc->sc_qh_used = UHCI_CTRL_BASE; /* preserve skeleton + intr slot QHs */
 	qh = uhci_alloc_qh(sc);
 	if (qh == NULL)
 	{
@@ -380,7 +411,7 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
 	if (!direction)
 		memcpy(buf.db_vaddr, data, datalen);
 
-	sc->sc_td_used = 3; /* preserve slab entries for skeleton QH TDs */
+	sc->sc_td_used = UHCI_CTRL_BASE; /* preserve skeleton + intr slot TDs */
 	first_td = prev_td = NULL;
 	remaining = datalen;
 	offset = 0;
@@ -412,7 +443,7 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
 	}
 
 	/* Insert in bulk QH */
-	sc->sc_qh_used = 3;
+	sc->sc_qh_used = UHCI_CTRL_BASE;
 	qh = uhci_alloc_qh(sc);
 	if (qh == NULL)
 	{
@@ -455,20 +486,71 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
 }
 
 /* -----------------------------------------------------------------------
- * Interrupt transfer scheduling
- * Currently a stub — Phase 5 (HID keyboard) will flesh this out.
+ * Interrupt transfer scheduling — periodic IN from a HID/interrupt endpoint.
+ * Allocates pool QH+TD at index (3+slot), inserts QH before int_qh in all
+ * 1024 frame entries, marks TD active.  ISR re-arms on each completion.
  * --------------------------------------------------------------------- */
-struct uhci_qh *uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint16_t maxpkt, uint32_t interval_ms, void (*callback)(void *arg, uint8_t *data, int len), void *arg)
+struct uhci_qh *
+uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr, uint8_t ep,
+    uint16_t maxpkt, uint32_t interval_ms, void (*callback)(void *arg,
+    uint8_t *data, int len), void *arg)
 {
-	(void)sc;
-	(void)addr;
-	(void)ep;
-	(void)maxpkt;
-	(void)interval_ms;
-	(void)callback;
-	(void)arg;
-	kprintf("uhci: uhci_schedule_intr: stub (Phase 5)\n");
-	return (NULL);
+	struct uhci_intr_slot *slot;
+	struct uhci_qh *qh;
+	struct uhci_td *td;
+	int i;
+
+	(void)interval_ms; /* all slots run every frame for simplicity */
+
+	slot = NULL;
+	for (i = 0; i < UHCI_INTR_SLOTS; i++) {
+		if (!sc->sc_intr[i].is_used) {
+			slot = &sc->sc_intr[i];
+			break;
+		}
+	}
+	if (slot == NULL) {
+		kprintf("uhci: no free interrupt slots\n");
+		return (NULL);
+	}
+
+	if (dma_alloc(maxpkt < 4 ? 4 : maxpkt, 4, &slot->is_buf) != 0)
+		return (NULL);
+
+	/* Use reserved pool entries for this slot */
+	qh = &sc->sc_qh_pool[3 + i];
+	td = &sc->sc_td_pool[3 + i];
+	memset(qh, 0, sizeof(*qh));
+	memset(td, 0, sizeof(*td));
+
+	td->td_status = UHCI_TD_ACTIVE | UHCI_TD_IOC | UHCI_TD_ERRCNT(3) |
+	    UHCI_TD_SPD;
+	td->td_token  = UHCI_TOKEN(maxpkt, 0, ep, addr, UHCI_PID_IN);
+	td->td_buffer = slot->is_buf.db_paddr;
+	td->td_link   = UHCI_PTR_T;
+
+	qh->qh_elt    = (uint32_t)td;
+	/* Link new QH → whatever the frame list currently points to */
+	qh->qh_link   = sc->sc_fl[0];
+	qh->qh_softc  = slot;
+
+	/* Insert before existing head in all frame entries */
+	for (i = 0; i < UHCI_FRAMELIST_COUNT; i++)
+		sc->sc_fl[i] = (uint32_t)qh | UHCI_PTR_QH;
+
+	slot->is_qh      = qh;
+	slot->is_td      = td;
+	slot->is_cb      = callback;
+	slot->is_arg     = arg;
+	slot->is_maxpkt  = maxpkt;
+	slot->is_addr    = addr;
+	slot->is_ep      = ep;
+	slot->is_toggle  = 0;
+	slot->is_used    = 1;
+
+	kprintf("uhci: intr scheduled addr=%d ep=%d maxpkt=%d\n",
+	    addr, ep, maxpkt);
+	return (qh);
 }
 
 /* -----------------------------------------------------------------------
