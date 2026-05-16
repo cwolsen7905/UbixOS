@@ -30,6 +30,7 @@
 #include <pci/e1000.h>
 #include <pci/hd.h>
 #include <pci/lnc.h>
+#include <usb/uhci.h>
 #include <sys/bus.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
@@ -385,6 +386,7 @@ static struct ubx_driver *const pci_drv_table[] = {
     &e1000_ubx_driver,
     &ide_ubx_driver,
     &lnc_ubx_driver,
+    &uhci_ubx_driver,
     NULL,
 };
 

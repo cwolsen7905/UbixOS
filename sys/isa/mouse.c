@@ -146,7 +146,7 @@ int mouseInit(void)
 	outportByte(mPic, eoi);
 	irqEnable(12);
 
-	kprintf("psm0 - Address: [0x%X], CCB: 0x%X\n", &mouseISR, ccb);
+	kprintf("psm0: isr=0x%X ccb=0x%X\n", &mouseISR, ccb);
 	return 0;
 }
 

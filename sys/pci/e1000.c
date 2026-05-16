@@ -237,9 +237,21 @@ void e1000_send_packet(const void *data, uint16_t len) {
 		return;
 	}
 
-	/* One-shot: confirm virtual==physical identity mapping on first send. */
-	if (tail == 0)
-		kprintf("e1000: send desc_virt=phys=0x%X\n", (uint32_t)tx_descs);
+	/* Verify identity mapping: vmm_getRealAddr must equal the pointer. */
+	if (tail == 0) {
+		uint32_t virt  = (uint32_t)tx_descs;
+		uint32_t phys2 = vmm_getRealAddr(virt);
+		kprintf("e1000: send virt=0x%X vmm_getRealAddr=0x%X %s\n",
+		    virt, phys2,
+		    (virt == phys2) ? "MATCH" : "MISMATCH!");
+		/* Also dump PDE[0] and PTE[0x31F] directly for diagnosis */
+		{
+			uint32_t *pd = (uint32_t *)0xC0400000; /* PD_BASE_ADDR */
+			uint32_t *pt = (uint32_t *)0xC0000000; /* PT_BASE_ADDR + PD[0]*0x1000 */
+			kprintf("e1000: PDE[0]=0x%X PTE[0x31F]=0x%X\n",
+			    pd[0], pt[0x31F]);
+		}
+	}
 
 	/* Wait for the descriptor to be free (DD set by hardware).
 	 * Volatile cast: QEMU writes DD via DMA; compiler cannot observe the change. */

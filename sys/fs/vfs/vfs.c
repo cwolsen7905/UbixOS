@@ -49,7 +49,7 @@ int vfs_init() {
   systemVitals->fileSystems = 0x0;
 
   /* Print information */
-  kprintf("vfs0: loaded at address: [0x%X]\n",systemVitals->fileSystems);
+  kprintf("vfs0: addr=0x%X\n", systemVitals->fileSystems);
 
   /* Return so we know things went well */
   return(0x0);

@@ -187,7 +187,7 @@ int vmm_pagingInit()
 	vmmMemoryMap = (mMap *)VMM_MMAP_ADDR_PMODE;
 
 	/* Print information on paging */
-	kprintf("paging0 - Address: [0x%X], PagingISR Address: [0x%X]\n", kernelPageDirectory, &_vmm_pageFault);
+	kprintf("paging0: pd=0x%X isr=0x%X\n", kernelPageDirectory, &_vmm_pageFault);
 
 	/* Return so we know everything went well */
 	return (0x0);

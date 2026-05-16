@@ -52,8 +52,8 @@ int i8259_init()
 	outportByte(sImr, 0xff);       /* Mask All Seconary Interrupts    */
 
 	/* Print out the system info for this */
-	kprintf("pic0 - Port: [0x%X]\n", mPic);
-	kprintf("pic1 - Port: [0x%X]\n", sPic);
+	kprintf("pic0: port=0x%X\n", mPic);
+	kprintf("pic1: port=0x%X\n", sPic);
 
 	/* Return so the system knows it went well */
 	return (0x0);

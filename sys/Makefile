@@ -28,7 +28,7 @@ all:
 	@echo "Kernel Build For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
 
-kernel-build: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code net-code kernel-img
+kernel-build: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code usb-code net-code kernel-img
 
 generic-code: generic
 	(cd generic;${MAKE})
@@ -47,6 +47,9 @@ isa-code: isa
 
 pci-code: pci
 	(cd pci;${MAKE})
+
+usb-code: usb
+	(cd usb;${MAKE})
 
 sys-code: sys
 	(cd sys;${MAKE})

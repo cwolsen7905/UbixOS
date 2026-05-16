@@ -199,7 +199,7 @@ int atkbd_init()
 	irqEnable(0x1);
 
 	/* Print out information on keyboard */
-	kprintf("atkbd0 - Address: [0x%X], Keyboard Buffer: [0x%X], Buffer Size [%i]\n", &atkbd_isr, &stdinBuffer, 512);
+	kprintf("atkbd0: isr=0x%X buf=0x%X bufsz=512\n", &atkbd_isr, &stdinBuffer);
 
 	/* Return so we know everything went well */
 	return (0x0);

@@ -57,7 +57,7 @@ int sched_init()
 
 	taskList->id = nextID++;
 
-	kprintf("sched0 - Address: [0x%X]\n", taskList);
+	kprintf("sched0: addr=0x%X\n", taskList);
 
 	return (0x0);
 }

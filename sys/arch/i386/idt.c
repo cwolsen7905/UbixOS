@@ -199,7 +199,7 @@ int idt_init() {
   */
 
   /* Print out information for the IDT */
-  kprintf("idt0 - Address: [0x%X]\n", &ubixIDT);
+  kprintf("idt0: addr=0x%X\n", &ubixIDT);
 
   /* Return so we know all went well */
   return (0x0);

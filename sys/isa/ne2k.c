@@ -106,7 +106,7 @@ int ne2k_init()
 	outportByte(mDev->ioAddr + NE_CMD, 0x0);
 	outportByte(mDev->ioAddr + NE_DCR, 0x29);
 
-	kprintf("Initialized");
+	kprintf("ne0: ready\n");
 	/* Return so we know everything went well */
 	return (0x0);
 }

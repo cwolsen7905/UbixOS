@@ -65,7 +65,7 @@ int vitals_init() {
   systemVitals->dQuantum = 8;
 
   /* Print Out Info For Vitals: */
-  kprintf("vitals0 - Address: [0x%X]\n", systemVitals);
+  kprintf("vitals0: addr=0x%X\n", systemVitals);
 
   /* Return so kernel knows that there is no problem */
   return (0x0);

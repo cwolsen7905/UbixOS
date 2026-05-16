@@ -67,7 +67,7 @@ int pit_init()
 	outportByte(0x40, (((1193180 / PIT_TIMER) >> 8) & 0xFF));
 
 	/* Print out information on the PIT */
-	kprintf("pit0 - Port [0x%X], Timer Hz: [%iHz]\n", 0x43, PIT_TIMER);
+	kprintf("pit0: port=0x%X hz=%d\n", 0x43, PIT_TIMER);
 
 	/* Return so we know everything went well */
 	return (0x0);

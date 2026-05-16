@@ -75,7 +75,7 @@ int tty_init() {
   tty_foreground->tty_pointer = (char *) 0xB8000;
 
   /* Return to let kernel know initialization is complete */
-  kprintf("tty0 - Initialized\n");
+  kprintf("tty0: ready\n");
 
   return (0x0);
 }
