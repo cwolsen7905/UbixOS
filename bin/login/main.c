@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,167 +28,174 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
 #include <sched.h>
+#include <sys/mpi.h>
 #include <api/ubix.h>
+#include <authd.h>
 
 int pidStatus(int pid);
 
-struct passwd {
-  char username[32];
-  char password[32];
-  int  uid;
-  int  gid;
-  char shell[128];
-  char realname[256];
-  char path[256];
-  };
+#define REPLY_MBOX  "login.auth"
+#define MOTD_PATH   "sys:/etc/motd"
 
-static char *pgets(char *string) {
-  int count = 0, ch = 0;
-  tty_setraw(1);   /* raw: each keystroke arrives immediately, no kernel echo */
-  while (1) {
-    ch = fgetc(stdin);
-    if (ch == '\n' || ch == '\r') {
-      printf("\n");
-      break;
-    }
-    else if (ch == 8 && count > 0) {
-      count--;
-    }
-    else if (ch == 0 || ch == -1) {
-      if (count == 0) { tty_setraw(0); return NULL; }
-      count--;
-    }
-    else {
-      string[count++] = ch;
-      printf("*");
-      fflush(stdout);
-    }
-  }
-  tty_setraw(0);   /* restore canonical mode */
-  string[count] = '\0';
-  return string;
+static char *argv_shell[2] = { "shell", NULL };
+static char  envp_buf[11][128];
+static char *envp_shell[12];
+
+static char *
+pgets(char *string, int maxlen)
+{
+	int count = 0, ch = 0;
+
+	tty_setraw(1);
+	while (1) {
+		ch = fgetc(stdin);
+		if (ch == '\n' || ch == '\r') {
+			printf("\n");
+			break;
+		} else if ((ch == 8 || ch == 127) && count > 0) {
+			count--;
+		} else if (ch == 0 || ch == -1) {
+			if (count == 0) { tty_setraw(0); return (NULL); }
+			count--;
+		} else if (count < maxlen - 1) {
+			string[count++] = ch;
+			printf("*");
+			fflush(stdout);
+		}
+	}
+	tty_setraw(0);
+	string[count] = '\0';
+	return (string);
 }
 
-static char *argv_shell[2] = { "shell", NULL, }; // ARGV For Initial Proccess
-static char *envp_shell[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess
+static struct auth_response
+do_auth(const char *username, const char *password)
+{
+	mpi_message_t        msg;
+	mpi_message_t        rmsg;
+	struct auth_request  req;
+	struct auth_response resp;
+	int                  waited;
 
-static char *envp_init[11] = {
-    "HOST=Dev.uBixOS.com",
-    "TERM=xterm",
-    "SHELL=/bin/sh",
-    "HOME=/",
-    "PWD=/",
-    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
-    "USER=root",
-    "LOGNAME=root",
-    "GROUP=admin",
-    "LD_LIBRARY_PATH=/lib:/usr/lib",
-    NULL, }; //ENVP For Initial Proccess
+	memset(&req,  0, sizeof(req));
+	memset(&resp, 0, sizeof(resp));
 
-  
-int main(int argc, char **argv, char **env) {
-  FILE *fd;
-  int shellPid = 0,i = 0x0;
-  char userName[32];
-  char passWord[32];
-  char *data2 = 0x0;
-  struct passwd *data = 0x0;
-  int users = 0;
+	strncpy(req.reply_mbox, REPLY_MBOX,   AUTH_MBOX_MAX - 1);
+	strncpy(req.username,   username,     AUTH_USER_MAX - 1);
+	strncpy(req.password,   password,     AUTH_PASS_MAX - 1);
 
+	memset(&msg, 0, sizeof(msg));
+	msg.header = AUTHD_MSG_REQUEST;
+	memcpy(msg.data, &req, sizeof(req));
 
-  if ((getuid() != 0x0) && (getgid() != 0x0)) {
-    printf("This Application Must Be Run As Root.\n");
-    exit(-1);
-    }
+	if (mpi_postMessage(AUTHD_MBOX, AUTHD_MSG_REQUEST, &msg) != 0) {
+		printf("login: authd not available\n");
+		return (resp);
+	}
 
-  if ((data = (struct passwd *)malloc(0x1000)) == 0x0) {
-    printf("Malloc Failed\n");
-    exit(0x1);
-    }
+	/* Poll for response — authd replies promptly */
+	for (waited = 0; waited < 1000; waited++) {
+		if (mpi_fetchMessage(REPLY_MBOX, &rmsg) == 0 &&
+		    rmsg.header == AUTHD_MSG_RESPONSE) {
+			memcpy(&resp, rmsg.data, sizeof(resp));
+			return (resp);
+		}
+		sched_yield();
+	}
 
-  fd = fopen("sys:/etc/userdb","r");
-  if (fd == NULL) {
-    printf("Missing User Database.\n");
-    exit(0x1);
-    }
-     
-  {
-    size_t nread = fread(data, 1, 0x1000, fd);
-    users = (int)(nread / sizeof(struct passwd));
-  }
+	printf("login: timeout waiting for authd\n");
+	return (resp);
+}
 
+int
+main(int argc, char **argv, char **env)
+{
+	struct auth_response resp;
+	char                 userName[AUTH_USER_MAX];
+	char                 passWord[AUTH_PASS_MAX];
+	char                 motd[384];
+	FILE                *fd;
+	int                  shellPid;
+	int                  i;
 
-  fclose(fd);
+	(void)argc; (void)argv; (void)env;
 
-  if ((data2 = (char *)malloc(384)) == 0x0) {
-    printf("Malloc Failed\n");
-    exit(0x1);
-    }
+	if ((getuid() != 0) && (getgid() != 0)) {
+		printf("This application must be run as root.\n");
+		exit(-1);
+	}
 
-  login:
-  printf("\nUbixOS/IA-32 (devel.ubixos.com) (console)");
-  getUsername:
-  printf("\n\nLogin: ");
-  fflush(stdout);
-  fgets((char *)&userName, sizeof(userName), stdin);
-  { int _n = strlen(userName); if (_n > 0 && userName[_n-1] == '\n') userName[_n-1] = '\0'; }
+	mpi_createMbox(REPLY_MBOX);
 
-  if (userName[0] == '\0')
-    goto getUsername;
+login:
+	printf("\nUbixOS/IA-32 (devel.ubixos.com) (console)");
 
-  printf("Password: ");
-  fflush(stdout);
-  pgets((char *)&passWord);
+getUsername:
+	printf("\n\nLogin: ");
+	fflush(stdout);
+	fgets(userName, sizeof(userName), stdin);
+	{ int n = strlen(userName); if (n > 0 && userName[n-1] == '\n') userName[n-1] = '\0'; }
 
+	if (userName[0] == '\0')
+		goto getUsername;
 
-  for (i=0x0;i<users;i++) {
-    if (0x0 == strcmp(userName,data[i].username)) {
-      if (0x0 == strcmp(passWord,data[i].password)) {
-        shellPid = fork();
+	printf("Password: ");
+	fflush(stdout);
+	if (pgets(passWord, sizeof(passWord)) == NULL)
+		goto login;
 
-        if (shellPid == 0x0) {
-          if (setuid(data[i].uid) != 0x0) {
-            printf("Set UID Failed\n");
-            }
+	resp = do_auth(userName, passWord);
 
-          if (setgid(data[i].gid) != 0x0) {
-            printf("Set GID Failed\n");
-          }
+	if (!resp.ok) {
+		printf("Login incorrect.\n");
+		goto login;
+	}
 
-          fd = 0x0;
-          fd = fopen("sys:/etc/motd","r");
+	shellPid = fork();
+	if (shellPid == 0) {
+		if (setuid(resp.uid) != 0)
+			printf("login: setuid failed\n");
+		if (setgid(resp.gid) != 0)
+			printf("login: setgid failed\n");
 
-          if (fd == 0x0) {
-            printf("No MOTD");
-            }
-          else {
-            size_t mread = fread(data2, 1, 383, fd);
-            data2[mread] = '\0';
-            if (mread > 0)
-              printf("%s\n", data2);
-            }
-          fclose(fd);          
-          //chdir(data[i].path);
-          chdir("sys:/bin/");
-          fflush(stdout);
-          execve(data[i].shell,argv_shell,envp_init);
-          printf("Error: Problem Starting Shell\n");
-          exit(-1);
-          }
-        else {
-          while (pidStatus(shellPid) == shellPid) {
-            sched_yield();
-            }
-          goto login;
-          }
-        }
-      }
-    }
-  printf("Login Incorrect!\n");
-  goto login;      
-  return(0x0);
-  }
+		/* show motd */
+		fd = fopen(MOTD_PATH, "r");
+		if (fd != NULL) {
+			size_t n = fread(motd, 1, sizeof(motd) - 1, fd);
+			motd[n] = '\0';
+			if (n > 0) printf("%s\n", motd);
+			fclose(fd);
+		}
 
+		/* build envp from auth response */
+		i = 0;
+		snprintf(envp_buf[i], 128, "HOME=%s",  resp.home[0] ? resp.home : "/"); i++;
+		snprintf(envp_buf[i], 128, "PWD=%s",   resp.home[0] ? resp.home : "/"); i++;
+		snprintf(envp_buf[i], 128, "SHELL=%s", resp.shell[0] ? resp.shell : "sys:/bin/shell"); i++;
+		snprintf(envp_buf[i], 128, "PATH=/bin:/sbin:/usr/bin:/usr/sbin"); i++;
+		snprintf(envp_buf[i], 128, "USER=%s",  userName); i++;
+		snprintf(envp_buf[i], 128, "LOGNAME=%s", userName); i++;
+		snprintf(envp_buf[i], 128, "HOST=Dev.uBixOS.com"); i++;
+		snprintf(envp_buf[i], 128, "TERM=xterm"); i++;
+		snprintf(envp_buf[i], 128, "LD_LIBRARY_PATH=/lib:/usr/lib"); i++;
+		envp_buf[i][0] = '\0'; i++;
+		for (int j = 0; j < i; j++) envp_shell[j] = envp_buf[j];
+		envp_shell[i] = NULL;
+
+		chdir(resp.home[0] ? resp.home : "sys:/bin/");
+		fflush(stdout);
+		execve(resp.shell[0] ? resp.shell : "sys:/bin/shell",
+		    argv_shell, envp_shell);
+		printf("login: failed to exec shell\n");
+		exit(-1);
+	}
+
+	while (pidStatus(shellPid) == shellPid)
+		sched_yield();
+
+	goto login;
+	return (0);
+}
