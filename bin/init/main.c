@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,15 +28,91 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include <dirent.h>
 #include <sys/sys.h>
 #include <sys/sched.h>
 #include <sys/mpi.h>
 
+#define INITD_PATH    "sys:/etc/init.d"
+#define INITD_MAXSVCS 64
+#define INITD_PATHMAX 256
+
 static char *argv_login[2] = { "login", NULL, };
 static char *envp_login[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, };
 
-static char *argv_logd[2] = { "logd", NULL, };
+/*
+ * Scan INITD_PATH for service definition files.  Each file contains one
+ * line: the full VFS path of the binary to exec.  Files are started in
+ * lexicographic order, so a numeric prefix (10-logd, 20-views …) controls
+ * the launch sequence.  Lines beginning with '#' and empty lines are
+ * skipped.  Missing or unreadable files are silently ignored.
+ */
+static void
+start_initd_services(void)
+{
+  DIR           *d;
+  struct dirent *ent;
+  char          *names[INITD_MAXSVCS];
+  int            nnames = 0, i, j;
+  char           path[INITD_PATHMAX];
+  char           execpath[INITD_PATHMAX];
+  char          *tmp;
+  FILE          *f;
+  char          *argv_svc[2];
+
+  d = opendir(INITD_PATH);
+  if (d == NULL)
+    return;
+
+  while ((ent = readdir(d)) != NULL && nnames < INITD_MAXSVCS) {
+    if (ent->d_name[0] == '.')
+      continue;
+    names[nnames] = strdup(ent->d_name);
+    if (names[nnames] != NULL)
+      nnames++;
+  }
+  closedir(d);
+
+  /* bubble sort — numeric prefixes (10-, 20-, …) set launch order */
+  for (i = 0; i < nnames - 1; i++) {
+    for (j = i + 1; j < nnames; j++) {
+      if (strcmp(names[i], names[j]) > 0) {
+        tmp = names[i]; names[i] = names[j]; names[j] = tmp;
+      }
+    }
+  }
+
+  for (i = 0; i < nnames; i++) {
+    snprintf(path, sizeof(path), "%s/%s", INITD_PATH, names[i]);
+    free(names[i]);
+
+    f = fopen(path, "r");
+    if (f == NULL)
+      continue;
+    if (fgets(execpath, sizeof(execpath), f) == NULL) {
+      fclose(f);
+      continue;
+    }
+    fclose(f);
+
+    execpath[strcspn(execpath, "\r\n")] = '\0';
+    if (execpath[0] == '\0' || execpath[0] == '#')
+      continue;
+
+    printf("init: starting %s\n", execpath);
+    fflush(stdout);
+
+    if (fork() == 0) {
+      argv_svc[0] = execpath;
+      argv_svc[1] = NULL;
+      execve(execpath, argv_svc, envp_login);
+      printf("init: failed to exec %s\n", execpath);
+      exit(0);
+    }
+  }
+}
 
 int main(int argc,char **argv, char **envp) {
   int i=0x0;
@@ -57,13 +133,7 @@ int main(int argc,char **argv, char **envp) {
 
   printf("Initializing UbixOS\n");
 
-  /* Start kernel log daemon */
-  i = fork();
-  if (0x0 == i) {
-    execve("sys:/bin/logd", argv_logd, envp_login);
-    printf("Error: Could not start logd\n");
-    exit(0x0);
-  }
+  start_initd_services();
 
   /* Start TTYD */
   #ifdef _IGNORE

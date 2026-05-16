@@ -162,6 +162,12 @@ mmd -i "$IMG"@@1M ::/etc
 [ -f tools/fstab  ] && mcopy -i "$IMG"@@1M tools/fstab  ::/etc/fstab
 [ -f tools/motd   ] && mcopy -i "$IMG"@@1M tools/motd   ::/etc/motd
 
+echo "==> Installing init.d service definitions (etc/init.d/)"
+mmd -i "$IMG"@@1M ::/etc/init.d
+for f in tools/initd/*; do
+  [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/init.d/
+done
+
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
