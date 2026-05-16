@@ -46,139 +46,156 @@
 #include <vmm/vmm.h>
 
 /* Exit Syscall */
-int sys_exit(struct thread *td, struct sys_exit_args *args) {
-    //kprintf("exit(%i)", args->status);
-    endTask(_current->id);
-    return (0x0);
+int sys_exit(struct thread *td, struct sys_exit_args *args)
+{
+	// kprintf("exit(%i)", args->status);
+	endTask(_current->id);
+	return (0x0);
 }
 
 /* return the process id */
-int getpid(struct thread *td, struct getpid_args *uap) {
+int getpid(struct thread *td, struct getpid_args *uap)
+{
 #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
-    td->td_retval[0] = _current->id;
-    return (0);
+	td->td_retval[0] = _current->id;
+	return (0);
 }
 
 /* return the process user id */
-int getuid(struct thread *td, struct getuid_args *uap) {
+int getuid(struct thread *td, struct getuid_args *uap)
+{
 #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
-    td->td_retval[0] = _current->uid;
-    return (0);
+	td->td_retval[0] = _current->uid;
+	return (0);
 }
 
 /* return the process group id */
-int getgid(struct thread *td, struct getgid_args *uap) {
+int getgid(struct thread *td, struct getgid_args *uap)
+{
 #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
-    td->td_retval[0] = _current->gid;
-    return (0);
+	td->td_retval[0] = _current->gid;
+	return (0);
 }
 
-int sys_issetugid(register struct thread *td, struct sys_issetugid_args *uap) {
-    td->td_retval[0] = 0;
-    return (0);
+int sys_issetugid(register struct thread *td, struct sys_issetugid_args *uap)
+{
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int readlink(struct thread *td, struct readlink_args *uap) {
+int readlink(struct thread *td, struct readlink_args *uap)
+{
 #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
-    kprintf("readlink: [%s:%i]\n", uap->path, uap->count);
-    td->td_retval[0] = -1;
-    td->td_retval[1] = 0x0;
-    return (0x0);
+	kprintf("readlink: [%s:%i]\n", uap->path, uap->count);
+	td->td_retval[0] = -1;
+	td->td_retval[1] = 0x0;
+	return (0x0);
 }
 
-int gettimeofday_new(struct thread *td, struct gettimeofday_args *uap) {
+int gettimeofday_new(struct thread *td, struct gettimeofday_args *uap)
+{
 #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
-    return (0x0);
+	return (0x0);
 }
 
-int read(struct thread *td, struct read_args *uap) {
-    int error = 0x0;
-    size_t count = 0x0;
-    struct file *fd = 0x0;
+int read(struct thread *td, struct read_args *uap)
+{
+	int error = 0x0;
+	size_t count = 0x0;
+	struct file *fd = 0x0;
 
 #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
 
-    error = getfd(td, &fd, uap->fd);
+	error = getfd(td, &fd, uap->fd);
 
-    if (error)
-        return (error);
+	if (error)
+		return (error);
 
-    count = fread(uap->buf, uap->nbyte, 0x1, fd->fd);
-    kprintf("count: %i\n", count);
-    td->td_retval[0] = count;
+	count = fread(uap->buf, uap->nbyte, 0x1, fd->fd);
+	kprintf("count: %i\n", count);
+	td->td_retval[0] = count;
 
-    return (error);
+	return (error);
 }
 
 /*!
  * \brief place holder for now functionality to be added later
  */
-int setitimer(struct thread *td, struct setitimer_args *uap) {
-    int error = 0x0;
+int setitimer(struct thread *td, struct setitimer_args *uap)
+{
+	int error = 0x0;
 
-    return (error);
+	return (error);
 }
 
-int access(struct thread *td, struct access_args *uap) {
-    int error = 0x0;
-    kprintf("name: [%s]\n", uap->path);
-    return (error);
+int access(struct thread *td, struct access_args *uap)
+{
+	int error = 0x0;
+	kprintf("name: [%s]\n", uap->path);
+	return (error);
 }
 
-int mprotect(struct thread *td, struct mprotect_args *uap) {
-    int error = 0x0;
-    return (error);
+int mprotect(struct thread *td, struct mprotect_args *uap)
+{
+	int error = 0x0;
+	return (error);
 }
 
-int sys_kill(struct thread *td, struct sys_kill_args *uap) {
-    kTask_t *target = schedFindTask(uap->pid);
+int sys_kill(struct thread *td, struct sys_kill_args *uap)
+{
+	kTask_t *target = schedFindTask(uap->pid);
 
-    if (target == 0x0) {
-        td->td_retval[0] = -1;
-        return (-1);
-    }
+	if (target == 0x0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-    /* SIGTERM/SIGKILL: end the task; other signals are silently accepted */
-    if (uap->signum == 15 || uap->signum == 9) {
-        endTask(uap->pid);
-    }
+	/* SIGTERM/SIGKILL: end the task; other signals are silently accepted */
+	if (uap->signum == 15 || uap->signum == 9)
+	{
+		endTask(uap->pid);
+	}
 
-    td->td_retval[0] = 0;
-    return (0);
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap) {
-    struct timeval tv;
-    struct timezone tz;
+int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
+{
+	struct timeval tv;
+	struct timezone tz;
 
-    if (uap->tp == 0x0) {
-        td->td_retval[0] = -1;
-        return (-1);
-    }
+	if (uap->tp == 0x0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-    gettimeofday(&tv, &tz);
-    uap->tp->tv_sec  = tv.tv_sec;
-    uap->tp->tv_nsec = tv.tv_usec * 1000;
-    td->td_retval[0] = 0;
-    return (0);
+	gettimeofday(&tv, &tz);
+	uap->tp->tv_sec = tv.tv_sec;
+	uap->tp->tv_nsec = tv.tv_usec * 1000;
+	td->td_retval[0] = 0;
+	return (0);
 }
 
 /* futex stub — always succeeds for single-threaded musl */
-int sys_futex(struct thread *td, struct sys_futex_args *uap) {
-    td->td_retval[0] = 0;
-    return (0);
+int sys_futex(struct thread *td, struct sys_futex_args *uap)
+{
+	td->td_retval[0] = 0;
+	return (0);
 }
 
 /*
@@ -194,510 +211,566 @@ int sys_futex(struct thread *td, struct sys_futex_args *uap) {
  * TI bit).  The arch/i386/__init_tls.c patch for UbixOS must use entry_number*8+7
  * so the TI bit is set and the CPU looks in the LDT, giving 1*8+7 = 0xF.
  */
-int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap) {
-    struct gdtDescriptor *tlsDesc = 0x0;
-    uint32_t base_addr = 0x0;
+int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
+{
+	struct gdtDescriptor *tlsDesc = 0x0;
+	uint32_t base_addr = 0x0;
 
-    /* user_desc first two fields: entry_number (uint), base_addr (uint) */
-    struct {
-        unsigned int entry_number;
-        unsigned int base_addr;
-    } *ud = uap->u_info;
+	/* user_desc first two fields: entry_number (uint), base_addr (uint) */
+	struct
+	{
+		unsigned int entry_number;
+		unsigned int base_addr;
+	} *ud = uap->u_info;
 
-    if (ud == 0x0) {
-        td->td_retval[0] = -1;
-        return (-1);
-    }
+	if (ud == 0x0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-    base_addr = ud->base_addr;
+	base_addr = ud->base_addr;
 
-    /* Write LDT[1] — second entry in the per-process LDT page */
-    tlsDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
+	/* Write LDT[1] — second entry in the per-process LDT page */
+	tlsDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 
-    tlsDesc->limitLow    = 0xFFFF;
-    tlsDesc->limitHigh   = 0xF;
-    tlsDesc->baseLow     = (base_addr & 0xFFFF);
-    tlsDesc->baseMed     = ((base_addr >> 16) & 0xFF);
-    tlsDesc->access      = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-    tlsDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-    tlsDesc->baseHigh    = (base_addr >> 24);
+	tlsDesc->limitLow = 0xFFFF;
+	tlsDesc->limitHigh = 0xF;
+	tlsDesc->baseLow = (base_addr & 0xFFFF);
+	tlsDesc->baseMed = ((base_addr >> 16) & 0xFF);
+	tlsDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+	tlsDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+	tlsDesc->baseHigh = (base_addr >> 24);
 
-    /* Load LDT (GDT[3] = 0x18) and point %gs at LDT[1] (selector 0xF) */
-    asm(
-        "push %eax\n"
-        "mov  $0x18,%ax\n"
-        "lldt %ax\n"
-        "mov  $0xF,%eax\n"
-        "mov  %eax,%gs\n"
-        "pop  %eax\n"
-    );
+	/* Load LDT (GDT[3] = 0x18) and point %gs at LDT[1] (selector 0xF) */
+	asm("push %eax\n"
+	    "mov  $0x18,%ax\n"
+	    "lldt %ax\n"
+	    "mov  $0xF,%eax\n"
+	    "mov  %eax,%gs\n"
+	    "pop  %eax\n");
 
-    ud->entry_number = 1;
-    td->td_retval[0] = 0;
-    return (0);
+	ud->entry_number = 1;
+	td->td_retval[0] = 0;
+	return (0);
 }
 
 /* writev — scatter-gather write: loop over iov[] calling sys_write for each */
-int sys_writev(struct thread *td, struct sys_writev_args *uap) {
-    struct sys_write_args wa;
-    int i;
-    ssize_t total = 0;
+int sys_writev(struct thread *td, struct sys_writev_args *uap)
+{
+	struct sys_write_args wa;
+	int i;
+	ssize_t total = 0;
 
-    wa.fd = uap->fd;
-    for (i = 0; i < uap->iovcnt; i++) {
-        wa.buf   = uap->iov[i].iov_base;
-        wa.nbyte = uap->iov[i].iov_len;
-        if (wa.nbyte == 0)
-            continue;
-        sys_write(td, &wa);
-        if (td->td_retval[0] < 0) {
-            td->td_retval[0] = total > 0 ? total : td->td_retval[0];
-            return (-1);
-        }
-        total += td->td_retval[0];
-    }
-    td->td_retval[0] = total;
-    return (0);
+	wa.fd = uap->fd;
+	for (i = 0; i < uap->iovcnt; i++)
+	{
+		wa.buf = uap->iov[i].iov_base;
+		wa.nbyte = uap->iov[i].iov_len;
+		if (wa.nbyte == 0)
+			continue;
+		sys_write(td, &wa);
+		if (td->td_retval[0] < 0)
+		{
+			td->td_retval[0] = total > 0 ? total : td->td_retval[0];
+			return (-1);
+		}
+		total += td->td_retval[0];
+	}
+	td->td_retval[0] = total;
+	return (0);
 }
 
-int sys_readv(struct thread *td, struct sys_readv_args *uap) {
-    struct sys_read_args ra;
-    int i;
-    ssize_t total = 0;
+int sys_readv(struct thread *td, struct sys_readv_args *uap)
+{
+	struct sys_read_args ra;
+	int i;
+	ssize_t total = 0;
 
-    ra.fd = uap->fd;
-    for (i = 0; i < uap->iovcnt; i++) {
-        ra.buf   = uap->iov[i].iov_base;
-        ra.nbyte = uap->iov[i].iov_len;
-        if (ra.nbyte == 0)
-            continue;
-        sys_read(td, &ra);
-        if (td->td_retval[0] < 0) {
-            td->td_retval[0] = total > 0 ? total : td->td_retval[0];
-            return (-1);
-        }
-        total += td->td_retval[0];
-        if ((size_t)td->td_retval[0] < ra.nbyte)
-            break;
-    }
-    td->td_retval[0] = total;
-    return (0);
+	ra.fd = uap->fd;
+	for (i = 0; i < uap->iovcnt; i++)
+	{
+		ra.buf = uap->iov[i].iov_base;
+		ra.nbyte = uap->iov[i].iov_len;
+		if (ra.nbyte == 0)
+			continue;
+		sys_read(td, &ra);
+		if (td->td_retval[0] < 0)
+		{
+			td->td_retval[0] = total > 0 ? total : td->td_retval[0];
+			return (-1);
+		}
+		total += td->td_retval[0];
+		if ((size_t)td->td_retval[0] < ra.nbyte)
+			break;
+	}
+	td->td_retval[0] = total;
+	return (0);
 }
 
 /* exit_group — exit all threads in the process (alias to sys_exit) */
-int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap) {
-    endTask(_current->id);
-    return (0);
+int sys_exit_group(struct thread *td, struct sys_exit_group_args *uap)
+{
+	endTask(_current->id);
+	return (0);
 }
 
-int sys_invalid(struct thread *td, void *args) {
-    kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
-    td->td_retval[0] = -1;
-    return (0);
+int sys_invalid(struct thread *td, void *args)
+{
+	kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
+	td->td_retval[0] = -1;
+	return (0);
 }
 
-int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args) {
-  kTask_t *task = schedFindTask(args->pid);
+int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
+{
+	kTask_t *task = schedFindTask(args->pid);
 
-  if (task != NULL && task->state != DEAD)
-    td->td_retval[0] = 1;
-  else
-    td->td_retval[0] = 0;
-  return (0);
+	if (task != NULL && task->state != DEAD)
+		td->td_retval[0] = 1;
+	else
+		td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
-    int error = 0;
+int sys_wait4(struct thread *td, struct sys_wait4_args *args)
+{
+	int error = 0;
 
-    if (args->pid == -1) {
-        if (_current->children <= 0) {
-            td->td_retval[0] = ECHILD;
-            return (-1);
-        }
+	if (args->pid == -1)
+	{
+		if (_current->children <= 0)
+		{
+			td->td_retval[0] = ECHILD;
+			return (-1);
+		}
 
-        int children = _current->children;
+		int children = _current->children;
 
-        sched_setStatus(_current->id, WAIT);
-        while (_current->children == children) {
-            sched_yield();
-        }
+		sched_setStatus(_current->id, WAIT);
+		while (_current->children == children)
+		{
+			sched_yield();
+		}
 
-        td->td_retval[0] = _current->last_exit;
-        td->td_retval[1] = 0x8;
-    }
-    else {
-        kTask_t *tmpTask = NULL;
-        int retries;
+		td->td_retval[0] = _current->last_exit;
+		td->td_retval[1] = 0x8;
+	}
+	else
+	{
+		kTask_t *tmpTask = NULL;
+		int retries;
 
-        /*
-         * Retry briefly: a just-forked child may not appear in the scheduler
-         * until after the parent's next yield (fork-to-schedule race).
-         */
-        for (retries = 0; retries < 100; retries++) {
-            tmpTask = schedFindTask(args->pid);
-            if (tmpTask != NULL)
-                break;
-            sched_yield();
-        }
+		/*
+		 * Retry briefly: a just-forked child may not appear in the scheduler
+		 * until after the parent's next yield (fork-to-schedule race).
+		 */
+		for (retries = 0; retries < 100; retries++)
+		{
+			tmpTask = schedFindTask(args->pid);
+			if (tmpTask != NULL)
+				break;
+			sched_yield();
+		}
 
-        if (tmpTask != NULL) {
-            sched_setStatus(_current->id, WAIT);
-            while (tmpTask != NULL) {
-                sched_yield();
-                tmpTask = schedFindTask(args->pid);
-            }
-            td->td_retval[0] = args->pid;
-        } else {
-            td->td_retval[0] = -1;
-            error = -1;
-        }
-    }
-    return (error);
+		if (tmpTask != NULL)
+		{
+			sched_setStatus(_current->id, WAIT);
+			while (tmpTask != NULL)
+			{
+				sched_yield();
+				tmpTask = schedFindTask(args->pid);
+			}
+			td->td_retval[0] = args->pid;
+		}
+		else
+		{
+			td->td_retval[0] = -1;
+			error = -1;
+		}
+	}
+	return (error);
 }
 
-int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
+int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
+{
 
-    void **segbase = 0x0;
-    uint32_t base_addr = 0x0;
+	void **segbase = 0x0;
+	uint32_t base_addr = 0x0;
 
-    if (args->op == 10) {
-        kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
+	if (args->op == 10)
+	{
+		kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
 
-        segbase = (void **)args->parms;
+		segbase = (void **)args->parms;
 
-        kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
-        base_addr = (uint32_t) segbase[0];
+		kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
+		base_addr = (uint32_t)segbase[0];
 
-        struct gdtDescriptor *tmpDesc = 0x0;
+		struct gdtDescriptor *tmpDesc = 0x0;
 
-        tmpDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));  //taskLDT[1];
+		tmpDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor)); // taskLDT[1];
 
-        tmpDesc->limitLow = 0xFFFF;  //(0xFFFFF & 0xFFFF);
-        tmpDesc->limitHigh = 0xF;  //(0xFFFFF >> 16);
-        tmpDesc->baseLow = (base_addr & 0xFFFF);
-        tmpDesc->baseMed = ((base_addr >> 16) & 0xFF);
-        tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-        tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-        tmpDesc->baseHigh = base_addr >> 24;
+		tmpDesc->limitLow = 0xFFFF; //(0xFFFFF & 0xFFFF);
+		tmpDesc->limitHigh = 0xF;   //(0xFFFFF >> 16);
+		tmpDesc->baseLow = (base_addr & 0xFFFF);
+		tmpDesc->baseMed = ((base_addr >> 16) & 0xFF);
+		tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+		tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+		tmpDesc->baseHigh = base_addr >> 24;
 
-        asm(
-            "push %eax\n"
-            "mov $0x18,%ax\n"
-            "lldt %ax\n" /* "lgdtl (loadGDT)\n" */
-            "mov $0xF,%eax\n"
-            "mov %eax,%gs\n"
-            "pop %eax\n"
-        );
+		asm("push %eax\n"
+		    "mov $0x18,%ax\n"
+		    "lldt %ax\n" /* "lgdtl (loadGDT)\n" */
+		    "mov $0xF,%eax\n"
+		    "mov %eax,%gs\n"
+		    "pop %eax\n");
 
-        td->td_retval[0] = 0;
-    }
-    else {
-        kprintf("sysarch(%i,NULL)", args->op);
-        td->td_retval[0] = -1;
-    }
-    return (0);
+		td->td_retval[0] = 0;
+	}
+	else
+	{
+		kprintf("sysarch(%i,NULL)", args->op);
+		td->td_retval[0] = -1;
+	}
+	return (0);
 }
 
-int sys_getpid(struct thread *td, struct sys_getpid_args *args) {
-    td->td_retval[0] = _current->id;
-    return (0);
+int sys_getpid(struct thread *td, struct sys_getpid_args *args)
+{
+	td->td_retval[0] = _current->id;
+	return (0);
 }
-int sys_geteuid(struct thread *td, struct sys_geteuid_args *args) {
-    td->td_retval[0] = _current->uid;
-    return (0);
-}
-
-int sys_getegid(struct thread *td, struct sys_getegid_args *args) {
-    td->td_retval[0] = _current->gid;
-    return (0);
+int sys_geteuid(struct thread *td, struct sys_geteuid_args *args)
+{
+	td->td_retval[0] = _current->uid;
+	return (0);
 }
 
-int sys_getppid(struct thread *td, struct sys_getppid_args *args) {
-    td->td_retval[0] = _current->ppid;
-    return (0);
+int sys_getegid(struct thread *td, struct sys_getegid_args *args)
+{
+	td->td_retval[0] = _current->gid;
+	return (0);
 }
 
-int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
-    td->td_retval[0] = -1;
-
-    if (args->oset != 0x0) {
-        memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
-        td->td_retval[0] = 0x0;
-    }
-
-    if (args->set != 0x0) {
-        if (args->how == SIG_SETMASK) {
-            if (args->set != 0x0) {
-                memcpy(&td->sigmask, args->set, sizeof(sigset_t));
-                td->td_retval[0] = 0;
-            }
-            else {
-                td->td_retval[0] = -1;
-            }
-        }
-        else if (args->how == SIG_BLOCK) {
-            if (args->set != 0x0) {
-                td->sigmask.__bits[0] &= args->set->__bits[0];
-                td->sigmask.__bits[1] &= args->set->__bits[1];
-                td->sigmask.__bits[2] &= args->set->__bits[2];
-                td->sigmask.__bits[3] &= args->set->__bits[3];
-                td->td_retval[0] = 0;
-            }
-            else {
-                td->td_retval[0] = -1;
-            }
-        }
-        else if (args->how == SIG_UNBLOCK) {
-            if (args->set != 0x0) {
-                td->sigmask.__bits[0] |= args->set->__bits[0];
-                td->sigmask.__bits[1] |= args->set->__bits[1];
-                td->sigmask.__bits[2] |= args->set->__bits[2];
-                td->sigmask.__bits[3] |= args->set->__bits[3];
-                td->td_retval[0] = 0;
-            }
-            else {
-                td->td_retval[0] = -1;
-            }
-        }
-        else {
-            kprintf("SPM: 0x%X", args->how);
-            td->td_retval[0] = -1;
-        }
-    }
-
-    return (0);
+int sys_getppid(struct thread *td, struct sys_getppid_args *args)
+{
+	td->td_retval[0] = _current->ppid;
+	return (0);
 }
 
-int sys_sigaction(struct thread *td, struct sys_sigaction_args *args) {
-    td->td_retval[0] = -1;
+int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
+{
+	td->td_retval[0] = -1;
 
-    if (args->oact != 0x0) {
-        memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
-        td->td_retval[0] = 0;
-    }
+	if (args->oset != 0x0)
+	{
+		memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
+		td->td_retval[0] = 0x0;
+	}
 
-    if (args->act != 0x0) {
-        //kprintf("SA: %i", args->sig);
-        memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
-        td->td_retval[0] = 0;
-    }
-    return (0);
+	if (args->set != 0x0)
+	{
+		if (args->how == SIG_SETMASK)
+		{
+			if (args->set != 0x0)
+			{
+				memcpy(&td->sigmask, args->set, sizeof(sigset_t));
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+		}
+		else if (args->how == SIG_BLOCK)
+		{
+			if (args->set != 0x0)
+			{
+				td->sigmask.__bits[0] &= args->set->__bits[0];
+				td->sigmask.__bits[1] &= args->set->__bits[1];
+				td->sigmask.__bits[2] &= args->set->__bits[2];
+				td->sigmask.__bits[3] &= args->set->__bits[3];
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+		}
+		else if (args->how == SIG_UNBLOCK)
+		{
+			if (args->set != 0x0)
+			{
+				td->sigmask.__bits[0] |= args->set->__bits[0];
+				td->sigmask.__bits[1] |= args->set->__bits[1];
+				td->sigmask.__bits[2] |= args->set->__bits[2];
+				td->sigmask.__bits[3] |= args->set->__bits[3];
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+		}
+		else
+		{
+			kprintf("SPM: 0x%X", args->how);
+			td->td_retval[0] = -1;
+		}
+	}
+
+	return (0);
 }
 
-int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args) {
-    td->td_retval[0] = _current->pgrp;
-    return (0);
+int sys_sigaction(struct thread *td, struct sys_sigaction_args *args)
+{
+	td->td_retval[0] = -1;
+
+	if (args->oact != 0x0)
+	{
+		memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
+		td->td_retval[0] = 0;
+	}
+
+	if (args->act != 0x0)
+	{
+		// kprintf("SA: %i", args->sig);
+		memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
+		td->td_retval[0] = 0;
+	}
+	return (0);
 }
 
-int sys_setpgid(struct thread *td, struct sys_setpgid_args *args) {
-    pidType pid = 0x0;
-    pidType pgrp = 0x0;
-
-    if (args->pid == 0x0 || args->pid == _current->id) {
-        if (args->pgid == 0x0 || args->pgid == _current->id) {
-            td->td_retval[0] = 0x0;
-            _current->pgrp = _current->id;
-        }
-        else {
-            td->td_retval[0] = -1;
-        }
-    }
-    else {
-        kTask_t *tmpTask = schedFindTask(args->pid);
-
-        if (tmpTask == 0x0) {
-            td->td_retval[0] = -1;
-        }
-        else {
-
-            /* Get The PRGP We Want To Set */
-            pgrp = (args->pgid == 0) ? tmpTask->pgrp : args->pgid;
-
-            if (pgrp != _current->pgrp || pgrp != tmpTask->id) {
-                td->td_retval[0] = -1;
-            }
-            else {
-                td->td_retval[0] = 0x0;
-                tmpTask->pgrp = pgrp;
-            }
-
-        }
-
-    }
-
-    return (0);
+int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args)
+{
+	td->td_retval[0] = _current->pgrp;
+	return (0);
 }
 
-int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *args) {
-    gettimeofday(args->tp, args->tzp);
-    td->td_retval[0] = 0;
-    return (0);
+int sys_setpgid(struct thread *td, struct sys_setpgid_args *args)
+{
+	pidType pid = 0x0;
+	pidType pgrp = 0x0;
+
+	if (args->pid == 0x0 || args->pid == _current->id)
+	{
+		if (args->pgid == 0x0 || args->pgid == _current->id)
+		{
+			td->td_retval[0] = 0x0;
+			_current->pgrp = _current->id;
+		}
+		else
+		{
+			td->td_retval[0] = -1;
+		}
+	}
+	else
+	{
+		kTask_t *tmpTask = schedFindTask(args->pid);
+
+		if (tmpTask == 0x0)
+		{
+			td->td_retval[0] = -1;
+		}
+		else
+		{
+
+			/* Get The PRGP We Want To Set */
+			pgrp = (args->pgid == 0) ? tmpTask->pgrp : args->pgid;
+
+			if (pgrp != _current->pgrp || pgrp != tmpTask->id)
+			{
+				td->td_retval[0] = -1;
+			}
+			else
+			{
+				td->td_retval[0] = 0x0;
+				tmpTask->pgrp = pgrp;
+			}
+		}
+	}
+
+	return (0);
 }
 
-int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args) {
-    int error = 0;
-    size_t len = args->namelen;
-
-    if (len > sizeof(_current->username))
-        len = sizeof(_current->username);
-
-    memcpy(args->namebuf, _current->username, len);
-
-    return (error);
+int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *args)
+{
+	gettimeofday(args->tp, args->tzp);
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_setlogin(struct thread *thr, struct sys_setlogin_args *args) {
-    int error = 0;
+int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args)
+{
+	int error = 0;
+	size_t len = args->namelen;
 
-    memcpy(_current->username, args->namebuf, 256);
+	if (len > sizeof(_current->username))
+		len = sizeof(_current->username);
 
-    return (error);
+	memcpy(args->namebuf, _current->username, len);
+
+	return (error);
 }
 
-int sys_getrlimit(struct thread *thr, struct sys_getrlimit_args *args) {
-    int error = 0;
+int sys_setlogin(struct thread *thr, struct sys_setlogin_args *args)
+{
+	int error = 0;
 
-    struct rlimit *rlim = 0x0;
+	memcpy(_current->username, args->namebuf, 256);
 
-    switch (args->which) {
-        case 0:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 1:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 2:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 3:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 4:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 5:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 6:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 7:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 8:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 9:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 10:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 11:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 12:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 13:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        case 14:
-            args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-            args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-            break;
-        default:
-            error = -1;
-            kprintf("[getrlimit: %i]", args->which);
-    }
-
-    return (error);
+	return (error);
 }
 
-int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args) {
-    int error = 0;
+int sys_getrlimit(struct thread *thr, struct sys_getrlimit_args *args)
+{
+	int error = 0;
 
-    switch (args->which) {
-        case 0:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 1:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 2:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 3:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 4:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 5:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 6:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 7:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 8:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 9:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 10:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 11:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 12:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 13:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        case 14:
-            thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-            thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-            break;
-        default:
-            error = -1;
-            kprintf("[setrlimit: %i]", args->which);
-    }
+	struct rlimit *rlim = 0x0;
 
-    return (error);
+	switch (args->which)
+	{
+	case 0:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 1:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 2:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 3:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 4:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 5:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 6:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 7:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 8:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 9:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 10:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 11:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 12:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 13:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	case 14:
+		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+		break;
+	default:
+		error = -1;
+		kprintf("[getrlimit: %i]", args->which);
+	}
+
+	return (error);
+}
+
+int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args)
+{
+	int error = 0;
+
+	switch (args->which)
+	{
+	case 0:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 1:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 2:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 3:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 4:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 5:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 6:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 7:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 8:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 9:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 10:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 11:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 12:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 13:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	case 14:
+		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+		break;
+	default:
+		error = -1;
+		kprintf("[setrlimit: %i]", args->which);
+	}
+
+	return (error);
 }
 
 /*
@@ -705,35 +778,39 @@ int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args) {
  * Fills a userland struct utsname from the version macros in version.h.
  * The layout must match include/sys/utsname.h (_SYS_NAMELEN = 256).
  */
-struct _kern_utsname {
-  char sysname[256];
-  char nodename[256];
-  char release[256];
-  char version[256];
-  char machine[256];
+struct _kern_utsname
+{
+	char sysname[256];
+	char nodename[256];
+	char release[256];
+	char version[256];
+	char machine[256];
 };
 
-int sys_uname(struct thread *td, struct sys_uname_args *args) {
-  struct _kern_utsname *uts = (struct _kern_utsname *)args->buf;
+int sys_uname(struct thread *td, struct sys_uname_args *args)
+{
+	struct _kern_utsname *uts = (struct _kern_utsname *)args->buf;
 
-  if (uts == 0x0) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (uts == 0x0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  memset(uts, 0, sizeof(*uts));
-  strncpy(uts->sysname,  "UBIX",                    sizeof(uts->sysname)  - 1);
-  strncpy(uts->nodename, "ubixos",                   sizeof(uts->nodename) - 1);
-  strncpy(uts->release,  UBIXOS_VERSION_RELEASE,     sizeof(uts->release)  - 1);
-  strncpy(uts->version,  UBIXOS_VERSION_STRING,      sizeof(uts->version)  - 1);
-  strncpy(uts->machine,  "i386",                     sizeof(uts->machine)  - 1);
+	memset(uts, 0, sizeof(*uts));
+	strncpy(uts->sysname, "UBIX", sizeof(uts->sysname) - 1);
+	strncpy(uts->nodename, "ubixos", sizeof(uts->nodename) - 1);
+	strncpy(uts->release, UBIXOS_VERSION_RELEASE, sizeof(uts->release) - 1);
+	strncpy(uts->version, UBIXOS_VERSION_STRING, sizeof(uts->version) - 1);
+	strncpy(uts->machine, "i386", sizeof(uts->machine) - 1);
 
-  td->td_retval[0] = 0;
-  return (0);
+	td->td_retval[0] = 0;
+	return (0);
 }
 
 /* set_tid_address(2) — Linux 258. Store tidptr; return current TID (PID). */
-int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap) {
-  td->td_retval[0] = _current->id;
-  return (0);
+int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap)
+{
+	td->td_retval[0] = _current->id;
+	return (0);
 }

@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-int kern_execve(const char *file, char **argv, char **envp) {
-  return(0);
+int kern_execve(const char *file, char **argv, char **envp)
+{
+	return (0);
 }

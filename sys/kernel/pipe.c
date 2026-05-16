@@ -34,41 +34,43 @@
 #include <lib/kmalloc.h>
 #include <string.h>
 
-int pipe(struct thread *td, struct pipe_args *uap) {
-  int fd1 = 0, fd2 = 0;
-  struct file *nfp1 = 0, *nfp2 = 0;
-  struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
+int pipe(struct thread *td, struct pipe_args *uap)
+{
+	int fd1 = 0, fd2 = 0;
+	struct file *nfp1 = 0, *nfp2 = 0;
+	struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
 
-  if (pipeDesc == 0) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (pipeDesc == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  memset(pipeDesc, 0, sizeof(struct pipeInfo));
+	memset(pipeDesc, 0, sizeof(struct pipeInfo));
 
-  falloc(td, &nfp1, &fd1);
-  falloc(td, &nfp2, &fd2);
+	falloc(td, &nfp1, &fd1);
+	falloc(td, &nfp2, &fd2);
 
-  nfp1->data = pipeDesc;
-  nfp2->data = pipeDesc;
-  nfp1->fd_type = 3;
-  nfp2->fd_type = 3;
+	nfp1->data = pipeDesc;
+	nfp2->data = pipeDesc;
+	nfp1->fd_type = 3;
+	nfp2->fd_type = 3;
 
-  pipeDesc->rFD = fd1;
-  pipeDesc->rfdCNT = 2;
-  pipeDesc->wFD = fd2;
-  pipeDesc->wfdCNT = 2;
+	pipeDesc->rFD = fd1;
+	pipeDesc->rfdCNT = 2;
+	pipeDesc->wFD = fd2;
+	pipeDesc->wfdCNT = 2;
 
-  /* Write to the caller's fd array (musl/modern FreeBSD ABI) */
-  if (uap->fildes != 0) {
-    uap->fildes[0] = fd1;
-    uap->fildes[1] = fd2;
-  }
+	/* Write to the caller's fd array (musl/modern FreeBSD ABI) */
+	if (uap->fildes != 0)
+	{
+		uap->fildes[0] = fd1;
+		uap->fildes[1] = fd2;
+	}
 
-  /* Also return in registers for old-style callers */
-  td->td_retval[0] = 0;
-  td->td_retval[1] = 0;
+	/* Also return in registers for old-style callers */
+	td->td_retval[0] = 0;
+	td->td_retval[1] = 0;
 
-  return (0);
+	return (0);
 }
-

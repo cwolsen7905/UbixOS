@@ -60,14 +60,9 @@ uint8_t      e1000_mac[6];
 /* Kernel-virtual base of the 128 KB MMIO region */
 static volatile uint8_t *e1000_mmio = NULL;
 
-/* Descriptor ring backing memory — allocated from heap to ensure physical
- * addresses are above 1 MB where QEMU's DMA path reliably accesses guest RAM.
- * BSS-resident descriptors at low physical addresses (< 1 MB) appear to be
- * silently zero-read by pci_dma_read, possibly due to QEMU's PC memory map
- * treating that range differently for DMA. */
-static uint8_t *rx_desc_mem_heap;
-static uint8_t *tx_desc_mem_heap;
-
+/* Descriptor rings — identity-mapped pages (virtual == physical).
+ * vmm_findFreePage + vmm_remapIOPage guarantees this so TDBAL/RDBAL
+ * can be set directly to the pointer value with no vmm_getRealAddr call. */
 static struct e1000_rx_desc *rx_descs;
 static struct e1000_tx_desc *tx_descs;
 
@@ -136,33 +131,34 @@ static int e1000_map_mmio(uint32_t phys) {
  * --------------------------------------------------------------------- */
 
 static int e1000_init_rx(void) {
-	uint32_t i;
+	uint32_t i, phys;
 
-	/* Allocate descriptor ring from heap — heap addresses are above 1 MB
-	 * and reliably DMA-accessible by QEMU's pci_dma_read. */
-	rx_desc_mem_heap = kmalloc(E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc) + 16);
-	if (!rx_desc_mem_heap) {
+	/* Identity-map descriptor ring: virtual == physical, so RDBAL == pointer. */
+	phys = vmm_findFreePage(sysID);
+	if (!phys) {
 		kprintf("e1000: cannot allocate RX descriptor ring\n");
 		return -1;
 	}
-	rx_descs = (struct e1000_rx_desc *)
-	    (((uint32_t)rx_desc_mem_heap + 15u) & ~15u);
+	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT, sysID);
+	rx_descs = (struct e1000_rx_desc *)phys;
+	memset(rx_descs, 0, E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc));
 
 	for (i = 0; i < E1000_NUM_RX_DESC; i++) {
-		rx_bufs[i] = kmalloc(E1000_BUF_SIZE);
-		if (!rx_bufs[i]) {
+		uint32_t buf_phys = vmm_findFreePage(sysID);
+		if (!buf_phys) {
 			kprintf("e1000: cannot allocate RX buffer %u\n", i);
 			return -1;
 		}
-		rx_descs[i].addr   = (uint64_t)vmm_getRealAddr((uint32_t)rx_bufs[i]);
+		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
+		rx_bufs[i] = (uint8_t *)buf_phys;
+		rx_descs[i].addr   = (uint64_t)buf_phys; /* physical == virtual */
 		rx_descs[i].status = 0;
 	}
 	rx_tail = 0;
 
-	uint32_t rdba = vmm_getRealAddr((uint32_t)rx_descs);
-	kprintf("e1000: RX ring virt=0x%X phys=0x%X\n", (uint32_t)rx_descs, rdba);
+	kprintf("e1000: RX ring virt=phys=0x%X buf[0]=0x%X\n", phys, (uint32_t)rx_bufs[0]);
 
-	e1000_write(E1000_REG_RDBAL, rdba);
+	e1000_write(E1000_REG_RDBAL, phys);
 	e1000_write(E1000_REG_RDBAH, 0);
 	e1000_write(E1000_REG_RDLEN, E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc));
 	e1000_write(E1000_REG_RDH, 0);
@@ -180,33 +176,34 @@ static int e1000_init_rx(void) {
 }
 
 static int e1000_init_tx(void) {
-	uint32_t i, tdba;
+	uint32_t i, phys;
 
-	tx_desc_mem_heap = kmalloc(E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc) + 16);
-	if (!tx_desc_mem_heap) {
+	/* Identity-map descriptor ring: virtual == physical, so TDBAL == pointer. */
+	phys = vmm_findFreePage(sysID);
+	if (!phys) {
 		kprintf("e1000: cannot allocate TX descriptor ring\n");
 		return -1;
 	}
-	tx_descs = (struct e1000_tx_desc *)
-	    (((uint32_t)tx_desc_mem_heap + 15u) & ~15u);
+	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT, sysID);
+	tx_descs = (struct e1000_tx_desc *)phys;
+	memset(tx_descs, 0, E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc));
 
 	for (i = 0; i < E1000_NUM_TX_DESC; i++) {
-		tx_bufs[i] = kmalloc(E1000_BUF_SIZE);
-		if (!tx_bufs[i]) {
+		uint32_t buf_phys = vmm_findFreePage(sysID);
+		if (!buf_phys) {
 			kprintf("e1000: cannot allocate TX buffer %u\n", i);
 			return -1;
 		}
-		tx_descs[i].addr   = (uint64_t)vmm_getRealAddr((uint32_t)tx_bufs[i]);
+		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
+		tx_bufs[i] = (uint8_t *)buf_phys;
+		tx_descs[i].addr   = (uint64_t)buf_phys; /* physical == virtual */
 		tx_descs[i].status = E1000_TXD_STAT_DD;
 	}
 	tx_tail = 0;
 
-	tdba = vmm_getRealAddr((uint32_t)tx_descs);
-	kprintf("e1000: TX ring virt=0x%X phys=0x%X buf[0]=0x%X\n",
-	    (uint32_t)tx_descs, tdba,
-	    (uint32_t)(tx_descs[0].addr & 0xFFFFFFFF));
+	kprintf("e1000: TX ring virt=phys=0x%X buf[0]=0x%X\n", phys, (uint32_t)tx_bufs[0]);
 
-	e1000_write(E1000_REG_TDBAL, tdba);
+	e1000_write(E1000_REG_TDBAL, phys);
 	e1000_write(E1000_REG_TDBAH, 0);
 	e1000_write(E1000_REG_TDLEN, E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc));
 	e1000_write(E1000_REG_TDH, 0);
@@ -240,14 +237,9 @@ void e1000_send_packet(const void *data, uint16_t len) {
 		return;
 	}
 
-	/* One-shot: print CR3 on first send to verify address space context. */
-	if (tail == 0) {
-		uint32_t cr3;
-		asm volatile("movl %%cr3, %0" : "=r"(cr3));
-		kprintf("e1000: send CR3=0x%X desc_virt=0x%X desc_phys=0x%X\n",
-		    cr3, (uint32_t)tx_descs,
-		    vmm_getRealAddr((uint32_t)tx_descs));
-	}
+	/* One-shot: confirm virtual==physical identity mapping on first send. */
+	if (tail == 0)
+		kprintf("e1000: send desc_virt=phys=0x%X\n", (uint32_t)tx_descs);
 
 	/* Wait for the descriptor to be free (DD set by hardware).
 	 * Volatile cast: QEMU writes DD via DMA; compiler cannot observe the change. */
@@ -272,15 +264,13 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	 * the TDT MMIO write triggers QEMU's DMA read of the descriptor. */
 	__sync_synchronize();
 
-	/* Dump raw descriptor bytes via virtual address to verify what QEMU
-	 * should read at this physical address via pci_dma_read. */
+	/* Dump raw descriptor bytes (phys == virt with identity map). */
 	{
 		uint8_t *raw = (uint8_t *)&tx_descs[tail];
-		uint32_t phys = vmm_getRealAddr((uint32_t)&tx_descs[tail]);
-		kprintf("e1000: desc[%u] phys=0x%X raw: "
+		kprintf("e1000: desc[%u] phys=virt=0x%X raw: "
 		    "%02X%02X%02X%02X%02X%02X%02X%02X "
 		    "%02X%02X%02X%02X%02X%02X%02X%02X\n",
-		    tail, phys,
+		    tail, (uint32_t)&tx_descs[tail],
 		    raw[0],  raw[1],  raw[2],  raw[3],
 		    raw[4],  raw[5],  raw[6],  raw[7],
 		    raw[8],  raw[9],  raw[10], raw[11],
@@ -289,8 +279,9 @@ void e1000_send_packet(const void *data, uint16_t len) {
 
 	tx_tail = (tail + 1) % E1000_NUM_TX_DESC;
 	if (tail == 0) {
-		kprintf("e1000: ring TDBAL=0x%X TDLEN=%u TDH=%u TDT(pre)=%u TCTL=0x%X\n",
-		    e1000_read(E1000_REG_TDBAL), e1000_read(E1000_REG_TDLEN),
+		kprintf("e1000: ring TDBAL=0x%X TDBAH=0x%X TDLEN=%u TDH=%u TDT(pre)=%u TCTL=0x%X\n",
+		    e1000_read(E1000_REG_TDBAL), e1000_read(E1000_REG_TDBAH),
+		    e1000_read(E1000_REG_TDLEN),
 		    e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT),
 		    e1000_read(E1000_REG_TCTL));
 	}
@@ -298,9 +289,10 @@ void e1000_send_packet(const void *data, uint16_t len) {
 		uint32_t tdh_before = e1000_read(E1000_REG_TDH);
 		e1000_write(E1000_REG_TDT, tx_tail);
 		uint32_t tdh_after = e1000_read(E1000_REG_TDH);
-		kprintf("e1000: TX len=%u desc[%u] TDH %u->%u ICR=0x%X\n",
+		uint8_t  dd_after  = *(volatile uint8_t *)&tx_descs[tail].status;
+		kprintf("e1000: TX len=%u desc[%u] TDH %u->%u ICR=0x%X DD_after=0x%X\n",
 		    len, tail, tdh_before, tdh_after,
-		    e1000_read(E1000_REG_ICR));
+		    e1000_read(E1000_REG_ICR), dd_after);
 	}
 }
 

@@ -43,66 +43,70 @@
                    so adjacent blocks can be coalesced in O(1) on every kfree
    emptyKernDesc - descriptor objects with no memory backing, ready for reuse
 */
-static struct memDescriptor *usedKernDesc  = 0x0;
-static struct memDescriptor *freeKernDesc  = 0x0;
+static struct memDescriptor *usedKernDesc = 0x0;
+static struct memDescriptor *freeKernDesc = 0x0;
 static struct memDescriptor *emptyKernDesc = 0x0;
 
-static struct spinLock mallocSpinLock    = SPIN_LOCK_INITIALIZER;
+static struct spinLock mallocSpinLock = SPIN_LOCK_INITIALIZER;
 static struct spinLock emptyDescSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Return a descriptor object from the empty pool, allocating a new page of
    them when the pool is empty. */
-static struct memDescriptor *getEmptyDesc(void) {
-    struct memDescriptor *tmpDesc = 0x0;
-    int i;
+static struct memDescriptor *getEmptyDesc(void)
+{
+	struct memDescriptor *tmpDesc = 0x0;
+	int i;
 
-    spinLock(&emptyDescSpinLock);
+	spinLock(&emptyDescSpinLock);
 
-    if (emptyKernDesc != 0x0) {
-        tmpDesc = emptyKernDesc;
-        emptyKernDesc = tmpDesc->next;
-        if (emptyKernDesc != 0x0)
-            emptyKernDesc->prev = 0x0;
-        tmpDesc->next = 0x0;
-        tmpDesc->prev = 0x0;
-        spinUnlock(&emptyDescSpinLock);
-        return (tmpDesc);
-    }
+	if (emptyKernDesc != 0x0)
+	{
+		tmpDesc = emptyKernDesc;
+		emptyKernDesc = tmpDesc->next;
+		if (emptyKernDesc != 0x0)
+			emptyKernDesc->prev = 0x0;
+		tmpDesc->next = 0x0;
+		tmpDesc->prev = 0x0;
+		spinUnlock(&emptyDescSpinLock);
+		return (tmpDesc);
+	}
 
-    emptyKernDesc = (struct memDescriptor *) vmm_getFreeMallocPage(4);
-    if (emptyKernDesc == 0x0)
-        kpanic("kmalloc: vmm_getFreeMallocPage returned NULL\n");
+	emptyKernDesc = (struct memDescriptor *)vmm_getFreeMallocPage(4);
+	if (emptyKernDesc == 0x0)
+		kpanic("kmalloc: vmm_getFreeMallocPage returned NULL\n");
 
-    memset(emptyKernDesc, 0x0, 0x4000);
+	memset(emptyKernDesc, 0x0, 0x4000);
 
-    emptyKernDesc[0].next = &emptyKernDesc[1];
-    for (i = 1; i < (int)(0x4000 / sizeof(struct memDescriptor)); i++) {
-        emptyKernDesc[i].prev = &emptyKernDesc[i - 1];
-        if (i + 1 < (int)(0x4000 / sizeof(struct memDescriptor)))
-            emptyKernDesc[i].next = &emptyKernDesc[i + 1];
-        else
-            emptyKernDesc[i].next = 0x0;
-    }
+	emptyKernDesc[0].next = &emptyKernDesc[1];
+	for (i = 1; i < (int)(0x4000 / sizeof(struct memDescriptor)); i++)
+	{
+		emptyKernDesc[i].prev = &emptyKernDesc[i - 1];
+		if (i + 1 < (int)(0x4000 / sizeof(struct memDescriptor)))
+			emptyKernDesc[i].next = &emptyKernDesc[i + 1];
+		else
+			emptyKernDesc[i].next = 0x0;
+	}
 
-    tmpDesc = &emptyKernDesc[0];
-    emptyKernDesc = tmpDesc->next;
-    emptyKernDesc->prev = 0x0;
-    tmpDesc->next = 0x0;
-    tmpDesc->prev = 0x0;
-    spinUnlock(&emptyDescSpinLock);
-    return (tmpDesc);
+	tmpDesc = &emptyKernDesc[0];
+	emptyKernDesc = tmpDesc->next;
+	emptyKernDesc->prev = 0x0;
+	tmpDesc->next = 0x0;
+	tmpDesc->prev = 0x0;
+	spinUnlock(&emptyDescSpinLock);
+	return (tmpDesc);
 }
 
 /* Return a descriptor object to the empty pool (called with mallocSpinLock
    held, so no need to acquire emptyDescSpinLock separately). */
-static void returnEmptyDesc(struct memDescriptor *desc) {
-    desc->baseAddr = 0x0;
-    desc->limit    = 0x0;
-    desc->prev     = 0x0;
-    desc->next     = emptyKernDesc;
-    if (emptyKernDesc != 0x0)
-        emptyKernDesc->prev = desc;
-    emptyKernDesc = desc;
+static void returnEmptyDesc(struct memDescriptor *desc)
+{
+	desc->baseAddr = 0x0;
+	desc->limit = 0x0;
+	desc->prev = 0x0;
+	desc->next = emptyKernDesc;
+	if (emptyKernDesc != 0x0)
+		emptyKernDesc->prev = desc;
+	emptyKernDesc = desc;
 }
 
 /*
@@ -111,54 +115,58 @@ static void returnEmptyDesc(struct memDescriptor *desc) {
  and/or preceding block if they are physically adjacent.  This gives O(1)
  coalescing on every kfree and eliminates heap fragmentation over time.
 */
-static void insertFreeDesc(struct memDescriptor *freeDesc) {
-    struct memDescriptor *cur = 0x0;
+static void insertFreeDesc(struct memDescriptor *freeDesc)
+{
+	struct memDescriptor *cur = 0x0;
 
-    assert(freeDesc);
-    if (freeDesc->limit == 0x0)
-        kpanic("kmalloc: inserting descriptor with zero limit\n");
+	assert(freeDesc);
+	if (freeDesc->limit == 0x0)
+		kpanic("kmalloc: inserting descriptor with zero limit\n");
 
-    /* --- insert in address order --- */
-    if (freeKernDesc == 0x0 ||
-        (uInt32)freeDesc->baseAddr < (uInt32)freeKernDesc->baseAddr) {
-        freeDesc->prev = 0x0;
-        freeDesc->next = freeKernDesc;
-        if (freeKernDesc != 0x0)
-            freeKernDesc->prev = freeDesc;
-        freeKernDesc = freeDesc;
-    } else {
-        for (cur = freeKernDesc; cur->next != 0x0; cur = cur->next) {
-            if ((uInt32)freeDesc->baseAddr < (uInt32)cur->next->baseAddr)
-                break;
-        }
-        freeDesc->next = cur->next;
-        freeDesc->prev = cur;
-        if (cur->next != 0x0)
-            cur->next->prev = freeDesc;
-        cur->next = freeDesc;
-    }
+	/* --- insert in address order --- */
+	if (freeKernDesc == 0x0 || (uInt32)freeDesc->baseAddr < (uInt32)freeKernDesc->baseAddr)
+	{
+		freeDesc->prev = 0x0;
+		freeDesc->next = freeKernDesc;
+		if (freeKernDesc != 0x0)
+			freeKernDesc->prev = freeDesc;
+		freeKernDesc = freeDesc;
+	}
+	else
+	{
+		for (cur = freeKernDesc; cur->next != 0x0; cur = cur->next)
+		{
+			if ((uInt32)freeDesc->baseAddr < (uInt32)cur->next->baseAddr)
+				break;
+		}
+		freeDesc->next = cur->next;
+		freeDesc->prev = cur;
+		if (cur->next != 0x0)
+			cur->next->prev = freeDesc;
+		cur->next = freeDesc;
+	}
 
-    /* --- coalesce with next block if physically adjacent --- */
-    if (freeDesc->next != 0x0 &&
-        (uInt32)freeDesc->baseAddr + freeDesc->limit == (uInt32)freeDesc->next->baseAddr) {
-        struct memDescriptor *next = freeDesc->next;
-        freeDesc->limit += next->limit;
-        freeDesc->next   = next->next;
-        if (next->next != 0x0)
-            next->next->prev = freeDesc;
-        returnEmptyDesc(next);
-    }
+	/* --- coalesce with next block if physically adjacent --- */
+	if (freeDesc->next != 0x0 && (uInt32)freeDesc->baseAddr + freeDesc->limit == (uInt32)freeDesc->next->baseAddr)
+	{
+		struct memDescriptor *next = freeDesc->next;
+		freeDesc->limit += next->limit;
+		freeDesc->next = next->next;
+		if (next->next != 0x0)
+			next->next->prev = freeDesc;
+		returnEmptyDesc(next);
+	}
 
-    /* --- coalesce with prev block if physically adjacent --- */
-    if (freeDesc->prev != 0x0 &&
-        (uInt32)freeDesc->prev->baseAddr + freeDesc->prev->limit == (uInt32)freeDesc->baseAddr) {
-        struct memDescriptor *prev = freeDesc->prev;
-        prev->limit += freeDesc->limit;
-        prev->next   = freeDesc->next;
-        if (freeDesc->next != 0x0)
-            freeDesc->next->prev = prev;
-        returnEmptyDesc(freeDesc);
-    }
+	/* --- coalesce with prev block if physically adjacent --- */
+	if (freeDesc->prev != 0x0 && (uInt32)freeDesc->prev->baseAddr + freeDesc->prev->limit == (uInt32)freeDesc->baseAddr)
+	{
+		struct memDescriptor *prev = freeDesc->prev;
+		prev->limit += freeDesc->limit;
+		prev->next = freeDesc->next;
+		if (freeDesc->next != 0x0)
+			freeDesc->next->prev = prev;
+		returnEmptyDesc(freeDesc);
+	}
 }
 
 /*
@@ -170,94 +178,102 @@ static void insertFreeDesc(struct memDescriptor *freeDesc) {
  any unused tail is returned to the free list so it is immediately available
  for the next allocation.
 */
-void *kmalloc(uInt32 len) {
-    struct memDescriptor *tmpDesc1 = 0x0;
-    struct memDescriptor *tmpDesc2 = 0x0;
-    uInt16 pages = 0x0;
+void *kmalloc(uInt32 len)
+{
+	struct memDescriptor *tmpDesc1 = 0x0;
+	struct memDescriptor *tmpDesc2 = 0x0;
+	uInt16 pages = 0x0;
 
-    spinLock(&mallocSpinLock);
+	spinLock(&mallocSpinLock);
 
-    len = MALLOC_ALIGN(len);
+	len = MALLOC_ALIGN(len);
 
-    if (len == 0x0) {
-        spinUnlock(&mallocSpinLock);
-        kprintf("kmalloc: len = 0\n");
-        return (0x0);
-    }
+	if (len == 0x0)
+	{
+		spinUnlock(&mallocSpinLock);
+		kprintf("kmalloc: len = 0\n");
+		return (0x0);
+	}
 
-    /* First-fit search */
-    for (tmpDesc1 = freeKernDesc; tmpDesc1 != 0x0; tmpDesc1 = tmpDesc1->next) {
-        if (tmpDesc1->limit >= len) {
-            /* Unlink from free list */
-            if (tmpDesc1->prev != 0x0)
-                tmpDesc1->prev->next = tmpDesc1->next;
-            if (tmpDesc1->next != 0x0)
-                tmpDesc1->next->prev = tmpDesc1->prev;
-            if (tmpDesc1 == freeKernDesc)
-                freeKernDesc = tmpDesc1->next;
+	/* First-fit search */
+	for (tmpDesc1 = freeKernDesc; tmpDesc1 != 0x0; tmpDesc1 = tmpDesc1->next)
+	{
+		if (tmpDesc1->limit >= len)
+		{
+			/* Unlink from free list */
+			if (tmpDesc1->prev != 0x0)
+				tmpDesc1->prev->next = tmpDesc1->next;
+			if (tmpDesc1->next != 0x0)
+				tmpDesc1->next->prev = tmpDesc1->prev;
+			if (tmpDesc1 == freeKernDesc)
+				freeKernDesc = tmpDesc1->next;
 
-            /* Split remainder back into free list */
-            if (tmpDesc1->limit > len) {
-                tmpDesc2 = getEmptyDesc();
-                assert(tmpDesc2);
-                tmpDesc2->baseAddr = (struct memDescriptor *)((uInt32)tmpDesc1->baseAddr + len);
-                tmpDesc2->limit    = tmpDesc1->limit - len;
-                tmpDesc2->next     = 0x0;
-                tmpDesc2->prev     = 0x0;
-                tmpDesc1->limit    = len;
-                insertFreeDesc(tmpDesc2);
-            }
+			/* Split remainder back into free list */
+			if (tmpDesc1->limit > len)
+			{
+				tmpDesc2 = getEmptyDesc();
+				assert(tmpDesc2);
+				tmpDesc2->baseAddr = (struct memDescriptor *)((uInt32)tmpDesc1->baseAddr + len);
+				tmpDesc2->limit = tmpDesc1->limit - len;
+				tmpDesc2->next = 0x0;
+				tmpDesc2->prev = 0x0;
+				tmpDesc1->limit = len;
+				insertFreeDesc(tmpDesc2);
+			}
 
-            /* Link into used list */
-            tmpDesc1->prev = 0x0;
-            tmpDesc1->next = usedKernDesc;
-            if (usedKernDesc != 0x0)
-                usedKernDesc->prev = tmpDesc1;
-            usedKernDesc = tmpDesc1;
+			/* Link into used list */
+			tmpDesc1->prev = 0x0;
+			tmpDesc1->next = usedKernDesc;
+			if (usedKernDesc != 0x0)
+				usedKernDesc->prev = tmpDesc1;
+			usedKernDesc = tmpDesc1;
 
-            memset(tmpDesc1->baseAddr, 0x0, tmpDesc1->limit);
-            spinUnlock(&mallocSpinLock);
-            assert(tmpDesc1->baseAddr);
-            return (tmpDesc1->baseAddr);
-        }
-    }
+			memset(tmpDesc1->baseAddr, 0x0, tmpDesc1->limit);
+			spinUnlock(&mallocSpinLock);
+			assert(tmpDesc1->baseAddr);
+			return (tmpDesc1->baseAddr);
+		}
+	}
 
-    /* No free block large enough — get fresh pages from VMM */
-    tmpDesc1 = getEmptyDesc();
-    if (tmpDesc1 == 0x0) {
-        spinUnlock(&mallocSpinLock);
-        return (0x0);
-    }
+	/* No free block large enough — get fresh pages from VMM */
+	tmpDesc1 = getEmptyDesc();
+	if (tmpDesc1 == 0x0)
+	{
+		spinUnlock(&mallocSpinLock);
+		return (0x0);
+	}
 
-    pages = (uInt16)((len + 4095) / 4096);
-    tmpDesc1->baseAddr = (struct memDescriptor *) vmm_getFreeMallocPage(pages);
-    if (tmpDesc1->baseAddr == 0x0) {
-        returnEmptyDesc(tmpDesc1);
-        spinUnlock(&mallocSpinLock);
-        return (0x0);
-    }
-    tmpDesc1->limit = len;
-    tmpDesc1->prev  = 0x0;
-    tmpDesc1->next  = usedKernDesc;
-    if (usedKernDesc != 0x0)
-        usedKernDesc->prev = tmpDesc1;
-    usedKernDesc = tmpDesc1;
+	pages = (uInt16)((len + 4095) / 4096);
+	tmpDesc1->baseAddr = (struct memDescriptor *)vmm_getFreeMallocPage(pages);
+	if (tmpDesc1->baseAddr == 0x0)
+	{
+		returnEmptyDesc(tmpDesc1);
+		spinUnlock(&mallocSpinLock);
+		return (0x0);
+	}
+	tmpDesc1->limit = len;
+	tmpDesc1->prev = 0x0;
+	tmpDesc1->next = usedKernDesc;
+	if (usedKernDesc != 0x0)
+		usedKernDesc->prev = tmpDesc1;
+	usedKernDesc = tmpDesc1;
 
-    /* Return any page tail above the requested size */
-    if ((uInt32)(pages * 4096) > len) {
-        tmpDesc2 = getEmptyDesc();
-        assert(tmpDesc2);
-        tmpDesc2->baseAddr = (struct memDescriptor *)((uInt32)tmpDesc1->baseAddr + len);
-        tmpDesc2->limit    = (pages * 4096) - len;
-        tmpDesc2->prev     = 0x0;
-        tmpDesc2->next     = 0x0;
-        insertFreeDesc(tmpDesc2);
-    }
+	/* Return any page tail above the requested size */
+	if ((uInt32)(pages * 4096) > len)
+	{
+		tmpDesc2 = getEmptyDesc();
+		assert(tmpDesc2);
+		tmpDesc2->baseAddr = (struct memDescriptor *)((uInt32)tmpDesc1->baseAddr + len);
+		tmpDesc2->limit = (pages * 4096) - len;
+		tmpDesc2->prev = 0x0;
+		tmpDesc2->next = 0x0;
+		insertFreeDesc(tmpDesc2);
+	}
 
-    memset(tmpDesc1->baseAddr, 0x0, tmpDesc1->limit);
-    spinUnlock(&mallocSpinLock);
-    assert(tmpDesc1->baseAddr);
-    return (tmpDesc1->baseAddr);
+	memset(tmpDesc1->baseAddr, 0x0, tmpDesc1->limit);
+	spinUnlock(&mallocSpinLock);
+	assert(tmpDesc1->baseAddr);
+	return (tmpDesc1->baseAddr);
 }
 
 /*
@@ -266,36 +282,39 @@ void *kmalloc(uInt32 len) {
  Finds the descriptor in the used list by base address, unlinks it, and
  calls insertFreeDesc which coalesces with any adjacent free blocks.
 */
-void kfree(void *baseAddr) {
-    struct memDescriptor *tmpDesc = 0x0;
+void kfree(void *baseAddr)
+{
+	struct memDescriptor *tmpDesc = 0x0;
 
-    if (baseAddr == 0x0)
-        return;
+	if (baseAddr == 0x0)
+		return;
 
-    assert(usedKernDesc);
-    spinLock(&mallocSpinLock);
+	assert(usedKernDesc);
+	spinLock(&mallocSpinLock);
 
-    for (tmpDesc = usedKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next) {
-        if (tmpDesc->baseAddr == baseAddr) {
-            /* Poison freed memory to catch use-after-free */
-            memset(tmpDesc->baseAddr, 0xBE, tmpDesc->limit);
+	for (tmpDesc = usedKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next)
+	{
+		if (tmpDesc->baseAddr == baseAddr)
+		{
+			/* Poison freed memory to catch use-after-free */
+			memset(tmpDesc->baseAddr, 0xBE, tmpDesc->limit);
 
-            if (usedKernDesc == tmpDesc)
-                usedKernDesc = tmpDesc->next;
-            if (tmpDesc->prev != 0x0)
-                tmpDesc->prev->next = tmpDesc->next;
-            if (tmpDesc->next != 0x0)
-                tmpDesc->next->prev = tmpDesc->prev;
+			if (usedKernDesc == tmpDesc)
+				usedKernDesc = tmpDesc->next;
+			if (tmpDesc->prev != 0x0)
+				tmpDesc->prev->next = tmpDesc->next;
+			if (tmpDesc->next != 0x0)
+				tmpDesc->next->prev = tmpDesc->prev;
 
-            tmpDesc->next = 0x0;
-            tmpDesc->prev = 0x0;
+			tmpDesc->next = 0x0;
+			tmpDesc->prev = 0x0;
 
-            insertFreeDesc(tmpDesc);
-            spinUnlock(&mallocSpinLock);
-            return;
-        }
-    }
+			insertFreeDesc(tmpDesc);
+			spinUnlock(&mallocSpinLock);
+			return;
+		}
+	}
 
-    spinUnlock(&mallocSpinLock);
-    kprintf("kfree: descriptor not found for 0x%X\n", (uInt32)baseAddr);
+	spinUnlock(&mallocSpinLock);
+	kprintf("kfree: descriptor not found for 0x%X\n", (uInt32)baseAddr);
 }

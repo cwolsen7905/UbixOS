@@ -26,8 +26,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-void rs232Init() {
-  return;
+void rs232Init()
+{
+	return;
 }
 
 /***
@@ -48,4 +49,3 @@ void rs232Init() {
 
  END
  ***/
-

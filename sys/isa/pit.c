@@ -60,16 +60,17 @@
  = 1   BCD counter
 
  *****************************************************************************************/
-int pit_init() {
-  outportByteP(0x43, 0x36);
-  outportByteP(0x40, ((1193180 / PIT_TIMER) & 0xFF));
-  outportByte(0x40, (((1193180 / PIT_TIMER) >> 8) & 0xFF));
+int pit_init()
+{
+	outportByteP(0x43, 0x36);
+	outportByteP(0x40, ((1193180 / PIT_TIMER) & 0xFF));
+	outportByte(0x40, (((1193180 / PIT_TIMER) >> 8) & 0xFF));
 
-  /* Print out information on the PIT */
-  kprintf("pit0 - Port [0x%X], Timer Hz: [%iHz]\n", 0x43, PIT_TIMER);
+	/* Print out information on the PIT */
+	kprintf("pit0 - Port [0x%X], Timer Hz: [%iHz]\n", 0x43, PIT_TIMER);
 
-  /* Return so we know everything went well */
-  return (0x0);
+	/* Return so we know everything went well */
+	return (0x0);
 }
 
 /***
@@ -104,4 +105,3 @@ int pit_init() {
 
  END
  ***/
-

@@ -34,15 +34,16 @@
 #include <lib/kmalloc.h>
 #include <assert.h>
 
-int sigaction(struct thread *td, register struct sigaction_args *uap) {
-  return (0x0);
+int sigaction(struct thread *td, register struct sigaction_args *uap)
+{
+	return (0x0);
 }
 
-int sigprocmask(register struct thread *td, struct sigprocmask_args *uap) {
-  return (0x0);
+int sigprocmask(register struct thread *td, struct sigprocmask_args *uap)
+{
+	return (0x0);
 }
 
 /***
  END
  ***/
-

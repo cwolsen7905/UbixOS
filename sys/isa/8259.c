@@ -38,24 +38,25 @@ static unsigned int irqMask = 0xFFFF;
  * This will initialize both PICs for all of our IRQs
  *
  */
-int i8259_init() {
-  outportByte(mPic, icw1); /* Initialize Master PIC           */
-  outportByte(sPic, icw1); /* Initialize Seconary PIC         */
-  outportByte(mPic + 1, mVec); /* Master Interrup Vector          */
-  outportByte(sPic + 1, sVec); /* Secondary Interrupt Vector      */
-  outportByte(mPic + 1, 1 << 2); /* Bitmask for cascade on IRQ 2    */
-  outportByte(sPic + 1, 2); /* Cascade on IRQ 2                */
-  outportByte(mPic + 1, icw4); /* Finish Primary Initialization   */
-  outportByte(sPic + 1, icw4); /* Finish Seconary Initialization  */
-  outportByte(mImr, 0xff); /* Mask All Primary Interrupts     */
-  outportByte(sImr, 0xff); /* Mask All Seconary Interrupts    */
+int i8259_init()
+{
+	outportByte(mPic, icw1);       /* Initialize Master PIC           */
+	outportByte(sPic, icw1);       /* Initialize Seconary PIC         */
+	outportByte(mPic + 1, mVec);   /* Master Interrup Vector          */
+	outportByte(sPic + 1, sVec);   /* Secondary Interrupt Vector      */
+	outportByte(mPic + 1, 1 << 2); /* Bitmask for cascade on IRQ 2    */
+	outportByte(sPic + 1, 2);      /* Cascade on IRQ 2                */
+	outportByte(mPic + 1, icw4);   /* Finish Primary Initialization   */
+	outportByte(sPic + 1, icw4);   /* Finish Seconary Initialization  */
+	outportByte(mImr, 0xff);       /* Mask All Primary Interrupts     */
+	outportByte(sImr, 0xff);       /* Mask All Seconary Interrupts    */
 
-  /* Print out the system info for this */
-  kprintf("pic0 - Port: [0x%X]\n", mPic);
-  kprintf("pic1 - Port: [0x%X]\n", sPic);
+	/* Print out the system info for this */
+	kprintf("pic0 - Port: [0x%X]\n", mPic);
+	kprintf("pic1 - Port: [0x%X]\n", sPic);
 
-  /* Return so the system knows it went well */
-  return (0x0);
+	/* Return so the system knows it went well */
+	return (0x0);
 }
 
 /*!
@@ -63,31 +64,36 @@ int i8259_init() {
  *
  * \param irqNo IRQ to enable
  */
-void irqEnable_old(u_int16_t irqNo) {
-  irqMask &= ~(1 << irqNo);
-  if (irqNo >= 8) {
-    irqMask &= ~(1 << 2);
-  }
-  outportByte(mPic + 1, irqMask & 0xFF);
-  outportByte(sPic + 1, (irqMask >> 8) & 0xFF);
+void irqEnable_old(u_int16_t irqNo)
+{
+	irqMask &= ~(1 << irqNo);
+	if (irqNo >= 8)
+	{
+		irqMask &= ~(1 << 2);
+	}
+	outportByte(mPic + 1, irqMask & 0xFF);
+	outportByte(sPic + 1, (irqMask >> 8) & 0xFF);
 }
 
-void irqEnable(uint16_t irqNo) {
-  uint16_t port;
-  uint8_t value;
+void irqEnable(uint16_t irqNo)
+{
+	uint16_t port;
+	uint8_t value;
 
-  if (irqNo < 8) {
-    port = mImr;
-  }
-  else {
-    /* Slave PIC: also unmask IRQ2 (cascade) on master so slave IRQs reach CPU */
-    value = inportByte(mImr) & ~(1 << 2);
-    outportByte(mImr, value);
-    port = sImr;
-    irqNo -= 8;
-  }
-  value = inportByte(port) & ~(1 << irqNo);
-  outportByte(port, value);
+	if (irqNo < 8)
+	{
+		port = mImr;
+	}
+	else
+	{
+		/* Slave PIC: also unmask IRQ2 (cascade) on master so slave IRQs reach CPU */
+		value = inportByte(mImr) & ~(1 << 2);
+		outportByte(mImr, value);
+		port = sImr;
+		irqNo -= 8;
+	}
+	value = inportByte(port) & ~(1 << irqNo);
+	outportByte(port, value);
 }
 
 /*!
@@ -95,28 +101,33 @@ void irqEnable(uint16_t irqNo) {
  *
  * \param irqNo IRQ to disable
  */
-void irqDisable_old(u_int16_t irqNo) {
-  irqMask |= (1 << irqNo);
-  if ((irqMask & 0xFF00) == 0xFF00) {
-    irqMask |= (1 << 2);
-  }
-  outportByte(mPic + 1, irqMask & 0xFF);
-  outportByte(sPic + 1, (irqMask >> 8) & 0xFF);
+void irqDisable_old(u_int16_t irqNo)
+{
+	irqMask |= (1 << irqNo);
+	if ((irqMask & 0xFF00) == 0xFF00)
+	{
+		irqMask |= (1 << 2);
+	}
+	outportByte(mPic + 1, irqMask & 0xFF);
+	outportByte(sPic + 1, (irqMask >> 8) & 0xFF);
 }
 
-void irqDisable(uint16_t irqNo) {
-  uint16_t port;
-  uint8_t value;
+void irqDisable(uint16_t irqNo)
+{
+	uint16_t port;
+	uint8_t value;
 
-  if (irqNo < 8) {
-    port = mImr;
-  }
-  else {
-    port = sImr;
-    irqNo -= 8;
-  }
-  value = inportByte(port) | (1 << irqNo);
-  outportByte(port, value);
+	if (irqNo < 8)
+	{
+		port = mImr;
+	}
+	else
+	{
+		port = sImr;
+		irqNo -= 8;
+	}
+	value = inportByte(port) | (1 << irqNo);
+	outportByte(port, value);
 }
 
 /***

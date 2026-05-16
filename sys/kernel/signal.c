@@ -32,66 +32,89 @@
 #include <lib/kprintf.h>
 #include <assert.h>
 
-int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
-  td->td_retval[0] = -1;
+int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
+{
+	td->td_retval[0] = -1;
 
-  if (args->oset != 0x0) {
-    memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
-    td->td_retval[0] = 0x0;
-  }
+	if (args->oset != 0x0)
+	{
+		memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
+		td->td_retval[0] = 0x0;
+	}
 
-  if (args->set != 0x0) {
-    if (args->how == SIG_SETMASK) {
-      if (args->set != 0x0) {
-        memcpy(&td->sigmask, args->set, sizeof(sigset_t));
-        td->td_retval[0] = 0;
-      } else {
-        td->td_retval[0] = -1;
-      }
-    } else if (args->how == SIG_BLOCK) {
-      if (args->set != 0x0) {
-        td->sigmask.__bits[0] &= args->set->__bits[0];
-        td->sigmask.__bits[1] &= args->set->__bits[1];
-        td->sigmask.__bits[2] &= args->set->__bits[2];
-        td->sigmask.__bits[3] &= args->set->__bits[3];
-        td->td_retval[0] = 0;
-      } else {
-        td->td_retval[0] = -1;
-      }
-    } else if (args->how == SIG_UNBLOCK) {
-      if (args->set != 0x0) {
-        td->sigmask.__bits[0] |= args->set->__bits[0];
-        td->sigmask.__bits[1] |= args->set->__bits[1];
-        td->sigmask.__bits[2] |= args->set->__bits[2];
-        td->sigmask.__bits[3] |= args->set->__bits[3];
-        td->td_retval[0] = 0;
-      } else {
-        td->td_retval[0] = -1;
-      }
-    } else {
-      kprintf("SPM: 0x%X", args->how);
-      td->td_retval[0] = -1;
-    }
-  }
+	if (args->set != 0x0)
+	{
+		if (args->how == SIG_SETMASK)
+		{
+			if (args->set != 0x0)
+			{
+				memcpy(&td->sigmask, args->set, sizeof(sigset_t));
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+		}
+		else if (args->how == SIG_BLOCK)
+		{
+			if (args->set != 0x0)
+			{
+				td->sigmask.__bits[0] &= args->set->__bits[0];
+				td->sigmask.__bits[1] &= args->set->__bits[1];
+				td->sigmask.__bits[2] &= args->set->__bits[2];
+				td->sigmask.__bits[3] &= args->set->__bits[3];
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+		}
+		else if (args->how == SIG_UNBLOCK)
+		{
+			if (args->set != 0x0)
+			{
+				td->sigmask.__bits[0] |= args->set->__bits[0];
+				td->sigmask.__bits[1] |= args->set->__bits[1];
+				td->sigmask.__bits[2] |= args->set->__bits[2];
+				td->sigmask.__bits[3] |= args->set->__bits[3];
+				td->td_retval[0] = 0;
+			}
+			else
+			{
+				td->td_retval[0] = -1;
+			}
+		}
+		else
+		{
+			kprintf("SPM: 0x%X", args->how);
+			td->td_retval[0] = -1;
+		}
+	}
 
-  return (0);
+	return (0);
 }
 
-int sys_sigaction(struct thread *td, struct sys_sigaction_args *args) {
-  td->td_retval[0] = -1;
+int sys_sigaction(struct thread *td, struct sys_sigaction_args *args)
+{
+	td->td_retval[0] = -1;
 
-  if (args->sig < 1 || (size_t)args->sig >= (sizeof(td->sigact) / sizeof(td->sigact[0]))) {
-    return (0);
-  }
+	if (args->sig < 1 || (size_t)args->sig >= (sizeof(td->sigact) / sizeof(td->sigact[0])))
+	{
+		return (0);
+	}
 
-  if (args->oact != 0x0) {
-    memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
-    td->td_retval[0] = 0;
-  }
+	if (args->oact != 0x0)
+	{
+		memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
+		td->td_retval[0] = 0;
+	}
 
-  if (args->act != 0x0) {
-    memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
-    td->td_retval[0] = 0;
-  }
-  return (0);
+	if (args->act != 0x0)
+	{
+		memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
+		td->td_retval[0] = 0;
+	}
+	return (0);
 }

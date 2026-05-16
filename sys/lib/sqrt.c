@@ -26,8 +26,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-double sqrt(double x) {
-  return (x); /* Quick Hack */
+double sqrt(double x)
+{
+	return (x); /* Quick Hack */
 }
 
 /***
@@ -52,4 +53,3 @@ double sqrt(double x) {
 
  END
  ***/
-

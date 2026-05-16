@@ -32,120 +32,132 @@
 
 int haveChildren(struct Trie *curr);
 
-struct Trie *new_trieNode() {
+struct Trie *new_trieNode()
+{
 
-  struct Trie *node = (struct Trie *) kmalloc(sizeof(struct Trie));
+	struct Trie *node = (struct Trie *)kmalloc(sizeof(struct Trie));
 
-  node->isLeaf = 0;
+	node->isLeaf = 0;
 
-  for (int i = 0; i < CHAR_SIZE; i++)
-    node->character[i] = NULL;
+	for (int i = 0; i < CHAR_SIZE; i++)
+		node->character[i] = NULL;
 
-  return (node);
+	return (node);
 }
 
 // Insert Trie
-void insert_trieNode(struct Trie **head, char* str, void *e) {
+void insert_trieNode(struct Trie **head, char *str, void *e)
+{
 
-  // start from root node
-  struct Trie* curr = *head;
+	// start from root node
+	struct Trie *curr = *head;
 
-  while (*str) {
+	while (*str)
+	{
 
-    // create a new node if path doesn't exists
-    if (curr->character[*str - 'a'] == NULL) {
-      curr->character[*str - 'a'] = new_trieNode();
-    }
+		// create a new node if path doesn't exists
+		if (curr->character[*str - 'a'] == NULL)
+		{
+			curr->character[*str - 'a'] = new_trieNode();
+		}
 
-    // go to next node
-    curr = curr->character[*str - 'a'];
-    // move to next character
-    str++;
-  }
+		// go to next node
+		curr = curr->character[*str - 'a'];
+		// move to next character
+		str++;
+	}
 
-  curr->e = e;
-  // mark current node as leaf
-  curr->isLeaf = 1;
+	curr->e = e;
+	// mark current node as leaf
+	curr->isLeaf = 1;
 }
 
+struct Trie *search_trieNode(struct Trie *head, char *str)
+{
 
-struct Trie *search_trieNode(struct Trie *head, char *str) {
+	// return 0 if Trie is empty
+	if (head == NULL || str == NULL)
+		return (0);
 
-  // return 0 if Trie is empty
-  if (head == NULL || str == NULL)
-    return (0);
+	struct Trie *curr = head;
 
-  struct Trie *curr = head;
+	while (*str)
+	{
 
-  while (*str) {
+		// go to next node
+		curr = curr->character[*str - 'a'];
 
-    // go to next node
-    curr = curr->character[*str - 'a'];
+		// if string is invalid (reached end of path in Trie)
+		if (curr == NULL)
+			return (0);
 
-    // if string is invalid (reached end of path in Trie)
-    if (curr == NULL)
-      return (0);
+		// move to next character
+		str++;
+	}
 
-    // move to next character
-    str++;
-  }
-
-  // if current node is a leaf and we have reached the
-  // end of the string, return 1
-  return (curr);
+	// if current node is a leaf and we have reached the
+	// end of the string, return 1
+	return (curr);
 }
-
-
 
 // Recursive function to delete a string in Trie
-int delete_trieNode(struct Trie **curr, char *str) {
+int delete_trieNode(struct Trie **curr, char *str)
+{
 
-  // return if Trie is empty
-  if (*curr == NULL)
-    return (0);
+	// return if Trie is empty
+	if (*curr == NULL)
+		return (0);
 
-  // if we have not reached the end of the string
-  if (*str) {
-    // recurse for the node corresponding to next character in
-    // the string and if it returns 1, delete current node
-    // (if it is non-leaf)
-    if (*curr != NULL && (*curr)->character[*str - 'a'] != NULL && delete_trieNode(&((*curr)->character[*str - 'a']), str + 1) && (*curr)->isLeaf == 0) {
-      if (!haveChildren(*curr)) {
-        kfree(*curr);
-        (*curr) = NULL;
-        return (1);
-      }
-      else {
-        return (0);
-      }
-    }
-  }
+	// if we have not reached the end of the string
+	if (*str)
+	{
+		// recurse for the node corresponding to next character in
+		// the string and if it returns 1, delete current node
+		// (if it is non-leaf)
+		if (*curr != NULL && (*curr)->character[*str - 'a'] != NULL && delete_trieNode(&((*curr)->character[*str - 'a']), str + 1) && (*curr)->isLeaf == 0)
+		{
+			if (!haveChildren(*curr))
+			{
+				kfree(*curr);
+				(*curr) = NULL;
+				return (1);
+			}
+			else
+			{
+				return (0);
+			}
+		}
+	}
 
-  // if we have reached the end of the string
-  if (*str == '\0' && (*curr)->isLeaf) {
-    // if current node is a leaf node and don't have any children
-    if (!haveChildren(*curr)) {
-      kfree(*curr); // delete current node
-      (*curr) = NULL;
-      return (1); // delete non-leaf parent nodes
-    }
+	// if we have reached the end of the string
+	if (*str == '\0' && (*curr)->isLeaf)
+	{
+		// if current node is a leaf node and don't have any children
+		if (!haveChildren(*curr))
+		{
+			kfree(*curr); // delete current node
+			(*curr) = NULL;
+			return (1); // delete non-leaf parent nodes
+		}
 
-    // if current node is a leaf node and have children
-    else {
-      // mark current node as non-leaf node (DON'T DELETE IT)
-      (*curr)->isLeaf = 0;
-      return (0);    // don't delete its parent nodes
-    }
-  }
+		// if current node is a leaf node and have children
+		else
+		{
+			// mark current node as non-leaf node (DON'T DELETE IT)
+			(*curr)->isLeaf = 0;
+			return (0); // don't delete its parent nodes
+		}
+	}
 
-  return (0);
+	return (0);
 }
 
 // returns 1 if given node has any children
-int haveChildren(struct Trie* curr) {
-  for (int i = 0; i < CHAR_SIZE; i++)
-    if (curr->character[i])
-      return (1); // child found
+int haveChildren(struct Trie *curr)
+{
+	for (int i = 0; i < CHAR_SIZE; i++)
+		if (curr->character[i])
+			return (1); // child found
 
-  return (0);
+	return (0);
 }
