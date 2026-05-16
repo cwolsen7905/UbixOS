@@ -41,6 +41,7 @@
 #include <sys/gdt.h>
 #include <sys/types.h>
 #include <isa/8259.h>
+#include <isa/irq.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <vmm/paging.h>
@@ -412,7 +413,6 @@ asm(
 
 int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	uint32_t ral, rah;
-	uint8_t  vec;
 	int      i;
 
 	kprintf("e1000: initializing 82540EM at BAR0=0x%X IRQ=%u\n", bar0_phys, irq);
@@ -468,16 +468,14 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	if (e1000_init_rx() != 0) return -1;
 	if (e1000_init_tx() != 0) return -1;
 
-	/* Wire IRQ */
-	vec = (irq >= 8) ? (sVec + (irq - 8)) : (mVec + irq);
-	setVector(&e1000_isr, vec, dInt + dPresent + dDpl3);
-	irqEnable(irq);
+	/* Wire IRQ via shared dispatch layer */
+	irq_register(irq, e1000_handle_irq);
 
 	/* Enable RX timer, RX overrun, and link-change interrupts.
 	 * TXDW (TX descriptor written back) is not needed — we poll DD in send. */
 	e1000_write(E1000_REG_IMS, E1000_ICR_RXT0 | E1000_ICR_RXO | E1000_ICR_LSC);
-	kprintf("e1000: vec=0x%X irq=%u IMS=0x%X\n",
-	    vec, irq, e1000_read(E1000_REG_IMS));
+	kprintf("e1000: irq=%u IMS=0x%X\n",
+	    irq, e1000_read(E1000_REG_IMS));
 
 	e1000_ready = 1;
 	kprintf("e1000: ready\n");
@@ -523,19 +521,26 @@ e1000_ubx_attach(struct ubx_device *dev)
 			irq = (uint8_t)dev->dev_res[i].r_start;
 	}
 
-	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4);
-	cmd |= 0x06; /* Memory Space Enable + Bus Master Enable */
-	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 4);
+	kprintf("e1000: at bus=%u slot=%u func=%u BAR0=0x%X IRQ=%u\n",
+	    dev->dev_bus, dev->dev_slot, dev->dev_func, bar0, irq);
+
+	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
+	kprintf("e1000: PCI CMD before enable=0x%X\n", cmd);
+	cmd |= 0x07; /* I/O Space + Memory Space + Bus Master */
+	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 2);
+	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
+	kprintf("e1000: PCI CMD after enable=0x%X (master=%s)\n",
+	    cmd, (cmd & 0x04) ? "on" : "OFF");
 
 	kprintf("pci: found e1000 @ BAR0=0x%X IRQ=%u\n", bar0, irq);
 	ret = initE1000(bar0, irq);
 
 	/* Re-enable bus mastering — CTRL.RST inside initE1000 may have cleared it. */
-	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4);
-	cmd |= 0x06;
-	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 4);
+	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
+	cmd |= 0x07; /* I/O Space + Memory Space + Bus Master */
+	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 2);
 	kprintf("pci: e1000 PCI CMD after init=0x%X (bus master %s)\n",
-	    pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 4),
+	    pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2),
 	    (cmd & 0x04) ? "on" : "OFF");
 
 	return (ret);

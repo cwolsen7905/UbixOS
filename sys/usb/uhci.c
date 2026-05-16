@@ -40,6 +40,7 @@
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <isa/8259.h>
+#include <isa/irq.h>
 #include <pci/pci.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -196,10 +197,7 @@ void uhci_isr_handler(void)
 
 	if (sts & UHCI_STS_HCERR)
 		kprintf("uhci: HC process error\n");
-
-	/* EOI to 8259 slave then master (IRQ 11 = slave line 3) */
-	outportByte(0xA0, 0x20);
-	outportByte(0x20, 0x20);
+	/* EOI is sent by irq_dispatch() */
 }
 
 /* -----------------------------------------------------------------------
@@ -571,7 +569,6 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 	struct uhci_softc *sc = &uhci_sc;
 	struct ubx_resource *res;
 	uint32_t i;
-	uint16_t vec;
 
 	kprintf("uhci: attaching (vendor=0x%X dev=0x%X)\n", dev->dev_vendor, dev->dev_device_id);
 
@@ -677,14 +674,7 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 	uhci_wr16(sc, UHCI_USBINTR, UHCI_INTR_IOC | UHCI_INTR_RIE | UHCI_INTR_TOCRCIE);
 
 	/* --- Install ISR --- */
-	if (sc->sc_irq >= 8)
-		vec = sVec + (sc->sc_irq - 8);
-	else
-		vec = mVec + sc->sc_irq;
-
-	void uhci_isr_trampoline(void);
-	setVector(&uhci_isr_trampoline, vec, dInt + dPresent + dDpl3);
-	irqEnable(sc->sc_irq);
+	irq_register(sc->sc_irq, uhci_isr_handler);
 
 	/* --- Run! --- */
 	uhci_wr16(sc, UHCI_USBCMD, UHCI_CMD_RS | UHCI_CMD_CF | UHCI_CMD_MAXP);

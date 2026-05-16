@@ -3,7 +3,7 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-OBJS = mouse.o atkbd.o fdc.o 8259.o pit.o
+OBJS = mouse.o atkbd.o fdc.o 8259.o pit.o irq.o irq_stubs.o
 # ne2k.o
 
 .include "${UBIX_MK}/ubix.kern.mk"
