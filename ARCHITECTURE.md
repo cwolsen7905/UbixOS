@@ -13,10 +13,14 @@ This document describes the internal design of the UbixOS kernel, userland, and 
 5. [Process Model](#process-model)
 6. [Filesystem Layer (VFS)](#filesystem-layer-vfs)
 7. [Inter-Process Communication](#inter-process-communication)
-8. [Device Drivers](#device-drivers)
-9. [Networking](#networking)
-10. [Userland](#userland)
-11. [Third-Party Components](#third-party-components)
+8. [Device Driver Model (newbus-lite)](#device-driver-model-newbus-lite)
+9. [IRQ Dispatch](#irq-dispatch)
+10. [Keyboard Input](#keyboard-input)
+11. [Display Stack](#display-stack)
+12. [Networking](#networking)
+13. [USB Stack](#usb-stack)
+14. [Userland](#userland)
+15. [Third-Party Components](#third-party-components)
 
 ---
 
@@ -36,8 +40,8 @@ sys/
 │   ├── i386/       - x86 CPU, interrupts, syscall dispatch, fork, scheduler, SMP AP boot
 │   └── armv6/      - ARMv6 support (experimental)
 ├── init/
-│   ├── start.S     - Assembly bootstrap (segments, initial stack)
-│   └── main.c      - C entry point; GDT setup and subsystem initialization
+│   ├── start.S     - Assembly bootstrap (segments, initial stack, multiboot detection)
+│   └── main.c      - C entry point; GDT setup and subsystem initialization table
 ├── kernel/         - Core kernel: scheduler, ELF loader, exec, signals, TTY, pipes, SMP
 ├── vmm/            - Virtual memory manager (paging, COW, address space management)
 ├── fs/
@@ -49,10 +53,11 @@ sys/
 │   ├── devfs/      - Device filesystem driver
 │   └── common/     - Shared filesystem utilities
 ├── mpi/            - Message passing interface (IPC)
-├── net/            - Network stack (lwIP integration)
+├── net/            - Network stack (lwIP 2.0.3 integration)
 ├── isa/            - ISA bus device drivers
 ├── pci/            - PCI bus enumeration and drivers
-├── isa/fb.c        - VESA framebuffer syscalls (sys_mapfb, sys_shareregion)
+├── usb/            - USB host controller and device drivers
+├── sde/            - Software display environment (C++ graphics layer)
 ├── lib/            - Kernel library (kprintf, kmalloc, etc.)
 ├── sys/            - Core system services (DMA, IDT, I/O ports, video)
 ├── include/        - All kernel-internal headers
@@ -67,8 +72,8 @@ sys/
 
 ### x86 Startup
 
-1. **Bootloader** loads the kernel binary into memory and transfers control.
-2. **`sys/init/start.S`** — assembly trampoline that establishes segment registers and an initial stack, then calls into C.
+1. **GRUB2** loads the kernel via the multiboot protocol from a FAT32 disk image, passing `boot_device` info in `ebx`.
+2. **`sys/init/start.S`** — detects multiboot magic (`0x2BADB002` in `%eax`), saves `_multiboot_info`, establishes segment registers and initial stack, then calls `vmm_init()` → `kmain()`.
 3. **`sys/init/main.c`** — C entry point. Builds the Global Descriptor Table (GDT) with 11 descriptors:
 
 | Selector | Purpose |
@@ -85,24 +90,27 @@ sys/
 | `0x48` | SMP private data |
 | `0x50` | User `%gs` (stack pointer) |
 
-4. **Subsystem initialization** (in order):
-   - `static_constructors()` — C++ static initializers
-   - `i8259_init()` — Programmable Interrupt Controller
-   - `idt_init()` — Interrupt Descriptor Table
-   - `vitals_init()` — Kernel statistics
-   - `sysctl_init()` — sysctl interface
-   - `vfs_init()` — Virtual filesystem
-   - `sched_init()` — Scheduler
-   - `pit_init()` — Programmable Interval Timer
-   - `atkbd_init()` — AT keyboard
-   - `time_init()` — Time services
-   - `pci_init()` — PCI bus enumeration
-   - `devfs_init()` — Device filesystem
-   - `tty_init()` — TTY subsystem
-   - `ufs_init()`, `fat_init()` — Filesystem drivers
-   - `initHardDisk()` — Hard disk
-   - `initLNC()` — Lance network adapter
-   - `net_init()` — TCP/IP stack
+4. **Subsystem initialization** runs from the table in `sys/include/ubixos/init.h` (in order):
+
+| Step | Function | Notes |
+|------|----------|-------|
+| 1 | `static_constructors()` | C++ static initializers |
+| 2 | `i8259_init()` | Programmable Interrupt Controller (8259 PIC) |
+| 3 | `idt_init()` | Interrupt Descriptor Table |
+| 4 | `vitals_init()` | Kernel statistics / tick counters |
+| 5 | `sysctl_init()` | sysctl interface |
+| 6 | `vfs_init()` | Virtual filesystem |
+| 7 | `sched_init()` | Preemptive scheduler |
+| 8 | `pit_init()` | Programmable Interval Timer (scheduler tick) |
+| 9 | `isa_bus_init()` | ISA bus probe: AT keyboard + PS/2 mouse via newbus-lite |
+| 10 | `time_init()` | Time services |
+| 11 | `devfs_init()` | Device filesystem (must precede `pci_init`) |
+| 12 | `pci_init()` | PCI bus enumeration; attaches e1000 NIC, IDE disk, UHCI USB |
+| 13 | `tty_init()` | TTY subsystem |
+| 14 | `ufs_init()`, `fat_init()` | Filesystem drivers |
+| 15 | `net_init()` | lwIP TCP/IP stack + e1000 netif |
+
+5. After init, `kmain` mounts the FAT32 boot partition as `sys:/` using the multiboot `boot_device` field, then `execFile("sys:/bin/init")` launches PID 1.
 
 ### SMP Application Processor Startup
 
@@ -126,7 +134,7 @@ Each process has a private 4 GB virtual address space with the following regions
                                    (unless executing a syscall)
 ```
 
-At `0x00100000` each process stores its own page directory. Page table slot `0x768` (`PDE[0x300]`) points to the shared kernel page tables mapped into the top 1 GB.
+Physical addresses at or above `numPages × PAGE_SIZE` (≥ 256 MB with default `-m 256` QEMU) are MMIO — framebuffer, PCI BARs, etc. These frames have no entry in `vmmMemoryMap` and must never be passed to `freePage`.
 
 ### Key Functions
 
@@ -134,7 +142,7 @@ At `0x00100000` each process stores its own page directory. Page table slot `0x7
 |----------|-------------|
 | `vmmInit()` | Top-level init; calls `vmmMemMapInit` then `vmmPagingInit` |
 | `vmmMemMapInit()` | Builds the physical page map — a linked list of available frames tracking COW status and ownership |
-| `vmmPagingInit()` | Enables paging; sets up the kernel's default page directory and remaps the physical page map into the top 1 GB |
+| `vmmPagingInit()` | Enables paging; sets up the kernel's default page directory |
 | `vmmCreateVirtualSpace(pid)` | Allocates a new page directory for a process; pre-maps the shared lower 1 MB and kernel top 1 GB |
 | `vmmCopyVirtualSpace(pid)` | Forks the address space using copy-on-write: all pages in 2 MB–3 GB are marked COW; physical copies happen lazily on page-fault |
 
@@ -154,7 +162,7 @@ Source: `sys/kernel/`, `sys/arch/i386/`
 - **Signals:** `signal.c` / `kern_sig.c` implement POSIX-style signal delivery.
 - **Threading:** `ubthread.c` provides user-level thread support.
 - **SMP:** `smp.c` coordinates multi-processor scheduling.
-- **TTY:** `tty.c` manages terminal I/O.
+- **TTY:** `tty.c` manages up to 5 virtual terminals (`TTY_MAX_TERMS`). `tty_foreground` points to the active terminal; `tty_change()` switches between them.
 
 ---
 
@@ -178,9 +186,9 @@ The VFS provides a uniform interface over multiple concrete filesystems:
 |------------|--------|-------|
 | UbixFS v1 | `fs/ubixfs/` | Native UbixOS filesystem |
 | UbixFS v2 | `fs/ubixfsv2/` | Improved version with directory caching |
-| UFS | `fs/ufs/` | BSD Unix File System; file size hacked for compatibility |
-| FAT16/FAT32 | `fs/fat/` | For bootloader and cross-platform media |
-| DevFS | `fs/devfs/` | Device abstraction (e.g., `/dev/`) |
+| UFS | `fs/ufs/` | BSD Unix File System |
+| FAT16/FAT32 | `fs/fat/` | Boot partition and cross-platform media |
+| DevFS | `fs/devfs/` | Device abstraction |
 
 ---
 
@@ -202,45 +210,221 @@ The `init` process (PID 1) uses MPI mailboxes to communicate with child processe
 
 ---
 
-## Device Drivers
+## Device Driver Model (newbus-lite)
+
+Source: `sys/include/sys/bus.h`, `sys/include/sys/isa_bus.h`
+
+All drivers use a lightweight newbus-inspired model. Each driver declares a `struct ubx_driver`:
+
+```c
+struct ubx_driver {
+    const char      *drv_name;
+    int            (*drv_probe)(struct ubx_device *);   /* 0 = match */
+    int            (*drv_attach)(struct ubx_device *);  /* 0 = success */
+    int            (*drv_detach)(struct ubx_device *);
+};
+```
+
+Resources (IRQ, I/O ports, MMIO BARs) are described by `struct ubx_resource` arrays attached to each `struct ubx_device`. `ubx_bus_probe_and_attach()` walks a driver table, calls `drv_probe`, and on match calls `drv_attach`.
 
 ### ISA Bus (`sys/isa/`)
+
+`isa_bus_init()` allocates `ubx_device` entries from a static table in `sys/include/sys/isa_bus.h` and probes the ISA driver table:
 
 | File | Device |
 |------|--------|
 | `8259.c` | Programmable Interrupt Controller (i8259) |
 | `pit.c` | Programmable Interval Timer |
 | `atkbd.c` | AT keyboard (PS/2) |
-| `fdc.c` | Floppy disk controller |
-| `ne2k.c` | NE2000-compatible Ethernet NIC |
-| `rs232.c` | Serial port (RS-232) |
 | `mouse.c` | PS/2 mouse |
+| `fdc.c` | Floppy disk controller |
+| `irq.c` + `irq_stubs.S` | Shared IRQ dispatch layer (see [IRQ Dispatch](#irq-dispatch)) |
 
 ### PCI Bus (`sys/pci/`)
+
+`pci_init()` enumerates buses 0–1, probes each device, and walks `pci_drv_table`:
 
 | File | Device |
 |------|--------|
 | `pci.c` | PCI bus enumeration |
-| `hd.c` | PCI hard disk (IDE) |
-| `lnc.c` | Lance (Am7990) Ethernet adapter |
+| `hd.c` | PCI IDE hard disk (ATA) |
+| `e1000.c` | Intel 82540EM Gigabit Ethernet (primary NIC) |
+| `lnc.c` | Lance (Am7990) Ethernet — legacy, not in default boot |
 
-### Adding a New Driver
+USB host controllers found during PCI enumeration are also attached here — see [USB Stack](#usb-stack).
 
-See [docs/drivers/writing-a-driver.md](docs/drivers/writing-a-driver.md) for a skeleton and walkthrough of the `deviceAdd()` registration API.
+---
+
+## IRQ Dispatch
+
+Source: `sys/isa/irq.c`, `sys/isa/irq_stubs.S`
+
+Multiple drivers may share a hardware IRQ line (e.g., UHCI and e1000 both use IRQ 11 under QEMU's PIIX4). A per-IRQ handler chain avoids the `setVector` clobber problem.
+
+```
+Hardware IRQ N
+    │
+    └── irq_entry_N  (irq_stubs.S — one stub per IRQ 0-15)
+            │  pusha / push N / call irq_dispatch / popa / iret
+            ▼
+        irq_dispatch(int irq)   (irq.c)
+            │  walks irq_handlers[irq][0..count]
+            │  calls each handler
+            └── sends EOI (slave then master for IRQ ≥ 8)
+```
+
+Drivers register with `irq_register(irq, handler)`. On first registration the dispatch stub is installed into the IDT and the IRQ is unmasked. Subsequent registrations append to the chain.
+
+**Rule**: handlers must **not** send EOI — `irq_dispatch` sends exactly one EOI after all handlers run.
+
+---
+
+## Keyboard Input
+
+Source: `sys/isa/atkbd.c`, `sys/include/isa/kbd.h`, `sys/include/ubixos/tty.h`
+
+All keyboard input — PS/2 and USB — flows through a single `kbd_ring` circular buffer. The line discipline runs in process context, not in the interrupt handler.
+
+### Data Flow
+
+```
+PS/2 IRQ (keyboardHandler)          USB UHCI interrupt (hid_kbd_callback)
+    │                                           │
+    │  modifier tracking, LED control           │  HID report decode
+    │  emergency keys: Ctrl-C (kills           │  HID Usage → ASCII / KEY_*
+    │    foreground task), reboot,              │
+    │    Ctrl-X (panic), console switch        │
+    │                                           │
+    └──────────── kbd_ring_push(kc, 1) ────────┘
+                         │
+              kbd_ring[]  (64-entry circular buffer)
+                         │
+          ┌──────────────┴──────────────┐
+          │                             │
+    TTY mode                       GUI mode
+    (no views running)             (views running)
+          │                             │
+    getchar()                    sys_getkbd() → views
+    drains ring                  drains ring raw
+    through kbd_apply_event      routes DISPLAY_KEY MPI
+    (canonical/raw editing)      → focused window (term)
+          │
+    tty_foreground->stdin[]
+          │
+    sys_read(fd=0) returns line
+```
+
+### kbd_apply_event (single line discipline)
+
+`kbd_apply_event()` in `atkbd.c` is the **only** place canonical/raw TTY editing is implemented:
+- **Backspace**: erase from `t_linebuf` (canonical) or deliver raw
+- **Enter**: flush `t_linebuf` → `tty_foreground->stdin[]`, echo newline
+- **Ctrl-U**: clear `t_linebuf`
+- **Printable chars**: append to `t_linebuf` + echo (canonical) or deliver raw
+
+The PS/2 ISR and USB callback both do **zero** line discipline — they only translate hardware events to keycodes and push to `kbd_ring`.
+
+### Key Types
+
+| Range | Meaning |
+|-------|---------|
+| `0x01`–`0xFF` | Translated ASCII (shift/ctrl already applied) |
+| `0x100`+ | Special keys: `KEY_UP`, `KEY_F1`, etc. — GUI only, TTY ignores |
+
+### Syscalls
+
+| Syscall | Number | Description |
+|---------|--------|-------------|
+| `sys_getkbd` | 46 (native) | Drain one event from `kbd_ring`; used by views |
+
+---
+
+## Display Stack
+
+Source: `bin/views/`, `bin/term/`, `bin/taskbar/`, `lib/objgfx/`, `sys/kernel/fb.c`
+
+Two-layer graphical system modelled after WindowServer + Core Graphics:
+
+```
+┌────────────────────────────────────────┐
+│  Application (bin/term, bin/muffin…)   │
+│  Renders into shared-memory buffer     │
+│  via lib/objgfx (ogSurface/ogBitFont)  │
+└──────────────┬─────────────────────────┘
+               │  MPI: DISPLAY_FLIP / DISPLAY_KEY / DISPLAY_CLOSE
+               │  vmm_share_region: shared framebuffer window buffer
+               ▼
+┌────────────────────────────────────────┐
+│  views compositor (bin/views)          │
+│  Owns VESA framebuffer via sys_mapfb() │
+│  Manages windows, Z-order, decorations │
+│  Polls mouse (syscall 44) + kbd (46)   │
+│  Composites damage regions to screen   │
+│  Uses shadow back-buffer for flicker   │
+└────────────────────────────────────────┘
+```
+
+**Rules:**
+- `views` is the only process that calls `sys_mapfb()`. All other processes receive a `vmm_share_region` buffer.
+- Apps render with `objGFX` (`ogSurface`/`ogBitFont`). No app writes to the framebuffer directly.
+- MPI carries only signals (`DISPLAY_CLAIM`, `DISPLAY_FLIP`, `DISPLAY_KEY`, `DISPLAY_CLOSE`), never drawing commands.
+- The compositor uses deferred damage tracking — only dirty regions are recomposited each frame.
+
+### GUI Terminal (bin/term)
+
+`bin/term` is a windowed terminal emulator. It receives `DISPLAY_KEY` MPI messages from `views`, does its own canonical line editing, and writes completed lines to the shell's stdin via a pipe. The shell process reads from that pipe (fd type 3), not from the keyboard ring directly.
 
 ---
 
 ## Networking
 
-Source: `sys/net/`, `contrib/lwip-2.0.3/`
+Source: `sys/net/`, `sys/pci/e1000.c`
 
 UbixOS delegates the TCP/IP stack to **lwIP 2.0.3** (Lightweight IP), integrated through the network interface layer in `sys/net/netif/`. The socket API in `sys/net/api/` exposes standard BSD socket calls to userland.
 
-Supported NICs: NE2000 (`sys/isa/ne2k.c`), Lance LNC (`sys/pci/lnc.c`).
+### Primary NIC: Intel e1000 (82540EM)
+
+`sys/pci/e1000.c` drives the Intel 82540EM Gigabit Ethernet controller (QEMU's default `e1000` model). It is registered via newbus-lite as `e1000_ubx_driver` and uses `irq_register()` to share IRQ 11 with UHCI.
+
+The e1000 netif bridge (`sys/net/netif/e1000netif.c`) glues the driver to lwIP's `netif` abstraction.
+
+### Legacy NIC
+
+`sys/pci/lnc.c` (Lance/Am7990) is retained in the source tree but is **not** in the default `pci_drv_table`; it was replaced by e1000 in the boot sequence.
+
+---
+
+## USB Stack
+
+Source: `sys/usb/`
+
+| File | Role |
+|------|------|
+| `usb.h` / `usb_driver.h` | Core types: `usb_device`, `usb_driver`, `usb_ep_desc` |
+| `usb.c` | Device enumeration: `usb_new_device()` — reads descriptors, matches driver table |
+| `uhci.c` | UHCI host controller driver — DMA ring, control/bulk/interrupt transfers |
+| `hid_kbd.c` | HID boot-protocol keyboard driver (class 3/1/1) |
+
+### UHCI Host Controller
+
+`uhci_ubx_driver` is registered in `pci_drv_table` and attaches to any PCI device with class `0x0C/0x03/0x00` (USB UHCI). It allocates a DMA pool of QH/TD pairs, wires interrupt slot QHs into all 1024 frame list entries, and registers its ISR via `irq_register()`.
+
+**Pool layout** (within the DMA page):
+```
+indices 0-2      : control skeleton QH + bulk/term QH + frame-list sentinel
+indices 3-6      : interrupt slots (UHCI_INTR_SLOTS = 4)
+indices 7+       : free for control/bulk transfers (UHCI_CTRL_BASE = 7)
+```
+
+### USB Driver Matching
+
+`usb_new_device()` walks a `usb_drivers[]` table. Each driver declares `drv_class / drv_subclass / drv_protocol`. The HID keyboard driver (`hid_kbd_driver`) matches class 3/1/1 and calls `uhci_schedule_intr()` to arm an 8-byte interrupt IN transfer. Its callback (`hid_kbd_callback`) decodes HID Usage Page 0x07 reports and pushes translated keycodes into `kbd_ring` via `kbd_ring_push()`.
 
 ---
 
 ## Userland
+
+Userland is built separately from the kernel. All binaries link against **musl libc** (in `contrib/musl/`). The world build produces output in `build/bin/`, `build/lib/`, `build/libexec/`.
 
 ### Executables (`bin/`)
 
@@ -248,7 +432,7 @@ Supported NICs: NE2000 (`sys/isa/ne2k.c`), Lance LNC (`sys/pci/lnc.c`).
 |--------|-------------|
 | `init` | PID 1 — system initialization and process supervision |
 | `login` | User authentication |
-| `sh` / `shell` | Command shell |
+| `shell` | Command shell (primary; `sh` removed) |
 | `cat`, `cp`, `ls` | Core file utilities |
 | `mount` | Filesystem mounting |
 | `fdisk`, `disklabel`, `format` | Disk management |
@@ -259,19 +443,20 @@ Supported NICs: NE2000 (`sys/isa/ne2k.c`), Lance LNC (`sys/pci/lnc.c`).
 | `ttyd` | TTY daemon |
 | `views` | GUI compositor — owns framebuffer, composites windows, routes input |
 | `taskbar` | Taskbar panel with launcher button and clock |
-| `term` | Windowed VT100 terminal emulator |
-| `muffin` | Demo/test app for the display stack |
+| `term` | Windowed terminal emulator — pipes stdin/stdout to/from shell |
 
 ### Libraries (`lib/`)
 
 | Library | Description |
 |---------|-------------|
-| `libc/` | FreeBSD-derived POSIX C library |
-| `libcpp/` | C++ runtime support (static constructors, new/delete) |
 | `msun/` | Math library |
 | `objgfx/` | C++ surface rendering API (`ogSurface`, `ogBitFont`) — headers in `include/objgfx/` |
-| `ubix_api/` | UbixOS-specific API |
-| `ubix/` | Core library with static startup code |
+| `ubix_api/` | UbixOS-specific API (`ubix_getcwd`, MPI helpers, `gettime`) |
+| `ubix/` | Core startup library — `crt1` (`_start.S`) and static initializers |
+| `libedit/` | Line editing library |
+| `libmd/` | Message digest library |
+| `libfb/` | Framebuffer helper library |
+| `csu/` | C startup support (crtbegin/crtend) |
 
 ### Runtime Linker (`libexec/`)
 
@@ -284,10 +469,13 @@ The dynamic linker (`ld.so`) resolves shared library references at runtime. Libr
 | Component | Location | Purpose |
 |-----------|----------|---------|
 | lwIP 2.0.3 | `contrib/lwip-2.0.3/` | TCP/IP network stack |
+| musl libc | `contrib/musl/` | Primary C library for userland |
 | jemalloc | `contrib/jemalloc/` | Memory allocator |
 | gdtoa | `contrib/gdtoa/` | float/double ↔ ASCII conversion |
-| TCC | `contrib/tcc/` | Tiny C Compiler |
+| TCC | `contrib/tcc/` | Tiny C Compiler (self-hosted builds) |
 | tzcode | `contrib/tzcode/` | Timezone database and library |
 | libc-pwcache | `contrib/libc-pwcache/` | User/group password cache |
 | libc-vis | `contrib/libc-vis/` | String encoding/visualization |
 | NetBSD tests | `contrib/netbsd-tests/` | Portable test suite |
+| LLVM libc++ | `contrib/libcxx/` | C++ standard library for views/taskbar/term |
+| libcxxabi | `contrib/libcxxabi/` | C++ ABI support (exception handling, RTTI) |
