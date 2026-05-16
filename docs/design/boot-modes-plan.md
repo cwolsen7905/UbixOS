@@ -193,23 +193,66 @@ ttyd be tested without physical hardware.
 
 ---
 
+## Status
+
+### Infrastructure already done
+
+| Item | Status | Notes |
+|------|--------|-------|
+| klog ring buffer (`sys/kernel/klog.c`) | ✅ done | 256-entry ring, klog()/klog_push()/klog_read() |
+| `sys/include/sys/klog.h` | ✅ done | levels, entry struct, API |
+| `sys_klog_read` syscall (slot 47) | ✅ done | native ABI, wired in syscalls.c + fb.c |
+| `bin/logd` — kernel log daemon | ✅ done | polls slot 47, writes sys:/var/log/messages |
+| init.d framework | ✅ done | scan + sort + fork, in bin/init/main.c |
+| `tools/initd/10-logd` | ✅ done | logd enabled by default |
+| `tools/initd/15-ubistry` | ✅ done | registry service enabled by default |
+| `tools/initd/20-views` | ✅ done | present but commented out (enable for graphical boot) |
+| mkimage.sh installs /etc/init.d/ | ✅ done | copies tools/initd/* to image |
+| Design document (`boot-modes-plan.md`) | ✅ done | this file |
+
+### Phase 1 — Serial terminal (headless path)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Serial RX ISR + `serial_rx_ring[]` | ⬜ todo | `sys/isa/serial.c` |
+| `sys_serial_read` syscall (slot 48) | ⬜ todo | native ABI |
+| `bin/ttyd` — serial terminal daemon | ⬜ todo | line discipline, session fork |
+| `tools/initd/30-ttyd` | ⬜ todo | disabled by default |
+
+### Phase 2 — Graphical login
+
+| Item | Status | Notes |
+|------|--------|-------|
+| `bin/guilogin` — login screen | ⬜ todo | fullscreen objgfx form, userdb auth |
+| views forks guilogin after init | ⬜ todo | `bin/views/` compositor change |
+| Enable `tools/initd/20-views` | ⬜ todo | uncomment exec line |
+
+### Phase 3 — Taskbar as desktop shell
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Taskbar app launcher | ⬜ todo | right-click menu or dock strip |
+| Compositor keyboard shortcuts | ⬜ todo | views/taskbar layer, not kernel |
+
+---
+
 ## File checklist
 
 ### New files
-| File | Phase |
-|------|-------|
-| `sys/isa/serial_rx.c` (or extend `serial.c`) | 1 |
-| `bin/ttyd/main.c` | 1 |
-| `tools/initd/30-ttyd` | 1 |
-| `bin/guilogin/main.c` | 2 |
-| `bin/guilogin/Makefile` | 2 |
+| File | Phase | Status |
+|------|-------|--------|
+| `sys/isa/serial_rx.c` (or extend `serial.c`) | 1 | ⬜ todo |
+| `bin/ttyd/main.c` | 1 | ⬜ todo |
+| `tools/initd/30-ttyd` | 1 | ⬜ todo |
+| `bin/guilogin/main.c` | 2 | ⬜ todo |
+| `bin/guilogin/Makefile` | 2 | ⬜ todo |
 
 ### Modified files
-| File | Change | Phase |
-|------|--------|-------|
-| `sys/include/sys/sysproto.h` | add `sys_serial_read_args` | 1 |
-| `sys/kernel/syscalls.c` | slot 48 | 1 |
-| `sys/kernel/fb.c` | `sys_serial_read` impl | 1 |
-| `bin/Makefile` | add ttyd, guilogin to SUBDIRS | 1+2 |
-| `bin/views/*.cc` | fork guilogin after init | 2 |
-| `tools/initd/20-views` | uncomment exec line | 2 |
+| File | Change | Phase | Status |
+|------|--------|-------|--------|
+| `sys/include/sys/sysproto.h` | add `sys_serial_read_args` | 1 | ⬜ todo |
+| `sys/kernel/syscalls.c` | slot 48 | 1 | ⬜ todo |
+| `sys/kernel/fb.c` | `sys_serial_read` impl | 1 | ⬜ todo |
+| `bin/Makefile` | add ttyd, guilogin to SUBDIRS | 1+2 | ⬜ todo |
+| `bin/views/*.cc` | fork guilogin after init | 2 | ⬜ todo |
+| `tools/initd/20-views` | uncomment exec line | 2 | ⬜ todo |
