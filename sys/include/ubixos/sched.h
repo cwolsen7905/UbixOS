@@ -62,6 +62,7 @@ struct osInfo {
 typedef struct taskStruct {
     pidType id;
     char name[256];
+    char cmdline[1024];
     struct taskStruct *prev;
     struct taskStruct *next;
     struct md_proc md;

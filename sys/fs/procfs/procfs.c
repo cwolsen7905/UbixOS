@@ -40,6 +40,7 @@
 #include <fs/procfs/procfs.h>
 #include <fs/vfs/vfs.h>
 #include <lib/kmalloc.h>
+#include <lib/kprintf.h>
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
 #include <sys/klog.h>
@@ -122,10 +123,13 @@ procfs_build_status(kTask_t *t, char *buf, int bufsz)
 static int
 procfs_build_cmdline(kTask_t *t, char *buf, int bufsz)
 {
-	int len = strlen(t->name);
+	const char *src = t->cmdline[0] ? t->cmdline : t->name;
+	int len = strlen(src);
+	if (len == 0)
+		return 0;
 	if (len >= bufsz - 1)
 		len = bufsz - 2;
-	memcpy(buf, t->name, len);
+	memcpy(buf, src, len);
 	buf[len]     = '\n';
 	buf[len + 1] = '\0';
 	return len + 1;
@@ -139,7 +143,7 @@ static int
 procfs_initialize(struct vfs_mountPoint *mp)
 {
 	mp->fsInfo = NULL;
-	return 0;
+	return 1;  /* non-zero = success (vfs_mount convention) */
 }
 
 /* -----------------------------------------------------------------------
@@ -238,7 +242,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
  * --------------------------------------------------------------------- */
 
 static int
-procfs_read(fileDescriptor_t *fd, char *data, long offset, long size)
+procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	char     tmp[512];
 	int      len;
@@ -349,7 +353,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		ent->d_ino  = s->cursor->id;
 		ent->d_type = KDT_DIR;
 		s->cursor   = s->cursor->next;
-		return 1;
+		return 0;
 	}
 
 	if (s->type == PDIR_PID) {
@@ -361,7 +365,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		ent->d_ino  = s->pid * 10 + (uint32_t)s->subidx;
 		ent->d_type = KDT_REG;
 		s->subidx++;
-		return 1;
+		return 0;
 	}
 
 	return -1;

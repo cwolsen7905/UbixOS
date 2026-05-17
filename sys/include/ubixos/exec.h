@@ -32,7 +32,7 @@
 #include <sys/types.h>
 #include <ubixos/sched.h>
 
-uint32_t execThread(void (*tproc)(void), uint32_t, char *);
+uint32_t execThread(void (*tproc)(void), uint32_t, char *, const char *name);
 void execFile(char *file, char **argv, char **envp, int console);
 
 int sys_exec(struct thread *, char *, char **, char **);

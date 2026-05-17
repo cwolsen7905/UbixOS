@@ -75,7 +75,7 @@ int ubthread_cond_init(ubthread_cond_t *cond, const uInt32 attr);
 int ubthread_mutex_init(ubthread_mutex_t *mutex, const uInt32 attr);
 int ubthread_cond_destroy(ubthread_cond_t *cond);
 int ubthread_mutex_destroy(ubthread_mutex_t *mutex);
-int ubthread_create(struct taskStruct **thread, const uInt32 *attr, void (*tproc)(void), void *arg);
+int ubthread_create(struct taskStruct **thread, const uInt32 *attr, void (*tproc)(void), void *arg, const char *name);
 int ubthread_mutex_lock(ubthread_mutex_t *mutex);
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex);
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime);

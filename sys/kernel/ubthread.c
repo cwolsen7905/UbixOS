@@ -86,9 +86,9 @@ int ubthread_mutex_destroy(ubthread_mutex_t *mutex)
 	return (0x0);
 }
 
-int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg)
+int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg, const char *name)
 {
-	*thread = (void *)execThread(tproc, 0x2000, arg);
+	*thread = (void *)execThread(tproc, 0x2000, arg, name);
 	return (0x0);
 }
 

@@ -338,6 +338,7 @@ int sprintf(char *buf, const char *fmt, ...)
 	int i;
 	va_start(args, fmt);
 	i = kvprintf(fmt, NULL, buf, 10, args);
+	buf[i] = '\0';
 	va_end(args);
 	return (i);
 }

@@ -162,7 +162,7 @@ static int elf_parse_dynamic(elf_file_t ef);
  kernel space so do not use out side of kernel space
 
  *****************************************************************************************/
-uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg)
+uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *name)
 {
 
 	kTask_t *newProcess = 0x0;
@@ -171,6 +171,9 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg)
 	/* Find A New Thread */
 	newProcess = schedNewTask();
 	assert(newProcess);
+
+	if (name != 0x0)
+		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
 	stackAddr =
 	    (uint32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
@@ -284,6 +287,27 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->gid = 0x0;
 	newProcess->uid = 0x0;
 	newProcess->pgrp = newProcess->id;
+
+	{
+		const char *base = file, *p;
+		for (p = file; *p; p++)
+			if (*p == '/')
+				base = p + 1;
+		strncpy(newProcess->name, base, sizeof(newProcess->name) - 1);
+		size_t pos = 0;
+		int j;
+		for (j = 0; j < argc && pos < sizeof(newProcess->cmdline) - 1; j++) {
+			if (j > 0)
+				newProcess->cmdline[pos++] = ' ';
+			size_t alen = strlen(argv[j]);
+			if (pos + alen >= sizeof(newProcess->cmdline))
+				alen = sizeof(newProcess->cmdline) - pos - 1;
+			memcpy(newProcess->cmdline + pos, argv[j], alen);
+			pos += alen;
+		}
+		newProcess->cmdline[pos] = '\0';
+	}
+
 	newProcess->term = tty_find(console);
 
 	if (newProcess->term == 0x0)
@@ -628,6 +652,27 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	char *args_out = 0x0;
 
 	args_copyin(argv, (char **)&argv_out, &args_out);
+
+	{
+		const char *base = file, *p;
+		for (p = file; *p; p++)
+			if (*p == '/')
+				base = p + 1;
+		strncpy(_current->name, base, sizeof(_current->name) - 1);
+		size_t pos = 0;
+		int j;
+		for (j = 1; j <= argc && pos < sizeof(_current->cmdline) - 1; j++) {
+			const char *arg = (const char *)argv_out[j];
+			if (j > 1)
+				_current->cmdline[pos++] = ' ';
+			size_t alen = strlen(arg);
+			if (pos + alen >= sizeof(_current->cmdline))
+				alen = sizeof(_current->cmdline) - pos - 1;
+			memcpy(_current->cmdline + pos, arg, alen);
+			pos += alen;
+		}
+		_current->cmdline[pos] = '\0';
+	}
 
 	uint32_t *envp_out = 0x0;
 	char *envs_out = 0x0;

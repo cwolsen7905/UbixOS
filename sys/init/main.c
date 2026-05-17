@@ -196,7 +196,7 @@ int kmain(uint32_t rootdev)
 	kprintf("_bootinfo.bi_size: 0x%X\n", _bootinfo.bi_size);
 	kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
-	execThread(systemTask, 0x2000, 0x0);
+	execThread(systemTask, 0x2000, 0x0, "systemTask");
 
 	execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

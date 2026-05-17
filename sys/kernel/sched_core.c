@@ -55,7 +55,9 @@ int sched_init()
 	if (taskList == 0x0)
 		kpanic("Unable to create task list");
 
+	memset(taskList, 0x0, sizeof(kTask_t));
 	taskList->id = nextID++;
+	strncpy(taskList->name, "kernel", sizeof(taskList->name) - 1);
 
 	kprintf("sched0: addr=0x%X\n", taskList);
 
