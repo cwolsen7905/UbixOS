@@ -35,6 +35,7 @@
 #include <usb/uhci.h>
 #include <usb/usb.h>
 #include <sys/bus.h>
+#include <fs/devfs/devfs.h>
 #include <sys/dma_mem.h>
 #include <sys/io.h>
 #include <sys/idt.h>
@@ -683,6 +684,8 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 	kprintf("uhci: running (cmd=0x%X sts=0x%X)\n", uhci_rd16(sc, UHCI_USBCMD), uhci_rd16(sc, UHCI_USBSTS));
 
 	uhci_root_port_init(sc);
+
+	devfs_makeNode("usb0", 'c', 15, 0);
 
 	return (0);
 }

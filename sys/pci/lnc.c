@@ -29,6 +29,7 @@
 #include <pci/lnc.h>
 #include <pci/pci.h>
 #include <sys/bus.h>
+#include <fs/devfs/devfs.h>
 #include <sys/io.h>
 #include <sys/types.h>
 #include <sys/idt.h>
@@ -729,7 +730,11 @@ static int lnc_ubx_attach(struct ubx_device *dev)
 
 	kprintf("pci: found PCnet @ I/O 0x%X IRQ %u\n", iobase, dev->dev_res[0].r_type == UBX_RES_IRQ ? (uint8_t)dev->dev_res[0].r_start : 0);
 
-	return (initLNC(iobase));
+	if (initLNC(iobase) == 0) {
+		devfs_makeNode("lnc0", 'c', 14, 1);
+		return (0);
+	}
+	return (-1);
 }
 
 struct ubx_driver lnc_ubx_driver = {

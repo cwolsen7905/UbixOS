@@ -37,13 +37,14 @@
 #include <pci/e1000.h>
 #include <pci/pci.h>
 #include <sys/bus.h>
+#include <fs/devfs/devfs.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/types.h>
 #include <isa/8259.h>
 #include <isa/irq.h>
 #include <lib/kmalloc.h>
-#include <lib/kprintf.h>
+#include <sys/klog.h>
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
 #include <ubixos/sched.h>
@@ -93,17 +94,6 @@ static inline void e1000_write(uint32_t reg, uint32_t val) {
 	*(volatile uint32_t *)(e1000_mmio + reg) = val;
 }
 
-/* Spin until a register bit is set or a limit is reached */
-static int e1000_wait_bit(uint32_t reg, uint32_t mask, int set, int limit) {
-	int i;
-	for (i = 0; i < limit; i++) {
-		uint32_t v = e1000_read(reg);
-		if (set  && (v & mask)) return 0;
-		if (!set && !(v & mask)) return 0;
-	}
-	return -1;
-}
-
 /* -----------------------------------------------------------------------
  * MMIO mapping
  * --------------------------------------------------------------------- */
@@ -137,7 +127,7 @@ static int e1000_init_rx(void) {
 	/* Identity-map descriptor ring: virtual == physical, so RDBAL == pointer. */
 	phys = vmm_findFreePage(sysID);
 	if (!phys) {
-		kprintf("e1000: cannot allocate RX descriptor ring\n");
+		klog(KLOG_ERR, "e1000: cannot allocate RX descriptor ring");
 		return -1;
 	}
 	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT, sysID);
@@ -147,7 +137,7 @@ static int e1000_init_rx(void) {
 	for (i = 0; i < E1000_NUM_RX_DESC; i++) {
 		uint32_t buf_phys = vmm_findFreePage(sysID);
 		if (!buf_phys) {
-			kprintf("e1000: cannot allocate RX buffer %u\n", i);
+			klog(KLOG_ERR, "e1000: cannot allocate RX buffer %u", i);
 			return -1;
 		}
 		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
@@ -156,8 +146,6 @@ static int e1000_init_rx(void) {
 		rx_descs[i].status = 0;
 	}
 	rx_tail = 0;
-
-	kprintf("e1000: RX ring virt=phys=0x%X buf[0]=0x%X\n", phys, (uint32_t)rx_bufs[0]);
 
 	e1000_write(E1000_REG_RDBAL, phys);
 	e1000_write(E1000_REG_RDBAH, 0);
@@ -182,7 +170,7 @@ static int e1000_init_tx(void) {
 	/* Identity-map descriptor ring: virtual == physical, so TDBAL == pointer. */
 	phys = vmm_findFreePage(sysID);
 	if (!phys) {
-		kprintf("e1000: cannot allocate TX descriptor ring\n");
+		klog(KLOG_ERR, "e1000: cannot allocate TX descriptor ring");
 		return -1;
 	}
 	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT, sysID);
@@ -192,7 +180,7 @@ static int e1000_init_tx(void) {
 	for (i = 0; i < E1000_NUM_TX_DESC; i++) {
 		uint32_t buf_phys = vmm_findFreePage(sysID);
 		if (!buf_phys) {
-			kprintf("e1000: cannot allocate TX buffer %u\n", i);
+			klog(KLOG_ERR, "e1000: cannot allocate TX buffer %u", i);
 			return -1;
 		}
 		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
@@ -201,8 +189,6 @@ static int e1000_init_tx(void) {
 		tx_descs[i].status = E1000_TXD_STAT_DD;
 	}
 	tx_tail = 0;
-
-	kprintf("e1000: TX ring virt=phys=0x%X buf[0]=0x%X\n", phys, (uint32_t)tx_bufs[0]);
 
 	e1000_write(E1000_REG_TDBAL, phys);
 	e1000_write(E1000_REG_TDBAH, 0);
@@ -234,24 +220,8 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	int i;
 
 	if (len > E1000_BUF_SIZE) {
-		kprintf("e1000: TX packet too large (%u)\n", len);
+		klog(KLOG_ERR, "e1000: TX packet too large (%u)", len);
 		return;
-	}
-
-	/* Verify identity mapping: vmm_getRealAddr must equal the pointer. */
-	if (tail == 0) {
-		uint32_t virt  = (uint32_t)tx_descs;
-		uint32_t phys2 = vmm_getRealAddr(virt);
-		kprintf("e1000: send virt=0x%X vmm_getRealAddr=0x%X %s\n",
-		    virt, phys2,
-		    (virt == phys2) ? "MATCH" : "MISMATCH!");
-		/* Also dump PDE[0] and PTE[0x31F] directly for diagnosis */
-		{
-			uint32_t *pd = (uint32_t *)0xC0400000; /* PD_BASE_ADDR */
-			uint32_t *pt = (uint32_t *)0xC0000000; /* PT_BASE_ADDR + PD[0]*0x1000 */
-			kprintf("e1000: PDE[0]=0x%X PTE[0x31F]=0x%X\n",
-			    pd[0], pt[0x31F]);
-		}
 	}
 
 	/* Wait for the descriptor to be free (DD set by hardware).
@@ -261,9 +231,8 @@ void e1000_send_packet(const void *data, uint16_t len) {
 			break;
 	}
 	if (!(*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)) {
-		kprintf("e1000: TX timeout desc[%u] TDH=%u TDT=%u TCTL=0x%X\n",
-		    tail, e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT),
-		    e1000_read(E1000_REG_TCTL));
+		klog(KLOG_ERR, "e1000: TX timeout desc[%u] TDH=%u TDT=%u",
+		    tail, e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT));
 		return;
 	}
 
@@ -277,36 +246,8 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	 * the TDT MMIO write triggers QEMU's DMA read of the descriptor. */
 	__sync_synchronize();
 
-	/* Dump raw descriptor bytes (phys == virt with identity map). */
-	{
-		uint8_t *raw = (uint8_t *)&tx_descs[tail];
-		kprintf("e1000: desc[%u] phys=virt=0x%X raw: "
-		    "%02X%02X%02X%02X%02X%02X%02X%02X "
-		    "%02X%02X%02X%02X%02X%02X%02X%02X\n",
-		    tail, (uint32_t)&tx_descs[tail],
-		    raw[0],  raw[1],  raw[2],  raw[3],
-		    raw[4],  raw[5],  raw[6],  raw[7],
-		    raw[8],  raw[9],  raw[10], raw[11],
-		    raw[12], raw[13], raw[14], raw[15]);
-	}
-
 	tx_tail = (tail + 1) % E1000_NUM_TX_DESC;
-	if (tail == 0) {
-		kprintf("e1000: ring TDBAL=0x%X TDBAH=0x%X TDLEN=%u TDH=%u TDT(pre)=%u TCTL=0x%X\n",
-		    e1000_read(E1000_REG_TDBAL), e1000_read(E1000_REG_TDBAH),
-		    e1000_read(E1000_REG_TDLEN),
-		    e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT),
-		    e1000_read(E1000_REG_TCTL));
-	}
-	{
-		uint32_t tdh_before = e1000_read(E1000_REG_TDH);
-		e1000_write(E1000_REG_TDT, tx_tail);
-		uint32_t tdh_after = e1000_read(E1000_REG_TDH);
-		uint8_t  dd_after  = *(volatile uint8_t *)&tx_descs[tail].status;
-		kprintf("e1000: TX len=%u desc[%u] TDH %u->%u ICR=0x%X DD_after=0x%X\n",
-		    len, tail, tdh_before, tdh_after,
-		    e1000_read(E1000_REG_ICR), dd_after);
-	}
+	e1000_write(E1000_REG_TDT, tx_tail);
 }
 
 /* -----------------------------------------------------------------------
@@ -351,7 +292,7 @@ void e1000_handle_irq(void) {
 
 	if (icr & E1000_ICR_LSC) {
 		uint32_t status = e1000_read(E1000_REG_STATUS);
-		kprintf("e1000: link %s\n", (status & 0x02) ? "up" : "down");
+		klog(KLOG_NOTICE, "e1000: link %s", (status & 0x02) ? "up" : "down");
 	}
 	if (icr & (E1000_ICR_RXT0 | E1000_ICR_RXO)) {
 		e1000_irq_pending = 1;
@@ -377,35 +318,6 @@ void e1000_thread(void) {
 	}
 }
 
-/* -----------------------------------------------------------------------
- * ISR stub (saves/restores full register state, sends EOI)
- * --------------------------------------------------------------------- */
-
-asm(
-	".globl e1000_isr         \n"
-	"e1000_isr:               \n"
-	"  pusha                  \n"
-	"  push %ss               \n"
-	"  push %ds               \n"
-	"  push %es               \n"
-	"  push %fs               \n"
-	"  push %gs               \n"
-	"  call e1000_handle_irq  \n"
-	/* EOI to slave PIC (IRQ 11 is on slave) */
-	"  mov $0xA0,%dx          \n"
-	"  mov $0x20,%al          \n"
-	"  outb %al,%dx           \n"
-	/* EOI to master PIC (cascade line IRQ 2) */
-	"  mov $0x20,%dx          \n"
-	"  outb %al,%dx           \n"
-	"  pop %gs                \n"
-	"  pop %fs                \n"
-	"  pop %es                \n"
-	"  pop %ds                \n"
-	"  pop %ss                \n"
-	"  popa                   \n"
-	"  iret                   \n"
-);
 
 /* -----------------------------------------------------------------------
  * Initialization entry point (called from pci_init / init.h)
@@ -415,7 +327,7 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	uint32_t ral, rah;
 	int      i;
 
-	kprintf("e1000: initializing 82540EM at BAR0=0x%X IRQ=%u\n", bar0_phys, irq);
+	klog(KLOG_INFO, "e1000: initializing 82540EM at BAR0=0x%X IRQ=%u", bar0_phys, irq);
 
 	if (e1000_map_mmio(bar0_phys) != 0)
 		return -1;
@@ -433,7 +345,7 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 			break;
 	}
 	if (e1000_read(E1000_REG_CTRL) & E1000_CTRL_RST)
-		kprintf("e1000: reset did not clear — continuing anyway\n");
+		klog(KLOG_WARNING, "e1000: reset did not clear, continuing anyway");
 
 	/* Disable interrupts again (reset re-enables them) */
 	e1000_write(E1000_REG_IMC, 0xFFFFFFFFu);
@@ -442,9 +354,6 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	e1000_write(E1000_REG_CTRL,
 	    (e1000_read(E1000_REG_CTRL) | E1000_CTRL_SLU | E1000_CTRL_ASDE | E1000_CTRL_FD)
 	    & ~(E1000_CTRL_LRST | E1000_CTRL_ILOS));
-	kprintf("e1000: CTRL=0x%X STATUS=0x%X\n",
-	    e1000_read(E1000_REG_CTRL), e1000_read(E1000_REG_STATUS));
-
 	/* Clear multicast table */
 	for (i = 0; i < 128; i++)
 		e1000_write(E1000_REG_MTA + i * 4, 0);
@@ -460,10 +369,9 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	e1000_mac[4] = (rah >>  0) & 0xFF;
 	e1000_mac[5] = (rah >>  8) & 0xFF;
 
-	kprintf("e1000: MAC %02X:%02X:%02X:%02X:%02X:%02X STATUS=0x%X\n",
+	klog(KLOG_NOTICE, "e1000: MAC %02X:%02X:%02X:%02X:%02X:%02X",
 	    e1000_mac[0], e1000_mac[1], e1000_mac[2],
-	    e1000_mac[3], e1000_mac[4], e1000_mac[5],
-	    e1000_read(E1000_REG_STATUS));
+	    e1000_mac[3], e1000_mac[4], e1000_mac[5]);
 
 	if (e1000_init_rx() != 0) return -1;
 	if (e1000_init_tx() != 0) return -1;
@@ -474,11 +382,9 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 	/* Enable RX timer, RX overrun, and link-change interrupts.
 	 * TXDW (TX descriptor written back) is not needed — we poll DD in send. */
 	e1000_write(E1000_REG_IMS, E1000_ICR_RXT0 | E1000_ICR_RXO | E1000_ICR_LSC);
-	kprintf("e1000: irq=%u IMS=0x%X\n",
-	    irq, e1000_read(E1000_REG_IMS));
 
 	e1000_ready = 1;
-	kprintf("e1000: ready\n");
+	klog(KLOG_NOTICE, "e1000: ready (irq=%u)", irq);
 	return 0;
 }
 
@@ -521,27 +427,22 @@ e1000_ubx_attach(struct ubx_device *dev)
 			irq = (uint8_t)dev->dev_res[i].r_start;
 	}
 
-	kprintf("e1000: at bus=%u slot=%u func=%u BAR0=0x%X IRQ=%u\n",
+	klog(KLOG_INFO, "e1000: found at bus=%u slot=%u func=%u BAR0=0x%X IRQ=%u",
 	    dev->dev_bus, dev->dev_slot, dev->dev_func, bar0, irq);
 
 	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
-	kprintf("e1000: PCI CMD before enable=0x%X\n", cmd);
 	cmd |= 0x07; /* I/O Space + Memory Space + Bus Master */
 	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 2);
-	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
-	kprintf("e1000: PCI CMD after enable=0x%X (master=%s)\n",
-	    cmd, (cmd & 0x04) ? "on" : "OFF");
 
-	kprintf("pci: found e1000 @ BAR0=0x%X IRQ=%u\n", bar0, irq);
 	ret = initE1000(bar0, irq);
 
 	/* Re-enable bus mastering — CTRL.RST inside initE1000 may have cleared it. */
 	cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
 	cmd |= 0x07; /* I/O Space + Memory Space + Bus Master */
 	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 2);
-	kprintf("pci: e1000 PCI CMD after init=0x%X (bus master %s)\n",
-	    pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2),
-	    (cmd & 0x04) ? "on" : "OFF");
+
+	if (ret == 0)
+		devfs_makeNode("em0", 'c', 14, 0);
 
 	return (ret);
 }

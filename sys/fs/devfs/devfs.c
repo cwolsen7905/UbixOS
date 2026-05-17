@@ -26,8 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <devfs/devfs.h>
-#include <vfs/vfs.h>
+#include <fs/devfs/devfs.h>
+#include <fs/vfs/vfs.h>
 #include <sys/bus.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
@@ -115,7 +115,7 @@ static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) 
   struct ubx_device *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;
 
-  if (tmpDev == -1) {
+  if (tmpDev == (struct devfs_devices *)-1) {
     kprintf("Hi Ubie [%i]!!!\n", size);
     for (i = 0; i < size; i++) {
       data[i] = 'a';
@@ -123,6 +123,17 @@ static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) 
     }
     data[size - 1] = '\n';
     return (size);
+  }
+
+  /* Pseudo-devices: null reads return 0 bytes; zero reads return NUL bytes */
+  if (tmpDev->devType == 'p') {
+    if (tmpDev->devMinor == 0) /* null */
+      return (0);
+    if (tmpDev->devMinor == 1) { /* zero */
+      memset(data, 0, size);
+      return (size);
+    }
+    return (0);
   }
 
   device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
@@ -158,6 +169,10 @@ static int devfs_write(fileDescriptor_t *fd, char *data, long offset, long size)
   int i = 0x0, x = 0x0;
   struct ubx_device *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;
+
+  /* Pseudo-devices: silently discard all writes */
+  if (tmpDev->devType == 'p')
+    return (size);
 
   device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
   for (i = 0x0; i < ((size + 511) / 512); i++) {
@@ -208,6 +223,37 @@ int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor) {
   return (0x0);
 }
 
+static int devfs_opendir(const char *path, kDIR_t *dir) {
+  struct vfs_mountPoint *mp = dir->mp;
+  struct devfs_info *fsInfo = mp->fsInfo;
+
+  (void)path;
+  spinLock(&devfsSpinLock);
+  dir->dirHandle = fsInfo->deviceList;
+  spinUnlock(&devfsSpinLock);
+  return (0x1);
+}
+
+static int devfs_readdir(kDIR_t *dir, struct kdirent *ent) {
+  struct devfs_devices *dev = (struct devfs_devices *)dir->dirHandle;
+
+  if (dev == 0x0)
+    return (-1);
+
+  ent->d_ino  = (uint32_t)(uintptr_t)dev;
+  ent->d_type = KDT_REG;
+  strncpy(ent->d_name, dev->devName, sizeof(ent->d_name) - 1);
+  ent->d_name[sizeof(ent->d_name) - 1] = '\0';
+
+  dir->dirHandle = dev->next;
+  return (0x0);
+}
+
+static int devfs_closedir(kDIR_t *dir) {
+  dir->dirHandle = 0x0;
+  return (0x0);
+}
+
 int devfs_init() {
   /* Build our devfs struct */
   struct fileSystem devFS = { NULL, /* prev        */
@@ -220,7 +266,10 @@ int devfs_init() {
   NULL, /* vfsMakeDir  */
   NULL, /* vfsRemDir   */
   NULL, /* vfsSync     */
-  1 /* vfsType     */
+  1,    /* vfsType     */
+  devfs_opendir,
+  devfs_readdir,
+  devfs_closedir,
   }; /* devFS */
 
   if (vfsRegisterFS(devFS) != 0x0) {
@@ -229,6 +278,10 @@ int devfs_init() {
   }
   /* Mount our devfs this will build the devfs container node */
   vfs_mount(0x0, 0x0, 0x0, 0x1, "devfs", "rw"); // Mount Device File System
+
+  /* Pseudo-devices always present, major=0 minor=0/1 */
+  devfs_makeNode("null", 'p', 0, 0);
+  devfs_makeNode("zero", 'p', 0, 1);
 
   /* Return */
   return (0x0);

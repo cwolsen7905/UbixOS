@@ -30,9 +30,9 @@
 #include <isa/pit.h>
 #include <sys/bus.h>
 #include <isa/kbd.h>
+#include <fs/devfs/devfs.h>
 #include <ubixos/vitals.h>
 #include <isa/8259.h>
-#include <sys/video.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/io.h>
@@ -53,9 +53,13 @@ static unsigned int ledStatus = 0x0;
 
 /* Keyboard event ring buffer — fed by keyboardHandler, drained by sys_getkbd */
 #define KBD_RING_SIZE 64
-static kbd_event_t kbd_ring[KBD_RING_SIZE];
-static int kbd_ring_head = 0;
-static int kbd_ring_tail = 0;
+static volatile kbd_event_t kbd_ring[KBD_RING_SIZE];
+static volatile int kbd_ring_head = 0;
+static volatile int kbd_ring_tail = 0;
+
+/* Set to 1 by sys_mapfb when a GUI compositor takes the framebuffer.
+ * Prevents VGA-console getchar() from stealing events meant for views. */
+volatile int kbd_gui_mode = 0;
 
 void kbd_ring_push(uint32_t keycode, uint8_t pressed)
 {
@@ -71,7 +75,8 @@ int kbd_getEvent(kbd_event_t *ev)
 {
 	if (kbd_ring_tail == kbd_ring_head)
 		return (-1);
-	*ev = kbd_ring[kbd_ring_tail];
+	ev->keycode = kbd_ring[kbd_ring_tail].keycode;
+	ev->pressed = kbd_ring[kbd_ring_tail].pressed;
 	kbd_ring_tail = (kbd_ring_tail + 1) % KBD_RING_SIZE;
 	return (0);
 }
@@ -80,6 +85,11 @@ static uInt32 controlKeys = 0x0;
 static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
 
 volatile uint32_t reboot_at_tick = 0;
+
+/* Deferred GUI→text VTY switch.  Set to target slot (0-3) by the keyboard ISR
+ * when Ctrl+Alt+Fn is pressed in GUI mode; cleared by the VGA sys_read loop
+ * after it has called vesa_text_mode() and tty_change() in task context. */
+volatile int vesa_text_slot = -1;
 
 static unsigned int keyboardMap[255][8] = {
     /*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
@@ -142,11 +152,11 @@ static unsigned int keyboardMap[255][8] = {
     /*     */ {0, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0x20, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0, 0, 0, 0, 0, 0, 0, 0},
-    /* F1  */ {0x3000, 0, 0, 0x3000, 0, 0, 0, 0},
-    /*     */ {0x3001, 0, 0, 0x3001, 0, 0, 0, 0},
-    /*     */ {0x3002, 0, 0, 0x3002, 0, 0, 0, 0},
-    /*     */ {0x3003, 0, 0, 0x3003, 0, 0, 0, 0},
-    /*     */ {0x3004, 0, 0, 0x3004, 0, 0, 0, 0},
+    /* F1  */ {0xF100, 0, 0, 0x3000, 0, 0, 0, 0},
+    /* F2  */ {0xF200, 0, 0, 0x3001, 0, 0, 0, 0},
+    /* F3  */ {0xF300, 0, 0, 0x3002, 0, 0, 0, 0},
+    /* F4  */ {0xF400, 0, 0, 0x3003, 0, 0, 0, 0},
+    /* F5  */ {0xF500, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0x4000, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0x4100, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0x4200, 0, 0, 0, 0, 0, 0, 0},
@@ -195,6 +205,8 @@ int atkbd_init()
 
 	/* Turn on the keyboard vector */
 	irqEnable(0x1);
+
+	devfs_makeNode("kbd0", 'c', 1, 0);
 
 	/* Print out information on keyboard */
 	kprintf("atkbd0: isr=0x%X\n", &atkbd_isr);
@@ -290,14 +302,27 @@ void keyboardHandler(struct trapframe *frame)
 		return;
 	}
 
+	/* Ctrl+Alt+F1..F4 (scancodes 0x3B-0x3E): switch from GUI to text VTY.
+	 * Must be checked before the keyMap lookup because Ctrl+Alt is not
+	 * a mapped modifier combination.  Safe to set vesa_text_slot here and
+	 * return — the actual biosCall happens in vfs_calls.c sys_read context. */
+	if ((controlKeys & controlKey) && (controlKeys & altKey) &&
+	    key >= 0x3B && key <= 0x3E) {
+		vesa_text_slot = key - 0x3B;   /* F1→0, F2→1, F3→2, F4→3 */
+		spinUnlock(&atkbdSpinLock);
+		return;
+	}
+
 	kc = keyboardMap[key][keyMap];
 	if (kc == 0) {
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}
 
-	/* Console switch (F1-F5 → 0x3000-0x3004) */
-	if ((kc >> 8) == 0x30) {
+	/* Virtual console switch — Alt+F1..F4 only (0x3000-0x3003).
+	 * Bare F-keys produce 0xF100-0xF500 and fall through to kbd_ring.
+	 * Limit to VGA slots 0-3; slot 4 is serial and must not be switched. */
+	if ((kc >> 8) == 0x30 && (kc & 0xFF) <= 3) {
 		tty_change(kc & 0xFF);
 		spinUnlock(&atkbdSpinLock);
 		return;
@@ -350,73 +375,16 @@ void setLED()
 }
 
 /*
- * kbd_apply_event — apply one translated key event through the TTY line
- * discipline into tty_foreground->stdin[].
- *
- * Called only from process context (getchar, never from interrupt context).
- * The ISR only writes to kbd_ring; this function is the single owner of
- * the canonical/raw editing state.
+ * kbd_apply_event — translate a raw PS/2 keycode and inject into the
+ * foreground TTY via the common tty_inject() line discipline.
  */
 static void
 kbd_apply_event(uint32_t kc)
 {
-	char     ch, echo_buf[2];
-	int      i;
-
-	/* KEY_* specials (>= 0x100) and null keycodes are not TTY characters */
+	/* Specials (>= 0x100) and null keycodes are not TTY characters */
 	if (kc == 0 || kc >= 0x100 || tty_foreground == NULL)
 		return;
-
-	ch = (char)(uint8_t)kc;
-	echo_buf[0] = ch;
-	echo_buf[1] = '\0';
-
-	switch (ch) {
-	case '\b':
-		if (tty_foreground->t_raw) {
-			if (tty_foreground->stdinSize < 511)
-				tty_foreground->stdin[tty_foreground->stdinSize++] = '\b';
-		} else if (tty_foreground->t_linelen > 0) {
-			tty_foreground->t_linelen--;
-			if (tty_foreground->t_echo)
-				backSpace();
-		}
-		break;
-	case 0x15: /* Ctrl-U: kill current input line */
-		if (!tty_foreground->t_raw)
-			tty_foreground->t_linelen = 0;
-		break;
-	case '\n':
-		if (tty_foreground->t_raw) {
-			if (tty_foreground->stdinSize < 511)
-				tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
-		} else {
-			for (i = 0; i < tty_foreground->t_linelen &&
-			    tty_foreground->stdinSize < 511; i++)
-				tty_foreground->stdin[tty_foreground->stdinSize++] =
-				    tty_foreground->t_linebuf[i];
-			if (tty_foreground->stdinSize < 511)
-				tty_foreground->stdin[tty_foreground->stdinSize++] = '\n';
-			tty_foreground->t_linelen = 0;
-			if (tty_foreground->t_echo)
-				tty_print("\n", tty_foreground);
-		}
-		break;
-	default:
-		if (ch < 0x20)
-			break; /* other control chars: discard */
-		if (tty_foreground->t_raw) {
-			if (tty_foreground->stdinSize < 511)
-				tty_foreground->stdin[tty_foreground->stdinSize++] = ch;
-		} else {
-			if (tty_foreground->t_linelen < 511) {
-				tty_foreground->t_linebuf[tty_foreground->t_linelen++] = ch;
-				if (tty_foreground->t_echo)
-					tty_print(echo_buf, tty_foreground);
-			}
-		}
-		break;
-	}
+	tty_inject(tty_foreground, (char)(uint8_t)kc);
 }
 
 int

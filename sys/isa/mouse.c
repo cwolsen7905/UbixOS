@@ -33,6 +33,7 @@
 #include <sys/gdt.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
+#include <fs/devfs/devfs.h>
 
 /* Ring buffer for decoded mouse events */
 #define MOUSE_BUF_SIZE 64
@@ -222,8 +223,11 @@ static int mouse_ubx_probe(struct ubx_device *dev)
 
 static int mouse_ubx_attach(struct ubx_device *dev)
 {
+	int ret = mouseInit();
+	if (ret == 0)
+		devfs_makeNode("mouse0", 'c', 13, 0);
 	(void)dev;
-	return (mouseInit());
+	return (ret);
 }
 
 struct ubx_driver mouse_ubx_driver = {

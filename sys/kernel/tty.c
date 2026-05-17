@@ -32,6 +32,9 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <sys/io.h>
+#include <sys/video.h>
+#include <isa/rs232.h>
+#include <fs/devfs/devfs.h>
 #include <string.h>
 
 static tty_term *terms = 0x0;
@@ -60,6 +63,7 @@ int tty_init() {
     terms[i].t_linelen  = 0;
     terms[i].t_echo     = 1;
     terms[i].t_raw      = 0;
+    terms[i].t_type     = TTY_TYPE_VGA;
   }
 
   /* Read tty0 current position (to migrate from kprintf). */
@@ -73,6 +77,13 @@ int tty_init() {
 
   /* Set up the foreground ttys information */
   tty_foreground->tty_pointer = (char *) 0xB8000;
+
+  /* Register VGA virtual TTY nodes in devfs */
+  devfs_makeNode("ttyv0", 'c', 4, 0);
+  devfs_makeNode("ttyv1", 'c', 4, 1);
+  devfs_makeNode("ttyv2", 'c', 4, 2);
+  devfs_makeNode("ttyv3", 'c', 4, 3);
+  devfs_makeNode("com1",  'c', 4, 4);
 
   /* Return to let kernel know initialization is complete */
   kprintf("tty0: ready\n");
@@ -170,6 +181,92 @@ int tty_print(char *string, tty_term *term) {
 
 tty_term *tty_find(uInt16 tty) {
   return (&terms[tty]);
+}
+
+/*
+ * tty_inject — push one ASCII character through the TTY line discipline.
+ *
+ * This is the single input entry point regardless of the physical source:
+ * PS/2 keyboard, COM1 serial, or future telnet socket.  Echo and editing
+ * (backspace, Ctrl-U, newline coalescing) are applied here.
+ */
+void
+tty_inject(tty_term *tty, char ch)
+{
+	char echo_buf[2];
+	int  i;
+
+	if (tty == NULL)
+		return;
+
+	echo_buf[0] = ch;
+	echo_buf[1] = '\0';
+
+	switch (ch) {
+	case '\b':
+		if (tty->t_raw) {
+			if (tty->stdinSize < 511)
+				tty->stdin[tty->stdinSize++] = '\b';
+		} else if (tty->t_linelen > 0) {
+			tty->t_linelen--;
+			if (tty->t_echo) {
+				if (tty->t_type == TTY_TYPE_SERIAL) {
+					rs232_putc('\b');
+					rs232_putc(' ');
+					rs232_putc('\b');
+				} else {
+					backSpace();
+				}
+			}
+		}
+		break;
+	case 0x15: /* Ctrl-U: erase line */
+		if (!tty->t_raw)
+			tty->t_linelen = 0;
+		break;
+	case '\r':
+		ch = '\n';
+		/* FALLTHROUGH */
+	case '\n':
+		if (tty->t_raw) {
+			if (tty->stdinSize < 511)
+				tty->stdin[tty->stdinSize++] = '\n';
+		} else {
+			for (i = 0; i < tty->t_linelen && tty->stdinSize < 511; i++)
+				tty->stdin[tty->stdinSize++] = tty->t_linebuf[i];
+			if (tty->stdinSize < 511)
+				tty->stdin[tty->stdinSize++] = '\n';
+			tty->t_linelen = 0;
+			if (tty->t_echo) {
+				if (tty->t_type == TTY_TYPE_SERIAL) {
+					rs232_putc('\r');
+					rs232_putc('\n');
+				} else {
+					tty_print("\n", tty);
+				}
+			}
+		}
+		break;
+	default:
+		if ((unsigned char)ch < 0x20)
+			break;
+		if (tty->t_raw) {
+			if (tty->stdinSize < 511)
+				tty->stdin[tty->stdinSize++] = ch;
+		} else {
+			if (tty->t_linelen < 511) {
+				tty->t_linebuf[tty->t_linelen++] = ch;
+				if (tty->t_echo) {
+					if (tty->t_type == TTY_TYPE_SERIAL) {
+						rs232_putc(ch);
+					} else {
+						tty_print(echo_buf, tty);
+					}
+				}
+			}
+		}
+		break;
+	}
 }
 
 /***
