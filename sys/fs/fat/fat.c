@@ -124,8 +124,6 @@ int write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   if (fl_fwrite(data, 1, size, _file) != size)
     kprintf("ERROR: Write file failed\n");
 
-  fl_fflush(_file);
-
   /* Return */
   return (size);
 }

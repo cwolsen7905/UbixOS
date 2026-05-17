@@ -20,9 +20,9 @@ for a hobby OS).
 | 2e | Remove old device_node / device_interface | Done | device.c removed from build; device.h stubbed to redirect to sys/bus.h |
 | 3 | DMA-safe allocator | Done | sys/include/sys/dma_mem.h + sys/sys/dma_mem.c; dma_alloc/dma_free with PAGE_CACHE_DISABLED |
 | 4 | UHCI host controller | Done | sys/usb/uhci.c + sys/include/usb/uhci.h; probe/attach, frame list, skeleton QHs, control/bulk/intr transfer primitives, root port init |
-| 5 | USB core + enumeration | Not started | |
-| 6 | HID keyboard | Not started | |
-| 7 | USB mass storage | Not started | |
+| 5 | USB core + enumeration | Done | sys/usb/usb.c; full enumeration confirmed in serial log |
+| 6 | HID keyboard | Done | sys/usb/hid_kbd.c; routes via atkbd_inject into kbd_ring |
+| 7 | USB mass storage | Not started | BOT class driver; CBW/CSW; SCSI READ(10)/WRITE(10) |
 
 ---
 
