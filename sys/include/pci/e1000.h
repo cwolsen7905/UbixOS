@@ -140,7 +140,6 @@ extern struct ubx_driver e1000_ubx_driver;
 void            e1000_send_packet(const void *data, uint16_t len);
 void            e1000_handle_irq(void);
 void            e1000_thread(void);
-void            e1000_isr(void);                            /* ASM stub */
 const uint8_t  *e1000_get_rx_packet(uint16_t *out_len);    /* for netif bridge */
 
 #endif /* _PCI_E1000_H */

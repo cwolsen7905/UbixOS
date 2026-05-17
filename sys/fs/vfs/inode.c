@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <ubixos/wait.h>
 #include <ubixos/sched.h>
 #include <vmm/vmm.h>

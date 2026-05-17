@@ -165,38 +165,13 @@ int main(int argc,char **argv, char **envp) {
   */
   #endif
 
-  startup:
-  i = fork();
-
-  if (0 == i) {
-    printf("Starting Login Daemon.\n");
-    fflush(stdout);
-    execve("sys:/bin/login", argv_login, envp_login);
-    printf("Error Starting System\n");
-    exit(0x0);
-  }
-
-
-  while (pidStatus(i) != i) {
-    /*
-    fetchAgain:
-    if (mpi_fetchMessage("init",&myMsg) == 0x0) {
-      switch (myMsg.header) {
-        case 10:
-          printf("Exec: (%s)\n",myMsg.data);
-          break;
-        default:
-          printf("MailBox: init Received Message %i:%s\n",myMsg.header,myMsg.data);
-          break;
-        }
-      goto fetchAgain;
-      }
-    */
-    sched_yield();
+  /* Idle loop — terminals are managed by ttyd (etc/init.d/30-ttyd). */
+  for (;;) {
+    if (mpi_fetchMessage("init", &myMsg) == 0x0) {
+      /* reserved for future init control messages */
     }
-  printf("login exited?");
-
-  goto startup;
+    sched_yield();
+  }
 
   return(0x0);
   }

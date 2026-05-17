@@ -36,8 +36,8 @@
 #include <ubixos/time.h>
 #include <sys/video.h>
 #include <sys/trap.h>
-#include <vfs/file.h>
-#include <ubixfs/ubixfs.h>
+#include <fs/vfs/file.h>
+#include <fs/ubixfs/ubixfs.h>
 #include <string.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>

@@ -27,10 +27,10 @@
 
 *****************************************************************************************/
 
-#include <ubixfs/ubixfs.h>
+#include <fs/ubixfs/ubixfs.h>
 #include <sys/bus.h>
-#include <vfs/file.h>
-#include <vfs/mount.h>
+#include <fs/vfs/file.h>
+#include <fs/vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>

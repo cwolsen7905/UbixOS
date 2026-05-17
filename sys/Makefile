@@ -114,6 +114,7 @@ clean:
 	(cd fs/vfs;${MAKE} clean)
 	(cd fs/devfs;${MAKE} clean)
 	(cd net;${MAKE} clean)
+	(cd usb;${MAKE} clean)
 	(cd kmods;${MAKE} clean)
 	(cd fs/ufs;${MAKE} clean)
 	#(cd ../tools/;${MAKE} clean)

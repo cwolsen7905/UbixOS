@@ -44,6 +44,7 @@ ${BINARY}: ${OBJS} ${MODDI3}
 	  ${MUSL_OBJ}/lib/crti.o \
 	  ${OBJS} ${MODDI3} \
 	  ${OBJ_DIR}/lib/musl.a \
+	  ${LIBGCC} \
 	  ${MUSL_OBJ}/lib/crtn.o \
 	  -o ${BUILD_DIR}/bin/${BINARY}
 	${CC} ${TCC_CFLAGS} -c ${TCC_SRC}/lib/libtcc1.c -o ${OBJ_OUT}/libtcc1.o
@@ -79,3 +80,4 @@ clean:
 	${REMOVE} ${OBJ_OUT}
 	${REMOVE} ${BUILD_DIR}/bin/${BINARY}
 	${REMOVE} ${BUILD_DIR}/lib/tcc/libtcc1.a
+	${REMOVE} ${BUILD_DIR}/lib/tcc/crt1.o ${BUILD_DIR}/lib/tcc/crti.o ${BUILD_DIR}/lib/tcc/crtn.o

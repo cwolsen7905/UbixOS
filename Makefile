@@ -39,6 +39,14 @@ kernel:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@cd sys;${MAKE}
 
+musl:
+	@if [ ! -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
+		echo "musl not configured — run: cd build/obj/musl && /usr/bin/make configure (or see docs)"; \
+		exit 1; \
+	fi
+	/usr/bin/make -C ${OBJ_DIR}/obj/musl
+	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
+
 world:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \
 	           ${OBJ_DIR}/obj/bin ${OBJ_DIR}/obj/lib ${OBJ_DIR}/obj/libexec ${OBJ_DIR}/obj/sys
@@ -46,6 +54,11 @@ world:
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Started On `LC_ALL=C date`"
 	@echo "***************************************************************"
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 0: Build musl libc"
+	@echo "***************************************************************"
+	${MAKE} musl
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 1a: Build libcxxabi (C++ ABI)"
@@ -181,7 +194,7 @@ run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc,usb=on \
 	  -device usb-kbd \
-	  -nographic -serial stdio \
+	  -nographic \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
@@ -218,3 +231,7 @@ clean:
 	(cd libexec;${WMAKE} clean)
 	(cd contrib/libcxxabi;${MAKE} clean)
 	(cd contrib/libcxx;${MAKE} clean)
+	@if [ -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
+		/usr/bin/make -C ${OBJ_DIR}/obj/musl clean; \
+	fi
+	rm -rf ${OBJ_DIR}/obj/lib

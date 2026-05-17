@@ -116,6 +116,25 @@ int vesa_init(uint16_t mode) {
   return 0;
 }
 
+/*
+ * vesa_text_mode — switch the VGA adapter back to 80×25 text mode (mode 3).
+ * Uses INT 10h AX=0003h via the V86 bioscall trampoline.  Must only be called
+ * from normal task context (not from an ISR or the scheduler), because
+ * biosCall internally calls sched_yield() while the V86 task runs.
+ */
+void
+vesa_text_mode(void)
+{
+    biosCall(0x10, 0x0003, 0, 0, 0, 0, 0, 0, 0);
+    /* Clear the saved VESA dimensions so sys_mapfb knows VESA is gone */
+    vesa_fb_paddr = 0;
+    vesa_pitch    = 0;
+    vesa_width    = 0;
+    vesa_height   = 0;
+    vesa_bpp      = 0;
+    kprintf("vesa: switched to text mode\n");
+}
+
 void vesa_map_fb(void) {
   uint32_t base, end, addr;
 

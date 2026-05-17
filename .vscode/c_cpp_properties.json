@@ -2,15 +2,9 @@
     "configurations": [
         {
             "name": "Kernel (i386 bare-metal)",
+            "compileCommands": "${workspaceFolder}/compile_commands.json",
             "includePath": [
-                "${workspaceFolder}/sys/include",
-                "${workspaceFolder}/sys/include/ubixos",
-                "${workspaceFolder}/sys/include/sys",
-                "${workspaceFolder}/sys/include/vmm",
-                "${workspaceFolder}/sys/include/vfs",
-                "${workspaceFolder}/sys/include/net",
-                "${workspaceFolder}/sys/include/isa",
-                "${workspaceFolder}/sys/include/pci"
+                "${workspaceFolder}/sys/include/**"
             ],
             "defines": [
                 "__i386__",
@@ -20,14 +14,13 @@
             "compilerPath": "/opt/homebrew/bin/x86_64-elf-gcc",
             "compilerArgs": [
                 "-m32",
-                "-nostdinc",
                 "-ffreestanding",
                 "-fno-builtin",
                 "-fno-pie",
                 "-fno-pic"
             ],
             "cStandard": "gnu11",
-            "cppStandard": "gnu++14",
+            "cppStandard": "gnu++20",
             "intelliSenseMode": "gcc-x86",
             "browse": {
                 "path": [
@@ -38,14 +31,14 @@
         },
         {
             "name": "World (userland)",
+            "compileCommands": "${workspaceFolder}/compile_commands.json",
             "includePath": [
-                "${workspaceFolder}/include",
                 "${workspaceFolder}/include/**",
-                "${workspaceFolder}/include_old",
-                "${workspaceFolder}/lib/objgfx",
-                "${workspaceFolder}/lib/objgfx40",
-                "${workspaceFolder}/lib/libcpp/include",
-                "${workspaceFolder}/lib/libc/include"
+                "${workspaceFolder}/contrib/musl/include",
+                "${workspaceFolder}/contrib/musl/arch/i386",
+                "${workspaceFolder}/contrib/musl/arch/generic",
+                "${workspaceFolder}/contrib/libcxx/include",
+                "${workspaceFolder}/contrib/libcxxabi/include"
             ],
             "defines": [
                 "__i386__",
@@ -54,12 +47,10 @@
             "compilerPath": "/opt/homebrew/bin/x86_64-elf-gcc",
             "compilerArgs": [
                 "-m32",
-                "-nostdinc",
-                "-ffreestanding",
-                "-I${workspaceFolder}/include"
+                "-ffreestanding"
             ],
             "cStandard": "gnu11",
-            "cppStandard": "gnu++14",
+            "cppStandard": "gnu++20",
             "intelliSenseMode": "gcc-x86",
             "browse": {
                 "path": [

@@ -29,8 +29,8 @@
 #define _VFS_VFS_H
 
 #include <sys/types.h>
-#include <vfs/file.h>
-#include <vfs/mount.h>
+#include <fs/vfs/file.h>
+#include <fs/vfs/mount.h>
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <net/net.h>

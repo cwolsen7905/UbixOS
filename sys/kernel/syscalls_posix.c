@@ -178,10 +178,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP },  // 28 - sendmsg
     {
-        0,
+        ARG_COUNT(sys_recvfrom_args),
         "recvfrom",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 29 - recvfrom
+        sys_recvfrom,
+        SYSCALL_VALID },  // 29 - recvfrom
     {
         0,
         "accept",
@@ -1233,10 +1233,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 239 - Invalid */
     {
-        0,
+        2,
         "nanosleep",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 240 - Invalid */
+        sys_nanosleep,
+        SYSCALL_VALID }, /* 240 - nanosleep */
     {
         0,
         "ffclock_getcounter",

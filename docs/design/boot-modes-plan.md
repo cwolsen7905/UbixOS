@@ -213,7 +213,7 @@ client                          authd
 2. `bin/authd/main.c`: MPI mailbox, userdb load, poll + respond.
 3. `bin/authd/Makefile`.
 4. `bin/Makefile`: add `authd` to SUBDIRS.
-5. `tools/initd/16-authd`: enabled by default.
+5. `etc/init.d/16-authd`: enabled by default.
 6. `bin/login/main.c`: replace inline userdb read with MPI call to authd.
 7. Build + test: boot, confirm authd starts, login authenticates via MPI.
 
@@ -225,7 +225,7 @@ client                          authd
 4. `sys/kernel/fb.c` (or new `sys/kernel/serial_sys.c`): implement
    `sys_serial_read`.
 5. `bin/ttyd/main.c`: poll loop, line discipline, session fork.
-6. `tools/initd/30-ttyd`: add (disabled by default).
+6. `etc/init.d/30-ttyd`: add (disabled by default).
 7. Test: `bmake run-debug`, enable 30-ttyd, connect with host terminal.
 
 ### Phase 2 — Graphical login (guilogin)
@@ -236,7 +236,7 @@ client                          authd
 3. `bin/Makefile`: add `guilogin` to SUBDIRS.
 4. `bin/views/` (compositor): after init, fork `sys:/bin/guilogin`; on
    clean exit do not restart; on crash exit restart.
-5. `tools/initd/20-views`: uncomment to enable graphical boot.
+5. `etc/init.d/20-views`: uncomment to enable graphical boot.
 6. Test: `bmake run`, boot into GUI login, authenticate, confirm taskbar
    appears with empty desktop.
 
@@ -272,10 +272,10 @@ client                          authd
 | `sys_klog_read` syscall (slot 47) | ✅ done | native ABI, wired in syscalls.c + fb.c |
 | `bin/logd` — kernel log daemon | ✅ done | polls slot 47, writes sys:/var/log/messages |
 | init.d framework | ✅ done | scan + sort + fork, in bin/init/main.c |
-| `tools/initd/10-logd` | ✅ done | logd enabled by default |
-| `tools/initd/15-ubistry` | ✅ done | registry service enabled by default |
-| `tools/initd/20-views` | ✅ done | present but commented out (enable for graphical boot) |
-| mkimage.sh installs /etc/init.d/ | ✅ done | copies tools/initd/* to image |
+| `etc/init.d/10-logd` | ✅ done | logd enabled by default |
+| `etc/init.d/15-ubistry` | ✅ done | registry service enabled by default |
+| `etc/init.d/20-views` | ✅ done | present but commented out (enable for graphical boot) |
+| mkimage.sh installs /etc/init.d/ | ✅ done | copies etc/init.d/* to image |
 | Design document (`boot-modes-plan.md`) | ✅ done | this file |
 
 ### Phase 0 — authd (authentication service)
@@ -284,8 +284,9 @@ client                          authd
 |------|--------|-------|
 | `include/authd.h` — shared MPI message types | ✅ done | AUTH_REQUEST 96b / AUTH_RESPONSE 220b |
 | `bin/authd` — auth daemon | ✅ done | MPI mailbox, userdb load, poll + respond |
-| `tools/initd/16-authd` | ✅ done | always enabled |
+| `etc/init.d/16-authd` | ✅ done | always enabled |
 | `bin/login` — replace inline auth with MPI call | ✅ done | do_auth() via MPI, envp from response |
+| Boot + login tested end-to-end | ✅ done | init.d starts logd/authd/ubistry, login authenticates via MPI |
 
 ### Phase 1 — Serial terminal (headless path)
 
@@ -294,7 +295,7 @@ client                          authd
 | Serial RX ISR + `serial_rx_ring[]` | ⬜ todo | `sys/isa/serial.c` |
 | `sys_serial_read` syscall (slot 48) | ⬜ todo | native ABI |
 | `bin/ttyd` — serial terminal daemon | ⬜ todo | line discipline, session fork |
-| `tools/initd/30-ttyd` | ⬜ todo | disabled by default |
+| `etc/init.d/30-ttyd` | ⬜ todo | disabled by default |
 
 ### Phase 2 — Graphical login
 
@@ -302,7 +303,7 @@ client                          authd
 |------|--------|-------|
 | `bin/guilogin` — login screen | ⬜ todo | fullscreen objgfx form, userdb auth |
 | views forks guilogin after init | ⬜ todo | `bin/views/` compositor change |
-| Enable `tools/initd/20-views` | ⬜ todo | uncomment exec line |
+| Enable `etc/init.d/20-views` | ⬜ todo | uncomment exec line |
 
 ### Phase 3 — Taskbar as desktop shell
 
@@ -320,7 +321,7 @@ client                          authd
 |------|-------|--------|
 | `sys/isa/serial_rx.c` (or extend `serial.c`) | 1 | ⬜ todo |
 | `bin/ttyd/main.c` | 1 | ⬜ todo |
-| `tools/initd/30-ttyd` | 1 | ⬜ todo |
+| `etc/init.d/30-ttyd` | 1 | ⬜ todo |
 | `bin/guilogin/main.c` | 2 | ⬜ todo |
 | `bin/guilogin/Makefile` | 2 | ⬜ todo |
 
@@ -332,4 +333,4 @@ client                          authd
 | `sys/kernel/fb.c` | `sys_serial_read` impl | 1 | ⬜ todo |
 | `bin/Makefile` | add ttyd, guilogin to SUBDIRS | 1+2 | ⬜ todo |
 | `bin/views/*.cc` | fork guilogin after init | 2 | ⬜ todo |
-| `tools/initd/20-views` | uncomment exec line | 2 | ⬜ todo |
+| `etc/init.d/20-views` | uncomment exec line | 2 | ⬜ todo |

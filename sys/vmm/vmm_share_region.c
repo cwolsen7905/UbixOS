@@ -30,6 +30,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
+#include <lib/kmalloc.h>
 
 /*
  * vmm_share_region — map pages from the calling process into dst_pid's space.
@@ -48,17 +49,21 @@ uintptr_t
 vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 {
 	uint32_t  n, i, old_cr3, dst_vaddr;
-	uint32_t  phys[256];
+	uint32_t *phys;
 	kTask_t  *dst;
 
 	if (vaddr == 0 || size == 0)
 		return 0;
 
 	n = (uint32_t)((size + PAGE_SIZE - 1) / PAGE_SIZE);
-	if (n > 256) {
+	if (n > 4096) {
 		kprintf("vmm_share_region: region too large (%u pages)\n", n);
 		return 0;
 	}
+
+	phys = kmalloc(n * sizeof(uint32_t));
+	if (!phys)
+		return 0;
 
 	/* Collect physical addresses from current (src) address space */
 	for (i = 0; i < n; i++) {
@@ -66,6 +71,7 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		if (phys[i] == 0) {
 			kprintf("vmm_share_region: page %u at 0x%X not mapped\n",
 			    i, vaddr + i * PAGE_SIZE);
+			kfree(phys);
 			return 0;
 		}
 	}
@@ -73,6 +79,7 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	dst = schedFindTask(dst_pid);
 	if (dst == 0) {
 		kprintf("vmm_share_region: dst pid %d not found\n", dst_pid);
+		kfree(phys);
 		return 0;
 	}
 
@@ -97,9 +104,9 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		if (vmm_remapPage(phys[i], dst_vaddr + i * PAGE_SIZE,
 		    PAGE_DEFAULT, dst_pid, 0) == 0) {
 			kprintf("vmm_share_region: vmm_remapPage failed at page %u\n", i);
-			/* Restore CR3 before any further action */
 			asm volatile("movl %0, %%cr3" :: "r"(old_cr3));
 			asm volatile("sti");
+			kfree(phys);
 			return 0;
 		}
 	}
@@ -110,5 +117,6 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	kprintf("vmm_share_region: src vaddr 0x%X -> pid %d vaddr 0x%X (%u pages) phys[0]=0x%X\n",
 	    vaddr, dst_pid, dst_vaddr, n, phys[0]);
 
+	kfree(phys);
 	return (uintptr_t)dst_vaddr;
 }

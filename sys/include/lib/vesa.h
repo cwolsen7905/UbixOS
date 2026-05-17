@@ -93,6 +93,7 @@ typedef struct {
 } __attribute__((packed)) vbe_mode_info_t;
 
 int  vesa_init(uint16_t mode);
+void vesa_text_mode(void);
 void vesa_map_fb(void);
 void vesa_draw_test(void);
 void vesa_draw_circle(uint32_t cx, uint32_t cy, uint32_t r, uint32_t color);

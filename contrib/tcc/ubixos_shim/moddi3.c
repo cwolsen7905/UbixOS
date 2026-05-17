@@ -64,3 +64,12 @@ DWtype __divmoddi4(DWtype a, DWtype b, DWtype *rem)
 		*rem = a - q * b;
 	return q;
 }
+
+/* combined unsigned divide+modulo — used by musl's vfprintf/floatscan */
+UDWtype __udivmoddi4(UDWtype a, UDWtype b, UDWtype *rem)
+{
+	UDWtype q = __udivdi3(a, b);
+	if (rem)
+		*rem = a - q * b;
+	return q;
+}

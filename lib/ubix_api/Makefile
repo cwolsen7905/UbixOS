@@ -11,12 +11,11 @@ OBJS_SO = ubixcwd.o ttyctrl.o
 # Objects for the static ubix_api.a used by musl-linked programs.
 # pidStatus and MPI stubs duplicate symbols in the old libc; they must NOT
 # land in the source tree where LIBRARIES globs would pick them up.
-OBJS_A  = ubixcwd.o ttyctrl.o \
+OBJS_A  = ubixcwd.o ttyctrl.o settty.o \
           pidstatus.o \
           mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_destroymbox.o \
           sys_gettimeofday.o gettime.o
 
-SUBS    = ./test/*.o
 OUTPUT  = ubix_api.so
 
 .PATH.o: ${OBJDIR}
@@ -47,10 +46,9 @@ OUTPUT  = ubix_api.so
 all: lib.so lib.a
 
 lib.so: $(OBJS_SO)
-	(cd test;$(MAKE))
 	$(CC) -m32 -nostdlib -shared -Wl,-soname,ubix_api.so -Wl,-m,elf_i386 \
 		-o ${OBJ_DIR}/lib/$(OUTPUT) \
-		${OBJS_SO:S|^|${OBJDIR}/|} $(SUBS)
+		${OBJS_SO:S|^|${OBJDIR}/|}
 
 lib.a: $(OBJS_A)
 	$(AR) rcs ${OBJ_DIR}/lib/ubix_api.a \
@@ -59,7 +57,6 @@ lib.a: $(OBJS_A)
 clean:
 	$(REMOVE) ${OBJDIR} \
 		${OBJ_DIR}/lib/$(OUTPUT) ${OBJ_DIR}/lib/ubix_api.a
-	(cd test;${MAKE} clean)
 
 .for _d in ${OBJS_A:.o=.d}
 .sinclude "${OBJDIR}/${_d}"

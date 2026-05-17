@@ -47,13 +47,14 @@ ${BINARY}: ${OBJS}
 		${OBJ_DIR}/obj/ubix_api/mpi_destroymbox.o \
 		${OBJ_DIR}/obj/ubix_api/gettime.o \
 		${OBJ_DIR}/obj/ubix_api/sys_gettimeofday.o \
-		${OBJ_DIR}/obj/musl/compiler_rt.o \
 		${OBJGFX_OBJS} \
 		${OBJ_DIR}/lib/libcxx.a \
 		${OBJ_DIR}/lib/libcxxabi.a \
 		${OBJDIR}/taskbar.o \
 		${OBJ_DIR}/lib/musl.a \
+		${OBJ_DIR}/lib/crt.a \
 		-Wl,--end-group \
+		${LIBGCC} \
 		${MUSL_LIB}/crtn.o
 
 clean:

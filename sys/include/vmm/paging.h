@@ -65,6 +65,12 @@
 #define PAGE_STACK          0x00000400
 #define PAGE_WIRED          0x00000800
 
+/* When PAGE_PRESENT=0, hardware ignores all other bits; bits[31:12] hold the
+ * swap slot number and PAGE_SWAPPED marks the PTE as a valid swap reference. */
+#define PAGE_SWAPPED        0x00000002
+#define PTE_SWAP_SLOT(pte)      ((uint32_t)(pte) >> 12)
+#define PTE_SWAP_ENCODE(slot)   (((uint32_t)(slot) << 12) | PAGE_SWAPPED)
+
 #define PAGE_DEFAULT        (PAGE_PRESENT|PAGE_WRITE|PAGE_USER)
 #define KERNEL_PAGE_DEFAULT (PAGE_PRESENT|PAGE_WRITE)
 

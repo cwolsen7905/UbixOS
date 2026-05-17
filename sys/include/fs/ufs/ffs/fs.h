@@ -33,8 +33,8 @@
 #ifndef _UFS_FFS_FS_H_
 #define	_UFS_FFS_FS_H_
 
-#include <vfs/mount.h>
-#include <ufs/ufs/dinode.h>
+#include <fs/vfs/mount.h>
+#include <fs/ufs/ufs/dinode.h>
 
 /*
  * Each disk drive contains some number of filesystems.

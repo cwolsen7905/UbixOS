@@ -33,7 +33,7 @@
  * $Id: tcpdump.c 54 2016-01-11 01:29:55Z reddawg $
  */
 
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 #include <ubixos/kpanic.h>
   
 #include "netif/tcpdump.h"

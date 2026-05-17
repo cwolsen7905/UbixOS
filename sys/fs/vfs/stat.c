@@ -28,8 +28,8 @@
 
 #include <ubixos/errno.h>
 #include <sys/sysproto.h>
-#include <vfs/stat.h>
-#include <vfs/file.h>
+#include <fs/vfs/stat.h>
+#include <fs/vfs/file.h>
 #include <lib/kprintf.h>
 #include <sys/descrip.h>
 #include <string.h>

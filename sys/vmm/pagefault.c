@@ -27,6 +27,7 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/swap.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
@@ -139,6 +140,33 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		pageTable[pageTableIndex] = (uInt32)(vmm_getPhysicalAddr((uInt32)dst) | PAGE_DEFAULT);
 		/* Unlink From Memory Map Allocated Page */
 		vmm_unmapPage((uInt32)dst, 1);
+	}
+	else if ((pageTable[pageTableIndex] & PAGE_SWAPPED) == PAGE_SWAPPED)
+	{
+		/* Page was evicted to swap — bring it back in. */
+		uint32_t slot    = PTE_SWAP_SLOT(pageTable[pageTableIndex]);
+		uint32_t newPage = vmm_findFreePage(_current->id);
+
+		if (newPage == 0x0) {
+			kprintf("pageFault: OOM during swap-in at 0x%X pid %i\n",
+			    memAddr, _current->id);
+			spinUnlock(&pageFaultSpinLock);
+			endTask(_current->id);
+			return;
+		}
+
+		pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
+		asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
+
+		if (swap_read_page(slot, (void *)(memAddr & 0xFFFFF000)) != 0) {
+			kprintf("pageFault: swap read error slot %u at 0x%X\n",
+			    slot, memAddr);
+			spinUnlock(&pageFaultSpinLock);
+			endTask(_current->id);
+			return;
+		}
+
+		swap_free_slot(slot);
 	}
 	else if (pageTable[pageTableIndex] != 0x0)
 	{

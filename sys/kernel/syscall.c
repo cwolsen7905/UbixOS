@@ -33,6 +33,7 @@
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
+#include <isa/pit.h>
 #include <sys/trap.h>
 #include <sys/elf.h>
 #include <string.h>
@@ -234,6 +235,46 @@ int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
 
 int sys_sched_yield(struct thread *td, void *args) {
   sched_yield();
+  return (0);
+}
+
+/* nanosleep(const struct timespec *rqtp, struct timespec *rmtp)
+ * FreeBSD POSIX slot 240.  rqtp/rmtp are user pointers — layout:
+ *   long tv_sec  (offset 0)
+ *   long tv_nsec (offset 4)
+ * PIT_TIMER ticks/sec = 200; each tick = 5 ms.
+ */
+int sys_nanosleep(struct thread *td, void *args) {
+  uint32_t *params = (uint32_t *)args;
+  const long *rqtp  = (const long *)params[0]; /* struct timespec * */
+  long *rmtp         = (long *)params[1];
+
+  if (!rqtp) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  long tv_sec  = rqtp[0];
+  long tv_nsec = rqtp[1];
+  if (tv_sec < 0 || tv_nsec < 0 || tv_nsec >= 1000000000L) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  /* Convert requested time to PIT ticks (round up). */
+  uint32_t ticks = (uint32_t)(tv_sec * PIT_TIMER) +
+                   (uint32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) /
+                              (1000000000L / PIT_TIMER));
+
+  uint32_t deadline = systemVitals->sysTicks + ticks;
+  while (systemVitals->sysTicks < deadline)
+    sched_yield();
+
+  if (rmtp) {
+    rmtp[0] = 0;
+    rmtp[1] = 0;
+  }
+  td->td_retval[0] = 0;
   return (0);
 }
 

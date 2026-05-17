@@ -34,7 +34,7 @@ extern "C" {
 #endif
 
 #include <sys/types.h>
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 #include <ubixos/tty.h>
 
 #include <machine/proc.h>

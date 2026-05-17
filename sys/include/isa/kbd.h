@@ -65,4 +65,8 @@ typedef struct kbd_event kbd_event_t;
 int  kbd_getEvent(kbd_event_t *ev);
 void kbd_ring_push(uint32_t keycode, uint8_t pressed);
 
+/* Set to 1 by sys_mapfb when a GUI compositor maps the framebuffer.
+ * Prevents VGA console processes from draining the keyboard ring. */
+extern volatile int kbd_gui_mode;
+
 #endif /* _ISA_KBD_H */

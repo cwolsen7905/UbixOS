@@ -27,12 +27,14 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/swap.h>
 #include <sys/io.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/vitals.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/sched.h>
 #include <assert.h>
 
 #include <machine/cpu.h>
@@ -223,11 +225,13 @@ int countMemory() {
 uint32_t vmm_findFreePage(pidType pid) {
 
   int i = 0x0;
+  uint32_t evicted = 0x0;
 
   /* Lets Look For A Free Page */
   if (pid < sysID)
     kpanic("Error: invalid PID %i\n", pid);
 
+retry:
   spinLock(&vmmSpinLock);
 
   for (i = 0; i < numPages; i++) {
@@ -248,8 +252,22 @@ uint32_t vmm_findFreePage(pidType pid) {
     }
   }
 
-  /* If No Free Memory Is Found Return NULL */
-  kpanic("Out Of Memory!!!!");
+  spinUnlock(&vmmSpinLock);
+
+  /* No free pages — attempt to evict a page to swap. */
+  kprintf("vmm: OOM (pid %i) — attempting page eviction\n", pid);
+  evicted = swap_evict_page();
+  if (evicted != 0x0)
+    goto retry;
+
+  /* Eviction failed or no swap device. */
+  kprintf("vmm: OOM — out of memory and swap (pid %i)\n", pid);
+
+  if (pid == sysID)
+    kpanic("Out Of Memory — kernel has no swap fallback");
+
+  sched_setStatus(pid, DEAD);
+  sched_yield();
   return (0x0);
 }
 
@@ -354,39 +372,29 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 
  ************************************************************************/
 
-/* TODO: This can be greatly improved for performance but it gets the job done */
 void vmm_freeProcessPages(pidType pid) {
-  int i = 0, x = 0;
-  uint32_t *tmpPageTable = 0x0;
-  uint32_t *tmpPageDir = (uInt32 *) PD_BASE_ADDR;
+  int i = 0;
 
   spinLock(&vmmSpinLock);
 
-  /* NOTE (BUG-COW-03): COW-shared pages owned by another PID (e.g. parent)
-   * are invisible to the pid scan below and their counters are never
-   * decremented here.  The correct fix requires walking the DEAD task's own
-   * page tables, but vmm_freeProcessPages is called from systemTask after the
-   * task has been context-switched away — PT_BASE_ADDR reflects _current (the
-   * system task), not the dying task.  Until that is addressed, leave the
-   * page-walk disabled to avoid corrupting live processes' COW counters. */
-
-  /* Loop Through Pages To Find Pages Owned By Process */
+  /*
+   * By the time we are called, endTask() has already run
+   * vmm_cleanVirtualSpace(0x400000) while the dying task was still _current.
+   * That walk decremented every COW reference in PD[1..767] and freed every
+   * private user page.  All that remains here is to reclaim the physical pages
+   * used for page tables and the page directory itself, which vmm_cleanVirtualSpace
+   * zeroes out but does not free.
+   *
+   * Pages with cowCounter > 0 are owned by this pid but still shared with
+   * live children — leave them alone and let each child's own cleanup path
+   * free the page when the last reference drops.
+   */
   for (i = 0; i < numPages; i++) {
-    if (vmmMemoryMap[i].pid == pid) {
-      if (vmmMemoryMap[i].cowCounter == 0) {
-        /* Private page (kernel page tables, stack structures, etc.) not
-         * covered by vmm_cleanVirtualSpace — free it directly. */
-        vmmMemoryMap[i].status = memAvail;
-        vmmMemoryMap[i].cowCounter = 0x0;
-        vmmMemoryMap[i].pid = vmmID;
-        freePages++;
-        systemVitals->freePages = freePages;
-      }
-      /* cowCounter > 0: vmm_cleanVirtualSpace already decremented this page's
-       * reference count while the dying task was still _current.  Decrementing
-       * again here causes a double-free that corrupts the remaining mapper's
-       * address space (BUG-COW-07).  Skip and let the surviving task's own
-       * cleanup path free the physical page when its count reaches zero. */
+    if (vmmMemoryMap[i].pid == pid && vmmMemoryMap[i].cowCounter == 0) {
+      vmmMemoryMap[i].status = memAvail;
+      vmmMemoryMap[i].pid = vmmID;
+      freePages++;
+      systemVitals->freePages = freePages;
     }
   }
 

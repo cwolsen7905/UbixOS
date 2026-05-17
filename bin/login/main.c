@@ -37,8 +37,10 @@
 
 int pidStatus(int pid);
 
-#define REPLY_MBOX  "login.auth"
 #define MOTD_PATH   "sys:/etc/motd"
+#define REPLY_MBOX_MAX 32
+
+static char reply_mbox[REPLY_MBOX_MAX];
 
 static char *argv_shell[2] = { "shell", NULL };
 static char  envp_buf[11][128];
@@ -83,7 +85,7 @@ do_auth(const char *username, const char *password)
 	memset(&req,  0, sizeof(req));
 	memset(&resp, 0, sizeof(resp));
 
-	strncpy(req.reply_mbox, REPLY_MBOX,   AUTH_MBOX_MAX - 1);
+	strncpy(req.reply_mbox, reply_mbox,   AUTH_MBOX_MAX - 1);
 	strncpy(req.username,   username,     AUTH_USER_MAX - 1);
 	strncpy(req.password,   password,     AUTH_PASS_MAX - 1);
 
@@ -91,14 +93,20 @@ do_auth(const char *username, const char *password)
 	msg.header = AUTHD_MSG_REQUEST;
 	memcpy(msg.data, &req, sizeof(req));
 
-	if (mpi_postMessage(AUTHD_MBOX, AUTHD_MSG_REQUEST, &msg) != 0) {
-		printf("login: authd not available\n");
-		return (resp);
+	/* Retry until authd's mailbox exists — it may still be starting up. */
+	for (waited = 0; waited < 2000; waited++) {
+		if (mpi_postMessage(AUTHD_MBOX, AUTHD_MSG_REQUEST, &msg) == 0)
+			break;
+		sched_yield();
+		if (waited == 1999) {
+			printf("login: authd not available\n");
+			return (resp);
+		}
 	}
 
 	/* Poll for response — authd replies promptly */
 	for (waited = 0; waited < 1000; waited++) {
-		if (mpi_fetchMessage(REPLY_MBOX, &rmsg) == 0 &&
+		if (mpi_fetchMessage(reply_mbox, &rmsg) == 0 &&
 		    rmsg.header == AUTHD_MSG_RESPONSE) {
 			memcpy(&resp, rmsg.data, sizeof(resp));
 			return (resp);
@@ -128,7 +136,8 @@ main(int argc, char **argv, char **env)
 		exit(-1);
 	}
 
-	mpi_createMbox(REPLY_MBOX);
+	snprintf(reply_mbox, sizeof(reply_mbox), "login.auth.%d", getpid());
+	mpi_createMbox(reply_mbox);
 
 login:
 	printf("\nUbixOS/IA-32 (devel.ubixos.com) (console)");

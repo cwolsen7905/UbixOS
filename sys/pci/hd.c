@@ -28,10 +28,11 @@
 
 #include <pci/hd.h>
 #include <sys/bus.h>
+#include <vmm/swap.h>
 #include <sys/io.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <devfs/devfs.h>
+#include <fs/devfs/devfs.h>
 #include <string.h>
 #include <fs/common/gpt.h>
 
@@ -206,6 +207,13 @@ int _initHardDisk(int hdD)
 						        d[i].dp_size, hdC + 1, minor);
 
 						devfs_makeNode(name, 'c', 0x1, minor);
+
+						if (d[i].dp_type == 0x82)
+						{
+							/* Linux swap type — register as UbixOS swap device. */
+							swap_register_dev(hdd2,
+							    d[i].dp_size / SWAP_SECTORS_PER_PAGE);
+						}
 
 						if (d[i].dp_type == 0xA5)
 						{

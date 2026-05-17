@@ -34,7 +34,7 @@
 
 #include <fs/pipe_fs.h>
 #include <fs/msdos_fs.h>
-#include <ufs/ufs.h>
+#include <fs/ufs/ufs.h>
 
 struct inode {
     __dev_t i_dev;

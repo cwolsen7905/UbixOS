@@ -26,6 +26,6 @@ INCLUDES = -I${MUSL_SRC}/include \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
 
-LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o
+LIBRARIES =
 
-STARTUP = ../../lib/ubix/*.o
+STARTUP =

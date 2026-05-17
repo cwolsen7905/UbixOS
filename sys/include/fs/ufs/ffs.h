@@ -31,7 +31,7 @@
 #define _FFS_H
 
 #include <sys/types.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <sys/bus.h>
 
 int ffs_read(fileDescriptor_t *,char *,uint32_t,long);

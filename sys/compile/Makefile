@@ -21,6 +21,7 @@ KPARTS = \
 	${OBJ_DIR}/obj/sys/vfs/*.o \
 	${OBJ_DIR}/obj/sys/pci/*.o \
 	${OBJ_DIR}/obj/sys/devfs/*.o \
+	${OBJ_DIR}/obj/sys/procfs/*.o \
 	${OBJ_DIR}/obj/sys/mpi/*.o \
 	${OBJ_DIR}/obj/sys/ufs/*.o \
 	${OBJ_DIR}/obj/sys/fat/*.o \

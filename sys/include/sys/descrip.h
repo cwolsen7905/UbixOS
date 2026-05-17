@@ -32,8 +32,8 @@
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
 
-#include <vfs/file.h>
-#include <vfs/stat.h>
+#include <fs/vfs/file.h>
+#include <fs/vfs/stat.h>
 
 #include <sys/fcntl.h>
 

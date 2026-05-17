@@ -29,7 +29,7 @@
 #include <ubixos/sched.h>
 #include <sys/sysproto_posix.h>
 #include <sys/sysproto.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>

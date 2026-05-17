@@ -46,13 +46,14 @@ ${BINARY}: ${OBJS}
 		${OBJ_DIR}/obj/ubix_api/mpi_fetchmessage.o \
 		${OBJ_DIR}/obj/ubix_api/mpi_postmessage.o \
 		${OBJ_DIR}/obj/ubix_api/mpi_destroymbox.o \
-		${OBJ_DIR}/obj/musl/compiler_rt.o \
 		${OBJGFX_OBJS} \
 		${OBJ_DIR}/lib/libcxx.a \
 		${OBJ_DIR}/lib/libcxxabi.a \
 		${OBJS:S|^|${OBJDIR}/|} \
 		${OBJ_DIR}/lib/musl.a \
+		${OBJ_DIR}/lib/crt.a \
 		-Wl,--end-group \
+		${LIBGCC} \
 		${MUSL_LIB}/crtn.o
 
 clean:

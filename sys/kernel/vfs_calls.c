@@ -27,6 +27,11 @@
  */
 
 #include <ubixos/sched.h>
+#include <ubixos/tty.h>
+#include <isa/rs232.h>
+#include <isa/kbd.h>
+#include <isa/atkbd.h>
+#include <lib/vesa.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
 #include <sys/descrip.h>
@@ -35,10 +40,10 @@
 #include <sys/errno.h>
 #include <sys/fcntl.h>
 #include <string.h>
-#include <ufs/ufs.h>
+#include <fs/ufs/ufs.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 #include "../fs/fat/fat_filelib.h"
 
 #define FD_TYPE_DIR 4
@@ -206,11 +211,63 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	{
 		td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
 	}
+	else if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
+	{
+		/* Serial TTY (ttyd session): drain rx ring through line discipline,
+		 * then read completed characters from the term's stdin buffer.
+		 * Mirrors the VGA path: kbd_ring → tty_inject → stdin[]. */
+		while (x < (int)args->nbyte)
+		{
+			int raw;
+			while ((raw = serial_rx_getbyte()) >= 0)
+				tty_inject(_current->term, (char)raw);
+
+			if (_current->term->stdinSize > 0)
+			{
+				int i;
+				c = _current->term->stdin[0];
+				_current->term->stdinSize--;
+				for (i = 0; i < _current->term->stdinSize; i++)
+					_current->term->stdin[i] = _current->term->stdin[i + 1];
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)args->nbyte)
+					break;
+			}
+			else
+			{
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
+	}
 	else
 	{
-		/* stdin: echo and line buffering handled by keyboard ISR; drain stdin[] */
-		while (_current->term == tty_foreground)
+		/* VGA TTY: block until this terminal is the active foreground,
+		 * then drain keyboard ring → line discipline → stdin[].
+		 *
+		 * When another VTY is switched in (Alt+Fx) or the GUI compositor
+		 * has mapped the framebuffer (kbd_gui_mode=1), yield here rather
+		 * than returning 0 bytes — returning 0 causes login to spin and
+		 * spam "Login:" at full CPU speed.
+		 *
+		 * vesa_text_slot: deferred Ctrl+Alt+Fn from the keyboard ISR.
+		 * The ISR cannot call biosCall (spawns a V86 task, needs sched_yield),
+		 * so it sets the flag and we perform the switch here in task context. */
+		for (;;)
 		{
+			if (vesa_text_slot >= 0)
+			{
+				int slot = vesa_text_slot;
+				vesa_text_slot = -1;
+				tty_change((uInt16)slot);
+				vesa_text_mode();
+				kbd_gui_mode = 0;
+			}
+			if (kbd_gui_mode || _current->term != tty_foreground)
+			{
+				sched_yield();
+				continue;
+			}
 			c = getchar();
 			if (c != 0x0)
 			{
@@ -329,12 +386,23 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	}
 	else if (uap->fd == 2)
 	{
-		buffer = kmalloc(1024);
-
+		buffer = kmalloc(uap->nbyte + 1);
+		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
-		printColor += 1;
-		kprintf(buffer);
-		printColor = defaultColor;
+		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
+		{
+			size_t i;
+			for (i = 0; i < uap->nbyte; i++)
+				rs232_putc(buffer[i]);
+		}
+		else if (_current->term != NULL)
+		{
+			tty_print(buffer, _current->term);
+		}
+		else
+		{
+			kprintf("%s", buffer);
+		}
 		kfree(buffer);
 		td->td_retval[0] = uap->nbyte;
 	}
@@ -343,7 +411,20 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		buffer = kmalloc(uap->nbyte + 1);
 		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
-		kprintf("%s", buffer);
+		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
+		{
+			size_t i;
+			for (i = 0; i < uap->nbyte; i++)
+				rs232_putc(buffer[i]);
+		}
+		else if (_current->term != NULL)
+		{
+			tty_print(buffer, _current->term);
+		}
+		else
+		{
+			kprintf("%s", buffer);
+		}
 		kfree(buffer);
 		td->td_retval[0] = uap->nbyte;
 	}

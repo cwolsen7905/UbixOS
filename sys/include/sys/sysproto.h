@@ -131,4 +131,14 @@ struct sys_klog_read_args {
 };
 int sys_klog_read(struct thread *, struct sys_klog_read_args *);
 
+/* sys_settty (slot 48) — claim the serial TTY and set it as the process's terminal.
+ * Analogous to FreeBSD getty opening /dev/ttyu0 and calling login_tty().
+ * slot: index into the kernel tty_term[] table (1 = serial TTY). */
+struct sys_settty_args {
+    char slot_l_[PADL_(int)];
+    int  slot;
+    char slot_r_[PADR_(int)];
+};
+int sys_settty(struct thread *, struct sys_settty_args *);
+
 #endif

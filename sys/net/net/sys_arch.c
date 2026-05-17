@@ -21,6 +21,7 @@
 int lwip_socket(int domain, int type, int protocol);
 int lwip_setsockopt(int s, int level, int optname, const void *optval, int optlen);
 int lwip_sendto(int s, const void *dataptr, int size, unsigned int flags, const void *to, int tolen);
+int lwip_recvfrom(int s, void *mem, size_t len, int flags, void *from, unsigned int *fromlen);
 
 /* Get Definitions For These */
 #define ERR_NOT_READY 0
@@ -560,12 +561,107 @@ int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
   return (0);
 }
 
+/*
+ * Userland (musl/Linux) sockaddr_in has no sin_len byte:
+ *   [uint16 family][uint16 port][uint32 addr][char zero[8]]   (16 bytes)
+ * lwIP sockaddr_in has a BSD-style sin_len at byte 0:
+ *   [uint8 sin_len][uint8 family][uint16 port][uint32 addr][char zero[8]] (16 bytes)
+ *
+ * posix_to_lwip_addr() copies the userland address into a kernel buffer and
+ * fixes the first two bytes so lwIP's IS_SOCK_ADDR_TYPE_VALID check passes.
+ *
+ * lwip_to_posix_addr() does the reverse for addresses returned by lwIP
+ * (e.g. from recvfrom) before writing them back to userland.
+ */
+static void posix_to_lwip_addr(uint8_t *dst, const uint8_t *src, int len) {
+  uint16_t family;
+  if (len < 2) return;
+  memcpy(dst, src, len);
+  family = src[0] | ((uint16_t)src[1] << 8); /* little-endian uint16 family */
+  dst[0] = (uint8_t)len;      /* sin_len */
+  dst[1] = (uint8_t)family;   /* sin_family (low byte = AF_INET=2) */
+}
+
+static void lwip_to_posix_addr(uint8_t *dst, const uint8_t *src, int len) {
+  uint8_t family;
+  if (len < 2) return;
+  memcpy(dst, src, len);
+  family = src[1];            /* lwIP sin_family */
+  dst[0] = family;            /* posix family low byte */
+  dst[1] = 0;                 /* posix family high byte */
+}
+
 int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
   struct file *fd = 0x0;
+  int ret;
+  void *kbuf;
+
   getfd(td, &fd, args->s);
 
-  lwip_sendto(fd->socket, args->buf, args->len, args->flags, args->to, args->tolen);
-  td->td_retval[0] = 0x0;
+  /*
+   * lwip_sendto posts to tcpip_thread, which has no user mappings.
+   * Copy the payload into kernel memory so tcpip_thread can safely
+   * access it when it calls pbuf_take().
+   */
+  kbuf = kmalloc(args->len);
+  if (!kbuf) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+  memcpy(kbuf, args->buf, args->len);
 
-  return (0);
+  if (args->to && args->tolen > 0 && args->tolen <= 28) {
+    uint32_t kaddr_storage[7]; /* 28 bytes, 4-byte aligned for IS_SOCK_ADDR_ALIGNED */
+    uint8_t *kaddr = (uint8_t *)kaddr_storage;
+    posix_to_lwip_addr(kaddr, (const uint8_t *)args->to, args->tolen);
+    ret = lwip_sendto(fd->socket, kbuf, args->len, args->flags,
+        (void *)kaddr, args->tolen);
+  } else {
+    ret = lwip_sendto(fd->socket, kbuf, args->len, args->flags,
+        args->to, args->tolen);
+  }
+  kfree(kbuf);
+  td->td_retval[0] = (ret >= 0) ? ret : -1;
+  return (ret < 0 ? -1 : 0);
+}
+
+int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
+  struct file *fd = 0x0;
+  int ret;
+  uint8_t kfrom[28];
+  unsigned int kfromlen = sizeof(kfrom);
+  void *kbuf;
+
+  getfd(td, &fd, args->s);
+
+  /*
+   * lwip_recvfrom writes received data via tcpip_thread which has no user
+   * mappings.  Receive into a kernel buffer, then copy to userland.
+   */
+  kbuf = kmalloc(args->len);
+  if (!kbuf) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  if (args->from && args->fromlenaddr) {
+    ret = lwip_recvfrom(fd->socket, kbuf, args->len, args->flags,
+        (void *)kfrom, &kfromlen);
+    if (ret > 0)
+      memcpy(args->buf, kbuf, ret);
+    if (ret >= 0 && kfromlen > 0) {
+      unsigned int outlen = *(unsigned int *)args->fromlenaddr;
+      if (outlen > kfromlen) outlen = kfromlen;
+      lwip_to_posix_addr((uint8_t *)args->from, kfrom, outlen);
+      *(unsigned int *)args->fromlenaddr = kfromlen;
+    }
+  } else {
+    ret = lwip_recvfrom(fd->socket, kbuf, args->len, args->flags,
+        NULL, NULL);
+    if (ret > 0)
+      memcpy(args->buf, kbuf, ret);
+  }
+  kfree(kbuf);
+  td->td_retval[0] = ret;
+  return (ret < 0 ? -1 : 0);
 }

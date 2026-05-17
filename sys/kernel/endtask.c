@@ -37,15 +37,6 @@
 #include <lib/kprintf.h>
 #include <isa/8259.h>
 
-/*
- * TODO (BUG-COW-03 proper): The full FreeBSD/Linux approach is for the dying
- * task to release its entire address space here (user + kernel low region),
- * leaving systemTask to only free the task struct and kernel stack.
- * vmm_cleanVirtualSpace already handles the user region; a matching cleaner
- * for the kernel-mapped low region (PD index 1, where COW is also used) and
- * the per-process kernel stack is still needed before systemTask's
- * vmm_freeProcessPages can be safely removed.
- */
 
 /************************************************************************
 
@@ -59,11 +50,16 @@
 void endTask(pidType pid)
 {
 
-	/* Release user address space while we are still _current so that
-	 * PT_BASE_ADDR reflects our own page tables.  This decrements COW
-	 * counters for shared pages and frees private pages before the
-	 * scheduler switches us away. */
-	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
+	/*
+	 * Release the full per-process address space while we are still _current
+	 * so PT_BASE_ADDR reflects our own page tables.  Start at PD[1]
+	 * (0x400000) rather than VMM_USER_START (0x800000): PD[1] holds COW'd
+	 * pages from fork and must have its reference counts decremented here.
+	 * PD[0] (0–4 MB identity map) is shared by all processes and must not
+	 * be touched.  systemTask's vmm_freeProcessPages only needs to reclaim
+	 * the private PT/PD physical pages after this runs.
+	 */
+	vmm_cleanVirtualSpace(0x400000U);
 
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)

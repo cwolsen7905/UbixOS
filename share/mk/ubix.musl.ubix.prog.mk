@@ -47,6 +47,8 @@ $(BINARY): $(OBJS)
 		${_OBJS_FULL} \
 		${OBJ_DIR}/lib/musl.a \
 		${OBJ_DIR}/lib/ubix_api.a \
+		${OBJ_DIR}/lib/crt.a \
+		${LIBGCC} \
 		${MUSL_LIB}/crtn.o \
 		-o ${OBJ_DIR}/bin/${BINARY}
 

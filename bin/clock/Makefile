@@ -36,6 +36,8 @@ ${OBJ_DIR}/bin/${BINARY}: main.o
 		${MUSL_LIB}/crti.o \
 		${OBJDIR}/main.o \
 		${OBJ_DIR}/lib/musl.a \
+		${OBJ_DIR}/lib/crt.a \
+		${LIBGCC} \
 		${MUSL_LIB}/crtn.o \
 		-o ${OBJ_DIR}/bin/${BINARY}
 

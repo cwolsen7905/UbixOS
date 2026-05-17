@@ -28,6 +28,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <unistd.h>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <ubix/process.hh>
@@ -122,21 +123,30 @@ main(int argc, char **argv)
 		return 1;
 	}
 
+	/* VESA mode-set is async — system replies before the LFB is ready.
+	 * Retry until sys_mapfb sees valid globals (typically 1-3 yields). */
 	WindowManager wm;
-	if (wm.init() != 0) {
-		std::printf("views: fb_open failed\n");
-		return 1;
+	{
+		int tries = 500;
+		while (wm.init() != 0) {
+			if (--tries == 0) {
+				std::printf("views: fb_open failed\n");
+				return 1;
+			}
+			ubix::yield();
+		}
 	}
 	wm.startup();
 
-	/* Launch taskbar */
+	/* Fork vlogin after the compositor is fully ready — launching it via
+	 * init.d races with VESA VM86 and corrupts vlogin's startup context. */
 	{
 		int pid = ::fork();
 		if (pid == 0) {
-			char *argv_tb[] = { (char *)"taskbar", nullptr };
-			char *envp_tb[] = { nullptr };
-			::execve("sys:/bin/taskbar", argv_tb, envp_tb);
-			std::printf("views: failed to exec taskbar\n");
+			char *argv_vl[] = { (char *)"vlogin", nullptr };
+			char *envp_vl[] = { nullptr };
+			::execve("sys:/bin/vlogin", argv_vl, envp_vl);
+			std::printf("views: failed to exec vlogin\n");
 			std::exit(1);
 		}
 	}

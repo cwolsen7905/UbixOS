@@ -637,6 +637,14 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	base = round_page((vm_offset_t)td->vm_daddr);
 	old = base + ctob(td->vm_dsize);
 
+	if (old < VMM_USER_START)
+	{
+		kprintf("obreak: vm_daddr=0x%X vm_dsize=%u — not initialized\n",
+		        (uint32_t)td->vm_daddr, (uint32_t)td->vm_dsize);
+		td->td_retval[0] = -1;
+		return (EINVAL);
+	}
+
 	/* brk(0): return current break (Linux ABI compatible) */
 	if (uap->nsize == 0)
 	{
@@ -668,8 +676,39 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	}
 	else if (new < old)
 	{
-		/* Shrinking not yet supported — return old break */
-		td->td_retval[0] = old;
+		uint32_t *pageDir   = (uint32_t *)PD_BASE_ADDR;
+		uint32_t *pageTable = 0x0;
+
+		for (i = new; i < old; i += PAGE_SIZE)
+		{
+			uint32_t pdIdx = PD_INDEX(i);
+			uint32_t ptIdx = PT_INDEX(i);
+
+			if ((pageDir[pdIdx] & PAGE_PRESENT) != PAGE_PRESENT)
+				continue;
+
+			pageTable = (uint32_t *)(PT_BASE_ADDR + (pdIdx * PAGE_SIZE));
+
+			if ((pageTable[ptIdx] & PAGE_PRESENT) != PAGE_PRESENT)
+				continue;
+
+			uint32_t phys = pageTable[ptIdx] & 0xFFFFF000;
+
+			if ((pageTable[ptIdx] & PAGE_COW) == PAGE_COW)
+				adjustCowCounter(phys, -1);
+			else if ((phys >> 12) < (uint32_t)numPages)
+				freePage(phys);
+
+			pageTable[ptIdx] = 0x0;
+		}
+
+		td->vm_dsize -= btoc(old - new);
+
+		asm volatile("movl %%cr3, %%eax\n\t"
+		             "movl %%eax, %%cr3\n\t"
+		             : : : "eax", "memory");
+
+		td->td_retval[0] = new;
 	}
 	else
 	{

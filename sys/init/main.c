@@ -38,7 +38,7 @@
 #include <ubixos/exec.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/systemtask.h>
-#include <vfs/mount.h>
+#include <fs/vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 

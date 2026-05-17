@@ -20,6 +20,8 @@ set -e
 
 IMG="${1:-ubixos.img}"
 IMG_SIZE_MB=512
+FAT_SIZE_MB=448     # FAT32 partition (type 0x0C)
+SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
 KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"
@@ -36,28 +38,40 @@ done
 echo "==> Creating disk image: $IMG (${IMG_SIZE_MB} MB)"
 qemu-img create -f raw "$IMG" "${IMG_SIZE_MB}M"
 
-# ── Partition table: one FAT32 partition at LBA 2048 ───────────────────────
-python3 - "$IMG" "$IMG_SIZE_MB" <<'PYEOF'
+# ── Partition table: FAT32 + raw swap ──────────────────────────────────────
+python3 - "$IMG" "$FAT_SIZE_MB" "$SWAP_SIZE_MB" <<'PYEOF'
 import sys, struct
-img_path = sys.argv[1]
-size_mb  = int(sys.argv[2])
+img_path    = sys.argv[1]
+fat_size_mb = int(sys.argv[2])
 SECTOR = 512; HEADS = 16; SECTS = 63
 def lba_to_chs(lba):
     c = lba // (HEADS * SECTS); h = (lba // SECTS) % HEADS; s = (lba % SECTS) + 1
     return (h, s | ((min(c,1023) & 0x300) >> 2), min(c,1023) & 0xFF)
-part_start = 2048
-part_end   = (size_mb * 1024 * 1024 // SECTOR) - 1
-entry = struct.pack('<BBBBBBBBII',
-    0x80, *lba_to_chs(part_start), 0x0C, *lba_to_chs(part_end),
-    part_start, part_end - part_start + 1)
+fat_start   = 2048
+fat_sectors = fat_size_mb * 1024 * 1024 // SECTOR
+fat_end     = fat_start + fat_sectors - 1
+swap_start  = fat_end + 1
+swap_end    = swap_start + int(sys.argv[3]) * 1024 * 1024 // SECTOR - 1
+fat_entry  = struct.pack('<BBBBBBBBII',
+    0x80, *lba_to_chs(fat_start),  0x0C, *lba_to_chs(fat_end),
+    fat_start,  fat_sectors)
+swap_entry = struct.pack('<BBBBBBBBII',
+    0x00, *lba_to_chs(swap_start), 0x82, *lba_to_chs(swap_end),
+    swap_start, swap_end - swap_start + 1)
 with open(img_path, 'r+b') as f:
-    f.seek(446); f.write(entry); f.write(b'\x00'*48); f.write(b'\x55\xAA')
-print(f"  Partition: LBA {part_start}-{part_end} (FAT32 type 0x0C)")
+    f.seek(446)
+    f.write(fat_entry)
+    f.write(swap_entry)
+    f.write(b'\x00' * 32)   # entries 2 and 3 unused
+    f.write(b'\x55\xAA')
+print(f"  FAT32: LBA {fat_start}-{fat_end} ({fat_size_mb} MB)")
+print(f"  Swap:  LBA {swap_start}-{swap_end} ({sys.argv[3]} MB, type 0x82)")
 PYEOF
 
-# ── Format FAT32 partition ──────────────────────────────────────────────────
-echo "==> Formatting FAT32 partition"
-mformat -i "$IMG"@@1M -F -v UBIXOS ::
+# ── Format FAT32 partition (size-limited to FAT_SIZE_MB) ───────────────────
+FAT_SECTORS=$(( FAT_SIZE_MB * 1024 * 1024 / 512 ))
+echo "==> Formatting FAT32 partition (${FAT_SIZE_MB} MB, ${FAT_SECTORS} sectors)"
+mformat -i "$IMG"@@1M -F -v UBIXOS -T "$FAT_SECTORS" ::
 
 # ── Build GRUB core image embedding FAT + multiboot support ────────────────
 echo "==> Building GRUB core image"
@@ -158,13 +172,11 @@ for f in tools/src/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/src/; done
 
 echo "==> Installing system files (etc/)"
 mmd -i "$IMG"@@1M ::/etc
-[ -f tools/userdb ] && mcopy -i "$IMG"@@1M tools/userdb ::/etc/userdb
-[ -f tools/fstab  ] && mcopy -i "$IMG"@@1M tools/fstab  ::/etc/fstab
-[ -f tools/motd   ] && mcopy -i "$IMG"@@1M tools/motd   ::/etc/motd
-
-echo "==> Installing init.d service definitions (etc/init.d/)"
+for f in etc/*; do
+  [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/
+done
 mmd -i "$IMG"@@1M ::/etc/init.d
-for f in tools/initd/*; do
+for f in etc/init.d/*; do
   [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/init.d/
 done
 

@@ -32,7 +32,7 @@
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <vmm/vmm.h>
 #include <string.h>
 #include <assert.h>

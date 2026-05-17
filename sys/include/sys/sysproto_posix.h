@@ -33,7 +33,7 @@
 #include <sys/thread.h>
 
 /* TEMP */
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 
 typedef int register_t;
 
@@ -982,6 +982,7 @@ int sys_fseek(struct thread *td, struct sys_fseek_args*);
 int sys_lseek(struct thread *td, struct sys_lseek_args*);
 
 int sys_sched_yield(struct thread *td, void*);
+int sys_nanosleep(struct thread *td, void*);
 
 int sys_getcwd(struct thread *td, struct sys_getcwd_args*);
 
@@ -1028,8 +1029,35 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args*);
 
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args*);
 
+struct sys_recvfrom_args {
+    char s_l_[PADL_(int)];
+    int s;
+    char s_r_[PADR_(int)];
+
+    char buf_l_[PADL_(caddr_t)];
+    caddr_t buf;
+    char buf_r_[PADR_(caddr_t)];
+
+    char len_l_[PADL_(size_t)];
+    size_t len;
+    char len_r_[PADR_(size_t)];
+
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+
+    char from_l_[PADL_(caddr_t)];
+    caddr_t from;
+    char from_r_[PADR_(caddr_t)];
+
+    char fromlenaddr_l_[PADL_(int *)];
+    int *fromlenaddr;
+    char fromlenaddr_r_[PADR_(int *)];
+};
+
 int sys_socket(struct thread *td, struct sys_socket_args*);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args*);
+int sys_recvfrom(struct thread *td, struct sys_recvfrom_args*);
 int sys_select(struct thread *td, struct sys_select_args*);
 
 int sys_rename(struct thread *td, struct sys_rename_args*);

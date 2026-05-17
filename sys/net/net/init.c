@@ -43,7 +43,7 @@
 
 #include <ubixos/exec.h>
 #include <lib/kmalloc.h>
-#include <lib/kprintf.h>
+#include <sys/klog.h>
 #include <pci/e1000.h>
 
 static void e1000_thread_trampoline(void *arg) {
@@ -59,7 +59,8 @@ static void e1000_thread_trampoline(void *arg) {
  */
 static void net_status_cb(struct netif *netif) {
 	if (!ip4_addr_isany(netif_ip4_addr(netif))) {
-		kprintf("net: DHCP bound — IP=%d.%d.%d.%d mask=%d.%d.%d.%d gw=%d.%d.%d.%d\n",
+		klog(KLOG_NOTICE,
+		    "net: DHCP bound IP=%d.%d.%d.%d mask=%d.%d.%d.%d gw=%d.%d.%d.%d",
 		    ip4_addr1(netif_ip4_addr(netif)),
 		    ip4_addr2(netif_ip4_addr(netif)),
 		    ip4_addr3(netif_ip4_addr(netif)),
@@ -91,12 +92,12 @@ static void net_tcpip_init_done(void *arg) {
 	netif_set_default(&e1000_netif);
 
 	dhcp_start(&e1000_netif);
-	kprintf("net: DHCP requested\n");
+	klog(KLOG_INFO, "net: DHCP requested");
 }
 
 int net_init(void) {
 	if (!e1000_ready) {
-		kprintf("net: no NIC available, skipping network init\n");
+		klog(KLOG_WARNING, "net: no NIC available, skipping network init");
 		return 0;
 	}
 
@@ -104,6 +105,6 @@ int net_init(void) {
 
 	sys_thread_new("e1000Thread", e1000_thread_trampoline, NULL, 0x1000, 0);
 
-	kprintf("net: lwIP started\n");
+	klog(KLOG_INFO, "net: lwIP started");
 	return 0;
 }

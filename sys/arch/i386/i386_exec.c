@@ -39,7 +39,7 @@
 #include <vmm/vmm.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 #include <assert.h>
 #include <string.h>
 #include <sys/descrip.h>
@@ -267,6 +267,9 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	uint32_t *tmp = 0x0;
 
+	uint32_t seg_data_addr   = 0x0;
+	uint32_t seg_data_npages = 0x0;
+
 	Elf_Ehdr *binaryHeader = 0x0;
 
 	Elf_Phdr *programHeader = 0x0;
@@ -418,13 +421,21 @@ void execFile(char *file, char **argv, char **envp, int console)
 						       __FILE__, __LINE__);
 				}
 			}
+			else
+			{
+				/* Writable segment — track as data for vm_daddr/vm_dsize */
+				seg_data_addr   = programHeader[i].p_vaddr & 0xFFFFF000;
+				seg_data_npages = (programHeader[i].p_memsz +
+				                   (programHeader[i].p_vaddr & 0xFFF) +
+				                   PAGE_SIZE - 1) >> PAGE_SHIFT;
+			}
 		}
 	}
 
 	/* Set Virtual Memory Start */
 	newProcess->oInfo.vmStart = 0x80000000;
-	newProcess->td.vm_daddr =
-	    (u_long)(programHeader[i].p_vaddr & 0xFFFFF000);
+	newProcess->td.vm_daddr  = (u_long)seg_data_addr;
+	newProcess->td.vm_dsize  = seg_data_npages;
 
 	/* Set Up Stack Space */
 	// MrOlsen (2016-01-14) FIX: is the stack start supposed to be

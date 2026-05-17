@@ -27,7 +27,7 @@
 
  *****************************************************************************************/
 
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <sys/bus.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>

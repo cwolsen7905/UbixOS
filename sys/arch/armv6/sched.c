@@ -30,7 +30,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/endtask.h>
-#include <vfs/mount.h>
+#include <fs/vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <vmm/vmm.h>
