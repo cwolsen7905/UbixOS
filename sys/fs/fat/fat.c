@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2026 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -23,8 +23,6 @@
  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- $Id: ubixfs.c 79 2016-01-11 16:21:27Z reddawg $
-
  *****************************************************************************************/
 
 #include <fs/vfs/vfs.h>
@@ -43,6 +41,33 @@
 fileDescriptor_t *_fd;
 struct vfs_mountPoint *_mp;
 
+/*
+ * FAT library mutex — serializes all fl_* calls.
+ *
+ * fat_io_lib has no internal locking; concurrent callers corrupt its sector
+ * cache.  On a uniprocessor kernel the simplest correct primitive is an
+ * atomic test-and-set flag with sched_yield() in the spin loop: a contending
+ * task yields the CPU so the holder can finish and release, avoiding the
+ * deadlock that a cpu_relax() spinlock would cause when the PIT fires and
+ * switches tasks mid-hold.
+ *
+ * fat_acquire / fat_release must not be called from interrupt context.
+ */
+static volatile int fat_busy = 0;
+
+static void
+fat_acquire(void)
+{
+	while (__sync_lock_test_and_set(&fat_busy, 1))
+		sched_yield();
+}
+
+static void
+fat_release(void)
+{
+	__sync_lock_release(&fat_busy);
+}
+
 int media_read(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
   _mp->device->dev_blk_ops->read(_mp->device, sector, sector_count, buffer);
   return 1;
@@ -57,37 +82,21 @@ int fat_initialize(struct vfs_mountPoint *mp) {
   FL_FILE *file;
   _mp = mp;
 
-  // Attach media access functions to library
   if (fl_attach_media(media_read, media_write) != FAT_INIT_OK) {
     kprintf("ERROR: Media attach failed\n");
     return (0);
   }
 
-  // List root directory
-  //fl_listdirectory("/bin/");
-
-  // Delete File
-  //if (fl_remove("/file.bin") < 0)
-  //  kprintf("ERROR: Delete file failed\n");
-
-  // Create File
+  /* Create a test file to verify write path on init */
   file = fl_fopen("/file.bin", "w");
-  unsigned char data[] = {
-      'a',
-      '\n',
-      'b',
-      '\n',
-      'c',
-      '\n' };
+  unsigned char data[] = { 'a', '\n', 'b', '\n', 'c', '\n' };
   if (file) {
-    // Write some data
     if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
       kprintf("ERROR: Write file failed\n");
   }
   else
     kprintf("ERROR: Create file failed\n");
 
-  // Close file
   fl_fclose(file);
 
   return (1);
@@ -95,36 +104,31 @@ int fat_initialize(struct vfs_mountPoint *mp) {
 
 int read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
+  long ret;
 
   if (size == 0) {
     kprintf("ZERO: %s", _file->filename);
-
-        return (0);
+    return (0);
   }
 
-  //kprintf("[Offset(%s): %ld:%ld]", _file->filename, offset, size);
+  fat_acquire();
   if (fl_fseek(_file, offset & 0xFFFFFFFF, 0) != 0)
     kprintf("SEEK FAILED!");
+  ret = fl_fread(data, size, 1, _file);
+  fat_release();
 
-  size = fl_fread(data, size, 1, _file);
-    /*
-    if (size <= 0)
-        kprintf("[%s:%i] read_fat(0) FAILED!");
-     */
-
-  /* Return */
-  return (size);
+  return (ret);
 }
 
 int write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
-  // XXX this is not supposed to happen fl_fseek(_file, offset, 0);
-
+  fat_acquire();
   if (fl_fwrite(data, 1, size, _file) != size)
     kprintf("ERROR: Write file failed\n");
+  fl_fflush(_file);
+  fat_release();
 
-  /* Return */
   return (size);
 }
 
@@ -138,6 +142,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->dev_blk_ops->read);
   assert(file);
 
+  fat_acquire();
   if ((fd->mode & 0x1) == 0x1) {
     _file = fl_fopen(file, "r");
   }
@@ -151,6 +156,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   }
   else
     kprintf("Invalid Mode?");
+  fat_release();
 
   if (!_file) {
     return (0x0);
@@ -172,28 +178,43 @@ int unlink_fat() {
 }
 
 int mkdir_fat(char *path, void *fd) {
-  return fl_createdirectory(path);
+  int ret;
+  fat_acquire();
+  ret = fl_createdirectory(path);
+  fat_release();
+  return ret;
 }
 
 int rmdir_fat(char *path, void *fd) {
-  return fl_remove(path);
+  int ret;
+  fat_acquire();
+  ret = fl_remove(path);
+  fat_release();
+  return ret;
 }
 
 int fat_opendir(const char *path, kDIR_t *dir) {
     FL_DIR *fldir = (FL_DIR *) kmalloc(sizeof(FL_DIR));
     if (fldir == 0x0)
         return (0x0);
+    fat_acquire();
     if (fl_opendir(path, fldir) == 0x0) {
+        fat_release();
         kfree(fldir);
         return (0x0);
     }
+    fat_release();
     dir->dirHandle = fldir;
     return (0x1);
 }
 
 int fat_readdir(kDIR_t *dir, struct kdirent *ent) {
     fl_dirent fent;
-    if (fl_readdir((FL_DIR *)dir->dirHandle, &fent) != 0)
+    int ret;
+    fat_acquire();
+    ret = fl_readdir((FL_DIR *)dir->dirHandle, &fent);
+    fat_release();
+    if (ret != 0)
         return (-1);
     ent->d_ino = fent.cluster;
     ent->d_type = fent.is_dir ? KDT_DIR : KDT_REG;
@@ -204,7 +225,9 @@ int fat_readdir(kDIR_t *dir, struct kdirent *ent) {
 
 int fat_closedir(kDIR_t *dir) {
     if (dir->dirHandle != 0x0) {
+        fat_acquire();
         fl_closedir((FL_DIR *)dir->dirHandle);
+        fat_release();
         kfree(dir->dirHandle);
         dir->dirHandle = 0x0;
     }
@@ -212,33 +235,29 @@ int fat_closedir(kDIR_t *dir) {
 }
 
 int fat_init() {
-  // Initialise File IO Library
   fl_init();
 
-  /* Set up our file system structure */
   struct fileSystem ubixFileSystem = {
-      NULL, /* prev        */
-      NULL, /* next        */
-      (void*) fat_initialize, /* vfsInitFS   */
-      (void*) read_fat, /* vfsRead     */
-      (void*) write_fat, /* vfsWrite    */
-      (void*) open_fat, /* vfsOpenFile */
-      (void*) unlink_fat, /* vfsUnlink   */
-      (void*) mkdir_fat, /* vfsMakeDir  */
-      (void*) rmdir_fat, /* vfsRemDir   */
-      NULL, /* vfsSync     */
-      0xFA, /* vfsType     */
-      (void*) fat_opendir,  /* vfsOpenDir  */
-      (void*) fat_readdir,  /* vfsReadDir  */
-      (void*) fat_closedir  /* vfsCloseDir */
-  }; /* ubixFileSystem */
+      NULL,
+      NULL,
+      (void*) fat_initialize,
+      (void*) read_fat,
+      (void*) write_fat,
+      (void*) open_fat,
+      (void*) unlink_fat,
+      (void*) mkdir_fat,
+      (void*) rmdir_fat,
+      NULL,
+      0xFA,
+      (void*) fat_opendir,
+      (void*) fat_readdir,
+      (void*) fat_closedir
+  };
 
-  /* Add UbixFS */
   if (vfsRegisterFS(ubixFileSystem) != 0x0) {
     kpanic("Unable To Enable UbixFS");
     return (0x1);
   }
 
-  /* Return */
   return (0x0);
 }
