@@ -1055,7 +1055,34 @@ struct sys_recvfrom_args {
     char fromlenaddr_r_[PADR_(int *)];
 };
 
+struct sys_connect_args {
+    char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
+    char name_l_[PADL_(caddr_t)]; caddr_t name; char name_r_[PADR_(caddr_t)];
+    char namelen_l_[PADL_(int)]; int namelen; char namelen_r_[PADR_(int)];
+};
+
+struct sys_bind_args {
+    char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
+    char name_l_[PADL_(caddr_t)]; caddr_t name; char name_r_[PADR_(caddr_t)];
+    char namelen_l_[PADL_(int)]; int namelen; char namelen_r_[PADR_(int)];
+};
+
+struct sys_listen_args {
+    char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
+    char backlog_l_[PADL_(int)]; int backlog; char backlog_r_[PADR_(int)];
+};
+
+struct sys_accept_args {
+    char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
+    char name_l_[PADL_(caddr_t)]; caddr_t name; char name_r_[PADR_(caddr_t)];
+    char anamelen_l_[PADL_(int *)]; int *anamelen; char anamelen_r_[PADR_(int *)];
+};
+
 int sys_socket(struct thread *td, struct sys_socket_args*);
+int sys_connect(struct thread *td, struct sys_connect_args*);
+int sys_bind(struct thread *td, struct sys_bind_args*);
+int sys_listen(struct thread *td, struct sys_listen_args*);
+int sys_accept(struct thread *td, struct sys_accept_args*);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args*);
 int sys_recvfrom(struct thread *td, struct sys_recvfrom_args*);
 int sys_select(struct thread *td, struct sys_select_args*);

@@ -183,10 +183,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_recvfrom,
         SYSCALL_VALID },  // 29 - recvfrom
     {
-        0,
+        ARG_COUNT(sys_accept_args),
         "accept",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 30 - accept
+        sys_accept,
+        SYSCALL_VALID },  // 30 - accept
     {
         0,
         "getpeername",
@@ -523,10 +523,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_socket,
         SYSCALL_VALID },  //  97 - socket
     {
-        0,
+        ARG_COUNT(sys_connect_args),
         "connect",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /*  98 - connect */
+        sys_connect,
+        SYSCALL_VALID }, /*  98 - connect */
     {
         0,
         "old accept",
@@ -553,20 +553,20 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_INVALID }, /* 103 */
     {
-        0,
+        ARG_COUNT(sys_bind_args),
         "bind",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 104 - bind
+        sys_bind,
+        SYSCALL_VALID },  // 104 - bind
     {
         ARG_COUNT(sys_setsockopt_args),
         "setsockopt",
         sys_setsockopt,
         SYSCALL_VALID },  // 105 setsockopt
     {
-        0,
+        ARG_COUNT(sys_listen_args),
         "listen",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 106 - listen */
+        sys_listen,
+        SYSCALL_VALID }, /* 106 - listen */
     {
         0,
         "obsolete vtimes",

@@ -22,6 +22,11 @@ int lwip_socket(int domain, int type, int protocol);
 int lwip_setsockopt(int s, int level, int optname, const void *optval, int optlen);
 int lwip_sendto(int s, const void *dataptr, int size, unsigned int flags, const void *to, int tolen);
 int lwip_recvfrom(int s, void *mem, size_t len, int flags, void *from, unsigned int *fromlen);
+int lwip_connect(int s, const void *name, int namelen);
+int lwip_bind(int s, const void *name, int namelen);
+int lwip_listen(int s, int backlog);
+int lwip_accept(int s, void *addr, unsigned int *addrlen);
+int lwip_close(int s);
 
 /* Get Definitions For These */
 #define ERR_NOT_READY 0
@@ -664,4 +669,89 @@ int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
   kfree(kbuf);
   td->td_retval[0] = ret;
   return (ret < 0 ? -1 : 0);
+}
+
+int sys_connect(struct thread *td, struct sys_connect_args *args) {
+  struct file *fd = 0x0;
+  uint32_t kaddr_storage[7];
+  uint8_t *kaddr = (uint8_t *)kaddr_storage;
+  int ret;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  if (args->name && args->namelen > 0 && args->namelen <= 28) {
+    posix_to_lwip_addr(kaddr, (const uint8_t *)args->name, args->namelen);
+    ret = lwip_connect(fd->socket, (void *)kaddr, args->namelen);
+  } else {
+    ret = lwip_connect(fd->socket, (void *)args->name, args->namelen);
+  }
+  td->td_retval[0] = ret;
+  return (ret < 0 ? -1 : 0);
+}
+
+int sys_bind(struct thread *td, struct sys_bind_args *args) {
+  struct file *fd = 0x0;
+  uint32_t kaddr_storage[7];
+  uint8_t *kaddr = (uint8_t *)kaddr_storage;
+  int ret;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  if (args->name && args->namelen > 0 && args->namelen <= 28) {
+    posix_to_lwip_addr(kaddr, (const uint8_t *)args->name, args->namelen);
+    ret = lwip_bind(fd->socket, (void *)kaddr, args->namelen);
+  } else {
+    ret = lwip_bind(fd->socket, (void *)args->name, args->namelen);
+  }
+  td->td_retval[0] = ret;
+  return (ret < 0 ? -1 : 0);
+}
+
+int sys_listen(struct thread *td, struct sys_listen_args *args) {
+  struct file *fd = 0x0;
+  int ret;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  ret = lwip_listen(fd->socket, args->backlog);
+  td->td_retval[0] = ret;
+  return (ret < 0 ? -1 : 0);
+}
+
+int sys_accept(struct thread *td, struct sys_accept_args *args) {
+  struct file *fd = 0x0;
+  struct file *nfp = 0x0;
+  int newfd = 0x0;
+  uint8_t kfrom[28];
+  unsigned int kfromlen = sizeof(kfrom);
+  int newsock;
+  int error;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  newsock = lwip_accept(fd->socket,
+      args->name ? (void *)kfrom : NULL,
+      args->name ? &kfromlen     : NULL);
+
+  if (newsock < 0) { td->td_retval[0] = -1; return (-1); }
+
+  error = falloc(td, &nfp, &newfd);
+  if (error) { lwip_close(newsock); td->td_retval[0] = -1; return (error); }
+
+  nfp->socket  = newsock;
+  nfp->fd_type = 2;
+
+  if (args->name && args->anamelen) {
+    unsigned int outlen = (unsigned int)*args->anamelen;
+    if (outlen > kfromlen) outlen = kfromlen;
+    lwip_to_posix_addr((uint8_t *)args->name, kfrom, outlen);
+    *args->anamelen = (int)kfromlen;
+  }
+
+  td->td_retval[0] = newfd;
+  return (0);
 }
