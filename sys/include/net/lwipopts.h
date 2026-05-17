@@ -53,7 +53,7 @@
 #define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT 0
 #define MEM_ALIGNMENT                          1
 #define MEM_LIBC_MALLOC                        0
-#define MEM_SIZE                               1600
+#define MEM_SIZE                               32768
 #define MEM_USE_POOLS                          0
 #define MEM_USE_POOLS_TRY_BIGGER_POOL          0
 
@@ -82,7 +82,7 @@
 #define MEMP_NUM_TCPIP_MSG_API   8
 #define MEMP_NUM_TCPIP_MSG_INPKT   8
 #define MEMP_NUM_UDP_PCB   4
-#define PBUF_POOL_SIZE   16
+#define PBUF_POOL_SIZE   64
 
 #define MEMP_NUM_SYS_TIMEOUT   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + (PPP_SUPPORT*6*MEMP_NUM_PPP_PCB) + (LWIP_IPV6 ? (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD) : 0))
 
@@ -154,7 +154,7 @@
 #define LWIP_MIB2_CALLBACKS   0
 #define LWIP_IGMP   0
 #define LWIP_MULTICAST_TX_OPTIONS   (LWIP_IGMP && LWIP_UDP)
-#define LWIP_DNS   0
+#define LWIP_DNS   1
 #define DNS_TABLE_SIZE   4
 #define DNS_MAX_NAME_LENGTH   256
 #define DNS_MAX_SERVERS   2
@@ -169,7 +169,7 @@
 #define LWIP_NETBUF_RECVINFO   0
 #define LWIP_TCP   1
 #define TCP_TTL   (IP_DEFAULT_TTL)
-#define TCP_WND   (4 * TCP_MSS)
+#define TCP_WND   (8 * TCP_MSS)
 
 #define TCP_MAXRTX   12
 
@@ -177,11 +177,11 @@
 
 #define TCP_QUEUE_OOSEQ   (LWIP_TCP)
 
-#define TCP_MSS   536
+#define TCP_MSS   1460
 
 #define TCP_CALCULATE_EFF_SEND_MSS   1
 
-#define TCP_SND_BUF   (2 * TCP_MSS)
+#define TCP_SND_BUF   (8 * TCP_MSS)
 
 #define TCP_SND_QUEUELEN   ((4 * (TCP_SND_BUF) + (TCP_MSS - 1))/(TCP_MSS))
 

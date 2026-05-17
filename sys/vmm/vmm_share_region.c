@@ -92,9 +92,38 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	dst->oInfo.vmStart += n * PAGE_SIZE;
 
 	/*
+	 * Sync kernel PD entries into dst's page directory before switching
+	 * CR3.  Kernel PD entries (VMM_KERN_START..VMM_KERN_END) may differ
+	 * between tasks when new kernel page tables are allocated after a
+	 * task's PD was created.  Without the sync, kernel code and data are
+	 * unreachable after the CR3 switch, causing a page fault with IF=0
+	 * ("INT OFF! KERN").  Map dst's physical PD at VMM_CHILD_PD_WINDOW,
+	 * copy the stale-prone entries, then unmap before switching CR3.
+	 */
+	{
+		uint32_t *src_pd  = (uint32_t *)PD_BASE_ADDR;
+		uint32_t *dst_pd;
+		uint32_t  kstart  = PD_INDEX(VMM_KERN_START);
+		uint32_t  kend    = PD_INDEX(VMM_KERN_END);
+		uint32_t  x;
+
+		if (vmm_remapPage(dst->md.md_tss.cr3, VMM_CHILD_PD_WINDOW,
+		    KERNEL_PAGE_DEFAULT, _current->id, 0) == 0) {
+			kprintf("vmm_share_region: failed to map dst PD\n");
+			kfree(phys);
+			return 0;
+		}
+		dst_pd = (uint32_t *)VMM_CHILD_PD_WINDOW;
+		for (x = kstart; x <= kend; x++)
+			dst_pd[x] = src_pd[x];
+		vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
+	}
+
+	/*
 	 * Switch to dst's page directory and map the physical pages.
 	 * Interrupts disabled to prevent the scheduler from running with
-	 * the wrong CR3 loaded.
+	 * the wrong CR3 loaded.  Kernel entries are now current so all
+	 * kernel code and globals are reachable under dst's CR3.
 	 */
 	asm volatile("cli");
 	asm volatile("movl %%cr3, %0" : "=r"(old_cr3));

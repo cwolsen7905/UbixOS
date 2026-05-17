@@ -402,6 +402,10 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
         // Overlay directory entry over buffer
         directoryEntry = (struct fat_dir_entry*) (fs->currentsector.sector + recordoffset);
 
+        // 0x00 marks end of directory; all remaining entries are free
+        if (directoryEntry->Name[0] == FILE_HEADER_BLANK)
+          return 0;
+
 #if FATFS_INC_LFN_SUPPORT
 
         if (fatfs_entry_lfn_text(directoryEntry)) { // Long File Name Text Found
@@ -740,6 +744,10 @@ int fatfs_list_directory_next(struct fatfs *fs, struct fs_dir_list_status *dirls
         // Overlay directory entry over buffer
         directoryEntry = (struct fat_dir_entry*) (fs->currentsector.sector + recordoffset);
 
+        // 0x00 in Name[0] means end-of-directory; all remaining entries are free
+        if (directoryEntry->Name[0] == FILE_HEADER_BLANK)
+          goto dir_done;
+
 #if FATFS_INC_LFN_SUPPORT
         // Long File Name Text Found
         if (fatfs_entry_lfn_text(directoryEntry))
@@ -842,6 +850,7 @@ int fatfs_list_directory_next(struct fatfs *fs, struct fs_dir_list_status *dirls
       break;
   }
 
+dir_done:
   return result;
 }
 #endif

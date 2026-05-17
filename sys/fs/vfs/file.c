@@ -504,28 +504,37 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
 
     memset(tmpFd, 0x0, sizeof(fileDescriptor_t));
 
+    if (file == 0x0 || file[0] == '\0') {
+        kfree(tmpFd);
+        return (NULL);
+    }
+
     path = file;
 
     /* Determine if path is relative or absolute */
     if (path[0] == '.' && path[1] == '\0')
-        strcpy(fileName, _current->oInfo.cwd);
+        strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
     else
-        strcpy(fileName, file);
+        strncpy(fileName, file, sizeof(fileName) - 1);
+    fileName[sizeof(fileName) - 1] = '\0';
 
     path = 0x0;
 
     if (strstr(fileName, ":")) {
         mountPoint = (char*) strtok((char*) &fileName, ":");
         path = strtok(NULL, "\n");
+        if (path == 0x0 || path[0] == '\0')
+            path = "/";
     }
     else {
         path = fileName;
     }
 
     if (path[0] == '/')
-        strcpy(tmpFd->fileName, path);
+        strncpy(tmpFd->fileName, path, sizeof(tmpFd->fileName) - 1);
     else
-        sprintf(tmpFd->fileName, "/%s", path);
+        snprintf(tmpFd->fileName, sizeof(tmpFd->fileName), "/%s", path);
+    tmpFd->fileName[sizeof(tmpFd->fileName) - 1] = '\0';
 
     /* Find our mount point or set default to sys */
     if (mountPoint == 0x0) {
@@ -756,22 +765,29 @@ kDIR_t *vfs_opendir(const char *path) {
     struct vfs_mountPoint *mp = 0x0;
     kDIR_t *dir = 0x0;
 
+    if (path == 0x0 || path[0] == '\0')
+        return (0x0);
+
     if (path[0] == '.' && path[1] == '\0')
-        strcpy(fileName, _current->oInfo.cwd);
+        strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
     else
-        strcpy(fileName, path);
+        strncpy(fileName, path, sizeof(fileName) - 1);
+    fileName[sizeof(fileName) - 1] = '\0';
 
     if (strstr(fileName, ":")) {
         mountPoint = strtok(fileName, ":");
         dirPath = strtok(NULL, "\n");
+        if (dirPath == 0x0 || dirPath[0] == '\0')
+            dirPath = "/";
     } else {
         dirPath = fileName;
     }
 
     if (dirPath[0] != '/')  {
         char tmp[1024];
-        sprintf(tmp, "/%s", dirPath);
-        strcpy(fileName, tmp);
+        snprintf(tmp, sizeof(tmp), "/%s", dirPath);
+        strncpy(fileName, tmp, sizeof(fileName) - 1);
+        fileName[sizeof(fileName) - 1] = '\0';
         dirPath = fileName;
     }
 

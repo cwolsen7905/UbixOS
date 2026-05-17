@@ -344,12 +344,19 @@ debugging the driver before DHCP works.
 
 ## Status
 
-Last updated: 2026-05-15
+Last updated: 2026-05-17
 
 | Phase | Description | Status |
 |-------|-------------|--------|
-| Phase 0 | Baseline: trace lnc to see what's broken | ⬜ Not started |
-| Phase 1 | Intel e1000 driver + lwIP bridge | ⬜ Not started |
-| Phase 2 | lwIP 2.2.0 update + DHCP/DNS | ⬜ Not started |
-| Phase 3 | Kernel socket syscall bridge | ⬜ Not started |
-| Phase 4 | Userland network utilities (ping, nc, wget) | ⬜ Not started |
+| Phase 0 | Baseline: trace lnc to see what's broken | ✅ Done — lnc beyond repair, pivoted to e1000 |
+| Phase 1 | Intel e1000 driver + lwIP bridge | ✅ Done — `sys/pci/e1000.c` + `e1000netif.c`, DHCP+ping confirmed working |
+| Phase 2 | lwIP 2.2.0 update + DHCP/DNS | 🔶 Partial — DHCP enabled and working; `LWIP_SOCKET=1`; lwIP still 2.0.3 (upgrade pending); `MEM_SIZE` still 1600 (too small — raise to 32768) |
+| Phase 3 | Kernel socket syscall bridge | 🔶 Partial — `socket` (97), `sendto` (133), `recvfrom` (29) wired as VALID in `sys_arch.c`; `connect` (98), `bind` (104), `listen` (106), `accept` (30) still NOTIMP |
+| Phase 4 | Userland network utilities (ping, nc, wget) | 🔶 Partial — `bin/ping/` exists; `bin/nc/` and `bin/wget/` not yet written |
+
+### Remaining work (in order)
+1. Bump `MEM_SIZE` to 32768 and `PBUF_POOL_SIZE` to 64 in `lwipopts.h` — prevents DHCP/ARP from starving
+2. Implement `connect`, `bind`, `listen`, `accept` in `sys_arch.c` and mark VALID in `syscalls_posix.c`
+3. Write `bin/nc/` — smoke-tests the TCP socket path end-to-end
+4. Write `bin/wget/` — HTTP GET over TCP
+5. lwIP 2.0.3 → 2.2.0 upgrade (lowest urgency — 2.0.3 is working)

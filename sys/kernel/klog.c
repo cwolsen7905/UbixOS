@@ -37,6 +37,7 @@
  */
 
 #include <sys/klog.h>
+#include <sys/sysproto.h>
 #include <ubixos/vitals.h>
 #include <lib/kprintf.h>
 #include <string.h>
@@ -106,4 +107,20 @@ uint32_t
 klog_next_seq(void)
 {
 	return (klog_seq);
+}
+
+int
+sys_klog_write(struct thread *td, struct sys_klog_write_args *args)
+{
+	char buf[KLOG_MSG_MAX];
+
+	if (args->msg == NULL) {
+		td->td_retval[0] = -1;
+		return (0);
+	}
+	strncpy(buf, args->msg, KLOG_MSG_MAX - 1);
+	buf[KLOG_MSG_MAX - 1] = '\0';
+	klog_push(args->level, buf);
+	td->td_retval[0] = 0;
+	return (0);
 }

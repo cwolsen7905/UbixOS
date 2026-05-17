@@ -27,6 +27,7 @@
  */
 
 #include <sys/descrip.h>
+#include <sys/errno.h>
 
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
@@ -138,8 +139,12 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 
 	kfree(fp);
 
-	*resultfp = 0x0;
-	*resultfd = 0x0;
+	if (resultfp)
+		*resultfp = 0x0;
+	if (resultfd)
+		*resultfd = 0x0;
+
+	return (EMFILE);
 
 allocated:
 

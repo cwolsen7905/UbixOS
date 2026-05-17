@@ -182,6 +182,7 @@ done
 
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
+mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
 [ -f sys/sde/assets/ubix.bmp ] && mcopy -i "$IMG"@@1M sys/sde/assets/ubix.bmp ::/var/background/ubix.bmp
 mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true

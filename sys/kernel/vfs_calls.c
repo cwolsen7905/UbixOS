@@ -461,7 +461,7 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 
 	if (fd == NULL || fd->fd_type != FD_TYPE_DIR)
 	{
-		td->td_retval[0] = -1;
+		td->td_retval[0] = EBADF;
 		return (EBADF);
 	}
 
@@ -475,6 +475,8 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 			break;
 
 		namelen = strlen(kent.d_name);
+		if (namelen == 0)
+			continue;
 		/*
 		 * linux_dirent64 layout (musl/Linux i386 ABI):
 		 *   d_ino    uint64_t  offset 0  (8 bytes)
@@ -545,7 +547,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 
 	if (error)
 	{
-		thr->td_retval[0] = -1;
+		thr->td_retval[0] = error;
 		return (error);
 	}
 
@@ -558,8 +560,8 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		if (kdir == NULL)
 		{
 			fdestroy(thr, nfp, fd);
-			thr->td_retval[0] = -1;
-			return (ENOTDIR);
+			thr->td_retval[0] = ENOENT;
+			return (ENOENT);
 		}
 		nfp->fd_type = FD_TYPE_DIR;
 		nfp->data = kdir;
@@ -582,7 +584,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		if (fdestroy(thr, nfp, fd) != 0x0)
 			kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
-		thr->td_retval[0] = -1;
+		thr->td_retval[0] = ENOENT;
 		return (ENOENT);
 	}
 

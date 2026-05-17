@@ -82,6 +82,18 @@ static int sys_klog_read(struct klog_entry *buf, int max, uint32_t start_seq)
 	return ret;
 }
 
+/* Native syscall 49 — sys_klog_write */
+static void sys_klog_write(uint8_t level, const char *msg)
+{
+	__asm__ volatile (
+		"movl $49, %%eax\n"
+		"int  $0x81\n"
+		:
+		: "b"((uint32_t)level), "c"(msg)
+		: "eax", "memory"
+	);
+}
+
 #define LOG_PATH    "sys:/var/log/messages"
 #define BATCH_SIZE  32
 
@@ -109,17 +121,20 @@ int main(int argc, char **argv)
 
 	(void)argc; (void)argv;
 
+	sys_klog_write(KLOG_NOTICE, "logd: starting");
+
 	log = fopen(LOG_PATH, "a");
 	if (log == NULL) {
 		/* Can't open log file — try to create the directory path */
 		log = fopen(LOG_PATH, "w");
 		if (log == NULL) {
-			/* Give up silently; kernel ring still collects */
+			sys_klog_write(KLOG_ERR, "logd: failed to open " LOG_PATH);
 			for (;;)
 				sched_yield();
 		}
 	}
 
+	sys_klog_write(KLOG_NOTICE, "logd: log file open");
 	fprintf(log, "--- logd started ---\n");
 	fflush(log);
 
