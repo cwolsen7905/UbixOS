@@ -37,6 +37,8 @@
 #include <usb/usb_driver.h>
 #include <usb/uhci.h>
 #include <isa/kbd.h>
+#include <ubixos/sched.h>
+#include <ubixos/tty.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
@@ -169,7 +171,7 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 {
 	struct hid_kbd_softc *sc = (struct hid_kbd_softc *)arg;
 	struct hid_kbd_report *cur, *last;
-	int shifted, i, j, found;
+	int shifted, ctrl, i, j, found;
 	uint32_t kc;
 
 	if (len < 3)
@@ -178,6 +180,7 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 	cur = (struct hid_kbd_report *)data;
 	last = &sc->kd_last;
 	shifted = (cur->modifier & HID_MOD_SHIFT) ? 1 : 0;
+	ctrl    = (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0;
 
 	/* Key-press: keycodes in cur but not in last */
 	for (i = 0; i < 6; i++)
@@ -195,9 +198,29 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 		}
 		if (!found)
 		{
-			kc = hid_to_key(cur->keycode[i], shifted);
-			if (kc != 0)
-				kbd_ring_push(kc, 1);
+			/* Ctrl+letter: produce control character (^A=1 … ^Z=26) */
+			if (ctrl && cur->keycode[i] >= 0x04 && cur->keycode[i] <= 0x1D)
+				kc = cur->keycode[i] - 0x04 + 1;
+			else
+				kc = hid_to_key(cur->keycode[i], shifted);
+
+			if (kc == 0)
+				continue;
+
+			/* Ctrl-C: kill foreground task — mirrors AT keyboard ISR */
+			if (kc == 0x03) {
+				if (tty_foreground != NULL) {
+					kTask_t *victim = schedFindTask(tty_foreground->owner);
+					if (victim != NULL) {
+						if (victim->parent != NULL)
+							tty_foreground->owner = victim->parent->id;
+						sched_killTree(victim->id);
+					}
+				}
+				continue; /* do not push to ring */
+			}
+
+			kbd_ring_push(kc, 1);
 		}
 	}
 
