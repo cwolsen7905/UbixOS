@@ -66,11 +66,15 @@ klog(uint8_t level, const char *fmt, ...)
 {
 	char     buf[KLOG_MSG_MAX];
 	va_list  ap;
+	int      n;
 
 	va_start(ap, fmt);
-	kvprintf(fmt, NULL, buf, 10, ap);
+	n = kvprintf(fmt, NULL, buf, 10, ap);
 	va_end(ap);
-	buf[KLOG_MSG_MAX - 1] = '\0';
+	if (n < KLOG_MSG_MAX)
+		buf[n] = '\0';
+	else
+		buf[KLOG_MSG_MAX - 1] = '\0';
 
 	klog_push(level, buf);
 }

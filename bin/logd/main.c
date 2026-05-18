@@ -68,31 +68,34 @@ struct klog_entry {
 	char      ke_msg[KLOG_MSG_MAX];
 } __attribute__((packed));
 
-/* Native syscall 47 — sys_klog_read */
-static int sys_klog_read(struct klog_entry *buf, int max, uint32_t start_seq)
-{
-	int ret;
-	__asm__ volatile (
-		"movl $47, %%eax\n"
-		"int  $0x81\n"
-		: "=a"(ret)
-		: "b"(buf), "c"(max), "d"(start_seq)
-		: "memory"
-	);
-	return ret;
-}
+/*
+ * Native syscall stubs — must be bare asm with no C prologue so that
+ * esp+4 still points at the first argument when int $0x81 fires.
+ * The kernel syscall dispatcher reads args from [esp+4..] on the user stack.
+ */
+asm(
+	".text                              \n"
+	".globl _klog_read_stub             \n"
+	".type  _klog_read_stub, @function  \n"
+	"_klog_read_stub:                   \n"
+	"  movl $47, %eax                   \n"
+	"  int  $0x81                       \n"
+	"  ret                              \n"
+);
+extern int _klog_read_stub(struct klog_entry *buf, int max, uint32_t start_seq);
+#define sys_klog_read _klog_read_stub
 
-/* Native syscall 49 — sys_klog_write */
-static void sys_klog_write(uint8_t level, const char *msg)
-{
-	__asm__ volatile (
-		"movl $49, %%eax\n"
-		"int  $0x81\n"
-		:
-		: "b"((uint32_t)level), "c"(msg)
-		: "eax", "memory"
-	);
-}
+asm(
+	".text                               \n"
+	".globl _klog_write_stub             \n"
+	".type  _klog_write_stub, @function  \n"
+	"_klog_write_stub:                   \n"
+	"  movl $49, %eax                    \n"
+	"  int  $0x81                        \n"
+	"  ret                               \n"
+);
+extern void _klog_write_stub(uint8_t level, const char *msg);
+#define sys_klog_write _klog_write_stub
 
 #define LOG_PATH    "sys:/var/log/messages"
 #define BATCH_SIZE  32
