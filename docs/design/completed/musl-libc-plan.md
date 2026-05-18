@@ -327,32 +327,6 @@ C++ without GPL entanglement.
 
 ---
 
-### Phase 7 — New architecture port (ARM / x86_64)
-**Done when:** UbixOS boots on a second architecture.
-
-With musl the new work is:
-1. Write `arch/<newarch>/syscall_arch.h` — the new syscall convention
-2. Write `arch/<newarch>/bits/syscall.h.in` — syscall number table
-3. Kernel: implement the new arch's exception/syscall entry path
-
-All of libc, libcxx, and userland apps recompile untouched.
-The payoff of the entire migration effort.
-
----
-
-### Post-Phase 7 — Kernel cleanup
-Once a second architecture exists, arch-specific syscall code in `sys/kernel/gen_calls.c`
-should be split out:
-
-- Move `sys_set_thread_area` (and any future TLS/GDT helpers) from `gen_calls.c`
-  into `sys/arch/i386/tls.c` with a header at `sys/include/machine/tls.h`.
-  The i386 implementation uses LDT[1] and the `0xF` selector — none of that
-  belongs in a generic file once a second arch has its own equivalent.
-- Repeat for any other i386-specific calls that accumulate in `gen_calls.c`
-  during Phases 1–6.
-
----
-
 ## What Stays UbixOS-Specific Forever
 
 These are never replaced by musl or libc++:
@@ -396,8 +370,6 @@ Last updated: 2026-05-14 (Phases 5 and 6 complete)
 | Phase 4 | Retire lib/libc/ | ✅ Done | `lib/libc/` deleted; `include/` stripped of all standard C headers; only UbixOS-specific headers remain; orphaned bins (kill, printf, test, edit, mount) deferred |
 | Phase 5 | C++ ABI (libc++abi) | ✅ Done | `lib/libcpp/` retired; `contrib/libcxxabi/cxxabi.cc` is a self-contained minimal Itanium C++ ABI (new/delete, guards, pure/deleted virtual, `__dso_handle`); builds `build/lib/libcxxabi.a`; views/taskbar/term all link against it; `__cxa_atexit`/`__cxa_finalize` removed (musl provides them) |
 | Phase 6 | LLVM libc++ (C++ standard library) | ✅ Done | `contrib/libcxx/` (LLVM 18.1.8) builds `build/lib/libcxx.a`; views-first subset: `<string>`, `<vector>`, `<map>`, `<memory>`, `<algorithm>`, `<any>`, `<optional>`, `<variant>` + charconv/ryu; hand-written `__config_site` + `__assertion_handler`; GCC-16 `__decay` built-in patch; `ubix.musl.cxx.prog.mk` for C++ programs using STL |
-| Phase 7 | New architecture port | ⬜ Not started | |
-
 ### Legend
 - ✅ Done
 - 🔄 In progress
