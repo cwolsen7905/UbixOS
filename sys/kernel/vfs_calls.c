@@ -44,8 +44,11 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <fs/vfs/file.h>
-#include "../fs/fat/fat_filelib.h"
-#undef fwrite  /* restore kernel VFS fwrite(ptr,size,nmemb,fileDescriptor_t*) */
+/* fat_filelib.h removed — use VFS unlink() for file removal */
+
+/* Forward-declare lwIP read/write so we can call them for socket fds. */
+int lwip_send(int s, const void *dataptr, size_t size, int flags);
+int lwip_recv(int s, void *mem, size_t len, int flags);
 
 #define FD_TYPE_DIR 4
 
@@ -172,6 +175,19 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	int rpCNT = 0;
 
 	getfd(td, &fd, args->fd);
+
+	/* Socket fd: route through lwIP */
+	if (fd != NULL && fd->fd_type == 2)
+	{
+		void *kbuf = kmalloc(args->nbyte);
+		if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+		int r = lwip_recv(fd->socket, kbuf, args->nbyte, 0);
+		if (r > 0)
+			memcpy((void *)args->buf, kbuf, (size_t)r);
+		kfree(kbuf);
+		td->td_retval[0] = r;
+		return (0);
+	}
 
 	/* Check fd_type first so dup2'd pipe fds work on stdin slot (0-3) */
 	if (fd != 0x0 && fd->fd_type == 3)
@@ -359,6 +375,18 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	size_t nbytes;
 
 	getfd(td, &fd, uap->fd);
+
+	/* Socket fd: route through lwIP */
+	if (fd != NULL && fd->fd_type == 2)
+	{
+		void *kbuf = kmalloc(uap->nbyte);
+		if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+		memcpy(kbuf, uap->buf, uap->nbyte);
+		int r = lwip_send(fd->socket, kbuf, uap->nbyte, 0);
+		kfree(kbuf);
+		td->td_retval[0] = (r >= 0) ? r : -1;
+		return (0);
+	}
 
 	/* Check fd_type first so dup2'd pipe fds work on stdout/stderr slots */
 	if (fd != 0x0 && fd->fd_type == 3)
@@ -596,7 +624,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
 {
 	int error = 0x0;
-	td->td_retval[0] = fl_remove(uap->path);
+	td->td_retval[0] = unlink(uap->path);
 	if (td->td_retval[0] != 0x0)
 		kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
 	return (error);

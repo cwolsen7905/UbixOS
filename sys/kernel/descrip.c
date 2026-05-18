@@ -34,6 +34,10 @@
 #include <lib/kprintf.h>
 #include <ubixos/endtask.h>
 #include <lib/kmalloc.h>
+#include <ubixos/sched.h>
+#include <ubixos/tty.h>
+#include <isa/rs232.h>
+#include <isa/kbd.h>
 #include <assert.h>
 #include <sys/select.h>
 #include <string.h>
@@ -357,66 +361,129 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 
 int sys_select(struct thread *td, struct sys_select_args *args)
 {
-	int error = 0x0;
-	/*
-	 int i = 0x0;
+	int i, nd, total;
+	fd_set lwip_rfds, lwip_wfds;
+	int kern_to_lwip_r[MAX_FILES]; /* kernel fd → lwIP socket for read set */
+	int kern_to_lwip_w[MAX_FILES]; /* kernel fd → lwIP socket for write set */
+	int max_lwip;
+	int has_stdin_rd;
+	struct timeval zero_tv;
 
-	 fd_set sock_rfds;
-	 fd_set sock_wfds;
-	 fd_set sock_efds;
+	nd = (args->nd < MAX_FILES) ? args->nd : MAX_FILES;
+	FD_ZERO(&lwip_rfds);
+	FD_ZERO(&lwip_wfds);
+	memset(kern_to_lwip_r, -1, sizeof(kern_to_lwip_r));
+	memset(kern_to_lwip_w, -1, sizeof(kern_to_lwip_w));
+	max_lwip = 0;
+	has_stdin_rd = 0;
 
-	 FD_ZERO(&sock_rfds);
-	 FD_ZERO(&sock_wfds);
-	 FD_ZERO(&sock_efds);
+	/* Scan read fd_set: separate stdin from socket fds */
+	if (args->in) {
+		for (i = 0; i < nd; i++) {
+			if (!FD_ISSET(i, args->in))
+				continue;
+			if (i == 0) {
+				has_stdin_rd = 1;
+			} else {
+				struct file *f = td->o_files[i];
+				if (f && f->fd_type == 2) {
+					kern_to_lwip_r[i] = f->socket;
+					FD_SET(f->socket, &lwip_rfds);
+					if (f->socket + 1 > max_lwip)
+						max_lwip = f->socket + 1;
+				}
+			}
+		}
+		FD_ZERO(args->in);
+	}
 
-	 if (args->in != 0x0) {
-	 for (i = 0; i < args->nd; i++) {
-	 FD_SET(((struct file * ) td->o_files[args->in[0]]).socket, &sock_rfds);
-	 }
-	 }
+	/* Scan write fd_set */
+	if (args->ou) {
+		for (i = 0; i < nd; i++) {
+			if (!FD_ISSET(i, args->ou))
+				continue;
+			struct file *f = (i < MAX_FILES) ? td->o_files[i] : NULL;
+			if (f && f->fd_type == 2) {
+				kern_to_lwip_w[i] = f->socket;
+				FD_SET(f->socket, &lwip_wfds);
+				if (f->socket + 1 > max_lwip)
+					max_lwip = f->socket + 1;
+			}
+		}
+		FD_ZERO(args->ou);
+	}
 
-	 if (args->ou != 0x0) {
-	 for (i = 0; i < args->nd; i++) {
-	 FD_SET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds);
-	 }
-	 }
+	zero_tv.tv_sec = 0;
+	zero_tv.tv_usec = 0;
 
-	 if (args->ex != 0x0) {
-	 for (i = 0; i < args->nd; i++) {
-	 FD_SET(((struct file * ) td->o_files[args->ex[0]]).socket, &sock_efds);
-	 }
-	 }
+	/* Poll loop: yield until stdin or a socket becomes ready */
+	for (;;) {
+		total = 0;
 
-	 if ((td->td_retval[0] = lwip_select(args->nd, &sock_rfds, &sock_wfds, &sock_efds, args->tv)) == -1)
-	 error = -1;
+		/* Check TTY stdin readiness */
+		if (has_stdin_rd && _current->term) {
+			int stdin_ready = 0;
+			if (_current->term->t_type == TTY_TYPE_SERIAL) {
+				/* Drain serial rx ring so stdinSize is current */
+				int raw;
+				while ((raw = serial_rx_getbyte()) >= 0)
+					tty_inject(_current->term, (char)raw);
+				stdin_ready = (_current->term->stdinSize > 0);
+			} else {
+				/* VGA console: drain ring through tty_inject (echoes chars
+				 * to screen) and report ready only when a full canonical
+				 * line has been flushed to tty_foreground->stdin[]. */
+				kbd_event_t _kev;
+				while (kbd_getEvent(&_kev) == 0) {
+					if (_kev.pressed) {
+						uint32_t _kc = _kev.keycode;
+						if (_kc != 0 && _kc < 0x100 && tty_foreground != NULL)
+							tty_inject(tty_foreground, (char)(uint8_t)_kc);
+					}
+				}
+				stdin_ready = (tty_foreground != NULL &&
+				    tty_foreground->stdinSize > 0);
+			}
+			if (stdin_ready) {
+				if (args->in)
+					FD_SET(0, args->in);
+				total++;
+			}
+		}
 
-	 if (args->in != 0x0) {
-	 for (i = 0; i < MAX_FILES; i++) {
-	 if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_rfds))
-	 FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->in);
-	 }
-	 }
+		/* Check sockets (non-blocking) */
+		if (max_lwip > 0) {
+			fd_set tmp_r = lwip_rfds;
+			fd_set tmp_w = lwip_wfds;
+			int r = lwip_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
+			if (r > 0) {
+				for (i = 0; i < nd; i++) {
+					if (args->in && kern_to_lwip_r[i] >= 0 &&
+					    FD_ISSET(kern_to_lwip_r[i], &tmp_r)) {
+						FD_SET(i, args->in);
+						total++;
+					}
+					if (args->ou && kern_to_lwip_w[i] >= 0 &&
+					    FD_ISSET(kern_to_lwip_w[i], &tmp_w)) {
+						FD_SET(i, args->ou);
+						total++;
+					}
+				}
+			}
+		}
 
-	 if (args->ou != 0x0) {
-	 for (i = 0; i < MAX_FILES; i++) {
-	 if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds))
-	 FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ou);
-	 }
-	 }
+		if (total > 0)
+			break;
 
-	 if (args->ex != 0x0) {
-	 for (i = 0; i < MAX_FILES; i++) {
-	 if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_efds))
-	 FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ex);
-	 }
-	 }
+		/* Zero-timeout poll: return immediately even if nothing ready */
+		if (args->tv && args->tv->tv_sec == 0 && args->tv->tv_usec == 0)
+			break;
 
-	 */
+		sched_yield();
+	}
 
-	if ((td->td_retval[0] = lwip_select(args->nd, args->in, args->ou, args->ex, args->tv)) == -1)
-		error = -1;
-
-	return (error);
+	td->td_retval[0] = total;
+	return (0);
 }
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to)

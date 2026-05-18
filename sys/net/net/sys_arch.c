@@ -181,6 +181,8 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   if (mbox == NULL)
     return (ERR_MEM);
 
+  memset(mbox, 0, sizeof(struct sys_mbox));
+
   mbox->head = 0;
   mbox->tail = 0;
   mbox->wait_send = 0;
@@ -214,9 +216,9 @@ void sys_mbox_free(struct sys_mbox **mb) {
      sys_sem_free_internal(mbox->empty);
      sys_sem_free_internal(mbox->lock);
      */
-    sem_destroy(mbox->full);
-    sem_destroy(mbox->empty);
-    sem_destroy(mbox->lock);
+    sem_destroy(&mbox->full);
+    sem_destroy(&mbox->empty);
+    sem_destroy(&mbox->lock);
 
     mbox->full = mbox->empty = mbox->lock = NULL;
     kfree(mbox);

@@ -71,6 +71,11 @@ void kbd_ring_push(uint32_t keycode, uint8_t pressed)
 	kbd_ring_head = next;
 }
 
+int kbd_input_available(void)
+{
+	return (kbd_ring_tail != kbd_ring_head);
+}
+
 int kbd_getEvent(kbd_event_t *ev)
 {
 	if (kbd_ring_tail == kbd_ring_head)

@@ -63,12 +63,6 @@ err_t sem_init(sys_sem_t **sem, uint8_t count)
 {
 	sys_sem_t *newSem = 0x0;
 
-	if (*sem != 0)
-	{
-		// kpanic("UH OH!");
-		kprintf("UH OH!");
-	}
-
 	newSem = kmalloc(sizeof(struct sys_sem));
 	newSem->signaled = count;
 
@@ -105,7 +99,7 @@ err_t sem_destroy(sys_sem_t **sem)
 	ubthread_cond_destroy(&(d_sem->cond));
 	ubthread_mutex_destroy(&(d_sem->mutex));
 
-	kfree(sem);
+	kfree(d_sem);
 	*sem = 0x0;
 
 	return (ENOERR);
