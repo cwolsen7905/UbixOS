@@ -8,12 +8,15 @@ for a new arch. The remaining work is entirely in the kernel and the musl arch s
 
 ## Prerequisites
 
-All met as of 2026-05-18:
+Mostly met. The following are done:
 
 - musl libc in tree (`contrib/musl/`) — arch shim is a single directory per target
 - libc++ and libcxxabi in tree — pure C++, no arch assembly
 - Build system auto-detects Darwin/FreeBSD and sets `CROSS_PREFIX` — extend for new target
-- Linker script (`sys/compile/ldscript.i386`) parameterized by `cross-arch-plan.md` work
+- Linker script (`sys/compile/ldscript.i386`) parameterized (`cross-arch-plan.md` Phases 1–6 done)
+
+Phases 7–10 of `cross-arch-plan.md` are not yet done and must be completed first —
+they are captured as Phase 0 below.
 
 ## Target Candidates
 
@@ -27,6 +30,22 @@ All met as of 2026-05-18:
 **Recommended first target: x86_64** — same ISA as i386, same QEMU device model,
 same toolchain already installed, multiboot2 works, PCI/IDE/e1000 drivers reuse as-is.
 Mostly a calling-convention and register-width exercise.
+
+---
+
+## Phase 0 — Finish kernel arch-isolation (`cross-arch-plan.md` Phases 7–10)
+
+These are prerequisite cleanups that make the kernel portable before any new arch code is written.
+Tracked in detail in `cross-arch-plan.md`; summarised here for sequencing.
+
+| Step | Work | Risk |
+|------|------|------|
+| 7 | Audit `uint32_t` → `uintptr_t` for address-typed values in VMM/sched headers | Medium |
+| 8 | Move `sys/init/start.S` and `main.c` to `sys/arch/i386/` | Medium |
+| 9 | Extract VA layout constants into `sys/include/machine/vmm_layout.h` | Low |
+| 10 | Add empty `sys/arch/x86_64/` skeleton stubs | Zero |
+
+**Done when:** `cross-arch-plan.md` status table shows all ten phases Done.
 
 ---
 
@@ -108,6 +127,7 @@ Last updated: 2026-05-18
 
 | Phase | Description | Status |
 |-------|-------------|--------|
+| Phase 0 | Finish kernel arch-isolation (cross-arch-plan.md phases 7–10) | 🔶 Blocked on cross-arch-plan.md |
 | Phase 1 | musl arch shim for new target | ⬜ Not started |
 | Phase 2 | Kernel entry point and exception vectors | ⬜ Not started |
 | Phase 3 | VMM and paging for new arch | ⬜ Not started |
