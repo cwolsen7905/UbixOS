@@ -42,9 +42,8 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
-#include <string.h>
+#include <time.h>
 #include <unistd.h>
 #include <sched.h>
 
@@ -64,6 +63,7 @@
 struct klog_entry {
 	uint32_t  ke_seq;
 	uint32_t  ke_ticks;
+	uint32_t  ke_time;   /* Unix timestamp (seconds) */
 	uint8_t   ke_level;
 	char      ke_msg[KLOG_MSG_MAX];
 } __attribute__((packed));
@@ -146,8 +146,16 @@ int main(int argc, char **argv)
 
 		for (i = 0; i < n; i++) {
 			struct klog_entry *e = &batch[i];
-			fprintf(log, "[%8u] <%s> %s\n",
-			    e->ke_ticks, level_name(e->ke_level), e->ke_msg);
+			char tsbuf[20] = "                   ";
+			if (e->ke_time != 0) {
+				time_t t = (time_t)e->ke_time;
+				struct tm *tm = localtime(&t);
+				if (tm != NULL)
+					strftime(tsbuf, sizeof(tsbuf),
+					    "%Y-%m-%d %H:%M:%S", tm);
+			}
+			fprintf(log, "%s <%s> %s\n",
+			    tsbuf, level_name(e->ke_level), e->ke_msg);
 			if (e->ke_seq >= next_seq)
 				next_seq = e->ke_seq + 1;
 		}

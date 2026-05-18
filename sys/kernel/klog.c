@@ -55,6 +55,7 @@ klog_push(uint8_t level, const char *msg)
 
 	e->ke_seq   = seq;
 	e->ke_ticks = systemVitals ? systemVitals->sysTicks : 0;
+	e->ke_time  = systemVitals ? (systemVitals->timeStart + systemVitals->sysUptime) : 0;
 	e->ke_level = level;
 
 	strncpy(e->ke_msg, msg, KLOG_MSG_MAX - 1);

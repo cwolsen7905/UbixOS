@@ -50,6 +50,7 @@
 struct klog_entry {
 	uint32_t  ke_seq;           /* monotonic sequence number */
 	uint32_t  ke_ticks;         /* systemVitals->sysTicks at log time */
+	uint32_t  ke_time;          /* Unix timestamp (seconds) at log time */
 	uint8_t   ke_level;         /* KLOG_* severity */
 	char      ke_msg[KLOG_MSG_MAX];
 } __attribute__((packed));
