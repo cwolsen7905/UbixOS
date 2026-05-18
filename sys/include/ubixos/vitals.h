@@ -53,6 +53,9 @@ typedef struct vitalsStruct {
 extern vitalsNode *systemVitals;
 extern spinLock_t vitals_lock;
 
+/* Wrap-safe tick comparison: true if tick a is at or after b. */
+#define TICKS_AFTER(a, b)  ((int32_t)((a) - (b)) >= 0)
+
 int vitals_init();
 
 #endif

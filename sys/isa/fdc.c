@@ -244,8 +244,7 @@ void motorOff(void)
 {
 	if (motor == TRUE)
 	{
-		// outportByte(fdcDor,0x0);
-		// outportByte(fdcDor,0x0C);
+		outportByte(fdcDor, 0x0C);
 		motor = FALSE;
 	}
 }
@@ -358,7 +357,9 @@ void fdcRead(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
 }
 void fdcWrite(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
 {
+	spinLock(&fdcSpinLock);
 	writeBlock(startSector, baseAddr, sectorCount);
+	spinUnlock(&fdcSpinLock);
 	return;
 }
 

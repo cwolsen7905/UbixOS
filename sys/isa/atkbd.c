@@ -96,6 +96,10 @@ volatile uint32_t reboot_at_tick = 0;
  * after it has called vesa_text_mode() and tty_change() in task context. */
 volatile int vesa_text_slot = -1;
 
+/* Deferred text-mode VTY switch.  Set by keyboard ISR when Alt+Fn is pressed;
+ * consumed in task context by the sys_read and sys_select loops. */
+volatile int tty_switch_slot = -1;
+
 static unsigned int keyboardMap[255][8] = {
     /*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
     {0, 0, 0, 0, 0, 0, 0, 0},
@@ -326,9 +330,11 @@ void keyboardHandler(struct trapframe *frame)
 
 	/* Virtual console switch — Alt+F1..F4 only (0x3000-0x3003).
 	 * Bare F-keys produce 0xF100-0xF500 and fall through to kbd_ring.
-	 * Limit to VGA slots 0-3; slot 4 is serial and must not be switched. */
+	 * Limit to VGA slots 0-3; slot 4 is serial and must not be switched.
+	 * Defer the actual tty_change (9 KB memcpy) to task context; the ISR
+	 * only records the target slot.  Consumed in sys_read / sys_select. */
 	if ((kc >> 8) == 0x30 && (kc & 0xFF) <= 3) {
-		tty_change(kc & 0xFF);
+		tty_switch_slot = (int)(kc & 0xFF);
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}
@@ -371,11 +377,13 @@ void keyboardHandler(struct trapframe *frame)
 
 void setLED()
 {
+	int retries;
+
 	outportByte(0x60, 0xED);
-	while (inportByte(0x64) & 2)
+	for (retries = 100000; retries-- && (inportByte(0x64) & 2);)
 		;
 	outportByte(0x60, ledStatus);
-	while (inportByte(0x64) & 2)
+	for (retries = 100000; retries-- && (inportByte(0x64) & 2);)
 		;
 }
 
@@ -407,13 +415,19 @@ getchar()
 		if (ev.pressed)
 			kbd_apply_event(ev.keycode);
 
-	if (tty_foreground->stdinSize == 0)
+	/* Read one char from the stdin ring under IRQ disable so the rs232 ISR
+	 * cannot corrupt the ring while we shift the contents. */
+	uint32_t eflags;
+	asm volatile("pushfl; popl %0; cli" : "=r"(eflags) : : "memory");
+	if (tty_foreground->stdinSize == 0) {
+		asm volatile("pushl %0; popfl" : : "r"(eflags) : "memory");
 		return (0);
-
+	}
 	retKey = (unsigned char)tty_foreground->stdin[0];
 	tty_foreground->stdinSize--;
 	for (i = 0; i < (uInt32)tty_foreground->stdinSize; i++)
 		tty_foreground->stdin[i] = tty_foreground->stdin[i + 1];
+	asm volatile("pushl %0; popfl" : : "r"(eflags) : "memory");
 
 	return (retKey);
 }

@@ -267,7 +267,7 @@ int sys_nanosleep(struct thread *td, void *args) {
                               (1000000000L / PIT_TIMER));
 
   uint32_t deadline = systemVitals->sysTicks + ticks;
-  while (systemVitals->sysTicks < deadline)
+  while (!TICKS_AFTER(systemVitals->sysTicks, deadline))
     sched_yield();
 
   if (rmtp) {

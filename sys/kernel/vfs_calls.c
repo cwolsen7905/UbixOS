@@ -286,6 +286,12 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				vesa_text_mode();
 				kbd_gui_mode = 0;
 			}
+			if (tty_switch_slot >= 0)
+			{
+				int slot = tty_switch_slot;
+				tty_switch_slot = -1;
+				tty_change((uInt16)slot);
+			}
 			if (kbd_gui_mode || _current->term != tty_foreground)
 			{
 				sched_yield();

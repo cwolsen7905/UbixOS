@@ -41,6 +41,18 @@ static tty_term *terms = 0x0;
 tty_term *tty_foreground = 0x0;
 static struct spinLock tty_spinLock = SPIN_LOCK_INITIALIZER;
 
+/* Protects stdin[]/stdinSize from concurrent access by the rs232 ISR and task
+ * context readers.  Use irq_save/restore so the same lock is safe from both
+ * ISR and task context without deadlocking on a single-CPU system. */
+static inline uint32_t irq_save_disable(void) {
+	uint32_t flags;
+	asm volatile("pushfl; popl %0; cli" : "=r"(flags) : : "memory");
+	return (flags);
+}
+static inline void irq_restore(uint32_t flags) {
+	asm volatile("pushl %0; popfl" : : "r"(flags) : "memory");
+}
+
 int tty_init() {
   int i = 0x0;
 
@@ -207,8 +219,10 @@ tty_inject(tty_term *tty, char ch)
 	switch (ch) {
 	case '\b':
 		if (tty->t_raw) {
-			if (tty->stdinSize < 511)
+			uint32_t f = irq_save_disable();
+			if (tty->stdinSize < 512)
 				tty->stdin[tty->stdinSize++] = '\b';
+			irq_restore(f);
 		} else if (tty->t_linelen > 0) {
 			tty->t_linelen--;
 			if (tty->t_echo) {
@@ -231,13 +245,17 @@ tty_inject(tty_term *tty, char ch)
 		/* FALLTHROUGH */
 	case '\n':
 		if (tty->t_raw) {
-			if (tty->stdinSize < 511)
+			uint32_t f = irq_save_disable();
+			if (tty->stdinSize < 512)
 				tty->stdin[tty->stdinSize++] = '\n';
+			irq_restore(f);
 		} else {
-			for (i = 0; i < tty->t_linelen && tty->stdinSize < 511; i++)
+			uint32_t f = irq_save_disable();
+			for (i = 0; i < tty->t_linelen && tty->stdinSize < 512; i++)
 				tty->stdin[tty->stdinSize++] = tty->t_linebuf[i];
-			if (tty->stdinSize < 511)
+			if (tty->stdinSize < 512)
 				tty->stdin[tty->stdinSize++] = '\n';
+			irq_restore(f);
 			tty->t_linelen = 0;
 			if (tty->t_echo) {
 				if (tty->t_type == TTY_TYPE_SERIAL) {
@@ -253,8 +271,10 @@ tty_inject(tty_term *tty, char ch)
 		if ((unsigned char)ch < 0x20)
 			break;
 		if (tty->t_raw) {
-			if (tty->stdinSize < 511)
+			uint32_t f = irq_save_disable();
+			if (tty->stdinSize < 512)
 				tty->stdin[tty->stdinSize++] = ch;
+			irq_restore(f);
 		} else {
 			if (tty->t_linelen < 511) {
 				tty->t_linebuf[tty->t_linelen++] = ch;

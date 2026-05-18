@@ -40,6 +40,7 @@
 #include <isa/pit.h>
 #include <isa/rs232.h>
 #include <isa/kbd.h>
+#include <isa/atkbd.h>
 #include <assert.h>
 #include <sys/select.h>
 #include <sys/poll.h>
@@ -487,7 +488,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 
 		/* Timeout: return 0 if deadline reached */
 		if (args->tv != NULL &&
-		    (uint32_t)systemVitals->sysTicks >= deadline)
+		    TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
 
 		sched_yield();
@@ -618,7 +619,7 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 
 		/* positive timeout: check deadline */
 		if (args->timeout > 0 &&
-		    (uint32_t)systemVitals->sysTicks >= deadline)
+		    TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
 
 		sched_yield();
