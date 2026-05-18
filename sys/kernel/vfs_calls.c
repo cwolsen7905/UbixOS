@@ -45,6 +45,7 @@
 #include <lib/kmalloc.h>
 #include <fs/vfs/file.h>
 #include "../fs/fat/fat_filelib.h"
+#undef fwrite  /* restore kernel VFS fwrite(ptr,size,nmemb,fileDescriptor_t*) */
 
 #define FD_TYPE_DIR 4
 
