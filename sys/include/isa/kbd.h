@@ -70,4 +70,9 @@ int  kbd_input_available(void);
  * Prevents VGA console processes from draining the keyboard ring. */
 extern volatile int kbd_gui_mode;
 
+/* Deferred VTY switch target (0-3).  Set to -1 when idle.
+ * Written by keyboard ISRs/callbacks; consumed in task context by
+ * sys_read / sys_select after calling tty_change(). */
+extern volatile int tty_switch_slot;
+
 #endif /* _ISA_KBD_H */
