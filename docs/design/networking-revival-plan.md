@@ -344,19 +344,18 @@ debugging the driver before DHCP works.
 
 ## Status
 
-Last updated: 2026-05-17
+Last updated: 2026-05-18
 
 | Phase | Description | Status |
 |-------|-------------|--------|
 | Phase 0 | Baseline: trace lnc to see what's broken | ✅ Done — lnc beyond repair, pivoted to e1000 |
 | Phase 1 | Intel e1000 driver + lwIP bridge | ✅ Done — `sys/pci/e1000.c` + `e1000netif.c`, DHCP+ping confirmed working |
-| Phase 2 | lwIP 2.2.0 update + DHCP/DNS | 🔶 Partial — DHCP enabled and working; `LWIP_SOCKET=1`; lwIP still 2.0.3 (upgrade pending); `MEM_SIZE` still 1600 (too small — raise to 32768) |
-| Phase 3 | Kernel socket syscall bridge | 🔶 Partial — `socket` (97), `sendto` (133), `recvfrom` (29) wired as VALID in `sys_arch.c`; `connect` (98), `bind` (104), `listen` (106), `accept` (30) still NOTIMP |
-| Phase 4 | Userland network utilities (ping, nc, wget) | 🔶 Partial — `bin/ping/` exists; `bin/nc/` and `bin/wget/` not yet written |
+| Phase 2 | lwIP 2.2.0 update + DHCP/DNS | ✅ Done — DHCP working; `MEM_SIZE=32768`, `PBUF_POOL_SIZE=64`, `TCP_MSS=1460`, `TCP_WND/SND_BUF=8×MSS`; lwIP remains 2.0.3 (upgrade deferred — 2.0.3 is stable) |
+| Phase 3 | Kernel socket syscall bridge | ✅ Done — all socket syscalls wired: `socket` (97), `connect` (98), `bind` (104), `listen` (106), `accept` (30), `sendto` (133), `recvfrom` (29), `sendmsg` (28), `recvmsg` (27), `poll` (168); `sys_read`/`sys_write` route fd_type=2 through `lwip_recv`/`lwip_send`; `sys_select` and `sys_poll` drain kbd ring, respect timeouts via `sysTicks`; `SOCK_CLOEXEC`/`SOCK_NONBLOCK` stripped before lwIP sees them |
+| Phase 4 | Userland network utilities (ping, nc, wget) | ✅ Done — `bin/ping/` (ICMP), `bin/nc/` (TCP relay), `bin/wget/` (HTTP/1.0 GET with hostname resolution via `gethostbyname`); `etc/resolv.conf` added with `nameserver 8.8.8.8` |
 
-### Remaining work (in order)
-1. Bump `MEM_SIZE` to 32768 and `PBUF_POOL_SIZE` to 64 in `lwipopts.h` — prevents DHCP/ARP from starving
-2. Implement `connect`, `bind`, `listen`, `accept` in `sys_arch.c` and mark VALID in `syscalls_posix.c`
-3. Write `bin/nc/` — smoke-tests the TCP socket path end-to-end
-4. Write `bin/wget/` — HTTP GET over TCP
-5. lwIP 2.0.3 → 2.2.0 upgrade (lowest urgency — 2.0.3 is working)
+### Remaining work
+
+- **lwIP 2.0.3 → 2.2.0 upgrade** — lowest urgency; 2.0.3 is stable and all features work. Upgrade is a mechanical include-path change (`sys/net/` uses `"net/foo.h"` instead of `"lwip/foo.h"`). Worth doing to pick up upstream bug fixes.
+- **`bin/wget/` HTTPS** — would require TLS (mbedTLS or similar); significant work, not planned.
+- **`bin/wget/` redirects** — currently returns an error on 3xx; could follow `Location:` header for HTTP 301/302.
