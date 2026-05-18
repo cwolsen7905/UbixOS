@@ -127,11 +127,14 @@ Source: `sys/vmm/`
 Each process has a private 4 GB virtual address space with the following regions:
 
 ```
-0x00000000 - 0x000FFFFF  (1 MB)   Shared — kernel code, BIOS data, video buffers
-                                   Identity-mapped 1:1 across all processes
-0x00100000 - 0xBFFFFFFF  (~3 GB)  Per-process — code, data, heap, stack
+0x00000000 - 0x003FFFFF  (4 MB)   Identity-mapped — PD[0] all 1024 PT entries
+                                   0x000000–0x0FFFFF  ISA/VGA/BIOS (first 1 MB reserved)
+                                   0x101000–0x201FFF  Page bitmap staging (256 MB config)
+                                   0x300000–0x392000  Kernel image (text/data/BSS)
+                                   0x392000+          Page bitmap (placed at page_align(_end))
+0x00400000 - 0xBFFFFFFF  (~3 GB)  Per-process — code, data, heap, stack
 0xC0000000 - 0xFFFFFFFF  (1 GB)   Kernel-only — not accessible from ring 3
-                                   (unless executing a syscall)
+                                   0xC0800000         Page bitmap remapped here (VMM_MMAP_ADDR_PMODE)
 ```
 
 Physical addresses at or above `numPages × PAGE_SIZE` (≥ 256 MB with default `-m 256` QEMU) are MMIO — framebuffer, PCI BARs, etc. These frames have no entry in `vmmMemoryMap` and must never be passed to `freePage`.
@@ -143,7 +146,7 @@ Physical addresses at or above `numPages × PAGE_SIZE` (≥ 256 MB with default 
 | `vmmInit()` | Top-level init; calls `vmmMemMapInit` then `vmmPagingInit` |
 | `vmmMemMapInit()` | Builds the physical page map — a linked list of available frames tracking COW status and ownership |
 | `vmmPagingInit()` | Enables paging; sets up the kernel's default page directory |
-| `vmmCreateVirtualSpace(pid)` | Allocates a new page directory for a process; pre-maps the shared lower 1 MB and kernel top 1 GB |
+| `vmmCreateVirtualSpace(pid)` | Allocates a new page directory for a process; pre-maps the shared lower 4 MB identity map and kernel top 1 GB |
 | `vmmCopyVirtualSpace(pid)` | Forks the address space using copy-on-write: all pages in 2 MB–3 GB are marked COW; physical copies happen lazily on page-fault |
 
 ### Copy-on-Write

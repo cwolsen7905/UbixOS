@@ -82,15 +82,13 @@ int vmm_pagingInit()
 	kernelPageDirectory[0] = (uint32_t)((uint32_t)(pageTable) | PAGE_DEFAULT);
 
 	/*
-	 * Map the first 1MB of Memory to the kernel MM space because our kernel starts
-	 * at 0x30000
-	 * Do not map page at address 0x0 this is reserved for null...
+	 * Identity-map the full first 4 MB (PD[0], all 1024 entries).
+	 * The kernel loads at 0x300000 which is within this range.
+	 * The page bitmap lives at 0x101000–0x201FFF; free pages begin at 0x202000.
 	 */
-
-	/* MrOlsen (2016-01-15) NOTE: I'm Mapping It For Now Until I Can Figure Out Why FS:0x0 */
-	for (i = 0x0; i < (PD_ENTRIES / 0x4); i++)
+	for (i = 0x0; i < PD_ENTRIES; i++)
 	{
-		pageTable[i] = (uint32_t)((i * 0x1000) | PAGE_DEFAULT); // FIXME: This is temp becauseo f bios callKERNEL_PAGE_DEFAULT);  //MrOlsen 2018-01-14 PAGE_DEFAULT
+		pageTable[i] = (uint32_t)((i * 0x1000) | PAGE_DEFAULT);
 	} /* end for */
 
 	/* Allocate a page for the second 4MB of memory */
@@ -176,11 +174,17 @@ int vmm_pagingInit()
 	             :
 	             : "d"((uint32_t *)(kernelPageDirectory)));
 
-	/* Remap The Memory List */
-	for (i = VMM_MMAP_ADDR_RMODE; i <= (0x101000 + (numPages * sizeof(mMap))); i += 0x1000)
+	/* Remap the page bitmap from its physical location (right after the kernel)
+	 * into kernel virtual space at VMM_MMAP_ADDR_PMODE. */
 	{
-		if ((vmm_remapPage(i, (VMM_MMAP_ADDR_PMODE + (i - 0x101000)), PAGE_DEFAULT, sysID, 0)) == 0x0)
-			K_PANIC("vmmRemapPage failed\n");
+		uint32_t bmap_end = vmm_bitmap_phys + (uint32_t)(numPages * sizeof(mMap));
+		uint32_t bmap_page;
+		for (bmap_page = vmm_bitmap_phys; bmap_page < bmap_end; bmap_page += PAGE_SIZE)
+		{
+			uint32_t virt = VMM_MMAP_ADDR_PMODE + (bmap_page - vmm_bitmap_phys);
+			if (vmm_remapPage(bmap_page, virt, PAGE_DEFAULT, sysID, 0) == 0x0)
+				K_PANIC("vmmRemapPage failed\n");
+		}
 	}
 
 	/* Set New Address For Memory Map Since Its Relocation */

@@ -13,8 +13,8 @@ cover the upper 1 GB (kernel-only).
 
 | PDE | Virtual start | Virtual end | Notes |
 |-----|--------------|-------------|-------|
-| 0 | `0x00000000` | `0x003FFFFF` | Kernel code + kernel stack (low memory) |
-| 1 | `0x00400000` | `0x007FFFFF` | Kernel code continued; `0x007FF000–0x007FFFFF` = `USER_LDT` |
+| 0 | `0x00000000` | `0x003FFFFF` | Identity-mapped 4 MB (all 1024 PT entries). First 1 MB: ISA/VGA/BIOS. `0x101000–0x201FFF`: page bitmap staging. `0x300000–0x392000`: kernel image. |
+| 1 | `0x00400000` | `0x007FFFFF` | Allocated but initially empty; `0x007FF000–0x007FFFFF` = `USER_LDT` |
 | 2–767 | `0x00800000` | `0xBFFFFFFF` | Per-process user space (private page tables per process) |
 | 768 | `0xC0000000` | `0xC03FFFFF` | Mapped page tables — unique to each address space |
 | 769 | `0xC0400000` | `0xC07FFFFF` | Mapped page directory |

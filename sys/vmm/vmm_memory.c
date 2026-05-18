@@ -41,11 +41,18 @@
 
 static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
-//static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
 
-mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
+/* Physical address where the page bitmap is staged (set in vmm_memMapInit,
+ * read by paging.c to remap the bitmap into kernel virtual space). */
+uint32_t vmm_bitmap_phys = 0;
+
+mMap *vmmMemoryMap = NULL;
+
+/* Linker symbols bracketing the kernel image. */
+extern char _start[];
+extern char _end[];
 
 /************************************************************************
 
@@ -58,33 +65,48 @@ mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
  ************************************************************************/
 int vmm_memMapInit() {
   int i = 0x0;
-  int memStart = 0x0;
+  uint32_t kernel_start_page, bitmap_end_page;
+  uint32_t bitmap_size;
 
   /* Count System Memory */
   numPages = countMemory();
 
-  /* Set Memory Map To Point To First Physical Page That We Will Use */
-  vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
+  /*
+   * Place the page bitmap immediately after the kernel image (page-aligned).
+   * This makes the layout RAM-size-independent: with N pages the bitmap is
+   * N*sizeof(mMap) bytes, and free pages begin right after it regardless of
+   * how much RAM is installed.
+   */
+  vmm_bitmap_phys = ((uint32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
+  vmmMemoryMap    = (mMap *)vmm_bitmap_phys;
 
-  /* Initialize Map Make All Pages Not Available */
+  bitmap_size     = (uint32_t)numPages * sizeof(mMap);
+  bitmap_end_page = (vmm_bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE;
+
+  /* Initialize every entry — bitmap lives in raw RAM, not in BSS, so we
+   * must not assume it is zeroed. */
   for (i = 0x0; i < numPages; i++) {
     vmmMemoryMap[i].cowCounter = 0x0;
-    vmmMemoryMap[i].status = memNotavail;
-    vmmMemoryMap[i].pid = vmmID;
-    vmmMemoryMap[i].pageAddr = i * PAGE_SIZE;
+    vmmMemoryMap[i].status     = memNotavail;
+    vmmMemoryMap[i].pid        = vmmID;
+    vmmMemoryMap[i].pageAddr   = i * PAGE_SIZE;
   }
 
-  /* Calculate Start Of Free Memory */
-  memStart = (0x101000 / 0x1000);
+  /*
+   * Free page ranges:
+   *  [0x100000, kernel_start): RAM below the kernel (former bitmap staging area)
+   *  [bitmap_end, numPages*PAGE_SIZE): all RAM above the bitmap
+   *
+   * The first 1 MB (0x0–0xFFFFF) stays reserved: ISA devices, VGA, BIOS.
+   */
+  kernel_start_page = ((uint32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
 
-  memStart += (((sizeof(mMap) * numPages) + (sizeof(mMap) - 1)) / 0x1000);
+  for (i = 0x100; i < (int)kernel_start_page; i++) {
+    vmmMemoryMap[i].status = memAvail;
+    freePages++;
+  }
 
-  /* Initialize All Free Pages To Available */
-  vmmMemoryMap[(0x100000 / 0x1000)].status = memAvail;
-
-  freePages++;
-
-  for (i = memStart; i < numPages; i++) {
+  for (i = (int)bitmap_end_page; i < numPages; i++) {
     vmmMemoryMap[i].status = memAvail;
     freePages++;
   }
@@ -95,6 +117,8 @@ int vmm_memMapInit() {
   /* Print Out Amount Of Memory */
   kprintf("Real Memory:      %iKB\n", numPages * 4);
   kprintf("Available Memory: %iKB\n", freePages * 4);
+  kprintf("vmm: bitmap phys=0x%X pages=%i end_page=%i\n",
+      vmm_bitmap_phys, numPages, bitmap_end_page);
 
   /* Return */
   return (0);

@@ -118,6 +118,7 @@ extern "C" {
 
     extern int numPages;
     extern mMap *vmmMemoryMap;
+    extern uint32_t vmm_bitmap_phys;
 
     int vmm_init();
     int vmm_memMapInit();
