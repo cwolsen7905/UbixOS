@@ -44,6 +44,7 @@
 #include <assert.h>
 #include <sys/select.h>
 #include <sys/poll.h>
+#include <sys/pipe.h>
 #include <string.h>
 
 /* Forward-declare lwip_select to avoid pulling in sockets.h macros. */
@@ -393,6 +394,16 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 					FD_SET(f->socket, &lwip_rfds);
 					if (f->socket + 1 > max_lwip)
 						max_lwip = f->socket + 1;
+				} else if (f && f->fd_type == 3) {
+					/* Pipe: mark immediately ready if data available */
+					struct pipeInfo *pi = (struct pipeInfo *)f->data;
+					if (pi && pi->bCNT > 0) {
+						FD_SET(i, args->in);
+						has_stdin_rd = 1; /* reuse flag to skip the poll loop */
+					}
+				} else if (f && f->fd_type == 1) {
+					/* Regular file: always ready */
+					FD_SET(i, args->in);
 				}
 			}
 		}
@@ -422,8 +433,11 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	 * deadline == 0 means no timeout (block until ready). */
 	uint32_t deadline = 0;
 	if (args->tv != NULL) {
-		uint32_t ms = (uint32_t)(args->tv->tv_sec * 1000 +
-		    args->tv->tv_usec / 1000);
+		/* Clamp tv_sec to avoid overflow: 3600 s = 720,000 ticks at 200 Hz */
+		long tv_sec = args->tv->tv_sec;
+		if (tv_sec < 0) tv_sec = 0;
+		if (tv_sec > 3600) tv_sec = 3600;
+		uint32_t ms = (uint32_t)(tv_sec * 1000 + args->tv->tv_usec / 1000);
 		deadline = systemVitals->sysTicks + ms * PIT_TIMER / 1000 + 1;
 	}
 

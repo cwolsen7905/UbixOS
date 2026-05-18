@@ -265,19 +265,7 @@ uint32_t pciProbe(int bus, int dev, int func)
 	uint32_t *word = (uint32_t *)cfg;
 
 	for (i = 0; i < 4; i++)
-	{
 		word[i] = pciRead(bus, dev, func, 4 * i, 4);
-
-		/* This is TEMPORARY */
-		if (cfg->vendorID == 0x1022 && i == 1)
-		{
-			kprintf("got it: 0x%X", word[i]);
-			word[i] &= 0xffff0000;
-			word[i] |= 0x5; // 0x1 //0x5;
-			pciWrite(bus, dev, func, 4 * i, word[i], 4);
-			kprintf("set it: 0x%X\n", word[i]);
-		}
-	}
 
 	if (cfg->vendorID == 0xffff)
 	{
@@ -289,6 +277,15 @@ uint32_t pciProbe(int bus, int dev, int func)
 	{
 		kfree(cfg);
 		return 0x0;
+	}
+
+	/* Enable I/O space + bus mastering on AMD PCnet — moved after device
+	 * validation so we only write to confirmed AMD devices. */
+	if (cfg->vendorID == 0x1022)
+	{
+		word[1] &= 0xffff0000;
+		word[1] |= 0x5;
+		pciWrite(bus, dev, func, 4, word[1], 4);
 	}
 
 	switch (cfg->headerType & 0x7F)

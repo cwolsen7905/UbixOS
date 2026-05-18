@@ -372,6 +372,7 @@ fat_dir_iter_next(struct fat_dir_iter *it, char *name_out,
 			/* NUL-terminate conservatively */
 			if (pos + 13 < 256)
 				it->lfn[pos + 13] = '\0';
+			it->lfn[255] = '\0'; /* always guarantee termination */
 
 			if (iter_advance(fs, it) != 0)
 				return (-1);
@@ -539,10 +540,30 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 		uint16_t		 off = first_off;
 
 		fat_dir_iter_open(fs, dir_cluster, &it);
-		it.cluster		= (dir_cluster == 0) ? 0 : dir_cluster;
-		it.sector_in_cluster	= sec - ((dir_cluster == 0)
-		    ? fs->root_lba
-		    : fat_cluster_to_lba(fs, dir_cluster));
+
+		/*
+		 * Walk the cluster chain to find the cluster that actually
+		 * contains first_sec.  A simple subtraction from dir_cluster's
+		 * LBA is wrong for multi-cluster directories where the free run
+		 * may start in a later cluster.
+		 */
+		uint32_t it_cluster = (dir_cluster == 0) ? 0 : dir_cluster;
+		if (dir_cluster != 0) {
+			uint32_t wc = dir_cluster;
+			while (wc >= 2 && wc < FAT_CLUSTER_BAD) {
+				uint32_t clba = fat_cluster_to_lba(fs, wc);
+				if (sec >= clba &&
+				    sec < clba + fs->sectors_per_cluster) {
+					it_cluster = wc;
+					break;
+				}
+				wc = fat_cluster_next(fs, wc);
+			}
+		}
+		it.cluster		= it_cluster;
+		it.sector_in_cluster	= (dir_cluster == 0)
+		    ? (sec - fs->root_lba)
+		    : (sec - fat_cluster_to_lba(fs, it_cluster));
 		it.entry_offset		= off;
 
 		for (int seq = n_lfn; seq >= 1; seq--) {

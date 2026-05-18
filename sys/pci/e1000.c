@@ -111,10 +111,13 @@ static int e1000_map_mmio(uint32_t phys) {
 	uint32_t pages = 32; /* 128 KB / 4 KB */
 	uint32_t i;
 
-	for (i = 0; i < pages; i++)
-		vmm_remapIOPage(phys + i * 0x1000,
-		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
-
+	for (i = 0; i < pages; i++) {
+		if (vmm_remapIOPage(phys + i * 0x1000,
+		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID) < 0) {
+			klog(KLOG_ERR, "e1000: vmm_remapIOPage failed at page %u", i);
+			return (-1);
+		}
+	}
 	e1000_mmio = (volatile uint8_t *)phys;
 	return 0;
 }
@@ -235,6 +238,9 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	for (i = 0; i < 100000; i++) {
 		if (*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)
 			break;
+		__asm__ volatile("pause");
+		if ((i & 0x3FF) == 0x3FF)
+			sched_yield();
 	}
 	if (!(*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)) {
 		klog(KLOG_ERR, "e1000: TX timeout desc[%u] TDH=%u TDT=%u",

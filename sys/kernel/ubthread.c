@@ -166,6 +166,7 @@ int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, cons
 int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex)
 {
 	ubthread_cond_t ubcond = *cond;
+	ubcond->lock = TRUE;  /* arm before releasing mutex to prevent lost wakeup */
 	ubthread_mutex_unlock(mutex);
 	while (ubcond->lock == TRUE)
 		sched_yield();

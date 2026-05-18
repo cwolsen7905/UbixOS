@@ -229,7 +229,7 @@ void sys_mbox_post(struct sys_mbox **mb, void *msg) {
 
   LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_post: mbox %p msg %p\n", (void *)mbox, (void *)msg));
 
-  while ((mbox->tail + 1) >= (mbox->head + SYS_MBOX_SIZE)) {
+  while ((mbox->tail - mbox->head) >= SYS_MBOX_SIZE) {
     mbox->wait_send++;
     sys_sem_signal(&mbox->lock);
     sys_arch_sem_wait(&mbox->empty, 0);
@@ -266,7 +266,7 @@ err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
   LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_trypost: mbox %p msg %p\n",
           (void *)mbox, (void *)msg));
 
-  if ((mbox->tail + 1) >= (mbox->head + SYS_MBOX_SIZE)) {
+  if ((mbox->tail - mbox->head) >= SYS_MBOX_SIZE) {
     sys_sem_signal(&mbox->lock);
     return ERR_MEM;
   }
@@ -601,6 +601,7 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
    * Copy the payload into kernel memory so tcpip_thread can safely
    * access it when it calls pbuf_take().
    */
+  if (args->len > 65536) { td->td_retval[0] = -EMSGSIZE; return (-1); }
   kbuf = kmalloc(args->len);
   if (!kbuf) {
     td->td_retval[0] = -1;
@@ -637,11 +638,14 @@ int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
    * lwip_recvfrom writes received data via tcpip_thread which has no user
    * mappings.  Receive into a kernel buffer, then copy to userland.
    */
+  if (args->len > 65536) { td->td_retval[0] = -EMSGSIZE; return (-1); }
   kbuf = kmalloc(args->len);
   if (!kbuf) {
     td->td_retval[0] = -1;
     return (-1);
   }
+
+  if (!args->buf) { kfree(kbuf); td->td_retval[0] = -1; return (-1); }
 
   if (args->from && args->fromlenaddr) {
     ret = lwip_recvfrom(fd->socket, kbuf, args->len, args->flags,
@@ -774,11 +778,16 @@ int sys_sendmsg(struct thread *td, struct sys_sendmsg_args *args) {
 
   if (umsg == NULL) { td->td_retval[0] = -1; return (-1); }
 
-  /* compute total payload length across iovecs */
+  /* compute total payload length across iovecs (overflow-safe) */
   uiov = umsg->msg_iov;
   total = 0;
-  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++)
+  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++) {
+    if (total + uiov[i].iov_len < total || total + uiov[i].iov_len > 65536) {
+      td->td_retval[0] = -EMSGSIZE;
+      return (-1);
+    }
     total += uiov[i].iov_len;
+  }
 
   if (total == 0) { td->td_retval[0] = 0; return (0); }
 
@@ -828,8 +837,13 @@ int sys_recvmsg(struct thread *td, struct sys_recvmsg_args *args) {
 
   uiov = umsg->msg_iov;
   total = 0;
-  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++)
+  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++) {
+    if (total + uiov[i].iov_len < total || total + uiov[i].iov_len > 65536) {
+      td->td_retval[0] = -EMSGSIZE;
+      return (-1);
+    }
     total += uiov[i].iov_len;
+  }
 
   if (total == 0) { td->td_retval[0] = 0; return (0); }
 

@@ -73,7 +73,13 @@ put_le32(uint8_t *p, uint32_t v)
 uint32_t
 fat_cluster_to_lba(struct fat_fs *fs, uint32_t cluster)
 {
-	return (fs->data_lba + (cluster - 2) * fs->sectors_per_cluster);
+	if (cluster < 2) {
+		kprintf("fat_cluster_to_lba: invalid cluster %u\n", cluster);
+		return (0);
+	}
+	/* Cast to 64-bit before multiply to avoid overflow on large FAT32 volumes. */
+	return (fs->data_lba +
+	    (uint32_t)((uint64_t)(cluster - 2) * fs->sectors_per_cluster));
 }
 
 /* ------------------------------------------------------------------ */
@@ -298,7 +304,7 @@ fat_cluster_free_chain(struct fat_fs *fs, uint32_t start)
 	uint32_t	 c, next;
 
 	c = start;
-	while (c >= 2 && c != FAT_CLUSTER_EOC) {
+	while (c >= 2 && c < FAT_CLUSTER_BAD) {
 		next = fat_cluster_next(fs, c);
 		if (next == 0) {
 			kprintf("fat_cluster_free_chain: I/O error at %u\n", c);
