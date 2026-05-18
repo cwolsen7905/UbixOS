@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <lib/kmalloc.h>
 #include <lib/kern_trie.h>
+#include <ubixos/kpanic.h>
 
 int haveChildren(struct Trie *curr);
 
@@ -36,6 +37,9 @@ struct Trie *new_trieNode()
 {
 
 	struct Trie *node = (struct Trie *)kmalloc(sizeof(struct Trie));
+
+	if (node == NULL)
+		kpanic("new_trieNode: kmalloc failed\n");
 
 	node->isLeaf = 0;
 
@@ -54,16 +58,13 @@ void insert_trieNode(struct Trie **head, char *str, void *e)
 
 	while (*str)
 	{
+		if ((unsigned char)*str < 'a' || (unsigned char)*str > 'z')
+			break;
 
-		// create a new node if path doesn't exists
 		if (curr->character[*str - 'a'] == NULL)
-		{
 			curr->character[*str - 'a'] = new_trieNode();
-		}
 
-		// go to next node
 		curr = curr->character[*str - 'a'];
-		// move to next character
 		str++;
 	}
 
@@ -83,15 +84,14 @@ struct Trie *search_trieNode(struct Trie *head, char *str)
 
 	while (*str)
 	{
+		if ((unsigned char)*str < 'a' || (unsigned char)*str > 'z')
+			return (0);
 
-		// go to next node
 		curr = curr->character[*str - 'a'];
 
-		// if string is invalid (reached end of path in Trie)
 		if (curr == NULL)
 			return (0);
 
-		// move to next character
 		str++;
 	}
 
@@ -114,7 +114,8 @@ int delete_trieNode(struct Trie **curr, char *str)
 		// recurse for the node corresponding to next character in
 		// the string and if it returns 1, delete current node
 		// (if it is non-leaf)
-		if (*curr != NULL && (*curr)->character[*str - 'a'] != NULL && delete_trieNode(&((*curr)->character[*str - 'a']), str + 1) && (*curr)->isLeaf == 0)
+		if (*curr != NULL && (unsigned char)*str >= 'a' && (unsigned char)*str <= 'z' &&
+		    (*curr)->character[*str - 'a'] != NULL && delete_trieNode(&((*curr)->character[*str - 'a']), str + 1) && (*curr)->isLeaf == 0)
 		{
 			if (!haveChildren(*curr))
 			{

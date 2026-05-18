@@ -28,6 +28,8 @@
 
 #include <vmm/vmm.h>
 
+extern int numPages;
+
 /************************************************************************
 
  Function: void vmm_unmapPage(uInt32 pageAddr,int flags);
@@ -65,9 +67,12 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags)
 	/* Set pageTable To The Virtual Address Of Table */
 	pageTable = (uint32_t *)(PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
 
-	/* Free The Physical Page If Flags Is 0 */
-	if (flags == 0)
-		freePage((uint32_t)(pageTable[pageTableIndex] & 0xFFFFF000));
+	/* Free The Physical Page If Flags Is 0, guarding MMIO frames */
+	if (flags == 0) {
+		uint32_t phys = pageTable[pageTableIndex] & 0xFFFFF000;
+		if ((phys >> 12) < (uint32_t)numPages)
+			freePage(phys);
+	}
 
 	/* Unmap The Page */
 	pageTable[pageTableIndex] = 0x0;

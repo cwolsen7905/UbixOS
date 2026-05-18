@@ -109,9 +109,15 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 
 	for (i = 1; i <= argc; i++)
 	{
+		size_t alen = strlen(argv_in[i - 1]) + 1;
+		if (sp + alen > ARGV_PAGE) {
+			kfree(argv_tmp);
+			kfree(args_tmp);
+			return (-1);
+		}
 		argv_tmp[i] = (uint32_t)(args_tmp + sp);
 		strcpy((char *)argv_tmp[i], argv_in[i - 1]);
-		sp += strlen(argv_in[i - 1]) + 1;
+		sp += alen;
 	}
 
 	argv_tmp[i++] = 0x0;
@@ -138,9 +144,15 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 
 	for (i = 0; i < envc; i++)
 	{
+		size_t elen = strlen(envp_in[i]) + 1;
+		if (sp + elen > ENVP_PAGE) {
+			kfree(envp_tmp);
+			kfree(envs_tmp);
+			return (-1);
+		}
 		envp_tmp[i] = (uint32_t)(envs_tmp + sp);
 		strcpy((char *)envp_tmp[i], envp_in[i]);
-		sp += strlen(envp_in[i]) + 1;
+		sp += elen;
 	}
 	envp_tmp[i++] = 0x0;
 
@@ -339,20 +351,18 @@ void execFile(char *file, char **argv, char **envp, int console)
 	/* If We Dont Find the File Return */
 	if (newProcess->files[0] == 0x0)
 	{
-		/* Print error message and then print the attempted file in two
-		 * different kprintf */
 		kprintf("Exec Format Error: Binary File Not Executable1.\n");
-		// kprintf("Error: File not found: %s\n", file);
-		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 
 	if (newProcess->files[0]->perms == 0x0)
 	{
-		kprintf(
-		    "Exec Format Error: Binary File Not Executable2. (%s)\n",
-		    file);
+		kprintf("Exec Format Error: Binary File Not Executable2. (%s)\n", file);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 
@@ -369,6 +379,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kprintf("Exec Format Error: Binary File Not Executable3.\n");
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 	else if (binaryHeader->e_type != 2)
@@ -376,6 +388,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kprintf("Exec Format Error: Binary File Not Executable4.\n");
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 	else if (binaryHeader->e_entry == 0x300000)
@@ -383,10 +397,20 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kprintf("Exec Format Error: Binary File Not Executable5.\n");
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 
 	newProcess->td.abi = binaryHeader->e_ident[EI_OSABI];
+
+	if (binaryHeader->e_phnum > 256) {
+		kprintf("Exec Format Error: e_phnum too large (%u)\n", binaryHeader->e_phnum);
+		kfree(binaryHeader);
+		fclose(newProcess->files[0]);
+		sched_setStatus(newProcess->id, DEAD);
+		return;
+	}
 
 	/* Load The Program Header(s) */
 	programHeader =

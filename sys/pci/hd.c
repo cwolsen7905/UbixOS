@@ -510,8 +510,10 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
 	long retVal = 0x0;
 	short transactionCount = 0x0;
 	short *tmp = (short *)baseAddr;
-	startSector += hdd->parOffset;
-	startSector += hdd->lba_start;
+	if (hdd->lba_start == 0)
+		startSector += hdd->parOffset;
+	else
+		startSector += hdd->lba_start;
 
 	if (hdd->hdEnable == 0x0)
 	{

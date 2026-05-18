@@ -161,6 +161,9 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		if (swap_read_page(slot, (void *)(memAddr & 0xFFFFF000)) != 0) {
 			kprintf("pageFault: swap read error slot %u at 0x%X\n",
 			    slot, memAddr);
+			pageTable[pageTableIndex] = 0;
+			asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
+			freePage(newPage);
 			spinUnlock(&pageFaultSpinLock);
 			endTask(_current->id);
 			return;

@@ -48,8 +48,17 @@ int pipe(struct thread *td, struct pipe_args *uap)
 
 	memset(pipeDesc, 0, sizeof(struct pipeInfo));
 
-	falloc(td, &nfp1, &fd1);
-	falloc(td, &nfp2, &fd2);
+	if (falloc(td, &nfp1, &fd1) != 0 || nfp1 == NULL) {
+		kfree(pipeDesc);
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	if (falloc(td, &nfp2, &fd2) != 0 || nfp2 == NULL) {
+		fdestroy(td, nfp1, fd1);
+		kfree(pipeDesc);
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
 	nfp1->data = pipeDesc;
 	nfp2->data = pipeDesc;

@@ -48,16 +48,13 @@ static struct memDescriptor *freeKernDesc = 0x0;
 static struct memDescriptor *emptyKernDesc = 0x0;
 
 static struct spinLock mallocSpinLock = SPIN_LOCK_INITIALIZER;
-static struct spinLock emptyDescSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Return a descriptor object from the empty pool, allocating a new page of
-   them when the pool is empty. */
+   them when the pool is empty.  Always called with mallocSpinLock held. */
 static struct memDescriptor *getEmptyDesc(void)
 {
 	struct memDescriptor *tmpDesc = 0x0;
 	int i;
-
-	spinLock(&emptyDescSpinLock);
 
 	if (emptyKernDesc != 0x0)
 	{
@@ -67,7 +64,6 @@ static struct memDescriptor *getEmptyDesc(void)
 			emptyKernDesc->prev = 0x0;
 		tmpDesc->next = 0x0;
 		tmpDesc->prev = 0x0;
-		spinUnlock(&emptyDescSpinLock);
 		return (tmpDesc);
 	}
 
@@ -92,7 +88,6 @@ static struct memDescriptor *getEmptyDesc(void)
 	emptyKernDesc->prev = 0x0;
 	tmpDesc->next = 0x0;
 	tmpDesc->prev = 0x0;
-	spinUnlock(&emptyDescSpinLock);
 	return (tmpDesc);
 }
 
@@ -182,9 +177,16 @@ void *kmalloc(uInt32 len)
 {
 	struct memDescriptor *tmpDesc1 = 0x0;
 	struct memDescriptor *tmpDesc2 = 0x0;
-	uInt16 pages = 0x0;
+	uInt32 pages = 0x0;
 
 	spinLock(&mallocSpinLock);
+
+	if (len > 0xFFFFFFE0u)
+	{
+		spinUnlock(&mallocSpinLock);
+		kprintf("kmalloc: request too large (0x%X)\n", len);
+		return (0x0);
+	}
 
 	len = MALLOC_ALIGN(len);
 

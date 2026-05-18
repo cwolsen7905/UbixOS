@@ -99,7 +99,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 				{
 					/* Set Page To COW In Parent And Child Space — clear PAGE_WRITE so
 					 * the CPU faults on write and the COW handler fires. */
-					newPageTable[x] = (phys | ((KERNEL_PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
+					newPageTable[x] = (phys | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
 					/* Increment The COW Counter For This Page */
 					if (((uint32_t)parentPageTable[x] & PAGE_COW) == PAGE_COW)

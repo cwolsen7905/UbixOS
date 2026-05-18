@@ -736,7 +736,7 @@ int vmm_cleanVirtualSpace(uint32_t addr)
 
 	pageDir = (uint32_t *)PD_BASE_ADDR;
 
-	for (x = (addr / (PD_ENTRIES * PAGE_SIZE)); x <= PD_INDEX(VMM_USER_END); x++)
+	for (x = PD_INDEX(addr); x <= PD_INDEX(VMM_USER_END); x++)
 	{
 		if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT)
 		{

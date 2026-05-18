@@ -43,6 +43,7 @@
 #include <fs/ufs/ufs.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <sys/klog.h>
 #include <fs/vfs/file.h>
 /* fat_filelib.h removed — use VFS unlink() for file removal */
 
@@ -124,20 +125,21 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 			pFD = fd->data;
 			if (args->fd == pFD->rFD)
 			{
-				if (pFD->rfdCNT < 2)
-					if (fdestroy(td, fd, args->fd) != 0x0)
-						kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
+				if (pFD->rfdCNT < 2 && td->o_files[args->fd] != NULL)
+					if (fdestroy(td, fd, args->fd) != 0)
+						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe rFD %d", args->fd);
 				pFD->rfdCNT--;
 			}
 
 			if (args->fd == pFD->wFD)
 			{
-				if (pFD->wfdCNT < 2)
-					if (fdestroy(td, fd, args->fd) != 0x0)
-						kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
+				if (pFD->wfdCNT < 2 && td->o_files[args->fd] != NULL)
+					if (fdestroy(td, fd, args->fd) != 0)
+						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe wFD %d", args->fd);
 				pFD->wfdCNT--;
 			}
 
+			td->td_retval[0] = 0;
 			break;
 		default:
 			if (args->fd < 3)
@@ -402,7 +404,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	{
 		pFD = fd->data;
 		pBuf = (struct pipeBuf *)kmalloc(sizeof(struct pipeBuf));
+		if (!pBuf) { td->td_retval[0] = -1; return (-1); }
 		pBuf->buffer = kmalloc(uap->nbyte);
+		if (!pBuf->buffer) { kfree(pBuf); td->td_retval[0] = -1; return (-1); }
 		pBuf->next = 0x0;
 		pBuf->offset = 0;
 
@@ -425,6 +429,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	else if (uap->fd == 2)
 	{
 		buffer = kmalloc(uap->nbyte + 1);
+		if (!buffer) { td->td_retval[0] = -1; return (-1); }
 		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
 		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
@@ -447,6 +452,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	else if (uap->fd == 1)
 	{
 		buffer = kmalloc(uap->nbyte + 1);
+		if (!buffer) { td->td_retval[0] = -1; return (-1); }
 		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
 		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)

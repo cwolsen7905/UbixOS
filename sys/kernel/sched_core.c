@@ -154,11 +154,12 @@ kTask_t *sched_getDelTask()
 {
 	kTask_t *tmpTask = 0x0;
 
-	if (delList == 0x0)
-		return (0x0);
-
-	tmpTask = delList;
-	delList = delList->next;
+	spinLock(&schedulerSpinLock);
+	if (delList != 0x0) {
+		tmpTask = delList;
+		delList = delList->next;
+	}
+	spinUnlock(&schedulerSpinLock);
 	return (tmpTask);
 }
 
@@ -216,12 +217,15 @@ void remove_wait_queue(struct wait_queue **p, struct wait_queue *wait)
 	}
 	else
 	{
-		tmp = wait;
-		while (tmp->next != wait)
-		{
+		struct wait_queue *head = *p;
+		tmp = head;
+		do {
+			if (tmp->next == wait) {
+				tmp->next = wait->next;
+				break;
+			}
 			tmp = tmp->next;
-		}
-		tmp->next = wait->next;
+		} while (tmp != head);
 	}
 	wait->next = NULL;
 	restore_flags(flags);

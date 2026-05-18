@@ -90,7 +90,7 @@ void *vmm_createVirtualSpace(pid_t pid)
 		{
 
 			/* Set Page To COW In Parent And Child Space */
-			newPageTable[x] = (((uint32_t)parentPageTable[x] & 0xFFFFF000) | (KERNEL_PAGE_DEFAULT | PAGE_COW));
+			newPageTable[x] = (((uint32_t)parentPageTable[x] & 0xFFFFF000) | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
 			/* Increment The COW Counter For This Page */
 			if (((uint32_t)parentPageTable[x] & PAGE_COW) == PAGE_COW)
