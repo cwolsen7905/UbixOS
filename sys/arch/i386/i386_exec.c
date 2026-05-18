@@ -644,6 +644,36 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		return (-1);
 	}
 
+	/* Validate ELF header before destroying the current address space */
+	if ((binaryHeader = (Elf_Ehdr *)kmalloc(sizeof(Elf_Ehdr))) == 0x0)
+		K_PANIC("MALLOC FAILED");
+
+	fread(binaryHeader, sizeof(Elf_Ehdr), 1, fd);
+
+	if ((binaryHeader->e_ident[1] != 'E') ||
+	    (binaryHeader->e_ident[2] != 'L') ||
+	    (binaryHeader->e_ident[3] != 'F'))
+	{
+		kprintf("Exec Format Error: Binary File Not Executable7.\n");
+		kfree(binaryHeader);
+		fclose(fd);
+		return (-1);
+	}
+	else if (binaryHeader->e_type != ET_EXEC)
+	{
+		kprintf("Exec Format Error: Binary File Not Executable8.\n");
+		kfree(binaryHeader);
+		fclose(fd);
+		return (-1);
+	}
+	else if (binaryHeader->e_entry == 0x300000)
+	{
+		kprintf("Exec Format Error: Binary File Not Executable9.\n");
+		kfree(binaryHeader);
+		fclose(fd);
+		return (-1);
+	}
+
 	/* Set Threads FD to open FD */
 	_current->files[0] = fd;
 
@@ -695,38 +725,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		              (STACK_ADDR + 1) - (x * 0x1000),
 		              PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
 		bzero((void *)((STACK_ADDR + 1) - (x * 0x1000)), 0x1000);
-	}
-
-	/* Load ELF Header */
-	if ((binaryHeader = (Elf_Ehdr *)kmalloc(sizeof(Elf_Ehdr))) == 0x0)
-		K_PANIC("MALLOC FAILED");
-
-	fread(binaryHeader, sizeof(Elf_Ehdr), 1, fd);
-	/* Done Loading ELF Header */
-
-	/* Check If App Is A Real Application */
-	if ((binaryHeader->e_ident[1] != 'E') ||
-	    (binaryHeader->e_ident[2] != 'L') ||
-	    (binaryHeader->e_ident[3] != 'F'))
-	{
-		kprintf("Exec Format Error: Binary File Not Executable7.\n");
-		kfree(binaryHeader);
-		fclose(fd);
-		return (-1);
-	}
-	else if (binaryHeader->e_type != ET_EXEC)
-	{
-		kprintf("Exec Format Error: Binary File Not Executable8.\n");
-		kfree(binaryHeader);
-		fclose(fd);
-		return (-1);
-	}
-	else if (binaryHeader->e_entry == 0x300000)
-	{
-		kprintf("Exec Format Error: Binary File Not Executable9.\n");
-		kfree(binaryHeader);
-		fclose(fd);
-		return (-1);
 	}
 
 	/* Set Thread ABI */

@@ -1,8 +1,6 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
- *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,36 +24,51 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <math.h>
+#include <lib/libkern.h>
 
-u_quad_t __udivdi3(u_quad_t a, u_quad_t b) {
-  return (0); /* Quick Hack */
+u_quad_t
+__udivdi3(u_quad_t a, u_quad_t b)
+{
+	return (__qdivrem(a, b, (u_quad_t *)0));
 }
 
-quad_t __divdi3(quad_t a, quad_t b) {
-  return (0); /* Quick Hack */
+quad_t
+__divdi3(quad_t a, quad_t b)
+{
+	u_quad_t ua, ub, uq;
+	int neg;
+
+	if (a < 0) {
+		ua = -(u_quad_t)a;
+		neg = 1;
+	} else {
+		ua = (u_quad_t)a;
+		neg = 0;
+	}
+	if (b < 0) {
+		ub = -(u_quad_t)b;
+		neg ^= 1;
+	} else {
+		ub = (u_quad_t)b;
+	}
+	uq = __qdivrem(ua, ub, (u_quad_t *)0);
+	return (neg ? -(quad_t)uq : (quad_t)uq);
 }
 
-/***
- $Log: divdi3.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- ubix2
+quad_t
+__moddi3(quad_t a, quad_t b)
+{
+	u_quad_t ua, ub, ur;
+	int neg;
 
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:10  reddawg
- no message
-
- Revision 1.2  2004/05/19 03:46:32  reddawg
- A Few Quick Hacks To Make Things Work
-
- Revision 1.1.1.1  2004/04/15 12:07:10  reddawg
- UbixOS v1.0
-
- Revision 1.2  2004/04/13 16:36:33  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
- END
- ***/
-
+	if (a < 0) {
+		ua = -(u_quad_t)a;
+		neg = 1;
+	} else {
+		ua = (u_quad_t)a;
+		neg = 0;
+	}
+	ub = (b < 0) ? -(u_quad_t)b : (u_quad_t)b;
+	(void)__qdivrem(ua, ub, &ur);
+	return (neg ? -(quad_t)ur : (quad_t)ur);
+}

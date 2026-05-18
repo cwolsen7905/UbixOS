@@ -554,6 +554,7 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
   struct file *fd = 0x0;
   getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
 
   td->td_retval[0] = lwip_setsockopt(fd->socket, args->level, args->name, args->val, args->valsize);
   td->td_retval[0] = 0;
@@ -597,6 +598,7 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
   void *kbuf;
 
   getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
 
   /*
    * lwip_sendto posts to tcpip_thread, which has no user mappings.
@@ -633,6 +635,7 @@ int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
   void *kbuf;
 
   getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
 
   /*
    * lwip_recvfrom writes received data via tcpip_thread which has no user

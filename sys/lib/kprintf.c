@@ -27,6 +27,7 @@
  */
 
 #include <lib/kprintf.h>
+#include <lib/libkern.h>
 #include <string.h>
 #include <sys/video.h>
 #include <sys/io.h>

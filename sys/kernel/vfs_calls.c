@@ -314,6 +314,11 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 
 	getfd(td, &fd, args->fd);
 
+	if (fd == NULL) {
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
 	if (args->fd > 3)
 	{
 		offset = fd->fd->offset;

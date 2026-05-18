@@ -259,18 +259,18 @@ int ioctl(struct thread *td, struct ioctl_args *uap)
  */
 int getfd(struct thread *td, struct file **fp, int fd)
 {
-	int error = 0x0;
-
 #ifdef DEBUG
 	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
 
+	if (fd < 0 || fd >= O_FILES) {
+		*fp = NULL;
+		return (-1);
+	}
+
 	*fp = (struct file *)td->o_files[fd];
 
-	if (fp == 0x0)
-		error = -1;
-
-	return (error);
+	return (*fp == NULL ? -1 : 0);
 }
 
 int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)

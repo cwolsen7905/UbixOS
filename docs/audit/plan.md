@@ -54,13 +54,19 @@ Last updated: 2026-05-18
 
 | Subsystem | Status | Finding Count |
 |-----------|--------|---------------|
-| VMM | ⬜ Pending | — |
-| Scheduler / Exec | ⬜ Pending | — |
-| VFS / Syscalls | ⬜ Pending | — |
-| FAT Driver | ⬜ Pending | — |
-| IPC / Pipes / Semaphores | ⬜ Pending | — |
-| ISA Drivers | ⬜ Pending | — |
-| PCI / e1000 / IDE | ⬜ Pending | — |
-| TTY | ⬜ Pending | — |
-| Kernel Lib | ⬜ Pending | — |
-| Networking Bridge | ⬜ Pending | — |
+| VMM | ✅ Complete | 18 (2🔴 5🟠 7🟡 4🔵) |
+| Scheduler / Exec | ✅ Complete | 18 (4🔴 6🟠 5🟡 3🔵) |
+| VFS / Syscalls | ✅ Complete | 17 (3🔴 5🟠 6🟡 3🔵) |
+| FAT Driver | ✅ Complete | 17 (2🔴 5🟠 6🟡 4🔵) |
+| IPC / Pipes / Semaphores | ✅ Complete | 14 (3🔴 4🟠 4🟡 3🔵) |
+| ISA Drivers | ✅ Complete | 14 (2🔴 5🟠 5🟡 2🔵) |
+| PCI / e1000 / IDE | ✅ Complete | 18 (2🔴 6🟠 6🟡 4🔵) |
+| TTY | ✅ Complete | 14 (2🔴 5🟠 4🟡 3🔵) |
+| Kernel Lib | ✅ Complete | 19 (3🔴 6🟠 7🟡 3🔵) |
+| Networking Bridge | ✅ Complete | 21 (4🔴 7🟠 7🟡 3🔵) |
+
+**Total: 170 findings across 10 subsystems**
+- 🔴 Critical: 27
+- 🟠 High: 54
+- 🟡 Medium: 57
+- 🔵 Low: 32
