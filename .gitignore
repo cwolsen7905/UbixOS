@@ -11,5 +11,4 @@ t.c
 *.iso
 *.log
 .DS_Store
-.cache
 .cache/
