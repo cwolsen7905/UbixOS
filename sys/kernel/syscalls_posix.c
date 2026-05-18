@@ -168,15 +168,15 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP },  // 26 - ptrace
     {
-        0,
+        ARG_COUNT(sys_recvmsg_args),
         "recvmsg",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 27 - recvmsg
+        sys_recvmsg,
+        SYSCALL_VALID },  // 27 - recvmsg
     {
-        0,
+        ARG_COUNT(sys_sendmsg_args),
         "sendmsg",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 28 - sendmsg
+        sys_sendmsg,
+        SYSCALL_VALID },  // 28 - sendmsg
     {
         ARG_COUNT(sys_recvfrom_args),
         "recvfrom",
@@ -873,10 +873,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 167 - nosys */
     {
-        0,
-        "nosys",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 168 - nosys */
+        ARG_COUNT(sys_poll_args),
+        "poll",
+        sys_poll,
+        SYSCALL_VALID }, /* 168 - poll */
     {
         0,
         "semsys",

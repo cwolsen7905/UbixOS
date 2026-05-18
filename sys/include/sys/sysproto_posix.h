@@ -31,6 +31,10 @@
 
 #include <sys/signal.h>
 #include <sys/thread.h>
+#include <sys/poll.h>
+
+/* Forward declaration — full definition in net/sockets.h */
+struct msghdr;
 
 /* TEMP */
 #include <fs/vfs/file.h>
@@ -797,6 +801,20 @@ struct sys_select_args {
     char tv_r_[PADR_(struct timeval*)];
 };
 
+struct sys_poll_args {
+    char fds_l_[PADL_(struct pollfd *)];
+    struct pollfd *fds;
+    char fds_r_[PADR_(struct pollfd *)];
+
+    char nfds_l_[PADL_(unsigned int)];
+    unsigned int nfds;
+    char nfds_r_[PADR_(unsigned int)];
+
+    char timeout_l_[PADL_(int)];
+    int timeout;
+    char timeout_r_[PADR_(int)];
+};
+
 struct sys_gettimeofday_args {
     char tp_l_[PADL_(struct timeval *)];
     struct timeval *tp;
@@ -831,6 +849,34 @@ struct sys_sendto_args {
     char tolen_l_[PADL_(int)];
     int tolen;
     char tolen_r_[PADR_(int)];
+};
+
+struct sys_sendmsg_args {
+    char s_l_[PADL_(int)];
+    int s;
+    char s_r_[PADR_(int)];
+
+    char msg_l_[PADL_(const struct msghdr *)];
+    const struct msghdr *msg;
+    char msg_r_[PADR_(const struct msghdr *)];
+
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+};
+
+struct sys_recvmsg_args {
+    char s_l_[PADL_(int)];
+    int s;
+    char s_r_[PADR_(int)];
+
+    char msg_l_[PADL_(struct msghdr *)];
+    struct msghdr *msg;
+    char msg_r_[PADR_(struct msghdr *)];
+
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
 };
 
 struct sys_rename_args {
@@ -1085,7 +1131,10 @@ int sys_listen(struct thread *td, struct sys_listen_args*);
 int sys_accept(struct thread *td, struct sys_accept_args*);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args*);
 int sys_recvfrom(struct thread *td, struct sys_recvfrom_args*);
+int sys_recvmsg(struct thread *td, struct sys_recvmsg_args*);
+int sys_sendmsg(struct thread *td, struct sys_sendmsg_args*);
 int sys_select(struct thread *td, struct sys_select_args*);
+int sys_poll(struct thread *td, struct sys_poll_args*);
 
 int sys_rename(struct thread *td, struct sys_rename_args*);
 

@@ -17,16 +17,9 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/sem.h>
 
-/* Forward-declare lwip socket functions to avoid pulling in sockets.h macros. */
-int lwip_socket(int domain, int type, int protocol);
-int lwip_setsockopt(int s, int level, int optname, const void *optval, int optlen);
-int lwip_sendto(int s, const void *dataptr, int size, unsigned int flags, const void *to, int tolen);
-int lwip_recvfrom(int s, void *mem, size_t len, int flags, void *from, unsigned int *fromlen);
-int lwip_connect(int s, const void *name, int namelen);
-int lwip_bind(int s, const void *name, int namelen);
-int lwip_listen(int s, int backlog);
-int lwip_accept(int s, void *addr, unsigned int *addrlen);
-int lwip_close(int s);
+/* Include lwIP socket API — provides struct msghdr, lwip_sendmsg, lwip_recvmsg,
+ * and all other lwip_* socket function declarations. */
+#include <net/sockets.h>
 
 /* Get Definitions For These */
 #define ERR_NOT_READY 0
@@ -539,9 +532,10 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
   if (error)
     return (error);
 
-  nfp->socket = lwip_socket(args->domain, args->type, args->protocol);
+  /* Strip Linux-only flags musl ORs into type; lwIP only understands the
+   * low byte (SOCK_STREAM=1, SOCK_DGRAM=2, SOCK_RAW=3). */
+  nfp->socket = lwip_socket(args->domain, args->type & 0xFF, args->protocol);
   nfp->fd_type = 2;
-  kprintf("socket(%i:%i): 0x%X:0x%X:0x%X", nfp->socket, fd, args->domain, args->type, args->protocol);
 
   if (nfp->fd == 0x0 && nfp->socket) {
     if (fdestroy(td, nfp, fd) != 0x0)
@@ -562,7 +556,6 @@ int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
   getfd(td, &fd, args->s);
 
   td->td_retval[0] = lwip_setsockopt(fd->socket, args->level, args->name, args->val, args->valsize);
-  kprintf("SSO: %i:%i:%i", args->s, fd->socket, td->td_retval[0]);
   td->td_retval[0] = 0;
 
   return (0);
@@ -756,4 +749,117 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
 
   td->td_retval[0] = newfd;
   return (0);
+}
+
+/*
+ * sys_sendmsg — gather iovecs into a kernel buffer and call lwip_sendto.
+ * Handles MSG_FASTOPEN by stripping it (lwIP doesn't support it).
+ */
+int sys_sendmsg(struct thread *td, struct sys_sendmsg_args *args) {
+  struct file *fd = NULL;
+  const struct msghdr *umsg = args->msg;
+  struct iovec *uiov;
+  size_t total, off;
+  unsigned int i;
+  void *kbuf = NULL;
+  uint8_t kaddr[28];
+  int flags, ret;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  /* strip flags lwIP doesn't understand */
+#define MSG_FASTOPEN 0x20000000
+#define MSG_NOSIGNAL 0x4000
+  flags = args->flags & ~(MSG_FASTOPEN | MSG_NOSIGNAL);
+
+  if (umsg == NULL) { td->td_retval[0] = -1; return (-1); }
+
+  /* compute total payload length across iovecs */
+  uiov = umsg->msg_iov;
+  total = 0;
+  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++)
+    total += uiov[i].iov_len;
+
+  if (total == 0) { td->td_retval[0] = 0; return (0); }
+
+  kbuf = kmalloc(total);
+  if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+
+  /* gather iovecs into contiguous kernel buffer */
+  off = 0;
+  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++) {
+    memcpy((char *)kbuf + off, uiov[i].iov_base, uiov[i].iov_len);
+    off += uiov[i].iov_len;
+  }
+
+  if (umsg->msg_name && umsg->msg_namelen > 0 &&
+      umsg->msg_namelen <= (int)sizeof(kaddr)) {
+    posix_to_lwip_addr(kaddr, (const uint8_t *)umsg->msg_name,
+        umsg->msg_namelen);
+    ret = lwip_sendto(fd->socket, kbuf, (int)total, flags,
+        kaddr, umsg->msg_namelen);
+  } else {
+    ret = lwip_sendto(fd->socket, kbuf, (int)total, flags, NULL, 0);
+  }
+
+  kfree(kbuf);
+  td->td_retval[0] = (ret >= 0) ? ret : -1;
+  return (ret < 0 ? -1 : 0);
+}
+
+/*
+ * sys_recvmsg — receive into a kernel buffer then scatter to user iovecs.
+ */
+int sys_recvmsg(struct thread *td, struct sys_recvmsg_args *args) {
+  struct file *fd = NULL;
+  struct msghdr *umsg = args->msg;
+  struct iovec *uiov;
+  size_t total, off, chunk;
+  unsigned int i;
+  void *kbuf = NULL;
+  uint8_t kfrom[28];
+  unsigned int kfromlen = sizeof(kfrom);
+  int ret;
+
+  getfd(td, &fd, args->s);
+  if (!fd) { td->td_retval[0] = -1; return (-1); }
+
+  if (umsg == NULL) { td->td_retval[0] = -1; return (-1); }
+
+  uiov = umsg->msg_iov;
+  total = 0;
+  for (i = 0; i < (unsigned int)umsg->msg_iovlen; i++)
+    total += uiov[i].iov_len;
+
+  if (total == 0) { td->td_retval[0] = 0; return (0); }
+
+  kbuf = kmalloc(total);
+  if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+
+  ret = lwip_recvfrom(fd->socket, kbuf, total, args->flags,
+      umsg->msg_name ? (void *)kfrom : NULL,
+      umsg->msg_name ? &kfromlen    : NULL);
+
+  if (ret > 0) {
+    /* scatter kernel buffer back to user iovecs */
+    off = 0;
+    for (i = 0; i < (unsigned int)umsg->msg_iovlen && off < (size_t)ret; i++) {
+      chunk = uiov[i].iov_len;
+      if (chunk > (size_t)ret - off)
+        chunk = (size_t)ret - off;
+      memcpy(uiov[i].iov_base, (char *)kbuf + off, chunk);
+      off += chunk;
+    }
+    if (umsg->msg_name && kfromlen > 0) {
+      unsigned int outlen = (unsigned int)umsg->msg_namelen;
+      if (outlen > kfromlen) outlen = kfromlen;
+      lwip_to_posix_addr((uint8_t *)umsg->msg_name, kfrom, outlen);
+      umsg->msg_namelen = (int)kfromlen;
+    }
+  }
+
+  kfree(kbuf);
+  td->td_retval[0] = ret;
+  return (ret < 0 ? -1 : 0);
 }

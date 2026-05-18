@@ -36,10 +36,13 @@
 #include <lib/kmalloc.h>
 #include <ubixos/sched.h>
 #include <ubixos/tty.h>
+#include <ubixos/vitals.h>
+#include <isa/pit.h>
 #include <isa/rs232.h>
 #include <isa/kbd.h>
 #include <assert.h>
 #include <sys/select.h>
+#include <sys/poll.h>
 #include <string.h>
 
 /* Forward-declare lwip_select to avoid pulling in sockets.h macros. */
@@ -235,7 +238,6 @@ int fstat(struct thread *td, struct sys_fstat_args *uap)
 	fp = (struct file *)_current->td.o_files[uap->fd];
 	uap->sb->st_mode = 0x2180;
 	uap->sb->st_blksize = 0x1000;
-	kprintf("fstat: %i", uap->fd);
 	return (0x0);
 }
 
@@ -353,7 +355,6 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	}
 
 	default:
-		kprintf("ioFD:%i:0x%X!", args->fd, args->com);
 		td->td_retval[0] = -1;
 		return (0);
 	}
@@ -416,6 +417,15 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	zero_tv.tv_sec = 0;
 	zero_tv.tv_usec = 0;
 
+	/* Compute deadline in sysTicks (PIT_TIMER ticks/sec).
+	 * deadline == 0 means no timeout (block until ready). */
+	uint32_t deadline = 0;
+	if (args->tv != NULL) {
+		uint32_t ms = (uint32_t)(args->tv->tv_sec * 1000 +
+		    args->tv->tv_usec / 1000);
+		deadline = systemVitals->sysTicks + ms * PIT_TIMER / 1000 + 1;
+	}
+
 	/* Poll loop: yield until stdin or a socket becomes ready */
 	for (;;) {
 		total = 0;
@@ -475,8 +485,140 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 		if (total > 0)
 			break;
 
-		/* Zero-timeout poll: return immediately even if nothing ready */
-		if (args->tv && args->tv->tv_sec == 0 && args->tv->tv_usec == 0)
+		/* Timeout: return 0 if deadline reached */
+		if (args->tv != NULL &&
+		    (uint32_t)systemVitals->sysTicks >= deadline)
+			break;
+
+		sched_yield();
+	}
+
+	td->td_retval[0] = total;
+	return (0);
+}
+
+/*
+ * sys_poll — implemented on top of the same yield loop as sys_select.
+ *
+ * Translates pollfd[] into lwIP fd_sets, polls non-blocking each iteration,
+ * drains the kbd ring for TTY stdin fds, and writes revents on return.
+ */
+int sys_poll(struct thread *td, struct sys_poll_args *args)
+{
+	unsigned int i;
+	unsigned int nfds;
+	int total, max_lwip;
+	fd_set lwip_rfds, lwip_wfds;
+	int kern_to_lwip[MAX_FILES]; /* kernel fd → lwIP socket */
+	struct timeval zero_tv;
+
+	if (args->fds == NULL || args->nfds == 0) {
+		td->td_retval[0] = 0;
+		return (0);
+	}
+
+	nfds = args->nfds;
+
+	/* clear all revents */
+	for (i = 0; i < nfds; i++)
+		args->fds[i].revents = 0;
+
+	FD_ZERO(&lwip_rfds);
+	FD_ZERO(&lwip_wfds);
+	memset(kern_to_lwip, -1, sizeof(kern_to_lwip));
+	max_lwip = 0;
+
+	/* build lwIP fd_sets from poll events */
+	for (i = 0; i < nfds; i++) {
+		int kfd = args->fds[i].fd;
+		short ev = args->fds[i].events;
+		if (kfd < 0 || kfd >= MAX_FILES)
+			continue;
+		if (kfd == 0)
+			continue; /* stdin handled separately */
+		struct file *f = td->o_files[kfd];
+		if (f && f->fd_type == 2) {
+			kern_to_lwip[kfd] = f->socket;
+			if (ev & (POLLIN | POLLRDNORM))
+				FD_SET(f->socket, &lwip_rfds);
+			if (ev & (POLLOUT | POLLWRNORM))
+				FD_SET(f->socket, &lwip_wfds);
+			if (f->socket + 1 > max_lwip)
+				max_lwip = f->socket + 1;
+		}
+	}
+
+	zero_tv.tv_sec = 0;
+	zero_tv.tv_usec = 0;
+
+	/* deadline in sysTicks; 0 = infinite (-1 timeout), else absolute tick */
+	uint32_t deadline = 0;
+	if (args->timeout > 0)
+		deadline = systemVitals->sysTicks +
+		    (uint32_t)args->timeout * PIT_TIMER / 1000 + 1;
+
+	for (;;) {
+		total = 0;
+
+		/* stdin readiness */
+		for (i = 0; i < nfds; i++) {
+			if (args->fds[i].fd != 0)
+				continue;
+			if (!(args->fds[i].events & (POLLIN | POLLRDNORM)))
+				continue;
+			if (_current->term == NULL)
+				continue;
+			if (_current->term->t_type == TTY_TYPE_SERIAL) {
+				int raw;
+				while ((raw = serial_rx_getbyte()) >= 0)
+					tty_inject(_current->term, (char)raw);
+			} else {
+				kbd_event_t kev;
+				while (kbd_getEvent(&kev) == 0) {
+					if (kev.pressed && kev.keycode != 0 &&
+					    kev.keycode < 0x100 && tty_foreground != NULL)
+						tty_inject(tty_foreground, (char)(uint8_t)kev.keycode);
+				}
+			}
+			if (tty_foreground != NULL && tty_foreground->stdinSize > 0) {
+				args->fds[i].revents |= POLLIN;
+				total++;
+			}
+		}
+
+		/* socket readiness */
+		if (max_lwip > 0) {
+			fd_set tmp_r = lwip_rfds;
+			fd_set tmp_w = lwip_wfds;
+			int r = lwip_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
+			if (r > 0) {
+				for (i = 0; i < nfds; i++) {
+					int kfd = args->fds[i].fd;
+					if (kfd < 0 || kfd >= MAX_FILES || kern_to_lwip[kfd] < 0)
+						continue;
+					int ls = kern_to_lwip[kfd];
+					if (FD_ISSET(ls, &tmp_r)) {
+						args->fds[i].revents |= POLLIN;
+						total++;
+					}
+					if (FD_ISSET(ls, &tmp_w)) {
+						args->fds[i].revents |= POLLOUT;
+						total++;
+					}
+				}
+			}
+		}
+
+		if (total > 0)
+			break;
+
+		/* timeout == 0: non-blocking, return immediately */
+		if (args->timeout == 0)
+			break;
+
+		/* positive timeout: check deadline */
+		if (args->timeout > 0 &&
+		    (uint32_t)systemVitals->sysTicks >= deadline)
 			break;
 
 		sched_yield();
