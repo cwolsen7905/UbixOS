@@ -98,7 +98,7 @@ int tty_init() {
  */
 int tty_change(uInt16 tty) {
 
-  if (tty > TTY_MAX_TERMS)
+  if (tty >= TTY_MAX_TERMS)
     kpanic("Error: Changing to an invalid tty. File: %s, Line: %i\n", __FILE__, __LINE__);
 
   /* Copy display buffer to tty buffer */
@@ -180,6 +180,8 @@ int tty_print(char *string, tty_term *term) {
 }
 
 tty_term *tty_find(uInt16 tty) {
+  if (tty >= TTY_MAX_TERMS)
+    return (NULL);
   return (&terms[tty]);
 }
 

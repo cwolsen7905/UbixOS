@@ -41,6 +41,7 @@
 #include <lib/kprintf.h>
 #include <fs/vfs/file.h>
 #include <assert.h>
+#include <sys/klog.h>
 #include <string.h>
 #include <sys/descrip.h>
 
@@ -310,8 +311,12 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	newProcess->term = tty_find(console);
 
-	if (newProcess->term == 0x0)
-		kprintf("Error: invalid console\n");
+	if (newProcess->term == 0x0) {
+		kprintf("Error: invalid console %i for %s\n", console, file);
+		klog(KLOG_ERR, "execFile: invalid console %i for %s", console, file);
+		sched_setStatus(newProcess->id, DEAD);
+		return;
+	}
 
 	/* Set tty ownership */
 	newProcess->term->owner = newProcess->id;
@@ -512,6 +517,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	// sched_setStatus(newProcess->id, READY);
 
+	uint32_t e_entry = binaryHeader->e_entry;
+
 	kfree(binaryHeader);
 	kfree(programHeader);
 	fclose(newProcess->files[0]);
@@ -519,7 +526,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	tmp = (uint32_t *)newProcess->md.md_tss.esp0 - 5;
 
-	tmp[0] = binaryHeader->e_entry;
+	tmp[0] = e_entry;
 	tmp[3] = STACK_ADDR - 12;
 
 	newProcess->md.md_tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -

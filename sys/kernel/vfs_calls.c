@@ -226,6 +226,10 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	}
 	else if (args->fd > 3)
 	{
+		if (fd == NULL) {
+			td->td_retval[0] = -1;
+			return (-1);
+		}
 		td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
 	}
 	else if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)

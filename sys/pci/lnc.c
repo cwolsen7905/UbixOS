@@ -291,30 +291,23 @@ int lanceProbe(struct lncInfo *lnc)
 
 void lnc_INT()
 {
-	uint16_t csr0 = 0x0;
+	uint16_t csr0 = (uint16_t)lnc_readCSR32(lnc, CSR0);
 
-	// kprintf("\nINTR\n");
-	// while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
-	// kprintf("CSR0: [0x%X]\n", csr0);
 	if (csr0 & ERR)
-	{
-		kprintf("Error: [0x%X]\n", csr0);
-	}
-	if (csr0 & RINT)
-	{
+		kprintf("lnc: CSR0 error: [0x%X]\n", csr0);
+
+	if (csr0 & RINT) {
+		/* lnc_rxINT calls kmalloc — unsafe from ISR until pre-alloc pool
+		 * is implemented (see ISA-001 pattern). Left disabled for now. */
 		asm("nop");
-		// lnc_rxINT();
 	}
-	if (csr0 & TINT)
-	{
+	if (csr0 & TINT) {
+		/* lnc_txINT: same concern; re-enable once TX path is audited. */
 		asm("nop");
-		// kprintf("TINT");
-		// lnc_txINT();
 	}
-	//   kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
-	//  }
-	lnc_writeCSR32(lnc, CSR0, 0x7940); // csr0);
-	//  kprintf("INT DONE");
+
+	/* Acknowledge interrupts by writing back the active bits */
+	lnc_writeCSR32(lnc, CSR0, csr0 & 0x7940);
 }
 
 void lnc_thread()

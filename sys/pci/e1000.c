@@ -48,6 +48,7 @@
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
 #include <ubixos/sched.h>
+#include <ubixos/spinlock.h>
 #include <net/netif.h>
 #include <string.h>
 
@@ -74,6 +75,7 @@ static uint8_t *tx_bufs[E1000_NUM_TX_DESC];
 
 static uint32_t rx_tail;  /* next descriptor to check for received packet */
 static uint32_t tx_tail;  /* next free TX descriptor */
+static struct spinLock e1000_tx_lock = SPIN_LOCK_INITIALIZER;
 
 /* Scratch buffer handed to the lwIP bridge on each RX */
 static uint8_t e1000_rx_packet[E1000_BUF_SIZE];
@@ -216,11 +218,15 @@ static int e1000_init_tx(void) {
  * --------------------------------------------------------------------- */
 
 void e1000_send_packet(const void *data, uint16_t len) {
-	uint32_t tail = tx_tail;
+	uint32_t tail;
 	int i;
+
+	spinLock(&e1000_tx_lock);
+	tail = tx_tail;
 
 	if (len > E1000_BUF_SIZE) {
 		klog(KLOG_ERR, "e1000: TX packet too large (%u)", len);
+		spinUnlock(&e1000_tx_lock);
 		return;
 	}
 
@@ -233,6 +239,7 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	if (!(*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)) {
 		klog(KLOG_ERR, "e1000: TX timeout desc[%u] TDH=%u TDT=%u",
 		    tail, e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT));
+		spinUnlock(&e1000_tx_lock);
 		return;
 	}
 
@@ -248,6 +255,7 @@ void e1000_send_packet(const void *data, uint16_t len) {
 
 	tx_tail = (tail + 1) % E1000_NUM_TX_DESC;
 	e1000_write(E1000_REG_TDT, tx_tail);
+	spinUnlock(&e1000_tx_lock);
 }
 
 /* -----------------------------------------------------------------------
@@ -274,7 +282,9 @@ static int e1000_rx_process(void) {
 			}
 		}
 
-		/* Return descriptor to hardware */
+		/* Return descriptor to hardware: write RDT with the just-consumed
+		 * index before advancing — this is how QEMU's e1000 model expects
+		 * the tail to be updated (write-back-then-advance convention). */
 		rx_descs[rx_tail].status = 0;
 		e1000_write(E1000_REG_RDT, rx_tail);
 		rx_tail = (rx_tail + 1) % E1000_NUM_RX_DESC;
@@ -309,9 +319,9 @@ void e1000_thread(void) {
 			e1000_irq_pending = 0;
 			e1000_rx_process();
 		}
-		/* Poll ring directly — catch packets if IRQ is not firing.
-		 * Volatile cast prevents the compiler from hoisting the status
-		 * read out of this loop (QEMU DMA is invisible to the optimizer). */
+		/* Fallback poll: catch packets if the IRQ path is not firing.
+		 * Required because QEMU does not always deliver the PIC IRQ
+		 * before the descriptor DD bit is visible to the driver. */
 		if (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD)
 			e1000_rx_process();
 		sched_yield();

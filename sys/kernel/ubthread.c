@@ -51,6 +51,8 @@ kTask_t *ubthread_self()
 int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr)
 {
 	ubthread_cond_t ubcond = kmalloc(sizeof(struct ubthread_cond));
+	if (ubcond == NULL)
+		return (-1);
 	memset(ubcond, 0x0, sizeof(struct ubthread_cond));
 
 	ubcond->id = (int)cond;
@@ -63,6 +65,8 @@ int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr)
 int ubthread_mutex_init(ubthread_mutex_t *mutex, const uint32_t attr)
 {
 	ubthread_mutex_t ubmutex = kmalloc(sizeof(struct ubthread_mutex));
+	if (ubmutex == NULL)
+		return (-1);
 	memset(ubmutex, 0x0, sizeof(struct ubthread_mutex));
 
 	ubmutex->id = (int)mutex;

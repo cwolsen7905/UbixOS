@@ -49,6 +49,14 @@ static int dp_recv(struct device *);
 static struct nicBuffer *ne2kBuffer = 0x0;
 static struct device *mDev = 0x0;
 
+/* Pre-allocated RX pool — no kmalloc in ISR path */
+#define NE2K_RX_POOL_SIZE  16
+#define NE2K_MAX_PKT       1518
+
+static struct nicBuffer  ne2k_pool_slots[NE2K_RX_POOL_SIZE];
+static char              ne2k_pool_data[NE2K_RX_POOL_SIZE][NE2K_MAX_PKT];
+static struct nicBuffer *ne2k_free_pool = NULL;
+
 asm(".globl ne2kISR         \n"
     "ne2kISR:               \n"
     "  pusha                \n" /* Save all registers           */
@@ -105,6 +113,14 @@ int ne2k_init()
 
 	outportByte(mDev->ioAddr + NE_CMD, 0x0);
 	outportByte(mDev->ioAddr + NE_DCR, 0x29);
+
+	/* Initialise the ISR-safe pre-allocated RX pool */
+	for (int _i = 0; _i < NE2K_RX_POOL_SIZE; _i++) {
+		ne2k_pool_slots[_i].buffer = ne2k_pool_data[_i];
+		ne2k_pool_slots[_i].length = 0;
+		ne2k_pool_slots[_i].next   = ne2k_free_pool;
+		ne2k_free_pool = &ne2k_pool_slots[_i];
+	}
 
 	kprintf("ne0: ready\n");
 	/* Return so we know everything went well */
@@ -330,7 +346,13 @@ static int dp_pkt2user(struct device *dev, int page, int length)
 	}
 	else
 	{
+		if (length > NE2K_MAX_PKT)
+			length = NE2K_MAX_PKT;
 		tBuf = ne2kAllocBuffer(length);
+		if (tBuf == NULL) {
+			kprintf("[ne2k] RX pool exhausted, packet dropped\n");
+			return (OK);
+		}
 		NICtoPC(dev, tBuf->buffer, length, page * DP_PAGESIZE + sizeof(dp_rcvhdr_t));
 	}
 	return (OK);
@@ -338,54 +360,49 @@ static int dp_pkt2user(struct device *dev, int page, int length)
 
 struct nicBuffer *ne2kAllocBuffer(int length)
 {
-	struct nicBuffer *tmpBuf = 0x0;
+	struct nicBuffer *buf;
 
 	spinLock(&ne2k_spinLock);
-
-	if (ne2kBuffer == 0x0)
-	{
-		ne2kBuffer = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
-		ne2kBuffer->next = 0x0;
-		ne2kBuffer->length = length;
-		ne2kBuffer->buffer = (char *)kmalloc(length);
-		spinUnlock(&ne2k_spinLock);
-		return (ne2kBuffer);
-	}
-	else
-	{
-		for (tmpBuf = ne2kBuffer; tmpBuf->next != 0x0; tmpBuf = tmpBuf->next)
-			;
-
-		tmpBuf->next = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
-		tmpBuf = tmpBuf->next;
-		tmpBuf->next = 0x0;
-		tmpBuf->length = length;
-		tmpBuf->buffer = (char *)kmalloc(length);
-		spinUnlock(&ne2k_spinLock);
-		return (tmpBuf);
+	buf = ne2k_free_pool;
+	if (buf != NULL) {
+		ne2k_free_pool = buf->next;
+		buf->next   = NULL;
+		buf->length = length;
+		/* Append to the received-packets list */
+		if (ne2kBuffer == NULL) {
+			ne2kBuffer = buf;
+		} else {
+			struct nicBuffer *t = ne2kBuffer;
+			while (t->next != NULL)
+				t = t->next;
+			t->next = buf;
+		}
 	}
 	spinUnlock(&ne2k_spinLock);
-	return (0x0);
+	return (buf);
 }
 
 struct nicBuffer *ne2kGetBuffer()
 {
 	struct nicBuffer *tmpBuf = 0x0;
 
-	if (ne2k_spinLock == 0x1)
+	if (spinTryLock(&ne2k_spinLock))
 		return (0x0);
 
 	tmpBuf = ne2kBuffer;
 	if (ne2kBuffer != 0x0)
 		ne2kBuffer = ne2kBuffer->next;
+	spinUnlock(&ne2k_spinLock);
 	return (tmpBuf);
 }
 
 void ne2kFreeBuffer(struct nicBuffer *buf)
 {
-	kfree(buf->buffer);
-	kfree(buf);
-	return;
+	spinLock(&ne2k_spinLock);
+	buf->length = 0;
+	buf->next   = ne2k_free_pool;
+	ne2k_free_pool = buf;
+	spinUnlock(&ne2k_spinLock);
 }
 
 /***

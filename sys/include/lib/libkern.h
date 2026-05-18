@@ -1,8 +1,6 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
- *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -26,91 +24,16 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ubixos/sem.h>
+#ifndef _LIB_LIBKERN_H_
+#define _LIB_LIBKERN_H_
+
 #include <sys/types.h>
-#include <ubixos/errno.h>
-#include <ubixos/time.h>
-#include <ubixos/kpanic.h>
-#include <lib/kmalloc.h>
-#include <lib/kprintf.h>
 
-int sem_close(semID_t id)
-{
-	return (0);
-}
+/* 64-bit division/modulo support (compiler-rt / libgcc ABI) */
+u_quad_t __qdivrem(u_quad_t uq, u_quad_t vq, u_quad_t *arq);
+u_quad_t __udivdi3(u_quad_t a, u_quad_t b);
+u_quad_t __umoddi3(u_quad_t a, u_quad_t b);
+quad_t   __divdi3(quad_t a, quad_t b);
+quad_t   __moddi3(quad_t a, quad_t b);
 
-int sem_post(semID_t id)
-{
-	return (0);
-}
-
-int sem_wait(semID_t id)
-{
-	return (0);
-}
-
-int sem_trywait(semID_t id)
-{
-	return (0);
-}
-
-int sem_timedwait(semID_t id, const struct timespec *ts)
-{
-	return (0);
-}
-
-err_t sem_init(sys_sem_t **sem, uint8_t count)
-{
-	sys_sem_t *newSem = 0x0;
-
-	newSem = kmalloc(sizeof(struct sys_sem));
-	if (newSem == NULL)
-		return (ENOMEM);
-
-	newSem->signaled = count;
-
-	if (ubthread_cond_init(&(newSem->cond), NULL) != 0) {
-		kfree(newSem);
-		return (ENOMEM);
-	}
-	if (ubthread_mutex_init(&(newSem->mutex), NULL) != 0) {
-		kfree(newSem->cond);
-		kfree(newSem);
-		return (ENOMEM);
-	}
-
-	*sem = newSem;
-
-	return (ENOERR);
-}
-
-int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value)
-{
-	return (0);
-}
-
-int sem_unlink(const char *name)
-{
-	return (0);
-}
-
-int sem_getvalue(semID_t id, int *val)
-{
-	return (0);
-}
-
-err_t sem_destroy(sys_sem_t **sem)
-{
-	if (*sem == NULL)
-		return (EINVAL);
-
-	sys_sem_t *d_sem = *sem;
-
-	ubthread_cond_destroy(&(d_sem->cond));
-	ubthread_mutex_destroy(&(d_sem->mutex));
-
-	kfree(d_sem);
-	*sem = 0x0;
-
-	return (ENOERR);
-}
+#endif /* _LIB_LIBKERN_H_ */

@@ -74,7 +74,8 @@ void sched() {
       tmpTask->state = READY;
 
     if (tmpTask->state == READY) {
-      _current->state = (_current->state == DEAD) ? DEAD : READY;
+      if (_current != NULL)
+        _current->state = (_current->state == DEAD) ? DEAD : READY;
       _current = tmpTask;
       break;
     }

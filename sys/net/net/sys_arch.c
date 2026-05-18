@@ -181,19 +181,21 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   mbox->wait_send = 0;
   //mbox->size = size;
 
-  //Pass By Reference It's a Pointer
-  //ubthread_mutex_init(&mbox->lock, NULL);
-
-  //Pass By Reference It's a Pointer
-  sys_sem_new(&mbox->lock, 1);
-  sys_sem_new(&mbox->empty, 0);
-  sys_sem_new(&mbox->full, 0);
-
-  //mbox->queue = kmalloc(sizeof(void *) * size);//calloc(size, sizeof(void *));
-
-  //if (!mbox->queue) {
-  //  return ERR_MEM;
-  //}
+  if (sys_sem_new(&mbox->lock, 1) != ERR_OK) {
+    kfree(mbox);
+    return (ERR_MEM);
+  }
+  if (sys_sem_new(&mbox->empty, 0) != ERR_OK) {
+    sem_destroy(&mbox->lock);
+    kfree(mbox);
+    return (ERR_MEM);
+  }
+  if (sys_sem_new(&mbox->full, 0) != ERR_OK) {
+    sem_destroy(&mbox->lock);
+    sem_destroy(&mbox->empty);
+    kfree(mbox);
+    return (ERR_MEM);
+  }
 
   *mb = mbox;
 
@@ -203,22 +205,18 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
 void sys_mbox_free(struct sys_mbox **mb) {
   if ((mb != NULL) && (*mb != SYS_MBOX_NULL)) {
     struct sys_mbox *mbox = *mb;
+    *mb = SYS_MBOX_NULL;  /* prevent new callers from entering */
     sys_arch_sem_wait(&mbox->lock, 0);
-    /*
-     sys_sem_free_internal(mbox->full);
-     sys_sem_free_internal(mbox->empty);
-     sys_sem_free_internal(mbox->lock);
-     */
     sem_destroy(&mbox->full);
     sem_destroy(&mbox->empty);
+    mbox->full = mbox->empty = NULL;
+    /* Release the lock before destroying it so any waiter sees a valid
+     * signal rather than spinning on freed memory. */
+    sys_sem_signal(&mbox->lock);
     sem_destroy(&mbox->lock);
-
-    mbox->full = mbox->empty = mbox->lock = NULL;
+    mbox->lock = NULL;
     kfree(mbox);
-    *mb = 0x0;
   }
-  //kfree(mbox->queue);
-  //mbox->queue = NULL;
 }
 
 void sys_mbox_post(struct sys_mbox **mb, void *msg) {
@@ -394,25 +392,23 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
   LWIP_ASSERT("Prio is too big", prio < 20);
 
   new_thread = kmalloc(sizeof(struct sys_thread));
+  if (new_thread == NULL) {
+    kprintf("sys_thread_new: out of memory\n");
+    return (NULL);
+  }
   memset(new_thread, 0x0, sizeof(struct sys_thread));
+
+  if (ubthread_create(&new_thread->ubthread, 0x0, (void*)(thread), arg, name) != 0x0) {
+    kfree(new_thread);
+    kpanic("sys_thread_new: ubthread_create");
+  }
 
   spinLock(&netThreadSpinlock);
   new_thread->next = threads;
   new_thread->timeouts.next = NULL;
-  new_thread->ubthread = 0x0;
   threads = new_thread;
   spinUnlock(&netThreadSpinlock);
 
-  /*
-   thread_param = kmalloc(sizeof(struct thread_start_param));
-
-   thread_param->function = function;
-   thread_param->arg = arg;
-   thread_param->thread = thread;
-   */
-  if (ubthread_create(&new_thread->ubthread, 0x0, (void*) (thread), arg, name) != 0x0) {
-    kpanic("sys_thread_new: ubthread_create");
-  }
   return (new_thread);
 }
 
@@ -537,7 +533,7 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
   nfp->socket = lwip_socket(args->domain, args->type & 0xFF, args->protocol);
   nfp->fd_type = 2;
 
-  if (nfp->fd == 0x0 && nfp->socket) {
+  if (nfp->socket < 0) {
     if (fdestroy(td, nfp, fd) != 0x0)
       kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
@@ -545,7 +541,7 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
     error = -1;
   }
   else {
-    td->td_retval[0] = fd;  //nfp->fd; //MrOlsen 2018index;
+    td->td_retval[0] = fd;
   }
 
   return (error);

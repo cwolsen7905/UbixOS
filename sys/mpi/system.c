@@ -205,8 +205,19 @@ int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg)
 
 	if (type == 0x2)
 	{
-		while (mbox->msg != 0x0)
+		/* Re-look up the mbox by name under the lock each iteration.
+		 * Using the stale 'mbox' pointer after the unlock is a UAF:
+		 * mpi_destroyMbox holds mpiSpinLock when it kfree()s the mbox,
+		 * so re-finding by name is safe and handles the destroy case. */
+		for (;;) {
 			sched_yield();
+			spinLock(&mpiSpinLock);
+			mpi_mbox_t *m = mpi_findMbox(name);
+			int done = (m == NULL || m->msg == NULL);
+			spinUnlock(&mpiSpinLock);
+			if (done)
+				break;
+		}
 	}
 
 	return (0x0);

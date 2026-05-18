@@ -64,7 +64,11 @@ void systemTask() {
         case 0x69:
           x = (int*) &myMsg.data;
           kprintf("Switching to term: [%i][%i]\n", *x, myMsg.pid);
-          schedFindTask(myMsg.pid)->term = tty_find(*x);
+          {
+            kTask_t *_st = schedFindTask(myMsg.pid);
+            if (_st != NULL)
+              _st->term = tty_find(*x);
+          }
           break;
         case 1000:
           kprintf("Restarting the system in 5 seconds\n");

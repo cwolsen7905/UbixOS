@@ -37,6 +37,7 @@
 #include <assert.h>
 #include <sys/descrip.h>
 #include <ubixos/vitals.h>
+#include <sys/klog.h>
 
 uint32_t *kernelPageDirectory = 0x0; // Pointer To Kernel Page Directory
 
@@ -254,23 +255,26 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
 	/* Get The Index To The Page Table */
 	destPageTableIndex = PT_INDEX(dest);
 
-	/* If The Page Is Mapped In Free It Before We Remap */
+	/* If The Page Is Already Mapped, Handle COW Or Bail */
 	if ((pageTable[destPageTableIndex] & PAGE_PRESENT) == PAGE_PRESENT)
 	{
-		kpanic("A Page Is Already Mapped Here: 0x%X:0x%X", dest, destPageTableIndex);
+		kprintf("[vmm_remapPage] page already mapped at 0x%X (ptIdx 0x%X)\n", dest, destPageTableIndex);
+		klog(KLOG_WARNING, "vmm_remapPage: page already mapped at 0x%X (ptIdx 0x%X)", dest, destPageTableIndex);
 
-		if ((pageTable[destPageTableIndex] & PAGE_STACK) == PAGE_STACK)
-			kprintf("Stack Page: [0x%X]\n", dest);
+		if ((pageTable[destPageTableIndex] & PAGE_STACK) == PAGE_STACK) {
+			kprintf("[vmm_remapPage] stack page: [0x%X]\n", dest);
+			klog(KLOG_DEBUG, "vmm_remapPage: stack page at 0x%X", dest);
+		}
 
 		if ((pageTable[destPageTableIndex] & PAGE_COW) != PAGE_COW)
 		{
-			kprintf("Page NOT COW\n");
-			kprintf("Page Present: [0x%X][0x%X]", dest, pageTable[destPageTableIndex]);
+			kprintf("[vmm_remapPage] not COW: [0x%X][0x%X]\n", dest, pageTable[destPageTableIndex]);
+			klog(KLOG_ERR, "vmm_remapPage: non-COW page already present at 0x%X pte=0x%X", dest, pageTable[destPageTableIndex]);
 			source = 0x0;
 			goto rmDone;
 		}
 
-		/* Clear The Page First For Security Reasons */
+		/* COW page: free the old physical frame before remapping */
 		freePage(((uint32_t)pageTable[destPageTableIndex] & 0xFFFFF000));
 	}
 

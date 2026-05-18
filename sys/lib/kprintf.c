@@ -318,9 +318,8 @@ int kprintf(const char *fmt, ...)
 	char buf[512];
 
 	va_start(ap, fmt);
-
-	retval = kvprintf(fmt, NULL, &buf, 10, ap);
-	buf[retval] = '\0';
+	retval = kvprintf(fmt, NULL, buf, 10, ap, sizeof(buf) - 1);
+	buf[retval < (int)(sizeof(buf) - 1) ? retval : (int)(sizeof(buf) - 1)] = '\0';
 	va_end(ap);
 
 	if (!serial_initialized)
@@ -338,7 +337,7 @@ int sprintf(char *buf, const char *fmt, ...)
 	va_list args;
 	int i;
 	va_start(args, fmt);
-	i = kvprintf(fmt, NULL, buf, 10, args);
+	i = kvprintf(fmt, NULL, buf, 10, args, 0);
 	buf[i] = '\0';
 	va_end(args);
 	return (i);
@@ -346,18 +345,13 @@ int sprintf(char *buf, const char *fmt, ...)
 
 int snprintf(char *buf, size_t size, const char *fmt, ...)
 {
-	char tmp[2048];
 	va_list args;
 	int i;
 	va_start(args, fmt);
-	i = kvprintf(fmt, NULL, tmp, 10, args);
+	i = kvprintf(fmt, NULL, buf, 10, args, size > 0 ? size - 1 : 0);
 	va_end(args);
 	if (size > 0)
-	{
-		size_t n = (size_t)i < size - 1 ? (size_t)i : size - 1;
-		memcpy(buf, tmp, n);
-		buf[n] = '\0';
-	}
+		buf[i < (int)(size - 1) ? i : (int)(size - 1)] = '\0';
 	return (i);
 }
 
@@ -388,16 +382,16 @@ int snprintf(char *buf, size_t size, const char *fmt, ...)
  *              ("%*D", len, ptr, " " -> XX XX XX XX ...
  */
 
-int kvprintf(const char *fmt, void (*func)(int, void *), void *arg, int radix, va_list ap)
+int kvprintf(const char *fmt, void (*func)(int, void *), void *arg, int radix, va_list ap, size_t lim)
 {
-#define PCHAR(c)                                                                                                                                                                                                                                               \
-	{                                                                                                                                                                                                                                                      \
-		int cc = (c);                                                                                                                                                                                                                                  \
-		if (func)                                                                                                                                                                                                                                      \
-			(*func)(cc, arg);                                                                                                                                                                                                                      \
-		else                                                                                                                                                                                                                                           \
-			*d++ = cc;                                                                                                                                                                                                                             \
-		retval++;                                                                                                                                                                                                                                      \
+#define PCHAR(c)                                                     \
+	{                                                            \
+		int cc = (c);                                        \
+		if (func)                                            \
+			(*func)(cc, arg);                            \
+		else if (lim == 0 || (size_t)retval < lim)           \
+			*d++ = cc;                                   \
+		retval++;                                            \
 	}
 	char nbuf[MAXNBUF];
 	char *d;

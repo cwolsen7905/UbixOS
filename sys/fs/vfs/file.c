@@ -38,6 +38,7 @@
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <assert.h>
+#include <sys/klog.h>
 #include <sys/descrip.h>
 #include <sys/pipe.h>
 /* fat_filelib.h removed — FAT now uses native driver via vfsClose */
@@ -430,7 +431,7 @@ size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
      kprintf("fd->mp->fs[0x%X]\m", fd->mp->fs);
      */
 
-    if (fd != 0x0) {
+    if (fd != 0x0 && fd->mp->fs->vfsWrite != NULL) {
         res = fd->mp->fs->vfsWrite(fd, ptr, fd->offset, size * nmemb);
         fd->offset += size * nmemb;
     }
@@ -474,7 +475,7 @@ int feof(fileDescriptor_t *fd) {
 
  ************************************************************************/
 int fputc(int ch, fileDescriptor_t *fd) {
-    if (fd != 0x0) {
+    if (fd != 0x0 && fd->mp->fs->vfsWrite != NULL) {
         char c = (char) ch;
         fd->mp->fs->vfsWrite(fd, &c, fd->offset, 1);
         fd->offset++;
@@ -738,8 +739,16 @@ void sysMkDir(const char *path) {
     //kprintf("rootPath: [%s]\n",rootPath);
     tmpFD = fopen(rootPath, "rb");
 
-    if (tmpFD->mp == 0x0) {
-        kprintf("Invalid Mount Point\n");
+    if (tmpFD == NULL || tmpFD->mp == NULL) {
+        kprintf("sysMkDir: invalid mount point for %s\n", rootPath);
+        klog(KLOG_ERR, "sysMkDir: invalid mount point for %s", rootPath);
+        return;
+    }
+    if (tmpFD->mp->fs->vfsMakeDir == NULL) {
+        kprintf("sysMkDir: filesystem does not support mkdir\n");
+        klog(KLOG_ERR, "sysMkDir: filesystem does not support mkdir");
+        fclose(tmpFD);
+        return;
     }
     tmpFD->mp->fs->vfsMakeDir(dir, tmpFD);
 
@@ -778,6 +787,10 @@ int unlink(const char *node) {
 
     }
 
+    if (mp->fs->vfsUnlink == NULL) {
+        klog(KLOG_ERR, "unlink: filesystem does not support unlink for %s", path);
+        return (0x0);
+    }
     mp->fs->vfsUnlink(path, mp);
 
     return (0x0);

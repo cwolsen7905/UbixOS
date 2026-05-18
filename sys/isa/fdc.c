@@ -296,7 +296,7 @@ bool writeBlock(int block, Int8 *blockBuffer, unsigned long numSectors)
 bool waitFdc(bool sensei)
 {
 	timeOut = 50000;
-	while (!done && timeOut)
+	while (!done && timeOut--)
 		;
 	statSize = 0;
 	while ((statSize < 7) && (inportByte(fdcMsr) & (1 << 4)))
