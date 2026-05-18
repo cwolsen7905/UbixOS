@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -97,9 +97,17 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 	int argc = argv_count(argv_in);
 
 	uint32_t *argv_tmp = (uint32_t *)kmalloc(
-	    sizeof(char *) * (argc + 2)); // + 1 For ARGC + 1 For NULL TERM
+	    sizeof(char *) * (argc + 2)); /* + 1 For ARGC + 1 For NULL TERM */
+
+	if (argv_tmp == 0x0)
+		return (-1);
 
 	char *args_tmp = (char *)kmalloc(ARGV_PAGE);
+
+	if (args_tmp == 0x0) {
+		kfree(argv_tmp);
+		return (-1);
+	}
 
 	argv_tmp[0] = argc;
 

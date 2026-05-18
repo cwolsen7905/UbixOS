@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -230,6 +230,8 @@ int vsprintf(char *buf, const char *fmt, va_list args)
 
 		case 's':
 			s = va_arg(args, char *);
+			if (s == NULL)
+				s = "(null)";
 			len = strlen(s);
 			if (precision < 0)
 				precision = len;

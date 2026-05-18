@@ -312,10 +312,12 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args) {
 
     {
         if (strstr(fd->fileName, ":") == 0x0) {
-            sprintf(_current->oInfo.cwd, "%s%s", _current->oInfo.cwd, fd->fileName);
+            snprintf(_current->oInfo.cwd, sizeof(_current->oInfo.cwd),
+                "%s%s", _current->oInfo.cwd, fd->fileName);
         }
         else {
-            sprintf(_current->oInfo.cwd, fd->fileName);
+            snprintf(_current->oInfo.cwd, sizeof(_current->oInfo.cwd),
+                "%s", fd->fileName);
         }
     }
     return (error);
@@ -613,7 +615,6 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
         if (tmpFd->buffer == 0x0) {
             kfree(tmpFd);
             kprintf("Error: tmpFd->buffer == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
-            spinUnlock(&fdTable_lock);
             return (0x0);
         }
 

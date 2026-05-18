@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -48,11 +48,10 @@ long strtol(const char *__restrict nptr, char **__restrict endptr, int base)
 	 * assume decimal; if base is already 16, allow 0x.
 	 */
 	s = nptr;
-	/*
-	 do {
-	 c = *s++;
-	 } while (isspace((unsigned char)c));
-	 */
+	do {
+		c = *s++;
+	} while (c == ' ' || c == '\t' || c == '\n' || c == '\r' ||
+	    c == '\f' || c == '\v');
 	if (c == '-')
 	{
 		neg = 1;

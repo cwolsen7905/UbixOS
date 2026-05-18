@@ -649,9 +649,9 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to)
 	struct file *fp = 0x0;
 	struct file *dup_fp = 0x0;
 
-	if (to > MAX_FILES)
+	if (to >= MAX_FILES)
 	{
-		kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
+		kprintf("TO: %i >= MAX_FILES: %i", to, MAX_FILES);
 		return (-1);
 	}
 	else if (td->o_files[to] != 0x0)

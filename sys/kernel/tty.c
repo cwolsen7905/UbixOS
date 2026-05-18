@@ -114,10 +114,10 @@ int tty_change(uInt16 tty) {
     kpanic("Error: Changing to an invalid tty. File: %s, Line: %i\n", __FILE__, __LINE__);
 
   /* Copy display buffer to tty buffer */
-  memcpy(tty_foreground->tty_buffer, (char *) 0xB8000, (80 * 60 * 2));
+  memcpy(tty_foreground->tty_buffer, (char *) 0xB8000, (80 * 25 * 2));
 
   /* Copy new tty buffer to display buffer */
-  memcpy((char *) 0xB8000, terms[tty].tty_buffer, (80 * 60 * 2));
+  memcpy((char *) 0xB8000, terms[tty].tty_buffer, (80 * 25 * 2));
 
   /*
    Set the tty_pointer to the internal buffer so I can continue 

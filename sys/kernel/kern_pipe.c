@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -36,8 +36,6 @@
 
 int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args)
 {
-	int error = 0x0;
-
 	int fd1 = 0x0;
 	int fd2 = 0x0;
 
@@ -54,8 +52,17 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args)
 
 	memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
 
-	error = falloc(thr, &nfp1, &fd1);
-	error = falloc(thr, &nfp2, &fd2);
+	if (falloc(thr, &nfp1, &fd1) != 0 || nfp1 == 0x0) {
+		kfree(pipeDesc);
+		thr->td_retval[0] = -1;
+		return (-1);
+	}
+	if (falloc(thr, &nfp2, &fd2) != 0 || nfp2 == 0x0) {
+		fdestroy(thr, nfp1, fd1);
+		kfree(pipeDesc);
+		thr->td_retval[0] = -1;
+		return (-1);
+	}
 
 	nfp1->data = pipeDesc;
 	nfp2->data = pipeDesc;
