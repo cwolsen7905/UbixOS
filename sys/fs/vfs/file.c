@@ -40,7 +40,7 @@
 #include <assert.h>
 #include <sys/descrip.h>
 #include <sys/pipe.h>
-#include "../fat/fat_filelib.h"
+/* fat_filelib.h removed — FAT now uses native driver via vfsClose */
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
@@ -130,14 +130,38 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args) {
 }
 
 void sysRmDir(const char *path) {
-  char fullpath[1024];
+    char fullpath[1024];
+    char work[1024];
+    char *mp_name = 0x0;
+    char *dir_path = 0x0;
+    struct vfs_mountPoint *mp = 0x0;
 
-  if (strstr(path, ":") == 0x0)
-    sprintf(fullpath, "%s%s", _current->oInfo.cwd, path);
-  else
-    strncpy(fullpath, path, sizeof(fullpath) - 1);
+    if (strstr(path, ":") == 0x0)
+        snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, path);
+    else
+        strncpy(fullpath, path, sizeof(fullpath) - 1);
+    fullpath[sizeof(fullpath) - 1] = '\0';
 
-  fl_remove(fullpath);
+    strncpy(work, fullpath, sizeof(work) - 1);
+    work[sizeof(work) - 1] = '\0';
+
+    if (strstr(work, ":")) {
+        mp_name  = strtok(work, ":");
+        dir_path = strtok(NULL, "\n");
+        if (dir_path == 0x0 || dir_path[0] == '\0')
+            dir_path = "/";
+    } else {
+        mp       = vfs_findMount("sys");
+        dir_path = work;
+    }
+
+    if (mp_name != 0x0)
+        mp = vfs_findMount(mp_name);
+
+    if (mp == 0x0 || mp->fs == 0x0 || mp->fs->vfsRemDir == 0x0)
+        return;
+
+    mp->fs->vfsRemDir(dir_path);
 }
 
 int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {
@@ -650,8 +674,9 @@ int fclose(fileDescriptor_t *fd) {
                 fd->dup--;
             }
             else {
-                if (fd->res != 0x0)
-                    fl_fclose(fd->res);
+                if (fd->res != 0x0 && fd->mp != 0x0 &&
+                    fd->mp->fs != 0x0 && fd->mp->fs->vfsClose != 0x0)
+                    fd->mp->fs->vfsClose(fd->res);
 
                 if (tmpFd->prev)
                     tmpFd->prev->next = tmpFd->next;

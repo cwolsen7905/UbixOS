@@ -71,6 +71,7 @@ struct fileSystem {
     int (*vfsOpenDir)(const char *, kDIR_t *);   /* open directory for listing */
     int (*vfsReadDir)(kDIR_t *, struct kdirent *); /* read next entry */
     int (*vfsCloseDir)(kDIR_t *);                  /* close directory */
+    int (*vfsClose)(void *);                        /* close open file (may be NULL) */
 };
 
 struct inode_operations {
