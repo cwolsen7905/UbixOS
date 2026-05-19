@@ -669,6 +669,12 @@ fat_path_resolve(struct fat_fs *fs, const char *path,
 		while (*p && *p != '/' && i < 255)
 			comp[i++] = *p++;
 		comp[i] = '\0';
+		/* Consume any remaining characters in an over-long component */
+		if (i == 255 && *p && *p != '/') {
+			while (*p && *p != '/')
+				p++;
+			return (-1); /* ENAMETOOLONG */
+		}
 		if (*p == '/')
 			p++;
 

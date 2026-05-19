@@ -96,13 +96,18 @@ fat_bpb_parse(struct fat_fs *fs)
 	tot_sec32	= le32(buf + BPB_TotSec32);
 	fat_sz32	= le32(buf + BPB32_FATSz32);
 
-	if (bytes_per_sec == 0 || sec_per_clus == 0 || num_fats == 0) {
+	if (bytes_per_sec != 512 || sec_per_clus == 0 || num_fats == 0) {
 		kprintf("fat_bpb: invalid BPB fields\n");
 		return (-1);
 	}
 
 	fat_sz	= (fat_sz16 != 0) ? fat_sz16 : fat_sz32;
 	tot_sec	= (tot_sec16 != 0) ? tot_sec16 : tot_sec32;
+
+	if (fat_sz == 0 || tot_sec == 0) {
+		kprintf("fat_bpb: zero fat_sz or tot_sec\n");
+		return (-1);
+	}
 
 	/*
 	 * Sector counts for each region.  All values are partition-relative;
@@ -120,6 +125,10 @@ fat_bpb_parse(struct fat_fs *fs)
 	fs->root_sectors	= root_dir_sectors;
 	fs->data_lba		= fs->root_lba + root_dir_sectors;
 
+	if (tot_sec <= fs->data_lba) {
+		kprintf("fat_bpb: tot_sec <= data_lba\n");
+		return (-1);
+	}
 	data_sec		= tot_sec - fs->data_lba;
 	fs->total_clusters	= data_sec / sec_per_clus;
 
