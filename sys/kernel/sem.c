@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -74,7 +74,7 @@ err_t sem_init(sys_sem_t **sem, uint8_t count)
 		return (ENOMEM);
 	}
 	if (ubthread_mutex_init(&(newSem->mutex), NULL) != 0) {
-		kfree(newSem->cond);
+		ubthread_cond_destroy(&(newSem->cond));
 		kfree(newSem);
 		return (ENOMEM);
 	}

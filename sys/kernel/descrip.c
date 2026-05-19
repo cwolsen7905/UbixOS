@@ -73,7 +73,7 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 	{
 	case 17:
 		/* First 5 Descriptors Are Reserved */
-		for (i = 5; i < MAX_FILES; i++)
+		for (i = 5; i < O_FILES; i++)
 		{
 			if (td->o_files[i] == 0x0)
 			{
@@ -140,7 +140,7 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 	memset(fp, 0, sizeof(struct file));
 
 	/* First 5 Descriptors Are Reserved */
-	for (i = 5; i < MAX_FILES; i++)
+	for (i = 5; i < O_FILES; i++)
 	{
 		if (td->o_files[i] == 0x0)
 		{
