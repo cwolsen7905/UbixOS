@@ -412,34 +412,7 @@ void lnc_txINT()
 
 void lncInt()
 {
-	while (1)
-	{
-		kprintf("Finished!!!\n");
-	}
 	outportByte(0x20, 0x20);
-	return;
-	uInt16 csr0 = 0x0;
-	while ((csr0 = inportWord(lnc->ioAddr + RDP)) & INTR)
-	{
-		outportWord(lnc->ioAddr + RDP, csr0);
-		kprintf("CSR0: [0x%X]\n", csr0);
-		if (csr0 & ERR)
-		{
-			kprintf("Error: [0x%X]\n", csr0);
-		}
-		if (csr0 & RINT)
-		{
-			kprintf("RINT\n");
-		}
-		if (csr0 & TINT)
-		{
-			kprintf("TINT\n");
-		}
-		outportWord(lnc->ioAddr + RDP, csr0);
-		kprintf("CSR0: [0x%X]\n", csr0);
-	}
-	kprintf("Finished!!!\n");
-	return;
 }
 
 asm(".globl lnc_isr       \n"

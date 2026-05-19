@@ -281,6 +281,8 @@ static int e1000_rx_process(void) {
 				/* Notify lwIP bridge — defined in e1000netif.c */
 				extern void e1000netif_input(struct netif *);
 				e1000netif_input(&e1000_netif);
+			} else {
+				klog(KLOG_WARNING, "e1000: oversized rx frame %u bytes dropped", len);
 			}
 		}
 
@@ -406,6 +408,7 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
 
 const uint8_t *e1000_get_rx_packet(uint16_t *out_len) {
 	*out_len = e1000_rx_len;
+	e1000_rx_len = 0;
 	return e1000_rx_packet;
 }
 

@@ -75,7 +75,7 @@ static void low_level_init(struct netif *netif) {
 static err_t low_level_output(struct netif *netif, struct pbuf *p) {
 	/* Flatten the pbuf chain into a single linear buffer.
 	 * The e1000 supports scatter-gather but this keeps the driver simple. */
-	static uint8_t tx_scratch[1518]; /* max Ethernet frame without VLAN */
+	uint8_t tx_scratch[1518]; /* max Ethernet frame without VLAN */
 	uint16_t       total = 0;
 	struct pbuf   *q;
 
