@@ -139,7 +139,7 @@ int getFreeBlocks(int count, fileDescriptor_t *fd);
 //Good Functions
 //void initUbixFS(struct mountPoints *mp);
 
-int readUbixFS(fileDescriptor_t *fd, char *data, uInt32, long size);
+int readUbixFS(fileDescriptor_t *fd, char *data, off_t, long size);
 int writeUbixFS(fileDescriptor_t *fd, char *data, long offset, long size);
 void syncBat(struct vfs_mountPoint *mp);
 int freeBlocks(int block, fileDescriptor_t *fd);

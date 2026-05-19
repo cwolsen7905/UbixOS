@@ -29,6 +29,7 @@
 #include <fs/devfs/devfs.h>
 #include <fs/vfs/vfs.h>
 #include <sys/bus.h>
+#include <sys/types.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
@@ -108,7 +109,7 @@ static int devfs_open(char *file, fileDescriptor_t *fd) {
  Description: Read File Into Data
  Notes:
  */
-static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) {
+static int devfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   int i = 0x0, x = 0x0;
   uInt32 sectors = 0x0;
   uInt16 diff = 0x0;

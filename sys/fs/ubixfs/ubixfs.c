@@ -28,6 +28,7 @@
 *****************************************************************************************/
 
 #include <fs/ubixfs/ubixfs.h>
+#include <sys/types.h>
 #include <sys/bus.h>
 #include <fs/ubixfs/dirCache.h>
 #include <fs/vfs/vfs.h>
@@ -191,7 +192,7 @@ int writeFileByte(int ch, fileDescriptor_t *fd, long offset) {
 /* Verified Functions */
 
     
-int readUbixFS(fileDescriptor_t *fd,char *data,uInt32 offset,long size) {
+int readUbixFS(fileDescriptor_t *fd,char *data,off_t offset,long size) {
   int i = 0x0;
   char *buffer = 0x0;
   struct ubixFSInfo *fsInfo = NULL;

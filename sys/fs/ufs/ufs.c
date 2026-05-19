@@ -313,12 +313,12 @@ static int ufs_openFile(const char *file, fileDescriptor_t *fd)
 	return (0x1);
 }
 
-int ufs_readFile(fileDescriptor_t *fd, char *data, uInt32 offset, long size)
+int ufs_readFile(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	return (fsread(fd->ino, data, size, fd));
 }
 
-int ufs_writeFile(fileDescriptor_t *fd, char *data, uInt32 offset, long size)
+int ufs_writeFile(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	kprintf("Writing :)\n");
 	return (0x0);

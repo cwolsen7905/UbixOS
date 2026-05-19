@@ -6,8 +6,9 @@
 #include <ubixos/kpanic.h>
 #include <string.h>
 #include <sys/buf.h>
+#include <sys/types.h>
 
-int ffs_read(fileDescriptor_t *fd, char *data, uInt32 offset, long size)
+int ffs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct fs *fs;
 

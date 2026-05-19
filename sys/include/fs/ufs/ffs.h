@@ -34,7 +34,7 @@
 #include <fs/vfs/vfs.h>
 #include <sys/bus.h>
 
-int ffs_read(fileDescriptor_t *,char *,uint32_t,long);
+int ffs_read(fileDescriptor_t *,char *,off_t,long);
 
 #endif
 
