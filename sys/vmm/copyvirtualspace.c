@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -279,7 +279,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 	 * First Page After Page Tables
 	 * This must be mapped into the page directory before we map all 1024 page directories into the memory space
 	 */
-	newPageTable = (uint32_t *)vmm_getFreePage(pid);
+	newPageTable = (uint32_t *)vmm_getFreeKernelPage(pid, 1);
 
 	newPageDirectory[PD_INDEX(PD_BASE_ADDR)] = (uint32_t)(vmm_getPhysicalAddr((uint32_t)newPageTable) | PAGE_DEFAULT);
 
@@ -294,7 +294,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 	 *
 	 */
 
-	newPageTable = (uint32_t *)vmm_getFreePage(pid);
+	newPageTable = (uint32_t *)vmm_getFreeKernelPage(pid, 1);
 
 	newPageDirectory[PD_INDEX(PT_BASE_ADDR)] = (uint32_t)(vmm_getPhysicalAddr((uint32_t)newPageTable) | PAGE_DEFAULT);
 
