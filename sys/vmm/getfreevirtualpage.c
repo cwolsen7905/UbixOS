@@ -105,7 +105,7 @@ keepMapping:
 			if ((pageTable[y] & PAGE_COW) == PAGE_COW)
 				kprintf("COW PAGE NOT CLEANED!");
 
-			start_page += (PAGE_SIZE * counter);
+			start_page += PAGE_SIZE * (counter + 1);
 			map_from = 0x0;
 			counter = 0;
 			goto keepMapping;

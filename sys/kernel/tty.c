@@ -83,6 +83,8 @@ int tty_init() {
   terms[0].tty_y = inportByte(0x3D5);
   outportByte(0x3D4, 0x0f);
   terms[0].tty_x = inportByte(0x3D5);
+  if (terms[0].tty_y > 24)
+    terms[0].tty_y = 24;
 
   /* Set up pointer for the foreground tty */
   tty_foreground = &terms[0];

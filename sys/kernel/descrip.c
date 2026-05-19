@@ -130,6 +130,13 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 	int i = 0;
 
 	fp = (struct file *)kmalloc(sizeof(struct file));
+	if (fp == 0x0) {
+		if (resultfp)
+			*resultfp = 0x0;
+		if (resultfd)
+			*resultfd = 0x0;
+		return (ENOMEM);
+	}
 	memset(fp, 0, sizeof(struct file));
 
 	/* First 5 Descriptors Are Reserved */
@@ -673,6 +680,8 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to)
 		return (0x0);
 
 	dup_fp = (struct file *)kmalloc(sizeof(struct file));
+	if (dup_fp == 0x0)
+		return (-ENOMEM);
 	memcpy(dup_fp, fp, sizeof(struct file));
 
 	td->o_files[to] = (void *)dup_fp;

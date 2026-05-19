@@ -319,19 +319,18 @@ int freePage(uint32_t pageAddr) {
   }
 
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
+  spinLock(&vmmSpinLock);
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
-
     /* Set Page As Avail So It Can Be Used Again */
-    spinLock(&vmmSpinLock);
     vmmMemoryMap[pageIndex].status = memAvail;
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
     vmmMemoryMap[pageIndex].pid = -2;
     freePages++;
     systemVitals->freePages = freePages;
     spinUnlock(&vmmSpinLock);
-
   }
   else {
+    spinUnlock(&vmmSpinLock);
     /* Adjust The COW Counter */
     adjustCowCounter(((uint32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
   }

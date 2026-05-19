@@ -920,12 +920,16 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 			        programHeader[i].p_filesz);
 #endif
 			interp = (char *)kmalloc(programHeader[i].p_filesz);
+			if (interp == 0x0)
+				K_PANIC("MALLOC FAILED");
 			kern_fseek(fd, programHeader[i].p_offset, 0);
 			fread((void *)interp, programHeader[i].p_filesz, 1, fd);
 #ifdef DEBUG_EXEC
 			kprintf("Interp: [%s]\n", interp);
 #endif
 			ldAddr = ldEnable(interp);
+			kfree(interp);
+			interp = 0x0;
 			// ef->ld_addr = ldEnable();
 			break;
 		case PT_GNU_STACK:
@@ -1094,6 +1098,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	/* Now That We Relocated The Binary We Can Unmap And Free Header Info */
 	kfree(binaryHeader);
 	kfree(programHeader);
+	kfree(sectionHeader);
+	kfree(ef);
 	// irqEnable(0);
 	// asm("sti");
 
