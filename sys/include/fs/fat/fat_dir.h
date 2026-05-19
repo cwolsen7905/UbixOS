@@ -80,6 +80,13 @@ int	fat_dir_delete_entry(struct fat_fs *fs, uint32_t entry_sector,
 	    uint16_t entry_offset);
 
 /*
+ * Mark the 8.3 entry at (entry_sec, entry_off) and any preceding LFN entries
+ * belonging to it as deleted (0xE5).  dir_cluster is the parent directory.
+ */
+int	fat_dir_delete_with_lfn(struct fat_fs *fs, uint32_t dir_cluster,
+	    uint32_t entry_sec, uint16_t entry_off);
+
+/*
  * Create a new directory entry for name in the directory at dir_cluster.
  * attr is a FAT_ATTR_* combination; start_cluster is the file's first cluster
  * (0 for an empty file).  On success returns 0 and fills entry_sector/offset

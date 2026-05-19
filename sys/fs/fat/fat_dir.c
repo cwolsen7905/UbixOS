@@ -459,6 +459,82 @@ fat_dir_delete_entry(struct fat_fs *fs, uint32_t entry_sector,
 }
 
 /*
+ * Delete an 8.3 entry AND any preceding LFN entries that belong to it.
+ * Scans dir_cluster from the start, tracking up to 20 LFN positions, and
+ * marks them all 0xE5 once the 8.3 entry at (entry_sec, entry_off) is found.
+ */
+int
+fat_dir_delete_with_lfn(struct fat_fs *fs, uint32_t dir_cluster,
+    uint32_t entry_sec, uint16_t entry_off)
+{
+#define MAX_LFN_ENTRIES 20
+	struct fat_dir_iter	 it;
+	uint8_t			 buf[512];
+
+	struct { uint32_t sec; uint16_t off; } lfn_pos[MAX_LFN_ENTRIES];
+	int	 lfn_count = 0;
+
+	fat_dir_iter_open(fs, dir_cluster, &it);
+
+	for (;;) {
+		uint32_t sec = iter_sector(fs, &it);
+		uint16_t off = it.entry_offset;
+
+		if (fat_sector_read(fs, sec, buf) != 0)
+			return (-1);
+
+		uint8_t first = buf[off];
+
+		if (first == 0x00)
+			break;
+
+		if (first == 0xE5) {
+			lfn_count = 0;
+			if (iter_advance(fs, &it) != 0)
+				break;
+			continue;
+		}
+
+		uint8_t attr = buf[off + 11];
+
+		if (attr == FAT_ATTR_LFN && (buf[off + 26] == 0 && buf[off + 27] == 0)) {
+			if (buf[off] & 0x40)
+				lfn_count = 0;
+			if (lfn_count < MAX_LFN_ENTRIES) {
+				lfn_pos[lfn_count].sec = sec;
+				lfn_pos[lfn_count].off = off;
+				lfn_count++;
+			}
+			if (iter_advance(fs, &it) != 0)
+				break;
+			continue;
+		}
+
+		/* Regular entry — check if this is our target */
+		if (sec == entry_sec && off == entry_off) {
+			/* Mark LFN entries deleted */
+			for (int i = 0; i < lfn_count; i++) {
+				if (fat_sector_read(fs, lfn_pos[i].sec, buf) != 0)
+					continue;
+				buf[lfn_pos[i].off] = 0xE5;
+				fat_sector_write(fs, lfn_pos[i].sec, buf);
+			}
+			/* Mark the 8.3 entry deleted */
+			if (fat_sector_read(fs, sec, buf) != 0)
+				return (-1);
+			buf[off] = 0xE5;
+			return (fat_sector_write(fs, sec, buf));
+		}
+
+		lfn_count = 0;
+		if (iter_advance(fs, &it) != 0)
+			break;
+	}
+	return (-1);
+#undef MAX_LFN_ENTRIES
+}
+
+/*
  * Scan the directory at dir_cluster for n_slots consecutive free (0x00 or
  * 0xE5) 32-byte entries.  Returns the sector/offset of the FIRST free slot,
  * or -1 if not enough space.
@@ -527,8 +603,36 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 
 	if (find_free_slots(fs, dir_cluster, n_slots,
 	    &first_sec, &first_off) != 0) {
-		kprintf("fat_dir_create_entry: no free slots\n");
-		return (-1);
+		/* Directory full — try to grow it (FAT32 and subdirs only). */
+		if (dir_cluster < 2 && fs->type != 32) {
+			/* FAT12/16 fixed root cannot grow */
+			kprintf("fat_dir_create_entry: root dir full\n");
+			return (-1);
+		}
+		/* Walk to the last cluster of this directory chain. */
+		uint32_t last = dir_cluster;
+		for (;;) {
+			uint32_t next = fat_cluster_next(fs, last);
+			if (next == FAT_CLUSTER_EOC || next < 2)
+				break;
+			last = next;
+		}
+		uint32_t new_clust = fat_cluster_alloc(fs, last);
+		if (new_clust < 2) {
+			kprintf("fat_dir_create_entry: disk full\n");
+			return (-1);
+		}
+		/* Zero the new cluster so entries read as 0x00 (end marker). */
+		uint32_t clba = fat_cluster_to_lba(fs, new_clust);
+		memset(buf, 0, sizeof(buf));
+		for (uint32_t s = 0; s < fs->sectors_per_cluster; s++)
+			fat_sector_write(fs, clba + s, buf);
+		/* Retry slot search — should now succeed. */
+		if (find_free_slots(fs, dir_cluster, n_slots,
+		    &first_sec, &first_off) != 0) {
+			kprintf("fat_dir_create_entry: no free slots after grow\n");
+			return (-1);
+		}
 	}
 
 	checksum = sfn_checksum(sfn);
@@ -887,7 +991,7 @@ fat_dir_rmdir(struct fat_fs *fs, const char *path)
 		return (-1);	/* not empty */
 	}
 
-	if (fat_dir_delete_entry(fs, sec, off) != 0)
+	if (fat_dir_delete_with_lfn(fs, dir_cluster, sec, off) != 0)
 		return (-1);
 	return (fat_cluster_free_chain(fs, target_cluster));
 }
@@ -906,7 +1010,7 @@ fat_dir_unlink(struct fat_fs *fs, const char *path)
 
 	start_cluster = ((uint32_t)ent.clus_hi << 16) | ent.clus_lo;
 
-	if (fat_dir_delete_entry(fs, sec, off) != 0)
+	if (fat_dir_delete_with_lfn(fs, dir_cluster, sec, off) != 0)
 		return (-1);
 
 	if (start_cluster >= 2)
