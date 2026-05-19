@@ -283,20 +283,21 @@ main(int argc, char **argv)
 		            got ? "" : " (timeout, using defaults)");
 	}
 
-	/* Claim a full-screen, decoration-free window */
-	uint32_t win_id;
-	void    *shm;
-	int      act_w, act_h;
-	{
+	/* ---- Window claim/release helpers -------------------------------- */
+	uint32_t win_id = 0;
+	void    *shm    = nullptr;
+	int      act_w  = 0, act_h = 0;
+
+	auto claim_window = [&]() -> bool {
 		mpi_message_t msg = {};
 		struct display_claim_req *cr = (struct display_claim_req *)msg.data;
-		msg.header    = DISPLAY_CLAIM;
-		cr->x         = 0;
-		cr->y         = 0;
-		cr->w         = scr_w;
-		cr->h         = scr_h;
+		msg.header     = DISPLAY_CLAIM;
+		cr->x          = 0;
+		cr->y          = 0;
+		cr->w          = scr_w;
+		cr->h          = scr_h;
 		cr->sender_pid = ubix::pid();
-		cr->no_decor  = 1;
+		cr->no_decor   = 1;
 		::strncpy(cr->title, "vLogin", sizeof(cr->title) - 1);
 		::strncpy(cr->reply, my_mbox.c_str(), sizeof(cr->reply) - 1);
 		ubix::post_message(VIEWS_MBOX, DISPLAY_CLAIM, msg);
@@ -308,7 +309,7 @@ main(int argc, char **argv)
 		if (reply.header != DISPLAY_ACK) {
 			std::printf("vlogin: DISPLAY_CLAIM denied (hdr=%u)\n",
 			            reply.header);
-			return 1;
+			return false;
 		}
 
 		struct display_ack *da = (struct display_ack *)reply.data;
@@ -318,135 +319,139 @@ main(int argc, char **argv)
 		act_h  = da->h;
 		std::printf("vlogin: window %u shm=%p %dx%d\n",
 		            win_id, shm, act_w, act_h);
-	}
-
-	if (!shm || act_w <= 0 || act_h <= 0) {
-		std::printf("vlogin: bad shm or dimensions\n");
-		return 1;
-	}
-
-	/* Set up rendering surface */
-	ogSurface surf;
-	if (!surf.ogAttach(shm, (uint32_t)act_w, (uint32_t)act_h, OG_PIXFMT_32BPP)) {
-		std::printf("vlogin: ogAttach failed\n");
-		return 1;
-	}
-
-	LoginUI ui(surf, act_w, act_h);
-	if (!ui.loaded) {
-		std::printf("vlogin: font load failed (%s)\n", FONT_PATH);
-		return 1;
-	}
-
-	std::printf("vlogin: UI ready, entering event loop\n");
-
-	auto flip = [&]() {
-		mpi_message_t m = {};
-		struct display_flip *fl = (struct display_flip *)m.data;
-		m.header      = DISPLAY_FLIP;
-		fl->window_id = win_id;
-		fl->dirty_x   = 0;
-		fl->dirty_y   = 0;
-		fl->dirty_w   = act_w;
-		fl->dirty_h   = act_h;
-		ubix::post_message(VIEWS_MBOX, DISPLAY_FLIP, m);
+		return (shm != nullptr && act_w > 0 && act_h > 0);
 	};
 
-	/* ---- Main login loop ------------------------------------------ */
-	std::string username, password, errmsg;
-	bool in_pass = false;   /* false = editing username, true = password */
-
-	auto reset = [&]() {
-		username.clear();
-		password.clear();
-		errmsg.clear();
-		in_pass = false;
-	};
-
-	reset();
-	ui.draw(username, password, in_pass, errmsg);
-	flip();
-
-	for (;;) {
-		mpi_message_t ev;
-		if (!mbox.try_fetch(ev)) {
-			ubix::yield();
-			continue;
-		}
-
-		if (ev.header == DISPLAY_CLOSE)
-			break;
-
-		if (ev.header != DISPLAY_KEY)
-			continue;
-
-		struct display_key *dk = (struct display_key *)ev.data;
-		if (!dk->pressed)
-			continue;
-
-		uint32_t kc = dk->keycode;
-
-		/* Tab: toggle between username and password fields */
-		if (kc == '\t') {
-			in_pass = !in_pass;
-			errmsg.clear();
-
-		/* Enter: submit */
-		} else if (kc == '\n' || kc == '\r') {
-			if (!in_pass) {
-				/* Move to password field if username non-empty */
-				if (!username.empty())
-					in_pass = true;
-			} else {
-				/* Attempt authentication */
-				ui.draw(username, password, in_pass, "Authenticating...");
-				flip();
-
-				struct auth_response resp =
-				    do_auth(auth_mbox, username, password);
-
-				if (resp.ok) {
-					errmsg.clear();
-					ui.draw(username, password, in_pass, "");
-					flip();
-
-					run_session(resp);
-
-					/* Session over — reset for next user */
-					reset();
-				} else {
-					errmsg = "Login incorrect.";
-					password.clear();
-					in_pass = false;
-				}
-			}
-
-		/* Backspace */
-		} else if (kc == '\b') {
-			std::string &field = in_pass ? password : username;
-			if (!field.empty())
-				field.pop_back();
-
-		/* Printable character */
-		} else if (kc >= 0x20 && kc < 0x7F) {
-			std::string &field = in_pass ? password : username;
-			if ((int)field.size() < MAX_FIELD)
-				field += (char)kc;
-		}
-
-		ui.draw(username, password, in_pass, errmsg);
-		flip();
-	}
-
-	/* Release window on exit */
-	{
+	auto release_window = [&]() {
 		mpi_message_t m = {};
 		struct display_release *dr = (struct display_release *)m.data;
 		m.header      = DISPLAY_RELEASE;
 		dr->window_id = win_id;
 		ubix::post_message(VIEWS_MBOX, DISPLAY_RELEASE, m);
+		win_id = 0;
+		shm    = nullptr;
+	};
+
+	/* ---- Outer session loop: claim → login → session → release → repeat */
+	for (;;) {
+		if (!claim_window()) {
+			std::printf("vlogin: failed to claim window\n");
+			return 1;
+		}
+
+		ogSurface surf;
+		if (!surf.ogAttach(shm, (uint32_t)act_w, (uint32_t)act_h, OG_PIXFMT_32BPP)) {
+			std::printf("vlogin: ogAttach failed\n");
+			return 1;
+		}
+
+		LoginUI ui(surf, act_w, act_h);
+		if (!ui.loaded) {
+			std::printf("vlogin: font load failed (%s)\n", FONT_PATH);
+			return 1;
+		}
+
+		std::printf("vlogin: UI ready, entering event loop\n");
+
+		auto flip = [&]() {
+			mpi_message_t m = {};
+			struct display_flip *fl = (struct display_flip *)m.data;
+			m.header      = DISPLAY_FLIP;
+			fl->window_id = win_id;
+			fl->dirty_x   = 0;
+			fl->dirty_y   = 0;
+			fl->dirty_w   = act_w;
+			fl->dirty_h   = act_h;
+			ubix::post_message(VIEWS_MBOX, DISPLAY_FLIP, m);
+		};
+
+		std::string username, password, errmsg;
+		bool in_pass = false;
+		bool do_session = false;
+		struct auth_response session_resp = {};
+
+		auto reset = [&]() {
+			username.clear();
+			password.clear();
+			errmsg.clear();
+			in_pass = false;
+		};
+
+		reset();
+		ui.draw(username, password, in_pass, errmsg);
+		flip();
+
+		/* ---- Inner login loop ------------------------------------- */
+		for (;;) {
+			mpi_message_t ev;
+			if (!mbox.try_fetch(ev)) {
+				ubix::yield();
+				continue;
+			}
+
+			if (ev.header == DISPLAY_CLOSE)
+				goto done;
+
+			if (ev.header != DISPLAY_KEY)
+				continue;
+
+			struct display_key *dk = (struct display_key *)ev.data;
+			if (!dk->pressed)
+				continue;
+
+			uint32_t kc = dk->keycode;
+
+			if (kc == '\t') {
+				in_pass = !in_pass;
+				errmsg.clear();
+
+			} else if (kc == '\n' || kc == '\r') {
+				if (!in_pass) {
+					if (!username.empty())
+						in_pass = true;
+				} else {
+					ui.draw(username, password, in_pass,
+					        "Authenticating...");
+					flip();
+
+					session_resp =
+					    do_auth(auth_mbox, username, password);
+
+					if (session_resp.ok) {
+						do_session = true;
+						break;   /* exit inner loop → release → session */
+					} else {
+						errmsg = "Login incorrect.";
+						password.clear();
+						in_pass = false;
+					}
+				}
+
+			} else if (kc == '\b') {
+				std::string &field = in_pass ? password : username;
+				if (!field.empty())
+					field.pop_back();
+
+			} else if (kc >= 0x20 && kc < 0x7F) {
+				std::string &field = in_pass ? password : username;
+				if ((int)field.size() < MAX_FIELD)
+					field += (char)kc;
+			}
+
+			ui.draw(username, password, in_pass, errmsg);
+			flip();
+		}
+
+		/* Release window so the session (taskbar + apps) owns the screen */
+		release_window();
+
+		if (do_session)
+			run_session(session_resp);
+		/* Loop back to claim_window for the next user */
 	}
 
+done:
+	release_window();
 	mbox.destroy();
 	return 0;
 }
