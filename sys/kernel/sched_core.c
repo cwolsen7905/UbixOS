@@ -92,6 +92,8 @@ kTask_t *schedNewTask()
 	for (i = 0; i < 3; i++)
 	{
 		fp = (void *)kmalloc(sizeof(struct file));
+		if (fp == 0x0)
+			kpanic("schedNewTask: kmalloc failed allocating stdio file\n");
 		memset(fp, 0, sizeof(struct file));
 		tmpTask->td.o_files[i] = (void *)fp;
 		fp->f_flag = 0x4;
