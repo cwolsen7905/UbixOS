@@ -139,6 +139,17 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 				pFD->wfdCNT--;
 			}
 
+			if (pFD->rfdCNT <= 0 && pFD->wfdCNT <= 0) {
+				struct pipeBuf *pbuf = pFD->headPB;
+				while (pbuf != NULL) {
+					struct pipeBuf *next = pbuf->next;
+					kfree(pbuf->buffer);
+					kfree(pbuf);
+					pbuf = next;
+				}
+				kfree(pFD);
+			}
+
 			td->td_retval[0] = 0;
 			break;
 		default:
@@ -219,6 +230,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			{
 				rpFD = pFD->headPB;
 				pFD->headPB = pFD->headPB->next;
+				kfree(rpFD->buffer);
 				kfree(rpFD);
 				pFD->bCNT--;
 			}

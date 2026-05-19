@@ -130,13 +130,8 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex)
 	if (ubmutex->pid != _current->id)
 		kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id, *ubmutex);
 
-	while (1)
-	{
-		if (xchg_32(&ubmutex->lock, FALSE) == TRUE)
-			break;
-		while (ubmutex->lock == FALSE)
-			sched_yield();
-	}
+	if (xchg_32(&ubmutex->lock, FALSE) != TRUE)
+		kpanic("ubthread_mutex_unlock: lock was not held");
 
 	ubmutex->pid = 0x0;
 	return (0x0);

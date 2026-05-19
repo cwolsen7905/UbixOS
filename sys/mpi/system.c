@@ -304,6 +304,14 @@ int mpi_destroyMbox(char *name)
 				mboxList = mbox->next;
 			if (mbox->next != 0x0)
 				mbox->next->prev = mbox->prev;
+			{
+				mpi_message_t *msg = mbox->msg;
+				while (msg != 0x0) {
+					mpi_message_t *next = msg->next;
+					kfree(msg);
+					msg = next;
+				}
+			}
 			kfree(mbox);
 			spinUnlock(&mpiSpinLock);
 			return (0x0);
