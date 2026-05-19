@@ -135,6 +135,7 @@ void sysRmDir(const char *path) {
     char work[1024];
     char *mp_name = 0x0;
     char *dir_path = 0x0;
+    char *_strtok_last = NULL;
     struct vfs_mountPoint *mp = 0x0;
 
     if (strstr(path, ":") == 0x0)
@@ -147,8 +148,8 @@ void sysRmDir(const char *path) {
     work[sizeof(work) - 1] = '\0';
 
     if (strstr(work, ":")) {
-        mp_name  = strtok(work, ":");
-        dir_path = strtok(NULL, "\n");
+        mp_name  = strtok_r(work, ":", &_strtok_last);
+        dir_path = strtok_r(NULL, "\n", &_strtok_last);
         if (dir_path == 0x0 || dir_path[0] == '\0')
             dir_path = "/";
     } else {
@@ -520,6 +521,7 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
     int i = 0x0;
     char *path = 0x0;
     char *mountPoint = 0x0;
+    char *_strtok_last = NULL;
     char fileName[1024];
     fileDescriptor_t *tmpFd = 0x0;
 
@@ -548,8 +550,8 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
     path = 0x0;
 
     if (strstr(fileName, ":")) {
-        mountPoint = (char*) strtok((char*) &fileName, ":");
-        path = strtok(NULL, "\n");
+        mountPoint = (char*) strtok_r((char*) &fileName, ":", &_strtok_last);
+        path = strtok_r(NULL, "\n", &_strtok_last);
         if (path == 0x0 || path[0] == '\0')
             path = "/";
     }
@@ -721,6 +723,7 @@ void sysMkDir(const char *path) {
     char rootPath[256];
     char *dir = 0x0;  //UBU*mountPoint = 0x0;
     char *tmp = 0x0;
+    char *_strtok_last = NULL;
     rootPath[0] = '\0';
     dir = (char*) path;
 
@@ -730,10 +733,10 @@ void sysMkDir(const char *path) {
     }
     while (strstr(dir, "/")) {
         if (rootPath[0] == 0x0)
-            sprintf(rootPath, "%s/", strtok(dir, "/"));
+            sprintf(rootPath, "%s/", strtok_r(dir, "/", &_strtok_last));
         else
-            sprintf(rootPath, "%s%s/", rootPath, strtok(dir, "/"));
-        tmp = strtok(NULL, "\n");
+            sprintf(rootPath, "%s%s/", rootPath, strtok_r(dir, "/", &_strtok_last));
+        tmp = strtok_r(NULL, "\n", &_strtok_last);
         dir = tmp;
     }
 
@@ -768,11 +771,12 @@ void sysMkDir(const char *path) {
 
 int unlink(const char *node) {
     char *path = 0x0, *mountPoint = 0x0;
+    char *_strtok_last = NULL;
     struct vfs_mountPoint *mp = 0x0;
 
-    path = (char*) strtok((char*) node, "@");
+    path = (char*) strtok_r((char*) node, "@", &_strtok_last);
 
-    mountPoint = strtok(NULL, "\n");
+    mountPoint = strtok_r(NULL, "\n", &_strtok_last);
 
     if (mountPoint == 0x0) {
         mp = vfs_findMount("sys"); /* _current->oInfo.container; */
@@ -801,6 +805,7 @@ kDIR_t *vfs_opendir(const char *path) {
     char fileName[1024];
     char *mountPoint = 0x0;
     char *dirPath = 0x0;
+    char *_strtok_last = NULL;
     struct vfs_mountPoint *mp = 0x0;
     kDIR_t *dir = 0x0;
 
@@ -814,8 +819,8 @@ kDIR_t *vfs_opendir(const char *path) {
     fileName[sizeof(fileName) - 1] = '\0';
 
     if (strstr(fileName, ":")) {
-        mountPoint = strtok(fileName, ":");
-        dirPath = strtok(NULL, "\n");
+        mountPoint = strtok_r(fileName, ":", &_strtok_last);
+        dirPath = strtok_r(NULL, "\n", &_strtok_last);
         if (dirPath == 0x0 || dirPath[0] == '\0')
             dirPath = "/";
     } else {
