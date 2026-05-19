@@ -229,11 +229,13 @@ void sys_mbox_post(struct sys_mbox **mb, void *msg) {
 
   LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_post: mbox %p msg %p\n", (void *)mbox, (void *)msg));
 
-  while ((mbox->tail - mbox->head) >= SYS_MBOX_SIZE) {
+  if ((mbox->tail - mbox->head) >= SYS_MBOX_SIZE) {
     mbox->wait_send++;
-    sys_sem_signal(&mbox->lock);
-    sys_arch_sem_wait(&mbox->empty, 0);
-    sys_arch_sem_wait(&mbox->lock, 0);
+    do {
+      sys_sem_signal(&mbox->lock);
+      sys_arch_sem_wait(&mbox->empty, 0);
+      sys_arch_sem_wait(&mbox->lock, 0);
+    } while ((mbox->tail - mbox->head) >= SYS_MBOX_SIZE);
     mbox->wait_send--;
   }
 
@@ -744,7 +746,13 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
   nfp->fd_type = 2;
 
   if (args->name && args->anamelen) {
-    unsigned int outlen = (unsigned int)*args->anamelen;
+    unsigned int outlen;
+    if (*args->anamelen < 0) {
+      lwip_close(newsock);
+      td->td_retval[0] = -EINVAL;
+      return (-1);
+    }
+    outlen = (unsigned int)*args->anamelen;
     if (outlen > kfromlen) outlen = kfromlen;
     lwip_to_posix_addr((uint8_t *)args->name, kfrom, outlen);
     *args->anamelen = (int)kfromlen;

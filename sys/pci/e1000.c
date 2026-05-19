@@ -111,13 +111,9 @@ static int e1000_map_mmio(uint32_t phys) {
 	uint32_t pages = 32; /* 128 KB / 4 KB */
 	uint32_t i;
 
-	for (i = 0; i < pages; i++) {
-		if (vmm_remapIOPage(phys + i * 0x1000,
-		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID) < 0) {
-			klog(KLOG_ERR, "e1000: vmm_remapIOPage failed at page %u", i);
-			return (-1);
-		}
-	}
+	for (i = 0; i < pages; i++)
+		vmm_remapIOPage(phys + i * 0x1000,
+		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
 	e1000_mmio = (volatile uint8_t *)phys;
 	return 0;
 }
