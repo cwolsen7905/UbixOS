@@ -236,6 +236,11 @@ main(int argc, char **argv)
 
 		while (mbox.try_fetch(reply)) {
 			if (reply.header == DISPLAY_CLOSE) {
+				mpi_message_t rel = {};
+				struct display_release *dr = (struct display_release *)rel.data;
+				rel.header    = DISPLAY_RELEASE;
+				dr->window_id = win_id;
+				ubix::post_message(views, DISPLAY_RELEASE, rel);
 				shell.kill();
 				shell.close_fds();
 				mbox.destroy();

@@ -751,6 +751,10 @@ int vmm_cleanVirtualSpace(uint32_t addr)
 					{
 						adjustCowCounter(phys, -1);
 					}
+					else if ((pageTableSrc[y] & PAGE_SHARED) == PAGE_SHARED)
+					{
+						/* Borrowed via vmm_share_region — owner frees it */
+					}
 					else if ((phys >> 12) < (uint32_t)numPages)
 					{
 						freePage(phys);

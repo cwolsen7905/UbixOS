@@ -131,7 +131,7 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 
 	for (i = 0; i < n; i++) {
 		if (vmm_remapPage(phys[i], dst_vaddr + i * PAGE_SIZE,
-		    PAGE_DEFAULT, dst_pid, 0) == 0) {
+		    PAGE_DEFAULT | PAGE_SHARED, dst_pid, 0) == 0) {
 			kprintf("vmm_share_region: vmm_remapPage failed at page %u\n", i);
 			asm volatile("movl %0, %%cr3" :: "r"(old_cr3));
 			asm volatile("sti");

@@ -51,6 +51,7 @@ public:
 	uint32_t     pitch;
 	void        *buf;       /* page-aligned region shared with client */
 	int          decor_h;
+	bool         closing = false;   /* close button clicked; awaiting DISPLAY_RELEASE */
 	std::string  title;
 	std::string  mbox;
 

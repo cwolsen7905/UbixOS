@@ -87,21 +87,30 @@ WindowManager::notify_taskbar(Window *w, uint8_t added)
 void
 WindowManager::close_window(Window *w)
 {
+	/* Two-phase close: send DISPLAY_CLOSE to the client, remove the window
+	 * from the visible stack and focus, but keep it in the registry so that
+	 * handle_release() can free the buffer when the client acknowledges.
+	 * This prevents freeing the shared buffer before the client has stopped
+	 * writing to it, which would corrupt views' heap and freeze the GUI. */
+	w->closing = true;
+	if (w->decor_h > 0)
+		notify_taskbar(w, 0);
+	reg_.z_remove(w);
+	reg_.set_focused(
+	    reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
+	comp_.invalidate_all();
+
 	if (!w->mbox.empty()) {
 		mpi_message_t cm;
 		struct display_close *dc = (struct display_close *)cm.data;
 		cm.header     = DISPLAY_CLOSE;
 		dc->window_id = w->id;
 		ubix::post_message(w->mbox, DISPLAY_CLOSE, cm);
+	} else {
+		/* No client mailbox — free immediately */
+		std::free(w->buf);
+		reg_.destroy(w);
 	}
-	if (w->decor_h > 0)
-		notify_taskbar(w, 0);
-	std::free(w->buf);
-	reg_.z_remove(w);
-	reg_.set_focused(
-	    reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
-	reg_.destroy(w);   /* w is dangling after this point */
-	comp_.invalidate_all();
 }
 
 void
@@ -217,15 +226,19 @@ WindowManager::handle_release(struct display_release *rel)
 {
 	Window *w = reg_.find(rel->window_id);
 	if (!w) return;
-	if (w->decor_h > 0)
-		notify_taskbar(w, 0);
+	if (!w->closing) {
+		/* Normal client-initiated close (e.g. vlogin releasing its window) */
+		if (w->decor_h > 0)
+			notify_taskbar(w, 0);
+		reg_.z_remove(w);
+		if (reg_.focused() == w)
+			reg_.set_focused(
+			    reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
+		comp_.invalidate_all();
+	}
+	/* closing==true: already removed from z-stack by close_window(); just free */
 	std::free(w->buf);
-	reg_.z_remove(w);
-	if (reg_.focused() == w)
-		reg_.set_focused(
-		    reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
 	reg_.destroy(w);   /* w is dangling after this point */
-	comp_.invalidate_all();
 }
 
 void

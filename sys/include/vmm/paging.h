@@ -60,7 +60,7 @@
 #define PAGE_ACCESSED       0x00000020
 #define PAGE_DIRTY          0x00000040
 #define PAGE_GLOBAL         0x00000080
-#define PAGE_               0x00000100
+#define PAGE_SHARED         0x00000100   /* borrowed from another process; skip freePage on unmap */
 #define PAGE_COW            0x00000200
 #define PAGE_STACK          0x00000400
 #define PAGE_WIRED          0x00000800
