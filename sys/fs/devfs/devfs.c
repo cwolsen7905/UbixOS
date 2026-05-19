@@ -209,7 +209,7 @@ int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor) {
   tmpDev->devType = type;
   tmpDev->devMajor = major;
   tmpDev->devMinor = minor;
-  sprintf(tmpDev->devName, name);
+  snprintf(tmpDev->devName, sizeof(tmpDev->devName), "%s", name);
   devfs_len += strlen(name) + 1;
 
   tmpDev->next = fsInfo->deviceList;

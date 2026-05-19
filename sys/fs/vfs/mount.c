@@ -63,7 +63,7 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   }
 
   /* Copy Mount Point Into Buffer */
-  sprintf( mp->mountPoint, mountPoint );
+  snprintf( mp->mountPoint, sizeof(mp->mountPoint), "%s", mountPoint );
 
   /* Set Pointer To Physical Drive */
   device = ubx_device_find( major, minor );

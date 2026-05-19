@@ -117,7 +117,7 @@ int ubixFSmkDir(char *directory, fileDescriptor_t *fd)
 		entry->size = UBIXFS_BLOCKSIZE_BYTES;
 		entry->attributes = typeDirectory;
 		entry->permissions = 0xEAA;
-		sprintf(entry->fileName, directory);
+		snprintf(entry->fileName, sizeof(entry->fileName), "%s", directory);
 
 		// dir->attributes = typeDirectory;
 		// sprintf(dir->fileName,"Test Entry");
