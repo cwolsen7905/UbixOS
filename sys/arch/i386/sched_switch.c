@@ -85,7 +85,12 @@ void sched() {
       if (delTask->parent != 0x0) {
         delTask->parent->children -= 1;
         delTask->parent->last_exit = delTask->id;
-        delTask->parent->state = READY;
+        /* Don't revive a parent that is already dying (endTask ran
+         * vmm_cleanVirtualSpace, set DEAD, then yielded — marking it
+         * READY here would re-schedule it with a partially cleaned
+         * address space and trigger a not-present LDT fault). */
+        if (delTask->parent->state != DEAD)
+          delTask->parent->state = READY;
         if (delTask->term != NULL && delTask->term->owner == delTask->id)
           delTask->term->owner = delTask->parent->id;
       }

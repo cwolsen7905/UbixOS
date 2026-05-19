@@ -51,6 +51,18 @@ void endTask(pidType pid)
 {
 
 	/*
+	 * GS = 0xF is an LDT-based selector (LDT entry 1) and the LDT lives at
+	 * VMM_USER_LDT (0x7FF000, PD[1]).  vmm_cleanVirtualSpace frees that page
+	 * below, so we must clear GS now while the LDT is still mapped.  If the
+	 * scheduler later switches away and back while interrupts are disabled
+	 * (or races via a DEAD-child wakeup), the hardware task switch will try
+	 * to validate GS from GDT[3].base+8 = 0x7FF008 and fault on a
+	 * not-present page.  GS = 0 has no descriptor and requires no LDT read.
+	 */
+	asm volatile("xorl %%eax, %%eax\n\t"
+	             "movw %%ax, %%gs" : : : "eax", "memory");
+
+	/*
 	 * Release the full per-process address space while we are still _current
 	 * so PT_BASE_ADDR reflects our own page tables.  Start at PD[1]
 	 * (0x400000) rather than VMM_USER_START (0x800000): PD[1] holds COW'd

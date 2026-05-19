@@ -153,6 +153,8 @@ void trap(struct trapframe *frame)
 		}
 		else
 		{
+			kprintf("INT OFF! KERN: EIP=0x%X CR2=0x%X ERR=0x%X\n",
+			    frame->tf_eip, cr2, frame->tf_err);
 			kpanic("INT OFF! KERN[0x%X]", trap_code);
 			die_if_kernel("TEST", frame, 0x200);
 		}
