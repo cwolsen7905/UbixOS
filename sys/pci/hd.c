@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -410,9 +410,25 @@ go:
 	kprintf("LBA [0x%X - 0x%X], LBA_HIGH: %i, LBA_LOW: %i, SECTOR_SIZE: %i\n", hdd->ata_identify->command_set_enabled1, hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE, hdd->lba_high, hdd->lba_low,
 	        hdd->sector_size);
 
+	/* Wait for BSY to clear before issuing SET MULTIPLE MODE */
+	for (counter = 1000000; counter >= 0; counter--) {
+		if (!(inportByte(hdd->hdPort + ATA_COMMAND) & ATA_S_BUSY))
+			break;
+	}
 	outportByte(hdd->hdPort + hdSecCount, retVal);
 	outportByte(hdd->hdPort + hdHead, hdd->hdDev);
 	outportByte(hdd->hdPort + hdCmd, 0xC6);
+
+	/* Wait for command completion and check for error */
+	for (counter = 1000000; counter >= 0; counter--) {
+		u_int8_t st = inportByte(hdd->hdPort + ATA_COMMAND);
+		if (!(st & ATA_S_BUSY)) {
+			if (st & 1)
+				kprintf("hdInit: SET MULTIPLE failed (err=0x%X)\n",
+				    inportByte(hdd->hdPort + ATA_COMMAND + 1));
+			break;
+		}
+	}
 
 	hdd->hdMask = retVal;
 	// hdd->hdSize = (hdd->hdSector[0x7B] * 256 * 256 * 256) + (hdd->hdSector[0x7A] * 256 * 256) + (hdd->hdSector[0x79] * 256) + hdd->hdSector[0x78];
