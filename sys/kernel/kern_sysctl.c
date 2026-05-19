@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -470,7 +470,7 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size)
 
 		tmpCtl->children->namelen = namelen;
 
-		sprintf(tmpCtl->children->name, str_name);
+		snprintf(tmpCtl->children->name, sizeof(tmpCtl->children->name), "%s", str_name);
 
 		insert_trieNode(&sysctl_headTrie, tmpCtl->children->name, tmpCtl->children);
 
@@ -492,7 +492,7 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size)
 
 		newCtl->namelen = namelen;
 
-		sprintf(newCtl->name, str_name);
+		snprintf(newCtl->name, sizeof(newCtl->name), "%s", str_name);
 
 		insert_trieNode(&sysctl_headTrie, newCtl->name, newCtl);
 

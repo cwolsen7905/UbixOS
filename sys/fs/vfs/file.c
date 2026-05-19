@@ -728,14 +728,15 @@ void sysMkDir(const char *path) {
     dir = (char*) path;
 
     if (strstr(path, ":") == 0x0) {
-        sprintf(tmpDir, "%s%s", _current->oInfo.cwd, path);
+        snprintf(tmpDir, sizeof(tmpDir), "%s%s", _current->oInfo.cwd, path);
         dir = (char*) &tmpDir;
     }
     while (strstr(dir, "/")) {
+        char *_seg = strtok_r(dir, "/", &_strtok_last);
         if (rootPath[0] == 0x0)
-            sprintf(rootPath, "%s/", strtok_r(dir, "/", &_strtok_last));
+            snprintf(rootPath, sizeof(rootPath), "%s/", _seg);
         else
-            sprintf(rootPath, "%s%s/", rootPath, strtok_r(dir, "/", &_strtok_last));
+            snprintf(rootPath, sizeof(rootPath), "%s%s/", rootPath, _seg);
         tmp = strtok_r(NULL, "\n", &_strtok_last);
         dir = tmp;
     }
