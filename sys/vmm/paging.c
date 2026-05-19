@@ -121,8 +121,14 @@ int vmm_pagingInit()
 	kernelPageDirectory[1023] = (uint32_t)((uint32_t)(pageTable) | KERNEL_PAGE_DEFAULT);
 	pageTable = (uint32_t *)(kernelPageDirectory[1023] & 0xFFFFF000);
 
-	pageTable[1023] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
-	pageTable[1022] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+	{
+		uint32_t kstk1 = vmm_findFreePage(sysID);
+		uint32_t kstk2 = vmm_findFreePage(sysID);
+		if (!kstk1 || !kstk2)
+			K_PANIC("vmm_pagingInit: no free pages for kernel stack");
+		pageTable[1023] = (kstk1 | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+		pageTable[1022] = (kstk2 | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+	}
 
 	/*
 	 * Map Page Tables Into VM Space
@@ -600,6 +606,11 @@ void *vmm_getFreeMallocPage(uInt16 count)
 								c = -1;
 								break;
 							}
+						}
+						else
+						{
+							c = -1;
+							break;
 						}
 					}
 					if (c != -1)
