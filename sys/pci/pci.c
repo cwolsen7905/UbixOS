@@ -453,26 +453,35 @@ static struct ubx_device *pci_device_from_cfg(struct pciConfig *cfg)
 
 int pci_init()
 {
-	uint16_t bus, dev, func;
-	int i;
+	/*
+	 * BFS over all PCI buses.  Start with bus 0; when a PCI-to-PCI bridge
+	 * (class 0x06, subclass 0x04) is found, enqueue its secondary bus so
+	 * devices behind the bridge are also discovered.
+	 */
+	uint8_t  bus_queue[256];
+	int      qhead = 0, qtail = 0;
+	uint8_t  seen[256];
 
+	int i;
 	struct pciConfig *pcfg;
 	struct ubx_device *udev;
 
-	for (bus = 0x0; bus < 0x2; bus++)
-	{
-		for (dev = 0; dev < 32; dev++)
-		{
+	memset(seen, 0, sizeof(seen));
+	bus_queue[qtail++] = 0;
+	seen[0] = 1;
+
+	while (qhead < qtail) {
+		uint16_t bus = bus_queue[qhead++];
+
+		for (uint16_t dev = 0; dev < 32; dev++) {
 			int multifunction = 0;
-			for (func = 0; func < 8; func++)
-			{
+			for (uint16_t func = 0; func < 8; func++) {
 				/* Only scan functions 1-7 if function 0 advertised multi-function. */
 				if (func != 0 && !multifunction)
 					break;
 
 				pcfg = (struct pciConfig *)pciProbe(bus, dev, func);
-				if (pcfg == NULL)
-				{
+				if (pcfg == NULL) {
 					if (func == 0)
 						break; /* no device here at all */
 					continue;
@@ -481,10 +490,17 @@ int pci_init()
 				if (func == 0)
 					multifunction = (pcfg->headerType & 0x80) ? 1 : 0;
 
-				for (i = 0x0; i < (int)countof(pciClasses); i++)
-				{
-					if (pcfg->classCode == pciClasses[i].baseClass && pcfg->subClass == pciClasses[i].subClass && pcfg->progIf == pciClasses[i].interface)
-					{
+				/* If this is a PCI-to-PCI bridge, enqueue the secondary bus. */
+				if (pcfg->classCode == 0x06 && pcfg->subClass == 0x04) {
+					uint8_t secondary = (uint8_t)(pciRead(bus, dev, func, 0x19, 1));
+					if (secondary > 0 && !seen[secondary] && qtail < 256) {
+						seen[secondary] = 1;
+						bus_queue[qtail++] = secondary;
+					}
+				}
+
+				for (i = 0x0; i < (int)countof(pciClasses); i++) {
+					if (pcfg->classCode == pciClasses[i].baseClass && pcfg->subClass == pciClasses[i].subClass && pcfg->progIf == pciClasses[i].interface) {
 						kprintf("pci: %u:%u.%u %04X:%04X %s IRQ %u\n", pcfg->bus, pcfg->dev, pcfg->func, pcfg->vendorID, pcfg->deviceID, pciClasses[i].name, pcfg->intLine);
 						break;
 					}
