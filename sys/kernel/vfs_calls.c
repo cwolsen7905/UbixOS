@@ -230,6 +230,8 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			{
 				rpFD = pFD->headPB;
 				pFD->headPB = pFD->headPB->next;
+				if (pFD->headPB == NULL)
+					pFD->tailPB = NULL;
 				kfree(rpFD->buffer);
 				kfree(rpFD);
 				pFD->bCNT--;
