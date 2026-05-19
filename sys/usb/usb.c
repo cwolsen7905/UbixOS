@@ -39,12 +39,14 @@
 #include <string.h>
 
 /* -----------------------------------------------------------------------
- * Class driver table — populated in hid_kbd.c (Phase 6+)
+ * Class driver table — populated in hid_kbd.c (Phase 6) and ums_bot.c (Phase 7)
  * --------------------------------------------------------------------- */
 extern struct usb_driver hid_kbd_driver;
+extern struct usb_driver ums_bot_driver;
 
 static struct usb_driver *const usb_driver_table[] = {
 	&hid_kbd_driver,
+	&ums_bot_driver,
 	NULL,
 };
 
