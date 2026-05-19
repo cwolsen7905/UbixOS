@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -42,9 +42,11 @@
 void kpanic(const char *fmt, ...) {
   char buf[512];
   va_list args;
+  int n;
 
   va_start(args, fmt);
-  vsprintf(buf, fmt, args);
+  n = kvprintf(fmt, NULL, buf, 10, args, sizeof(buf) - 1);
+  buf[n < (int)(sizeof(buf) - 1) ? n : (int)(sizeof(buf) - 1)] = '\0';
   va_end(args);
 
   /* It's important that we print on the current terminal so let's reset foreground */

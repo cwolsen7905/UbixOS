@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -744,7 +744,7 @@ int kvprintf(const char *fmt, void (*func)(int, void *), void *arg, int radix, v
 		}
 	}
 #undef PCHAR
-	return (0);
+	return (retval); /* NOTREACHED */
 }
 
 static char *ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper)

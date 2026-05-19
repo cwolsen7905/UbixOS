@@ -245,7 +245,7 @@ void *kmalloc(uInt32 len)
 		return (0x0);
 	}
 
-	pages = (uInt16)((len + 4095) / 4096);
+	pages = (len + 4095) / 4096;
 	tmpDesc1->baseAddr = (struct memDescriptor *)vmm_getFreeMallocPage(pages);
 	if (tmpDesc1->baseAddr == 0x0)
 	{
@@ -313,6 +313,15 @@ void kfree(void *baseAddr)
 
 			insertFreeDesc(tmpDesc);
 			spinUnlock(&mallocSpinLock);
+			return;
+		}
+	}
+
+	/* Check if this pointer is already on the free list — double-free. */
+	for (tmpDesc = freeKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next) {
+		if (tmpDesc->baseAddr == baseAddr) {
+			spinUnlock(&mallocSpinLock);
+			kpanic("kfree: double-free 0x%X\n", (uInt32)baseAddr);
 			return;
 		}
 	}
