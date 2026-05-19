@@ -75,4 +75,9 @@ extern volatile int kbd_gui_mode;
  * sys_read / sys_select after calling tty_change(). */
 extern volatile int tty_switch_slot;
 
+/* Deferred GUI→text VTY switch target (0-3).  Set to -1 when idle.
+ * Written by keyboard ISRs/callbacks on Ctrl+Alt+Fn; consumed in task
+ * context by sys_read / sys_select after calling vesa_text_mode(). */
+extern volatile int vesa_text_slot;
+
 #endif /* _ISA_KBD_H */

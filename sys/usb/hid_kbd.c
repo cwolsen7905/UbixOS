@@ -208,6 +208,12 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 			if (kc == 0)
 				continue;
 
+			/* Ctrl+Alt+F1..F4: deferred GUI→text VTY switch */
+			if (ctrl && alt && cur->keycode[i] >= 0x3A && cur->keycode[i] <= 0x3D) {
+				vesa_text_slot = cur->keycode[i] - 0x3A;
+				continue;
+			}
+
 			/* Alt+F1..F4: deferred VTY switch — mirrors AT keyboard ISR */
 			if (alt && cur->keycode[i] >= 0x3A && cur->keycode[i] <= 0x3D) {
 				tty_switch_slot = cur->keycode[i] - 0x3A;
