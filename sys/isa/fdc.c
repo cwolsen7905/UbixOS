@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -164,8 +164,8 @@ bool fdcRw(int block, unsigned char *blockBuffer, bool read, unsigned long numSe
 			seek(1); /* clear "disk change" status */
 			recalibrate();
 			motorOff();
-			kprint("FDC: Disk change detected. Trying again.\n");
-			return fdcRw(block, blockBuffer, read, numSectors);
+			kprint("FDC: Disk change detected.\n");
+			return (FALSE);
 		}
 		if (!seek(track))
 		{
@@ -201,9 +201,9 @@ bool fdcRw(int block, unsigned char *blockBuffer, bool read, unsigned long numSe
 		sendByte(0xff); /* DTL = unused */
 		if (!waitFdc(TRUE))
 		{
-			kprint("Timed out, trying operation again after reset()\n");
+			kprint("FDC: timed out.\n");
 			reset();
-			return fdcRw(block, blockBuffer, read, numSectors);
+			return (FALSE);
 		}
 		if ((status[0] & 0xc0) == 0)
 			break; /* worked! outta here! */
@@ -309,7 +309,8 @@ bool waitFdc(bool sensei)
 		fdcTrack = getByte();
 	}
 	done = FALSE;
-	if (!timeOut)
+	/* timeOut ends at -1 when the spin loop exhausts the counter */
+	if (timeOut <= 0)
 	{
 		if (inportByte(fdcDir) & 0x80)
 		{

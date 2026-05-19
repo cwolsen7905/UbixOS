@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -76,6 +76,10 @@ asm(".globl ne2kISR         \n"
 int ne2k_init()
 {
 	mDev = (struct device *)kmalloc(sizeof(struct device));
+	if (mDev == 0x0) {
+		kprintf("ne2k: kmalloc failed\n");
+		return (-1);
+	}
 	mDev->ioAddr = 0x280;
 	mDev->irq = 10;
 	setVector(&ne2kISR, mVec + 10, dPresent + dInt + dDpl0);
