@@ -36,6 +36,7 @@
 #include <string.h>
 #include <assert.h>
 #include <sys/descrip.h>
+#include <sys/resource.h>
 
 /* Shared with sched_switch.c via sched_internal.h — not static. */
 kTask_t *taskList = 0x0;
@@ -98,6 +99,12 @@ kTask_t *schedNewTask()
 		tmpTask->td.o_files[i] = (void *)fp;
 		fp->f_flag = 0x4;
 	}
+
+	/* RLIMIT_NOFILE: FreeBSD=8, Linux/musl=7 — set both so either lookup works */
+	tmpTask->td.rlim[7].rlim_cur = 64;
+	tmpTask->td.rlim[7].rlim_max = 64;
+	tmpTask->td.rlim[RLIMIT_NOFILE].rlim_cur = 64;
+	tmpTask->td.rlim[RLIMIT_NOFILE].rlim_max = 64;
 
 	spinLock(&schedulerSpinLock);
 	tmpTask->id = nextID++;

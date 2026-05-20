@@ -1070,6 +1070,13 @@ int sys_sigaction(struct thread *td, struct sys_sigaction_args*);
 int sys_getpgrp(struct thread *td, struct sys_getpgrp_args*);
 int sys_setpgid(struct thread *td, struct sys_setpgid_args*);
 
+struct sys_getpgid_args {
+    char pid_l_[PADL_(int)];
+    int pid;
+    char pid_r_[PADR_(int)];
+};
+int sys_getpgid(struct thread *td, struct sys_getpgid_args*);
+
 int sys_access(struct thread *td, struct sys_access_args*);
 int sys_fchdir(struct thread *td, struct sys_fchdir_args*);
 

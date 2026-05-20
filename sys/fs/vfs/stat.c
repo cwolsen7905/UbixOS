@@ -97,12 +97,14 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
 
   getfd(td, &fdd, args->fd);
 
+  if (fdd == 0x0 || fdd->fd == 0x0) {
+    td->td_retval[0] = EBADF;
+    return (EBADF);
+  }
+
   fd = fdd->fd;
 
-  if (fdd == 0 || fdd->fd == 0x0) {
-    error = -1;
-  }
-  else if (fd->res != 0x0) {
+  if (fd->res != 0x0) {
     args->sb->st_dev = 0xDEADBEEF;
     args->sb->st_ino = fd->ino;
     args->sb->st_rdev = 0xBEEFDEAD;

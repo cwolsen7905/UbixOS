@@ -662,3 +662,7 @@
 /* exit_group: Linux=252, UbixOS=352 */
 #undef  __NR_exit_group
 #define __NR_exit_group		352
+
+/* getpgid: Linux=132, UbixOS=207 */
+#undef  __NR_getpgid
+#define __NR_getpgid		207

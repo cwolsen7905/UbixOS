@@ -1068,10 +1068,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 206 - Invalid */
     {
-        0,
+        ARG_COUNT(sys_getpgid_args),
         "getpgid",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 207 - Invalid */
+        (sys_call_t *) sys_getpgid,
+        SYSCALL_VALID }, /* 207 - getpgid */
     {
         0,
         "reboot",

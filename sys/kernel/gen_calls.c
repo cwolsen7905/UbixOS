@@ -582,6 +582,21 @@ int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args)
 	return (0);
 }
 
+int sys_getpgid(struct thread *td, struct sys_getpgid_args *args)
+{
+	if (args->pid == 0 || args->pid == _current->id) {
+		td->td_retval[0] = _current->pgrp;
+		return (0);
+	}
+	kTask_t *t = schedFindTask(args->pid);
+	if (t == NULL) {
+		td->td_retval[0] = ESRCH;
+		return (ESRCH);
+	}
+	td->td_retval[0] = t->pgrp;
+	return (0);
+}
+
 int sys_setpgid(struct thread *td, struct sys_setpgid_args *args)
 {
 	pidType pid = 0x0;
@@ -814,11 +829,12 @@ int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args)
  */
 struct _kern_utsname
 {
-	char sysname[256];
-	char nodename[256];
-	char release[256];
-	char version[256];
-	char machine[256];
+	char sysname[65];
+	char nodename[65];
+	char release[65];
+	char version[65];
+	char machine[65];
+	char domainname[65];
 };
 
 int sys_uname(struct thread *td, struct sys_uname_args *args)
