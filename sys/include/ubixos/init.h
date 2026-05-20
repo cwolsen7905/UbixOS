@@ -69,8 +69,9 @@ extern uint32_t _multiboot_info;
 typedef int (*intFunctionPTR)(void);
 
 /* devfs_init must precede pci_init: ide_ubx_attach calls initHardDisk which calls devfs_makeNode */
+/* ufs_init/fat_init must precede pci_init: ums_bot_attach calls vfs_mount during USB enumeration */
 /* isa_bus_init replaces atkbd_init + mouseInit; runs after pit_init so ISRs find a valid IDT */
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, isa_bus_init, time_init, devfs_init, procfs_init, pci_init, tty_init, rs232Init, ufs_init, fat_init, net_init };
+intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, isa_bus_init, time_init, devfs_init, procfs_init, ufs_init, fat_init, pci_init, tty_init, rs232Init, net_init };
 
 //ne2k_init,
 //ubixfs_init,
