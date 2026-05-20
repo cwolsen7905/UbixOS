@@ -177,6 +177,7 @@ int kmain(uint32_t rootdev)
 			}
 		}
 
+		kprintf("kmain: calling vfs_mount major=%i minor=%i\n", sys_major, sys_minor);
 		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "sys", "rw") != 0x0)
 			kprintf("Problem Mounting sys (FAT) from major=%i "
 			        "minor=%i\n",

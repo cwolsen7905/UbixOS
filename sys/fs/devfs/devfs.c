@@ -176,6 +176,10 @@ static int devfs_write(fileDescriptor_t *fd, char *data, long offset, long size)
     return (size);
 
   device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
+
+  /* Character device with a write hook (e.g. /dev/audio) */
+  if (device != 0x0 && device->dev_char_write != 0x0)
+    return device->dev_char_write(device, data, (int)size);
   for (i = 0x0; i < ((size + 511) / 512); i++) {
     device->dev_blk_ops->read(device, i + (offset / 512), 1, fd->buffer);
     for (x = 0x0; ((x < 512) && ((x + (i * 512)) < size)); x++) {

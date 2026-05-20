@@ -80,7 +80,6 @@ fat_bpb_parse(struct fat_fs *fs)
 		kprintf("fat_bpb: sector 0 read failed\n");
 		return (-1);
 	}
-
 	if (buf[BPB_SigOffset] != 0x55 || buf[BPB_SigOffset + 1] != 0xAA) {
 		kprintf("fat_bpb: bad boot signature %02x %02x\n",
 		    buf[BPB_SigOffset], buf[BPB_SigOffset + 1]);

@@ -16,6 +16,7 @@
 #   EXTRA_LDFLAGS — appended to the link command
 
 EXTRA_LDFLAGS ?=
+EXTRA_LIBS    ?=
 
 MUSL_SRC  = ${SRCTOP}/contrib/musl
 MUSL_OBJ  = ${OBJ_DIR}/obj/musl
@@ -52,6 +53,7 @@ $(BINARY): $(OBJS)
 		${MUSL_LIB}/crt1.o \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
+		${EXTRA_LIBS} \
 		${OBJ_DIR}/lib/musl.a \
 		${OBJ_DIR}/lib/crt.a \
 		${LIBGCC} \

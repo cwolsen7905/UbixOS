@@ -3,6 +3,6 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-OBJS = hd.o pci.o lnc.o e1000.o
+OBJS = hd.o pci.o lnc.o e1000.o ac97.o
 
 .include "${UBIX_MK}/ubix.kern.mk"

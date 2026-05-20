@@ -32,7 +32,7 @@ USB_IMAGE_MB?=64
 # Mount point where the FAT32 partition appears after bmake mount-image.
 # macOS auto-names it from the FAT volume label; override on the command line
 # if needed (e.g. bmake mount-image MOUNT_POINT=/mnt/ubixos).
-MOUNT_POINT?=/Volumes/UBIXOS
+MOUNT_POINT?=/Volumes/SYS
 
 # Temp file used to pass the hdiutil disk device between mount/unmount.
 _DEV_FILE=/tmp/.ubixos_dev
@@ -212,6 +212,7 @@ run:
 	  -serial file:serial.log -vga std \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap \
+	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0 \
 	  -d guest_errors,unimp -D /tmp/qemu_debug.log \
 	  --trace "e1000_*"
 

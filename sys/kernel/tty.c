@@ -76,6 +76,41 @@ int tty_init() {
     terms[i].t_echo     = 1;
     terms[i].t_raw      = 0;
     terms[i].t_type     = TTY_TYPE_VGA;
+
+    /* Full termios — FreeBSD sane defaults */
+    terms[i].t_termios.c_iflag = 0x2B02;
+    terms[i].t_termios.c_oflag = 0x3;
+    terms[i].t_termios.c_cflag = 0x4B00;
+    terms[i].t_termios.c_lflag = IEXTEN | ICANON | ISIG | ECHOCTL |
+                                  ECHO | ECHOE | ECHOK | ECHOKE;
+    terms[i].t_termios.c_cc[0]  = 4;    /* VEOF */
+    terms[i].t_termios.c_cc[1]  = 255;  /* VEOL */
+    terms[i].t_termios.c_cc[2]  = 255;  /* VEOL2 */
+    terms[i].t_termios.c_cc[3]  = 127;  /* VERASE */
+    terms[i].t_termios.c_cc[4]  = 23;   /* VWERASE */
+    terms[i].t_termios.c_cc[5]  = 21;   /* VKILL */
+    terms[i].t_termios.c_cc[6]  = 18;   /* VREPRINT */
+    terms[i].t_termios.c_cc[7]  = 8;    /* spare */
+    terms[i].t_termios.c_cc[8]  = 3;    /* VINTR */
+    terms[i].t_termios.c_cc[9]  = 28;   /* VQUIT */
+    terms[i].t_termios.c_cc[10] = 26;   /* VSUSP */
+    terms[i].t_termios.c_cc[11] = 25;   /* VDSUSP */
+    terms[i].t_termios.c_cc[12] = 17;   /* VSTART */
+    terms[i].t_termios.c_cc[13] = 19;   /* VSTOP */
+    terms[i].t_termios.c_cc[14] = 22;   /* VLNEXT */
+    terms[i].t_termios.c_cc[15] = 15;   /* VDISCARD */
+    terms[i].t_termios.c_cc[16] = 1;    /* VMIN */
+    terms[i].t_termios.c_cc[17] = 0;    /* VTIME */
+    terms[i].t_termios.c_cc[18] = 20;   /* VSTATUS */
+    terms[i].t_termios.c_cc[19] = 255;  /* spare */
+    terms[i].t_termios.c_ispeed = 9600;
+    terms[i].t_termios.c_ospeed = 9600;
+
+    terms[i].t_winsize.ws_row    = 25;
+    terms[i].t_winsize.ws_col    = 80;
+    terms[i].t_winsize.ws_xpixel = 0;
+    terms[i].t_winsize.ws_ypixel = 0;
+    terms[i].t_pgrp = 0;
   }
 
   /* Read tty0 current position (to migrate from kprintf). */

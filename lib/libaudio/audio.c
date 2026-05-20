@@ -2,8 +2,6 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
- *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
  *
@@ -26,48 +24,31 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _UBIXOS_TTY_H
-#define _UBIXOS_TTY_H
-
-#include <sys/types.h>
+#include <audio/audio.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <sys/ioctl.h>
 
-#define TTY_MAX_TERMS 5
+int
+audio_open(const char *dev)
+{
+	return open(dev, O_WRONLY);
+}
 
-/* tty_setmode cmd values */
-#define TTY_SETRAW   0  /* val 1 = raw, 0 = canonical */
-#define TTY_SETECHO  1  /* val 1 = echo on, 0 = echo off */
+int
+audio_set_rate(int fd, uint32_t rate)
+{
+	return ioctl(fd, AUDIO_SET_RATE, &rate);
+}
 
-/* t_type: controls how echo is delivered */
-#define TTY_TYPE_VGA    0   /* VGA text console — echo via tty_print / backSpace() */
-#define TTY_TYPE_SERIAL 1   /* COM1 serial — echo via rs232_putc() */
+int
+audio_write(int fd, const void *buf, int n)
+{
+	return (int)write(fd, buf, (size_t)n);
+}
 
-typedef struct tty_termNode {
-    char *tty_buffer;
-    char *tty_pointer;
-    uint8_t tty_colour;
-    uint16_t tty_x;
-    uint16_t tty_y;
-    pidType owner;
-    char stdin[512];
-    int stdinSize;
-    /* Line discipline */
-    char t_linebuf[512]; /* canonical input buffer (getchar fills until Enter) */
-    int  t_linelen;      /* chars currently in t_linebuf */
-    uint8_t t_echo;      /* 1 = echo input to terminal (default) */
-    uint8_t t_raw;       /* 1 = raw mode: bypass line discipline */
-    uint8_t t_type;      /* TTY_TYPE_VGA or TTY_TYPE_SERIAL */
-    struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
-    struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
-    pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */
-} tty_term;
-
-int tty_init();
-int tty_change(uInt16);
-tty_term *tty_find(uInt16);
-int tty_print(char *, tty_term *);
-void tty_inject(tty_term *tty, char ch); /* push one char through line discipline */
-
-extern tty_term *tty_foreground;
-
-#endif
+void
+audio_close(int fd)
+{
+	close(fd);
+}

@@ -9,6 +9,7 @@
 # so musl's own stdio.h / unistd.h always take precedence.
 
 EXTRA_LDFLAGS ?=
+EXTRA_CFLAGS  ?=
 
 MUSL_SRC  = ${SRCTOP}/contrib/musl
 MUSL_OBJ  = ${OBJ_DIR}/obj/musl
@@ -32,11 +33,11 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) ${EXTRA_CFLAGS} -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 .S.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
+	$(CC) $(MUSL_CFLAGS) $(MUSL_INC) ${EXTRA_CFLAGS} -MT ${.TARGET:T} -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 

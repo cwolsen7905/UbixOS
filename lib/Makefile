@@ -1,6 +1,6 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: crt-code ubix_api-code ubix-code objgfx-code #csu-code
+all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -29,8 +29,12 @@ tools: src
 install:
 	(cd src/sys;${MAKE} install)
 
+libaudio-code: libaudio
+	(cd libaudio;$(MAKE))
+
 clean:
 	(cd crt;${MAKE} clean)
 	(cd ubix_api;${MAKE} clean)
 	(cd ubix;${MAKE} clean)
 	(cd objgfx;${MAKE} clean)
+	(cd libaudio;${MAKE} clean)
