@@ -38,8 +38,10 @@ MOUNT_POINT?=/Volumes/UBIXOS
 _DEV_FILE=/tmp/.ubixos_dev
 
 # Optional USB disk flags injected into QEMU run targets when usb.img exists.
+# port=2 pins the storage device to root port 2 so QEMU does not insert a
+# virtual hub (which we have no driver for).  usb-kbd is pinned to port=1.
 _USB_FLAGS!= test -f ${USB_IMAGE} && \
-	echo "-drive file=${USB_IMAGE},format=raw,if=none,id=usbdisk -device usb-storage,bus=uhci-bus.0,drive=usbdisk" || \
+	echo "-drive file=${USB_IMAGE},format=raw,if=none,id=usbdisk -device usb-storage,bus=uhci-bus.0,port=2,drive=usbdisk" || \
 	echo ""
 
 # ── Primary targets ──────────────────────────────────────────────────────────
@@ -205,7 +207,7 @@ run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
-	  -device usb-kbd,bus=uhci-bus.0 \
+	  -device usb-kbd,bus=uhci-bus.0,port=1 \
 	  ${_USB_FLAGS} \
 	  -serial file:serial.log -vga std \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
@@ -219,7 +221,7 @@ run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
 	  -machine pc \
 	  -device piix3-usb-uhci,id=uhci-bus \
-	  -device usb-kbd,bus=uhci-bus.0 \
+	  -device usb-kbd,bus=uhci-bus.0,port=1 \
 	  ${_USB_FLAGS} \
 	  -nographic \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
