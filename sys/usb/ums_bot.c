@@ -39,6 +39,7 @@
 #include <usb/usb_driver.h>
 #include <usb/uhci.h>
 #include <sys/bus.h>
+#include <sys/klog.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
@@ -127,6 +128,7 @@ ums_command(struct ums_softc *sc,
 	rc = ums_send_cbw(sc, &cbw);
 	if (rc != 0) {
 		kprintf("ums: CBW send failed\n");
+		klog(KLOG_ERR, "ums: CBW send failed");
 		return (-1);
 	}
 
@@ -141,6 +143,8 @@ ums_command(struct ums_softc *sc,
 		if (rc != 0) {
 			kprintf("ums: data phase failed (dir=%d len=%u)\n",
 			    direction, datalen);
+			klog(KLOG_ERR, "ums: data phase failed dir=%d len=%u",
+			    direction, datalen);
 			return (-1);
 		}
 	}
@@ -148,11 +152,14 @@ ums_command(struct ums_softc *sc,
 	rc = ums_recv_csw(sc, &csw);
 	if (rc != 0) {
 		kprintf("ums: CSW recv failed\n");
+		klog(KLOG_ERR, "ums: CSW recv failed");
 		return (-1);
 	}
 
 	if (csw.dCSWSignature != UMS_CSW_SIGNATURE || csw.dCSWTag != cbw.dCBWTag) {
 		kprintf("ums: CSW signature/tag mismatch (sig=0x%08X tag=%u/%u)\n",
+		    csw.dCSWSignature, csw.dCSWTag, cbw.dCBWTag);
+		klog(KLOG_ERR, "ums: CSW sig/tag mismatch sig=0x%08X tag=%u/%u",
 		    csw.dCSWSignature, csw.dCSWTag, cbw.dCBWTag);
 		ums_reset(sc);
 		return (-1);
@@ -160,6 +167,7 @@ ums_command(struct ums_softc *sc,
 
 	if (csw.bCSWStatus == UMS_CSW_STATUS_PHASE) {
 		kprintf("ums: phase error — resetting\n");
+		klog(KLOG_ERR, "ums: phase error, resetting");
 		ums_reset(sc);
 		return (-1);
 	}
@@ -204,7 +212,10 @@ ums_read_capacity(struct ums_softc *sc)
 	/* READ CAPACITY(10) returns the address of the *last* block */
 	sc->um_blocks += 1;
 
-	kprintf("ums: %u blocks × %u bytes = %u MB\n",
+	kprintf("ums: %u blocks x %u bytes = %u MB\n",
+	    sc->um_blocks, sc->um_blk_size,
+	    (sc->um_blocks / 2048));
+	klog(KLOG_INFO, "ums: %u blocks x %u bytes = %u MB",
 	    sc->um_blocks, sc->um_blk_size,
 	    (sc->um_blocks / 2048));
 	return (0);
@@ -240,6 +251,8 @@ ums_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 		    sc->um_blk_size, 1);
 		if (rc != 0) {
 			kprintf("ums: READ(10) lba=%u failed rc=%d\n", blk, rc);
+			klog(KLOG_ERR, "ums: READ(10) lba=%u failed rc=%d",
+			    blk, rc);
 			return (-1);
 		}
 	}
@@ -272,6 +285,8 @@ ums_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 		    sc->um_blk_size, 0);
 		if (rc != 0) {
 			kprintf("ums: WRITE(10) lba=%u failed rc=%d\n", blk, rc);
+			klog(KLOG_ERR, "ums: WRITE(10) lba=%u failed rc=%d",
+			    blk, rc);
 			return (-1);
 		}
 	}
@@ -331,16 +346,22 @@ ums_bot_attach(struct usb_device *dev)
 	kprintf("ums: bulk IN ep=%d (mps=%d) OUT ep=%d (mps=%d)\n",
 	    sc->um_bulk_in_ep, sc->um_max_pkt_in,
 	    sc->um_bulk_out_ep, sc->um_max_pkt_out);
+	klog(KLOG_DEBUG, "ums: bulk IN ep=%d mps=%d OUT ep=%d mps=%d",
+	    sc->um_bulk_in_ep, sc->um_max_pkt_in,
+	    sc->um_bulk_out_ep, sc->um_max_pkt_out);
 
 	/* Issue a BOT reset to get into a known state */
 	ums_reset(sc);
 
 	/* Probe medium */
-	if (ums_test_unit_ready(sc) != 0)
+	if (ums_test_unit_ready(sc) != 0) {
 		kprintf("ums: TEST UNIT READY failed (continuing)\n");
+		klog(KLOG_WARNING, "ums: TEST UNIT READY failed (continuing)");
+	}
 
 	if (ums_read_capacity(sc) != 0) {
 		kprintf("ums: READ CAPACITY failed — no media?\n");
+		klog(KLOG_ERR, "ums: READ CAPACITY failed, no media");
 		kfree(sc);
 		return (-1);
 	}
@@ -358,6 +379,7 @@ ums_bot_attach(struct usb_device *dev)
 		udev = ubx_device_alloc(dev->ud_hc->sc_dev, "ums0");
 		if (udev == NULL) {
 			kprintf("ums: ubx_device_alloc failed\n");
+			klog(KLOG_ERR, "ums: ubx_device_alloc failed");
 			kfree(sc);
 			return (-1);
 		}
@@ -367,6 +389,7 @@ ums_bot_attach(struct usb_device *dev)
 		if (ubx_device_register_block(udev, UMS_MAJOR, 0,
 		    &ums_blk_ops) != 0) {
 			kprintf("ums: block device registration failed\n");
+			klog(KLOG_ERR, "ums: block device registration failed");
 			ubx_device_free(udev);
 			kfree(sc);
 			return (-1);
@@ -374,6 +397,8 @@ ums_bot_attach(struct usb_device *dev)
 	}
 
 	kprintf("ums: attached as block device major=%d minor=0\n", UMS_MAJOR);
+	klog(KLOG_INFO, "ums: attached major=%d minor=0 blocks=%u blksz=%u",
+	    UMS_MAJOR, sc->um_blocks, sc->um_blk_size);
 	return (0);
 }
 
@@ -382,6 +407,7 @@ ums_bot_detach(struct usb_device *dev)
 {
 	(void)dev;
 	kprintf("ums: detached\n");
+	klog(KLOG_INFO, "ums: detached");
 	return (0);
 }
 

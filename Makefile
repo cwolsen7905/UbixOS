@@ -24,6 +24,11 @@ WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD
 
 DISK_IMAGE?=ubixos.img
 
+# USB mass-storage test image (64 MB FAT32, populated by bmake usb-image).
+# bmake run attaches it automatically if the file exists.
+USB_IMAGE?=usb.img
+USB_IMAGE_MB?=64
+
 # Mount point where the FAT32 partition appears after bmake mount-image.
 # macOS auto-names it from the FAT volume label; override on the command line
 # if needed (e.g. bmake mount-image MOUNT_POINT=/mnt/ubixos).
@@ -31,6 +36,11 @@ MOUNT_POINT?=/Volumes/UBIXOS
 
 # Temp file used to pass the hdiutil disk device between mount/unmount.
 _DEV_FILE=/tmp/.ubixos_dev
+
+# Optional USB disk flags injected into QEMU run targets when usb.img exists.
+_USB_FLAGS!= test -f ${USB_IMAGE} && \
+	echo "-drive file=${USB_IMAGE},format=raw,if=none,id=usbdisk -device usb-storage,bus=uhci-bus.0,drive=usbdisk" || \
+	echo ""
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
@@ -95,6 +105,17 @@ world:
 # Always authoritative — use this for releases or a clean initial image.
 image:
 	@sh tools/mkimage.sh ${DISK_IMAGE}
+
+# Build a small FAT32 USB test image with a README.  Attach to QEMU via
+# bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.
+usb-image:
+	@echo "==> Creating USB test image: ${USB_IMAGE} (${USB_IMAGE_MB} MB)"
+	@qemu-img create -f raw ${USB_IMAGE} ${USB_IMAGE_MB}M
+	@mformat -i ${USB_IMAGE} -F -v UBIXUSB ::
+	@printf 'UbixOS USB Test Drive\r\n\r\nThis image is used to test the ums_bot (USB Mass Storage BOT)\r\nclass driver under QEMU.\r\n\r\nMount point: vfs_mount(major=5, minor=0, ...)\r\n' > /tmp/ubixos_usb_readme.txt
+	@mcopy -i ${USB_IMAGE} /tmp/ubixos_usb_readme.txt ::README.TXT
+	@rm -f /tmp/ubixos_usb_readme.txt
+	@echo "==> ${USB_IMAGE} ready — run 'bmake run' to attach it"
 
 # ── Mount / unmount ──────────────────────────────────────────────────────────
 
@@ -179,10 +200,13 @@ install: install-world install-kernel
 
 # Boot the disk image in QEMU (primary IDE master, boot from HD).
 # Serial output is captured to serial.log for post-mortem inspection.
+# If usb.img exists it is attached as a USB mass-storage device.
 run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -machine pc,usb=on \
-	  -device usb-kbd \
+	  -machine pc \
+	  -device piix3-usb-uhci,id=uhci-bus \
+	  -device usb-kbd,bus=uhci-bus.0 \
+	  ${_USB_FLAGS} \
 	  -serial file:serial.log -vga std \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap \
@@ -190,10 +214,13 @@ run:
 	  --trace "e1000_*"
 
 # Headless run: no display, serial to stdout.  Ctrl-C to stop.
+# If usb.img exists it is attached as a USB mass-storage device.
 run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -machine pc,usb=on \
-	  -device usb-kbd \
+	  -machine pc \
+	  -device piix3-usb-uhci,id=uhci-bus \
+	  -device usb-kbd,bus=uhci-bus.0 \
+	  ${_USB_FLAGS} \
 	  -nographic \
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
