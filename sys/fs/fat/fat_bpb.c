@@ -32,6 +32,7 @@
 #include <lib/kprintf.h>
 #include <string.h>
 #include <fs/fat/fat_bpb.h>
+#include <fs/vfs/mount.h>
 
 /* Little-endian reads from an unaligned byte buffer */
 static uint16_t
@@ -149,6 +150,41 @@ fat_bpb_parse(struct fat_fs *fs)
 
 	kprintf("fat_bpb: FAT%d  clusters=%u  data_lba=%u\n",
 	    fs->type, fs->total_clusters, fs->data_lba);
+
+	/*
+	 * Extract the volume label from the extended BPB and use it (lowercased,
+	 * spaces stripped) as the VFS mount point name.  This lets a disk with
+	 * label "SYS" mount as "sys:" and a USB drive with label "UBIX" mount
+	 * as "ubix:" without any hardcoding in the caller.
+	 *
+	 * FAT32 extended BPB: BS_VolLab at byte 71 (11 bytes)
+	 * FAT12/16 extended BPB: BS_VolLab at byte 43 (11 bytes)
+	 */
+	{
+		uint8_t vol_off = (fs->type == FAT_TYPE_32) ? 71 : 43;
+		char    label[12];
+		int     i, last;
+
+		memcpy(label, buf + vol_off, 11);
+		label[11] = '\0';
+
+		/* strip trailing spaces */
+		for (last = 10; last >= 0 && label[last] == ' '; last--)
+			;
+		label[last + 1] = '\0';
+
+		/* lowercase */
+		for (i = 0; label[i]; i++)
+			if (label[i] >= 'A' && label[i] <= 'Z')
+				label[i] = (char)(label[i] + ('a' - 'A'));
+
+		if (last >= 0 && label[0] != '\0') {
+			snprintf(fs->mp->mountPoint,
+			    sizeof(fs->mp->mountPoint), "%s", label);
+			kprintf("fat_bpb: volume label \"%s\" -> mount point \"%s:\"\n",
+			    label, label);
+		}
+	}
 
 	return (0);
 }

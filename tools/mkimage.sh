@@ -71,7 +71,7 @@ PYEOF
 # ── Format FAT32 partition (size-limited to FAT_SIZE_MB) ───────────────────
 FAT_SECTORS=$(( FAT_SIZE_MB * 1024 * 1024 / 512 ))
 echo "==> Formatting FAT32 partition (${FAT_SIZE_MB} MB, ${FAT_SECTORS} sectors)"
-mformat -i "$IMG"@@1M -F -v UBIXOS -T "$FAT_SECTORS" ::
+mformat -i "$IMG"@@1M -F -v SYS -T "$FAT_SECTORS" ::
 
 # ── Build GRUB core image embedding FAT + multiboot support ────────────────
 echo "==> Building GRUB core image"

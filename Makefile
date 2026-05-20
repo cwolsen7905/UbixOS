@@ -111,7 +111,7 @@ image:
 usb-image:
 	@echo "==> Creating USB test image: ${USB_IMAGE} (${USB_IMAGE_MB} MB)"
 	@qemu-img create -f raw ${USB_IMAGE} ${USB_IMAGE_MB}M
-	@mformat -i ${USB_IMAGE} -F -v UBIXUSB ::
+	@mformat -i ${USB_IMAGE} -F -v UBIX ::
 	@printf 'UbixOS USB Test Drive\r\n\r\nThis image is used to test the ums_bot (USB Mass Storage BOT)\r\nclass driver under QEMU.\r\n\r\nMount point: vfs_mount(major=5, minor=0, ...)\r\n' > /tmp/ubixos_usb_readme.txt
 	@mcopy -i ${USB_IMAGE} /tmp/ubixos_usb_readme.txt ::README.TXT
 	@rm -f /tmp/ubixos_usb_readme.txt
