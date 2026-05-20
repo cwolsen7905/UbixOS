@@ -357,7 +357,7 @@ fat_dir_iter_next(struct fat_dir_iter *it, char *name_out,
 				/* First LFN entry encountered (last in name) */
 				it->lfn_seq	 = seq_num;
 				it->lfn_checksum = raw[13];
-				it->lfn[0]	 = '\0';
+				memset(it->lfn, 0, sizeof(it->lfn));
 			}
 
 			lfn_extract_chars(raw, chars);
@@ -369,10 +369,6 @@ fat_dir_iter_next(struct fat_dir_iter *it, char *name_out,
 				if (pos + i < 255)
 					it->lfn[pos + i] = chars[i];
 			}
-			/* NUL-terminate conservatively */
-			if (pos + 13 < 256)
-				it->lfn[pos + 13] = '\0';
-			it->lfn[255] = '\0'; /* always guarantee termination */
 
 			if (iter_advance(fs, it) != 0)
 				return (-1);

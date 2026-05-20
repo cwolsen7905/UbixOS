@@ -29,6 +29,11 @@ DISK_IMAGE?=ubixos.img
 USB_IMAGE?=usb.img
 USB_IMAGE_MB?=64
 
+# Demo MP3 bundled in the USB image for mp3play testing.
+# "Investigations" by Kevin MacLeod — CC BY 3.0 (incompetech.com)
+DEMO_MP3_URL?=https://incompetech.com/music/royalty-free/mp3-royaltyfree/Investigations.mp3
+DEMO_MP3_LOCAL?=/tmp/ubixos_demo.mp3
+
 # Mount point where the FAT32 partition appears after bmake mount-image.
 # macOS auto-names it from the FAT volume label; override on the command line
 # if needed (e.g. bmake mount-image MOUNT_POINT=/mnt/ubixos).
@@ -114,10 +119,16 @@ usb-image:
 	@echo "==> Creating USB test image: ${USB_IMAGE} (${USB_IMAGE_MB} MB)"
 	@qemu-img create -f raw ${USB_IMAGE} ${USB_IMAGE_MB}M
 	@mformat -i ${USB_IMAGE} -F -v UBIX ::
-	@printf 'UbixOS USB Test Drive\r\n\r\nThis image is used to test the ums_bot (USB Mass Storage BOT)\r\nclass driver under QEMU.\r\n\r\nMount point: vfs_mount(major=5, minor=0, ...)\r\n' > /tmp/ubixos_usb_readme.txt
+	@printf 'UbixOS USB Test Drive\r\n\r\nDemo track: Investigations by Kevin MacLeod\r\nLicense: CC BY 3.0 -- https://incompetech.com\r\n\r\nTo play: mp3play ubix:/INVESTIGATIONS.MP3\r\n' \
+	    > /tmp/ubixos_usb_readme.txt
 	@mcopy -i ${USB_IMAGE} /tmp/ubixos_usb_readme.txt ::README.TXT
 	@rm -f /tmp/ubixos_usb_readme.txt
-	@echo "==> ${USB_IMAGE} ready — run 'bmake run' to attach it"
+	@echo "==> Fetching demo MP3 (Investigations - Kevin MacLeod, CC BY 3.0)..."
+	@if [ ! -f ${DEMO_MP3_LOCAL} ]; then \
+	    curl -fsSL "${DEMO_MP3_URL}" -o ${DEMO_MP3_LOCAL}; \
+	fi
+	@mcopy -i ${USB_IMAGE} ${DEMO_MP3_LOCAL} ::INVESTIGATIONS.MP3
+	@echo "==> ${USB_IMAGE} ready — run 'bmake run' then: mp3play ubix:/INVESTIGATIONS.MP3"
 
 # ── Mount / unmount ──────────────────────────────────────────────────────────
 

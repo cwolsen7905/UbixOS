@@ -537,6 +537,10 @@
 #undef  __NR_lstat64
 #define __NR_lstat64		190
 
+/* getrusage: Linux=77, UbixOS=117 */
+#undef  __NR_getrusage
+#define __NR_getrusage		117
+
 /* ugetrlimit: Linux=191, UbixOS=194 */
 #undef  __NR_ugetrlimit
 #define __NR_ugetrlimit		194

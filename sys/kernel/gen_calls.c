@@ -163,14 +163,48 @@ int sys_kill(struct thread *td, struct sys_kill_args *uap)
 		return (-1);
 	}
 
-	/* SIGTERM/SIGKILL: end the task; other signals are silently accepted */
-	if (uap->signum == 15 || uap->signum == 9)
-	{
+	/*
+	 * Fatal signals: terminate the target task.
+	 * SIGHUP=1, SIGINT=2, SIGQUIT=3, SIGILL=4, SIGTRAP=5, SIGABRT=6,
+	 * SIGBUS=7, SIGFPE=8, SIGKILL=9, SIGSEGV=11, SIGPIPE=13, SIGTERM=15.
+	 * Other signals are silently accepted (no full signal infrastructure yet).
+	 */
+	switch (uap->signum) {
+	case 1:  /* SIGHUP */
+	case 2:  /* SIGINT */
+	case 3:  /* SIGQUIT */
+	case 4:  /* SIGILL */
+	case 5:  /* SIGTRAP */
+	case 6:  /* SIGABRT */
+	case 7:  /* SIGBUS */
+	case 8:  /* SIGFPE */
+	case 9:  /* SIGKILL */
+	case 11: /* SIGSEGV */
+	case 13: /* SIGPIPE */
+	case 15: /* SIGTERM */
 		endTask(uap->pid);
+		break;
+	default:
+		break;
 	}
 
 	td->td_retval[0] = 0;
 	return (0);
+}
+
+int sys_gettid(struct thread *td, void *uap)
+{
+	td->td_retval[0] = _current->id;
+	return (0);
+}
+
+int sys_tkill(struct thread *td, struct sys_tkill_args *uap)
+{
+	struct sys_kill_args kargs;
+
+	kargs.pid    = uap->tid;
+	kargs.signum = uap->signum;
+	return (sys_kill(td, &kargs));
 }
 
 int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)

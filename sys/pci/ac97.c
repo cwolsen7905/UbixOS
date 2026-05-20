@@ -40,6 +40,7 @@
 
 #include <pci/ac97.h>
 #include <pci/pci.h>
+#include <ubixos/sched.h>
 #include <sys/bus.h>
 #include <sys/dma_mem.h>
 #include <sys/io.h>
@@ -195,13 +196,13 @@ ac97_codec_init(struct ac97_softc *sc)
 	nam_wr16(sc, NAM_HP_VOL,     0x0000);
 	nam_wr16(sc, NAM_PCM_VOL,    0x0000);
 
-	/* Set PCM output sample rate to 48 kHz.
-	 * The VRA capability bit in NAM_EXT_AUDIO would need to be set for other
-	 * rates; QEMU supports it, but 48 kHz is the reset default so we just
-	 * write it directly. */
+	/* Enable Variable Rate Audio so userland can change sample rate via ioctl. */
+	nam_wr16(sc, NAM_EXT_AUDIO, nam_rd16(sc, NAM_EXT_AUDIO) | NAM_EXT_VRA);
+
+	/* Default output rate: 48 kHz. */
 	nam_wr16(sc, NAM_PCM_RATE, 48000);
 
-	kprintf("ac97: codec ready, rate=48000 Hz\n");
+	kprintf("ac97: codec ready, VRA enabled, rate=48000 Hz\n");
 	return 0;
 }
 
@@ -280,11 +281,22 @@ ac97_ring_write(const char *src, int len)
 	if (!sc->running || len <= 0)
 		return 0;
 
-	free_space = (uint32_t)(AC97_RING_SIZE) -
-	    ((sc->ring_wr - sc->ring_rd) & AC97_RING_MASK);
+	/* Never write more than the ring can ever hold. */
+	if ((uint32_t)len > AC97_RING_SIZE)
+		len = (int)AC97_RING_SIZE;
 
-	if ((uint32_t)len > free_space)
-		len = (int)free_space;
+	/*
+	 * Block until the ring has enough free space.  sched_yield() lets the
+	 * scheduler run other tasks and lets the AC97 ISR drain the ring.
+	 * This naturally paces PCM writes to real-time playback speed.
+	 */
+	while (1) {
+		free_space = (uint32_t)(AC97_RING_SIZE) -
+		    ((sc->ring_wr - sc->ring_rd) & AC97_RING_MASK);
+		if (free_space >= (uint32_t)len)
+			break;
+		sched_yield();
+	}
 
 	for (i = 0; i < (uint32_t)len; i++)
 		sc->ring[(sc->ring_wr + i) & AC97_RING_MASK] = (uint8_t)src[i];
@@ -302,6 +314,27 @@ ac97_dev_write(struct ubx_device *dev, const char *buf, int len)
 {
 	(void)dev;
 	return ac97_ring_write(buf, len);
+}
+
+/* -----------------------------------------------------------------------
+ * devfs char_ioctl hook — handles AUDIO_SET_RATE / AUDIO_GET_RATE
+ * --------------------------------------------------------------------- */
+
+static int
+ac97_dev_ioctl(struct ubx_device *dev, uint32_t cmd, void *arg)
+{
+	struct ac97_softc *sc = &ac97_sc;
+	(void)dev;
+
+	switch (cmd) {
+	case AUDIO_SET_RATE:
+		nam_wr16(sc, NAM_PCM_RATE, (uint16_t)(*(uint32_t *)arg));
+		return (0);
+	case AUDIO_GET_RATE:
+		*(uint32_t *)arg = nam_rd16(sc, NAM_PCM_RATE);
+		return (0);
+	}
+	return (-1);
 }
 
 /* -----------------------------------------------------------------------
@@ -368,8 +401,9 @@ ac97_ubx_attach(struct ubx_device *dev)
 	if (ac97_dma_init(sc) != 0)
 		return -1;
 
-	/* Wire dev_char_write so devfs routes write() to our ring buffer */
+	/* Wire devfs hooks */
 	dev->dev_char_write = ac97_dev_write;
+	dev->dev_char_ioctl = ac97_dev_ioctl;
 	ubx_device_register_block(dev, AC97_MAJOR, AC97_MINOR, NULL);
 	devfs_makeNode("audio", 'c', AC97_MAJOR, AC97_MINOR);
 

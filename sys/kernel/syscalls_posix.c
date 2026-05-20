@@ -1154,9 +1154,9 @@ struct syscall_entry systemCalls_posix[] = {
         SYSCALL_NOTIMP }, /* 223 - Invalid */
     {
         0,
-        "old msgctl",
-        sys_invalid,
-        SYSCALL_INVALID }, /* 224 - Invalid */
+        "gettid",
+        (sys_call_t *) sys_gettid,
+        SYSCALL_VALID }, /* 224 - gettid */
     {
         0,
         "msgget",
@@ -1223,10 +1223,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 237 - Invalid */
     {
-        0,
-        "ktimer_gettime",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 238 - Invalid */
+        ARG_COUNT(sys_tkill_args),
+        "tkill",
+        (sys_call_t *) sys_tkill,
+        SYSCALL_VALID }, /* 238 - tkill */
     {
         0,
         "ktimer_getoverrun",

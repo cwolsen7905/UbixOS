@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -70,7 +70,6 @@ static void devfs_initialize(struct vfs_mountPoint *mp) {
 static int devfs_open(char *file, fileDescriptor_t *fd) {
   struct devfs_info *fsInfo = fd->mp->fsInfo;
   struct devfs_devices *tmpDev = 0x0;
-  struct ubx_device *device = 0x0;
 
   spinLock(&devfsSpinLock);
 
@@ -84,18 +83,7 @@ static int devfs_open(char *file, fileDescriptor_t *fd) {
     file++;
   for (tmpDev = fsInfo->deviceList; tmpDev != 0x0; tmpDev = tmpDev->next) {
     if (strcmp(tmpDev->devName, file) == 0x0) {
-      switch ((fd->mode & 0x3)) {
-        case 0:
-        case 1:
-          device = ubx_device_find(tmpDev->devMajor, tmpDev->devMinor);
-          fd->start = (uint32_t)(uintptr_t) tmpDev; /* MrOlsen (2016-01-19) FIX: I Don't Understand This */
-        break;
-        default:
-          kprintf("Invalid File Mode\n");
-          spinUnlock(&devfsSpinLock);
-          return (-1);
-        break;
-      }
+      fd->start = (uint32_t)(uintptr_t) tmpDev;
       spinUnlock(&devfsSpinLock);
       return (0x1);
     }
@@ -166,7 +154,7 @@ static int devfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
  Notes:
 
  ************************************************************************/
-static int devfs_write(fileDescriptor_t *fd, char *data, long offset, long size) {
+static int devfs_write(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   int i = 0x0, x = 0x0;
   struct ubx_device *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;

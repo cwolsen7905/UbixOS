@@ -28,6 +28,9 @@
 
 #include <sys/descrip.h>
 #include <sys/errno.h>
+#include <sys/bus.h>
+#include <fs/devfs/devfs.h>
+#include <pci/ac97.h>
 
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
@@ -360,9 +363,25 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		}
 		return (0);
 
-	default:
+	default: {
+		/* Route audio ioctls to the devfs character device. */
+		struct file *fp = NULL;
+		getfd(td, &fp, args->fd);
+		if (fp != NULL && fp->fd != NULL && fp->fd->mp != NULL &&
+		    fp->fd->mp->fs->vfsType == 1) {
+			struct devfs_devices *node =
+			    (struct devfs_devices *)(uintptr_t)fp->fd->start;
+			struct ubx_device *dev =
+			    ubx_device_find(node->devMajor, node->devMinor);
+			if (dev != NULL && dev->dev_char_ioctl != NULL) {
+				td->td_retval[0] = dev->dev_char_ioctl(
+				    dev, (uint32_t)args->com, args->data);
+				return (0);
+			}
+		}
 		td->td_retval[0] = -1;
 		return (0);
+	}
 	}
 }
 

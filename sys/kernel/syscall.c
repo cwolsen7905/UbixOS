@@ -41,6 +41,7 @@
 #include <ubixos/kpanic.h>
 /* #include <sde/sde.h> */
 #include <vmm/vmm.h>
+#include <ubixos/errno.h>
 
 void sys_call(struct trapframe *frame) {
   uint32_t code = 0x0;
@@ -214,22 +215,24 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args) {
 }
 
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
-  char *buf = (char *) args->buf;
-  char *cwd = _current->oInfo.cwd; 
+  char *cwd = _current->oInfo.cwd;
+  size_t len;
 
-  while (cwd[0] != '/')
+  /* skip mount-point prefix — advance past the first ':' */
+  while (*cwd && *cwd != '/')
     cwd++;
 
+  len = strlen(cwd) + 1;
+
   if (args->buf) {
-    sprintf(buf, "%s", cwd);
-    buf[strlen(cwd)] = '\0';
- 
-    //sprintf(buf, "%s", _current->oInfo.cwd);
-    //buf[strlen(_current->oInfo.cwd)] = '\0';
-    //MrOlsen (2018-01-01) - Why is sprintf not null terminating
+    if (len > args->size) {
+      td->td_retval[0] = -1;
+      return (ERANGE);
+    }
+    memcpy((char *)args->buf, cwd, len);
   }
- // kprintf("GETCWD: [%s][0x%X]\n", _current->oInfo.cwd, args->buf);
- // kprintf("[%s]", args->buf);
+
+  td->td_retval[0] = (int)len;
   return (0);
 }
 

@@ -1,7 +1,7 @@
 # System Makefile (C) 2002 The UbixOS Project
 
 # Add a directory name here to include it in the build and clean targets.
-SUBDIRS = logd authd init login shell clock cp fdisk format disklabel ubistry ttyd ls tcc uname cat syscheck make filetest ed ttytest views taskbar term vlogin ping nc wget aplay tcsh
+SUBDIRS = logd authd init login shell clock cp fdisk format disklabel ubistry ttyd ls tcc uname cat syscheck make filetest ed ttytest views taskbar term vlogin ping nc wget aplay mp3play tcsh
 
 .PHONY: all clean ${SUBDIRS}
 

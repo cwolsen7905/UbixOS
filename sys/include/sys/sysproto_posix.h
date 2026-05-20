@@ -1258,4 +1258,16 @@ struct sys_set_tid_address_args {
 };
 int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap);
 
+int sys_gettid(struct thread *td, void *uap);
+
+struct sys_tkill_args {
+  char tid_l_[PADL_(int)];
+  int tid;
+  char tid_r_[PADR_(int)];
+  char signum_l_[PADL_(int)];
+  int signum;
+  char signum_r_[PADR_(int)];
+};
+int sys_tkill(struct thread *td, struct sys_tkill_args *uap);
+
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

@@ -94,8 +94,9 @@ struct ubx_device {
 	void			*dev_softc;		/* driver private state */
 	struct ubx_blk_ops	*dev_blk_ops;		/* block-device ops; NULL for non-block devices */
 
-	/* Character write hook — if non-NULL, devfs write calls this instead of dev_blk_ops. */
+	/* Character device hooks — if non-NULL, devfs routes write/ioctl here. */
 	int		(*dev_char_write)(struct ubx_device *dev, const char *buf, int len);
+	int		(*dev_char_ioctl)(struct ubx_device *dev, uint32_t cmd, void *arg);
 	char			 dev_nameunit[32];	/* e.g. "uhci0", "ata0" */
 
 	struct ubx_resource	 dev_res[UBX_MAX_RESOURCES];

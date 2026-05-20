@@ -47,7 +47,12 @@
 #define NAM_HP_VOL       0x04   /* headphone volume */
 #define NAM_PCM_VOL      0x18   /* PCM out volume */
 #define NAM_EXT_AUDIO    0x28   /* extended audio status / VRA capability */
+#define NAM_EXT_VRA      0x0001 /* bit 0: enable variable rate audio */
 #define NAM_PCM_RATE     0x2A   /* PCM front DAC rate (Hz) */
+
+/* ioctl commands (shared with userland include/audio/audio.h) */
+#define AUDIO_SET_RATE  0x4101
+#define AUDIO_GET_RATE  0x4102
 
 /* -----------------------------------------------------------------------
  * NABM (Native Audio Bus Master) register offsets — relative to BAR1
@@ -121,9 +126,9 @@ struct ac97_softc {
 	uint8_t          *buf[2];
 
 	/* Kernel ring buffer written by sys_write, drained by ISR */
-	uint8_t   ring[AC97_RING_SIZE];
-	uint32_t  ring_rd;
-	uint32_t  ring_wr;
+	uint8_t            ring[AC97_RING_SIZE];
+	volatile uint32_t  ring_rd;   /* modified by ISR */
+	volatile uint32_t  ring_wr;   /* modified by write path */
 
 	uint8_t   next_buf;   /* ping-pong index to fill next (0 or 1) */
 	uint8_t   lvi;        /* current last-valid-index sent to hardware */
