@@ -163,7 +163,7 @@ void sysRmDir(const char *path) {
     if (mp == 0x0 || mp->fs == 0x0 || mp->fs->vfsRemDir == 0x0)
         return;
 
-    mp->fs->vfsRemDir(dir_path);
+    mp->fs->vfsRemDir(dir_path, mp);
 }
 
 int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {

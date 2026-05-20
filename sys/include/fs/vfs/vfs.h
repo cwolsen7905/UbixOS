@@ -65,7 +65,7 @@ struct fileSystem {
     int (*vfsOpenFile)(void*, void*); /*!< pointer to openfile routine */
     int (*vfsUnlink)(char*, void*); /*!< pointer to unlink routine */
     int (*vfsMakeDir)(char*, void*); /*!< pointer to makedir routine */
-    int (*vfsRemDir)(char*); /*!< pointer to remdir routine */
+    int (*vfsRemDir)(char*, void*); /*!< pointer to remdir routine; second arg is vfs_mountPoint* */
     int (*vfsSync)(void); /*!< pointer to sync routine */
     int vfsType; /*!< vfs type id */
     int (*vfsOpenDir)(const char *, kDIR_t *);   /* open directory for listing */
