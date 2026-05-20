@@ -22,7 +22,7 @@ for a hobby OS).
 | 4 | UHCI host controller | Done | sys/usb/uhci.c + sys/include/usb/uhci.h; probe/attach, frame list, skeleton QHs, control/bulk/intr transfer primitives, root port init |
 | 5 | USB core + enumeration | Done | sys/usb/usb.c; full enumeration confirmed in serial log |
 | 6 | HID keyboard | Done | sys/usb/hid_kbd.c; routes via atkbd_inject into kbd_ring |
-| 7 | USB mass storage | Not started | BOT class driver; CBW/CSW; SCSI READ(10)/WRITE(10) |
+| 7 | USB mass storage | Done | sys/usb/ums_bot.c + sys/include/usb/ums.h; BOT CBW/CSW; SCSI READ(10)/WRITE(10); automounts via vfs_mount on attach; volume label -> mount point via fat_bpb |
 
 ---
 
