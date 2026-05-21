@@ -105,7 +105,7 @@ struct ac97_bdle {
  * --------------------------------------------------------------------- */
 #define AC97_BUF_SAMPLES  1024
 #define AC97_BUF_BYTES    (AC97_BUF_SAMPLES * 4)
-#define AC97_RING_BUFS    8
+#define AC97_RING_BUFS    64                        /* 64 × 4 KB = 256 KB ≈ 1.5 s @ 44.1 kHz */
 #define AC97_RING_SIZE    (AC97_BUF_BYTES * AC97_RING_BUFS)
 #define AC97_RING_MASK    (AC97_RING_SIZE - 1)
 
