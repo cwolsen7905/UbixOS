@@ -27,6 +27,7 @@
 #include <audio/audio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sched.h>
 #include <sys/ioctl.h>
 
 int
@@ -44,7 +45,26 @@ audio_set_rate(int fd, uint32_t rate)
 int
 audio_write(int fd, const void *buf, int n)
 {
-	return (int)write(fd, buf, (size_t)n);
+	int total = 0;
+	const char *p = (const char *)buf;
+
+	/*
+	 * Retry loop in user mode (IF=1) so the AC97 ISR can fire between
+	 * attempts.  The kernel write is non-blocking: it returns 0 when the
+	 * ring is full rather than blocking with interrupts disabled.
+	 */
+	while (total < n) {
+		int r = (int)write(fd, p + total, (size_t)(n - total));
+		if (r < 0)
+			return (-1);
+		if (r > 0) {
+			total += r;
+		} else {
+			/* Ring full — yield so the ISR gets a chance to drain it. */
+			sched_yield();
+		}
+	}
+	return (total);
 }
 
 void

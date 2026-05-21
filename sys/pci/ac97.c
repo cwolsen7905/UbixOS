@@ -40,7 +40,6 @@
 
 #include <pci/ac97.h>
 #include <pci/pci.h>
-#include <ubixos/sched.h>
 #include <sys/bus.h>
 #include <sys/dma_mem.h>
 #include <sys/io.h>
@@ -276,33 +275,33 @@ int
 ac97_ring_write(const char *src, int len)
 {
 	struct ac97_softc *sc = &ac97_sc;
-	uint32_t free_space, i;
+	uint32_t free_space, write_len, i;
 
 	if (!sc->running || len <= 0)
 		return 0;
 
-	/* Never write more than the ring can ever hold. */
-	if ((uint32_t)len > AC97_RING_SIZE)
-		len = (int)AC97_RING_SIZE;
-
 	/*
-	 * Block until the ring has enough free space.  sched_yield() lets the
-	 * scheduler run other tasks and lets the AC97 ISR drain the ring.
-	 * This naturally paces PCM writes to real-time playback speed.
+	 * Non-blocking partial write.  Returns the number of bytes actually
+	 * written (0 to len).  Returns 0 when the ring is full so the caller
+	 * can yield from user mode — where IF=1 — and let the ISR drain the
+	 * ring.  Blocking here with sched_yield() would keep IF=0 (syscall
+	 * entry clears IF and never re-enables it), starving the AC97 IRQ.
 	 */
-	while (1) {
-		free_space = (uint32_t)(AC97_RING_SIZE) -
-		    ((sc->ring_wr - sc->ring_rd) & AC97_RING_MASK);
-		if (free_space >= (uint32_t)len)
-			break;
-		sched_yield();
-	}
+	free_space = (uint32_t)(AC97_RING_SIZE) -
+	    ((sc->ring_wr - sc->ring_rd) & AC97_RING_MASK);
 
-	for (i = 0; i < (uint32_t)len; i++)
+	if (free_space == 0)
+		return 0;
+
+	write_len = (uint32_t)len;
+	if (write_len > free_space)
+		write_len = free_space;
+
+	for (i = 0; i < write_len; i++)
 		sc->ring[(sc->ring_wr + i) & AC97_RING_MASK] = (uint8_t)src[i];
 
-	sc->ring_wr = (sc->ring_wr + (uint32_t)len) & AC97_RING_MASK;
-	return len;
+	sc->ring_wr = (sc->ring_wr + write_len) & AC97_RING_MASK;
+	return (int)write_len;
 }
 
 /* -----------------------------------------------------------------------
