@@ -41,11 +41,6 @@
 #include <string.h>
 #include <stdio.h>
 
-/* Inspect DOOM internal state from the platform layer */
-extern int gametic;
-extern int gamestate;
-extern int screenvisible;
-
 static struct fb_info g_fb;
 static uint32_t       g_start_ms;
 
@@ -113,27 +108,9 @@ DG_Init(void)
 
 	g_start_ms = now_ms();
 
-	/*
-	 * Fill the framebuffer with a dark-blue loading colour.  This gives
-	 * visible feedback while the 4 MB WAD is parsed.  DOOM's first
-	 * DG_DrawFrame call will overwrite it.
-	 */
-	if (g_fb.base) {
-		uint8_t  *p  = (uint8_t *)g_fb.base;
-		uint32_t  sz = (uint32_t)g_fb.pitch * g_fb.height;
-		uint32_t  i;
-		if (g_fb.bpp == 32) {
-			uint32_t *p32 = (uint32_t *)p;
-			for (i = 0; i < sz / 4; i++)
-				p32[i] = 0x00000040;   /* dark blue */
-		} else {
-			for (i = 0; i + 2 < sz; i += 3) {
-				p[i]     = 0x40;       /* B */
-				p[i + 1] = 0x00;       /* G */
-				p[i + 2] = 0x00;       /* R = dark blue on screen */
-			}
-		}
-	}
+	/* Clear to black — border regions are never written by DG_DrawFrame. */
+	if (g_fb.base)
+		memset(g_fb.base, 0, (size_t)g_fb.pitch * g_fb.height);
 }
 
 /*
@@ -153,118 +130,47 @@ DG_DrawFrame(void)
 	if (!g_fb.base)
 		return;
 
-	/*
-	 * Diagnostic block.  Remove once rendering confirmed.
-	 *
-	 * Scans 16 pixels spread across DG_ScreenBuffer to test for content.
-	 * Top-left 8×8 corner indicator:
-	 *   Blinking GREEN  → DG_ScreenBuffer has non-zero content (palette issue)
-	 *   Blinking RED    → DG_ScreenBuffer is all-zero   (game not rendering)
-	 *   Blinking YELLOW → DG_ScreenBuffer timeout: draws test gradient instead
-	 *
-	 * After 70 frames (~2 s) with no content a test gradient is drawn
-	 * directly to the DOOM area to confirm framebuffer addressing works.
-	 */
-	{
-		static uint32_t diag_frame = 0;
-		diag_frame++;
-
-		/* Sample 16 pixels spread across the 320×200 buffer */
-		uint32_t has_content = 0;
-		for (int _s = 0; _s < 16; _s++) {
-			uint32_t idx = (uint32_t)_s * (DOOMGENERIC_RESX * DOOMGENERIC_RESY / 16);
-			if (DG_ScreenBuffer[idx] & 0xFFFFFF) { has_content = 1; break; }
-		}
-
-		/* Print key state every 35 frames so we can see it in the log */
-		if (diag_frame % 35 == 1) {
-			fprintf(stderr,
-			        "DOOM diag: frame=%u gametic=%d gs=%d sv=%d "
-			        "buf[0]=%08x buf[4000]=%08x\n",
-			        diag_frame, gametic, gamestate, screenvisible,
-			        DG_ScreenBuffer[0], DG_ScreenBuffer[4000]);
-			fflush(stderr);
-		}
-
-		uint32_t diag_color;
-		if (diag_frame > 70 && !has_content) {
-			diag_color = (diag_frame & 1) ? 0xFFFF00 : 0x777700; /* yellow = timeout */
-		} else if (has_content) {
-			diag_color = (diag_frame & 1) ? 0x00FF00 : 0x007700; /* green = content */
-		} else {
-			diag_color = (diag_frame & 1) ? 0xFF0000 : 0x770000; /* red = empty */
-		}
-
-		uint8_t *db = (uint8_t *)g_fb.base;
-		uint32_t bpp = g_fb.bpp;
-		for (int _dy = 0; _dy < 8; _dy++) {
-			uint8_t *row = db + (uint32_t)_dy * g_fb.pitch;
-			for (int _dx = 0; _dx < 8; _dx++) {
-				if (bpp == 32) {
-					((uint32_t *)row)[_dx] = diag_color;
-				} else {
-					uint8_t *p = row + _dx * 3;
-					p[0] = diag_color & 0xFF;
-					p[1] = (diag_color >> 8) & 0xFF;
-					p[2] = (diag_color >> 16) & 0xFF;
-				}
-			}
-		}
-
-		/* After 70 frames with no content, draw a test gradient over DOOM area */
-		if (diag_frame > 70 && !has_content) {
-			int32_t sx    = (int32_t)((g_fb.width  - DOOMGENERIC_RESX * 3) / 2);
-			int32_t sy    = (int32_t)((g_fb.height - DOOMGENERIC_RESY * 3) / 2);
-			for (uint32_t gy = 0; gy < (uint32_t)DOOMGENERIC_RESY * 3; gy++) {
-				uint8_t *row = db + (uint32_t)(sy + (int32_t)gy) * g_fb.pitch;
-				for (uint32_t gx = 0; gx < (uint32_t)DOOMGENERIC_RESX * 3; gx++) {
-					uint8_t rv = (uint8_t)(gx * 255 / (DOOMGENERIC_RESX * 3));
-					uint8_t gv = (uint8_t)(gy * 255 / (DOOMGENERIC_RESY * 3));
-					if (bpp == 32) {
-						((uint32_t *)row)[sx + (int32_t)gx] = (uint32_t)(rv << 16) | gv;
-					} else {
-						uint8_t *p = row + ((uint32_t)(sx) + gx) * 3;
-						p[0] = 0;   /* B */
-						p[1] = gv;  /* G */
-						p[2] = rv;  /* R */
-					}
-				}
-			}
-			return; /* skip normal blit when showing gradient */
-		}
-	}
-
 	const uint32_t *src = DG_ScreenBuffer;
 	uint32_t        sw  = g_fb.width;
 	uint32_t        sh  = g_fb.height;
 
-	uint32_t sx    = sw / DOOMGENERIC_RESX;
-	uint32_t sy    = sh / DOOMGENERIC_RESY;
-	uint32_t scale = (sx < sy) ? sx : sy;
-	if (scale < 1)
-		scale = 1;
+	/*
+	 * Scale to fill the screen width while preserving aspect ratio.
+	 * If that would exceed the screen height, scale to fill height instead.
+	 * Uses nearest-neighbour with integer fixed-point (no floats, no division
+	 * in the inner loop).
+	 */
+	uint32_t dw = sw;
+	uint32_t dh = sw * DOOMGENERIC_RESY / DOOMGENERIC_RESX;
+	if (dh > sh) {
+		dh = sh;
+		dw = sh * DOOMGENERIC_RESX / DOOMGENERIC_RESY;
+	}
+	int32_t ox = (int32_t)((sw - dw) / 2);
+	int32_t oy = (int32_t)((sh - dh) / 2);
 
-	uint32_t dw  = DOOMGENERIC_RESX * scale;
-	uint32_t dh  = DOOMGENERIC_RESY * scale;
-	int32_t  ox  = (int32_t)((sw - dw) / 2);
-	int32_t  oy  = (int32_t)((sh - dh) / 2);
+	/* Fixed-point step: how many source pixels per destination pixel (16.16) */
+	uint32_t xstep = (DOOMGENERIC_RESX << 16) / dw;
+	uint32_t ystep = (DOOMGENERIC_RESY << 16) / dh;
 
 	uint8_t *base  = (uint8_t *)g_fb.base;
 	uint32_t pitch = g_fb.pitch;
 
-	for (uint32_t dy = 0; dy < dh; dy++) {
-		const uint32_t *src_row  = src + (dy / scale) * DOOMGENERIC_RESX;
+	uint32_t yacc = 0;
+	for (uint32_t dy = 0; dy < dh; dy++, yacc += ystep) {
+		const uint32_t *src_row  = src + (yacc >> 16) * DOOMGENERIC_RESX;
 		uint8_t        *dst_base = base + (uint32_t)(oy + (int32_t)dy) * pitch;
 
 		if (g_fb.bpp == 32) {
 			uint32_t *dst_row = (uint32_t *)dst_base + ox;
-			for (uint32_t dx = 0; dx < dw; dx++)
-				dst_row[dx] = src_row[dx / scale];
+			uint32_t xacc = 0;
+			for (uint32_t dx = 0; dx < dw; dx++, xacc += xstep)
+				dst_row[dx] = src_row[xacc >> 16];
 		} else {
-			/* 24bpp: 3 bytes per pixel, BGR byte order */
 			dst_base += (uint32_t)ox * 3;
-			for (uint32_t dx = 0; dx < dw; dx++) {
-				uint32_t pix = src_row[dx / scale];
+			uint32_t xacc = 0;
+			for (uint32_t dx = 0; dx < dw; dx++, xacc += xstep) {
+				uint32_t pix = src_row[xacc >> 16];
 				dst_base[0] = pix & 0xFF;
 				dst_base[1] = (pix >> 8) & 0xFF;
 				dst_base[2] = (pix >> 16) & 0xFF;

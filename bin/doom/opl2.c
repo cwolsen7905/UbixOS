@@ -344,11 +344,7 @@ opl2_mix(int16_t *out, int n)
                 ch_out += mod_out;
             }
 
-            /*
-             * Scale down per channel to leave headroom when mixed with SFX.
-             * Divide by 36: 9 channels × 4 = 36, giving music ≈ 25% of rail.
-             */
-            mix += ch_out / 36;
+            mix += ch_out / 9;
         }
 
         if (mix >  32767) mix =  32767;

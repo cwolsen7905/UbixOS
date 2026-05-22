@@ -324,8 +324,17 @@ void keyboardHandler(struct trapframe *frame)
 	else if (controlKeys == 2) keyMap = 2;
 	else if (controlKeys == 4) keyMap = 3;
 
-	/* Ignore key-up after updating modifier state */
+	/* For key-up events: modifiers already pushed above; push key-up for
+	 * regular keys so callers (DOOM, etc.) can clear their held-key state. */
 	if (key >= 0x80) {
+		uint8_t down_scan = (uint8_t)(key & 0x7F);
+		/* Skip modifier scancodes — already handled above */
+		if (down_scan != 0x1D && down_scan != 0x38 &&
+		    down_scan != 0x2A && down_scan != 0x36) {
+			uint32_t kc_up = keyboardMap[down_scan][keyMap];
+			if (kc_up != 0)
+				kbd_ring_push(kc_up, 0);
+		}
 		spinUnlock(&atkbdSpinLock);
 		return;
 	}
