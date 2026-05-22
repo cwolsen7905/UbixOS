@@ -27,7 +27,7 @@ DISK_IMAGE?=ubixos.img
 # USB mass-storage test image (64 MB FAT32, populated by bmake usb-image).
 # bmake run attaches it automatically if the file exists.
 USB_IMAGE?=usb.img
-USB_IMAGE_MB?=64
+USB_IMAGE_MB?=512
 
 # Demo MP3 bundled in the USB image for mp3play testing.
 # "Investigations" by Kevin MacLeod — CC BY 3.0 (incompetech.com)

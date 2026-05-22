@@ -60,6 +60,9 @@ typedef struct kbd_event kbd_event_t;
 #define KEY_PGDN   0x113
 #define KEY_INS    0x114
 #define KEY_DEL    0x115
+#define KEY_LSHIFT 0x116   /* left or right shift (modifier press/release) */
+#define KEY_LCTRL  0x117   /* left ctrl */
+#define KEY_LALT   0x118   /* left alt */
 #define KEY_ESC    0x1B
 
 #endif /* _SYS_KBD_H */

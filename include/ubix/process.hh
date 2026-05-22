@@ -63,7 +63,7 @@ public:
 	Shell(const Shell &) = delete;
 	Shell &operator=(const Shell &) = delete;
 
-	bool spawn(const char *path) {
+	bool spawn(const char *path, char **argv = nullptr, char **envp = nullptr) {
 		int to_shell[2], from_shell[2];
 		if (::pipe(to_shell) != 0 || ::pipe(from_shell) != 0)
 			return false;
@@ -76,9 +76,11 @@ public:
 			::close(to_shell[1]);
 			::close(from_shell[0]);
 			::close(from_shell[1]);
-			char *argv[] = { (char *)"shell", nullptr };
-			char *envp[] = { nullptr };
-			::execve(path, argv, envp);
+			static char *default_argv[] = { (char *)"shell", nullptr };
+			static char *default_envp[] = { nullptr };
+			::execve(path,
+			    argv  ? argv  : default_argv,
+			    envp  ? envp  : default_envp);
 			::_exit(1);
 		}
 		::close(to_shell[0]);

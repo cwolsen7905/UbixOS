@@ -166,8 +166,16 @@ main(int argc, char **argv)
 	if (!mbox.create())
 		return 1;
 
+	static char *tcsh_argv[] = { (char *)"tcsh", nullptr };
+	static char *tcsh_envp[] = {
+		(char *)"HOME=/",
+		(char *)"SHELL=/bin/tcsh",
+		(char *)"PATH=/bin",
+		(char *)"TERM=dumb",
+		nullptr
+	};
 	ubix::Shell shell;
-	shell.spawn("sys:/bin/shell");
+	shell.spawn("sys:/bin/tcsh", tcsh_argv, tcsh_envp);
 
 	static const char views[] = "views";
 
@@ -220,10 +228,11 @@ main(int argc, char **argv)
 	tv.redraw(act_w, act_h);
 	send_flip();
 
-	std::string linebuf;
 	int dirty = 0;
 
 	for (;;) {
+		dirty = 0;
+
 		if (shell.valid()) {
 			char outbuf[128];
 			int n;
@@ -254,27 +263,16 @@ main(int argc, char **argv)
 			if (ch == 0)
 				continue;
 
-			if (ch == '\n') {
-				tv.putchar('\n');
-				linebuf += '\n';
-				shell.write(linebuf.c_str(), (int)linebuf.size());
-				linebuf.clear();
-			} else if (ch == '\b') {
-				if (!linebuf.empty()) {
-					linebuf.pop_back();
-					tv.putchar('\b');
-				}
-			} else {
-				linebuf += ch;
-				tv.putchar(ch);
-			}
-			dirty = 1;
+			/* Forward immediately — no local buffering or echo.
+			 * tcsh is in raw mode and manages its own line editing
+			 * and echo via stdout, which we display from the read
+			 * loop above. */
+			shell.write(&ch, 1);
 		}
 
 		if (dirty) {
 			tv.redraw(act_w, act_h);
 			send_flip();
-			dirty = 0;
 		}
 
 		ubix::yield();

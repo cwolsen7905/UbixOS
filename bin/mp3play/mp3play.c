@@ -30,8 +30,14 @@
  * via the AC97 driver.  Detects sample rate from the first frame and
  * programs the codec via ioctl(AUDIO_SET_RATE) before playback begins.
  *
- * File is read in 64 KB chunks so the global FAT spinlock is held only
- * briefly per chunk rather than for the entire file duration.
+ * Buffering strategy:
+ *   1. Try to preload the entire file into RAM (up to PRELOAD_MAX bytes).
+ *      This eliminates all disk I/O during playback — the UHCI bulk-
+ *      transfer path busy-polls the hardware, so any disk read during
+ *      playback starves the AC97 ring and causes audible glitches.
+ *   2. If the file exceeds PRELOAD_MAX or malloc fails for the large
+ *      buffer, fall back to 64 KB streaming chunks (same sliding-window
+ *      approach as before).
  *
  * Usage: mp3play <file.mp3>
  */
@@ -46,24 +52,22 @@
 #include <stdint.h>
 #include <string.h>
 
-/*
- * Input ring-buffer sizing.
- * IBUF_SIZE: total bytes allocated for the streaming read buffer.
- * IBUF_REFILL: when fewer than this many bytes remain unprocessed,
- *   slide the remainder to the front and read another chunk.
- *   Must be > the largest possible single MP3 frame (≈ 1441 bytes at
- *   320 kbps), with margin for minimp3's sync search.
- */
-#define IBUF_SIZE    (64 * 1024)
-#define IBUF_REFILL   4096
+/* Preload up to 16 MB into RAM before decoding begins. */
+#define PRELOAD_MAX  (16 * 1024 * 1024)
+
+/* Streaming fallback parameters (used only when file > PRELOAD_MAX). */
+#define STREAM_SIZE   (64 * 1024)
+#define STREAM_REFILL  4096
 
 int
 main(int argc, char *argv[])
 {
 	FILE               *fp;
 	uint8_t            *ibuf;
+	int                 ibuf_cap;   /* allocated size of ibuf */
 	int                 ibuf_len;   /* valid bytes in ibuf[0..ibuf_len-1] */
 	int                 pos;        /* next byte to decode */
+	int                 streaming;  /* 1 = streaming mode, 0 = preloaded */
 	int                 audio_fd;
 	mp3dec_t            dec;
 	mp3dec_frame_info_t info;
@@ -82,50 +86,68 @@ main(int argc, char *argv[])
 		return (1);
 	}
 
-	ibuf = (uint8_t *)malloc(IBUF_SIZE);
-	if (ibuf == NULL) {
-		fprintf(stderr, "mp3play: out of memory\n");
-		fclose(fp);
-		return (1);
-	}
-
 	audio_fd = audio_open("devfs:/audio");
 	if (audio_fd < 0) {
 		fprintf(stderr, "mp3play: cannot open devfs:/audio\n");
-		free(ibuf);
 		fclose(fp);
 		return (1);
 	}
 
+	/*
+	 * Attempt to preload the whole file into RAM.  A single large fread
+	 * at startup is acceptable; disk I/O during playback is not (it
+	 * starves the AC97 ring while UHCI busy-polls).
+	 */
+	ibuf = (uint8_t *)malloc(PRELOAD_MAX);
+	if (ibuf != NULL) {
+		printf("mp3play: loading %s...\n", argv[1]);
+		got      = fread(ibuf, 1, PRELOAD_MAX, fp);
+		ibuf_cap = PRELOAD_MAX;
+		ibuf_len = (int)got;
+		streaming = (ibuf_len == PRELOAD_MAX);   /* hit the cap → need refills */
+		if (!streaming)
+			fclose(fp);   /* done with disk */
+	} else {
+		/* Large malloc failed — stream in 64 KB chunks. */
+		ibuf = (uint8_t *)malloc(STREAM_SIZE);
+		if (ibuf == NULL) {
+			fprintf(stderr, "mp3play: out of memory\n");
+			audio_close(audio_fd);
+			fclose(fp);
+			return (1);
+		}
+		printf("mp3play: streaming %s (low-memory mode)...\n", argv[1]);
+		got      = fread(ibuf, 1, STREAM_SIZE, fp);
+		ibuf_cap = STREAM_SIZE;
+		ibuf_len = (int)got;
+		streaming = 1;
+	}
+
 	mp3dec_init(&dec);
-	ibuf_len = 0;
 	pos      = 0;
 	rate_set = 0;
 
-	printf("mp3play: playing %s\n", argv[1]);
-
-	/* Fill the buffer for the first time. */
-	got = fread(ibuf, 1, IBUF_SIZE, fp);
-	ibuf_len = (int)got;
-
 	while (ibuf_len - pos > 0) {
 		/*
-		 * Refill when the unprocessed tail shrinks below IBUF_REFILL.
-		 * Slide the remainder to the front, then append a fresh read.
-		 * Each fread is at most IBUF_SIZE bytes so the FAT spinlock is
-		 * held for only one chunk at a time.
+		 * Streaming refill: slide the unprocessed tail to the front and
+		 * read another chunk.  Only entered in streaming fallback mode.
 		 */
-		if (ibuf_len - pos < IBUF_REFILL) {
+		if (streaming && ibuf_len - pos < STREAM_REFILL) {
 			int remain = ibuf_len - pos;
 			if (remain > 0)
 				memmove(ibuf, ibuf + pos, (size_t)remain);
 			ibuf_len = remain;
 			pos      = 0;
 			got = fread(ibuf + ibuf_len, 1,
-			    (size_t)(IBUF_SIZE - ibuf_len), fp);
+			    (size_t)(ibuf_cap - ibuf_len), fp);
 			ibuf_len += (int)got;
 			if (ibuf_len == 0)
 				break;
+			if ((int)got < ibuf_cap - remain) {
+				/* Reached EOF — no more refills needed. */
+				streaming = 0;
+				fclose(fp);
+			}
 		}
 
 		samples = mp3dec_decode_frame(&dec,
@@ -172,6 +194,7 @@ main(int argc, char *argv[])
 	printf("mp3play: done\n");
 	audio_close(audio_fd);
 	free(ibuf);
-	fclose(fp);
+	if (streaming)
+		fclose(fp);
 	return (0);
 }

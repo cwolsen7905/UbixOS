@@ -180,6 +180,21 @@ for f in etc/init.d/*; do
   [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/init.d/
 done
 
+echo "==> Installing DOOM WAD (optional)"
+_doom_wad=""
+for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
+    if [ -f "$_candidate" ]; then
+        _doom_wad="$_candidate"
+        break
+    fi
+done
+if [ -n "$_doom_wad" ]; then
+    mcopy -o -i "$IMG"@@1M "$_doom_wad" ::/bin/doom1.wad
+    echo "    Installed: $_doom_wad -> /bin/doom1.wad"
+else
+    echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
+fi
+
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true

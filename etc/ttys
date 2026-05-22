@@ -14,8 +14,7 @@
 # To switch ttyv0 to the graphical compositor instead of login:
 #   ttyv0   sys:/bin/vlogin   on
 #
-#ttyv0   sys:/bin/login   on
-ttyv0   sys:/bin/views   on
+ttyv0   sys:/bin/login   on
 ttyv1   sys:/bin/login   on
 ttyv2   sys:/bin/login   on
 ttyv3   sys:/bin/login   on
