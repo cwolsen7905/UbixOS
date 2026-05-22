@@ -14,4 +14,8 @@ int tty_setecho(int val);  /* 1 = echo on (default), 0 = echo off */
  * Analogous to FreeBSD login_tty() — must be called by ttyd before fork. */
 int settty(int slot);
 
+/* Returns 1 if the views compositor is running, 0 if not.
+ * Call before DISPLAY_CLAIM to give a clean error instead of hanging. */
+int views_running(void);
+
 #endif /* _API_UBIX_H */

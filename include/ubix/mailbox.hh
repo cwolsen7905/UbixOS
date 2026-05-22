@@ -33,6 +33,7 @@
 
 extern "C" {
 #include <sys/mpi.h>
+int views_running(void);
 }
 
 namespace ubix {
@@ -90,6 +91,13 @@ public:
 	const char        *c_str() const { return name_.c_str(); }
 	const std::string &str()   const { return name_; }
 };
+
+/* views_running: 1 if compositor mailbox exists, 0 if not. */
+inline bool
+views_running()
+{
+	return ::views_running() != 0;
+}
 
 } /* namespace ubix */
 

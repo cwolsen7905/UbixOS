@@ -161,21 +161,26 @@ main(int argc, char **argv)
 {
 	(void)argc; (void)argv;
 
+	if (!ubix::views_running()) {
+		printf("term: views compositor is not running\n");
+		return 1;
+	}
+
 	ubix::Mailbox mbox;
 	mbox.assign("term." + std::to_string(ubix::pid()));
 	if (!mbox.create())
 		return 1;
 
-	static char *tcsh_argv[] = { (char *)"tcsh", (char *)"-i", nullptr };
-	static char *tcsh_envp[] = {
+	static char *shell_argv[] = { (char *)"shell", nullptr };
+	static char *shell_envp[] = {
 		(char *)"HOME=/",
-		(char *)"SHELL=/bin/tcsh",
+		(char *)"SHELL=/bin/shell",
 		(char *)"PATH=/bin",
 		(char *)"TERM=dumb",
 		nullptr
 	};
 	ubix::Shell shell;
-	shell.spawn("sys:/bin/tcsh", tcsh_argv, tcsh_envp);
+	shell.spawn("sys:/bin/shell", shell_argv, shell_envp);
 
 	static const char views[] = "views";
 
@@ -263,10 +268,11 @@ main(int argc, char **argv)
 			if (ch == 0)
 				continue;
 
-			/* Forward to tcsh. With -i, tcsh echoes each character
-			 * back through stdout, which the read loop above picks
-			 * up and displays.  No local echo here — that would
-			 * show every character twice. */
+			/* Local echo: the native shell reads full lines from the
+			 * pipe and does not echo characters back.  Show each
+			 * keystroke immediately so the user sees what they type. */
+			tv.putchar(ch);
+			dirty = 1;
 			shell.write(&ch, 1);
 		}
 
