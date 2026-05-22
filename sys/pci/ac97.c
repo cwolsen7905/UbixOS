@@ -119,7 +119,7 @@ ac97_isr(void)
 	struct ac97_softc *sc = &ac97_sc;
 	uint16_t sr;
 	uint8_t  fill_buf;
-	uint32_t avail, i;
+	uint32_t avail;
 
 	/* Always drain pi/mc status so spurious QEMU interrupt bits don't cause
 	 * an IRQ storm on the shared IRQ 10 line. */
@@ -141,17 +141,28 @@ ac97_isr(void)
 	fill_buf    = sc->next_buf;
 	sc->next_buf ^= 1;
 
-	/* Drain ring into the next ping-pong buffer */
+	/* Drain ring into the next ping-pong buffer.
+	 * Copy however many bytes are ready (up to AC97_BUF_BYTES) and pad
+	 * any remainder with silence.  This avoids a full silent buffer on a
+	 * near-underrun where a few bytes are available but less than a full
+	 * buffer — the all-or-nothing approach turns a tiny gap into a 5 ms
+	 * click every time the ring dips below AC97_BUF_BYTES. */
 	avail = sc->ring_wr - sc->ring_rd;
-	if (avail >= AC97_BUF_BYTES) {
-		for (i = 0; i < (uint32_t)AC97_BUF_BYTES; i++)
-			sc->buf[fill_buf][i] =
-			    sc->ring[(sc->ring_rd + i) & AC97_RING_MASK];
-		sc->ring_rd += AC97_BUF_BYTES;
-	} else {
-		/* Buffer underrun — output silence rather than stale data */
-		memset(sc->buf[fill_buf], 0, AC97_BUF_BYTES);
+	if (avail > (uint32_t)AC97_BUF_BYTES)
+		avail = AC97_BUF_BYTES;
+	if (avail > 0) {
+		uint32_t rd    = sc->ring_rd & AC97_RING_MASK;
+		uint32_t tail  = AC97_RING_SIZE - rd;
+		if (tail >= avail) {
+			memcpy(sc->buf[fill_buf], sc->ring + rd, avail);
+		} else {
+			memcpy(sc->buf[fill_buf],        sc->ring + rd, tail);
+			memcpy(sc->buf[fill_buf] + tail, sc->ring,      avail - tail);
+		}
 	}
+	if (avail < (uint32_t)AC97_BUF_BYTES)
+		memset(sc->buf[fill_buf] + avail, 0, AC97_BUF_BYTES - avail);
+	sc->ring_rd += avail;
 
 	/* Advance LVI to include the newly filled buffer */
 	sc->lvi = (sc->lvi + 1) & 31;
@@ -275,7 +286,7 @@ int
 ac97_ring_write(const char *src, int len)
 {
 	struct ac97_softc *sc = &ac97_sc;
-	uint32_t free_space, write_len, i;
+	uint32_t free_space, write_len;
 
 	if (!sc->running || len <= 0)
 		return 0;
@@ -296,9 +307,16 @@ ac97_ring_write(const char *src, int len)
 	if (write_len > free_space)
 		write_len = free_space;
 
-	for (i = 0; i < write_len; i++)
-		sc->ring[(sc->ring_wr + i) & AC97_RING_MASK] = (uint8_t)src[i];
-
+	{
+		uint32_t wr   = sc->ring_wr & AC97_RING_MASK;
+		uint32_t tail = AC97_RING_SIZE - wr;
+		if (tail >= write_len) {
+			memcpy(sc->ring + wr, src, write_len);
+		} else {
+			memcpy(sc->ring + wr, src,        tail);
+			memcpy(sc->ring,      src + tail, write_len - tail);
+		}
+	}
 	sc->ring_wr += write_len;
 	return (int)write_len;
 }

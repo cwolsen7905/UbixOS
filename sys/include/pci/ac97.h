@@ -113,10 +113,23 @@ struct ac97_bdle {
  * a full ring (distance == RING_SIZE) look identical to an empty ring
  * (distance == 0).  Always compute distance as the raw uint32_t difference.
  * --------------------------------------------------------------------- */
-#define AC97_BUF_FRAMES   1024
+/*
+ * Latency budget:
+ *   DMA buffer  = 512 frames × 4 B = 2048 B = 10.7 ms @ 48 kHz
+ *   Startup lag = 2 × 10.7 ms ≈ 21 ms  (two ping-pong buffers before first sound)
+ *   Ring depth  = 8 × 2048 B = 16 KB ≈ 85 ms @ 48 kHz
+ *   Total worst-case latency ≈ 106 ms — good for game sound effects.
+ *
+ *   DOOM at 35 fps writes ~5044 B per tick; with 2048-byte DMA buffers the
+ *   non-integer ratio (5044/2048 = 2.46) leaves 6.23 ms margin before the
+ *   next ISR fires after a game write — 14× more than the 256-frame layout.
+ *   RING_SIZE = 8 × 2048 = 16384 = 2^14 (power of 2 for RING_MASK bitmask).
+ *   The ISR uses memcpy (with wrap-around split) for minimum ISR overhead.
+ */
+#define AC97_BUF_FRAMES   512
 #define AC97_BUF_BYTES    (AC97_BUF_FRAMES * 4)
 #define AC97_BDL_LEN      (AC97_BUF_BYTES / 2)     /* BDL len in 16-bit samples */
-#define AC97_RING_BUFS    64                        /* 64 × 4 KB = 256 KB ≈ 1.5 s @ 44.1 kHz */
+#define AC97_RING_BUFS    8                         /* 8 × 2 KB = 16 KB ≈ 85 ms @ 48 kHz */
 #define AC97_RING_SIZE    (AC97_BUF_BYTES * AC97_RING_BUFS)
 #define AC97_RING_MASK    (AC97_RING_SIZE - 1)      /* index mask ONLY — not for distance */
 
