@@ -104,5 +104,6 @@ extern uint16_t vesa_pitch;       /* bytes per scanline */
 extern uint16_t vesa_width;
 extern uint16_t vesa_height;
 extern uint8_t  vesa_bpp;
+extern uint16_t vesa_current_mode; /* mode number from last successful vesa_init() */
 
 #endif /* _LIB_VESA_H */
