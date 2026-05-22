@@ -164,7 +164,9 @@ void systemTask() {
       if (disp_owner_pid != 0 && tmpTask->id == (int)disp_owner_pid) {
         kprintf("system: display owner pid %d exited — restoring mode 0x%X\n",
             (int)disp_owner_pid, disp_saved_mode);
-        if (disp_saved_mode != 0 && disp_saved_mode != vesa_current_mode) {
+        if (disp_saved_mode == 0) {
+          vesa_text_mode();
+        } else if (disp_saved_mode != vesa_current_mode) {
           if (vesa_init(disp_saved_mode) == 0)
             vesa_map_fb();
         }
