@@ -194,8 +194,18 @@ int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 	}
 
 	gettimeofday(&tv, &tz);
-	uap->tp->tv_sec = tv.tv_sec;
-	uap->tp->tv_nsec = tv.tv_usec * 1000;
+
+	/*
+	 * musl libc on i386 uses 64-bit time_t, so its struct timespec is:
+	 *   { int64_t tv_sec; int32_t tv_nsec; int32_t _pad; }  (16 bytes, LE)
+	 * Write the four 32-bit words in order: sec_lo, sec_hi, nsec, pad.
+	 */
+	int32_t *p = (int32_t *)uap->tp;
+	p[0] = (int32_t)tv.tv_sec;          /* tv_sec low  32 bits */
+	p[1] = 0;                            /* tv_sec high 32 bits */
+	p[2] = (int32_t)(tv.tv_usec * 1000);/* tv_nsec              */
+	p[3] = 0;                            /* padding              */
+
 	td->td_retval[0] = 0;
 	return (0);
 }
