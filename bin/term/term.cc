@@ -166,7 +166,7 @@ main(int argc, char **argv)
 	if (!mbox.create())
 		return 1;
 
-	static char *tcsh_argv[] = { (char *)"tcsh", nullptr };
+	static char *tcsh_argv[] = { (char *)"tcsh", (char *)"-i", nullptr };
 	static char *tcsh_envp[] = {
 		(char *)"HOME=/",
 		(char *)"SHELL=/bin/tcsh",
@@ -263,13 +263,10 @@ main(int argc, char **argv)
 			if (ch == 0)
 				continue;
 
-			/* Local echo: tcsh's stdin is a pipe so isatty(0) is
-			 * false and tcsh runs non-interactively — it won't echo
-			 * individual characters until a full line is received.
-			 * Show the character immediately so keystrokes appear as
-			 * typed rather than all at once on Enter. */
-			tv.putchar(ch);
-			dirty = 1;
+			/* Forward to tcsh. With -i, tcsh echoes each character
+			 * back through stdout, which the read loop above picks
+			 * up and displays.  No local echo here — that would
+			 * show every character twice. */
 			shell.write(&ch, 1);
 		}
 
