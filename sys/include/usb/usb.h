@@ -65,6 +65,13 @@
 #define USB_TYPE_CLASS          0x20
 #define USB_RECIP_DEVICE        0x00
 #define USB_RECIP_INTERFACE     0x01
+#define USB_RECIP_ENDPOINT      0x02
+
+/* Standard feature selectors */
+#define USB_FEATURE_ENDPOINT_HALT  0x00
+
+/* Additional standard request codes */
+#define USB_REQ_CLEAR_FEATURE   0x01
 
 /* -----------------------------------------------------------------------
  * Standard USB descriptors (all little-endian; native on i386)

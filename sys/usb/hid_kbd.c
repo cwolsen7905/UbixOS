@@ -39,6 +39,7 @@
 #include <isa/kbd.h>
 #include <ubixos/sched.h>
 #include <ubixos/tty.h>
+#include <ubixos/signal.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
@@ -220,20 +221,31 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 				continue;
 			}
 
-			/* Ctrl-C: kill foreground task — mirrors AT keyboard ISR */
+			/* Ctrl-C: post SIGINT to foreground job — mirrors AT keyboard ISR */
 			if (kc == 0x03) {
-				if (tty_foreground != NULL) {
-					kTask_t *victim = schedFindTask(tty_foreground->owner);
-					if (victim != NULL) {
-						if (victim->parent != NULL)
-							tty_foreground->owner = victim->parent->id;
-						sched_killTree(victim->id);
-					}
-				}
+				signal_post_tty(tty_foreground, 2 /* SIGINT */);
 				continue; /* do not push to ring */
 			}
 
 			kbd_ring_push(kc, 1);
+		}
+	}
+
+	/* Modifier transitions: emit KEY_L* events so GUI apps see Ctrl/Alt/Shift
+	 * as first-class key events (mirrors the PS/2 atkbd treatment). */
+	{
+		uint8_t changed = cur->modifier ^ last->modifier;
+		if (changed & (HID_MOD_LCTRL | HID_MOD_RCTRL)) {
+			kbd_ring_push(KEY_LCTRL,
+			    (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0);
+		}
+		if (changed & (HID_MOD_LALT | HID_MOD_RALT)) {
+			kbd_ring_push(KEY_LALT,
+			    (cur->modifier & (HID_MOD_LALT | HID_MOD_RALT)) ? 1 : 0);
+		}
+		if (changed & HID_MOD_SHIFT) {
+			kbd_ring_push(KEY_LSHIFT,
+			    (cur->modifier & HID_MOD_SHIFT) ? 1 : 0);
 		}
 	}
 

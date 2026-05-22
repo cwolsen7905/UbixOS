@@ -394,93 +394,130 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
 }
 
 /* -----------------------------------------------------------------------
- * Bulk transfer — synchronous polled
+ * Bulk transfer — synchronous polled, chunked via pre-allocated DMA buffer.
+ *
+ * Splits large transfers into UHCI_BULK_CHUNK-byte pieces so each chunk fits
+ * within the TD slab and the sc_xfer_buf page.  Eliminates per-transfer
+ * dma_alloc/free overhead.
  * --------------------------------------------------------------------- */
-int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *data, uint16_t datalen, int direction, uint8_t *toggle)
+int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *data, uint32_t datalen, int direction, uint8_t *toggle)
 {
 	struct uhci_td *td, *first_td, *prev_td;
 	struct uhci_qh *qh;
-	struct dma_buf buf;
-	uint16_t remaining, chunk, offset;
-	int timeout;
+	uint8_t *p = (uint8_t *)data;
+	uint32_t transferred = 0;
 
-	if (dma_alloc(datalen < 64 ? 64 : datalen, 64, &buf) != 0)
-		return (-1);
+	while (transferred < datalen) {
+		uint32_t seg   = datalen - transferred;
+		uint32_t pkt_offset, chunk;
+		int timeout;
 
-	if (!direction)
-		memcpy(buf.db_vaddr, data, datalen);
+		if (seg > UHCI_BULK_CHUNK)
+			seg = UHCI_BULK_CHUNK;
 
-	sc->sc_td_used = UHCI_CTRL_BASE; /* preserve skeleton + intr slot TDs */
-	first_td = prev_td = NULL;
-	remaining = datalen;
-	offset = 0;
+		/* For OUT transfers, copy caller data into DMA buffer. */
+		if (!direction)
+			memcpy(sc->sc_xfer_buf.db_vaddr, p + transferred, seg);
 
-	while (remaining > 0)
-	{
-		chunk = remaining > 64 ? 64 : remaining;
-		td = uhci_alloc_td(sc);
-		if (td == NULL)
-		{
-			dma_free(&buf);
-			return (-1);
+		sc->sc_td_used = UHCI_CTRL_BASE;
+		first_td = prev_td = NULL;
+		pkt_offset = 0;
+
+		while (pkt_offset < seg) {
+			chunk = seg - pkt_offset;
+			if (chunk > 64)
+				chunk = 64;
+			td = uhci_alloc_td(sc);
+			if (td == NULL)
+				return (-1);
+			td->td_status = UHCI_TD_ACTIVE | UHCI_TD_ERRCNT(3);
+			if (pkt_offset + chunk >= seg)
+				td->td_status |= UHCI_TD_IOC;
+			td->td_token = UHCI_TOKEN(chunk, *toggle, ep, addr,
+			    direction ? UHCI_PID_IN : UHCI_PID_OUT);
+			td->td_buffer = sc->sc_xfer_buf.db_paddr + pkt_offset;
+			td->td_link   = UHCI_PTR_T;
+			*toggle ^= 1;
+
+			if (prev_td != NULL)
+				prev_td->td_link = (uint32_t)td;
+			else
+				first_td = td;
+			prev_td    = td;
+			pkt_offset += chunk;
 		}
-		td->td_status = UHCI_TD_ACTIVE | UHCI_TD_ERRCNT(3);
-		if (remaining <= 64)
-			td->td_status |= UHCI_TD_IOC;
-		td->td_token = UHCI_TOKEN(chunk, *toggle, ep, addr, direction ? UHCI_PID_IN : UHCI_PID_OUT);
-		td->td_buffer = buf.db_paddr + offset;
-		td->td_link = UHCI_PTR_T;
-		*toggle ^= 1;
 
-		if (prev_td != NULL)
-			prev_td->td_link = (uint32_t)td;
-		else
-			first_td = td;
-		prev_td = td;
-		offset += chunk;
-		remaining -= chunk;
+		sc->sc_qh_used = UHCI_CTRL_BASE;
+		qh = uhci_alloc_qh(sc);
+		if (qh == NULL)
+			return (-1);
+		qh->qh_elt  = (uint32_t)first_td;
+		qh->qh_link = sc->sc_bulk_qh->qh_link;
+		sc->sc_bulk_qh->qh_link = (uint32_t)qh | UHCI_PTR_QH;
+
+		/*
+		 * Poll for completion.  Break when the last TD clears ACTIVE
+		 * (normal success), or break early if any earlier TD clears
+		 * ACTIVE with error bits set (stall, babble, CRC — bits 16-22).
+		 * ACTIVE itself is bit 23 and is not an error bit.
+		 */
+#define UHCI_TD_ERR_MASK (UHCI_TD_STATUS_MASK & ~UHCI_TD_ACTIVE)
+		{
+			int any_error = 0;
+
+			timeout = 500;
+			while (timeout-- > 0) {
+				int i;
+
+				if (!(prev_td->td_status & UHCI_TD_ACTIVE))
+					break;
+				for (i = UHCI_CTRL_BASE; i < sc->sc_td_used; i++) {
+					uint32_t s = sc->sc_td_pool[i].td_status;
+					if (!(s & UHCI_TD_ACTIVE) &&
+					    (s & UHCI_TD_ERR_MASK)) {
+						any_error = 1;
+						break;
+					}
+				}
+				if (any_error)
+					break;
+				uhci_delay_ms(1);
+			}
+
+			sc->sc_bulk_qh->qh_link = qh->qh_link;
+
+			if (timeout < 0) {
+				int di, last_done = -1;
+				kprintf("uhci: bulk timeout %s %uB ntd=%d qh_elt=%08X cmd=%04X sts=%04X\n",
+				    direction ? "IN" : "OUT", seg,
+				    sc->sc_td_used - UHCI_CTRL_BASE,
+				    qh->qh_elt,
+				    uhci_rd16(sc, UHCI_USBCMD),
+				    uhci_rd16(sc, UHCI_USBSTS));
+				for (di = UHCI_CTRL_BASE; di < sc->sc_td_used; di++) {
+					if (!(sc->sc_td_pool[di].td_status & UHCI_TD_ACTIVE))
+						last_done = di - UHCI_CTRL_BASE;
+				}
+				kprintf("uhci: last completed td index=%d (of %d)\n",
+				    last_done, sc->sc_td_used - UHCI_CTRL_BASE);
+				return (-1);
+			}
+
+			if (any_error ||
+			    (prev_td->td_status & UHCI_TD_ERR_MASK)) {
+				kprintf("uhci: bulk transfer error (status=0x%08X)\n",
+				    prev_td->td_status);
+				return (-1);
+			}
+		}
+
+		/* For IN transfers, copy DMA buffer into caller's data. */
+		if (direction)
+			memcpy(p + transferred, sc->sc_xfer_buf.db_vaddr, seg);
+
+		transferred += seg;
 	}
 
-	/* Insert in bulk QH */
-	sc->sc_qh_used = UHCI_CTRL_BASE;
-	qh = uhci_alloc_qh(sc);
-	if (qh == NULL)
-	{
-		dma_free(&buf);
-		return (-1);
-	}
-	qh->qh_elt = (uint32_t)first_td;
-	qh->qh_link = sc->sc_bulk_qh->qh_link;
-	sc->sc_bulk_qh->qh_link = (uint32_t)qh | UHCI_PTR_QH;
-
-	timeout = 500;
-	while (timeout-- > 0)
-	{
-		if (!(prev_td->td_status & UHCI_TD_ACTIVE))
-			break;
-		uhci_delay_ms(1);
-	}
-
-	sc->sc_bulk_qh->qh_link = qh->qh_link;
-
-	if (timeout < 0)
-	{
-		kprintf("uhci: bulk transfer timeout\n");
-		dma_free(&buf);
-		return (-1);
-	}
-
-	if (prev_td->td_status & UHCI_TD_STATUS_MASK)
-	{
-		kprintf("uhci: bulk transfer error (status=0x%08X)\n", prev_td->td_status);
-		dma_free(&buf);
-		return (-1);
-	}
-
-	if (direction && data != NULL)
-		memcpy(data, buf.db_vaddr, datalen);
-
-	dma_free(&buf);
 	return (0);
 }
 
@@ -652,6 +689,16 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 	}
 	sc->sc_td_pool = (struct uhci_td *)sc->sc_td_buf.db_vaddr;
 	sc->sc_td_used = 0;
+
+	/* --- Pre-allocated bulk transfer buffer (avoids per-transfer dma_alloc) --- */
+	if (dma_alloc(4096, 64, &sc->sc_xfer_buf) != 0)
+	{
+		kprintf("uhci: xfer buf alloc failed\n");
+		dma_free(&sc->sc_fl_buf);
+		dma_free(&sc->sc_qh_buf);
+		dma_free(&sc->sc_td_buf);
+		return (-1);
+	}
 
 	/* --- Skeleton QHs: intr → ctl → bulk → T --- */
 	sc->sc_int_qh = uhci_alloc_qh(sc);

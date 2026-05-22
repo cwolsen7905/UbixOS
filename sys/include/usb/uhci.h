@@ -129,7 +129,7 @@ struct uhci_td
  * Driver soft state
  * --------------------------------------------------------------------- */
 #define UHCI_FRAMELIST_COUNT 1024
-#define UHCI_TD_POOL_COUNT   64
+#define UHCI_TD_POOL_COUNT   128  /* 128 × 32 bytes = 4096 bytes = 1 slab page */
 #define UHCI_QH_POOL_COUNT   16
 #define UHCI_INTR_SLOTS      4
 /* Pool indices 0-2 = skeleton QHs; 3..3+SLOTS-1 = interrupt slots; above = ctl/bulk */
@@ -148,6 +148,15 @@ struct uhci_intr_slot {
 	int             is_used;
 };
 
+/*
+ * Max bytes per bulk transfer chunk.  Must fit in the available TD slots
+ * (UHCI_TD_POOL_COUNT - UHCI_CTRL_BASE) × 64 bytes and in sc_xfer_buf (4096 B).
+ * 512 bytes = 8 TDs — the largest count QEMU's UHCI emulation reliably completes
+ * in a single frame pass without stopping mid-chain.  Larger chains (e.g. 64 TDs
+ * for 4096 B) cause the HC to stop after the first TD for unknown reasons.
+ */
+#define UHCI_BULK_CHUNK  512
+
 struct uhci_softc
 {
 	struct ubx_device *sc_dev;
@@ -157,6 +166,7 @@ struct uhci_softc
 	uint32_t *sc_fl;            /* virtual frame list */
 	struct dma_buf sc_qh_buf;   /* QH slab page */
 	struct dma_buf sc_td_buf;   /* TD slab page */
+	struct dma_buf sc_xfer_buf; /* pre-allocated bulk transfer buffer */
 	struct uhci_qh *sc_int_qh;  /* interrupt skeleton QH */
 	struct uhci_qh *sc_ctl_qh;  /* control skeleton QH */
 	struct uhci_qh *sc_bulk_qh; /* bulk skeleton QH */
@@ -175,7 +185,7 @@ extern struct ubx_driver uhci_ubx_driver;
 
 int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8_t *setup_pkt, void *data, uint16_t datalen, int direction);
 
-int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *data, uint16_t datalen, int direction, uint8_t *toggle);
+int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *data, uint32_t datalen, int direction, uint8_t *toggle);
 
 struct uhci_qh *uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint16_t maxpkt, uint32_t interval_ms, void (*callback)(void *arg, uint8_t *data, int len), void *arg);
 

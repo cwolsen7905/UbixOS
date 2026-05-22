@@ -52,6 +52,23 @@
  * --------------------------------------------------------------------- */
 
 /*
+ * ums_clear_halt — send CLEAR_FEATURE(ENDPOINT_HALT) to one endpoint.
+ * After a bulk timeout the device stalls that endpoint; this clears it and
+ * resets the endpoint's data toggle to DATA0 per the USB spec.
+ * ep_addr is the full endpoint address byte (ep_num | 0x80 for IN endpoints).
+ */
+static int
+ums_clear_halt(struct ums_softc *sc, uint8_t ep_addr)
+{
+	return (usb_control(sc->um_dev,
+	    USB_DIR_OUT | USB_TYPE_STANDARD | USB_RECIP_ENDPOINT,
+	    USB_REQ_CLEAR_FEATURE,
+	    USB_FEATURE_ENDPOINT_HALT,
+	    ep_addr,
+	    NULL, 0));
+}
+
+/*
  * ums_reset — Bulk-Only Mass Storage Reset (BOT class request).
  * Resets both DATA0/DATA1 toggles to DATA0 per the BOT spec.
  */
@@ -138,7 +155,7 @@ ums_command(struct ums_softc *sc,
 		rc = uhci_bulk_transfer(sc->um_dev->ud_hc,
 		    sc->um_dev->ud_addr,
 		    direction ? sc->um_bulk_in_ep : sc->um_bulk_out_ep,
-		    data, (uint16_t)datalen,
+		    data, datalen,
 		    direction,
 		    direction ? &sc->um_toggle_in : &sc->um_toggle_out);
 		if (rc != 0) {
@@ -146,6 +163,19 @@ ums_command(struct ums_softc *sc,
 			    direction, datalen);
 			klog(KLOG_ERR, "ums: data phase failed dir=%d len=%u",
 			    direction, datalen);
+			/*
+			 * BOT error recovery: clear the stalled endpoint and
+			 * reset its data toggle to DATA0.  Without this every
+			 * subsequent bulk transfer on this endpoint is rejected.
+			 */
+			if (direction) {
+				ums_clear_halt(sc,
+				    sc->um_bulk_in_ep | 0x80);
+				sc->um_toggle_in = 0;
+			} else {
+				ums_clear_halt(sc, sc->um_bulk_out_ep);
+				sc->um_toggle_out = 0;
+			}
 			return (-1);
 		}
 	}
@@ -226,17 +256,28 @@ ums_read_capacity(struct ums_softc *sc)
  * Block device ops — called from VFS/FAT with sector LBA
  * --------------------------------------------------------------------- */
 
+/*
+ * Maximum sectors per SCSI READ/WRITE(10).  Sized so the data fits within
+ * UHCI_BULK_CHUNK × ceil(max_sectors × 512 / UHCI_BULK_CHUNK) chunks.
+ * 128 sectors = 64 KB — fits comfortably; UHCI chunks it internally.
+ */
+#define UMS_MAX_SECTORS  128
+
 static int
 ums_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 {
 	struct ums_softc *sc = (struct ums_softc *)dev->dev_softc;
 	uint8_t  cdb[10];
-	uint32_t i;
-	int      rc;
 	uint8_t *p = (uint8_t *)buf;
+	uint32_t done = 0;
 
-	for (i = 0; i < count; i++) {
-		uint32_t blk = lba + i;
+	while (done < count) {
+		uint32_t n    = count - done;
+		uint32_t blk  = lba + done;
+		int      rc;
+
+		if (n > UMS_MAX_SECTORS)
+			n = UMS_MAX_SECTORS;
 
 		memset(cdb, 0, sizeof(cdb));
 		cdb[0] = SCSI_READ10;
@@ -244,18 +285,21 @@ ums_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 		cdb[3] = (uint8_t)(blk >> 16);
 		cdb[4] = (uint8_t)(blk >> 8);
 		cdb[5] = (uint8_t)(blk);
-		cdb[7] = 0;
-		cdb[8] = 1;	/* transfer length: 1 block */
+		cdb[7] = (uint8_t)(n >> 8);
+		cdb[8] = (uint8_t)(n);
 
+		kprintf("ums: READ(10) lba=%u n=%u\n", blk, n);
 		rc = ums_command(sc, cdb, sizeof(cdb),
-		    p + (size_t)i * sc->um_blk_size,
-		    sc->um_blk_size, 1);
+		    p + (size_t)done * sc->um_blk_size,
+		    n * sc->um_blk_size, 1);
 		if (rc != 0) {
-			kprintf("ums: READ(10) lba=%u failed rc=%d\n", blk, rc);
-			klog(KLOG_ERR, "ums: READ(10) lba=%u failed rc=%d",
-			    blk, rc);
+			kprintf("ums: READ(10) lba=%u n=%u failed rc=%d\n",
+			    blk, n, rc);
+			klog(KLOG_ERR, "ums: READ(10) lba=%u n=%u failed rc=%d",
+			    blk, n, rc);
 			return (-1);
 		}
+		done += n;
 	}
 	return (0);
 }
@@ -265,12 +309,16 @@ ums_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 {
 	struct ums_softc *sc = (struct ums_softc *)dev->dev_softc;
 	uint8_t  cdb[10];
-	uint32_t i;
-	int      rc;
 	uint8_t *p = (uint8_t *)buf;
+	uint32_t done = 0;
 
-	for (i = 0; i < count; i++) {
-		uint32_t blk = lba + i;
+	while (done < count) {
+		uint32_t n    = count - done;
+		uint32_t blk  = lba + done;
+		int      rc;
+
+		if (n > UMS_MAX_SECTORS)
+			n = UMS_MAX_SECTORS;
 
 		memset(cdb, 0, sizeof(cdb));
 		cdb[0] = SCSI_WRITE10;
@@ -278,18 +326,20 @@ ums_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 		cdb[3] = (uint8_t)(blk >> 16);
 		cdb[4] = (uint8_t)(blk >> 8);
 		cdb[5] = (uint8_t)(blk);
-		cdb[7] = 0;
-		cdb[8] = 1;	/* transfer length: 1 block */
+		cdb[7] = (uint8_t)(n >> 8);
+		cdb[8] = (uint8_t)(n);
 
 		rc = ums_command(sc, cdb, sizeof(cdb),
-		    p + (size_t)i * sc->um_blk_size,
-		    sc->um_blk_size, 0);
+		    p + (size_t)done * sc->um_blk_size,
+		    n * sc->um_blk_size, 0);
 		if (rc != 0) {
-			kprintf("ums: WRITE(10) lba=%u failed rc=%d\n", blk, rc);
-			klog(KLOG_ERR, "ums: WRITE(10) lba=%u failed rc=%d",
-			    blk, rc);
+			kprintf("ums: WRITE(10) lba=%u n=%u failed rc=%d\n",
+			    blk, n, rc);
+			klog(KLOG_ERR, "ums: WRITE(10) lba=%u n=%u failed rc=%d",
+			    blk, n, rc);
 			return (-1);
 		}
+		done += n;
 	}
 	return (0);
 }
