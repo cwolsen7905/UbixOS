@@ -38,6 +38,7 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <sys/signal.h>
+#include <ubixos/signal.h>
 #include <ubixos/version.h>
 #include <sys/sysproto_posix.h>
 #include <sys/sysproto.h>
@@ -48,7 +49,6 @@
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args)
 {
-	// kprintf("exit(%i)", args->status);
 	endTask(_current->id);
 	return (0x0);
 }
@@ -155,39 +155,14 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 
 int sys_kill(struct thread *td, struct sys_kill_args *uap)
 {
-	kTask_t *target = schedFindTask(uap->pid);
-
-	if (target == 0x0)
-	{
-		td->td_retval[0] = -1;
-		return (-1);
+	if (uap->signum == 0) {
+		/* Signal 0: existence check only. */
+		kTask_t *target = schedFindTask(uap->pid);
+		td->td_retval[0] = (target != NULL) ? 0 : -1;
+		return (td->td_retval[0]);
 	}
 
-	/*
-	 * Fatal signals: terminate the target task.
-	 * SIGHUP=1, SIGINT=2, SIGQUIT=3, SIGILL=4, SIGTRAP=5, SIGABRT=6,
-	 * SIGBUS=7, SIGFPE=8, SIGKILL=9, SIGSEGV=11, SIGPIPE=13, SIGTERM=15.
-	 * Other signals are silently accepted (no full signal infrastructure yet).
-	 */
-	switch (uap->signum) {
-	case 1:  /* SIGHUP */
-	case 2:  /* SIGINT */
-	case 3:  /* SIGQUIT */
-	case 4:  /* SIGILL */
-	case 5:  /* SIGTRAP */
-	case 6:  /* SIGABRT */
-	case 7:  /* SIGBUS */
-	case 8:  /* SIGFPE */
-	case 9:  /* SIGKILL */
-	case 11: /* SIGSEGV */
-	case 13: /* SIGPIPE */
-	case 15: /* SIGTERM */
-		endTask(uap->pid);
-		break;
-	default:
-		break;
-	}
-
+	signal_post_kill(_current->id, uap->pid, uap->signum);
 	td->td_retval[0] = 0;
 	return (0);
 }
@@ -233,37 +208,29 @@ int sys_futex(struct thread *td, struct sys_futex_args *uap)
 }
 
 /*
- * set_thread_area — Linux TLS setup syscall.
+ * set_thread_area — TLS setup syscall (slot 351).
  *
- * musl calls this during __init_tls() with a user_desc requesting a segment
- * whose base points at the thread block.  We write LDT[1] (the per-process LDT
- * at VMM_USER_LDT) with a ring-3 data descriptor whose base is ud->base_addr,
- * then reload %gs with selector 0xF (LDT index 1, TI=1, RPL=3).  Setting %gs
- * in the kernel syscall handler persists to userland through iret.
+ * UbixOS musl calls __syscall(SYS_set_thread_area, pthread_ptr) where
+ * pthread_ptr IS the TLS base (the pthread struct address).  This is NOT
+ * the Linux struct user_desc interface — musl passes the raw TLS pointer
+ * as a single argument.
  *
- * musl Phase-1 note: musl computes the selector as entry_number*8+3 (GDT, no
- * TI bit).  The arch/i386/__init_tls.c patch for UbixOS must use entry_number*8+7
- * so the TI bit is set and the CPU looks in the LDT, giving 1*8+7 = 0xF.
+ * We write LDT[1] with base = pthread_ptr, then set tf_gs = 0xF so the
+ * iret back to user mode installs %gs = LDT[1] selector.  After this,
+ * %gs:0 == pthread->self, matching what musl's __get_tp() expects.
  */
 int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 {
 	struct gdtDescriptor *tlsDesc = 0x0;
-	uint32_t base_addr = 0x0;
 
-	/* user_desc first two fields: entry_number (uint), base_addr (uint) */
-	struct
-	{
-		unsigned int entry_number;
-		unsigned int base_addr;
-	} *ud = uap->u_info;
+	/* uap->u_info IS the TLS base pointer (pthread struct address). */
+	uint32_t base_addr = (uint32_t)uap->u_info;
 
-	if (ud == 0x0)
+	if (base_addr == 0)
 	{
 		td->td_retval[0] = -1;
 		return (-1);
 	}
-
-	base_addr = ud->base_addr;
 
 	/* Write LDT[1] — second entry in the per-process LDT page */
 	tlsDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
@@ -276,15 +243,21 @@ int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 	tlsDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
 	tlsDesc->baseHigh = (base_addr >> 24);
 
-	/* Load LDT (GDT[3] = 0x18) and point %gs at LDT[1] (selector 0xF) */
-	asm("push %eax\n"
-	    "mov  $0x18,%ax\n"
-	    "lldt %ax\n"
-	    "mov  $0xF,%eax\n"
-	    "mov  %eax,%gs\n"
-	    "pop  %eax\n");
+	/* Reload the LDT register so the updated LDT[1] descriptor is live. */
+	asm volatile("pushl %eax\n\t"
+	             "movw  $0x18,%ax\n\t"
+	             "lldt  %ax\n\t"
+	             "popl  %eax\n\t");
 
-	ud->entry_number = 1;
+	/*
+	 * Propagate the new %gs selector (0xF = LDT[1], TI=1, RPL=3) back to
+	 * user space via the saved trapframe register.  sys_call_posix.S pushes
+	 * and pops all segment registers around the syscall, so writing
+	 * tf_gs here is the only way to make %gs=0xF survive the iret.
+	 * Setting %gs directly in kernel asm would be discarded by the pop.
+	 */
+	td->frame->tf_gs = 0xF;
+
 	td->td_retval[0] = 0;
 	return (0);
 }
@@ -493,89 +466,6 @@ int sys_getppid(struct thread *td, struct sys_getppid_args *args)
 	return (0);
 }
 
-int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
-{
-	td->td_retval[0] = -1;
-
-	if (args->oset != 0x0)
-	{
-		memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
-		td->td_retval[0] = 0x0;
-	}
-
-	if (args->set != 0x0)
-	{
-		if (args->how == SIG_SETMASK)
-		{
-			if (args->set != 0x0)
-			{
-				memcpy(&td->sigmask, args->set, sizeof(sigset_t));
-				td->td_retval[0] = 0;
-			}
-			else
-			{
-				td->td_retval[0] = -1;
-			}
-		}
-		else if (args->how == SIG_BLOCK)
-		{
-			if (args->set != 0x0)
-			{
-				td->sigmask.__bits[0] &= args->set->__bits[0];
-				td->sigmask.__bits[1] &= args->set->__bits[1];
-				td->sigmask.__bits[2] &= args->set->__bits[2];
-				td->sigmask.__bits[3] &= args->set->__bits[3];
-				td->td_retval[0] = 0;
-			}
-			else
-			{
-				td->td_retval[0] = -1;
-			}
-		}
-		else if (args->how == SIG_UNBLOCK)
-		{
-			if (args->set != 0x0)
-			{
-				td->sigmask.__bits[0] |= args->set->__bits[0];
-				td->sigmask.__bits[1] |= args->set->__bits[1];
-				td->sigmask.__bits[2] |= args->set->__bits[2];
-				td->sigmask.__bits[3] |= args->set->__bits[3];
-				td->td_retval[0] = 0;
-			}
-			else
-			{
-				td->td_retval[0] = -1;
-			}
-		}
-		else
-		{
-			kprintf("SPM: 0x%X", args->how);
-			td->td_retval[0] = -1;
-		}
-	}
-
-	return (0);
-}
-
-int sys_sigaction(struct thread *td, struct sys_sigaction_args *args)
-{
-	td->td_retval[0] = -1;
-
-	if (args->oact != 0x0)
-	{
-		memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
-		td->td_retval[0] = 0;
-	}
-
-	if (args->act != 0x0)
-	{
-		// kprintf("SA: %i", args->sig);
-		memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
-		td->td_retval[0] = 0;
-	}
-	return (0);
-}
-
 int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args)
 {
 	td->td_retval[0] = _current->pgrp;
@@ -599,47 +489,25 @@ int sys_getpgid(struct thread *td, struct sys_getpgid_args *args)
 
 int sys_setpgid(struct thread *td, struct sys_setpgid_args *args)
 {
-	pidType pid = 0x0;
-	pidType pgrp = 0x0;
+	kTask_t *t;
 
-	if (args->pid == 0x0 || args->pid == _current->id)
-	{
-		if (args->pgid == 0x0 || args->pgid == _current->id)
-		{
-			td->td_retval[0] = 0x0;
-			_current->pgrp = _current->id;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-		}
-	}
-	else
-	{
-		kTask_t *tmpTask = schedFindTask(args->pid);
-
-		if (tmpTask == 0x0)
-		{
-			td->td_retval[0] = -1;
-		}
-		else
-		{
-
-			/* Get The PRGP We Want To Set */
-			pgrp = (args->pgid == 0) ? tmpTask->pgrp : args->pgid;
-
-			if (pgrp != _current->pgrp || pgrp != tmpTask->id)
-			{
-				td->td_retval[0] = -1;
-			}
-			else
-			{
-				td->td_retval[0] = 0x0;
-				tmpTask->pgrp = pgrp;
-			}
-		}
+	/* Target is the calling process itself. */
+	if (args->pid == 0 || args->pid == _current->id) {
+		_current->pgrp = (args->pgid == 0)
+		    ? (uint32_t)_current->id
+		    : (uint32_t)args->pgid;
+		td->td_retval[0] = 0;
+		return (0);
 	}
 
+	/* Target is another process — must be a direct child of the caller. */
+	t = schedFindTask((uint32_t)args->pid);
+	if (t == NULL || t->parent != _current) {
+		td->td_retval[0] = -1;
+		return (0);
+	}
+	t->pgrp = (args->pgid == 0) ? (uint32_t)t->id : (uint32_t)args->pgid;
+	td->td_retval[0] = 0;
 	return (0);
 }
 

@@ -27,6 +27,7 @@
  */
 
 #include <ubixos/syscalls.h>
+#include <ubixos/signal.h>
 #include <sys/sysproto_posix.h>
 #include <sys/pipe.h>
 
@@ -928,10 +929,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 178 - getdescriptor */
     {
-        0,
-        "setdescriptor",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 179 - setdescriptor */
+        ARG_COUNT(sys_sigsuspend_args),
+        "sigsuspend",
+        sys_sigsuspend,
+        SYSCALL_VALID }, /* 179 - sigsuspend */
     {
         0,
         "nosys",
@@ -1948,10 +1949,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 382 - Invalid */
     {
-        0,
-        "kse_release",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 383 - Invalid */
+        ARG_COUNT(sys_statx_args),
+        "statx",
+        (sys_call_t *) sys_statx,
+        SYSCALL_VALID }, /* 383 - statx (Linux slot; musl uses for fstat/stat) */
     {
         0,
         "__mac_get_proc",
@@ -2118,10 +2119,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_sigaction,
         SYSCALL_VALID },  // 416 - sigaction
     {
-        0,
+        ARG_COUNT(sys_sigreturn_args),
         "sigreturn",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 417 - Invalid */
+        sys_sigreturn,
+        SYSCALL_VALID }, /* 417 - sigreturn */
     {
         0,
         "__xstat",

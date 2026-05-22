@@ -31,6 +31,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/signal.h>
 #include <sys/trap.h>
 #include <sys/elf.h>
 #include <string.h>
@@ -90,6 +91,9 @@ void sys_call_posix(struct trapframe *frame)
 		td->td_retval[0] = 0;
 		td->td_retval[1] = frame->tf_edx;
 
+		/* Save syscall number in tf_err for SA_RESTART in signal_check. */
+		frame->tf_err = (uint32_t)code;
+
 		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
 			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
 
@@ -106,7 +110,7 @@ void sys_call_posix(struct trapframe *frame)
 		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
 		{
 			kprintf("RET(%i)1", code);
-			return;
+			goto check_signals;
 		}
 
 		switch (error)
@@ -122,11 +126,17 @@ void sys_call_posix(struct trapframe *frame)
 			frame->tf_eax = td->td_retval[0];
 			frame->tf_edx = td->td_retval[1];
 			frame->tf_eflags |= PSL_C;
+			/* Pack errno into high 16 bits of tf_err for SA_RESTART check. */
+			frame->tf_err = ((uint32_t)error << 16) | (uint32_t)code;
 			if (systemCalls_posix[code].sc_status == SYSCALL_DEBUG)
 				kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
 			break;
 		}
 	}
+
+check_signals:
+	/* Deliver any pending unblocked signal before returning to user mode. */
+	signal_check(frame);
 }
 
 int invalidCall_posix()

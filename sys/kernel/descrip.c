@@ -65,10 +65,7 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 	int i = 0;
 
 	if (uap->fd < 0 || uap->fd >= O_FILES || td->o_files[uap->fd] == 0x0)
-	{
-		kprintf("fcntl: bad fd %i\n", uap->fd);
-		return (-1);
-	}
+		return (-EBADF);
 
 	fp = (struct file *)td->o_files[uap->fd];
 
@@ -288,7 +285,9 @@ int getfd(struct thread *td, struct file **fp, int fd)
 int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 {
 	tty_term *term = _current->term;
-	int on_tty = (args->fd == 0 || args->fd == 1 || args->fd == 2) && term != NULL;
+	struct file *tty_fp = NULL;
+	getfd(td, &tty_fp, args->fd);
+	int on_tty = (tty_fp != NULL && tty_fp->fd == NULL) && term != NULL;
 
 	switch (args->com)
 	{

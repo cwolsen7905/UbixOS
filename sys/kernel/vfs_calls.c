@@ -51,6 +51,11 @@
 int lwip_send(int s, const void *dataptr, size_t size, int flags);
 int lwip_recv(int s, void *mem, size_t len, int flags);
 
+/* True when an unblocked signal is pending — used to make blocking I/O
+ * loops interruptible.  td must be struct thread *. */
+#define SIG_PENDING_UNBLOCKED(td) \
+    ((td)->sig_pending & ~(td)->sigmask.__bits[0])
+
 #define FD_TYPE_DIR 4
 
 int sys_open(struct thread *td, struct sys_open_args *args)
@@ -217,9 +222,14 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		}
 		else
 		{
-			/* Blocking: wait until data arrives */
-			while (pFD->bCNT == 0)
+			/* Blocking: wait until data arrives or a signal fires. */
+			while (pFD->bCNT == 0) {
+				if (SIG_PENDING_UNBLOCKED(td)) {
+					td->td_retval[0] = EINTR;
+					return (EINTR);
+				}
 				sched_yield();
+			}
 		}
 		{
 			nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
@@ -240,14 +250,17 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			td->td_retval[0] = nbytes;
 		}
 	}
-	else if (args->fd > 3)
+	else if (fd == NULL)
 	{
-		if (fd == NULL) {
-			td->td_retval[0] = -1;
-			return (-1);
-		}
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	else if (fd->fd != NULL)
+	{
+		/* Regular file with a fileDescriptor_t: read via VFS */
 		td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
 	}
+	/* else: fd->fd == NULL = TTY placeholder (original fds 0-3 or dup2'd copy) */
 	else if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
 	{
 		/* Serial TTY (ttyd session): drain rx ring through line discipline,
@@ -272,6 +285,10 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			}
 			else
 			{
+				if (SIG_PENDING_UNBLOCKED(td)) {
+					td->td_retval[0] = EINTR;
+					return (EINTR);
+				}
 				sched_yield();
 			}
 		}
@@ -292,6 +309,10 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		 * so it sets the flag and we perform the switch here in task context. */
 		for (;;)
 		{
+			if (SIG_PENDING_UNBLOCKED(td)) {
+				td->td_retval[0] = EINTR;
+				return (EINTR);
+			}
 			if (vesa_text_slot >= 0)
 			{
 				int slot = vesa_text_slot;
@@ -446,31 +467,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		td->td_retval[0] = uap->nbyte;
 	}
-	else if (uap->fd == 2)
+	else if (fd != NULL && fd->fd == NULL)
 	{
-		buffer = kmalloc(uap->nbyte + 1);
-		if (!buffer) { td->td_retval[0] = -1; return (-1); }
-		memset(buffer, '\0', uap->nbyte + 1);
-		memcpy(buffer, uap->buf, uap->nbyte);
-		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
-		{
-			size_t i;
-			for (i = 0; i < uap->nbyte; i++)
-				rs232_putc(buffer[i]);
-		}
-		else if (_current->term != NULL)
-		{
-			tty_print(buffer, _current->term);
-		}
-		else
-		{
-			kprintf("%s", buffer);
-		}
-		kfree(buffer);
-		td->td_retval[0] = uap->nbyte;
-	}
-	else if (uap->fd == 1)
-	{
+		/* TTY placeholder: original fds 1/2 or any dup2'd copy thereof */
 		buffer = kmalloc(uap->nbyte + 1);
 		if (!buffer) { td->td_retval[0] = -1; return (-1); }
 		memset(buffer, '\0', uap->nbyte + 1);
@@ -500,7 +499,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		}
 		else
 		{
-			td->td_retval[0] = uap->nbyte;
+			td->td_retval[0] = -1;
 		}
 	}
 	return (0x0);

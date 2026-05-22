@@ -28,6 +28,7 @@
 
 #include <ubixos/errno.h>
 #include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <fs/vfs/stat.h>
 #include <fs/vfs/file.h>
 #include <lib/kprintf.h>
@@ -305,4 +306,85 @@ int sys_lstat(struct thread *td, struct sys_lstat_args *args) {
 int sys_stat(struct thread *td, struct sys_stat_args *args) {
   td->td_retval[0] = _sys_stat(args->path, args->ub, STAT_LSTAT);
   return (0x0);
+}
+
+/*
+ * sys_statx — Linux statx(2) compatibility (slot 383).
+ *
+ * musl uses statx as the backing for fstat/stat.  We handle the two
+ * common call patterns:
+ *   AT_EMPTY_PATH set, path==""  → fstat(dirfd)
+ *   AT_FDCWD or path given       → stat(path)
+ *
+ * The struct statx is zeroed first so musl's conversion to struct stat
+ * sees consistent values for fields we don't populate.
+ */
+int sys_statx(struct thread *td, struct sys_statx_args *args)
+{
+  struct statx *stx = args->stx;
+  int error = 0;
+
+  if (stx == 0x0) {
+    td->td_retval[0] = EFAULT;
+    return (EFAULT);
+  }
+
+  memset(stx, 0, sizeof(*stx));
+
+  if ((args->flags & AT_EMPTY_PATH) &&
+      (args->path == 0x0 || args->path[0] == '\0')) {
+    /* fstat(dirfd) path */
+    struct file *fdd = 0x0;
+    fileDescriptor_t *fd = 0x0;
+
+    getfd(td, &fdd, args->dirfd);
+    if (fdd == 0x0 || fdd->fd == 0x0) {
+      td->td_retval[0] = EBADF;
+      return (EBADF);
+    }
+    fd = fdd->fd;
+
+    stx->stx_mask       = args->mask & STATX_BASIC_STATS;
+    stx->stx_blksize    = 512;
+    stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
+    stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
+    stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
+    stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
+    stx->stx_ino        = fd->ino;
+    stx->stx_size       = fd->size;
+    stx->stx_blocks     = (fd->size + 511) / 512;
+    stx->stx_dev_major  = 1;
+    stx->stx_dev_minor  = 1;
+  } else {
+    /* stat(path) path */
+    const char *path = args->path;
+    fileDescriptor_t *fd = 0x0;
+
+    if (path == 0x0 || path[0] == '\0') {
+      td->td_retval[0] = ENOENT;
+      return (ENOENT);
+    }
+
+    fd = fopen(path, "rb");
+    if (fd == 0x0) {
+      td->td_retval[0] = ENOENT;
+      return (ENOENT);
+    }
+
+    stx->stx_mask       = args->mask & STATX_BASIC_STATS;
+    stx->stx_blksize    = 512;
+    stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
+    stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
+    stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
+    stx->stx_mode       = fd->inode.u.ufs2_i.di_mode;
+    stx->stx_ino        = fd->ino;
+    stx->stx_size       = fd->size;
+    stx->stx_blocks     = (fd->size + 511) / 512;
+    stx->stx_dev_major  = 1;
+    stx->stx_dev_minor  = 1;
+    fclose(fd);
+  }
+
+  td->td_retval[0] = error;
+  return (error);
 }

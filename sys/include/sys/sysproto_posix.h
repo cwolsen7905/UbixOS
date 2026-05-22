@@ -33,11 +33,14 @@
 #include <sys/thread.h>
 #include <sys/poll.h>
 
+struct ubx_sigcontext; /* full definition in ubixos/signal.h */
+
 /* Forward declaration — full definition in net/sockets.h */
 struct msghdr;
 
 /* TEMP */
 #include <fs/vfs/file.h>
+#include <fs/vfs/stat.h>
 
 typedef int register_t;
 
@@ -667,6 +670,19 @@ struct sys_sigaction_args {
     char oact_r_[PADR_(struct sigaction*)];
 };
 
+struct sys_sigreturn_args {
+    char scp_l_[PADL_(struct ubx_sigcontext *)];
+    struct ubx_sigcontext *scp;
+    char scp_r_[PADR_(struct ubx_sigcontext *)];
+};
+
+struct sys_sigsuspend_args {
+    char sigmask_l_[PADL_(const sigset_t *)];
+    const sigset_t *sigmask;
+    char sigmask_r_[PADR_(const sigset_t *)];
+    /* sigsetsize (musl rt_sigsuspend arg 2) is ignored — sigset_t is fixed */
+};
+
 struct sys_getpgrp_args {
     register_t dummy;
 };
@@ -717,6 +733,28 @@ struct sys_fstatat_args {
     char flag_l_[PADL_(int)];
     int flag;
     char flag_r_[PADR_(int)];
+};
+
+struct sys_statx_args {
+    char dirfd_l_[PADL_(int)];
+    int dirfd;
+    char dirfd_r_[PADR_(int)];
+
+    char path_l_[PADL_(const char *)];
+    const char *path;
+    char path_r_[PADR_(const char *)];
+
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+
+    char mask_l_[PADL_(unsigned int)];
+    unsigned int mask;
+    char mask_r_[PADR_(unsigned int)];
+
+    char stx_l_[PADL_(struct statx *)];
+    struct statx *stx;
+    char stx_r_[PADR_(struct statx *)];
 };
 
 struct sys_fchdir_args {
@@ -1049,6 +1087,7 @@ int sys_stat(struct thread *td, struct sys_stat_args*);
 int sys_lstat(struct thread *td, struct sys_lstat_args*);
 int sys_fstat(struct thread *td, struct sys_fstat_args*);
 int sys_fstatat(struct thread *td, struct sys_fstatat_args*);
+int sys_statx(struct thread *td, struct sys_statx_args*);
 int sys_openat(struct thread *td, struct sys_openat_args*);
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args*);
@@ -1066,6 +1105,7 @@ int sys_setpgrp(struct thread *td, struct sys_setpgid_args*);
 
 int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args*);
 int sys_sigaction(struct thread *td, struct sys_sigaction_args*);
+int sys_sigreturn(struct thread *td, struct sys_sigreturn_args*);
 
 int sys_getpgrp(struct thread *td, struct sys_getpgrp_args*);
 int sys_setpgid(struct thread *td, struct sys_setpgid_args*);
