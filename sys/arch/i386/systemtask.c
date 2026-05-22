@@ -36,6 +36,7 @@
 #include <lib/kprintf.h>
 #include <lib/bioscall.h>
 #include <lib/vesa.h>
+#include <isa/kbd.h>
 #include <sys/shutdown.h>
 #include <vmm/vmm.h>
 #include <mpi/mpi.h>
@@ -166,6 +167,7 @@ void systemTask() {
             (int)disp_owner_pid, disp_saved_mode);
         if (disp_saved_mode == 0) {
           vesa_text_mode();
+          kbd_gui_mode = 0;
         } else if (disp_saved_mode != vesa_current_mode) {
           if (vesa_init(disp_saved_mode) == 0)
             vesa_map_fb();
