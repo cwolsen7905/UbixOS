@@ -135,7 +135,7 @@ int _initHardDisk(int hdD)
 	if (hdInit(hdd) == 0 && ubx_device_register_block(udev, 1, 0, &hd_blk_ops) == 0)
 	{
 		kprintf("ad%i - Start: [0x0], Size: [0x%x/0x%X]\n", hdC, hdd->hdSize, hdd->hdSize * 512);
-		sprintf(name, "ad%ip%i", hdC, hdd->part);
+		snprintf(name, sizeof(name), "ad%ip%i", hdC, hdd->part);
 		devfs_makeNode(name, 'b', 0x1, 0x0);
 		hdRead(hdd, data, 0x0, 0x1);
 
@@ -170,7 +170,7 @@ int _initHardDisk(int hdD)
 
 					if (ubx_device_register_block(udev2, 1, minor, &hd_blk_ops) == 0)
 					{
-						sprintf(name, "ad%ip%i", hdC, hdd->part);
+						snprintf(name, sizeof(name), "ad%ip%i", hdC, hdd->part);
 						kprintf("%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: [%i], MM: [%i:%i]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", hdd2->lba_start,
 						        hdd2->parOffset, hdd2->lba_end - hdd2->lba_start, hdC + 1, minor);
 						devfs_makeNode(name, 'c', 0x1, minor);
@@ -188,7 +188,7 @@ int _initHardDisk(int hdD)
 				// kprintf( "Type: 0x%X\n", d[i].dp_type );
 
 				if (d[i].dp_type == 0xEE)
-					kprintf("Motherfucker Jones! We're GPT.... Lick My Nuts Now Bitch!\n");
+					kprintf("hd: unexpected GPT protective MBR in MBR partition slot %d\n", i);
 
 				if (d[i].dp_type != 0x0)
 				{
@@ -224,7 +224,7 @@ int _initHardDisk(int hdD)
 							{
 								if (bsdd->d_partitions[x].p_size > 0)
 								{
-									sprintf(name, "ad%is%i%c", hdC, i + 1, 'a' + x);
+									snprintf(name, sizeof(name), "ad%is%i%c", hdC, i + 1, 'a' + x);
 									hdd2 = (struct driveInfo *)kmalloc(sizeof(struct driveInfo));
 									memcpy(hdd2, hdd, sizeof(struct driveInfo));
 									// hdd2->parOffset = d[i].dp_start + bsdd->d_partitions[x].p_offset;
@@ -248,6 +248,9 @@ int _initHardDisk(int hdD)
 		}
 	}
 	kfree(data);
+	kfree(data2);
+	if (secbuf != 0x0)
+		kfree(secbuf);
 	hdC++;
 	return (0x0);
 }
