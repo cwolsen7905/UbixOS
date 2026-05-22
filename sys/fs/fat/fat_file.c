@@ -297,25 +297,58 @@ fat_file_read(struct fat_file *f, void *buf, uint32_t size, uint32_t *got)
 		uint32_t byte_off          = offset_in_cluster % 512;
 		uint32_t lba = fat_cluster_to_lba(fs, f->cur_cluster) +
 		    sec_in_clust;
-		uint32_t can_copy = 512 - byte_off;
 
-		if (can_copy > remaining)
-			can_copy = remaining;
+		/*
+		 * Fast path: sector-aligned read directly into caller's buffer,
+		 * consuming all remaining whole sectors in the current cluster.
+		 * Avoids the intermediate sector_buf[] copy and issues one
+		 * block-layer call per cluster instead of one per sector.
+		 */
+		if (byte_off == 0 && remaining >= 512) {
+			uint32_t secs_left_clust = fs->sectors_per_cluster -
+			    sec_in_clust;
+			uint32_t secs_want       = remaining / 512;
+			uint32_t secs_to_read    = secs_left_clust < secs_want ?
+			    secs_left_clust : secs_want;
+			uint32_t nbytes          = secs_to_read * 512;
 
-		if (fat_sector_read(fs, lba, sector_buf) != 0)
-			break;
-
-		memcpy(dst + bytes_read, sector_buf + byte_off, can_copy);
-		bytes_read += can_copy;
-		remaining  -= can_copy;
-		f->position += can_copy;
-
-		/* Advance cluster if we just crossed a boundary. */
-		if (remaining > 0 && f->position % cluster_bytes == 0) {
-			uint32_t next = fat_cluster_next(fs, f->cur_cluster);
-			if (next == FAT_CLUSTER_EOC || next < 2)
+			if (fs->mp->device->dev_blk_ops->read(
+			    fs->mp->device, lba, secs_to_read,
+			    dst + bytes_read) != 0)
 				break;
-			f->cur_cluster = next;
+			bytes_read  += nbytes;
+			remaining   -= nbytes;
+			f->position += nbytes;
+			if (remaining > 0 && f->position % cluster_bytes == 0) {
+				uint32_t next = fat_cluster_next(fs, f->cur_cluster);
+				if (next == FAT_CLUSTER_EOC || next < 2)
+					break;
+				f->cur_cluster = next;
+			}
+			continue;
+		}
+
+		/* Slow path: partial sector at start/end. */
+		{
+			uint32_t can_copy = 512 - byte_off;
+			if (can_copy > remaining)
+				can_copy = remaining;
+
+			if (fat_sector_read(fs, lba, sector_buf) != 0)
+				break;
+
+			memcpy(dst + bytes_read, sector_buf + byte_off, can_copy);
+			bytes_read  += can_copy;
+			remaining   -= can_copy;
+			f->position += can_copy;
+
+			/* Advance cluster if we just crossed a boundary. */
+			if (remaining > 0 && f->position % cluster_bytes == 0) {
+				uint32_t next = fat_cluster_next(fs, f->cur_cluster);
+				if (next == FAT_CLUSTER_EOC || next < 2)
+					break;
+				f->cur_cluster = next;
+			}
 		}
 	}
 

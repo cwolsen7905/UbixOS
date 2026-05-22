@@ -42,19 +42,17 @@
 #include <fs/fat/fat_dir.h>
 #include <fs/fat/fat_file.h>
 
-static volatile int	 fat_busy = 0;
-
 static void
-fat_acquire(void)
+fat_acquire(struct fat_fs *fs)
 {
-	while (__sync_lock_test_and_set(&fat_busy, 1))
+	while (__sync_lock_test_and_set(&fs->fs_lock, 1))
 		sched_yield();
 }
 
 static void
-fat_release(void)
+fat_release(struct fat_fs *fs)
 {
-	__sync_lock_release(&fat_busy);
+	__sync_lock_release(&fs->fs_lock);
 }
 
 /* Retrieve the fat_fs for a mount point (stored in mp->fsInfo). */
@@ -123,9 +121,9 @@ open_fat(const char *path, fileDescriptor_t *fd)
 	else
 		mode = FAT_MODE_W;
 
-	fat_acquire();
+	fat_acquire(fs);
 	f = fat_file_open(fs, path, mode);
-	fat_release();
+	fat_release(fs);
 
 	if (f == NULL)
 		return (0);
@@ -140,9 +138,12 @@ open_fat(const char *path, fileDescriptor_t *fd)
 int
 close_fat(void *res)
 {
-	fat_acquire();
-	fat_file_close((struct fat_file *)res);
-	fat_release();
+	struct fat_file	*f = (struct fat_file *)res;
+	struct fat_fs	*fs = f->fs;
+
+	fat_acquire(fs);
+	fat_file_close(f);
+	fat_release(fs);
 	return (0);
 }
 
@@ -157,10 +158,10 @@ read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (size <= 0)
 		return (0);
 
-	fat_acquire();
+	fat_acquire(f->fs);
 	fat_file_seek(f, (uint32_t)offset);
 	fat_file_read(f, data, (uint32_t)size, &got);
-	fat_release();
+	fat_release(f->fs);
 
 	return ((int)got);
 }
@@ -175,11 +176,11 @@ write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (size <= 0)
 		return (0);
 
-	fat_acquire();
+	fat_acquire(f->fs);
 	fat_file_seek(f, (uint32_t)offset);
 	fat_file_write(f, data, (uint32_t)size);
 	fat_file_flush(f);
-	fat_release();
+	fat_release(f->fs);
 
 	/* Update fd->size to reflect any growth. */
 	fd->size = f->file_size;
@@ -198,14 +199,14 @@ fat_opendir(const char *path, kDIR_t *dir)
 	if (it == NULL)
 		return (0);
 
-	fat_acquire();
+	fat_acquire(fs);
 	if (fat_path_to_dir_cluster(fs, path, &cluster) != 0) {
-		fat_release();
+		fat_release(fs);
 		kfree(it);
 		return (0);
 	}
 	fat_dir_iter_open(fs, cluster, it);
-	fat_release();
+	fat_release(fs);
 
 	dir->dirHandle = it;
 	return (1);
@@ -221,9 +222,9 @@ fat_readdir(kDIR_t *dir, struct kdirent *ent)
 	uint16_t		 off;
 	int			 r;
 
-	fat_acquire();
+	fat_acquire(it->fs);
 	r = fat_dir_iter_next(it, name, &raw, &sec, &off);
-	fat_release();
+	fat_release(it->fs);
 
 	if (r != 0)
 		return (-1);
@@ -251,9 +252,9 @@ mkdir_fat(char *path, void *vfd)
 	struct fat_fs	*fs = fat_fs_from_mp(((fileDescriptor_t *)vfd)->mp);
 	int		 r;
 
-	fat_acquire();
+	fat_acquire(fs);
 	r = fat_dir_mkdir(fs, strip_prefix(path));
-	fat_release();
+	fat_release(fs);
 	return (r);
 }
 
@@ -263,9 +264,9 @@ rmdir_fat(char *path, void *vmp)
 	struct fat_fs	*fs = fat_fs_from_mp((struct vfs_mountPoint *)vmp);
 	int		 r;
 
-	fat_acquire();
+	fat_acquire(fs);
 	r = fat_dir_rmdir(fs, strip_prefix(path));
-	fat_release();
+	fat_release(fs);
 	return (r);
 }
 
@@ -275,9 +276,9 @@ unlink_fat(char *path, void *vmp)
 	struct fat_fs	*fs = fat_fs_from_mp((struct vfs_mountPoint *)vmp);
 	int		 r;
 
-	fat_acquire();
+	fat_acquire(fs);
 	r = fat_dir_unlink(fs, strip_prefix(path));
-	fat_release();
+	fat_release(fs);
 	return (r);
 }
 

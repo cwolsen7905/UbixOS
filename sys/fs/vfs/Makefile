@@ -3,6 +3,6 @@
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-OBJS = mount.o file.o vfs.o stat.o namei.o inode.o
+OBJS = mount.o file.o vfs.o stat.o namei.o inode.o bcache.o
 
 .include "${UBIX_MK}/ubix.kern.mk"

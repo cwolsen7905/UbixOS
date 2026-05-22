@@ -54,6 +54,7 @@
  * mount time except free_cluster_hint.
  */
 struct fat_fs {
+	volatile int		 fs_lock;		/* per-mount spinlock */
 	struct vfs_mountPoint	*mp;
 	uint8_t			 type;			/* FAT_TYPE_12/16/32 */
 	uint32_t		 bytes_per_sector;	/* always 512 on UbixOS */

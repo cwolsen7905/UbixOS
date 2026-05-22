@@ -27,6 +27,7 @@
  */
 
 #include <fs/vfs/vfs.h>
+#include <fs/vfs/bcache.h>
 #include <ubixos/vitals.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -47,6 +48,8 @@ Notes:
 int vfs_init() {
   /* Set up default fileSystems list */
   systemVitals->fileSystems = 0x0;
+
+  bcache_init();
 
   /* Print information */
   kprintf("vfs0: addr=0x%X\n", systemVitals->fileSystems);

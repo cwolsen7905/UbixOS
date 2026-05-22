@@ -147,8 +147,9 @@ fat_bpb_parse(struct fat_fs *fs)
 		 */
 	}
 
-	kprintf("fat_bpb: FAT%d  clusters=%u  data_lba=%u\n",
-	    fs->type, fs->total_clusters, fs->data_lba);
+	kprintf("fat_bpb: FAT%d  clusters=%u  data_lba=%u  sec/clus=%u\n",
+	    fs->type, fs->total_clusters, fs->data_lba,
+	    fs->sectors_per_cluster);
 
 	/*
 	 * Extract the volume label from the extended BPB and use it (lowercased,
