@@ -119,10 +119,10 @@ void systemTask() {
             vesa_ok = 1;
           }
 
-          if (vesa_ok && prev_mode != 0 && prev_mode != 0x118) {
+          if (vesa_ok) {
             disp_saved_mode = prev_mode;
             disp_owner_pid  = myMsg.pid;
-            kprintf("system: display claimed by pid %d (was mode 0x%X)\n",
+            kprintf("system: display claimed by pid %d (prev mode 0x%X)\n",
                 (int)myMsg.pid, prev_mode);
           }
 
@@ -164,8 +164,10 @@ void systemTask() {
       if (disp_owner_pid != 0 && tmpTask->id == (int)disp_owner_pid) {
         kprintf("system: display owner pid %d exited — restoring mode 0x%X\n",
             (int)disp_owner_pid, disp_saved_mode);
-        if (vesa_init(disp_saved_mode) == 0)
-          vesa_map_fb();
+        if (disp_saved_mode != 0 && disp_saved_mode != vesa_current_mode) {
+          if (vesa_init(disp_saved_mode) == 0)
+            vesa_map_fb();
+        }
         disp_owner_pid  = 0;
         disp_saved_mode = 0;
 
