@@ -28,6 +28,7 @@
 
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
+#include <i386/signal.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
 #include <ubixos/endtask.h>
@@ -89,10 +90,17 @@ void sched() {
          * vmm_cleanVirtualSpace, set DEAD, then yielded — marking it
          * READY here would re-schedule it with a partially cleaned
          * address space and trigger a not-present LDT fault). */
-        if (delTask->parent->state != DEAD)
+        if (delTask->parent->state != DEAD) {
           delTask->parent->state = READY;
+          delTask->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
+        }
         if (delTask->term != NULL && delTask->term->owner == delTask->id)
           delTask->term->owner = delTask->parent->id;
+        /* Clear stale foreground pgrp so the fallback fires for the
+         * next shell before it calls tcsetpgrp. */
+        if (delTask->term != NULL &&
+            delTask->term->t_pgrp == (pid_t)delTask->pgrp)
+          delTask->term->t_pgrp = 0;
       }
 
       tmpTask = tmpTask->next;

@@ -142,12 +142,12 @@ ac97_isr(void)
 	sc->next_buf ^= 1;
 
 	/* Drain ring into the next ping-pong buffer */
-	avail = (sc->ring_wr - sc->ring_rd) & AC97_RING_MASK;
+	avail = sc->ring_wr - sc->ring_rd;
 	if (avail >= AC97_BUF_BYTES) {
 		for (i = 0; i < (uint32_t)AC97_BUF_BYTES; i++)
 			sc->buf[fill_buf][i] =
 			    sc->ring[(sc->ring_rd + i) & AC97_RING_MASK];
-		sc->ring_rd = (sc->ring_rd + AC97_BUF_BYTES) & AC97_RING_MASK;
+		sc->ring_rd += AC97_BUF_BYTES;
 	} else {
 		/* Buffer underrun — output silence rather than stale data */
 		memset(sc->buf[fill_buf], 0, AC97_BUF_BYTES);
@@ -156,7 +156,7 @@ ac97_isr(void)
 	/* Advance LVI to include the newly filled buffer */
 	sc->lvi = (sc->lvi + 1) & 31;
 	sc->bdl[sc->lvi].addr  = sc->buf_dma[fill_buf].db_paddr;
-	sc->bdl[sc->lvi].len   = AC97_BUF_SAMPLES;
+	sc->bdl[sc->lvi].len   = AC97_BDL_LEN;
 	sc->bdl[sc->lvi].flags = AC97_BDL_IOC;
 	nabm_wr8(sc, NABM_PO_BASE + NABM_LVI, sc->lvi);
 }
@@ -233,7 +233,7 @@ ac97_dma_init(struct ac97_softc *sc)
 		memset(sc->buf[i], 0, AC97_BUF_BYTES);
 
 		sc->bdl[i].addr  = sc->buf_dma[i].db_paddr;
-		sc->bdl[i].len   = AC97_BUF_SAMPLES;
+		sc->bdl[i].len   = AC97_BDL_LEN;
 		sc->bdl[i].flags = AC97_BDL_IOC;
 	}
 
@@ -287,8 +287,7 @@ ac97_ring_write(const char *src, int len)
 	 * ring.  Blocking here with sched_yield() would keep IF=0 (syscall
 	 * entry clears IF and never re-enables it), starving the AC97 IRQ.
 	 */
-	free_space = (uint32_t)(AC97_RING_SIZE) -
-	    ((sc->ring_wr - sc->ring_rd) & AC97_RING_MASK);
+	free_space = (uint32_t)(AC97_RING_SIZE) - (sc->ring_wr - sc->ring_rd);
 
 	if (free_space == 0)
 		return 0;
@@ -300,7 +299,7 @@ ac97_ring_write(const char *src, int len)
 	for (i = 0; i < write_len; i++)
 		sc->ring[(sc->ring_wr + i) & AC97_RING_MASK] = (uint8_t)src[i];
 
-	sc->ring_wr = (sc->ring_wr + write_len) & AC97_RING_MASK;
+	sc->ring_wr += write_len;
 	return (int)write_len;
 }
 

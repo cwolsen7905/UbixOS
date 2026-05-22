@@ -64,14 +64,14 @@ mov %eax, %fs
 cld
 */
 /* push %esp */
-  call sched              
+  call sched
 /* add $0x4,%esp */ /* Remove Stack Pointer From Stack */
-/*
-pop %gs
-pop %fs
-pop %es
-pop %ds
-*/
-done:                     
+  /* AST: if we interrupted ring-3 code, check for pending signals.
+   * After pusha the CPU-pushed CS is at [ESP+36]; RPL bits 0-1 == 3 for
+   * user mode (CS=0x1B).  Kernel interrupts (CS=0x08) have RPL=0 → skip. */
+  testb $3, 36(%esp)
+  jz done
+  call signal_ast_check
+done:
   popa                      /* Restore Registers                        */
-  iret                    
+  iret

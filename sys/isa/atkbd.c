@@ -45,6 +45,7 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/vitals.h>
+#include <ubixos/signal.h>
 
 static int atkbd_scan();
 
@@ -280,19 +281,37 @@ void keyboardHandler(struct trapframe *frame)
 		return;
 	}
 
-	/* Modifier key state tracking */
-	if (key == 0x1D && !(controlKeys & controlKey))
-		controlKeys |= controlKey;
-	if (key == 0x80 + 0x1D)
+	/* Modifier key state tracking.
+	 * Also push KEY_L* events to the ring so that GUI apps (e.g. DOOM) can
+	 * treat Ctrl, Alt, and Shift as first-class keys (fire/strafe/run). */
+	if (key == 0x1D) {
+		if (!(controlKeys & controlKey)) {
+			controlKeys |= controlKey;
+			kbd_ring_push(KEY_LCTRL, 1);
+		}
+	}
+	if (key == 0x80 + 0x1D) {
 		controlKeys &= ~controlKey;
-	if (key == 0x38 && !(controlKeys & altKey))
-		controlKeys |= altKey;
-	if (key == 0x80 + 0x38)
+		kbd_ring_push(KEY_LCTRL, 0);
+	}
+	if (key == 0x38) {
+		if (!(controlKeys & altKey)) {
+			controlKeys |= altKey;
+			kbd_ring_push(KEY_LALT, 1);
+		}
+	}
+	if (key == 0x80 + 0x38) {
 		controlKeys &= ~altKey;
-	if ((key == 0x2A || key == 0x36) && !(controlKeys & shiftKey))
+		kbd_ring_push(KEY_LALT, 0);
+	}
+	if ((key == 0x2A || key == 0x36) && !(controlKeys & shiftKey)) {
 		controlKeys |= shiftKey;
-	if ((key == 0x80 + 0x2A) || (key == 0x80 + 0x36))
+		kbd_ring_push(KEY_LSHIFT, 1);
+	}
+	if ((key == 0x80 + 0x2A) || (key == 0x80 + 0x36)) {
 		controlKeys &= ~shiftKey;
+		kbd_ring_push(KEY_LSHIFT, 0);
+	}
 
 	/* Lock keys */
 	if (key == 0x3A) { ledStatus ^= ledCapslock;   setLED(); }
@@ -341,15 +360,8 @@ void keyboardHandler(struct trapframe *frame)
 
 	/* ISR-context emergency keys: handle and do not forward to ring */
 	switch (kc) {
-	case 0x03: /* Ctrl-C: kill foreground task */
-		if (tty_foreground != NULL) {
-			kTask_t *victim = schedFindTask(tty_foreground->owner);
-			if (victim != NULL) {
-				if (victim->parent != NULL)
-					tty_foreground->owner = victim->parent->id;
-				sched_killTree(victim->id);
-			}
-		}
+	case 0x03: /* Ctrl-C: post SIGINT to foreground job */
+		signal_post_tty(tty_foreground, 2 /* SIGINT */);
 		spinUnlock(&atkbdSpinLock);
 		return;
 	case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */

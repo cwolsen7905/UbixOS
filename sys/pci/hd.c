@@ -522,10 +522,12 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
 
 int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
 {
-	long counter = 0x0;
-	long retVal = 0x0;
+	long  counter          = 0x0;
+	long  retVal           = 0x0;
 	short transactionCount = 0x0;
-	short *tmp = (short *)baseAddr;
+	short remainder        = 0x0;
+	short *tmp             = (short *)baseAddr;
+
 	if (hdd->lba_start == 0)
 		startSector += hdd->parOffset;
 	else
@@ -536,19 +538,42 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
 		kprintf("Invalid Drive\n");
 		return (1);
 	}
+
 	if ((sectorCount >> hdd->hdShift) == 0x0)
 	{
-		hdd->hdCalc = sectorCount; /* hdd->hdMask); */
+		/*
+		 * Fewer sectors than one hdMulti block: issue a single
+		 * READ SECTORS command for the exact count.
+		 */
+		hdd->hdCalc     = sectorCount;
 		transactionCount = 1;
 	}
 	else
 	{
-		hdd->hdCalc = hdd->hdMulti;
+		hdd->hdCalc      = hdd->hdMulti;
 		transactionCount = sectorCount >> hdd->hdShift;
+		/*
+		 * If sectorCount is not an exact multiple of hdMulti,
+		 * the integer shift above drops the remainder.  Add one
+		 * extra iteration for those trailing sectors so we always
+		 * read exactly sectorCount sectors.
+		 */
+		remainder = (short)(sectorCount -
+		    (uInt32)transactionCount * hdd->hdMulti);
+		if (remainder > 0)
+			transactionCount++;
 	}
+
 	for (; transactionCount > 0; transactionCount--)
 	{
-		// for (counter = 1000000; counter >= 0; counter--) {
+		/*
+		 * On the final iteration when there is a remainder, switch
+		 * hdCalc to the leftover sector count and use READ SECTORS
+		 * (0x20) which accepts any count, unlike READ MULTIPLE.
+		 */
+		if (transactionCount == 1 && remainder > 0)
+			hdd->hdCalc = remainder;
+
 		for (counter = 10000000; counter >= 0; counter--)
 		{
 			retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
@@ -566,14 +591,19 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
 		outportByte(hdd->hdPort + hdCylHi, (retVal & 0xFF));
 		retVal >>= 8;
 		retVal &= 0x0F;
-		retVal |= (hdd->hdDev | 0xA0); // Test as per TJ
-		// retVal |= hdd->hdDev; //retVal |= (hdd->hdDev | 0xA0); //Test as per TJ
+		retVal |= (hdd->hdDev | 0xA0);
 		outportByte(hdd->hdPort + hdHead, (retVal & 0xFF));
-		if (hdd->hdShift > 0)
+		/*
+		 * Full hdMulti-block transactions use READ MULTIPLE (0xC4).
+		 * The remainder iteration always uses READ SECTORS (0x20)
+		 * because READ MULTIPLE requires an exact multiple of the
+		 * configured block size.
+		 */
+		if (hdd->hdShift > 0 && !(transactionCount == 1 && remainder > 0))
 			outportByte(hdd->hdPort + hdCmd, 0xC4);
 		else
 			outportByte(hdd->hdPort + hdCmd, 0x20);
-		// for (counter = 1000000; counter >= 0; counter--) {
+
 		for (counter = 10000000; counter >= 0; counter--)
 		{
 			retVal = inportByte(hdd->hdPort + hdStat);
@@ -593,9 +623,8 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
 		for (counter = 0; counter < (hdd->hdCalc << 8); counter++)
 		{
 			tmp[counter] = inportWord(hdd->hdPort + hdData);
-			// kprintf("[0x%X]", tmp[counter]);
 		}
-		tmp += (counter + 0);
+		tmp         += (counter + 0);
 		startSector += hdd->hdCalc;
 	}
 	return (0);

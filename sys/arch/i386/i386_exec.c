@@ -671,6 +671,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	if (fd == 0x0)
 	{
+		kprintf("sys_exec: fopen failed for %s\n", file);
 		td->td_retval[0] = 2;
 		return (-1);
 	}

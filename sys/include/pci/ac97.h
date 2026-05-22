@@ -100,14 +100,25 @@ struct ac97_bdle {
 
 /* -----------------------------------------------------------------------
  * Ping-pong buffer sizing
- * AC97_BUF_SAMPLES stereo pairs × 4 bytes = AC97_BUF_BYTES per buffer.
- * Ring holds AC97_RING_BUFS × that so userland can stay ahead.
+ *
+ * AC97_BUF_FRAMES : stereo frames per DMA buffer (L+R pair = 4 bytes each)
+ * AC97_BUF_BYTES  : bytes per DMA buffer = frames × 4
+ * AC97_BDL_LEN    : value written to BDL ctl_len field.
+ *                   The AC97 BDL length unit is one 16-bit sample (2 bytes).
+ *                   QEMU reads (ctl_len × 2) bytes per entry, so for a
+ *                   4096-byte buffer we need ctl_len = 4096 / 2 = 2048.
+ *
+ * AC97_RING_MASK is used ONLY for indexing (ring[idx & MASK]).
+ * Never apply it to the distance (ring_wr - ring_rd) — that would make
+ * a full ring (distance == RING_SIZE) look identical to an empty ring
+ * (distance == 0).  Always compute distance as the raw uint32_t difference.
  * --------------------------------------------------------------------- */
-#define AC97_BUF_SAMPLES  1024
-#define AC97_BUF_BYTES    (AC97_BUF_SAMPLES * 4)
+#define AC97_BUF_FRAMES   1024
+#define AC97_BUF_BYTES    (AC97_BUF_FRAMES * 4)
+#define AC97_BDL_LEN      (AC97_BUF_BYTES / 2)     /* BDL len in 16-bit samples */
 #define AC97_RING_BUFS    64                        /* 64 × 4 KB = 256 KB ≈ 1.5 s @ 44.1 kHz */
 #define AC97_RING_SIZE    (AC97_BUF_BYTES * AC97_RING_BUFS)
-#define AC97_RING_MASK    (AC97_RING_SIZE - 1)
+#define AC97_RING_MASK    (AC97_RING_SIZE - 1)      /* index mask ONLY — not for distance */
 
 /* -----------------------------------------------------------------------
  * Driver private state

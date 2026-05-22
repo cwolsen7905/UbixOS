@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -115,14 +115,21 @@ uint32_t timeMake(struct timeStruct *time)
 
 int gettimeofday(struct timeval *tp, struct timezone *tzp)
 {
-	tp->tv_sec = systemVitals->timeStart + systemVitals->sysUptime;
-	tp->tv_usec = 0x0;
+	uint32_t ticks = systemVitals->sysTicks;
 
-	if (tzp != 0x0)
-	{
+	/*
+	 * Return boot-relative time so tv_sec stays small.
+	 * timeStart is a large Unix timestamp (~1.77e9) that would overflow
+	 * the uint32_t arithmetic in userland gettimeofday consumers.
+	 * Elapsed-since-boot is sufficient for all current callers.
+	 */
+	tp->tv_sec  = ticks / 200u;
+	tp->tv_usec = (ticks % 200u) * 5000u;   /* 0..995000 µs in 5 ms steps */
+
+	if (tzp != NULL) {
 		tzp->tz_minuteswest = (-5 * 60);
-		tzp->tz_dsttime = 0x0;
+		tzp->tz_dsttime = 0;
 	}
 
-	return (0x0);
+	return (0);
 }

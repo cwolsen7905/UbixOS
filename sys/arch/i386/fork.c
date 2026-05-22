@@ -121,10 +121,21 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  //kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->md.md_tss.esp0, newProcess->md.md_tss.esp, newProcess->md.md_tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
-
   newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
-  //kprintf( "Copied Mem Space! [0x%X]\n", newProcess->md.md_tss.cr3 );
+
+  /*
+   * Signal state must be cleared AFTER vmm_copyVirtualSpace.
+   * vmm_getFreeKernelPage and the parent's kernel heap share the same VA
+   * range (VMM_KERN_START..VMM_KERN_END).  A temporary double-mapping of
+   * the physical page backing sig_pending can occur during the COW walk,
+   * causing sig_pending to be overwritten with garbage.  Zeroing here
+   * guarantees a clean slate regardless of what vmm_copyVirtualSpace did.
+   */
+  newProcess->td.sig_pending = 0;
+  memset(newProcess->td.sig_code,  0, sizeof(newProcess->td.sig_code));
+  memset(newProcess->td.sig_extra, 0, sizeof(newProcess->td.sig_extra));
+  memset(newProcess->td.sigact, 0, sizeof(newProcess->td.sigact));
+  memset(&newProcess->td.sigmask, 0, sizeof(newProcess->td.sigmask));
 
   newProcess->parent = _current;
   _current->children++;

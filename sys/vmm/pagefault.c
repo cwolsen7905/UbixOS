@@ -32,7 +32,9 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/endtask.h>
+#include <ubixos/signal.h>
 #include <lib/kprintf.h>
+#include <i386/signal.h>
 #include <sys/trap.h>
 #include <string.h>
 
@@ -89,10 +91,16 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	/* Set page dir pointer to the address of the visable page directory */
 	pageDir = (uint32_t *)PD_BASE_ADDR;
 
-	/* UBU - This is a temp panic for 0x0 read write later on I will handle this differently */
+	/* NULL dereference: deliver SIGSEGV to user, kpanic in kernel. */
 	if (memAddr == 0x0)
 	{
 		kprintf("Segfault At Address: [0x%X], ESP: [0x%X], PID: [%i], EIP: [0x%X]\n", memAddr, esp, _current->id, eip);
+		if ((frame->tf_cs & 3) == 3) {
+			spinUnlock(&pageFaultSpinLock);
+			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+			signal_check(frame);
+			return;
+		}
 		spinUnlock(&pageFaultSpinLock);
 		kpanic("Error We Wrote To 0x0\n");
 	}
@@ -108,6 +116,11 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	{
 		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
 		spinUnlock(&pageFaultSpinLock);
+		if ((frame->tf_cs & 3) == 3) {
+			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+			signal_check(frame);
+			return;
+		}
 		endTask(_current->id);
 		return;
 	}
@@ -178,7 +191,11 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
 		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
 		spinUnlock(&pageFaultSpinLock);
-		kpanic("SIT HERE FOR NOW");
+		if ((frame->tf_cs & 3) == 3) {
+			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_ACCERR);
+			signal_check(frame);
+			return;
+		}
 		die_if_kernel("SEGFAULT", frame, 0xC);
 		endTask(_current->id);
 		return;
@@ -200,14 +217,17 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	}
 	else
 	{
-		/* Need To Create A Routine For Attempting To Access Non Mapped Memory */
+		/* Access to non-mapped memory: SIGSEGV user, kpanic kernel. */
 		kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
 		kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
 		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", memAddr, esp, _current->id, eip);
-		die_if_kernel("SEGFAULT", frame, 0xC);
 		spinUnlock(&pageFaultSpinLock);
-		kpanic("SIT HERE FOR NOW");
-		kprintf("Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000);
+		if ((frame->tf_cs & 3) == 3) {
+			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+			signal_check(frame);
+			return;
+		}
+		die_if_kernel("SEGFAULT", frame, 0xC);
 		endTask(_current->id);
 		return;
 	}
