@@ -263,10 +263,13 @@ main(int argc, char **argv)
 			if (ch == 0)
 				continue;
 
-			/* Forward immediately — no local buffering or echo.
-			 * tcsh is in raw mode and manages its own line editing
-			 * and echo via stdout, which we display from the read
-			 * loop above. */
+			/* Local echo: tcsh's stdin is a pipe so isatty(0) is
+			 * false and tcsh runs non-interactively — it won't echo
+			 * individual characters until a full line is received.
+			 * Show the character immediately so keystrokes appear as
+			 * typed rather than all at once on Enter. */
+			tv.putchar(ch);
+			dirty = 1;
 			shell.write(&ch, 1);
 		}
 
