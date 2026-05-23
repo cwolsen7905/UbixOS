@@ -2,6 +2,27 @@
 
 Port tcsh (6.24.x) to UbixOS as the primary interactive shell, replacing `bin/shell`.
 
+## Status
+
+| Step | Item | Status |
+|------|------|--------|
+| 1 | Import `contrib/tcsh` source (6.24.16) | ✅ Done |
+| 2 | Pre-generated config headers in `contrib/tcsh/ubixos_config/` | ✅ Done |
+| 3 | `bin/tcsh/Makefile` — bmake build rules | ✅ Done |
+| 4 | `bin/tcsh/ubixos_compat.c` — termcap stubs + missing symbols | ✅ Done |
+| 5 | `bin/Makefile` — added `tcsh` to SUBDIRS | ✅ Done |
+| 6a | Starts and prints a prompt | ✅ Done |
+| 6b | Tab completion works for filenames | ✅ Done |
+| 6c | Command history (↑/↓) works | ✅ Done |
+| 6d | `^C` kills the foreground command | ✅ Done |
+| 6e | `^Z` suspends, `fg` resumes | ✅ Done |
+| 6f | Background jobs (`command &`) work | ✅ Done |
+| 6g | `~` expansion resolves correctly | ⬜ Not verified |
+| 6h | `/etc/csh.cshrc` or `/etc/tcshrc` loads on startup | ⬜ Not started |
+
+**Notes:** tcsh 6.24.16 is working interactively. Known remaining noise: minor
+cosmetic issues; `~` expansion and rc file loading not yet verified.
+
 **Prerequisite:** Complete the musl libc / libcpp migration and remove the old libc first.
 
 ## License
@@ -84,12 +105,12 @@ mcopy build/bin/tcsh ::bin/tcsh
 
 ### 6. Testing checklist
 
-- [ ] Starts and prints a prompt
-- [ ] Tab completion works for filenames
-- [ ] Command history (`↑`/`↓`) works
-- [ ] `^C` kills the foreground command (not tcsh itself)
-- [ ] `^Z` suspends, `fg` resumes
-- [ ] Background jobs (`command &`) work
+- [x] Starts and prints a prompt
+- [x] Tab completion works for filenames
+- [x] Command history (`↑`/`↓`) works
+- [x] `^C` kills the foreground command (not tcsh itself)
+- [x] `^Z` suspends, `fg` resumes
+- [x] Background jobs (`command &`) work
 - [ ] `~` expansion resolves correctly
 - [ ] `/etc/csh.cshrc` or `/etc/tcshrc` loads on startup (optional)
 

@@ -292,10 +292,10 @@ client                          authd
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Serial RX ISR + `serial_rx_ring[]` | ⬜ todo | `sys/isa/serial.c` |
-| `sys_serial_read` syscall (slot 48) | ⬜ todo | native ABI |
-| `bin/ttyd` — serial terminal daemon | ⬜ todo | line discipline, session fork |
-| `etc/init.d/30-ttyd` | ⬜ todo | disabled by default |
+| Serial RX ISR + `serial_rx_ring[]` | ✅ done | `sys/isa/rs232.c` — ISR, ring buffer, tty_inject routing |
+| Serial TTY slot (`sys_settty` slot 48) | ✅ done | used instead of a raw `sys_serial_read`; com1 → TTY slot 4 |
+| `bin/ttyd` — terminal daemon | ✅ done | reads `/etc/ttys`, forks getty loop per slot |
+| `etc/init.d/30-ttyd` | ✅ done | present, enabled by default |
 
 ### Phase 2 — Graphical login
 
@@ -319,18 +319,17 @@ client                          authd
 ### New files
 | File | Phase | Status |
 |------|-------|--------|
-| `sys/isa/serial_rx.c` (or extend `serial.c`) | 1 | ⬜ todo |
-| `bin/ttyd/main.c` | 1 | ⬜ todo |
-| `etc/init.d/30-ttyd` | 1 | ⬜ todo |
+| `sys/isa/rs232.c` — RX ISR + ring buffer | 1 | ✅ done |
+| `bin/ttyd/main.c` | 1 | ✅ done |
+| `etc/init.d/30-ttyd` | 1 | ✅ done |
 | `bin/guilogin/main.c` | 2 | ⬜ todo |
 | `bin/guilogin/Makefile` | 2 | ⬜ todo |
 
 ### Modified files
 | File | Change | Phase | Status |
 |------|--------|-------|--------|
-| `sys/include/sys/sysproto.h` | add `sys_serial_read_args` | 1 | ⬜ todo |
-| `sys/kernel/syscalls.c` | slot 48 | 1 | ⬜ todo |
-| `sys/kernel/fb.c` | `sys_serial_read` impl | 1 | ⬜ todo |
-| `bin/Makefile` | add ttyd, guilogin to SUBDIRS | 1+2 | ⬜ todo |
+| `sys/kernel/syscalls.c` | `sys_settty` at slot 48 (serial TTY slot claim) | 1 | ✅ done |
+| `bin/Makefile` | added `ttyd` to SUBDIRS | 1 | ✅ done |
+| `bin/Makefile` | add `guilogin` to SUBDIRS | 2 | ⬜ todo |
 | `bin/views/*.cc` | fork guilogin after init | 2 | ⬜ todo |
 | `etc/init.d/20-views` | uncomment exec line | 2 | ⬜ todo |

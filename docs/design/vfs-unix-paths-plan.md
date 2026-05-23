@@ -16,14 +16,14 @@ natively without any kernel-side path translation hacks.
 
 | Phase | Description | Status |
 |-------|-------------|--------|
-| 1 | VFS mount table: name-keyed → path-keyed | [x] Done |
-| 1b | Remove `sys:/`, `devfs:/`, `proc:/` string constants | [x] Done |
-| 1c | CWD format: `sys:/bin/` → `/bin/` | [x] Done |
-| 2 | `sys_mount` / `sys_umount` POSIX syscalls | [ ] Not started |
-| 3 | `/etc/fstab` config file + `automountd` skeleton | [ ] Not started |
-| 4 | `automountd` static mounts (devfs, procfs at boot) | [ ] Not started |
-| 5 | Kernel MPI device notifications (USB, IDE) | [ ] Not started |
-| 6 | `automountd` dynamic auto-mount at `/mnt/<volname>` | [ ] Not started |
+| 1 | VFS mount table: name-keyed → path-keyed | ✅ Done |
+| 1b | Remove `sys:/`, `devfs:/`, `proc:/` string constants | ✅ Done |
+| 1c | CWD format: `sys:/bin/` → `/bin/` | ✅ Done |
+| 2 | `sys_mount` / `sys_umount` POSIX syscalls (FreeBSD slots 21/22) | ✅ Done |
+| 3 | `/etc/fstab` config file + `automountd` skeleton | ✅ Done |
+| 4 | `automountd` static mounts (devfs, procfs at boot) | ✅ Done |
+| 5 | Kernel MPI device notifications (USB → `MPI_STORAGE_APPEARED`) | ✅ Done |
+| 6 | `automountd` dynamic auto-mount at `/mnt/<volname>` | ✅ Done |
 
 ---
 
