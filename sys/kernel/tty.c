@@ -111,6 +111,16 @@ int tty_init() {
     terms[i].t_winsize.ws_xpixel = 0;
     terms[i].t_winsize.ws_ypixel = 0;
     terms[i].t_pgrp = 0;
+
+    /* ANSI state machine */
+    terms[i].t_esc_state    = 0;
+    terms[i].t_esc_priv     = 0;
+    terms[i].t_esc_nparams  = 0;
+    terms[i].t_default_colour = (uint8_t)terms[i].tty_colour;
+    terms[i].t_saved_x      = 0;
+    terms[i].t_saved_y      = 0;
+    terms[i].t_saved_colour = (uint8_t)terms[i].tty_colour;
+    memset(terms[i].t_esc_params, 0, sizeof(terms[i].t_esc_params));
   }
 
   /* Read tty0 current position (to migrate from kprintf). */
@@ -176,45 +186,315 @@ int tty_change(uInt16 tty) {
   return (0x0);
 }
 
+/* ANSI colour: black red green yellow blue magenta cyan white → VGA indices */
+static const uint8_t ansi_to_vga[8] = { 0, 4, 2, 6, 1, 5, 3, 7 };
+
+/* Scroll the terminal up one line and leave cursor on the last row. */
+static void
+tty_scroll(tty_term *term)
+{
+	unsigned int i;
+	for (i = 0; i < 160u * 24u; i++)
+		term->tty_pointer[i] = term->tty_pointer[i + 160];
+	for (i = 0; i < 80u; i++) {
+		term->tty_pointer[(160u * 24u) + (i * 2u)]     = 0x20;
+		term->tty_pointer[(160u * 24u) + (i * 2u) + 1] = term->tty_colour;
+	}
+}
+
+/* Execute a complete CSI sequence.  Returns updated bufferOffset. */
+static unsigned int
+tty_csi_execute(tty_term *term, unsigned int bufferOffset, char cmd)
+{
+	unsigned int  linear, row, col, i;
+	unsigned int  p0, p1;
+
+	linear = bufferOffset / 2u;
+	row    = linear / 80u;
+	col    = linear % 80u;
+
+	p0 = term->t_esc_params[0];
+	p1 = term->t_esc_params[1];
+
+	switch (cmd) {
+	case 'A': /* cursor up */
+		if (p0 == 0) p0 = 1;
+		row = (row >= p0) ? row - p0 : 0;
+		bufferOffset = (row * 80u + col) * 2u;
+		break;
+	case 'B': /* cursor down */
+		if (p0 == 0) p0 = 1;
+		row += p0;
+		if (row >= 25u) row = 24u;
+		bufferOffset = (row * 80u + col) * 2u;
+		break;
+	case 'C': /* cursor right */
+		if (p0 == 0) p0 = 1;
+		col += p0;
+		if (col >= 80u) col = 79u;
+		bufferOffset = (row * 80u + col) * 2u;
+		break;
+	case 'D': /* cursor left */
+		if (p0 == 0) p0 = 1;
+		col = (col >= p0) ? col - p0 : 0;
+		bufferOffset = (row * 80u + col) * 2u;
+		break;
+	case 'G': /* cursor horizontal absolute (1-based col) */
+		col = (p0 > 0u ? p0 - 1u : 0u);
+		if (col >= 80u) col = 79u;
+		bufferOffset = (row * 80u + col) * 2u;
+		break;
+	case 'H': case 'f': /* cursor position: row;col (1-based) */
+		row = (p0 > 0u ? p0 - 1u : 0u);
+		col = (p1 > 0u ? p1 - 1u : 0u);
+		if (row >= 25u) row = 24u;
+		if (col >= 80u) col = 79u;
+		bufferOffset = (row * 80u + col) * 2u;
+		break;
+	case 'J': /* erase display */
+		switch (p0) {
+		case 0: /* cursor to end */
+			for (i = bufferOffset; i < 160u * 25u; i += 2u) {
+				term->tty_pointer[i]     = ' ';
+				term->tty_pointer[i + 1] = term->tty_colour;
+			}
+			break;
+		case 1: /* start to cursor */
+			for (i = 0; i <= bufferOffset && i + 1 < 160u * 25u; i += 2u) {
+				term->tty_pointer[i]     = ' ';
+				term->tty_pointer[i + 1] = term->tty_colour;
+			}
+			break;
+		case 2: case 3: /* whole screen */
+			for (i = 0; i < 160u * 25u; i += 2u) {
+				term->tty_pointer[i]     = ' ';
+				term->tty_pointer[i + 1] = term->tty_colour;
+			}
+			bufferOffset = 0;
+			break;
+		}
+		break;
+	case 'K': /* erase line */
+		switch (p0) {
+		case 0: /* cursor to end of line */
+			for (i = col; i < 80u; i++) {
+				term->tty_pointer[row * 160u + i * 2u]     = ' ';
+				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+			}
+			break;
+		case 1: /* start of line to cursor */
+			for (i = 0; i <= col; i++) {
+				term->tty_pointer[row * 160u + i * 2u]     = ' ';
+				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+			}
+			break;
+		case 2: /* whole line */
+			for (i = 0; i < 80u; i++) {
+				term->tty_pointer[row * 160u + i * 2u]     = ' ';
+				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+			}
+			break;
+		}
+		break;
+	case 'P': /* delete characters (shift left) */
+		if (p0 == 0) p0 = 1;
+		for (i = col; i + p0 < 80u; i++) {
+			term->tty_pointer[row * 160u + i * 2u]     = term->tty_pointer[row * 160u + (i + p0) * 2u];
+			term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_pointer[row * 160u + (i + p0) * 2u + 1];
+		}
+		for (i = 80u - p0; i < 80u; i++) {
+			term->tty_pointer[row * 160u + i * 2u]     = ' ';
+			term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+		}
+		break;
+	case 'm': { /* SGR — select graphic rendition */
+		unsigned int k;
+		unsigned int nparams = (term->t_esc_nparams > 0) ? term->t_esc_nparams : 1;
+		for (k = 0; k < nparams; k++) {
+			unsigned int v = term->t_esc_params[k];
+			switch (v) {
+			case 0:
+				term->tty_colour = term->t_default_colour;
+				break;
+			case 1: /* bold → bright fg */
+				term->tty_colour |= 0x08u;
+				break;
+			case 2: case 22: /* dim / normal */
+				term->tty_colour &= (uint8_t)~0x08u;
+				break;
+			case 5: case 6: /* blink → bright bg */
+				term->tty_colour |= 0x80u;
+				break;
+			case 7: { /* reverse video */
+				uint8_t fg = term->tty_colour & 0x07u;
+				uint8_t bg = (term->tty_colour >> 4) & 0x07u;
+				term->tty_colour = (uint8_t)((fg << 4) | bg | (term->tty_colour & 0x88u));
+				break;
+			}
+			case 27: break; /* reverse off — no tracking */
+			case 39: /* default fg */
+				term->tty_colour = (uint8_t)((term->tty_colour & 0xF0u) | (term->t_default_colour & 0x0Fu));
+				break;
+			case 49: /* default bg */
+				term->tty_colour = (uint8_t)((term->tty_colour & 0x0Fu) | (term->t_default_colour & 0xF0u));
+				break;
+			default:
+				if (v >= 30u && v <= 37u)
+					term->tty_colour = (uint8_t)((term->tty_colour & 0xF8u) | ansi_to_vga[v - 30u]);
+				else if (v >= 90u && v <= 97u)
+					term->tty_colour = (uint8_t)((term->tty_colour & 0xF0u) | (ansi_to_vga[v - 90u] | 8u));
+				else if (v >= 40u && v <= 47u)
+					term->tty_colour = (uint8_t)((term->tty_colour & 0x8Fu) | (uint8_t)(ansi_to_vga[v - 40u] << 4u));
+				else if (v >= 100u && v <= 107u)
+					term->tty_colour = (uint8_t)((term->tty_colour & 0x0Fu) | (uint8_t)((ansi_to_vga[v - 100u] | 8u) << 4u));
+				break;
+			}
+		}
+		break;
+	}
+	case 's': /* save cursor */
+		term->t_saved_x      = term->tty_x;
+		term->t_saved_y      = term->tty_y;
+		term->t_saved_colour = term->tty_colour;
+		break;
+	case 'u': /* restore cursor */
+		term->tty_x      = term->t_saved_x;
+		term->tty_y      = term->t_saved_y;
+		term->tty_colour = term->t_saved_colour;
+		bufferOffset     = ((unsigned int)term->tty_y * 256u + term->tty_x) * 2u;
+		break;
+	/* Intentionally ignored: h/l (mode set/reset), r (scroll region), n (DSR) */
+	default:
+		break;
+	}
+	return (bufferOffset);
+}
+
 int tty_print(char *string, tty_term *term) {
-  unsigned int bufferOffset = 0x0, character = 0x0, i = 0x0;
+  unsigned int bufferOffset = 0x0, character = 0x0;
   spinLock(&tty_spinLock);
 
-  /* We Need To Get The Y Position */
+  /* Reconstruct byte offset from the split tty_y:tty_x linear cursor. */
   bufferOffset = term->tty_y;
   bufferOffset <<= 8;
-
-  /* Then We Need To Add The X Position */
   bufferOffset += term->tty_x;
   bufferOffset <<= 1;
 
-  while ((character = *string++)) {
-    switch (character) {
-      case '\n':
-        bufferOffset = (bufferOffset / 160) * 160 + 160;
-      break;
+  while ((character = (unsigned char)*string++)) {
+    /* ── ANSI/VT100 state machine ── */
+    if (term->t_esc_state == 1) {
+      /* Received ESC — next char determines sequence type */
+      switch (character) {
+      case '[':
+        term->t_esc_state   = 2;
+        term->t_esc_priv    = 0;
+        term->t_esc_nparams = 0;
+        memset(term->t_esc_params, 0, sizeof(term->t_esc_params));
+        break;
+      case 'M': { /* reverse index — scroll down if at top */
+        unsigned int row = (bufferOffset / 2u) / 80u;
+        if (row > 0u) {
+          bufferOffset -= 160u;
+        } else {
+          unsigned int j;
+          for (j = 160u * 24u; j >= 160u; j--)
+            term->tty_pointer[j] = term->tty_pointer[j - 160u];
+          for (j = 0; j < 80u; j++) {
+            term->tty_pointer[j * 2u]     = ' ';
+            term->tty_pointer[j * 2u + 1] = term->tty_colour;
+          }
+        }
+        term->t_esc_state = 0;
+        break;
+      }
+      case '=': case '>': /* application/numeric keypad — ignore */
+        term->t_esc_state = 0;
+        break;
       default:
-        term->tty_pointer[bufferOffset++] = character;
+        term->t_esc_state = 0;
+        break;
+      }
+      continue;
+    }
+
+    if (term->t_esc_state == 2) {
+      /* Collecting CSI parameters */
+      if (character == '?') {
+        term->t_esc_priv = 1;
+        continue;
+      }
+      if (character >= '0' && character <= '9') {
+        if (term->t_esc_nparams == 0)
+          term->t_esc_nparams = 1;
+        term->t_esc_params[term->t_esc_nparams - 1] =
+          (uint16_t)(term->t_esc_params[term->t_esc_nparams - 1] * 10u +
+                     (unsigned int)(character - '0'));
+        continue;
+      }
+      if (character == ';') {
+        if (term->t_esc_nparams < 8u)
+          term->t_esc_nparams++;
+        continue;
+      }
+      /* Final character — dispatch */
+      if (term->t_esc_nparams == 0 &&
+          character != 's' && character != 'u')
+        term->t_esc_nparams = 1;
+      bufferOffset = tty_csi_execute(term, bufferOffset, (char)character);
+      term->t_esc_state = 0;
+      /* Skip scroll check for control commands */
+      if (bufferOffset < 160u * 25u)
+        continue;
+      /* Fall through to scroll if somehow past end */
+    }
+
+    if (term->t_esc_state != 0) {
+      term->t_esc_state = 0;
+      continue;
+    }
+
+    /* ── Normal character output ── */
+    switch (character) {
+    case 0x1B: /* ESC */
+      term->t_esc_state = 1;
+      break;
+    case '\r': /* carriage return — column 0, same row */
+      bufferOffset = (bufferOffset / 160u) * 160u;
+      break;
+    case '\n':
+      bufferOffset = (bufferOffset / 160u) * 160u + 160u;
+      break;
+    case '\b': /* move cursor left without erasing */
+      if (bufferOffset >= 2u)
+        bufferOffset -= 2u;
+      break;
+    case '\t': { /* advance to next 8-column tab stop */
+      unsigned int col = (bufferOffset / 2u) % 80u;
+      unsigned int spaces = 8u - (col % 8u);
+      while (spaces-- > 0 && (bufferOffset / 2u) % 80u < 79u) {
+        term->tty_pointer[bufferOffset++] = ' ';
         term->tty_pointer[bufferOffset++] = term->tty_colour;
+      }
+      break;
+    }
+    default:
+      if (character >= 0x20u) {
+        term->tty_pointer[bufferOffset++] = (char)character;
+        term->tty_pointer[bufferOffset++] = term->tty_colour;
+      }
       break;
     } /* switch */
 
-    /* Check To See If We Are Out Of Bounds */
-    if (bufferOffset >= 160 * 25) {
-      for (i = 0; i < 160 * 24; i++) {
-        term->tty_pointer[i] = term->tty_pointer[i + 160];
-      }
-      for (i = 0; i < 80; i++) {
-        term->tty_pointer[(160 * 24) + (i * 2)] = 0x20;
-        term->tty_pointer[(160 * 24) + (i * 2) + 1] = term->tty_colour;
-      }
-      bufferOffset -= 160;
+    /* Scroll if past last line */
+    if (bufferOffset >= 160u * 25u) {
+      tty_scroll(term);
+      bufferOffset -= 160u;
     }
-  }
+  } /* while */
 
-  bufferOffset >>= 1; /* Set the new cursor position  */
-  term->tty_x = (bufferOffset & 0xFF);
-  term->tty_y = (bufferOffset >> 0x8);
+  bufferOffset >>= 1; /* convert byte offset back to linear cursor position */
+  term->tty_x = (uint16_t)(bufferOffset & 0xFFu);
+  term->tty_y = (uint16_t)(bufferOffset >> 8u);
 
   if (term == tty_foreground) {
     outportByte(0x3D4, 0x0f);
@@ -224,7 +504,6 @@ int tty_print(char *string, tty_term *term) {
   }
 
   spinUnlock(&tty_spinLock);
-
   return (0x0);
 }
 

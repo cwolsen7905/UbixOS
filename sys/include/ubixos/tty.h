@@ -60,6 +60,15 @@ typedef struct tty_termNode {
     struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
     struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
     pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */
+    /* ANSI/VT100 escape sequence parser */
+    uint8_t  t_esc_state;      /* 0=normal 1=ESC_seen 2=CSI_collecting */
+    uint8_t  t_esc_priv;       /* 1 if '?' seen after CSI '[' */
+    uint8_t  t_esc_nparams;    /* number of CSI params collected so far */
+    uint8_t  t_default_colour; /* colour at init time — SGR 0 resets to this */
+    uint16_t t_esc_params[8];  /* CSI numeric parameters (';'-separated) */
+    uint16_t t_saved_x;        /* cursor save/restore (same encoding as tty_x) */
+    uint16_t t_saved_y;
+    uint8_t  t_saved_colour;
 } tty_term;
 
 int tty_init();
