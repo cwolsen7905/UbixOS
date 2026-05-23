@@ -363,6 +363,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
     /* stat(path) path */
     const char *path = args->path;
     fileDescriptor_t *fd = 0x0;
+    kDIR_t *dir = 0x0;
 
     if (path == 0x0 || path[0] == '\0') {
       td->td_retval[0] = ENOENT;
@@ -371,22 +372,39 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
 
     fd = fopen(path, "rb");
     if (fd == 0x0) {
-      td->td_retval[0] = ENOENT;
-      return (ENOENT);
-    }
+      /* fopen rejects directories; try vfs_opendir to detect them. */
+      dir = vfs_opendir(path);
+      if (dir == 0x0) {
+        td->td_retval[0] = ENOENT;
+        return (ENOENT);
+      }
+      vfs_closedir(dir);
 
-    stx->stx_mask       = args->mask & STATX_BASIC_STATS;
-    stx->stx_blksize    = 512;
-    stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
-    stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
-    stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
-    stx->stx_mode       = fd->inode.u.ufs2_i.di_mode;
-    stx->stx_ino        = fd->ino;
-    stx->stx_size       = fd->size;
-    stx->stx_blocks     = (fd->size + 511) / 512;
-    stx->stx_dev_major  = 1;
-    stx->stx_dev_minor  = 1;
-    fclose(fd);
+      stx->stx_mask      = args->mask & STATX_BASIC_STATS;
+      stx->stx_blksize   = 512;
+      stx->stx_nlink     = 2;
+      stx->stx_uid       = 0;
+      stx->stx_gid       = 0;
+      stx->stx_mode      = 0040755; /* S_IFDIR | 0755 */
+      stx->stx_ino       = 1;
+      stx->stx_size      = 0;
+      stx->stx_blocks    = 0;
+      stx->stx_dev_major = 1;
+      stx->stx_dev_minor = 1;
+    } else {
+      stx->stx_mask       = args->mask & STATX_BASIC_STATS;
+      stx->stx_blksize    = 512;
+      stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
+      stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
+      stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
+      stx->stx_mode       = fd->inode.u.ufs2_i.di_mode;
+      stx->stx_ino        = fd->ino;
+      stx->stx_size       = fd->size;
+      stx->stx_blocks     = (fd->size + 511) / 512;
+      stx->stx_dev_major  = 1;
+      stx->stx_dev_minor  = 1;
+      fclose(fd);
+    }
   }
 
   td->td_retval[0] = error;

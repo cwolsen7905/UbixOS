@@ -358,11 +358,11 @@
 #define __NR_execveat		358
 /* FreeBSD-ABI numbers used by UbixOS kernel */
 #define __NR_socket		97
-#define __NR_socketpair		360
+#define __NR_socketpair		135
 #define __NR_bind		104
 #define __NR_connect		98
 #define __NR_listen		106
-#define __NR_accept4		364
+#define __NR_accept4		541
 #define __NR_getsockopt		118
 #define __NR_setsockopt		105
 #define __NR_getsockname	32
@@ -371,7 +371,7 @@
 #define __NR_sendmsg		28
 #define __NR_recvfrom		29
 #define __NR_recvmsg		27
-#define __NR_shutdown		373
+#define __NR_shutdown		134
 #define __NR_userfaultfd	374
 #define __NR_membarrier		375
 #define __NR_mlock2		376
@@ -615,9 +615,10 @@
 #undef  __NR_fstatfs64
 #define __NR_fstatfs64		397
 
-/* fstatat64: Linux=300, UbixOS=493 */
+/* fstatat64: undefine so musl uses fstatat_statx → SYS_statx=383 → sys_statx.
+ * The kstat path (used when SYS_fstatat is defined) calls SYS_stat=106 which
+ * hits sys_listen on the FreeBSD ABI table. */
 #undef  __NR_fstatat64
-#define __NR_fstatat64		493
 
 /* openat: Linux=295, UbixOS=499 */
 #undef  __NR_openat
@@ -670,3 +671,181 @@
 /* setsid: Linux=66, UbixOS=147 */
 #undef  __NR_setsid
 #define __NR_setsid		147
+
+/* ── Directory and file management ──────────────────────────────────────── */
+
+/* mkdir: Linux=39, UbixOS=136 */
+#undef  __NR_mkdir
+#define __NR_mkdir		136
+
+/* rmdir: Linux=40, UbixOS=137 */
+#undef  __NR_rmdir
+#define __NR_rmdir		137
+
+/* fchdir: Linux=133, UbixOS=13 */
+#undef  __NR_fchdir
+#define __NR_fchdir		13
+
+/* getppid: Linux=64, UbixOS=39 */
+#undef  __NR_getppid
+#define __NR_getppid		39
+
+/* fsync: Linux=118, UbixOS=95 */
+#undef  __NR_fsync
+#define __NR_fsync		95
+
+/* fdatasync: Linux=148, UbixOS=550 */
+#undef  __NR_fdatasync
+#define __NR_fdatasync		550
+
+/* flock: Linux=143, UbixOS=131 */
+#undef  __NR_flock
+#define __NR_flock		131
+
+/* msync: Linux=144, UbixOS=65 */
+#undef  __NR_msync
+#define __NR_msync		65
+
+/* truncate64: Linux=193, UbixOS=479 */
+#undef  __NR_truncate64
+#define __NR_truncate64		479
+
+/* ftruncate64: Linux=194, UbixOS=480 */
+#undef  __NR_ftruncate64
+#define __NR_ftruncate64	480
+
+/* truncate: Linux=92, UbixOS=479 */
+#undef  __NR_truncate
+#define __NR_truncate		479
+
+/* ftruncate: Linux=93, UbixOS=480 */
+#undef  __NR_ftruncate
+#define __NR_ftruncate		480
+
+/* fchmod: Linux=94, UbixOS=124 */
+#undef  __NR_fchmod
+#define __NR_fchmod		124
+
+/* fchown32: Linux=207, UbixOS=123 */
+#undef  __NR_fchown32
+#define __NR_fchown32		123
+
+/* fchown: Linux=95, UbixOS=123 */
+#undef  __NR_fchown
+#define __NR_fchown		123
+
+/* lchown32: Linux=198, UbixOS=254 */
+#undef  __NR_lchown32
+#define __NR_lchown32		254
+
+/* chown32: Linux=212, UbixOS=254 */
+#undef  __NR_chown32
+#define __NR_chown32		254
+
+/* lchown: Linux=16, UbixOS=254 */
+#undef  __NR_lchown
+#define __NR_lchown		254
+
+/* chown: Linux=182, UbixOS=254 */
+#undef  __NR_chown
+#define __NR_chown		254
+
+/* ── Priority and scheduling ─────────────────────────────────────────────── */
+
+/* getpriority: Linux=96, UbixOS=100 */
+#undef  __NR_getpriority
+#define __NR_getpriority	100
+
+/* setpriority: Linux=97, UbixOS=96 */
+#undef  __NR_setpriority
+#define __NR_setpriority	96
+
+/* setitimer: Linux=104, UbixOS=83 */
+#undef  __NR_setitimer
+#define __NR_setitimer		83
+
+/* getitimer: Linux=105, UbixOS=86 */
+#undef  __NR_getitimer
+#define __NR_getitimer		86
+
+/* getsid: Linux=147, UbixOS=310 */
+#undef  __NR_getsid
+#define __NR_getsid		310
+
+/* ── Memory management ───────────────────────────────────────────────────── */
+
+/* madvise: Linux=219, UbixOS=75 */
+#undef  __NR_madvise
+#define __NR_madvise		75
+
+/* mincore: Linux=218, UbixOS=78 */
+#undef  __NR_mincore
+#define __NR_mincore		78
+
+/* mlock: Linux=150, UbixOS=203 */
+#undef  __NR_mlock
+#define __NR_mlock		203
+
+/* munlock: Linux=151, UbixOS=204 */
+#undef  __NR_munlock
+#define __NR_munlock		204
+
+/* mlockall: Linux=152, UbixOS=324 */
+#undef  __NR_mlockall
+#define __NR_mlockall		324
+
+/* munlockall: Linux=153, UbixOS=325 */
+#undef  __NR_munlockall
+#define __NR_munlockall		325
+
+/* ── Signals ──────────────────────────────────────────────────────────────── */
+
+/* sigaltstack: Linux=186, UbixOS=53 */
+#undef  __NR_sigaltstack
+#define __NR_sigaltstack	53
+
+/* vfork: Linux=190, UbixOS=66 */
+#undef  __NR_vfork
+#define __NR_vfork		66
+
+/* ── Credentials ──────────────────────────────────────────────────────────── */
+
+/* setreuid32: Linux=203, UbixOS=126 */
+#undef  __NR_setreuid32
+#define __NR_setreuid32		126
+
+/* setregid32: Linux=204, UbixOS=127 */
+#undef  __NR_setregid32
+#define __NR_setregid32		127
+
+/* setreuid: Linux=70, UbixOS=126 */
+#undef  __NR_setreuid
+#define __NR_setreuid		126
+
+/* setregid: Linux=71, UbixOS=127 */
+#undef  __NR_setregid
+#define __NR_setregid		127
+
+/* getresuid32: Linux=209, UbixOS=360 */
+#undef  __NR_getresuid32
+#define __NR_getresuid32	360
+
+/* getresgid32: Linux=211, UbixOS=361 */
+#undef  __NR_getresgid32
+#define __NR_getresgid32	361
+
+/* getgroups32: Linux=205, UbixOS=79 */
+#undef  __NR_getgroups32
+#define __NR_getgroups32	79
+
+/* setgroups32: Linux=206, UbixOS=80 */
+#undef  __NR_setgroups32
+#define __NR_setgroups32	80
+
+/* getgroups: Linux=80, UbixOS=79 */
+#undef  __NR_getgroups
+#define __NR_getgroups		79
+
+/* setgroups: Linux=81, UbixOS=80 */
+#undef  __NR_setgroups
+#define __NR_setgroups		80
