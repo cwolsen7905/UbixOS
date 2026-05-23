@@ -123,6 +123,50 @@ mount_entry(const fstab_entry_t *e)
 		    e->fstype, e->mountpoint);
 }
 
+/* ── dynamic mount table (Phase 6) ──────────────────────────────────────── */
+
+#define MOUNT_TABLE_MAX  16
+
+typedef struct {
+	char dev_path[STORAGE_DEV_MAX];
+	char mountpath[STORAGE_MNT_MAX];
+} mount_entry_t;
+
+static mount_entry_t mount_table[MOUNT_TABLE_MAX];
+static int           mount_table_n = 0;
+
+static void
+mount_table_add(const char *dev, const char *mnt)
+{
+	if (mount_table_n >= MOUNT_TABLE_MAX)
+		return;
+	strncpy(mount_table[mount_table_n].dev_path,  dev, STORAGE_DEV_MAX - 1);
+	strncpy(mount_table[mount_table_n].mountpath, mnt, STORAGE_MNT_MAX - 1);
+	mount_table_n++;
+}
+
+static const char *
+mount_table_find(const char *dev)
+{
+	int i;
+	for (i = 0; i < mount_table_n; i++)
+		if (strcmp(mount_table[i].dev_path, dev) == 0)
+			return (mount_table[i].mountpath);
+	return (NULL);
+}
+
+static void
+mount_table_remove(const char *dev)
+{
+	int i;
+	for (i = 0; i < mount_table_n; i++) {
+		if (strcmp(mount_table[i].dev_path, dev) == 0) {
+			mount_table[i] = mount_table[--mount_table_n];
+			return;
+		}
+	}
+}
+
 /* ── dynamic mount/unmount (Phase 6) ─────────────────────────────────────── */
 
 static void
@@ -134,13 +178,16 @@ handle_storage_event(mpi_message_t *msg)
 	int   i;
 
 	if (s->type == MPI_STORAGE_APPEARED) {
-		/* lowercase volume name for the mount path */
-		for (i = 0; s->volume_name[i] && i < (int)sizeof(volname) - 1; i++)
-			volname[i] = (char)tolower((unsigned char)s->volume_name[i]);
-		volname[i] = '\0';
+		/* volume_name is already lowercased by the kernel driver */
+		strncpy(volname, s->volume_name, sizeof(volname) - 1);
+		volname[sizeof(volname) - 1] = '\0';
+
+		/* lowercase any remaining uppercase (defensive) */
+		for (i = 0; volname[i]; i++)
+			volname[i] = (char)tolower((unsigned char)volname[i]);
 
 		if (volname[0] == '\0') {
-			fprintf(stderr, "automountd: device %s has no volume name, skipping\n",
+			fprintf(stderr, "automountd: %s has no volume name\n",
 			    s->dev_path);
 			return;
 		}
@@ -150,8 +197,7 @@ handle_storage_event(mpi_message_t *msg)
 		mkdir(mntpath, 0755);
 
 		if (mount(s->fstype, mntpath, 0, NULL) == 0) {
-			strncpy(s->mountpath, mntpath, sizeof(s->mountpath) - 1);
-			s->mountpath[sizeof(s->mountpath) - 1] = '\0';
+			mount_table_add(s->dev_path, mntpath);
 			printf("automountd: mounted %s at %s\n", s->dev_path, mntpath);
 		} else {
 			fprintf(stderr, "automountd: mount %s at %s failed\n",
@@ -159,12 +205,18 @@ handle_storage_event(mpi_message_t *msg)
 		}
 
 	} else if (s->type == MPI_STORAGE_DEPARTED) {
-		if (s->mountpath[0] == '\0')
+		const char *mnt = mount_table_find(s->dev_path);
+		if (mnt == NULL) {
+			fprintf(stderr, "automountd: no mount recorded for %s\n",
+			    s->dev_path);
 			return;
-		if (unmount(s->mountpath, 0) == 0)
-			printf("automountd: unmounted %s\n", s->mountpath);
-		else
-			fprintf(stderr, "automountd: umount %s failed\n", s->mountpath);
+		}
+		if (unmount(mnt, 0) == 0) {
+			printf("automountd: unmounted %s\n", mnt);
+			mount_table_remove(s->dev_path);
+		} else {
+			fprintf(stderr, "automountd: umount %s failed\n", mnt);
+		}
 	}
 }
 
