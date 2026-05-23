@@ -39,7 +39,7 @@
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
 
-#define FONT_PATH  "sys:/var/fonts/ROM8X8.DPF"
+#define FONT_PATH  "/var/fonts/ROM8X8.DPF"
 
 /* Taskbar geometry */
 #define TB_H       32
@@ -457,7 +457,7 @@ public:
 				int item = fly_.hit_item(me->y);
 				fly_.hide();
 				if (item == 0)
-					launcher_.launch("sys:/bin/term");
+					launcher_.launch("/bin/term");
 			}
 			return;
 		}

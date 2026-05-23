@@ -32,7 +32,7 @@ TCC_CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin \
   -DCONFIG_TCC_SYSINCLUDEPATHS=\"/include:/lib/tcc/include\" \
   -DCONFIG_TCC_LIBPATHS=\"/lib:/lib/tcc\" \
   -DCONFIG_TCC_CRTPREFIX=\"/lib/tcc\" \
-  -DCONFIG_TCC_ELFINTERP=\"sys:/libexec/ld.so\"
+  -DCONFIG_TCC_ELFINTERP=\"/libexec/ld.so\"
 
 OBJS     = ${OBJ_OUT}/tcc_main.o
 MODDI3   = ${OBJ_OUT}/shim_moddi3.o

@@ -42,9 +42,9 @@
 /* Constants                                                            */
 /* ------------------------------------------------------------------ */
 
-#define FONT_PATH     "sys:/var/fonts/ROM8X8.DPF"
+#define FONT_PATH     "/var/fonts/ROM8X8.DPF"
 #define VIEWS_MBOX    "views"
-#define TASKBAR_PATH  "sys:/bin/taskbar"
+#define TASKBAR_PATH  "/bin/taskbar"
 #define MAX_FIELD     31           /* max username / password length */
 
 extern "C" int pidStatus(int pid);
@@ -203,7 +203,7 @@ run_session(const struct auth_response &resp)
 	           resp.home[0]  ? resp.home  : "/");
 	::snprintf(user_env,  sizeof(user_env),  "USER=root");
 	::snprintf(shell_env, sizeof(shell_env), "SHELL=%s",
-	           resp.shell[0] ? resp.shell : "sys:/bin/shell");
+	           resp.shell[0] ? resp.shell : "/bin/shell");
 	::snprintf(path_env,  sizeof(path_env),
 	           "PATH=/bin:/sbin:/usr/bin:/usr/sbin");
 

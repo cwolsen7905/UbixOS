@@ -28,7 +28,7 @@
  * logd — UbixOS kernel log daemon.
  *
  * Drains the kernel log ring via sys_klog_read (native syscall 47) and
- * appends formatted entries to sys:/var/log/messages.
+ * appends formatted entries to /var/log/messages.
  *
  * Design:
  *   - Runs as a long-lived service launched early by init.

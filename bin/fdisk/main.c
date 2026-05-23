@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
   if (argc >= 3) {
     i = atoi(argv[2]);
     if (i == 0) {
-      mbr = fopen("sys:mrb", "rb");
+      mbr = fopen("/mrb", "rb");
       fseek(mbr, 0, 0);
       fread(data, 512, 1, mbr);
       printf("Installing Ubix MBR\n");

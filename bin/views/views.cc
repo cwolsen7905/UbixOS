@@ -145,7 +145,7 @@ main(int argc, char **argv)
 		if (pid == 0) {
 			char *argv_vl[] = { (char *)"vlogin", nullptr };
 			char *envp_vl[] = { nullptr };
-			::execve("sys:/bin/vlogin", argv_vl, envp_vl);
+			::execve("/bin/vlogin", argv_vl, envp_vl);
 			std::printf("views: failed to exec vlogin\n");
 			std::exit(1);
 		}

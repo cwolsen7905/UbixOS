@@ -43,7 +43,7 @@
 #define TERM_FG_R 0xC0u
 #define TERM_FG_G 0xC0u
 #define TERM_FG_B 0xC0u
-#define FONT_PATH "sys:/var/fonts/ROM8X8.DPF"
+#define FONT_PATH "/var/fonts/ROM8X8.DPF"
 
 /* ------------------------------------------------------------------ */
 /* TerminalView — cell grid, surface, and font; single responsibility   */
@@ -180,7 +180,7 @@ main(int argc, char **argv)
 		nullptr
 	};
 	ubix::Shell shell;
-	shell.spawn("sys:/bin/shell", shell_argv, shell_envp);
+	shell.spawn("/bin/shell", shell_argv, shell_envp);
 
 	static const char views[] = "views";
 

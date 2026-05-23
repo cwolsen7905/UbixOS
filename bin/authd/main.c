@@ -27,7 +27,7 @@
 /*
  * authd — UbixOS authentication daemon.
  *
- * Owns sys:/etc/userdb exclusively.  All other processes (login, guilogin,
+ * Owns /etc/userdb exclusively.  All other processes (login, guilogin,
  * future sudo/ssh) send an AUTH_REQUEST MPI message and receive an
  * AUTH_RESPONSE.  authd is the only process that ever reads the credential
  * store.
