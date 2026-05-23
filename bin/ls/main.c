@@ -27,7 +27,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <dirent.h>
 #include <unistd.h>
 
@@ -46,7 +45,7 @@ int main(int argc, char **argv) {
 
   dir = opendir(path);
   if (dir == 0x0) {
-    printf("ls: cannot open '%s'\n", path);
+    fprintf(stderr, "ls: %s: No such file or directory\n", path);
     return (1);
   }
 
