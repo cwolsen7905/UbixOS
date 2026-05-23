@@ -4,6 +4,11 @@
 
 CURDIR=${.CURDIR}
 
+# UbixOS manages its own object directories via OBJ_DIR/OBJDIR variables.
+# Disable bmake's auto-objdir feature so targets like 'musl' don't get
+# redirected to build/obj/musl/ where a GNU Makefile symlink confuses bmake.
+MKOBJDIRS=no
+
 include Makefile.incl
 
 OBJ_DIR?= ${CURDIR}/build
@@ -56,13 +61,18 @@ kernel:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@cd sys;${MAKE}
 
-musl:
-	@if [ ! -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
-		echo "musl not configured — run: cd build/obj/musl && /usr/bin/make configure (or see docs)"; \
+musl-libc:
+	@if [ ! -f ${OBJ_DIR}/obj/musl/GNUmakefile ] && [ ! -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
+		echo "musl not configured — run: cd build/obj/musl && contrib/musl/configure ... (see docs)"; \
 		exit 1; \
 	fi
-	/usr/bin/make -C ${OBJ_DIR}/obj/musl
+	${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+	    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
+	    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o
+	${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o
+	/usr/bin/make -C ${OBJ_DIR}/obj/musl LIBCC=${OBJ_DIR}/lib/libgcc32.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
+	cp ${OBJ_DIR}/obj/musl/lib/libc.so ${OBJ_DIR}/lib/libc.so
 
 world:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \
@@ -75,7 +85,7 @@ world:
 	@echo "***************************************************************"
 	@echo "Step 0: Build musl libc"
 	@echo "***************************************************************"
-	${MAKE} musl
+	${MAKE} musl-libc
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 1a: Build libcxxabi (C++ ABI)"
@@ -110,7 +120,14 @@ world:
 
 # Build a fresh bootable FAT32 disk image from scratch (GRUB + kernel + world).
 # Always authoritative — use this for releases or a clean initial image.
-image:
+makeuser:
+	@echo "==> Compiling and running tools/makeuser.c"
+	cc -o tools/makeuser tools/makeuser.c
+	cd tools && ./makeuser
+	cp tools/userdb etc/userdb
+	@echo "==> etc/userdb updated"
+
+image: makeuser
 	@sh tools/mkimage.sh ${DISK_IMAGE}
 
 # Build a small FAT32 USB test image with a README.  Attach to QEMU via

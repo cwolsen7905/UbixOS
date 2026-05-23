@@ -12,3 +12,4 @@ t.c
 *.log
 .DS_Store
 .cache/
+tools/makeuser
