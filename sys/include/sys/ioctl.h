@@ -89,6 +89,16 @@ struct winsize {
 #define TIOCSETAF       _IOW('t', 22, struct termios)  /* flush, then set */
 #define TIOCGWINSZ      _IOR('t', 104, struct winsize) /* get window size */
 #define TIOCSWINSZ      _IOW('t', 103, struct winsize) /* set window size */
+#define TIOCDRAIN       _IO('t',  94)                  /* wait for output to drain */
+#define TIOCFLUSH       _IOW('t', 16, int)             /* flush input/output queues */
+#define TIOCEXCL        _IO('t',  13)                  /* set exclusive use */
+#define TIOCNXCL        _IO('t',  14)                  /* clear exclusive use */
+#define TIOCNOTTY       _IO('t', 113)                  /* release controlling tty */
+#define TIOCOUTQ        _IOR('t', 115, int)            /* output queue size */
+#define TIOCSTI         _IOW('t', 114, char)           /* simulate terminal input */
+#define TIOCCONS        _IO('t',  98)                  /* redirect console output */
+#define FREAD  1
+#define FWRITE 2
 
 /* c_cc indices — FreeBSD order, must match contrib/musl/arch/i386/bits/termios.h */
 #define VEOF      0
@@ -146,6 +156,10 @@ struct winsize {
 #define ISIG            0x00000080
 #define ICANON          0x00000100
 #define IEXTEN          0x00000400
+#define TOSTOP          0x00400000
+#define FLUSHO          0x00800000
+#define PENDIN          0x20000000
+#define NOFLSH          0x80000000
 
 #define TIOCGPGRP       _IOR('t', 119, int)    /* get foreground pgrp */
 #define TIOCSPGRP       _IOW('t', 118, int)    /* set foreground pgrp */

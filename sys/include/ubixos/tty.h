@@ -59,6 +59,7 @@ typedef struct tty_termNode {
     uint8_t t_type;      /* TTY_TYPE_VGA or TTY_TYPE_SERIAL */
     uint8_t t_eof;       /* 1 = VEOF delivered; next read with stdinSize==0 returns 0 */
     uint8_t t_stopped;   /* 1 = IXON Ctrl-S received; output suspended */
+    uint8_t t_exclusive; /* 1 = TIOCEXCL set; no further opens allowed */
     struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
     struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
     pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */

@@ -140,6 +140,7 @@ void signal_post_fault(int sig, void *fault_addr, int fault_code);
  * Finds the actual foreground job when tty_foreground->owner is stale.
  */
 void signal_post_tty(tty_term *term, int sig);
+void signal_post_pgrp(pid_t pgrp, int sig);
 
 /*
  * Check for pending unblocked signals and deliver one before returning

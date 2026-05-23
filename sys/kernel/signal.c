@@ -162,6 +162,24 @@ signal_post_tty(tty_term *term, int sig)
 }
 
 /*
+ * signal_post_pgrp — post signal `sig` to every task in process group `pgrp`.
+ */
+void
+signal_post_pgrp(pid_t pgrp, int sig)
+{
+    kTask_t *t;
+
+    if (sig < 1 || sig > 31 || pgrp == 0)
+        return;
+    for (t = taskList; t != NULL; t = t->next) {
+        if (t->state == DEAD || (pid_t)t->pgrp != pgrp)
+            continue;
+        t->td.sig_code[sig - 1] = SI_KERNEL;
+        t->td.sig_pending |= (1u << (sig - 1));
+    }
+}
+
+/*
  * signal_check — deliver the highest-priority pending unblocked signal.
  *
  * Called on every POSIX syscall exit, before iret returns to user mode.

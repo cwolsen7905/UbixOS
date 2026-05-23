@@ -320,12 +320,45 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 
 	case TIOCSETA:
 	case TIOCSETAW:
-	case TIOCSETAF:
 		if (on_tty) {
 			struct termios *t = (struct termios *)args->data;
 			term->t_termios = *t;
 			term->t_raw  = (t->c_lflag & ICANON) ? 0 : 1;
 			term->t_echo = (t->c_lflag & ECHO)   ? 1 : 0;
+			td->td_retval[0] = 0;
+		} else {
+			td->td_retval[0] = -1;
+		}
+		return (0);
+
+	case TIOCSETAF:
+		/* Flush pending input before applying new attributes. */
+		if (on_tty) {
+			struct termios *t = (struct termios *)args->data;
+			term->stdinSize = 0;
+			term->t_linelen = 0;
+			term->t_termios = *t;
+			term->t_raw  = (t->c_lflag & ICANON) ? 0 : 1;
+			term->t_echo = (t->c_lflag & ECHO)   ? 1 : 0;
+			td->td_retval[0] = 0;
+		} else {
+			td->td_retval[0] = -1;
+		}
+		return (0);
+
+	case TIOCDRAIN:
+		/* Output is synchronous — drain is always complete. */
+		td->td_retval[0] = 0;
+		return (0);
+
+	case TIOCFLUSH:
+		if (on_tty) {
+			int flags = args->data ? *(int *)args->data : (FREAD | FWRITE);
+			if (flags & FREAD) {
+				term->stdinSize = 0;
+				term->t_linelen = 0;
+			}
+			/* FWRITE: output is synchronous, nothing to flush. */
 			td->td_retval[0] = 0;
 		} else {
 			td->td_retval[0] = -1;
@@ -389,6 +422,43 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		} else {
 			td->td_retval[0] = -1;
 		}
+		return (0);
+
+	case TIOCEXCL:
+		if (on_tty) { term->t_exclusive = 1; td->td_retval[0] = 0; }
+		else          td->td_retval[0] = -1;
+		return (0);
+
+	case TIOCNXCL:
+		if (on_tty) { term->t_exclusive = 0; td->td_retval[0] = 0; }
+		else          td->td_retval[0] = -1;
+		return (0);
+
+	case TIOCNOTTY:
+		_current->ct_tty = NULL;
+		td->td_retval[0] = 0;
+		return (0);
+
+	case TIOCOUTQ:
+		/* Output is synchronous — queue is always empty. */
+		if (args->data)
+			*(int *)args->data = 0;
+		td->td_retval[0] = 0;
+		return (0);
+
+	case TIOCSTI:
+		/* Inject one byte into the tty line discipline. */
+		if (on_tty && args->data) {
+			tty_inject(term, *(char *)args->data);
+			td->td_retval[0] = 0;
+		} else {
+			td->td_retval[0] = -1;
+		}
+		return (0);
+
+	case TIOCCONS:
+		/* Redirect console to this tty — stub, accept silently. */
+		td->td_retval[0] = 0;
 		return (0);
 
 	default: {

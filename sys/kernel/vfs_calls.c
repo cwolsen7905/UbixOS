@@ -28,6 +28,8 @@
 
 #include <ubixos/sched.h>
 #include <ubixos/tty.h>
+#include <ubixos/signal.h>
+#include <i386/signal.h>
 #include <isa/rs232.h>
 #include <isa/kbd.h>
 #include <isa/atkbd.h>
@@ -255,6 +257,13 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	{
 		/* Specific virtual terminal fd: read from the bound tty_term. */
 		tty_term *t = (tty_term *)fd->data;
+		/* Phase 12: background process reading from its controlling tty */
+		if (t != NULL && t->t_pgrp != 0 &&
+		    (pid_t)_current->pgrp != t->t_pgrp) {
+			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
+			td->td_retval[0] = EINTR;
+			return (EINTR);
+		}
 		for (;;)
 		{
 			if (SIG_PENDING_UNBLOCKED(td))
@@ -337,6 +346,16 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	}
 	else
 	{
+		/* Phase 12: background process reading from its controlling tty */
+		{
+			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
+			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
+			    (pid_t)_current->pgrp != t_bg->t_pgrp) {
+				signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
+				td->td_retval[0] = EINTR;
+				return (EINTR);
+			}
+		}
 		/* VGA TTY: block until this terminal is the active foreground,
 		 * then drain keyboard ring → line discipline → stdin[].
 		 *
@@ -537,6 +556,14 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	{
 		/* Specific virtual terminal fd: write to the bound tty_term. */
 		tty_term *t = (tty_term *)fd->data;
+		/* Phase 12: background process writing to its controlling tty */
+		if (t != NULL && t->t_pgrp != 0 &&
+		    (pid_t)_current->pgrp != t->t_pgrp &&
+		    (t->t_termios.c_lflag & TOSTOP)) {
+			signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
+			td->td_retval[0] = EINTR;
+			return (EINTR);
+		}
 		buffer = kmalloc(uap->nbyte + 1);
 		if (!buffer)
 		{
@@ -562,6 +589,17 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	else if (fd != NULL && fd->fd == NULL)
 	{
 		/* TTY placeholder: original fds 1/2 or any dup2'd copy thereof */
+		/* Phase 12: background process writing to its controlling tty */
+		{
+			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
+			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
+			    (pid_t)_current->pgrp != t_bg->t_pgrp &&
+			    (t_bg->t_termios.c_lflag & TOSTOP)) {
+				signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
+				td->td_retval[0] = EINTR;
+				return (EINTR);
+			}
+		}
 		buffer = kmalloc(uap->nbyte + 1);
 		if (!buffer)
 		{

@@ -141,7 +141,7 @@ Currently ICRNL is hardcoded always-on.  IXON is never enforced.
 
 ---
 
-### Phase 10 — TIOCSETAW / TIOCSETAF real drain; TIOCDRAIN; TIOCFLUSH
+### Phase 10 — TIOCSETAW / TIOCSETAF real drain; TIOCDRAIN; TIOCFLUSH ✅ DONE
 
 Currently `TIOCSETAW` and `TIOCSETAF` apply the new `termios` immediately
 without draining/flushing output.  This is wrong when a process calls
@@ -160,7 +160,7 @@ is a no-op for now — but the ioctl should still flush the *input* buffer on
 
 ---
 
-### Phase 11 — Missing ioctls (TIOCNOTTY, TIOCEXCL, TIOCOUTQ, FIONREAD cleanup)
+### Phase 11 — Missing ioctls (TIOCNOTTY, TIOCEXCL, TIOCOUTQ, FIONREAD cleanup) ✅ DONE
 
 Low-priority stubs so apps don't get EINVAL:
 
@@ -175,7 +175,7 @@ Low-priority stubs so apps don't get EINVAL:
 
 ---
 
-### Phase 12 — Background job I/O blocking (SIGTTOU / SIGTTIN)
+### Phase 12 — Background job I/O blocking (SIGTTOU / SIGTTIN) ✅ DONE
 
 POSIX requires that a background process writing to its controlling terminal
 receives SIGTTOU (unless the signal is ignored or `TOSTOP` is clear in
@@ -204,9 +204,9 @@ This depends on Phase 6 (pgrp delivery working) and Phase 5 (correct pgrp).
 ✅ Phase 7   (c_cc[] dispatch, WERASE, KILL echo, EOF)  depends on Phase 6 layout
 ✅ Phase 8   (input flags: ICRNL gate, IXON)   independent
 ✅ Phase 9   (output flags: OPOST/ONLCR gate)  independent
-Phase 10    (TIOCSETAF flush, TIOCDRAIN)       depends on Phase 7 (input flush)
-Phase 11    (stub ioctls)                      independent
-Phase 12    (SIGTTOU/SIGTTIN)                  depends on Phase 6
+✅ Phase 10  (TIOCSETAF flush, TIOCDRAIN)       depends on Phase 7 (input flush)
+✅ Phase 11  (stub ioctls)                      independent
+✅ Phase 12  (SIGTTOU/SIGTTIN)                  depends on Phase 6
 ```
 
 **Recommended order for a working interactive shell:**
