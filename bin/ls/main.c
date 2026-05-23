@@ -35,6 +35,10 @@ static void ls_err(const char *path)
 {
   const char *pre = "ls: ";
   const char *suf = ": No such file or directory\n";
+  /* Write to both fd 1 and fd 2 to diagnose which is broken. */
+  write(1, pre, strlen(pre));
+  write(1, path, strlen(path));
+  write(1, suf, strlen(suf));
   write(2, pre, strlen(pre));
   write(2, path, strlen(path));
   write(2, suf, strlen(suf));
