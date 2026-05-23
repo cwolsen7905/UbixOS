@@ -769,9 +769,11 @@ kDIR_t *vfs_opendir(const char *path) {
     if (path == 0x0 || path[0] == '\0')
         return (0x0);
 
-    /* Resolve '.' to CWD; everything else taken as-is. */
-    if (path[0] == '.' && path[1] == '\0') {
-        strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
+    /* Resolve relative paths (including '.') against CWD. */
+    if (path[0] != '/') {
+        snprintf(fileName, sizeof(fileName), "%s%s",
+                 _current->oInfo.cwd,
+                 (path[0] == '.' && path[1] == '\0') ? "" : path);
     } else {
         strncpy(fileName, path, sizeof(fileName) - 1);
     }
