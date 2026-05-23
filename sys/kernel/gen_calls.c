@@ -830,3 +830,25 @@ int sys_getrusage(struct thread *td, struct sys_getrusage_args *args)
 	td->td_retval[0] = 0;
 	return (0);
 }
+
+/*
+ * setitimer(2) / getitimer(2) — FreeBSD slots 83 / 86.
+ * Stub: report no previous timer; ignore the new value.  tcsh calls these to
+ * set up SIGALRM-based prompt timeouts; returning success with a zeroed oitv
+ * is enough for tcsh to proceed without spinning on ENOSYS.
+ */
+int sys_setitimer(struct thread *td, struct setitimer_args *uap)
+{
+	if (uap->oitv != NULL)
+		memset(uap->oitv, 0, sizeof(struct itimerval));
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+int sys_getitimer(struct thread *td, struct setitimer_args *uap)
+{
+	if (uap->itv != NULL)
+		memset(uap->itv, 0, sizeof(struct itimerval));
+	td->td_retval[0] = 0;
+	return (0);
+}

@@ -31,7 +31,13 @@
 
 #include <sys/types.h>
 #include <sys/_timespec.h>
+#include <sys/_timeval.h>
 #include <sys/io.h>
+
+struct itimerval {
+	struct timeval it_interval;
+	struct timeval it_value;
+};
 
 typedef long suseconds_t;
 

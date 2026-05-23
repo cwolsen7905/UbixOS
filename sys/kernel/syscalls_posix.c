@@ -30,6 +30,10 @@
 #include <ubixos/signal.h>
 #include <sys/sysproto_posix.h>
 #include <sys/pipe.h>
+#include <ubixos/time.h>
+
+int sys_setitimer(struct thread *td, struct setitimer_args *uap);
+int sys_getitimer(struct thread *td, struct setitimer_args *uap);
 
 /* System Calls List */
 struct syscall_entry systemCalls_posix[] = {
@@ -116,10 +120,10 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "setgroups", sys_invalid, SYSCALL_NOTIMP},                                                              /*  80 - setgroups */
     {ARG_COUNT(sys_getpgrp_args), "getpgrp", sys_getpgrp, SYSCALL_VALID},                                       //  81 - getpgrp
     {ARG_COUNT(sys_setpgid_args), "setpgid", sys_setpgid, SYSCALL_VALID},                                       //  82 - setpgid
-    {0, "setitimer", sys_invalid, SYSCALL_NOTIMP},                                                              /*  83 - setitimer */
+    {ARG_COUNT(setitimer_args), "setitimer", (sys_call_t *)sys_setitimer, SYSCALL_VALID},                       /*  83 - setitimer */
     {0, "old wait", sys_invalid, SYSCALL_INVALID},                                                              /*  84 - Invalid */
     {0, "swapon", sys_invalid, SYSCALL_NOTIMP},                                                                 /*  85 - swapon */
-    {0, "getitimer", sys_invalid, SYSCALL_NOTIMP},                                                              /*  86 - getitimer */
+    {ARG_COUNT(setitimer_args), "getitimer", (sys_call_t *)sys_getitimer, SYSCALL_VALID},                       /*  86 - getitimer */
     {0, "old gethostname", sys_invalid, SYSCALL_INVALID},                                                       /*  87  */
     {0, "Get Free Page", (sys_call_t *)sysGetFreePage, SYSCALL_VALID},                                          /*  88 - getFreePage TEMP OLD sethostname */
     {0, "getdtablesize", sys_invalid, SYSCALL_NOTIMP},                                                          /*  89 - gettablesize */
