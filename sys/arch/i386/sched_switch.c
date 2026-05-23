@@ -47,7 +47,8 @@
 static inline uint8_t
 quantum_for_priority(uint8_t pri)
 {
-  if (pri >= 24) return 0;   /* High/Realtime: unlimited */
+  if (pri >= 31) return 0;   /* Realtime only: unlimited, never preempted */
+  if (pri >= 24) return 20;  /* High (kernel threads): long but finite quantum */
   if (pri >= 16) return 10;  /* Interactive */
   if (pri >= 8)  return 6;   /* Normal */
   if (pri >= 1)  return 2;   /* Background */
@@ -171,8 +172,8 @@ void sched() {
   if (_current != NULL && _current->state == RUNNING) {
     uint8_t pri = _current->priority;
 
-    if (pri >= 24) {
-      /* High/Realtime: never preempt — runs until it voluntarily blocks. */
+    if (pri >= 31) {
+      /* Realtime only: never preempt — runs until it voluntarily blocks. */
       spinUnlock(&schedulerSpinLock);
       return;
     }
@@ -268,7 +269,7 @@ void sched_yield() {
    * For a voluntary yield we must enqueue _current as READY so the
    * early-exit check is bypassed and another task can be dispatched.
    */
-  if (_current->priority >= 24) {
+  if (_current->priority >= 31) {
     save_flags(flags);
     cli();
     spinLock(&schedulerSpinLock);
