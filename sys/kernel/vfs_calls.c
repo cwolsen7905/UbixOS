@@ -226,7 +226,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				if (SIG_PENDING_UNBLOCKED(td))
 				{
 					p_fd->reader_pid = 0;
-					td->td_retval[0] = EINTR;
+					td->td_retval[0] = -EINTR;
 					return (EINTR);
 				}
 				sched_yield();
@@ -266,14 +266,14 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		if (t != NULL && t->t_pgrp != 0 &&
 		    (pid_t)_current->pgrp != t->t_pgrp) {
 			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
-			td->td_retval[0] = EINTR;
+			td->td_retval[0] = -EINTR;
 			return (EINTR);
 		}
 		for (;;)
 		{
 			if (SIG_PENDING_UNBLOCKED(td))
 			{
-				td->td_retval[0] = EINTR;
+				td->td_retval[0] = -EINTR;
 				return (EINTR);
 			}
 			if (t->stdinSize > 0)
@@ -341,7 +341,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			{
 				if (SIG_PENDING_UNBLOCKED(td))
 				{
-					td->td_retval[0] = EINTR;
+					td->td_retval[0] = -EINTR;
 					return (EINTR);
 				}
 				sched_yield();
@@ -357,7 +357,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
 			    (pid_t)_current->pgrp != t_bg->t_pgrp) {
 				signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
-				td->td_retval[0] = EINTR;
+				td->td_retval[0] = -EINTR;
 				return (EINTR);
 			}
 		}
@@ -376,7 +376,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		{
 			if (SIG_PENDING_UNBLOCKED(td))
 			{
-				td->td_retval[0] = EINTR;
+				td->td_retval[0] = -EINTR;
 				return (EINTR);
 			}
 			if (vesa_text_slot >= 0)
@@ -573,7 +573,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		    (pid_t)_current->pgrp != t->t_pgrp &&
 		    (t->t_termios.c_lflag & TOSTOP)) {
 			signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
-			td->td_retval[0] = EINTR;
+			td->td_retval[0] = -EINTR;
 			return (EINTR);
 		}
 		buffer = kmalloc(uap->nbyte + 1);
@@ -608,7 +608,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 			    (pid_t)_current->pgrp != t_bg->t_pgrp &&
 			    (t_bg->t_termios.c_lflag & TOSTOP)) {
 				signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
-				td->td_retval[0] = EINTR;
+				td->td_retval[0] = -EINTR;
 				return (EINTR);
 			}
 		}

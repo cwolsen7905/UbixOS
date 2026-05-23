@@ -501,13 +501,29 @@ sched_io_wakeup(kTask_t *t)
 	boosted = (uint8_t)(t->base_priority + 4);
 	if (boosted > 23)
 		boosted = 23;
-	if (boosted > t->priority)
-		t->priority = boosted;
-	t->boost_quanta = 2;
 
-	if (t->state != READY && t->state != RUNNING && t->state != DEAD) {
+	if (t->state == READY) {
+		/*
+		 * Must dequeue before changing priority: rq_dequeue_locked
+		 * keys on t->priority to find the right bucket, so changing
+		 * priority in-place while enqueued corrupts that queue.
+		 */
+		rq_dequeue_locked(t);
+		if (boosted > t->priority)
+			t->priority = boosted;
+		t->boost_quanta = 2;
+		rq_enqueue_locked(t);
+	} else if (t->state != RUNNING && t->state != DEAD) {
+		if (boosted > t->priority)
+			t->priority = boosted;
+		t->boost_quanta = 2;
 		t->state = READY;
 		rq_enqueue_locked(t);
+	} else {
+		/* RUNNING: not in any queue — in-place change is safe. */
+		if (boosted > t->priority)
+			t->priority = boosted;
+		t->boost_quanta = 2;
 	}
 
 	spinUnlock(&schedulerSpinLock);
