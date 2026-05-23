@@ -193,11 +193,6 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *
 	newProcess = schedNewTask();
 	assert(newProcess);
 
-	/* Kernel threads run ring-0: elevate to High band so they are never
-	 * starved by user processes at QOS_DEFAULT (12). */
-	newProcess->priority      = QOS_KERNEL;
-	newProcess->base_priority = QOS_KERNEL;
-
 	if (name != 0x0)
 		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
