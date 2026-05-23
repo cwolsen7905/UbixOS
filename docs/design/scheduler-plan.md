@@ -16,7 +16,7 @@
 | 2.5 | Add `priority`, `base_priority`, `quantum`, `rq_next/prev` to `kTask_t` | 2 | ✅ Done |
 | 3.1 | QoS classes as `base_priority` floor | 3 | ✅ Done |
 | 3.2 | Temporary priority boosts (I/O wakeup, CPU-bound decay) | 3 | ✅ Done |
-| 3.3 | Priority inheritance for mutexes | 3 | ⬜ Not started |
+| 3.3 | Priority inheritance for mutexes | 3 | ✅ Done |
 | 3.4 | Starvation aging (background timer, +1 per 50 ms) | 3 | ✅ Done |
 | 4.1 | Split `kTask_t` → `kProc_t` + `kThread_t` | 4 | ⬜ Not started |
 | 4.2 | `clone()` / `rfork()` syscall | 4 | ⬜ Not started |

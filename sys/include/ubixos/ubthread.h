@@ -53,6 +53,8 @@ struct ubthread_mutex {
     int id;
     uint32_t lock;
     pidType pid;
+    kTask_t *owner;     /* task currently holding the lock, or NULL */
+    uint8_t  pi_active; /* non-zero if a PI boost has been applied to owner */
 };
 
 struct ubthread_list {

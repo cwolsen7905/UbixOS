@@ -138,6 +138,8 @@ void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work *
 void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     */
 void sched_zombie(kTask_t *t);          /* ZOMBIE  — exited, awaiting wait() */
 void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
+void sched_pi_boost(kTask_t *t, uint8_t pri);  /* PI: raise t to pri if higher      */
+void sched_pi_restore(kTask_t *t);             /* PI: drop t back to base_priority  */
 
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();

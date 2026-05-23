@@ -491,6 +491,63 @@ void sched_stop(kTask_t *t, int sig)
  *
  * Rewards I/O-bound tasks that yield the CPU willingly (FreeBSD ULE style).
  */
+/*
+ * sched_pi_boost — priority inheritance: raise t's scheduling priority to
+ * pri if pri is higher than t's current priority.  Safe for any task state:
+ * dequeues/re-enqueues when READY (preserving run-queue integrity), changes
+ * in-place for RUNNING or sleeping tasks (not in any queue).
+ */
+void
+sched_pi_boost(kTask_t *t, uint8_t pri)
+{
+	uint32_t flags;
+
+	if (t == NULL || pri <= t->priority)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	if (pri > t->priority) {
+		if (t->state == READY) {
+			rq_dequeue_locked(t);
+			t->priority = pri;
+			rq_enqueue_locked(t);
+		} else {
+			t->priority = pri;
+		}
+	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
+/*
+ * sched_pi_restore — drop t's priority back to its QoS floor (base_priority)
+ * after releasing a mutex that had a PI boost applied.  Called after the lock
+ * is released so the newly-unblocked high-priority waiter runs immediately.
+ */
+void
+sched_pi_restore(kTask_t *t)
+{
+	uint32_t flags;
+
+	if (t == NULL || t->priority <= t->base_priority)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	if (t->priority > t->base_priority) {
+		if (t->state == READY) {
+			rq_dequeue_locked(t);
+			t->priority = t->base_priority;
+			rq_enqueue_locked(t);
+		} else {
+			t->priority = t->base_priority;
+		}
+	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
 void
 sched_io_wakeup(kTask_t *t)
 {
