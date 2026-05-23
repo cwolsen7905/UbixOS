@@ -179,10 +179,12 @@ fat_bpb_parse(struct fat_fs *fs)
 				label[i] = (char)(label[i] + ('a' - 'A'));
 
 		if (last >= 0 && label[0] != '\0') {
-			snprintf(fs->mp->mountPoint,
-			    sizeof(fs->mp->mountPoint), "%s", label);
-			kprintf("fat_bpb: volume label \"%s\" -> mount point \"%s:\"\n",
-			    label, label);
+			/* Store label in fat_fs for informational use (e.g. automountd).
+			 * Do NOT overwrite mp->mountPoint — that holds the POSIX path. */
+			strncpy(fs->vol_label, label, sizeof(fs->vol_label) - 1);
+			fs->vol_label[sizeof(fs->vol_label) - 1] = '\0';
+			kprintf("fat_bpb: volume label \"%s\", mounted at %s\n",
+			    label, fs->mp->mountPoint);
 		}
 	}
 

@@ -451,11 +451,7 @@ ums_bot_attach(struct usb_device *dev)
 	klog(KLOG_INFO, "ums: attached major=%d minor=0 blocks=%u blksz=%u",
 	    UMS_MAJOR, sc->um_blocks, sc->um_blk_size);
 
-	/*
-	 * Auto-mount the FAT filesystem.  Pass "usb0" as a placeholder mount
-	 * point name — fat_bpb_parse will override it with the volume label
-	 * (e.g. "ubix" for a disk formatted with label UBIX).
-	 */
+	/* Mount at /mnt/usb0; automountd will eventually handle dynamic naming. */
 	if (vfs_mount(UMS_MAJOR, 0, 0, 0xFA, "/mnt/usb0", "rw") != 0) {
 		kprintf("ums: vfs_mount failed\n");
 		klog(KLOG_WARNING, "ums: vfs_mount failed (no FAT filesystem?)");

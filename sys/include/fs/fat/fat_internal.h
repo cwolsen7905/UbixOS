@@ -56,6 +56,7 @@
 struct fat_fs {
 	volatile int		 fs_lock;		/* per-mount spinlock */
 	struct vfs_mountPoint	*mp;
+	char			 vol_label[12];		/* FAT volume label (lowercased) */
 	uint8_t			 type;			/* FAT_TYPE_12/16/32 */
 	uint32_t		 bytes_per_sector;	/* always 512 on UbixOS */
 	uint8_t			 sectors_per_cluster;
