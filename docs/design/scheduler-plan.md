@@ -7,7 +7,7 @@
 | 1.1 | Fix O(n²) dead-task cleanup — inline splice | 1 | ✅ Done |
 | 1.2 | Remove `FORK` state — insert as `READY` | 1 | ✅ Done |
 | 1.3 | Fix wrap-around double-scan | 1 | ✅ Done |
-| 1.4 | Wire up `need_resched` + quantum decrement | 2 | ⏸ Deferred to Phase 2 — needs timer.S to pre-set need_resched |
+| 1.4 | Wire up `need_resched` + quantum decrement | 2 | ⏸ Deferred — needs timer.S to pre-set need_resched |
 | 1.5 | Hash table for `schedFindTask` | 1 | ✅ Done |
 | 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ✅ Done |
 | 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ✅ Done |
@@ -22,6 +22,28 @@
 | 4.2 | `clone()` / `rfork()` syscall | 4 | ⬜ Not started |
 | 4.3 | Thread-local storage via GS register | 4 | ⬜ Not started |
 | 4.4 | libc pthreads wired to `clone()` + futex | 4 | ⬜ Not started |
+
+### Correctness fixes landed 2026-05-23
+
+| Fix | Commit |
+|-----|--------|
+| `sched_io_wakeup` dequeue/re-enqueue before priority change (run-queue corruption) | 4457e5a |
+| `td->td_retval[0]` must be negative errno for EINTR (musl Linux ABI) | 4457e5a |
+| `fork`: inherit `sigact`+`sigmask` from parent (POSIX); clear only `sig_pending` | aa4c4ed |
+| `exec (sys_exec)`: stop resetting `pgrp` to own PID — POSIX exec preserves pgrp | aa4c4ed |
+| `sched_yield()`: no-op for pri≥31 only (was ≥24, broke High-band yields) | aa4c4ed |
+| `schedNewTask`: init `last_run_tick` to `sysTicks` so new tasks qualify for aging | aa4c4ed |
+| `fork`: inherit `base_priority` (QoS floor) from parent | f99c47f |
+| `exec`: clear `boost_quanta` / reset `priority` to `base_priority` on execve | f99c47f |
+| `sched_init` bootstrap task: priority set to QOS_REALTIME (was 0 from memset) | f99c47f |
+| Non-preempt zone narrowed to pri≥31 (QOS_REALTIME); High band gets 20-tick quantum | 7280805 |
+| Add `QOS_KERNEL=24` to `qos_class_t` enum | f99c47f |
+
+### Known deferred items (not bugs, future work)
+
+- `systemTask` is a polling loop — needs blocking `mpi_fetchMessage` before it can safely run at `QOS_KERNEL`. Currently at `QOS_DEFAULT=12`.
+- `mpi_fetchMessage`: no blocking/sleep path — caller must poll with `sched_yield()`.
+- `execThread` kernel threads stay at QOS_DEFAULT until the above is resolved.
 
 **Legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked
 
