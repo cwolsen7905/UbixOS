@@ -43,28 +43,28 @@
 #include <sys/mpi.h>
 #include <authd.h>
 
-#define USERDB_PATH  "/etc/userdb"
-#define USERDB_MAX   64
+#define USERDB_PATH "/etc/userdb"
+#define USERDB_MAX 64
 
 /* Must match the binary layout written by tools/userdb */
-struct userdb_entry {
+struct userdb_entry
+{
 	char username[32];
 	char password[32];
-	int  uid;
-	int  gid;
+	int uid;
+	int gid;
 	char shell[128];
 	char realname[256];
-	char path[256];       /* home directory */
+	char path[256]; /* home directory */
 };
 
 static struct userdb_entry users[USERDB_MAX];
-static int                 nusers = 0;
+static int nusers = 0;
 
-static int
-load_userdb(void)
+static int load_userdb(void)
 {
-	FILE   *f;
-	size_t  n;
+	FILE *f;
+	size_t n;
 
 	f = fopen(USERDB_PATH, "r");
 	if (f == NULL)
@@ -75,36 +75,39 @@ load_userdb(void)
 	return (nusers);
 }
 
-int
-main(void)
+int main(void)
 {
-	mpi_message_t        msg;
-	mpi_message_t        rmsg;
-	struct auth_request  *req;
-	struct auth_response  resp;
-	int                   i;
+	mpi_message_t msg;
+	mpi_message_t rmsg;
+	struct auth_request *req;
+	struct auth_response resp;
+	int i;
 
-	if (mpi_createMbox(AUTHD_MBOX) != 0) {
+	if (mpi_createMbox(AUTHD_MBOX) != 0)
+	{
 		printf("authd: failed to create mailbox\n");
 		exit(1);
 	}
 
-	if (load_userdb() < 0) {
-		printf("authd: cannot open %s — no authentication possible\n",
-		    USERDB_PATH);
+	if (load_userdb() < 0)
+	{
+		printf("authd: cannot open %s — no authentication possible\n", USERDB_PATH);
 		/* keep running so clients get a clean rejection rather than hanging */
 	}
 
 	printf("authd: ready (%d user%s)\n", nusers, nusers == 1 ? "" : "s");
 	fflush(stdout);
 
-	for (;;) {
-		if (mpi_fetchMessage(AUTHD_MBOX, &msg) != 0) {
+	for (;;)
+	{
+		if (mpi_fetchMessage(AUTHD_MBOX, &msg) != 0)
+		{
 			sched_yield();
 			continue;
 		}
 
-		if (msg.header != AUTHD_MSG_REQUEST) {
+		if (msg.header != AUTHD_MSG_REQUEST)
+		{
 			sched_yield();
 			continue;
 		}
@@ -113,16 +116,15 @@ main(void)
 
 		memset(&resp, 0, sizeof(resp));
 
-		for (i = 0; i < nusers; i++) {
-			if (strcmp(req->username, users[i].username) == 0 &&
-			    strcmp(req->password, users[i].password) == 0) {
-				resp.ok  = 1;
+		for (i = 0; i < nusers; i++)
+		{
+			if (strcmp(req->username, users[i].username) == 0 && strcmp(req->password, users[i].password) == 0)
+			{
+				resp.ok = 1;
 				resp.uid = users[i].uid;
 				resp.gid = users[i].gid;
-				strncpy(resp.shell, users[i].shell,
-				    AUTH_SHELL_MAX - 1);
-				strncpy(resp.home, users[i].path,
-				    AUTH_HOME_MAX - 1);
+				strncpy(resp.shell, users[i].shell, AUTH_SHELL_MAX - 1);
+				strncpy(resp.home, users[i].path, AUTH_HOME_MAX - 1);
 				break;
 			}
 		}

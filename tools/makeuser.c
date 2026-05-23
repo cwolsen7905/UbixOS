@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -60,21 +60,21 @@ int main(int argc, char **argv)
 	sprintf(password[1].passwd, "user");
 	sprintf(password[1].shell, "/bin/shell");
 	sprintf(password[1].realname, "Guest User");
-	sprintf(password[1].path, "guest");
+	sprintf(password[1].path, "/home/guest");
 	password[1].uid = 1;
 	password[1].gid = 1;
 
 	sprintf(password[2].username, "reddawg");
 	sprintf(password[2].passwd, "temp123");
-	sprintf(password[2].shell, "/bin/sh");
+	sprintf(password[2].shell, "/bin/tcsh");
 	sprintf(password[2].realname, "Christopher W. Olsen");
-	sprintf(password[2].path, "reddawg");
+	sprintf(password[2].path, "/home/reddawg");
 	password[2].uid = 1000;
 	password[2].gid = 0;
 
 	sprintf(password[3].username, "bsd");
 	sprintf(password[3].passwd, "user");
-	sprintf(password[3].shell, "/bin/sh");
+	sprintf(password[3].shell, "/bin/tcsh");
 	sprintf(password[3].realname, "BSD User");
 	sprintf(password[3].path, "/home/bsd");
 	password[3].uid = 0;
