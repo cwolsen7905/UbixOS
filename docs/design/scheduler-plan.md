@@ -7,7 +7,7 @@
 | 1.1 | Fix O(n²) dead-task cleanup — inline splice | 1 | ✅ Done |
 | 1.2 | Remove `FORK` state — insert as `READY` | 1 | ✅ Done |
 | 1.3 | Fix wrap-around double-scan | 1 | ✅ Done |
-| 1.4 | Wire up `need_resched` + quantum decrement | 1 | ✅ Done |
+| 1.4 | Wire up `need_resched` + quantum decrement | 2 | ⏸ Deferred to Phase 2 — needs timer.S to pre-set need_resched |
 | 1.5 | Hash table for `schedFindTask` | 1 | ✅ Done |
 | 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ⬜ Not started |
 | 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ⬜ Not started |
