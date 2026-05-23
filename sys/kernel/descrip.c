@@ -284,10 +284,25 @@ int getfd(struct thread *td, struct file **fp, int fd)
 
 int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 {
-	tty_term *term = _current->term;
 	struct file *tty_fp = NULL;
 	getfd(td, &tty_fp, args->fd);
-	int on_tty = (tty_fp != NULL && tty_fp->fd == NULL) && term != NULL;
+
+	/* FD_TYPE_TTYV fds carry their own tty_term in fd->data. */
+	tty_term *term;
+	if (tty_fp != NULL && tty_fp->fd_type == FD_TYPE_TTYV)
+		term = (tty_term *)tty_fp->data;
+	else
+		term = _current->ct_tty ? _current->ct_tty : _current->term;
+
+	/*
+	 * on_tty: fd is a tty when it has no underlying fileDescriptor_t (raw
+	 * tty fd inherited from parent), was opened via /dev/tty (FD_TYPE_TTY),
+	 * or is a specific vty (FD_TYPE_TTYV).
+	 */
+	int on_tty = (tty_fp != NULL &&
+	    (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY ||
+	    tty_fp->fd_type == FD_TYPE_TTYV)) &&
+	    term != NULL;
 
 	switch (args->com)
 	{
@@ -329,6 +344,17 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		if (on_tty) {
 			struct winsize *win = (struct winsize *)args->data;
 			term->t_winsize = *win;
+			td->td_retval[0] = 0;
+		} else {
+			td->td_retval[0] = -1;
+		}
+		return (0);
+
+	case TIOCSCTTY:
+		/* Claim this tty as the controlling terminal for this session. */
+		if (on_tty) {
+			_current->ct_tty = term;
+			term->t_pgrp = (int)_current->pgrp;
 			td->td_retval[0] = 0;
 		} else {
 			td->td_retval[0] = -1;
@@ -716,4 +742,32 @@ int sys_dup2(struct thread *td, struct sys_dup2_args *args)
 		error = -1;
 
 	return (error);
+}
+
+int sys_dup(struct thread *td, struct sys_dup_args *args)
+{
+	int i;
+
+	if (args->fd >= MAX_FILES || td->o_files[args->fd] == NULL) {
+		td->td_retval[0] = -1;
+		return (EBADF);
+	}
+
+	/* Find lowest available fd slot. */
+	for (i = 0; i < MAX_FILES; i++) {
+		if (td->o_files[i] == NULL)
+			break;
+	}
+	if (i >= MAX_FILES) {
+		td->td_retval[0] = -1;
+		return (EMFILE);
+	}
+
+	if (dup2(td, args->fd, (u_int32_t)i) == -1) {
+		td->td_retval[0] = -1;
+		return (EBADF);
+	}
+
+	td->td_retval[0] = i;
+	return (0);
 }

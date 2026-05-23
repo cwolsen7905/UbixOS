@@ -27,6 +27,7 @@
  */
 
 #include <sys/gen_calls.h>
+#include <sys/resource.h>
 #include <sys/thread.h>
 #include <sys/gdt.h>
 #include <ubixos/sched.h>
@@ -740,5 +741,27 @@ int sys_uname(struct thread *td, struct sys_uname_args *args)
 int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap)
 {
 	td->td_retval[0] = _current->id;
+	return (0);
+}
+
+/* setsid(2) — FreeBSD 147. Become session leader; new session has no ctty. */
+int sys_setsid(struct thread *td, struct sys_setsid_args *args)
+{
+	_current->pgrp   = (uint32_t)_current->id;
+	_current->sid    = (uint32_t)_current->id;
+	_current->ct_tty = NULL;
+	td->td_retval[0] = (int)_current->id;
+	return (0);
+}
+
+/* getrusage(2) — FreeBSD 117. Return zeroed rusage; timing not tracked. */
+int sys_getrusage(struct thread *td, struct sys_getrusage_args *args)
+{
+	if (args->rusage == NULL) {
+		td->td_retval[0] = -1;
+		return (EFAULT);
+	}
+	memset(args->rusage, 0, sizeof(struct rusage));
+	td->td_retval[0] = 0;
 	return (0);
 }

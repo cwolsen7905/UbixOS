@@ -666,3 +666,7 @@
 /* getpgid: Linux=132, UbixOS=207 */
 #undef  __NR_getpgid
 #define __NR_getpgid		207
+
+/* setsid: Linux=66, UbixOS=147 */
+#undef  __NR_setsid
+#define __NR_setsid		147

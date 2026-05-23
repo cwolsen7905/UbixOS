@@ -12,7 +12,7 @@
 # VGA virtual consoles.  Switch with Alt+F1 through Alt+F4.
 #
 # To switch ttyv0 to the graphical compositor instead of login:
-#   ttyv0   sys:/bin/vlogin   on
+#   ttyv0   sys:/bin/views    on
 #
 ttyv0   sys:/bin/login   on
 ttyv1   sys:/bin/login   on

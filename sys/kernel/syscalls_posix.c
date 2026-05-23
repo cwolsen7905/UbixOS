@@ -239,10 +239,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_INVALID },  // 40
     {
-        0,
+        ARG_COUNT(sys_dup_args),
         "dup",
-        sys_invalid,
-        SYSCALL_NOTIMP },  // 41 - dup
+        sys_dup,
+        SYSCALL_VALID },  // 41 - dup
     {
         ARG_COUNT(pipe_args),
         "pipe",
@@ -619,10 +619,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_gettimeofday,
         SYSCALL_VALID },  // 116 - gettimeofday
     {
-        0,
+        ARG_COUNT(sys_getrusage_args),
         "getrusage",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 117 - getrusage */
+        sys_getrusage,
+        SYSCALL_VALID }, /* 117 - getrusage */
     {
         0,
         "getsockopt",
@@ -769,10 +769,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_INVALID }, /* 146 - Invalid */
     {
-        0,
+        ARG_COUNT(sys_setsid_args),
         "setsid",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 147 - setsid */
+        sys_setsid,
+        SYSCALL_VALID }, /* 147 - setsid */
     {
         0,
         "quotactl",

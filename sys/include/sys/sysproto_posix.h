@@ -1029,6 +1029,32 @@ struct sys_dup2_args {
 
 int sys_dup2(struct thread*, struct sys_dup2_args*);
 
+struct sys_dup_args {
+    char fd_l_[PADL_(u_int)];
+    u_int fd;
+    char fd_r_[PADR_(u_int)];
+};
+
+int sys_dup(struct thread*, struct sys_dup_args*);
+
+struct sys_setsid_args {
+    register_t dummy;
+};
+
+int sys_setsid(struct thread*, struct sys_setsid_args*);
+
+struct sys_getrusage_args {
+    char who_l_[PADL_(int)];
+    int who;
+    char who_r_[PADR_(int)];
+
+    char rusage_l_[PADL_(struct rusage *)];
+    struct rusage *rusage;
+    char rusage_r_[PADR_(struct rusage *)];
+};
+
+int sys_getrusage(struct thread*, struct sys_getrusage_args*);
+
 struct sys_unlink_args {
     char path_l_[PADL_(char *)];
     char *path;
