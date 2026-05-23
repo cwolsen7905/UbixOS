@@ -33,6 +33,7 @@
 #include <string.h>
 #include <fs/fat/fat_bpb.h>
 #include <fs/vfs/mount.h>
+#include <sys/types.h>
 
 /* Little-endian reads from an unaligned byte buffer */
 static uint16_t
@@ -188,5 +189,84 @@ fat_bpb_parse(struct fat_fs *fs)
 		}
 	}
 
+	return (0);
+}
+
+int
+fat_read_vol_label(struct ubx_device *dev, char *out, size_t len)
+{
+	uint8_t  buf[512];
+	uint32_t fat_sz16, fat_sz32, tot_sec16, tot_sec32, fat_sz, tot_sec;
+	uint32_t data_sec, total_clusters;
+	uint16_t root_ent_cnt, bytes_per_sec;
+	uint8_t  num_fats, sec_per_clus, fat_type;
+	uint8_t  vol_off;
+	char     label[12];
+	int      i, last;
+
+	if (dev == NULL || out == NULL || len == 0)
+		return (-1);
+
+	if (dev->dev_blk_ops->read(dev, 0, 1, buf) != 0)
+		return (-1);
+
+	if (buf[BPB_SigOffset] != 0x55 || buf[BPB_SigOffset + 1] != 0xAA)
+		return (-1);
+
+	bytes_per_sec = le16(buf + BPB_BytsPerSec);
+	sec_per_clus  = buf[BPB_SecPerClus];
+	num_fats      = buf[BPB_NumFATs];
+	root_ent_cnt  = le16(buf + BPB_RootEntCnt);
+	tot_sec16     = le16(buf + BPB_TotSec16);
+	fat_sz16      = le16(buf + BPB_FATSz16);
+	tot_sec32     = le32(buf + BPB_TotSec32);
+	fat_sz32      = le32(buf + BPB32_FATSz32);
+
+	if (bytes_per_sec == 0 || sec_per_clus == 0 || num_fats == 0)
+		return (-1);
+
+	fat_sz  = (fat_sz16 != 0) ? fat_sz16 : fat_sz32;
+	tot_sec = (tot_sec16 != 0) ? tot_sec16 : tot_sec32;
+
+	if (fat_sz == 0 || tot_sec == 0)
+		return (-1);
+
+	{
+		uint32_t rsvd       = le16(buf + BPB_RsvdSecCnt);
+		uint32_t root_secs  = ((uint32_t)root_ent_cnt * 32 +
+		    bytes_per_sec - 1) / bytes_per_sec;
+		uint32_t data_lba   = rsvd + (uint32_t)num_fats * fat_sz + root_secs;
+
+		if (tot_sec <= data_lba)
+			return (-1);
+		data_sec      = tot_sec - data_lba;
+		total_clusters = data_sec / sec_per_clus;
+	}
+
+	if (total_clusters < 4085)
+		fat_type = 12;
+	else if (total_clusters < 65525)
+		fat_type = 16;
+	else
+		fat_type = 32;
+
+	vol_off = (fat_type == 32) ? 71 : 43;
+
+	memcpy(label, buf + vol_off, 11);
+	label[11] = '\0';
+
+	for (last = 10; last >= 0 && label[last] == ' '; last--)
+		;
+	label[last + 1] = '\0';
+
+	if (last < 0 || label[0] == '\0')
+		return (-1);
+
+	for (i = 0; label[i]; i++)
+		if (label[i] >= 'A' && label[i] <= 'Z')
+			label[i] = (char)(label[i] + ('a' - 'A'));
+
+	strncpy(out, label, len - 1);
+	out[len - 1] = '\0';
 	return (0);
 }

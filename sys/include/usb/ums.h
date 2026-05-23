@@ -97,6 +97,7 @@ struct ums_softc {
 	uint32_t           um_tag;
 	uint32_t           um_blocks;		/* total block count */
 	uint32_t           um_blk_size;		/* bytes per block */
+	char               um_mountpath[96];	/* path automountd mounted us at */
 };
 
 /* -----------------------------------------------------------------------

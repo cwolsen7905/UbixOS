@@ -40,9 +40,11 @@
 #include <usb/uhci.h>
 #include <sys/bus.h>
 #include <sys/klog.h>
-#include <fs/vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
+#include <mpi/mpi.h>
+#include <mpi/storage.h>
+#include <fs/fat/fat_bpb.h>
 #include <string.h>
 
 #define UMS_MAJOR	5
@@ -451,13 +453,31 @@ ums_bot_attach(struct usb_device *dev)
 	klog(KLOG_INFO, "ums: attached major=%d minor=0 blocks=%u blksz=%u",
 	    UMS_MAJOR, sc->um_blocks, sc->um_blk_size);
 
-	/* Mount at /mnt/usb0; automountd will eventually handle dynamic naming. */
-	if (vfs_mount(UMS_MAJOR, 0, 0, 0xFA, "/mnt/usb0", "rw") != 0) {
-		kprintf("ums: vfs_mount failed\n");
-		klog(KLOG_WARNING, "ums: vfs_mount failed (no FAT filesystem?)");
-	} else {
-		kprintf("ums: FAT filesystem mounted\n");
-		klog(KLOG_INFO, "ums: FAT filesystem mounted");
+	/*
+	 * Notify automountd that a USB storage device appeared.
+	 * automountd will probe the FAT BPB for the volume label and mount
+	 * the device at /mnt/<volname> via the sys_mount syscall (Phase 6).
+	 */
+	{
+		mpi_message_t     msg;
+		mpi_storage_msg_t *s = (mpi_storage_msg_t *)msg.data;
+
+		memset(&msg, 0, sizeof(msg));
+		s->type = MPI_STORAGE_APPEARED;
+		strncpy(s->dev_path, "/dev/uba0", sizeof(s->dev_path) - 1);
+		strncpy(s->fstype,   "fat",       sizeof(s->fstype)   - 1);
+
+		/* Read volume label from BPB without doing a full mount. */
+		if (fat_read_vol_label(sc->um_udev, s->volume_name,
+		    sizeof(s->volume_name)) != 0) {
+			/* Fall back to device name as mount suffix. */
+			strncpy(s->volume_name, "uba0", sizeof(s->volume_name) - 1);
+		}
+
+		if (mpi_postMessage(AUTOMOUNTD_MBOX, MPI_STORAGE_APPEARED, &msg) != 0)
+			kprintf("ums: automountd not running, device not mounted\n");
+		else
+			kprintf("ums: notified automountd (label=%s)\n", s->volume_name);
 	}
 
 	return (0);
@@ -466,9 +486,29 @@ ums_bot_attach(struct usb_device *dev)
 static int
 ums_bot_detach(struct usb_device *dev)
 {
-	(void)dev;
+	struct ums_softc  *sc;
+	mpi_message_t      msg;
+	mpi_storage_msg_t *s = (mpi_storage_msg_t *)msg.data;
+
+	if (dev == NULL || dev->ud_drv_softc == NULL)
+		return (0);
+
+	sc = (struct ums_softc *)dev->ud_drv_softc;
+
 	kprintf("ums: detached\n");
 	klog(KLOG_INFO, "ums: detached");
+
+	if (sc->um_mountpath[0] != '\0') {
+		memset(&msg, 0, sizeof(msg));
+		s->type = MPI_STORAGE_DEPARTED;
+		strncpy(s->mountpath, sc->um_mountpath, sizeof(s->mountpath) - 1);
+
+		if (mpi_postMessage(AUTOMOUNTD_MBOX, MPI_STORAGE_DEPARTED, &msg) != 0)
+			kprintf("ums: automountd not running, skipping umount notify\n");
+		else
+			kprintf("ums: notified automountd of USB storage departure\n");
+	}
+
 	return (0);
 }
 

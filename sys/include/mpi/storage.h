@@ -28,25 +28,37 @@
  * DAMAGE.
  */
 
-#ifndef _FAT_BPB_H
-#define _FAT_BPB_H
+#ifndef _KERNEL_MPI_STORAGE_H
+#define _KERNEL_MPI_STORAGE_H
 
-#include <fs/fat/fat_internal.h>
+#include <sys/types.h>
 
 /*
- * Read sector 0 via fs->mp->device, verify the BPB boot signature, and
- * populate all geometry fields in *fs.  fs->mp must be set by the caller.
+ * Kernel-side MPI storage event protocol — matches userland include/mpi/storage.h.
  *
- * Returns 0 on success, -1 on I/O error or unrecognised BPB.
+ * USB and IDE drivers post MPI_STORAGE_APPEARED when a device is detected and
+ * MPI_STORAGE_DEPARTED when it is removed.  automountd handles both events.
+ *
+ * Payload must fit in mpi_message_t.data[248].
+ * 4 + 64 + 32 + 16 + 96 = 212 bytes — fits.
  */
-int	fat_bpb_parse(struct fat_fs *fs);
 
-/*
- * Read the FAT volume label from sector 0 of the given block device without
- * doing a full mount.  The label is lowercased, space-stripped, and written
- * into out[0..len-1] with NUL termination.  Returns 0 on success, -1 on I/O
- * error, bad signature, or no label present.
- */
-int	fat_read_vol_label(struct ubx_device *dev, char *out, size_t len);
+#define AUTOMOUNTD_MBOX         "automountd"
 
-#endif /* _FAT_BPB_H */
+#define MPI_STORAGE_APPEARED    0x5100u
+#define MPI_STORAGE_DEPARTED    0x5101u
+
+#define STORAGE_DEV_MAX         64
+#define STORAGE_VOL_MAX         32
+#define STORAGE_FS_MAX          16
+#define STORAGE_MNT_MAX         96
+
+typedef struct {
+	uint32_t type;                        /* MPI_STORAGE_APPEARED / DEPARTED */
+	char     dev_path[STORAGE_DEV_MAX];   /* e.g. "/dev/uba0" */
+	char     volume_name[STORAGE_VOL_MAX];/* FAT volume label, e.g. "UBIX" */
+	char     fstype[STORAGE_FS_MAX];      /* "fat" */
+	char     mountpath[STORAGE_MNT_MAX];  /* filled by automountd on DEPARTED */
+} mpi_storage_msg_t;
+
+#endif /* _KERNEL_MPI_STORAGE_H */
