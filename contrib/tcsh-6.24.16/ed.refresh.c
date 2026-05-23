@@ -274,6 +274,9 @@ Vdraw(Char c, int width)	/* draw char c onto V lines */
 # endif /* SHORT_STRNGS */
 #endif  /* DEBUG_REFRESH */
 
+    /* Bail out if terminal geometry is not yet known. */
+    if (TermH == 0 || Vdisplay == NULL)
+	return;
     /* Hopefully this is what all the terminals do with multi-column characters
        that "span line breaks". */
     while (vcursor_h + width > TermH)
@@ -357,6 +360,9 @@ Refresh(void)
     reprintf("Prompt = :%s:\r\n", short2str(Prompt));
     reprintf("InputBuf = :%s:\r\n", short2str(InputBuf));
 #endif /* DEBUG_REFRESH */
+    /* Display buffers not yet allocated — terminal not yet initialized. */
+    if (Display == NULL || Vdisplay == NULL || TermH == 0)
+	return;
     oldgetting = GettingInput;
     GettingInput = 0;		/* avoid re-entrance via SIGWINCH */
 
@@ -1175,6 +1181,8 @@ RefCursor(void)
     Char *cp;
     int w, h, th, v;
 
+    if (Display == NULL || TermH == 0)
+	return;
     /* first we must find where the cursor is... */
     h = 0;
     v = 0;
@@ -1248,6 +1256,11 @@ RefPlusOne(int l)
     Char *cp, c;
     int w;
 
+    /* Display not yet allocated — terminal not initialized yet. */
+    if (Display == NULL || TermH == 0) {
+	Refresh();
+	return;
+    }
     if (Cursor != LastChar) {
 	Refresh();		/* too hard to handle */
 	return;

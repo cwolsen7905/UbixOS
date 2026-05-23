@@ -94,6 +94,7 @@ void sys_call_posix(struct trapframe *frame)
 		/* Save syscall number in tf_err for SA_RESTART in signal_check. */
 		frame->tf_err = (uint32_t)code;
 
+
 		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
 			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
 

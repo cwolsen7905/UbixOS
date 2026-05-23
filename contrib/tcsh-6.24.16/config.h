@@ -53,9 +53,9 @@
 /* UbixOS target identification */
 #define UBIXOS                  1
 #define TCSH_DBG(s) write(2, "[tcsh] " s "\n", sizeof("[tcsh] " s "\n") - 1)
+#define DEBUG_TTY               1
 
-/* devfs is mounted as devfs:, not under sys:/dev/ */
-#define _PATH_DEVNULL           "devfs:/null"
+#define _PATH_DEVNULL           "/dev/null"
 
 /* Pull in time.h for time() declaration (musl sys/time.h does not imply it) */
 #include <time.h>

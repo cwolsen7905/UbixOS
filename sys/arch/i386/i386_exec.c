@@ -565,9 +565,10 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	// sched_setStatus(newProcess->id, READY);
 
-	uint32_t e_entry  = binaryHeader->e_entry;
-	uint32_t e_phoff  = binaryHeader->e_phoff;
-	uint32_t e_phnum  = binaryHeader->e_phnum;
+	uint32_t e_entry    = binaryHeader->e_entry;
+	uint32_t e_phoff    = binaryHeader->e_phoff;
+	uint32_t e_phnum    = binaryHeader->e_phnum;
+	uint32_t e_phentsize = binaryHeader->e_phentsize;
 
 	kfree(binaryHeader);
 	kfree(programHeader);
@@ -610,6 +611,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	if (ldAddr) {
 		uint32_t *av = &tmp[i + envc + 1];
 		AUXARGS_ENTRY(av, AT_PHDR,   e_phoff + 0x08048000);
+		AUXARGS_ENTRY(av, AT_PHENT,  e_phentsize);
 		AUXARGS_ENTRY(av, AT_PHNUM,  e_phnum);
 		AUXARGS_ENTRY(av, AT_PAGESZ, PAGE_SIZE);
 		AUXARGS_ENTRY(av, AT_BASE,   LD_START);
@@ -988,10 +990,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	// iFrame->ebp = 0x0;
 
-	/* Always start at the binary's own entry point.
-	 * If ld.so was loaded, GOT[1]/GOT[2] will be patched below
-	 * so the PLT resolver trampoline calls _ld on first use. */
-	iFrame->eip = binaryHeader->e_entry;
+	/* For dynamically linked binaries, start at the interpreter entry so the
+	 * dynamic linker initialises relocations before handing off to the app. */
+	iFrame->eip = ldAddr ? (long)ldAddr : (long)binaryHeader->e_entry;
 
 	// iFrame->edx = 0x0;
 

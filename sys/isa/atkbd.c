@@ -367,12 +367,9 @@ void keyboardHandler(struct trapframe *frame)
 		return;
 	}
 
-	/* ISR-context emergency keys: handle and do not forward to ring */
+	/* ISR-context emergency keys: handle and do not forward to ring.
+	 * Ctrl-C/Ctrl-\/Ctrl-Z are now handled by tty_inject via ISIG. */
 	switch (kc) {
-	case 0x03: /* Ctrl-C: post SIGINT to foreground job */
-		signal_post_tty(tty_foreground, 2 /* SIGINT */);
-		spinUnlock(&atkbdSpinLock);
-		return;
 	case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */
 		sys_shutdown(REBOOT);
 		break;

@@ -28,6 +28,7 @@
 
 #include <ubixos/tty.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/signal.h>
 #include <ubixos/spinlock.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -36,6 +37,7 @@
 #include <isa/rs232.h>
 #include <fs/devfs/devfs.h>
 #include <string.h>
+#include <i386/signal.h>
 
 static tty_term *terms = 0x0;
 tty_term *tty_foreground = 0x0;
@@ -76,6 +78,7 @@ int tty_init() {
     terms[i].t_echo     = 1;
     terms[i].t_raw      = 0;
     terms[i].t_type     = TTY_TYPE_VGA;
+    terms[i].t_eof      = 0;
 
     /* Full termios — FreeBSD sane defaults */
     terms[i].t_termios.c_iflag = 0x2B02;
@@ -529,43 +532,112 @@ tty_inject(tty_term *tty, char ch)
 	if (tty == NULL)
 		return;
 
+	/* Phase 6: signal-generating characters (ISIG).  Consumed here; not
+	 * forwarded to the line buffer or the raw ring. */
+	if (tty->t_termios.c_lflag & ISIG) {
+		uint8_t uc = (uint8_t)ch;
+		if (uc == tty->t_termios.c_cc[VINTR]) {
+			signal_post_tty(tty, SIGINT);
+			return;
+		}
+		if (uc == tty->t_termios.c_cc[VQUIT]) {
+			signal_post_tty(tty, SIGQUIT);
+			return;
+		}
+		if (uc == tty->t_termios.c_cc[VSUSP]) {
+			signal_post_tty(tty, SIGTSTP);
+			return;
+		}
+	}
+
 	echo_buf[0] = ch;
 	echo_buf[1] = '\0';
 
-	switch (ch) {
-	case '\b':
-		if (tty->t_raw) {
-			uint32_t f = irq_save_disable();
-			if (tty->stdinSize < 512)
-				tty->stdin[tty->stdinSize++] = '\b';
-			irq_restore(f);
-		} else if (tty->t_linelen > 0) {
-			tty->t_linelen--;
-			if (tty->t_echo) {
-				if (tty->t_type == TTY_TYPE_SERIAL) {
-					rs232_putc('\b');
-					rs232_putc(' ');
-					rs232_putc('\b');
-				} else {
-					backSpace();
+	/* Raw mode: every byte goes straight to the ring. */
+	if (tty->t_raw) {
+		uint32_t f = irq_save_disable();
+		if (tty->stdinSize < 512)
+			tty->stdin[tty->stdinSize++] = (uint8_t)ch;
+		irq_restore(f);
+		return;
+	}
+
+	/* Canonical mode: c_cc[] dispatch (Phase 7). */
+	{
+		uint8_t uc = (uint8_t)ch;
+
+		/* VERASE: erase one character */
+		if (uc == tty->t_termios.c_cc[VERASE]) {
+			if (tty->t_linelen > 0) {
+				tty->t_linelen--;
+				if (tty->t_echo && (tty->t_termios.c_lflag & ECHOE)) {
+					if (tty->t_type == TTY_TYPE_SERIAL) {
+						rs232_putc('\b');
+						rs232_putc(' ');
+						rs232_putc('\b');
+					} else {
+						backSpace();
+					}
 				}
 			}
+			return;
 		}
-		break;
-	case 0x15: /* Ctrl-U: erase line */
-		if (!tty->t_raw)
+
+		/* VKILL: erase entire input line */
+		if (uc == tty->t_termios.c_cc[VKILL]) {
 			tty->t_linelen = 0;
-		break;
-	case '\r':
-		ch = '\n';
-		/* FALLTHROUGH */
-	case '\n':
-		if (tty->t_raw) {
+			if (tty->t_echo && (tty->t_termios.c_lflag & ECHOK)) {
+				if (tty->t_type == TTY_TYPE_SERIAL) {
+					rs232_putc('\r');
+					rs232_putc('\n');
+				} else {
+					tty_print("\n", tty);
+				}
+			}
+			return;
+		}
+
+		/* VWERASE: erase last word (Ctrl-W) */
+		if (uc == tty->t_termios.c_cc[VWERASE]) {
+			/* skip trailing spaces */
+			while (tty->t_linelen > 0 &&
+			    tty->t_linebuf[tty->t_linelen - 1] == ' ')
+				tty->t_linelen--;
+			/* erase non-space characters */
+			while (tty->t_linelen > 0 &&
+			    tty->t_linebuf[tty->t_linelen - 1] != ' ') {
+				tty->t_linelen--;
+				if (tty->t_echo && (tty->t_termios.c_lflag & ECHOE)) {
+					if (tty->t_type == TTY_TYPE_SERIAL) {
+						rs232_putc('\b');
+						rs232_putc(' ');
+						rs232_putc('\b');
+					} else {
+						backSpace();
+					}
+				}
+			}
+			return;
+		}
+
+		/* VEOF: flush partial line without newline (Ctrl-D) */
+		if (uc == tty->t_termios.c_cc[VEOF]) {
 			uint32_t f = irq_save_disable();
-			if (tty->stdinSize < 512)
-				tty->stdin[tty->stdinSize++] = '\n';
+			for (i = 0; i < tty->t_linelen && tty->stdinSize < 512; i++)
+				tty->stdin[tty->stdinSize++] = tty->t_linebuf[i];
 			irq_restore(f);
-		} else {
+			tty->t_linelen = 0;
+			/* stdinSize==0 here means empty line → reader gets 0 bytes (EOF) */
+			tty->t_eof = 1;
+			return;
+		}
+
+		/* CR → NL (always; Phase 8 will gate this on ICRNL) */
+		if (ch == '\r')
+			ch = '\n';
+
+		/* End of line: flush line buffer to stdin ring */
+		if (ch == '\n') {
 			uint32_t f = irq_save_disable();
 			for (i = 0; i < tty->t_linelen && tty->stdinSize < 512; i++)
 				tty->stdin[tty->stdinSize++] = tty->t_linebuf[i];
@@ -581,29 +653,24 @@ tty_inject(tty_term *tty, char ch)
 					tty_print("\n", tty);
 				}
 			}
+			return;
 		}
-		break;
-	default:
-		if ((unsigned char)ch < 0x20)
-			break;
-		if (tty->t_raw) {
-			uint32_t f = irq_save_disable();
-			if (tty->stdinSize < 512)
-				tty->stdin[tty->stdinSize++] = ch;
-			irq_restore(f);
-		} else {
-			if (tty->t_linelen < 511) {
-				tty->t_linebuf[tty->t_linelen++] = ch;
-				if (tty->t_echo) {
-					if (tty->t_type == TTY_TYPE_SERIAL) {
-						rs232_putc(ch);
-					} else {
-						tty_print(echo_buf, tty);
-					}
+
+		/* Discard unhandled control characters */
+		if (uc < 0x20)
+			return;
+
+		/* Regular character: append to line buffer and echo */
+		if (tty->t_linelen < 511) {
+			tty->t_linebuf[tty->t_linelen++] = ch;
+			if (tty->t_echo) {
+				if (tty->t_type == TTY_TYPE_SERIAL) {
+					rs232_putc(ch);
+				} else {
+					tty_print(echo_buf, tty);
 				}
 			}
 		}
-		break;
 	}
 }
 

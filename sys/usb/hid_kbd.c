@@ -221,12 +221,7 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 				continue;
 			}
 
-			/* Ctrl-C: post SIGINT to foreground job — mirrors AT keyboard ISR */
-			if (kc == 0x03) {
-				signal_post_tty(tty_foreground, 2 /* SIGINT */);
-				continue; /* do not push to ring */
-			}
-
+			/* Ctrl-C/Ctrl-\/Ctrl-Z: handled by tty_inject via ISIG */
 			kbd_ring_push(kc, 1);
 		}
 	}

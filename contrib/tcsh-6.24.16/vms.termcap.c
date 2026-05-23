@@ -51,23 +51,75 @@ int
 tgetent(char *bp, char *name)
 {
 #if defined(__ANDROID__) || defined(UBIXOS)
-	/* Use static termcap entry — no termcap file on this platform. */
+	/*
+	 * Try /etc/termcap first so users can install proper entries.
+	 * Fall back to a built-in vt100/linux entry when the file is absent.
+	 */
+	{
+		FILE *fp = fopen("/etc/termcap", "r");
+		if (fp != NULL) {
+			/* Read the whole file and search for the terminal name. */
+			char line[1024];
+			size_t len = name ? strlen(name) : 0;
+			int found = 0;
+			bp[0] = '\0';
+			while (fgets(line, sizeof(line), fp)) {
+				/* Skip comments and blank lines. */
+				if (line[0] == '#' || line[0] == '\n')
+					continue;
+				/* Match "name|..." at start of line. */
+				if (len > 0 && strncmp(line, name, len) == 0 &&
+				    (line[len] == '|' || line[len] == ':' ||
+				     line[len] == '\n' || line[len] == '\\')) {
+					/* Concatenate continuation lines. */
+					size_t pos = 0;
+					do {
+						size_t ll = strlen(line);
+						/* strip trailing newline / backslash */
+						while (ll > 0 && (line[ll-1] == '\n' || line[ll-1] == '\\'))
+							ll--;
+						if (pos + ll >= 1023) ll = 1023 - pos;
+						strncpy(bp + pos, line, ll);
+						pos += ll;
+						bp[pos] = '\0';
+						/* continuation? peek at next line */
+						{
+							int c = fgetc(fp);
+							if (c == EOF) break;
+							ungetc(c, fp);
+							if (c != ' ' && c != '\t') break;
+						}
+					} while (fgets(line, sizeof(line), fp));
+					found = 1;
+					break;
+				}
+			}
+			fclose(fp);
+			if (found && bp[0] != '\0') {
+				capab = bp;
+				return 1;
+			}
+			/* name not found in file */
+			capab = bp;
+			bp[0] = '\0';
+			return 0;
+		}
+	}
+	/* No /etc/termcap — use built-in vt100-compatible entry. */
 	capab = bp;
 	strcpy(bp,
-	"linux|linux console:"
-        ":am:eo:mi:ms:xn:xo:"
-        ":it#8:"
-        ":AL=\\E[%dL:DC=\\E[%dP:DL=\\E[%dM:IC=\\E[%d@:K2=\\E[G:al=\\E[L:"
-        ":bl=^G:cd=\\E[J:ce=\\E[K:cl=\\E[H\\E[J:cm=\\E[%i%d;%dH:cr=^M:"
-        ":cs=\\E[%i%d;%dr:ct=\\E[3g:dc=\\E[P:dl=\\E[M:do=^J:ec=\\E[%dX:"
-        ":ei=\\E[4l:ho=\\E[H:ic=\\E[@:im=\\E[4h:k1=\\E[[A:k2=\\E[[B:"
-        ":k3=\\E[[C:k4=\\E[[D:k5=\\E[[E:k6=\\E[17~:k7=\\E[18~:k8=\\E[19~:"
-        ":k9=\\E[20~:kD=\\E[3~:kI=\\E[2~:kN=\\E[6~:kP=\\E[5~:kb=\\177:"
-        ":kd=\\E[B:kh=\\E[1~:kl=\\E[D:kr=\\E[C:ku=\\E[A:le=^H:mb=\\E[5m:"
-        ":md=\\E[1m:me=\\E[0m:mh=\\E[2m:mr=\\E[7m:nd=\\E[C:nw=^M^J:"
-        ":rc=\\E8:sc=\\E7:se=\\E[27m:sf=^J:so=\\E[7m:sr=\\EM:st=\\EH:ta=^I:"
-        ":ue=\\E[24m:up=\\E[A:us=\\E[4m:vb=200\\E[?5h\\E[?5l:"
-        ":ve=\\E[?25h\\E[?0c:vi=\\E[?25l\\E[?1c:vs=\\E[?25h\\E[?0c:"
+	"vt100|VT100 compatible terminal:"
+	":am:xn:"
+	":co#80:li#24:"
+	":cl=\\E[H\\E[J:cm=\\E[%i%d;%dH:cr=^M:"
+	":do=^J:ho=\\E[H:le=^H:nd=\\E[C:up=\\E[A:"
+	":ce=\\E[K:cd=\\E[J:sf=^J:sr=\\EM:"
+	":so=\\E[7m:se=\\E[m:us=\\E[4m:ue=\\E[m:"
+	":mb=\\E[5m:md=\\E[1m:mr=\\E[7m:me=\\E[m:"
+	":k1=\\EOP:k2=\\EOQ:k3=\\EOR:k4=\\EOS:"
+	":ku=\\E[A:kd=\\E[B:kr=\\E[C:kl=\\E[D:kb=^H:"
+	":al=\\E[L:dl=\\E[M:ic=\\E[@:dc=\\E[P:"
+	":sc=\\E7:rc=\\E8:"
 	);
 	return(1);
 #else

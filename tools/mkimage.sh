@@ -198,6 +198,11 @@ if [ -n "$_doom_wad" ]; then
 else
     echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
 fi
+echo "==> Creating /home (user home directory root)"
+mmd -i "$IMG"@@1M ::/home 2>/dev/null || true
+
+echo "==> Creating /home/root (root user home directory)"
+mmd -i "$IMG"@@1M ::/home/root 2>/dev/null || true
 
 echo "==> Creating /mnt (automountd mount point root)"
 mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true

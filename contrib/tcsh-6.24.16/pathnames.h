@@ -133,7 +133,7 @@
 
 #ifdef UBIXOS
 # undef  _PATH_DEVNULL
-# define _PATH_DEVNULL		"devfs:/null"
+# define _PATH_DEVNULL		"/dev/null"
 #else
 # ifndef _PATH_DEVNULL
 #  define _PATH_DEVNULL		"/dev/null"

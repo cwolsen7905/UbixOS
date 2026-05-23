@@ -90,6 +90,28 @@ struct winsize {
 #define TIOCGWINSZ      _IOR('t', 104, struct winsize) /* get window size */
 #define TIOCSWINSZ      _IOW('t', 103, struct winsize) /* set window size */
 
+/* c_cc indices — FreeBSD order, must match contrib/musl/arch/i386/bits/termios.h */
+#define VEOF      0
+#define VEOL      1
+#define VEOL2     2
+#define VERASE    3
+#define VWERASE   4
+#define VKILL     5
+#define VREPRINT  6
+/* 7: spare */
+#define VINTR     8
+#define VQUIT     9
+#define VSUSP    10
+#define VDSUSP   11
+#define VSTART   12
+#define VSTOP    13
+#define VLNEXT   14
+#define VDISCARD 15
+#define VMIN     16
+#define VTIME    17
+#define VSTATUS  18
+/* 19: spare */
+
 /* c_lflag bits */
 #define ECHOKE          0x00000001
 #define ECHOE           0x00000002

@@ -275,6 +275,11 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 					break;
 }
 			}
+			else if (t->t_eof)
+			{
+				t->t_eof = 0;
+				break; /* return x bytes (0 if line was empty = EOF) */
+			}
 			else
 			{
 				sched_yield();
@@ -312,6 +317,11 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				if (c == '\n' || x >= (int)args->nbyte) {
 					break;
 }
+			}
+			else if (_current->term->t_eof)
+			{
+				_current->term->t_eof = 0;
+				break; /* return x bytes (0 if line was empty = EOF) */
 			}
 			else
 			{
@@ -371,6 +381,11 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				if (c == '\n' || x >= (int)args->nbyte) {
 					break;
 }
+			}
+			else if (tty_foreground != NULL && tty_foreground->t_eof)
+			{
+				tty_foreground->t_eof = 0;
+				break; /* return x bytes (0 if line was empty = EOF) */
 			}
 			else
 			{

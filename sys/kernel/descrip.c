@@ -452,6 +452,10 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 				} else if (f && f->fd_type == 1) {
 					/* Regular file: always ready */
 					FD_SET(i, args->in);
+				} else if (f && (f->fd_type == FD_TYPE_TTY ||
+				    f->fd_type == FD_TYPE_TTYV)) {
+					/* /dev/tty and /dev/ttyN: treat as terminal stdin */
+					has_stdin_rd = 1;
 				}
 			}
 		}

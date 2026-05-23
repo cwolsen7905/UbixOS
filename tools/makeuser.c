@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	sprintf(password[0].passwd, "user");
 	sprintf(password[0].shell, "/bin/shell");
 	sprintf(password[0].realname, "Root User");
-	sprintf(password[0].path, "root");
+	sprintf(password[0].path, "/home/root");
 	password[0].uid = 0;
 	password[0].gid = 0;
 

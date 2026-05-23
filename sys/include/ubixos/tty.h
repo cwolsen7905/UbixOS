@@ -57,6 +57,7 @@ typedef struct tty_termNode {
     uint8_t t_echo;      /* 1 = echo input to terminal (default) */
     uint8_t t_raw;       /* 1 = raw mode: bypass line discipline */
     uint8_t t_type;      /* TTY_TYPE_VGA or TTY_TYPE_SERIAL */
+    uint8_t t_eof;       /* 1 = VEOF delivered; next read with stdinSize==0 returns 0 */
     struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
     struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
     pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */
