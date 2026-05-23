@@ -42,7 +42,8 @@ int pidStatus(int pid);
 
 static char reply_mbox[REPLY_MBOX_MAX];
 
-static char *argv_shell[2] = { "shell", NULL };
+static char  argv0_buf[64];
+static char *argv_shell[2] = { argv0_buf, NULL };
 static char  envp_buf[11][128];
 static char *envp_shell[12];
 
@@ -196,8 +197,16 @@ getUsername:
 
 		chdir(resp.home[0] ? resp.home : "/");
 		fflush(stdout);
-		execve(resp.shell[0] ? resp.shell : "/bin/shell",
-		    argv_shell, envp_shell);
+
+		/* argv[0] = "-basename" so shell sees itself as a login shell. */
+		const char *shell_path = resp.shell[0] ? resp.shell : "/bin/shell";
+		const char *base = strrchr(shell_path, '/');
+		base = base ? base + 1 : shell_path;
+		argv0_buf[0] = '-';
+		strncpy(argv0_buf + 1, base, sizeof(argv0_buf) - 2);
+		argv0_buf[sizeof(argv0_buf) - 1] = '\0';
+
+		execve(shell_path, argv_shell, envp_shell);
 		printf("login: failed to exec shell\n");
 		exit(-1);
 	}

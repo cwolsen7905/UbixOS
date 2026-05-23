@@ -198,11 +198,35 @@ if [ -n "$_doom_wad" ]; then
 else
     echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
 fi
-echo "==> Creating /home (user home directory root)"
-mmd -i "$IMG"@@1M ::/home 2>/dev/null || true
+# Parse tools/userdb (binary struct array) to get username + home path per user.
+# struct userdb_entry: char[32] user, char[32] pass, int uid, int gid,
+#                      char[128] shell, char[256] realname, char[256] path
+# Total = 712 bytes per entry.
+USERDB_ENTRIES=$(python3 - tools/userdb <<'PYEOF'
+import sys, struct
+ENTRY = struct.Struct('<32s 32s i i 128s 256s 256s')
+with open(sys.argv[1], 'rb') as f:
+    data = f.read()
+for i in range(len(data) // ENTRY.size):
+    rec = ENTRY.unpack_from(data, i * ENTRY.size)
+    user = rec[0].split(b'\x00', 1)[0].decode()
+    home = rec[6].split(b'\x00', 1)[0].decode()
+    if user:
+        print(f"{user}:{home}")
+PYEOF
+)
 
-echo "==> Creating /home/root (root user home directory)"
-mmd -i "$IMG"@@1M ::/home/root 2>/dev/null || true
+echo "==> Creating /home (user home directories from userdb)"
+mmd -i "$IMG"@@1M ::/home 2>/dev/null || true
+for entry in $USERDB_ENTRIES; do
+    _user="${entry%%:*}"; _home="${entry#*:}"
+    echo "    /home/$_user ($entry)"
+    mmd -i "$IMG"@@1M "::$_home" 2>/dev/null || true
+    for _f in tools/skel/.*; do
+        case "$_f" in */.|*/..) continue;; esac
+        [ -f "$_f" ] && mcopy -o -i "$IMG"@@1M "$_f" "::$_home/"
+    done
+done
 
 echo "==> Creating /mnt (automountd mount point root)"
 mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true
