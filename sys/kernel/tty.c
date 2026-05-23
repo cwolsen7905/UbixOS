@@ -79,6 +79,7 @@ int tty_init() {
     terms[i].t_raw      = 0;
     terms[i].t_type     = TTY_TYPE_VGA;
     terms[i].t_eof      = 0;
+    terms[i].t_stopped  = 0;
 
     /* Full termios — FreeBSD sane defaults */
     terms[i].t_termios.c_iflag = 0x2B02;
@@ -375,6 +376,11 @@ tty_csi_execute(tty_term *term, unsigned int bufferOffset, char cmd)
 
 int tty_print(char *string, tty_term *term) {
   unsigned int bufferOffset = 0x0, character = 0x0;
+
+  /* IXON: output suspended by Ctrl-S */
+  if (term->t_stopped)
+    return (0);
+
   spinLock(&tty_spinLock);
 
   /* Reconstruct byte offset from the split tty_y:tty_x linear cursor. */
@@ -465,7 +471,13 @@ int tty_print(char *string, tty_term *term) {
       bufferOffset = (bufferOffset / 160u) * 160u;
       break;
     case '\n':
-      bufferOffset = (bufferOffset / 160u) * 160u + 160u;
+      /* Phase 9: OPOST+ONLCR → col 0 of next row; OPOST only → same col, next row */
+      if (term->t_termios.c_oflag & OPOST) {
+        if (term->t_termios.c_oflag & ONLCR)
+          bufferOffset = (bufferOffset / 160u) * 160u + 160u; /* CR+LF */
+        else
+          bufferOffset += 160u; /* LF only — stay in same column */
+      }
       break;
     case '\b': /* move cursor left without erasing */
       if (bufferOffset >= 2u)
@@ -531,6 +543,19 @@ tty_inject(tty_term *tty, char ch)
 
 	if (tty == NULL)
 		return;
+
+	/* Phase 8 IXON: Ctrl-S / Ctrl-Q flow control — consume before anything else. */
+	if (tty->t_termios.c_iflag & IXON) {
+		uint8_t uc8 = (uint8_t)ch;
+		if (uc8 == tty->t_termios.c_cc[VSTOP]) {
+			tty->t_stopped = 1;
+			return;
+		}
+		if (uc8 == tty->t_termios.c_cc[VSTART]) {
+			tty->t_stopped = 0;
+			return;
+		}
+	}
 
 	/* Phase 6: signal-generating characters (ISIG).  Consumed here; not
 	 * forwarded to the line buffer or the raw ring. */
@@ -632,9 +657,12 @@ tty_inject(tty_term *tty, char ch)
 			return;
 		}
 
-		/* CR → NL (always; Phase 8 will gate this on ICRNL) */
-		if (ch == '\r')
-			ch = '\n';
+		/* CR → NL (Phase 8: gated on ICRNL) */
+		if (ch == '\r') {
+			if (tty->t_termios.c_iflag & ICRNL)
+				ch = '\n';
+			/* ICRNL off: CR falls through as 0x0D, discarded below */
+		}
 
 		/* End of line: flush line buffer to stdin ring */
 		if (ch == '\n') {

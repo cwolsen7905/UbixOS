@@ -49,7 +49,7 @@ the wrong terminal.  Fix: prefer `ct_tty` over `term` in the write path.
 
 ---
 
-### Phase 5 — TIOCSWINSZ → SIGWINCH
+### Phase 5 — TIOCSWINSZ → SIGWINCH ✅ DONE
 
 `TIOCSWINSZ` stores the new size in `t_winsize` but never notifies the
 foreground process.  Shells and editors rely on SIGWINCH to redraw.
@@ -108,7 +108,7 @@ no effect.
 
 ---
 
-### Phase 8 — Input flag enforcement (ICRNL, IXON)
+### Phase 8 — Input flag enforcement (ICRNL, IXON) ✅ DONE
 
 `t_termios.c_iflag` is stored correctly but never consulted.  The most
 important flags:
@@ -130,7 +130,7 @@ Currently ICRNL is hardcoded always-on.  IXON is never enforced.
 
 ---
 
-### Phase 9 — Output flag enforcement (OPOST/ONLCR)
+### Phase 9 — Output flag enforcement (OPOST/ONLCR) ✅ DONE
 
 `tty_print` hardcodes CR/LF/backspace/tab handling without checking `c_oflag`.
 
@@ -199,11 +199,11 @@ This depends on Phase 6 (pgrp delivery working) and Phase 5 (correct pgrp).
 
 ✅ Phase 4   (fd-type cleanup, ct_tty vs term in write path)
 
-Phase 5     (TIOCSWINSZ → SIGWINCH)           independent
+✅ Phase 5   (TIOCSWINSZ → SIGWINCH)           independent
 ✅ Phase 6   (ISIG in ldisc, SIGQUIT+SIGTSTP)  independent; unlocks Phase 12
 ✅ Phase 7   (c_cc[] dispatch, WERASE, KILL echo, EOF)  depends on Phase 6 layout
-Phase 8     (input flags: ICRNL gate, IXON)   independent
-Phase 9     (output flags: OPOST/ONLCR gate)  independent
+✅ Phase 8   (input flags: ICRNL gate, IXON)   independent
+✅ Phase 9   (output flags: OPOST/ONLCR gate)  independent
 Phase 10    (TIOCSETAF flush, TIOCDRAIN)       depends on Phase 7 (input flush)
 Phase 11    (stub ioctls)                      independent
 Phase 12    (SIGTTOU/SIGTTIN)                  depends on Phase 6

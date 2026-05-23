@@ -39,6 +39,8 @@
 #include <lib/kmalloc.h>
 #include <ubixos/sched.h>
 #include <ubixos/tty.h>
+#include <ubixos/signal.h>
+#include <i386/signal.h>
 #include <ubixos/vitals.h>
 #include <isa/pit.h>
 #include <isa/rs232.h>
@@ -344,6 +346,7 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		if (on_tty) {
 			struct winsize *win = (struct winsize *)args->data;
 			term->t_winsize = *win;
+			signal_post_tty(term, SIGWINCH);
 			td->td_retval[0] = 0;
 		} else {
 			td->td_retval[0] = -1;
