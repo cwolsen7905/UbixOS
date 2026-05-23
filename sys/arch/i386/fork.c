@@ -83,9 +83,6 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
           ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
           memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, ((struct file *)td->o_files[i])->fd->buffer, 4096);
         }
-      } else {
-        /* Raw TTY placeholder fd (fd->fd == NULL): ensure fd_type is tagged. */
-        ((struct file *)newProcess->td.o_files[i])->fd_type = FD_TYPE_TTY;
       }
     }
 

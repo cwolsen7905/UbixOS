@@ -184,7 +184,9 @@ public:
 			int  len = 0;
 			char ch;
 			for (;;) {
-				if (::read(pfd[0], &ch, 1) <= 0)
+				int r;
+				do { r = ::read(pfd[0], &ch, 1); } while (r < 0);
+				if (r == 0)
 					::_exit(0);
 				if (ch != '\0') {
 					if (len < (int)sizeof(path) - 1)
