@@ -1,5 +1,32 @@
 # UbixOS Scheduler Improvement Plan
 
+## Status
+
+| # | Task | Phase | Status |
+|---|------|-------|--------|
+| 1.1 | Fix O(n²) dead-task cleanup — inline splice | 1 | ⬜ Not started |
+| 1.2 | Remove `FORK` state — insert as `READY` | 1 | ⬜ Not started |
+| 1.3 | Fix wrap-around double-scan | 1 | ⬜ Not started |
+| 1.4 | Wire up `need_resched` + quantum decrement | 1 | ⬜ Not started |
+| 1.5 | Hash table for `schedFindTask` | 1 | ⬜ Not started |
+| 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ⬜ Not started |
+| 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ⬜ Not started |
+| 2.3 | Priority bands (32 levels, 4 bands) | 2 | ⬜ Not started |
+| 2.4 | Per-band time quanta + preemption | 2 | ⬜ Not started |
+| 2.5 | Add `priority`, `base_priority`, `quantum`, `rq_next/prev` to `kTask_t` | 2 | ⬜ Not started |
+| 3.1 | QoS classes as `base_priority` floor | 3 | ⬜ Not started |
+| 3.2 | Temporary priority boosts (I/O wakeup, interactive, CPU-bound decay) | 3 | ⬜ Not started |
+| 3.3 | Priority inheritance for mutexes | 3 | ⬜ Not started |
+| 3.4 | Starvation aging (background timer, +1 per 50 ms) | 3 | ⬜ Not started |
+| 4.1 | Split `kTask_t` → `kProc_t` + `kThread_t` | 4 | ⬜ Not started |
+| 4.2 | `clone()` / `rfork()` syscall | 4 | ⬜ Not started |
+| 4.3 | Thread-local storage via GS register | 4 | ⬜ Not started |
+| 4.4 | libc pthreads wired to `clone()` + futex | 4 | ⬜ Not started |
+
+**Legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked
+
+---
+
 ## Overview
 
 The current scheduler is a simple round-robin over a flat doubly-linked task list.
