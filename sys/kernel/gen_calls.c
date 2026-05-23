@@ -46,6 +46,8 @@
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
 #include <vmm/vmm.h>
+#include <vmm/mmap.h>
+#include <vmm/paging.h>
 
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args)
@@ -121,8 +123,9 @@ int read(struct thread *td, struct read_args *uap)
 
 	error = getfd(td, &fd, uap->fd);
 
-	if (error)
+	if (error) {
 		return (error);
+}
 
 	count = fread(uap->buf, uap->nbyte, 0x1, fd->fd);
 	kprintf("count: %i\n", count);
@@ -150,13 +153,26 @@ int access(struct thread *td, struct access_args *uap)
 
 int mprotect(struct thread *td, struct mprotect_args *uap)
 {
-	int error = 0x0;
-	return (error);
+	uint32_t base = (uint32_t)uap->addr & ~0xFFFU;
+	uint32_t end = base + round_page(uap->len);
+	uint16_t flags = PAGE_PRESENT | PAGE_USER;
+
+	if (uap->prot & PROT_WRITE) {
+		flags |= PAGE_WRITE;
+}
+
+	for (uint32_t va = base; va < end; va += PAGE_SIZE) {
+		vmm_setPageAttributes(va, flags);
+}
+
+	td->td_retval[0] = 0;
+	return (0);
 }
 
 int sys_kill(struct thread *td, struct sys_kill_args *uap)
 {
-	if (uap->signum == 0) {
+	if (uap->signum == 0)
+	{
 		/* Signal 0: existence check only. */
 		kTask_t *target = schedFindTask(uap->pid);
 		td->td_retval[0] = (target != NULL) ? 0 : -1;
@@ -178,7 +194,7 @@ int sys_tkill(struct thread *td, struct sys_tkill_args *uap)
 {
 	struct sys_kill_args kargs;
 
-	kargs.pid    = uap->tid;
+	kargs.pid = uap->tid;
 	kargs.signum = uap->signum;
 	return (sys_kill(td, &kargs));
 }
@@ -202,9 +218,9 @@ int sys_clock_gettime(struct thread *td, struct sys_clock_gettime_args *uap)
 	 * Write the four 32-bit words in order: sec_lo, sec_hi, nsec, pad.
 	 */
 	int32_t *p = (int32_t *)uap->tp;
-	p[0] = (int32_t)tv.tv_sec;          /* tv_sec low  32 bits */
+	p[0] = (int32_t)tv.tv_sec;           /* tv_sec low  32 bits */
 	p[1] = 0;                            /* tv_sec high 32 bits */
-	p[2] = (int32_t)(tv.tv_usec * 1000);/* tv_nsec              */
+	p[2] = (int32_t)(tv.tv_usec * 1000); /* tv_nsec              */
 	p[3] = 0;                            /* padding              */
 
 	td->td_retval[0] = 0;
@@ -232,7 +248,7 @@ int sys_futex(struct thread *td, struct sys_futex_args *uap)
  */
 int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 {
-	struct gdtDescriptor *tlsDesc = 0x0;
+	struct gdtDescriptor *tls_desc = 0x0;
 
 	/* uap->u_info IS the TLS base pointer (pthread struct address). */
 	uint32_t base_addr = (uint32_t)uap->u_info;
@@ -244,15 +260,15 @@ int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 	}
 
 	/* Write LDT[1] — second entry in the per-process LDT page */
-	tlsDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
+	tls_desc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 
-	tlsDesc->limitLow = 0xFFFF;
-	tlsDesc->limitHigh = 0xF;
-	tlsDesc->baseLow = (base_addr & 0xFFFF);
-	tlsDesc->baseMed = ((base_addr >> 16) & 0xFF);
-	tlsDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-	tlsDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-	tlsDesc->baseHigh = (base_addr >> 24);
+	tls_desc->limitLow = 0xFFFF;
+	tls_desc->limitHigh = 0xF;
+	tls_desc->baseLow = (base_addr & 0xFFFF);
+	tls_desc->baseMed = ((base_addr >> 16) & 0xFF);
+	tls_desc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+	tls_desc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+	tls_desc->baseHigh = (base_addr >> 24);
 
 	/* Reload the LDT register so the updated LDT[1] descriptor is live. */
 	asm volatile("pushl %eax\n\t"
@@ -285,8 +301,9 @@ int sys_writev(struct thread *td, struct sys_writev_args *uap)
 	{
 		wa.buf = uap->iov[i].iov_base;
 		wa.nbyte = uap->iov[i].iov_len;
-		if (wa.nbyte == 0)
+		if (wa.nbyte == 0) {
 			continue;
+}
 		sys_write(td, &wa);
 		if (td->td_retval[0] < 0)
 		{
@@ -310,8 +327,9 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 	{
 		ra.buf = uap->iov[i].iov_base;
 		ra.nbyte = uap->iov[i].iov_len;
-		if (ra.nbyte == 0)
+		if (ra.nbyte == 0) {
 			continue;
+}
 		sys_read(td, &ra);
 		if (td->td_retval[0] < 0)
 		{
@@ -319,8 +337,9 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 			return (-1);
 		}
 		total += td->td_retval[0];
-		if ((size_t)td->td_retval[0] < ra.nbyte)
+		if ((size_t)td->td_retval[0] < ra.nbyte) {
 			break;
+}
 	}
 	td->td_retval[0] = total;
 	return (0);
@@ -344,10 +363,11 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
 {
 	kTask_t *task = schedFindTask(args->pid);
 
-	if (task != NULL && task->state != DEAD)
+	if (task != NULL && task->state != DEAD) {
 		td->td_retval[0] = 1;
-	else
+	} else {
 		td->td_retval[0] = 0;
+}
 	return (0);
 }
 
@@ -376,7 +396,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	}
 	else
 	{
-		kTask_t *tmpTask = NULL;
+		kTask_t *tmp_task = NULL;
 		int retries;
 
 		/*
@@ -385,19 +405,20 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 		 */
 		for (retries = 0; retries < 100; retries++)
 		{
-			tmpTask = schedFindTask(args->pid);
-			if (tmpTask != NULL)
+			tmp_task = schedFindTask(args->pid);
+			if (tmp_task != NULL) {
 				break;
+}
 			sched_yield();
 		}
 
-		if (tmpTask != NULL)
+		if (tmp_task != NULL)
 		{
 			sched_setStatus(_current->id, WAIT);
-			while (tmpTask != NULL)
+			while (tmp_task != NULL)
 			{
 				sched_yield();
-				tmpTask = schedFindTask(args->pid);
+				tmp_task = schedFindTask(args->pid);
 			}
 			td->td_retval[0] = args->pid;
 		}
@@ -425,17 +446,17 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
 		kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
 		base_addr = (uint32_t)segbase[0];
 
-		struct gdtDescriptor *tmpDesc = 0x0;
+		struct gdtDescriptor *tmp_desc = 0x0;
 
-		tmpDesc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor)); // taskLDT[1];
+		tmp_desc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor)); // taskLDT[1];
 
-		tmpDesc->limitLow = 0xFFFF; //(0xFFFFF & 0xFFFF);
-		tmpDesc->limitHigh = 0xF;   //(0xFFFFF >> 16);
-		tmpDesc->baseLow = (base_addr & 0xFFFF);
-		tmpDesc->baseMed = ((base_addr >> 16) & 0xFF);
-		tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-		tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-		tmpDesc->baseHigh = base_addr >> 24;
+		tmp_desc->limitLow = 0xFFFF; //(0xFFFFF & 0xFFFF);
+		tmp_desc->limitHigh = 0xF;   //(0xFFFFF >> 16);
+		tmp_desc->baseLow = (base_addr & 0xFFFF);
+		tmp_desc->baseMed = ((base_addr >> 16) & 0xFF);
+		tmp_desc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+		tmp_desc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+		tmp_desc->baseHigh = base_addr >> 24;
 
 		asm("push %eax\n"
 		    "mov $0x18,%ax\n"
@@ -485,12 +506,14 @@ int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args)
 
 int sys_getpgid(struct thread *td, struct sys_getpgid_args *args)
 {
-	if (args->pid == 0 || args->pid == _current->id) {
+	if (args->pid == 0 || args->pid == _current->id)
+	{
 		td->td_retval[0] = _current->pgrp;
 		return (0);
 	}
 	kTask_t *t = schedFindTask(args->pid);
-	if (t == NULL) {
+	if (t == NULL)
+	{
 		td->td_retval[0] = ESRCH;
 		return (ESRCH);
 	}
@@ -503,17 +526,17 @@ int sys_setpgid(struct thread *td, struct sys_setpgid_args *args)
 	kTask_t *t;
 
 	/* Target is the calling process itself. */
-	if (args->pid == 0 || args->pid == _current->id) {
-		_current->pgrp = (args->pgid == 0)
-		    ? (uint32_t)_current->id
-		    : (uint32_t)args->pgid;
+	if (args->pid == 0 || args->pid == _current->id)
+	{
+		_current->pgrp = (args->pgid == 0) ? (uint32_t)_current->id : (uint32_t)args->pgid;
 		td->td_retval[0] = 0;
 		return (0);
 	}
 
 	/* Target is another process — must be a direct child of the caller. */
 	t = schedFindTask((uint32_t)args->pid);
-	if (t == NULL || t->parent != _current) {
+	if (t == NULL || t->parent != _current)
+	{
 		td->td_retval[0] = -1;
 		return (0);
 	}
@@ -534,8 +557,9 @@ int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args)
 	int error = 0;
 	size_t len = args->namelen;
 
-	if (len > sizeof(_current->username))
+	if (len > sizeof(_current->username)) {
 		len = sizeof(_current->username);
+}
 
 	memcpy(args->namebuf, _current->username, len);
 
@@ -706,7 +730,7 @@ int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args)
  * Fills a userland struct utsname from the version macros in version.h.
  * The layout must match include/sys/utsname.h (_SYS_NAMELEN = 256).
  */
-struct _kern_utsname
+struct kern_utsname
 {
 	char sysname[65];
 	char nodename[65];
@@ -718,7 +742,7 @@ struct _kern_utsname
 
 int sys_uname(struct thread *td, struct sys_uname_args *args)
 {
-	struct _kern_utsname *uts = (struct _kern_utsname *)args->buf;
+	struct kern_utsname *uts = (struct kern_utsname *)args->buf;
 
 	if (uts == 0x0)
 	{
@@ -747,8 +771,8 @@ int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap)
 /* setsid(2) — FreeBSD 147. Become session leader; new session has no ctty. */
 int sys_setsid(struct thread *td, struct sys_setsid_args *args)
 {
-	_current->pgrp   = (uint32_t)_current->id;
-	_current->sid    = (uint32_t)_current->id;
+	_current->pgrp = (uint32_t)_current->id;
+	_current->sid = (uint32_t)_current->id;
 	_current->ct_tty = NULL;
 	td->td_retval[0] = (int)_current->id;
 	return (0);
@@ -757,7 +781,8 @@ int sys_setsid(struct thread *td, struct sys_setsid_args *args)
 /* getrusage(2) — FreeBSD 117. Return zeroed rusage; timing not tracked. */
 int sys_getrusage(struct thread *td, struct sys_getrusage_args *args)
 {
-	if (args->rusage == NULL) {
+	if (args->rusage == NULL)
+	{
 		td->td_retval[0] = -1;
 		return (EFAULT);
 	}
