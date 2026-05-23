@@ -4,8 +4,7 @@
 t
 t.c
 *.o
-*.d
-!etc/init.d/
+**/*.d
 *.so
 .depen*
 *.img
