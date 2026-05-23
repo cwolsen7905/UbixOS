@@ -293,6 +293,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	uint32_t seg_data_addr   = 0x0;
 	uint32_t seg_data_npages = 0x0;
+	uint32_t ldAddr          = 0x0;
+	char    *interp          = 0x0;
 
 	Elf_Ehdr *binaryHeader = 0x0;
 
@@ -434,14 +436,14 @@ void execFile(char *file, char **argv, char **envp, int console)
 	/* Loop Through The Header And Load Sections Which Need To Be Loaded */
 	for (i = 0; i < binaryHeader->e_phnum; i++)
 	{
-		if (programHeader[i].p_type == 1)
+		if (programHeader[i].p_type == PT_LOAD)
 		{
 			/*
 			 Allocate Memory Im Going To Have To Make This Load
 			 Memory With Correct Settings so it helps us in the
 			 future
 			 */
-			for (x = 0x0; x < (programHeader[i].p_memsz);
+			for (x = 0x0; x < (int)programHeader[i].p_memsz;
 			     x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
@@ -469,7 +471,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 			if ((programHeader[i].p_flags & 0x2) != 0x2)
 			{
-				for (x = 0x0; x < (programHeader[i].p_memsz);
+				for (x = 0x0; x < (int)programHeader[i].p_memsz;
 				     x += 0x1000)
 				{
 					if ((vmm_setPageAttributes(
@@ -493,6 +495,17 @@ void execFile(char *file, char **argv, char **envp, int console)
 				                   (programHeader[i].p_vaddr & 0xFFF) +
 				                   PAGE_SIZE - 1) >> PAGE_SHIFT;
 			}
+		}
+		else if (programHeader[i].p_type == PT_INTERP)
+		{
+			interp = (char *)kmalloc(programHeader[i].p_filesz);
+			if (interp == 0x0)
+				K_PANIC("execFile: kmalloc interp");
+			kern_fseek(newProcess->files[0], programHeader[i].p_offset, 0);
+			fread(interp, programHeader[i].p_filesz, 1, newProcess->files[0]);
+			ldAddr = ldEnable(interp);
+			kfree(interp);
+			interp = 0x0;
 		}
 	}
 
@@ -531,7 +544,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->md.md_tss.ss1 = 0x0;
 	newProcess->md.md_tss.esp2 = 0x0;
 	newProcess->md.md_tss.ss2 = 0x0;
-	newProcess->md.md_tss.eip = (long)binaryHeader->e_entry;
+	newProcess->md.md_tss.eip = ldAddr ? (long)ldAddr : (long)binaryHeader->e_entry;
 	newProcess->md.md_tss.eflags = 0x206;
 	newProcess->md.md_tss.esp = STACK_ADDR;
 	newProcess->md.md_tss.ebp = 0x0; // STACK_ADDR;
@@ -552,7 +565,9 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	// sched_setStatus(newProcess->id, READY);
 
-	uint32_t e_entry = binaryHeader->e_entry;
+	uint32_t e_entry  = binaryHeader->e_entry;
+	uint32_t e_phoff  = binaryHeader->e_phoff;
+	uint32_t e_phnum  = binaryHeader->e_phnum;
 
 	kfree(binaryHeader);
 	kfree(programHeader);
@@ -583,13 +598,24 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	sp = 0;
 
-	for (int x = 0; x < envc; x++)
+	for (int ex = 0; ex < envc; ex++)
 	{
-		tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-		strcpy((char *)tmp[x + i], envp[x]);
-		sp += strlen(envp[x]) + 1;
+		tmp[ex + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+		strcpy((char *)tmp[ex + i], envp[ex]);
+		sp += strlen(envp[ex]) + 1;
 	}
-	tmp[i + x] = 0x0;
+	tmp[i + envc] = 0x0;  /* envp null terminator */
+
+	/* auxv — required by musl's _dlstart to resolve the dynamic linker */
+	if (ldAddr) {
+		uint32_t *av = &tmp[i + envc + 1];
+		AUXARGS_ENTRY(av, AT_PHDR,   e_phoff + 0x08048000);
+		AUXARGS_ENTRY(av, AT_PHNUM,  e_phnum);
+		AUXARGS_ENTRY(av, AT_PAGESZ, PAGE_SIZE);
+		AUXARGS_ENTRY(av, AT_BASE,   LD_START);
+		AUXARGS_ENTRY(av, AT_ENTRY,  e_entry);
+		AUXARGS_ENTRY(av, AT_NULL,   0);
+	}
 
 	/* Build LDT For GS and FS */
 	vmm_unmapPage(VMM_USER_LDT, 1);
