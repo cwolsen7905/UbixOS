@@ -80,7 +80,7 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		{
 			kprintf("v86 pageFault: remap failed for 0x%X, killing task\n", memAddr);
 			spinUnlock(&pageFaultSpinLock);
-			_current->state = DEAD;
+			sched_dead(_current);
 			sched_yield();
 			return;
 		}
@@ -114,6 +114,22 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	/* UBU - This is a temporary routine for handling access to a page of a non existant page table */
 	if (pageDir[pageDirectoryIndex] == 0x0)
 	{
+		/* Stack growth across a page-directory boundary: allocate a new PT. */
+		if ((frame->tf_cs & 3) == 3 &&
+		    memAddr < esp &&
+		    memAddr >= (esp - 0x800000) &&
+		    memAddr >= 0x10000000U)
+		{
+			uint32_t newPage = vmm_findFreePage(_current->id);
+			if (newPage != 0x0 &&
+			    vmm_remapPage(newPage, memAddr & 0xFFFFF000, PAGE_DEFAULT, _current->id, 0) != 0x0)
+			{
+				memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+				asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+				spinUnlock(&pageFaultSpinLock);
+				return;
+			}
+		}
 		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
 		spinUnlock(&pageFaultSpinLock);
 		if ((frame->tf_cs & 3) == 3) {
@@ -212,6 +228,25 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		}
 		pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
 		/* Flush TLB for this page so the zero-write goes to the new physical page */
+		asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
+		memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+	}
+	else if ((frame->tf_cs & 3) == 3 &&
+	    memAddr < esp &&
+	    memAddr >= (esp - 0x800000) &&
+	    memAddr >= 0x10000000U)
+	{
+		/* Stack growth: fault just below ESP — map a new zeroed page. */
+		uInt32 newPage = vmm_findFreePage(_current->id);
+		if (newPage == 0x0)
+		{
+			kprintf("pageFault: OOM (stack) at 0x%X pid %i\n", memAddr, _current->id);
+			spinUnlock(&pageFaultSpinLock);
+			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+			signal_check(frame);
+			return;
+		}
+		pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
 		asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
 		memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
 	}

@@ -469,7 +469,7 @@ void __gpf(struct trapframe *frame) {
   if (++gpfIterCount > 4096) {
     kprintf("GPF: timeout pid=%d iter=%d at 0x%X:0x%X, killing\n",
         _current->id, gpfIterCount, (uint16_t)_current->md.md_tss.cs, _current->md.md_tss.eip);
-    _current->state = DEAD;
+    sched_dead(_current);
     gpfLastPid = -1;
     gpfIterCount = 0;
     irqEnable(0);
@@ -489,7 +489,7 @@ void __gpf(struct trapframe *frame) {
       switch (ip[1]) {
         case 0x69:
           irqEnable(0);   /* restore timer IRQ masked by sched before v86 switch */
-          _current->state = DEAD;
+          sched_dead(_current);
         break;
         case 0x20:
         case 0x21:
@@ -737,7 +737,7 @@ void __gpf(struct trapframe *frame) {
         (uint16_t)_current->md.md_tss.cs, _current->md.md_tss.eip,
         (uint16_t)_current->md.md_tss.ss, (uint16_t)_current->md.md_tss.esp,
         _current->id);
-      _current->state = DEAD;
+      sched_dead(_current);
     break;
   }
   irqEnable(0);

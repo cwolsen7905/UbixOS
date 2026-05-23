@@ -105,6 +105,13 @@ kTask_t *sched_getDelTask();
 void sched_yield();
 void sched();
 
+/* Scheduler state-transition API — always use these instead of direct
+ * task->state assignments.  Phase 2 will add run-queue management here. */
+void sched_ready(kTask_t *t);           /* READY  — task is runnable        */
+void sched_dead(kTask_t *t);            /* DEAD   — task has exited          */
+void sched_sleep(kTask_t *t, tState s); /* WAIT / UNINTERRUPTIBLE — blocked  */
+void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work */
+
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
 kTask_t *schedFindTask(uInt32 id);

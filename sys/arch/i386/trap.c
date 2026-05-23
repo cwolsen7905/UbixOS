@@ -72,7 +72,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 	/* If this is a VM86 task, kill it gracefully instead of dumping */
 	if (_current->oInfo.v86Task)
 	{
-		_current->state = DEAD;
+		sched_dead(_current);
 		endTask(_current->id);
 		return;
 	}

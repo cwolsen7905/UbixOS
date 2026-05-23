@@ -100,7 +100,7 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
   newProcess->md.md_tss.io_map = sizeof(struct tssStruct) - 8192;
   newProcess->oInfo.v86Task = 0x1;
 
-  newProcess->state = READY;
+  sched_ready(newProcess);
 
   while (newProcess->state > 0)
     sched_yield();

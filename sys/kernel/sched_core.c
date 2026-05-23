@@ -313,3 +313,28 @@ void wake_up(struct wait_queue **q)
 		tmp = tmp->next;
 	} while (tmp != *q);
 }
+
+/* -----------------------------------------------------------------------
+ * Scheduler state-transition API
+ * Phase 2 will add run-queue enqueue/dequeue calls here.
+ * ----------------------------------------------------------------------- */
+
+void sched_ready(kTask_t *t) {
+	if (t != 0x0)
+		t->state = READY;
+}
+
+void sched_dead(kTask_t *t) {
+	if (t != 0x0)
+		t->state = DEAD;
+}
+
+void sched_sleep(kTask_t *t, tState s) {
+	if (t != 0x0)
+		t->state = s;
+}
+
+void sched_wakeup(kTask_t *t) {
+	if (t != 0x0)
+		t->state = RUNNING;
+}
