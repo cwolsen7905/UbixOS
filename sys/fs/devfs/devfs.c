@@ -42,12 +42,30 @@ static struct spinLock devfsSpinLock = SPIN_LOCK_INITIALIZER;
 /* Length of dev list */
 static int devfs_len = 0x0;
 
+/*
+ * Pre-mount queue — device registrations that arrive before /dev is mounted
+ * are buffered here and replayed by devfs_initialize() at mount time.
+ * This allows the kernel's vfs_mount() call to be removed from devfs_init()
+ * so that /dev can be mounted by automountd from fstab instead.
+ */
+#define DEVFS_QUEUE_MAX 64
+struct devfs_queued {
+	char   name[32];
+	uInt8  type;
+	uInt16 major;
+	uInt16 minor;
+};
+static struct devfs_queued devfs_queue[DEVFS_QUEUE_MAX];
+static int                 devfs_queue_n  = 0;
+static int                 devfs_mounted  = 0;
+
 /**
  This is the initialized called by the vfs system when enabling devfs
  basically it allocates memory for the devfs module
  */
 static void devfs_initialize(struct vfs_mountPoint *mp) {
   struct devfs_info *fsInfo = 0x0;
+  int i;
 
   /* Allocate memory for the fsInfo */
   if ((mp->fsInfo = (struct devfs_info *) kmalloc(sizeof(struct devfs_info))) == 0x0)
@@ -56,8 +74,12 @@ static void devfs_initialize(struct vfs_mountPoint *mp) {
   fsInfo = mp->fsInfo;
   fsInfo->deviceList = 0x0;
 
-  /* Return */
-  return;
+  /* Mark mounted and replay any device registrations that arrived early. */
+  devfs_mounted = 1;
+  for (i = 0; i < devfs_queue_n; i++)
+    devfs_makeNode(devfs_queue[i].name, devfs_queue[i].type,
+                   devfs_queue[i].major, devfs_queue[i].minor);
+  devfs_queue_n = 0;
 }
 
 /**
@@ -186,6 +208,20 @@ int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor) {
 
   spinLock(&devfsSpinLock);
 
+  /* If /dev is not yet mounted, buffer for replay in devfs_initialize(). */
+  if (!devfs_mounted) {
+    if (devfs_queue_n < DEVFS_QUEUE_MAX) {
+      strncpy(devfs_queue[devfs_queue_n].name, name,
+              sizeof(devfs_queue[0].name) - 1);
+      devfs_queue[devfs_queue_n].type  = type;
+      devfs_queue[devfs_queue_n].major = major;
+      devfs_queue[devfs_queue_n].minor = minor;
+      devfs_queue_n++;
+    }
+    spinUnlock(&devfsSpinLock);
+    return (0);
+  }
+
   mp = vfs_findMount("/dev");
 
   if (mp == 0x0) {
@@ -266,17 +302,14 @@ int devfs_init() {
   }; /* devFS */
 
   if (vfsRegisterFS(devFS) != 0x0) {
-    //sysErr(systemErr,"Unable To Enable DevFS");
     return (0x1);
   }
-  /* Mount our devfs this will build the devfs container node */
-  vfs_mount(0x0, 0x0, 0x0, 0x1, "/dev", "rw"); /* mount devfs at /dev */
 
-  /* Pseudo-devices always present, major=0 minor=0/1 */
+  /* Queue pseudo-devices — replayed by devfs_initialize() when automountd
+   * mounts /dev via fstab.  No vfs_mount() call here. */
   devfs_makeNode("null", 'p', 0, 0);
   devfs_makeNode("zero", 'p', 0, 1);
   devfs_makeNode("tty",  'p', 0, 2);
 
-  /* Return */
   return (0x0);
 }

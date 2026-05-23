@@ -414,7 +414,6 @@ procfs_init(void)
 		return 1;
 	}
 
-	vfs_mount(0, 0, 0, PROCFS_TYPE, "/proc", "r");
-	klog(KLOG_NOTICE, "procfs: mounted at /proc");
+	klog(KLOG_NOTICE, "procfs: registered, will be mounted by automountd");
 	return 0;
 }
