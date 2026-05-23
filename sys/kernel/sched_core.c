@@ -157,23 +157,24 @@ void
 rq_enqueue_locked(kTask_t *t)
 {
 	int pri;
+	kTask_t *head;
 	kTask_t *tail;
 
 	if (t == NULL || t->on_rq)
 		return;
 
 	pri = (int)t->priority;
-	tail = run_queue[pri];
+	head = run_queue[pri];
 
-	if (tail == NULL) {
-		/* First task at this priority. */
+	if (head == NULL) {
+		/* First task at this priority — circular singleton. */
 		t->rq_next     = t;
 		t->rq_prev     = t;
 		run_queue[pri] = t;
 		ready_mask    |= (1u << pri);
 	} else {
-		/* Insert before the head (= append to tail of circular list). */
-		kTask_t *head = tail->rq_next;
+		/* Append at the real tail (= just before head) for FIFO round-robin. */
+		tail           = head->rq_prev;
 		t->rq_next     = head;
 		t->rq_prev     = tail;
 		tail->rq_next  = t;
