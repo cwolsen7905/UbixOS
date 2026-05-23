@@ -97,11 +97,26 @@ typedef struct taskStruct {
     uint8_t   quantum;            /* ticks remaining in current time slice */
     uint8_t   priority;          /* current scheduling priority (0–31) */
     uint8_t   base_priority;     /* QoS floor — boosts never go below this */
+    uint8_t   boost_quanta;      /* ticks remaining on temporary I/O priority boost */
     uint8_t   on_rq;             /* 1 if currently in a run queue */
     struct taskStruct *rq_next;  /* per-priority run queue forward link */
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
+    uint32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
 } kTask_t;
+
+/*
+ * QoS classes — stored as base_priority.  The scheduler never drops a task
+ * below its QoS floor.  Inspired by macOS DISPATCH_QOS_CLASS_*.
+ */
+typedef enum {
+    QOS_BACKGROUND       =  4,  /* maintenance work, automountd */
+    QOS_UTILITY          =  8,  /* compilation, long-running tools */
+    QOS_DEFAULT          = 12,  /* default — inherited from parent */
+    QOS_USER_INITIATED   = 18,  /* action the user explicitly started */
+    QOS_USER_INTERACTIVE = 22,  /* direct UI interaction */
+    QOS_REALTIME         = 31,  /* hard-deadline (fixed, never decayed) */
+} qos_class_t;
 
 int sched_init();
 int sched_setStatus(pidType, tState);
@@ -119,6 +134,7 @@ void sched_dead(kTask_t *t);            /* DEAD   — task has exited          *
 void sched_sleep(kTask_t *t, tState s); /* WAIT / UNINTERRUPTIBLE — blocked  */
 void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work */
 void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     */
+void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
 
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();

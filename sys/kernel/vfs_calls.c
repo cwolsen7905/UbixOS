@@ -217,16 +217,21 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		}
 		else
 		{
-			/* Blocking: wait until data arrives or a signal fires. */
+			/* Blocking: wait until data arrives or a signal fires.
+			 * Register ourselves as the reader so the writer can
+			 * boost our priority when it adds data (Phase 3.2). */
+			p_fd->reader_pid = (int)_current->id;
 			while (p_fd->bCNT == 0)
 			{
 				if (SIG_PENDING_UNBLOCKED(td))
 				{
+					p_fd->reader_pid = 0;
 					td->td_retval[0] = EINTR;
 					return (EINTR);
 				}
 				sched_yield();
 			}
+			p_fd->reader_pid = 0;
 		}
 		{
 			nbytes = (args->nbyte - (p_fd->headPB->nbytes - p_fd->headPB->offset) <= 0) ? args->nbyte : (p_fd->headPB->nbytes - p_fd->headPB->offset);
@@ -549,6 +554,13 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 }
 
 		p_fd->bCNT++;
+
+		/* Phase 3.2: boost the blocked reader so it runs before CPU-bound tasks. */
+		if (p_fd->reader_pid != 0) {
+			kTask_t *reader = schedFindTask((uint32_t)p_fd->reader_pid);
+			if (reader != NULL)
+				sched_io_wakeup(reader);
+		}
 
 		td->td_retval[0] = uap->nbyte;
 	}

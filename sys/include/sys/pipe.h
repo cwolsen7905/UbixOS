@@ -50,6 +50,7 @@ struct pipeInfo {
     int bCNT;
     struct pipeBuf *headPB;
     struct pipeBuf *tailPB;
+    int reader_pid;  /* PID of task blocked in pipe read (0 = none) */
 };
 
 #endif /* END _SYS_PIPE_H */

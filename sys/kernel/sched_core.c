@@ -134,6 +134,8 @@ kTask_t *schedNewTask()
 
 	tmpTask->priority      = 12;  /* QOS_DEFAULT — mid Normal band */
 	tmpTask->base_priority = 12;
+	tmpTask->boost_quanta  = 0;
+	tmpTask->last_run_tick = 0;
 	tmpTask->on_rq         = 0;
 
 	spinLock(&schedulerSpinLock);
@@ -452,6 +454,41 @@ void sched_stop(kTask_t *t, int sig)
 		t->parent->state = READY;
 		rq_enqueue_locked(t->parent);
 	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
+/*
+ * sched_io_wakeup — called when a task that was waiting for I/O becomes
+ * runnable.  Boosts its scheduling priority by +4 (capped at 23, floored at
+ * base_priority) for 2 quanta, then enqueues it as READY.
+ *
+ * Rewards I/O-bound tasks that yield the CPU willingly (FreeBSD ULE style).
+ */
+void
+sched_io_wakeup(kTask_t *t)
+{
+	uint32_t flags;
+	uint8_t  boosted;
+
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+
+	boosted = (uint8_t)(t->base_priority + 4);
+	if (boosted > 23)
+		boosted = 23;
+	if (boosted > t->priority)
+		t->priority = boosted;
+	t->boost_quanta = 2;
+
+	if (t->state != READY && t->state != RUNNING && t->state != DEAD) {
+		t->state = READY;
+		rq_enqueue_locked(t);
+	}
+
 	spinUnlock(&schedulerSpinLock);
 	restore_flags(flags);
 }

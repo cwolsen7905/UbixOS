@@ -39,6 +39,11 @@
 #include <sys/shutdown.h>
 #include <lib/kprintf.h>
 
+/* Starvation aging: scan every AGING_INTERVAL ticks (~50 ms at 200 Hz).
+ * Boost tasks that haven't run in > AGING_STARVE ticks (~200 ms). */
+#define AGING_INTERVAL  10
+#define AGING_STARVE    40
+
 static inline uint8_t
 quantum_for_priority(uint8_t pri)
 {
@@ -77,6 +82,28 @@ void sched() {
 
   if (spinTryLock(&schedulerSpinLock))
     return;
+
+  /* --- Phase 3.4: starvation aging — scan every ~50 ms --- */
+  {
+    static uint32_t aging_last = 0;
+    uint32_t        now = systemVitals->sysTicks;
+    if (now - aging_last >= AGING_INTERVAL) {
+      kTask_t *tmp;
+      aging_last = now;
+      for (tmp = taskList; tmp != NULL; tmp = tmp->next) {
+        uint8_t cap;
+        if (tmp->state != READY || tmp->last_run_tick == 0)
+          continue;
+        if (now - tmp->last_run_tick < AGING_STARVE)
+          continue;
+        /* +1 boost, capped at base_priority + 8, never into interactive band. */
+        cap = tmp->base_priority + 8;
+        if (cap > 23) cap = 23;
+        if (tmp->priority < cap)
+          tmp->priority++;
+      }
+    }
+  }
 
   /* --- Phase 2: dead-task cleanup (separate from dispatch) --- */
   t = taskList;
@@ -133,8 +160,20 @@ void sched() {
       return;
     }
 
-    /* Quantum expired: reset slice and re-enqueue at tail for round-robin. */
-    _current->quantum = quantum_for_priority(pri);
+    /* Quantum expired — apply priority adjustments before re-enqueue. */
+    if (_current->boost_quanta > 0) {
+      /* I/O boost is still active: count down. */
+      _current->boost_quanta--;
+      if (_current->boost_quanta == 0)
+        /* Boost expired: drop back to the QoS floor. */
+        _current->priority = _current->base_priority;
+    } else if (_current->priority > _current->base_priority) {
+      /* CPU-bound decay: −2 per expired quantum (floor: base_priority). */
+      uint8_t decayed = (uint8_t)(_current->priority - 2);
+      _current->priority = (decayed > _current->base_priority)
+          ? decayed : _current->base_priority;
+    }
+    _current->quantum = quantum_for_priority(_current->priority);
     _current->state   = READY;
     rq_enqueue_locked(_current);
   }
@@ -155,6 +194,7 @@ void sched() {
   }
 
   _current = next;
+  _current->last_run_tick = systemVitals->sysTicks;
 
   /* Give the newly dispatched task a fresh time slice if it has none left. */
   if (_current->quantum == 0)
