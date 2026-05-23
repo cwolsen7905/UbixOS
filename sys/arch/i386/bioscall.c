@@ -98,7 +98,9 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
   newProcess->md.md_tss.ldt = 0x0;
   newProcess->md.md_tss.trace_bitmap = 0x0;
   newProcess->md.md_tss.io_map = sizeof(struct tssStruct) - 8192;
-  newProcess->oInfo.v86Task = 0x1;
+  newProcess->oInfo.v86Task   = 0x1;
+  newProcess->priority        = 23;  /* highest non-realtime: gets CPU over caller but yields properly */
+  newProcess->base_priority   = 23;
 
   sched_ready(newProcess);
 

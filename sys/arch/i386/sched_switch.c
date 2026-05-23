@@ -114,15 +114,19 @@ void sched() {
   /* --- Phase 2: dead-task cleanup (separate from dispatch) --- */
   t = taskList;
   while (t != 0x0) {
-    if (t->state == DEAD) {
+    if (t->state == ZOMBIE) {
+      /*
+       * ZOMBIE: task exited normally via endTask.  Notify the parent and
+       * transition to DEAD — but leave the task in taskList so the parent's
+       * wait_find_child() can collect it and free it.
+       */
       delTask = t;
       t = t->next;
 
       if (delTask->parent != 0x0) {
         delTask->parent->children -= 1;
         delTask->parent->last_exit = delTask->id;
-        /* Don't revive a parent that is already dying. */
-        if (delTask->parent->state != DEAD) {
+        if (delTask->parent->state != DEAD && delTask->parent->state != ZOMBIE) {
           delTask->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
           if (delTask->parent->state != READY) {
             delTask->parent->state = READY;
@@ -135,13 +139,28 @@ void sched() {
             delTask->term->t_pgrp == (pid_t)delTask->pgrp)
           delTask->term->t_pgrp = 0;
       }
+      /* ZOMBIE → DEAD: wait_find_child() will splice from taskList. */
+      delTask->state = DEAD;
 
-      /* O(1) splice from taskList. */
-      if (delTask->prev != 0x0) delTask->prev->next = delTask->next;
-      else                      taskList             = delTask->next;
-      if (delTask->next != 0x0) delTask->next->prev  = delTask->prev;
-      pid_hash_remove(delTask);
-      sched_addDelTask(delTask);
+    } else if (t->state == DEAD) {
+      /*
+       * DEAD with no living parent (fault-killed, exec-error, or after
+       * wait_find_child already spliced the task out of parent's view).
+       * Only auto-collect when the parent is gone; otherwise wait_find_child
+       * handles collection so we don't race with it.
+       */
+      delTask = t;
+      t = t->next;
+      if (delTask->parent == 0x0 ||
+          delTask->parent->state == DEAD ||
+          delTask->parent->state == ZOMBIE) {
+        if (delTask->prev != 0x0) delTask->prev->next = delTask->next;
+        else                      taskList             = delTask->next;
+        if (delTask->next != 0x0) delTask->next->prev  = delTask->prev;
+        pid_hash_remove(delTask);
+        sched_addDelTask(delTask);
+      }
+
     } else {
       t = t->next;
     }

@@ -438,6 +438,27 @@ void sched_wakeup(kTask_t *t)
 		t->state = RUNNING;
 }
 
+/*
+ * sched_zombie — called by endTask() when a process exits normally.
+ * Removes the task from the run queue but keeps it in taskList so
+ * wait_find_child() can collect it.  sched() transitions ZOMBIE→DEAD
+ * after notifying the parent; wait_find_child() removes from taskList.
+ */
+void
+sched_zombie(kTask_t *t)
+{
+	uint32_t flags;
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	rq_dequeue_locked(t);
+	t->state = ZOMBIE;
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
 void sched_stop(kTask_t *t, int sig)
 {
 	uint32_t flags;

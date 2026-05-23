@@ -45,7 +45,8 @@ extern "C" {
 
 typedef enum {
   PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7,
-  STOPPED = 8
+  STOPPED = 8,
+  ZOMBIE  = 9   /* exited, awaiting parent wait() collection */
 } tState;
 
 struct osInfo {
@@ -134,6 +135,7 @@ void sched_dead(kTask_t *t);            /* DEAD   — task has exited          *
 void sched_sleep(kTask_t *t, tState s); /* WAIT / UNINTERRUPTIBLE — blocked  */
 void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work */
 void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     */
+void sched_zombie(kTask_t *t);          /* ZOMBIE  — exited, awaiting wait() */
 void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
 
 void schedEndTask(pidType pid);

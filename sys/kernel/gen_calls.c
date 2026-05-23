@@ -31,6 +31,7 @@
 #include <sys/thread.h>
 #include <sys/gdt.h>
 #include <ubixos/sched.h>
+#include <ubixos/sched_internal.h>
 #include <ubixos/endtask.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -371,64 +372,103 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
 	return (0);
 }
 
+#define WNOHANG     0x0001  /* don't block if no child ready */
+#define WUNTRACED   0x0002  /* report stopped children */
+
+#define W_STOPPED(sig)  (((sig) << 8) | 0x7f)
+#define W_EXITED(code)  ((code) << 8)
+#define W_SIGNALED(sig) ((sig) & 0x7f)
+
+/*
+ * Find a direct child of _current that has exited or (if WUNTRACED) stopped.
+ * When a DEAD child is found it is spliced from taskList and queued for
+ * freeing — the caller reads child->id before the system task reclaims it.
+ */
+static kTask_t *
+wait_find_child(int want_pid, int options, int *wstatus)
+{
+	kTask_t *t;
+	int      untraced = options & WUNTRACED;
+
+	for (t = taskList; t != NULL; t = t->next) {
+		if (t->parent != _current)
+			continue;
+		if (want_pid != -1 && (int)t->id != want_pid)
+			continue;
+		if (t->state == DEAD) {
+			if (wstatus)
+				*wstatus = W_EXITED(0);
+			if (t->prev != NULL) t->prev->next = t->next;
+			else                 taskList       = t->next;
+			if (t->next != NULL) t->next->prev  = t->prev;
+			pid_hash_remove(t);
+			sched_addDelTask(t);
+			return (t);
+		}
+		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0) {
+			if (wstatus)
+				*wstatus = W_STOPPED(t->t_stopped_sig);
+			t->t_stopped_sig = 0;
+			return (t);
+		}
+	}
+	return (NULL);
+}
+
 int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 {
-	int error = 0;
+	kTask_t *child;
+	int      wstatus = 0;
+	int      retries;
 
-	if (args->pid == -1)
-	{
-		if (_current->children <= 0)
-		{
-			td->td_retval[0] = ECHILD;
+	if (args->pid == -1 && _current->children <= 0) {
+		td->td_retval[0] = -ECHILD;
+		return (-1);
+	}
+
+	if (args->pid != -1) {
+		child = NULL;
+		for (retries = 0; retries < 100; retries++) {
+			child = schedFindTask((uint32_t)args->pid);
+			if (child != NULL)
+				break;
+			sched_yield();
+		}
+		if (child == NULL) {
+			td->td_retval[0] = -1;
 			return (-1);
 		}
-
-		int children = _current->children;
-
-		sched_setStatus(_current->id, WAIT);
-		while (_current->children == children)
-		{
-			sched_yield();
-		}
-
-		td->td_retval[0] = _current->last_exit;
-		td->td_retval[1] = 0x8;
 	}
-	else
-	{
-		kTask_t *tmp_task = NULL;
-		int retries;
 
-		/*
-		 * Retry briefly: a just-forked child may not appear in the scheduler
-		 * until after the parent's next yield (fork-to-schedule race).
-		 */
-		for (retries = 0; retries < 100; retries++)
-		{
-			tmp_task = schedFindTask(args->pid);
-			if (tmp_task != NULL) {
-				break;
-}
-			sched_yield();
+	if (args->options & WNOHANG) {
+		child = wait_find_child(args->pid, args->options, &wstatus);
+		if (child == NULL) {
+			td->td_retval[0] = 0;
+			if (args->status)
+				*args->status = 0;
+			return (0);
 		}
-
-		if (tmp_task != NULL)
-		{
-			sched_setStatus(_current->id, WAIT);
-			while (tmp_task != NULL)
-			{
-				sched_yield();
-				tmp_task = schedFindTask(args->pid);
-			}
-			td->td_retval[0] = args->pid;
-		}
-		else
-		{
-			td->td_retval[0] = -1;
-			error = -1;
-		}
+		if (args->status)
+			*args->status = wstatus;
+		td->td_retval[0] = (int)child->id;
+		return (0);
 	}
-	return (error);
+
+	/* Blocking wait. */
+	sched_sleep(_current, WAIT);
+	for (;;) {
+		sched_yield();
+		child = wait_find_child(args->pid, args->options, &wstatus);
+		if (child != NULL)
+			break;
+	}
+	sched_wakeup(_current);
+
+	if (args->status)
+		*args->status = wstatus;
+	td->td_retval[0] = (int)child->id;
+	_current->last_exit = child->id;
+	return (0);
 }
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)

@@ -77,7 +77,7 @@ void endTask(pidType pid)
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
 		_current->term->owner = _current->parent->id;
 
-	sched_setStatus(pid, DEAD);
+	sched_zombie(_current);
 	sched_yield();
 	while (1)
 	{
