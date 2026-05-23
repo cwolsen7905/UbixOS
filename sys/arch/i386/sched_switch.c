@@ -39,6 +39,16 @@
 #include <sys/shutdown.h>
 #include <lib/kprintf.h>
 
+static inline uint8_t
+quantum_for_priority(uint8_t pri)
+{
+  if (pri >= 24) return 0;   /* High/Realtime: unlimited */
+  if (pri >= 16) return 10;  /* Interactive */
+  if (pri >= 8)  return 6;   /* Normal */
+  if (pri >= 1)  return 2;   /* Background */
+  return 1;                  /* Idle */
+}
+
 void sched() {
   uint32_t memAddr = 0x0;
   kTask_t *delTask = 0x0;
@@ -106,10 +116,26 @@ void sched() {
 
   /* --- Phase 2: O(1) dispatch via ready_mask --- */
 
-  /* Re-enqueue current task if it is still runnable (wasn't put to sleep
-   * or killed before calling sched_yield). */
   if (_current != NULL && _current->state == RUNNING) {
-    _current->state = READY;
+    uint8_t pri = _current->priority;
+
+    if (pri >= 24) {
+      /* High/Realtime: never preempt — runs until it voluntarily blocks. */
+      spinUnlock(&schedulerSpinLock);
+      return;
+    }
+
+    /* Decrement time slice; skip switch if the task still has ticks left. */
+    if (_current->quantum > 0)
+      _current->quantum--;
+    if (_current->quantum > 0) {
+      spinUnlock(&schedulerSpinLock);
+      return;
+    }
+
+    /* Quantum expired: reset slice and re-enqueue at tail for round-robin. */
+    _current->quantum = quantum_for_priority(pri);
+    _current->state   = READY;
     rq_enqueue_locked(_current);
   }
 
@@ -129,6 +155,10 @@ void sched() {
   }
 
   _current = next;
+
+  /* Give the newly dispatched task a fresh time slice if it has none left. */
+  if (_current->quantum == 0)
+    _current->quantum = quantum_for_priority(_current->priority);
 
   if (_current->oInfo.v86Task == 0x1)
     irqDisable(0x0);  /* mask timer while v86 task runs */
@@ -160,5 +190,8 @@ void schedEndTask(pidType pid) {
 }
 
 void sched_yield() {
+  /* Force an immediate switch by expiring the current quantum. */
+  if (_current != NULL)
+    _current->quantum = 0;
   sched();
 }

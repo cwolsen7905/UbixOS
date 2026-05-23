@@ -12,7 +12,7 @@
 | 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ✅ Done |
 | 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ✅ Done |
 | 2.3 | Priority bands (32 levels, 4 bands) | 2 | ✅ Done |
-| 2.4 | Per-band time quanta + preemption | 2 | ⬜ Not started |
+| 2.4 | Per-band time quanta + preemption | 2 | ✅ Done |
 | 2.5 | Add `priority`, `base_priority`, `quantum`, `rq_next/prev` to `kTask_t` | 2 | ✅ Done |
 | 3.1 | QoS classes as `base_priority` floor | 3 | ⬜ Not started |
 | 3.2 | Temporary priority boosts (I/O wakeup, interactive, CPU-bound decay) | 3 | ⬜ Not started |
