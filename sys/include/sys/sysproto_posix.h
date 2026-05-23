@@ -1460,6 +1460,34 @@ int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap)
 
 int sys_gettid(struct thread *td, void *uap);
 
+struct sys_mount_args
+{
+	char type_l_[PADL_(const char *)];
+	const char *type;
+	char type_r_[PADR_(const char *)];
+	char path_l_[PADL_(const char *)];
+	const char *path;
+	char path_r_[PADR_(const char *)];
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+	char data_l_[PADL_(void *)];
+	void *data;
+	char data_r_[PADR_(void *)];
+};
+int sys_mount(struct thread *td, struct sys_mount_args *uap);
+
+struct sys_umount_args
+{
+	char path_l_[PADL_(const char *)];
+	const char *path;
+	char path_r_[PADR_(const char *)];
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+};
+int sys_umount(struct thread *td, struct sys_umount_args *uap);
+
 struct sys_tkill_args
 {
 	char tid_l_[PADL_(int)];

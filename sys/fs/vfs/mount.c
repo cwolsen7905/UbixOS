@@ -168,6 +168,34 @@ struct vfs_mountPoint *vfs_findMount( const char *path ) {
   return best;
 }
 
+/*
+ * vfs_umount — remove a mount point by exact path.
+ *
+ * Returns 0 on success, -1 if no mount with that path exists.
+ * Does not call a per-FS cleanup hook (none registered yet).
+ */
+int vfs_umount(const char *path)
+{
+	struct vfs_mountPoint *mp;
+
+	if (path == NULL)
+		return (-1);
+
+	mp = vfs_findMount(path);
+	if (mp == NULL || strcmp(mp->mountPoint, path) != 0)
+		return (-1);
+
+	if (mp->prev)
+		mp->prev->next = mp->next;
+	else
+		systemVitals->mountPoints = mp->next;
+	if (mp->next)
+		mp->next->prev = mp->prev;
+
+	kfree(mp);
+	return (0);
+}
+
 /***
  END
  ***/

@@ -45,6 +45,7 @@
 #include <lib/kmalloc.h>
 #include <sys/klog.h>
 #include <fs/vfs/file.h>
+#include <fs/vfs/mount.h>
 /* fat_filelib.h removed — use VFS unlink() for file removal */
 
 /* Forward-declare lwIP read/write so we can call them for socket fds. */
@@ -831,4 +832,82 @@ int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
 		kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
 }
 	return (error);
+}
+
+/*
+ * sys_mount — POSIX mount(2), FreeBSD ABI syscall 21.
+ *
+ * type: filesystem type string ("devfs", "procfs", "fat")
+ * path: POSIX mount point path (must already exist as a directory)
+ * flags/data: ignored for now (pseudo-FSes need no device)
+ *
+ * Maps type string to the internal vfsType integer used by vfsRegisterFS,
+ * then delegates to vfs_mount(). Block-device FSes (fat) are not yet
+ * supported via this path — those come through the automountd Phase 6 flow.
+ */
+int sys_mount(struct thread *td, struct sys_mount_args *uap)
+{
+	static const struct { const char *name; int type; } fs_map[] = {
+		{ "devfs",  1    },
+		{ "procfs", 0x02 },
+		{ "fat",    0xFA },
+		{ "msdos",  0xFA },
+		{ NULL, 0 }
+	};
+	int i, vfs_type = -1;
+	char mpath[1024];
+
+	if (uap->type == NULL || uap->path == NULL) {
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	for (i = 0; fs_map[i].name != NULL; i++) {
+		if (strcmp(uap->type, fs_map[i].name) == 0) {
+			vfs_type = fs_map[i].type;
+			break;
+		}
+	}
+	if (vfs_type < 0) {
+		kprintf("sys_mount: unknown fstype \"%s\"\n", uap->type);
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	strncpy(mpath, uap->path, sizeof(mpath) - 1);
+	mpath[sizeof(mpath) - 1] = '\0';
+
+	if (vfs_mount(0, 0, 0, vfs_type, mpath, "r") != 0) {
+		kprintf("sys_mount: vfs_mount(%s, %s) failed\n", uap->type, mpath);
+		td->td_retval[0] = -EIO;
+		return (EIO);
+	}
+
+	kprintf("sys_mount: mounted %s at %s\n", uap->type, mpath);
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * sys_umount — POSIX unmount(2), FreeBSD ABI syscall 22.
+ *
+ * Finds the mount point by exact path match and removes it from the table.
+ * Does not call a per-FS cleanup hook (none registered yet).
+ */
+int sys_umount(struct thread *td, struct sys_umount_args *uap)
+{
+	if (uap->path == NULL) {
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	if (vfs_umount(uap->path) != 0) {
+		kprintf("sys_umount: no mount at \"%s\"\n", uap->path);
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	kprintf("sys_umount: unmounted %s\n", uap->path);
+	td->td_retval[0] = 0;
+	return (0);
 }

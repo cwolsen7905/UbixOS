@@ -54,8 +54,8 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 18 */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 19 */
     {ARG_COUNT(sys_getpid_args), "getpid", sys_getpid, SYSCALL_VALID},                                          // 20 - getpid
-    {0, "mount", sys_invalid, SYSCALL_NOTIMP},                                                                  // 21 - mount
-    {0, "unmount", sys_invalid, SYSCALL_NOTIMP},                                                                // 22 - unmount
+    {ARG_COUNT(sys_mount_args), "mount", (sys_call_t *)sys_mount, SYSCALL_VALID},                              // 21 - mount
+    {ARG_COUNT(sys_umount_args), "unmount", (sys_call_t *)sys_umount, SYSCALL_VALID},                          // 22 - unmount
     {ARG_COUNT(sys_setUID_args), "setuid", (sys_call_t *)sys_setUID, SYSCALL_VALID},                            // 23 - setUID
     {0, "getuid", sys_getUID, SYSCALL_VALID},                                                                   // 24 - getuid
     {ARG_COUNT(sys_geteuid_args), "geteuid", sys_geteuid, SYSCALL_VALID},                                       // 25 - geteuid

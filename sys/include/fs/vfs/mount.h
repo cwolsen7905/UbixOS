@@ -80,6 +80,7 @@ struct vfs_mountPoint {
 int vfs_mount(int major, int minor, int partition, int fsType, char *mountPoint, char *perms);
 int vfs_addMount(struct vfs_mountPoint *mp);
 struct vfs_mountPoint *vfs_findMount(const char *path);
+int vfs_umount(const char *path);
 
 #endif
 
