@@ -82,8 +82,10 @@ int sched_init()
 		kpanic("Unable to create task list");
 
 	memset(taskList, 0x0, sizeof(kTask_t));
-	taskList->id = nextID++;
-	taskList->quantum = 6;
+	taskList->id            = nextID++;
+	taskList->quantum       = 6;
+	taskList->priority      = QOS_REALTIME;
+	taskList->base_priority = QOS_REALTIME;
 	strncpy(taskList->name, "kernel", sizeof(taskList->name) - 1);
 	pid_hash_insert(taskList);
 

@@ -116,6 +116,7 @@ typedef enum {
     QOS_DEFAULT          = 12,  /* default — inherited from parent */
     QOS_USER_INITIATED   = 18,  /* action the user explicitly started */
     QOS_USER_INTERACTIVE = 22,  /* direct UI interaction */
+    QOS_KERNEL           = 24,  /* kernel threads and device drivers */
     QOS_REALTIME         = 31,  /* hard-deadline (fixed, never decayed) */
 } qos_class_t;
 

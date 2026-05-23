@@ -193,6 +193,11 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *
 	newProcess = schedNewTask();
 	assert(newProcess);
 
+	/* Kernel threads run ring-0: elevate to High band so they are never
+	 * starved by user processes at QOS_DEFAULT (12). */
+	newProcess->priority      = QOS_KERNEL;
+	newProcess->base_priority = QOS_KERNEL;
+
 	if (name != 0x0)
 		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
@@ -1184,6 +1189,11 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	taskLDT->baseHigh = data_addr >> 24;
 
 	_current->md.md_tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
+
+	/* Clear any temporary I/O boost — the new binary starts clean at its
+	 * QoS floor.  base_priority is preserved (QoS class survives exec). */
+	_current->boost_quanta = 0;
+	_current->priority     = _current->base_priority;
 
 	/*
 	 * POSIX: exec does not change the process group.  Keep _current->pgrp

@@ -44,9 +44,15 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess = schedNewTask();
 
   /*
-   *
+   * Inherit QoS class from parent: fork propagates the base_priority floor
+   * (process-level QoS) but starts at that floor, not the parent's current
+   * (possibly temporarily boosted) priority.
+   */
+  newProcess->base_priority = _current->base_priority;
+  newProcess->priority      = _current->base_priority;
+
+  /*
    * Initalize New Task Information From Parrent
-   *
    */
 
   /* Set CWD */
