@@ -1,12 +1,8 @@
 # (C) 2002-2026 The UbixOS Project
 # ubix.musl.prog.mk — Compile and link rules for musl-linked UbixOS userland programs.
 #
-# Drop-in replacement for ubix.prog.mk that links against musl libc (static)
-# instead of the native dynamic libc.so.  Use for programs that need POSIX
-# compliance via musl rather than the FreeBSD-derived native libc.
-#
-# Usage: identical to ubix.prog.mk — just change the .include at the bottom
-# of your program Makefile from ubix.prog.mk to ubix.musl.prog.mk.
+# Produces a dynamically-linked ET_EXEC binary: musl libc is resolved from
+# /lib/libc.so at runtime via /lib/ld-musl-i386.so.1.
 #
 # Required variables set before .include:
 #   BINARY    — output binary name
@@ -14,6 +10,7 @@
 #
 # Optional:
 #   EXTRA_LDFLAGS — appended to the link command
+#   EXTRA_LIBS    — extra archives/objects inserted before -lc
 
 EXTRA_LDFLAGS ?=
 EXTRA_LIBS    ?=
@@ -50,13 +47,15 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(BINARY): $(OBJS)
-	$(CC) ${CROSS_M32} -nostdlib -static -Wl,-m,elf_i386 ${EXTRA_LDFLAGS} \
+	$(CC) ${CROSS_M32} -nostdlib -Wl,-m,elf_i386 \
+		-Wl,-dynamic-linker,/lib/ld-musl-i386.so.1 \
+		-Wl,-rpath,/lib \
+		${EXTRA_LDFLAGS} \
 		${MUSL_LIB}/crt1.o \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
 		${EXTRA_LIBS} \
-		${OBJ_DIR}/lib/musl.a \
-		${OBJ_DIR}/lib/crt.a \
+		-L${OBJ_DIR}/lib -lc \
 		${LIBGCC} \
 		${MUSL_LIB}/crtn.o \
 		-o ${OBJ_DIR}/bin/${BINARY}

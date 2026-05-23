@@ -145,6 +145,10 @@ mmd -i "$IMG"@@1M ::/libexec
 
 for f in "$BUILD/bin"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/bin/;    done
 for f in "$BUILD/lib"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/;    done
+# musl dynamic linker: FAT32 has no symlinks, so install libc.so a second time
+# under the LDSO_PATHNAME that the kernel ld.so and ELF binaries expect.
+[ -f "$BUILD/lib/libc.so" ] && \
+    mcopy -o -i "$IMG"@@1M "$BUILD/lib/libc.so" ::/lib/ld-musl-i386.so.1
 for f in "$BUILD/libexec"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/libexec/; done
 
 echo "==> Installing TCC compiler (lib/tcc/ and usr/bin/)"

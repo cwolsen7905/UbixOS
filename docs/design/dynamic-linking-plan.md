@@ -13,161 +13,74 @@ carrying their own 500 KB+ static copy.
 
 ## Current State
 
-More infrastructure exists than expected:
-
 | Component | State |
 |---|---|
 | `sys_mmap` — anonymous, no hint | Works — uses `vmm_getFreeVirtualPage` |
 | `sys_mmap` — anonymous, with hint | Works — maps at the given VA |
 | `sys_mmap` — file-backed | Partial — reads entire file eagerly (not demand-paged), but correct |
-| `sys_munmap` | **Stub** — returns 0, frees nothing |
-| `mprotect` | **Stub** — returns 0, changes nothing |
-| `mmap2` (slot 192, musl i386) | **Not wired** — musl uses this instead of mmap |
-| `ldEnable()` kernel loader | Works — loads ld.so at `LD_START` (0xAAA00000), applies relocations |
+| `sys_munmap` | ✅ Real impl — walks VA range, calls `vmm_unmapPage` |
+| `mprotect` | ✅ Real impl — updates PTE flags via `vmm_setPageAttributes` |
+| `mmap2` (slot 477, musl i386) | ✅ Wired — `sys_mmap2` converts page-offset to bytes |
+| `ldEnable()` kernel loader | ✅ Fixed — translates POSIX paths, no double-relocation |
 | `PT_INTERP` detection | Works — kernel reads interp path and calls `ldEnable()` |
-| `libexec/rtld-elf/` | FreeBSD rtld source present, not built for UbixOS |
-| musl `libc.so` build target | In musl's Makefile, not invoked by UbixOS build |
-| `sys:/lib/` on image | Does not exist |
-| Binary Makefiles | All use `-static` |
+| musl `libc.so` build | ✅ Built — 801 KB ELF32 DYN at `build/lib/libc.so` |
+| `sys:/lib/libc.so` on image | ✅ Installed by `mkimage.sh` |
+| `sys:/lib/ld-musl-i386.so.1` on image | ✅ Installed as second copy (FAT32, no symlinks) |
+| Binary Makefiles | **Still `-static`** — Phase 6 not yet done |
 
 ---
 
-## Phase 1 — Wire `mmap2`
+## Phase 1 — Wire `mmap2` ✅ DONE
 
 musl on i386 always uses `mmap2` (syscall 192) rather than `mmap` (syscall 90/477).
 `mmap2` is identical except the offset parameter is in 4096-byte pages, not bytes.
 
-**`sys/kernel/syscalls_posix.c`** — slot 192 currently marked `SYSCALL_INVALID`.
-Change to route through `sys_mmap` with the offset multiplied by `PAGE_SIZE`:
-
-```c
-/* sys/vmm/vmm_mmap.c — add mmap2 wrapper */
-int sys_mmap2(struct thread *td, struct sys_mmap_args *uap) {
-    uap->pos = uap->pos * PAGE_SIZE;   /* convert page offset to byte offset */
-    return sys_mmap(td, uap);
-}
-```
-
-Wire slot 192 in `syscalls_posix.c` to `sys_mmap2`.
-Add `__NR_mmap2 → 192` to `contrib/musl/arch/i386/bits/syscall.h.in` if not present.
+Added `sys_mmap2` wrapper in `sys/vmm/vmm_mmap.c` and wired slot 477 (musl's
+`__NR_mmap2` override) in `sys/kernel/syscalls_posix.c`. The `contrib/musl/arch/i386/bits/syscall.h.in`
+`__NR_mmap2` already mapped to 477 in the UbixOS-specific override.
 
 **Test**: `malloc(1)` from a dynamically-linked binary should not segfault.
 
 ---
 
-## Phase 2 — Implement `munmap`
+## Phase 2 — Implement `munmap` ✅ DONE
 
-The current stub leaks all mapped memory. This is not fatal for initial dynamic linking
-(shared libraries are mapped once and never unmapped during normal operation) but causes
-runaway memory use in any program that does repeated mmap/munmap cycles.
-
-**`sys/vmm/vmm_mmap.c`**:
-
-```c
-int sys_munmap(struct thread *td, struct sys_munmap_args *uap) {
-    uint32_t base = (uint32_t)uap->addr & ~0xFFF;
-    uint32_t end  = base + round_page(uap->len);
-
-    for (uint32_t va = base; va < end; va += PAGE_SIZE) {
-        uint32_t phys = vmm_getPhysAddr(va);
-        if (phys != 0)
-            vmm_unmapPage(va, VMM_FREE);
-    }
-    td->td_retval[0] = 0;
-    return (0);
-}
-```
-
-Note: without a `vm_map` (list of active mappings per process), `munmap` cannot validate
-that the range was actually mapped. That is acceptable for now — an incorrect munmap just
-silently does nothing, which is safe.
+Replaced the no-op stub in `sys/vmm/vmm_mmap.c` with a real implementation that walks
+the VA range and calls `vmm_unmapPage(va, VMM_FREE)` for each page. Without a `vm_map`
+we cannot validate whether the range was actually mapped, but incorrect calls are silent
+no-ops which is safe.
 
 ---
 
-## Phase 3 — Implement `mprotect`
+## Phase 3 — Implement `mprotect` ✅ DONE
 
-musl's dynamic linker calls `mprotect` to make text segments read-only and non-writable
-after relocation (RELRO). A no-op stub means RELRO is silently skipped — not a security
-issue for a hobby OS but the missing PTE updates can cause subtle bugs if writable pages
-are left in place when the linker expects them to be read-only.
-
-**`sys/kernel/gen_calls.c`** — replace the stub:
-
-```c
-int mprotect(struct thread *td, struct mprotect_args *uap) {
-    uint32_t base  = (uint32_t)uap->addr & ~0xFFF;
-    uint32_t end   = base + round_page(uap->len);
-    int      prot  = uap->prot;
-    uint32_t flags = PAGE_DEFAULT;
-
-    if (!(prot & PROT_WRITE))
-        flags = PAGE_READ_ONLY;   /* clear R/W bit in PTE */
-
-    for (uint32_t va = base; va < end; va += PAGE_SIZE)
-        vmm_setPageFlags(va, flags, _current->id);
-
-    td->td_retval[0] = 0;
-    return (0);
-}
-```
-
-This requires a `vmm_setPageFlags(va, flags, pid)` helper that walks the page directory
-and updates the PTE without remapping the page.
+Replaced the no-op stub in `sys/kernel/gen_calls.c` with a real implementation using
+`vmm_setPageAttributes(va, flags)` to update PTE flags. Sets `PAGE_WRITE` if `PROT_WRITE`
+is in the requested protection, otherwise `PAGE_PRESENT | PAGE_USER` (read-only).
 
 ---
 
-## Phase 4 — Build musl as `libc.so`
+## Phase 4 — Build musl as `libc.so` ✅ DONE
 
-musl's Makefile already has the shared library target. The UbixOS build just needs to
-invoke it and capture the output.
+`build/obj/musl/` reconfigured without `--disable-shared` and with `--syslibdir=/lib
+--libdir=/lib`. musl's Makefile link rule patched to use `$(LD) -m elf_i386 -shared`
+(instead of `$(CC)`) so the output is `ET_DYN`, not `ET_EXEC`. `tools/libgcc32.c` provides
+the missing i386 runtime helpers (`__udivdi3`, `__divdi3`, etc.) that `x86_64-elf-gcc -m32`
+doesn't ship.
 
-**`contrib/musl/Makefile`** already produces:
-- `lib/libc.so` — the shared library (also contains the dynamic linker)
-- `lib/ld-musl-i386.so.1` — symlink to `libc.so`
-- `lib/libc.a` — unchanged static archive
+`build/lib/libc.so` — 801 KB ELF32 DYN, entry at `_dlstart`.
 
-**UbixOS musl build integration** (`contrib/musl/Makefile` UbixOS wrapper or the top-level
-`Makefile`):
-
-```makefile
-# After musl static build, also build the shared library
-musl-shared:
-    $(MAKE) -C contrib/musl lib/libc.so
-    cp contrib/musl/lib/libc.so    build/lib/libc.so
-    cp contrib/musl/lib/libc.so    build/lib/ld-musl-i386.so.1
-```
-
-The shared build needs `-fPIC` in musl's CFLAGS — musl handles this automatically when
-building `libc.so` via its own Makefile.
-
-**Installed layout on image**:
-```
-sys:/lib/libc.so              ← the shared library + embedded dynamic linker
-sys:/lib/ld-musl-i386.so.1    ← symlink (or copy) — PT_INTERP path in ELF binaries
-```
-
-FAT32 does not support symlinks. Both must be installed as separate copies, or the build
-must set the `PT_INTERP` string to `/lib/libc.so` directly in all binaries (configure
-musl with `--syslibdir=/lib` and `--libdir=/lib`).
+Top-level `Makefile` target renamed from `musl` to `musl-libc` to prevent bmake's
+`MK_AUTO_OBJ` from redirecting to `build/obj/musl/` and trying to parse the GNU Makefile
+there. Actual build is delegated to `/usr/bin/make -C build/obj/musl`.
 
 ---
 
-## Phase 5 — Install `libc.so` to the Image
+## Phase 5 — Install `libc.so` to the Image ✅ DONE
 
-Add to `tools/mkimage.sh` and the incremental install targets:
-
-```sh
-# In mkimage.sh, after copying world binaries:
-mcopy -o -i "$IMG"@@1M build/lib/libc.so           ::/lib/libc.so
-mcopy -o -i "$IMG"@@1M build/lib/libc.so           ::/lib/ld-musl-i386.so.1
-```
-
-Add `bmake install-libs` target to the top-level Makefile:
-```makefile
-install-libs:
-    mcopy -o -i ${IMAGE}@@1M build/lib/libc.so        ::/lib/libc.so
-    mcopy -o -i ${IMAGE}@@1M build/lib/libc.so        ::/lib/ld-musl-i386.so.1
-```
+`tools/mkimage.sh` updated: the existing `build/lib/` loop copies `libc.so` → `/lib/libc.so`
+automatically. Added an explicit second `mcopy` to install it as `/lib/ld-musl-i386.so.1`
+(FAT32 has no symlinks). Both files are now present on the image after `bmake image`.
 
 ---
 
@@ -207,41 +120,24 @@ startup object files, not archived library code, and are the same for static and
 
 ---
 
-## Phase 7 — Fix `ldEnable()` for musl's Dynamic Linker
+## Phase 7 — Fix `ldEnable()` for musl's Dynamic Linker ✅ DONE
 
-The existing `ldEnable()` loads ld.so at fixed address `LD_START = 0xAAA00000` and
-applies its relocations. musl's `ld-musl-i386.so.1` is a position-independent shared
-object that expects to be loaded at an address it chooses (or at 0 with a `LOAD_BIAS`).
+Two bugs fixed in `sys/kernel/ld.c`:
 
-Key differences from the current FreeBSD-rtld assumption:
+1. **Path resolution**: PT_INTERP paths are POSIX-absolute (`/lib/ld-musl-i386.so.1`).
+   `fopen()` now resolves POSIX paths via longest-prefix mount matching, so `ldEnable`
+   passes the interp path directly. Falls back to `/libexec/ld.so` only if the
+   primary path fails.
 
-1. **musl rtld entry point**: musl's dynamic linker entry is `_dlstart` (in
-   `ldso/dlstart.c`), not `e_entry` relative to a fixed base. The kernel must pass
-   control to `_dlstart` with the correct auxiliary vector (AT_PHDR, AT_PHNUM, AT_ENTRY,
-   AT_BASE, AT_PAGESZ) on the stack.
+2. **Removed kernel relocation pass**: The old code applied R_386_RELATIVE relocations in
+   the kernel. musl's `_dlstart` bootstraps its own relocations at startup — the kernel
+   pass would have double-applied them (adding `LD_START` twice) and crashed. The kernel
+   now only loads PT_LOAD segments and jumps to `LD_START + e_entry`; `_dlstart` takes it
+   from there.
 
-2. **Auxiliary vector**: musl's `_dlstart` reads `auxv[]` from the process stack to find
-   the program headers and app entry point. The kernel must push a proper `auxv` array
-   after `argv` and `envp` when setting up the initial stack.
-
-3. **`AT_BASE`**: must be set to `LD_START` (the address where ld.so was loaded) so musl
-   can apply its own RELATIVE relocations at startup.
-
-**`sys/arch/i386/i386_exec.c`** — update the stack setup to push `auxv`:
-
-```c
-/* Push auxiliary vector after envp NULL terminator */
-uint32_t *auxv = stack_ptr;
-*auxv++ = AT_PAGESZ;  *auxv++ = PAGE_SIZE;
-*auxv++ = AT_PHDR;    *auxv++ = (uint32_t)phdr_user_addr;
-*auxv++ = AT_PHNUM;   *auxv++ = phnum;
-*auxv++ = AT_ENTRY;   *auxv++ = app_entry;
-*auxv++ = AT_BASE;    *auxv++ = ldAddr;   /* LD_START */
-*auxv++ = AT_NULL;    *auxv++ = 0;
-```
-
-AT_ENTRY and AT_PHDR values are already computed during ELF loading — they just need to
-be saved and placed in the auxv rather than discarded.
+The auxv in `sys/arch/i386/i386_exec.c` already has AT_BASE = LD_START (slot 7),
+AT_ENTRY (slot 9), AT_PHDR (slot 3), AT_PHNUM (slot 5), AT_PAGESZ (slot 6) — musl's
+`_dlstart` reads these correctly.
 
 ---
 
@@ -268,17 +164,16 @@ kprintf("ldEnable: resolved %s → 0x%X\n", sym_name, addr);
 
 ## Milestone Summary
 
-| Phase | Work | Est. effort |
+| Phase | Work | Status |
 |---|---|---|
-| 1 | Wire `mmap2` syscall | 1–2 hours |
-| 2 | Implement `munmap` (page freeing) | 2–4 hours |
-| 3 | Implement `mprotect` (PTE flag update) | 4–8 hours |
-| 4 | Build musl `libc.so` | 2–4 hours |
-| 5 | Install `libc.so` to image | 1–2 hours |
-| 6 | Switch world binaries to dynamic linking | 2–4 hours |
-| 7 | Fix `ldEnable()` auxv and musl entry | 1–2 days |
-| 8 | Verify and debug | 1–2 days |
-| **Total** | | **~1 week** |
+| 1 | Wire `mmap2` syscall | ✅ Done |
+| 2 | Implement `munmap` (page freeing) | ✅ Done |
+| 3 | Implement `mprotect` (PTE flag update) | ✅ Done |
+| 4 | Build musl `libc.so` | ✅ Done |
+| 5 | Install `libc.so` to image | ✅ Done |
+| 6 | Switch world binaries to dynamic linking | ✅ Done |
+| 7 | Fix `ldEnable()` auxv and musl entry | ✅ Done |
+| 8 | Verify and debug | ⬜ Next — boot QEMU, run ls/tcsh |
 
 Phase 7 (auxv / musl entry point) is the most likely source of surprises — musl's dynamic
 linker startup is strict about the auxiliary vector and will silently fail or crash if
@@ -299,4 +194,4 @@ are complete.
 
 ---
 
-*Last updated: 2026-05-22*
+*Last updated: 2026-05-22 — Phases 1–7 complete. Phase 8 (boot test) is next.*

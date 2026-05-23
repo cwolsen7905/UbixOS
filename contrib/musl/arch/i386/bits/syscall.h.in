@@ -81,11 +81,11 @@
 #define __NR_getgroups		 80
 #define __NR_setgroups		 81
 #define __NR_select		 82
-#define __NR_symlink		 83
+#define __NR_symlink		 57  /* FreeBSD 57, was Linux 83 */
 #define __NR_oldlstat		 84
-#define __NR_readlink		 85
+#define __NR_readlink		 58  /* FreeBSD 58, was Linux 85 */
 #define __NR_uselib		 86
-#define __NR_swapon		 87
+#define __NR_swapon		 85  /* FreeBSD 85, was Linux 87 */
 #define __NR_reboot		 88
 #define __NR_readdir		 89
 #define __NR_mmap		 90

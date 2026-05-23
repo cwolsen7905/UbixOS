@@ -1,8 +1,11 @@
 # (C) 2002-2026 The UbixOS Project
-# ubix.musl.ubix.prog.mk — musl libc + UbixOS native API (static link).
+# ubix.musl.ubix.prog.mk — musl libc (dynamic) + UbixOS native API (static).
 #
 # Use for programs that need both POSIX (via musl) and UbixOS-specific APIs:
 # pidStatus, mpi_createMbox, mpi_postMessage, mpi_fetchMessage, ubix_getcwd.
+#
+# musl is resolved from /lib/libc.so at runtime.  ubix_api.a is linked
+# statically because only a subset of its symbols are in ubix_api.so.
 #
 # The UbixOS-specific headers (<sys/mpi.h>, <sys/sys.h>, <api/ubix.h>, etc.)
 # are exposed via -I${SRCTOP}/include appended AFTER the musl include paths,
@@ -42,13 +45,15 @@ OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
 _OBJS_FULL = ${OBJS:S|^|${OBJDIR}/|}
 
 $(BINARY): $(OBJS)
-	$(CC) ${CROSS_M32} -nostdlib -static -Wl,-m,elf_i386 ${EXTRA_LDFLAGS} \
+	$(CC) ${CROSS_M32} -nostdlib -Wl,-m,elf_i386 \
+		-Wl,-dynamic-linker,/lib/ld-musl-i386.so.1 \
+		-Wl,-rpath,/lib \
+		${EXTRA_LDFLAGS} \
 		${MUSL_LIB}/crt1.o \
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
-		${OBJ_DIR}/lib/musl.a \
 		${OBJ_DIR}/lib/ubix_api.a \
-		${OBJ_DIR}/lib/crt.a \
+		-L${OBJ_DIR}/lib -lc \
 		${LIBGCC} \
 		${MUSL_LIB}/crtn.o \
 		-o ${OBJ_DIR}/bin/${BINARY}
