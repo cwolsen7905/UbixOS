@@ -5,6 +5,7 @@ t
 t.c
 *.o
 *.d
+!etc/init.d/
 *.so
 .depen*
 *.img

@@ -14,7 +14,7 @@ OBJS_SO = ubixcwd.o ttyctrl.o
 OBJS_A  = ubixcwd.o ttyctrl.o settty.o views.o \
           pidstatus.o \
           mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_destroymbox.o \
-          sys_gettimeofday.o gettime.o
+          sys_gettimeofday.o gettime.o mount.o
 
 OUTPUT  = ubix_api.so
 
