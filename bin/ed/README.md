@@ -88,7 +88,7 @@ q
 Edit an existing file, change line 3, save:
 
 ```
-ed sys:/etc/motd
+ed /etc/motd
 3p
 3c
 Welcome to UbixOS.

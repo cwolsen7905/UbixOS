@@ -26,7 +26,7 @@
  *   DG_GetKey        — poll keyboard and convert to DOOM key codes
  *   DG_SetWindowTitle — no-op
  *
- * Usage: doom [-iwad sys:/path/to/doom1.wad]
+ * Usage: doom [-iwad /path/to/doom1.wad]
  */
 
 #include "doomgeneric.h"
@@ -276,7 +276,7 @@ main(int argc, char **argv)
 
 	/*
 	 * If -iwad was not given, inject a default so the user does not need to
-	 * type it.  doom1.wad lives at sys:/bin/doom1.wad on the UbixOS image.
+	 * type it.  doom1.wad lives at /bin/doom1.wad on the UbixOS image.
 	 */
 	int has_iwad = 0;
 	for (int i = 1; i < argc; i++) {

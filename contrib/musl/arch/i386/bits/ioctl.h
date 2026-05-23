@@ -12,15 +12,15 @@
  */
 #include "../../generic/bits/ioctl.h"
 
-/* termios get/set — Linux 0x5401-0x5404 → FreeBSD encoding */
+/* termios get/set — FreeBSD encoding, sizeof(struct termios)=44=0x2C */
 #undef  TCGETS
-#define TCGETS    0x40247413U  /* _IOR('t', 19, struct termios) */
+#define TCGETS    0x402C7413U  /* _IOR('t', 19, struct termios) */
 #undef  TCSETS
-#define TCSETS    0x80247414U  /* _IOW('t', 20, struct termios) */
+#define TCSETS    0x802C7414U  /* _IOW('t', 20, struct termios) */
 #undef  TCSETSW
-#define TCSETSW   0x80247415U  /* _IOW('t', 21, struct termios) */
+#define TCSETSW   0x802C7415U  /* _IOW('t', 21, struct termios) */
 #undef  TCSETSF
-#define TCSETSF   0x80247416U  /* _IOW('t', 22, struct termios) */
+#define TCSETSF   0x802C7416U  /* _IOW('t', 22, struct termios) */
 
 /* window size */
 #undef  TIOCGWINSZ

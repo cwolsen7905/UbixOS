@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 
 	sprintf(password[0].username, "root");
 	sprintf(password[0].passwd, "user");
-	sprintf(password[0].shell, "sys:/bin/shell");
+	sprintf(password[0].shell, "/bin/shell");
 	sprintf(password[0].realname, "Root User");
 	sprintf(password[0].path, "root");
 	password[0].uid = 0;
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
 	sprintf(password[1].username, "guest");
 	sprintf(password[1].passwd, "user");
-	sprintf(password[1].shell, "sys:/bin/shell");
+	sprintf(password[1].shell, "/bin/shell");
 	sprintf(password[1].realname, "Guest User");
 	sprintf(password[1].path, "guest");
 	password[1].uid = 1;
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 
 	sprintf(password[2].username, "reddawg");
 	sprintf(password[2].passwd, "temp123");
-	sprintf(password[2].shell, "sys:/bin/sh");
+	sprintf(password[2].shell, "/bin/sh");
 	sprintf(password[2].realname, "Christopher W. Olsen");
 	sprintf(password[2].path, "reddawg");
 	password[2].uid = 1000;
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 
 	sprintf(password[3].username, "bsd");
 	sprintf(password[3].passwd, "user");
-	sprintf(password[3].shell, "sys:/bin/sh");
+	sprintf(password[3].shell, "/bin/sh");
 	sprintf(password[3].realname, "BSD User");
 	sprintf(password[3].path, "/home/bsd");
 	password[3].uid = 0;

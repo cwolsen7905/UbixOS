@@ -13,3 +13,5 @@ t.c
 .DS_Store
 .cache/
 tools/makeuser
+tools/doom1.wad
+tools/userdb

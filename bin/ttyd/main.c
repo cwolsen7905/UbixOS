@@ -4,7 +4,7 @@
  *
  * ttyd — terminal daemon (UbixOS equivalent of FreeBSD getty).
  *
- * Reads sys:/etc/ttys.  For each enabled entry it forks a child that
+ * Reads /etc/ttys.  For each enabled entry it forks a child that
  * claims the named terminal slot, then loops: fork the configured
  * program (login, vlogin, shell, …), wait for it to exit, restart.
  *

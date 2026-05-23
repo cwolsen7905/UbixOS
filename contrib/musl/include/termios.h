@@ -16,7 +16,7 @@ typedef unsigned char cc_t;
 typedef unsigned int speed_t;
 typedef unsigned int tcflag_t;
 
-#define NCCS 32
+#define NCCS 20
 
 #include <bits/termios.h>
 

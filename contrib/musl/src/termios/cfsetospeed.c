@@ -5,22 +5,12 @@
 
 int cfsetospeed(struct termios *tio, speed_t speed)
 {
-	if (speed & ~CBAUD) {
-		errno = EINVAL;
-		return -1;
-	}
-	tio->c_cflag &= ~CBAUD;
-	tio->c_cflag |= speed;
+	tio->c_ospeed = speed;
 	return 0;
 }
 
 int cfsetispeed(struct termios *tio, speed_t speed)
 {
-	if (speed & ~CBAUD) {
-		errno = EINVAL;
-		return -1;
-	}
-	tio->c_cflag &= ~CIBAUD;
-	tio->c_cflag |= speed * (CIBAUD/CBAUD);
+	tio->c_ispeed = speed;
 	return 0;
 }
