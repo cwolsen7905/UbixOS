@@ -39,6 +39,15 @@
 extern kTask_t *taskList;
 extern struct spinLock schedulerSpinLock;
 
+/* Phase 2: priority run queues. */
+#define SCHED_PRIORITIES 32
+extern kTask_t  *run_queue[SCHED_PRIORITIES];
+extern uint32_t  ready_mask;          /* bit N set ↔ run_queue[N] non-empty */
+
 void pid_hash_remove(kTask_t *t);
+
+/* Run-queue helpers — caller must hold schedulerSpinLock. */
+void rq_enqueue_locked(kTask_t *t);
+void rq_dequeue_locked(kTask_t *t);
 
 #endif /* _UBIXOS_SCHED_INTERNAL_H */

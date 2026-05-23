@@ -41,9 +41,9 @@
 
 void sched() {
   uint32_t memAddr = 0x0;
-  kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
-  int wrapped = 0;
+  kTask_t *next    = 0x0;
+  kTask_t *t       = 0x0;
 
   /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
    * and reboot when time is up. Runs before the spinlock to keep it simple. */
@@ -68,93 +68,88 @@ void sched() {
   if (spinTryLock(&schedulerSpinLock))
     return;
 
-  /* 1.3: start scan from the task after _current; wrap once. */
-  tmpTask = (_current != 0x0) ? _current->next : taskList;
-  if (tmpTask == 0x0) { tmpTask = taskList; wrapped = 1; }
-  schedStart:
-
-  for (; tmpTask != 0x0; tmpTask = tmpTask->next) {
-    if (tmpTask->state == READY) {
-      if (_current != NULL)
-        _current->state = (_current->state == DEAD) ? DEAD : READY;
-      _current = tmpTask;
-      break;
-    }
-    else if (tmpTask->state == DEAD) {
-      delTask = tmpTask;
+  /* --- Phase 2: dead-task cleanup (separate from dispatch) --- */
+  t = taskList;
+  while (t != 0x0) {
+    if (t->state == DEAD) {
+      delTask = t;
+      t = t->next;
 
       if (delTask->parent != 0x0) {
         delTask->parent->children -= 1;
         delTask->parent->last_exit = delTask->id;
-        /* Don't revive a parent that is already dying (endTask ran
-         * vmm_cleanVirtualSpace, set DEAD, then yielded — marking it
-         * READY here would re-schedule it with a partially cleaned
-         * address space and trigger a not-present LDT fault). */
+        /* Don't revive a parent that is already dying. */
         if (delTask->parent->state != DEAD) {
-          delTask->parent->state = READY;
           delTask->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
+          if (delTask->parent->state != READY) {
+            delTask->parent->state = READY;
+            rq_enqueue_locked(delTask->parent);
+          }
         }
         if (delTask->term != NULL && delTask->term->owner == delTask->id)
           delTask->term->owner = delTask->parent->id;
-        /* Clear stale foreground pgrp so the fallback fires for the
-         * next shell before it calls tcsetpgrp. */
         if (delTask->term != NULL &&
             delTask->term->t_pgrp == (pid_t)delTask->pgrp)
           delTask->term->t_pgrp = 0;
       }
 
-      /* 1.1: O(1) splice — we already hold the pointer, no list re-scan. */
-      tmpTask = tmpTask->next;
+      /* O(1) splice from taskList. */
       if (delTask->prev != 0x0) delTask->prev->next = delTask->next;
       else                      taskList             = delTask->next;
       if (delTask->next != 0x0) delTask->next->prev  = delTask->prev;
       pid_hash_remove(delTask);
       sched_addDelTask(delTask);
-
-      goto schedStart;
+    } else {
+      t = t->next;
     }
   }
 
-  /* 1.3: wrap once to catch tasks before _current in the list. */
-  if (tmpTask == 0x0 && !wrapped) {
-    wrapped = 1;
-    tmpTask = taskList;
-    goto schedStart;
+  /* --- Phase 2: O(1) dispatch via ready_mask --- */
+
+  /* Re-enqueue current task if it is still runnable (wasn't put to sleep
+   * or killed before calling sched_yield). */
+  if (_current != NULL && _current->state == RUNNING) {
+    _current->state = READY;
+    rq_enqueue_locked(_current);
   }
 
-  /* No READY task found — nothing to switch to. */
-  if (tmpTask == 0x0 || _current == 0x0) {
+  /* Nothing ready — return without switching. */
+  if (ready_mask == 0) {
     spinUnlock(&schedulerSpinLock);
     return;
   }
 
-  if (_current->state == READY || _current->state == RUNNING) {
-
-    if (_current->oInfo.v86Task == 0x1)
-      irqDisable(0x0);  /* mask timer while v86 task runs; irqEnable(0) on INT 0x69 exit */
-
-    asm("cli");
-
-    memAddr = (uint32_t) &(_current->md.md_tss);
-    ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
-    ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
-    ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
-    ubixGDT[4].descriptor.access = '\x89';
-
-    _current->state = RUNNING;
-
-    spinUnlock(&schedulerSpinLock);
-
-    asm("ljmp $0x20,$0");
-    /* The outgoing task resumes here on its next scheduling slot.
-     * ljmp saved EFLAGS with IF=0 (from cli above) into its TSS, so
-     * we must re-enable interrupts explicitly here rather than before
-     * the ljmp (which would create a race window). */
-    asm("sti");
+  /* Pick the highest-priority ready task (highest set bit). */
+  {
+    int pri = 31 - __builtin_clz(ready_mask);
+    /* run_queue[pri] is a circular list; head is the next to run. */
+    next = run_queue[pri];
+    /* Dequeue (removes next and rotates head to next->rq_next). */
+    rq_dequeue_locked(next);
   }
-  else {
-    spinUnlock(&schedulerSpinLock);
-  }
+
+  _current = next;
+
+  if (_current->oInfo.v86Task == 0x1)
+    irqDisable(0x0);  /* mask timer while v86 task runs */
+
+  asm("cli");
+
+  memAddr = (uint32_t) &(_current->md.md_tss);
+  ubixGDT[4].descriptor.baseLow  = (memAddr & 0xFFFF);
+  ubixGDT[4].descriptor.baseMed  = ((memAddr >> 16) & 0xFF);
+  ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
+  ubixGDT[4].descriptor.access   = '\x89';
+
+  _current->state = RUNNING;
+
+  spinUnlock(&schedulerSpinLock);
+
+  asm("ljmp $0x20,$0");
+  /* The outgoing task resumes here on its next scheduling slot.
+   * ljmp saved EFLAGS with IF=0 (from cli above) into its TSS, so
+   * we must re-enable interrupts explicitly here. */
+  asm("sti");
 
   return;
 }

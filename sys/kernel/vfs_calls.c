@@ -555,20 +555,22 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		}
 		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
-		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
 		{
-			size_t i;
-			for (i = 0; i < uap->nbyte; i++) {
-				rs232_putc(buffer[i]);
-}
-		}
-		else if (_current->term != NULL)
-		{
-			tty_print(buffer, _current->term);
-		}
-		else
-		{
-			kprintf("%s", buffer);
+			tty_term *t_out = _current->ct_tty ? _current->ct_tty : _current->term;
+			if (t_out != NULL && t_out->t_type == TTY_TYPE_SERIAL)
+			{
+				size_t i;
+				for (i = 0; i < uap->nbyte; i++)
+					rs232_putc(buffer[i]);
+			}
+			else if (t_out != NULL)
+			{
+				tty_print(buffer, t_out);
+			}
+			else
+			{
+				kprintf("%s", buffer);
+			}
 		}
 		kfree(buffer);
 		td->td_retval[0] = uap->nbyte;

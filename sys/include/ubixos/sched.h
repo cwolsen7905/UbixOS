@@ -94,6 +94,11 @@ typedef struct taskStruct {
     uint32_t *kernelStack;
     struct taskStruct *hash_next; /* PID hash chain — Phase 1.5 */
     uint8_t   quantum;            /* ticks remaining in current time slice */
+    uint8_t   priority;          /* current scheduling priority (0–31) */
+    uint8_t   base_priority;     /* QoS floor — boosts never go below this */
+    uint8_t   on_rq;             /* 1 if currently in a run queue */
+    struct taskStruct *rq_next;  /* per-priority run queue forward link */
+    struct taskStruct *rq_prev;  /* per-priority run queue backward link */
 } kTask_t;
 
 int sched_init();

@@ -9,11 +9,11 @@
 | 1.3 | Fix wrap-around double-scan | 1 | ✅ Done |
 | 1.4 | Wire up `need_resched` + quantum decrement | 2 | ⏸ Deferred to Phase 2 — needs timer.S to pre-set need_resched |
 | 1.5 | Hash table for `schedFindTask` | 1 | ✅ Done |
-| 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ⬜ Not started |
-| 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ⬜ Not started |
-| 2.3 | Priority bands (32 levels, 4 bands) | 2 | ⬜ Not started |
+| 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ✅ Done |
+| 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ✅ Done |
+| 2.3 | Priority bands (32 levels, 4 bands) | 2 | ✅ Done |
 | 2.4 | Per-band time quanta + preemption | 2 | ⬜ Not started |
-| 2.5 | Add `priority`, `base_priority`, `quantum`, `rq_next/prev` to `kTask_t` | 2 | ⬜ Not started |
+| 2.5 | Add `priority`, `base_priority`, `quantum`, `rq_next/prev` to `kTask_t` | 2 | ✅ Done |
 | 3.1 | QoS classes as `base_priority` floor | 3 | ⬜ Not started |
 | 3.2 | Temporary priority boosts (I/O wakeup, interactive, CPU-bound decay) | 3 | ⬜ Not started |
 | 3.3 | Priority inheritance for mutexes | 3 | ⬜ Not started |

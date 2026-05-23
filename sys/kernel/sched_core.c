@@ -28,6 +28,7 @@
 
 #include <sys/_null.h>
 #include <ubixos/sched.h>
+#include <ubixos/sched_internal.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/wait.h>
@@ -41,6 +42,10 @@
 /* Shared with sched_switch.c via sched_internal.h — not static. */
 kTask_t *taskList = 0x0;
 struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
+
+/* Phase 2: 32 per-priority run queues + bitmask (Windows ReadySummary trick). */
+kTask_t  *run_queue[SCHED_PRIORITIES];
+uint32_t  ready_mask = 0;
 
 static kTask_t *delList = 0x0;
 static uint32_t nextID = 1;
@@ -127,6 +132,10 @@ kTask_t *schedNewTask()
 	tmpTask->td.rlim[RLIMIT_NOFILE].rlim_cur = 64;
 	tmpTask->td.rlim[RLIMIT_NOFILE].rlim_max = 64;
 
+	tmpTask->priority      = 12;  /* QOS_DEFAULT — mid Normal band */
+	tmpTask->base_priority = 12;
+	tmpTask->on_rq         = 0;
+
 	spinLock(&schedulerSpinLock);
 	tmpTask->id = nextID++;
 	tmpTask->quantum = 6;
@@ -138,6 +147,65 @@ kTask_t *schedNewTask()
 	spinUnlock(&schedulerSpinLock);
 
 	return (tmpTask);
+}
+
+/* -----------------------------------------------------------------------
+ * Phase 2: run-queue helpers — caller must hold schedulerSpinLock.
+ * ----------------------------------------------------------------------- */
+
+void
+rq_enqueue_locked(kTask_t *t)
+{
+	int pri;
+	kTask_t *tail;
+
+	if (t == NULL || t->on_rq)
+		return;
+
+	pri = (int)t->priority;
+	tail = run_queue[pri];
+
+	if (tail == NULL) {
+		/* First task at this priority. */
+		t->rq_next     = t;
+		t->rq_prev     = t;
+		run_queue[pri] = t;
+		ready_mask    |= (1u << pri);
+	} else {
+		/* Insert before the head (= append to tail of circular list). */
+		kTask_t *head = tail->rq_next;
+		t->rq_next     = head;
+		t->rq_prev     = tail;
+		tail->rq_next  = t;
+		head->rq_prev  = t;
+		/* run_queue[pri] stays pointing at head for O(1) dequeue. */
+	}
+	t->on_rq = 1;
+}
+
+void
+rq_dequeue_locked(kTask_t *t)
+{
+	int pri;
+
+	if (t == NULL || !t->on_rq)
+		return;
+
+	pri = (int)t->priority;
+
+	if (t->rq_next == t) {
+		/* Only task in this queue. */
+		run_queue[pri] = NULL;
+		ready_mask    &= ~(1u << pri);
+	} else {
+		t->rq_prev->rq_next = t->rq_next;
+		t->rq_next->rq_prev = t->rq_prev;
+		if (run_queue[pri] == t)
+			run_queue[pri] = t->rq_next;
+	}
+	t->rq_next = NULL;
+	t->rq_prev = NULL;
+	t->on_rq   = 0;
 }
 
 void sched_killTree(pidType id)
@@ -204,7 +272,12 @@ int sched_setStatus(pidType pid, tState state)
 	kTask_t *tmpTask = schedFindTask(pid);
 	if (tmpTask == 0x0)
 		return (0x1);
-	tmpTask->state = state;
+	if (state == DEAD)
+		sched_dead(tmpTask);
+	else if (state == READY)
+		sched_ready(tmpTask);
+	else
+		sched_sleep(tmpTask, state);
 	return (0x0);
 }
 
@@ -266,11 +339,7 @@ void wake_up_interruptible(struct wait_queue **q)
 		if ((p = tmp->task) != NULL)
 		{
 			if (p->state == INTERRUPTIBLE)
-			{
-				p->state = RUNNING;
-				if (p->counter > _current->counter)
-					need_resched = 1;
-			}
+				sched_ready(p);
 		}
 		if (!tmp->next)
 		{
@@ -295,12 +364,8 @@ void wake_up(struct wait_queue **q)
 	{
 		if ((p = tmp->task) != NULL)
 		{
-			if ((p->state == UNINTERRUPTIBLE) || (p->state == INTERRUPTIBLE))
-			{
-				p->state = RUNNING;
-				if (p->counter > _current->counter)
-					need_resched = 1;
-			}
+			if (p->state == UNINTERRUPTIBLE || p->state == INTERRUPTIBLE)
+				sched_ready(p);
 		}
 		if (!tmp->next)
 		{
@@ -315,26 +380,57 @@ void wake_up(struct wait_queue **q)
 }
 
 /* -----------------------------------------------------------------------
- * Scheduler state-transition API
- * Phase 2 will add run-queue enqueue/dequeue calls here.
+ * Scheduler state-transition API — Phase 2: run-queue management.
  * ----------------------------------------------------------------------- */
 
-void sched_ready(kTask_t *t) {
-	if (t != 0x0)
+void sched_ready(kTask_t *t)
+{
+	uint32_t flags;
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	if (t->state != READY) {
 		t->state = READY;
+		rq_enqueue_locked(t);
+	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
 }
 
-void sched_dead(kTask_t *t) {
-	if (t != 0x0)
-		t->state = DEAD;
+void sched_dead(kTask_t *t)
+{
+	uint32_t flags;
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	rq_dequeue_locked(t);
+	t->state = DEAD;
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
 }
 
-void sched_sleep(kTask_t *t, tState s) {
-	if (t != 0x0)
-		t->state = s;
+void sched_sleep(kTask_t *t, tState s)
+{
+	uint32_t flags;
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	rq_dequeue_locked(t);
+	t->state = s;
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
 }
 
-void sched_wakeup(kTask_t *t) {
-	if (t != 0x0)
+void sched_wakeup(kTask_t *t)
+{
+	/* Called when _current resumes after its own sleep — it's already
+	 * the running task so it doesn't need to be re-enqueued. */
+	if (t != NULL)
 		t->state = RUNNING;
 }
