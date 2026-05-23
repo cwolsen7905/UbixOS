@@ -64,6 +64,10 @@ struct uio {
     char pad;
 };
 
+/* fd_type values for struct file */
+#define FD_TYPE_TTY  5   /* opened via /dev/tty — uses process ct_tty */
+#define FD_TYPE_TTYV 6   /* opened via /dev/ttvX — specific tty_term in fd->data */
+
 struct file {
     uint32_t f_flag;
     uint16_t f_type;

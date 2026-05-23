@@ -65,34 +65,7 @@ int sys_open(struct thread *td, struct sys_open_args *args)
 
 int sys_openat(struct thread *td, struct sys_openat_args *args)
 {
-
-	int error = 0x0;
-	int fd = 0x0;
-	struct file *nfp = 0x0;
-
-	error = falloc(td, &nfp, &fd);
-
-	if (error)
-		return (error);
-
-	if ((args->flag & O_WRONLY) == O_WRONLY)
-		nfp->fd = fopen(args->path, "w");
-	else if ((args->flag & O_RDWR) == O_RDWR)
-		nfp->fd = fopen(args->path, "a");
-	else
-		nfp->fd = fopen(args->path, "r");
-
-	if (nfp->fd == 0x0)
-	{
-		if (fdestroy(td, nfp, fd) != 0x0)
-			kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
-
-		td->td_retval[0] = -1;
-		return (ENOENT);
-	}
-
-	td->td_retval[0] = fd;
-	return (0);
+	return (kern_openat(td, args->fd, args->path, args->flag, (int)args->mode));
 }
 
 int sys_close(struct thread *td, struct sys_close_args *args)
@@ -157,15 +130,21 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 
 			td->td_retval[0] = 0;
 			break;
+		case FD_TYPE_TTY:
+		case FD_TYPE_TTYV:
+			/* tty fds have no underlying fileDescriptor_t to close */
+			if (args->fd >= 3)
+				fdestroy(td, fd, args->fd);
+			td->td_retval[0] = 0;
+			break;
 		default:
 			if (args->fd < 3)
 				td->td_retval[0] = 0;
 			else
 			{
-				if (fclose(fd->fd) != 0)
+				if (fd->fd != NULL && fclose(fd->fd) != 0)
 					td->td_retval[0] = -1;
 
-				// kprintf("DESTROY: %i!", args->fd);
 				if (fdestroy(td, fd, args->fd) != 0x0)
 					kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
 
@@ -254,6 +233,30 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	{
 		td->td_retval[0] = -1;
 		return (-1);
+	}
+	else if (fd->fd_type == FD_TYPE_TTYV)
+	{
+		/* Specific virtual terminal fd: read from the bound tty_term. */
+		tty_term *t = (tty_term *)fd->data;
+		for (;;) {
+			if (SIG_PENDING_UNBLOCKED(td)) {
+				td->td_retval[0] = EINTR;
+				return (EINTR);
+			}
+			if (t->stdinSize > 0) {
+				int i;
+				c = t->stdin[0];
+				t->stdinSize--;
+				for (i = 0; i < t->stdinSize; i++)
+					t->stdin[i] = t->stdin[i + 1];
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)args->nbyte)
+					break;
+			} else {
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
 	}
 	else if (fd->fd != NULL)
 	{
@@ -467,6 +470,24 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		td->td_retval[0] = uap->nbyte;
 	}
+	else if (fd != NULL && fd->fd_type == FD_TYPE_TTYV)
+	{
+		/* Specific virtual terminal fd: write to the bound tty_term. */
+		tty_term *t = (tty_term *)fd->data;
+		buffer = kmalloc(uap->nbyte + 1);
+		if (!buffer) { td->td_retval[0] = -1; return (-1); }
+		memset(buffer, '\0', uap->nbyte + 1);
+		memcpy(buffer, uap->buf, uap->nbyte);
+		if (t != NULL && t->t_type == TTY_TYPE_SERIAL) {
+			size_t i;
+			for (i = 0; i < uap->nbyte; i++)
+				rs232_putc(buffer[i]);
+		} else if (t != NULL) {
+			tty_print(buffer, t);
+		}
+		kfree(buffer);
+		td->td_retval[0] = uap->nbyte;
+	}
 	else if (fd != NULL && fd->fd == NULL)
 	{
 		/* TTY placeholder: original fds 1/2 or any dup2'd copy thereof */
@@ -615,6 +636,52 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	}
 
 	nfp->f_flag = flags & FMASK;
+
+	/* Special case: /dev/tty opens the calling process's controlling terminal.
+	 * Fall back to _current->term when ct_tty is NULL (e.g. right after
+	 * setsid()) — UbixOS has no /dev/ttyN device for the app to open and
+	 * then call TIOCSCTTY on, so we treat the inherited term as good enough. */
+	if (strcmp(path, "/dev/tty") == 0 || strcmp(path, "devfs:/tty") == 0) {
+		if (_current->ct_tty == NULL && _current->term == NULL) {
+			fdestroy(thr, nfp, fd);
+			thr->td_retval[0] = ENXIO;
+			return (ENXIO);
+		}
+		/* If no explicit ct_tty yet, promote the inherited term. */
+		if (_current->ct_tty == NULL)
+			_current->ct_tty = _current->term;
+		nfp->fd      = NULL;
+		nfp->fd_type = FD_TYPE_TTY;
+		thr->td_retval[0] = fd;
+		return (0);
+	}
+
+	/* /dev/ttyv0.../dev/ttyv3 — open a specific virtual terminal. */
+	{
+		const char *tvp = NULL;
+		if (strncmp(path, "/dev/ttyv", 9) == 0)
+			tvp = path + 9;
+		else if (strncmp(path, "devfs:/ttyv", 11) == 0)
+			tvp = path + 11;
+		if (tvp != NULL && *tvp >= '0' && *tvp <= '3' && *(tvp + 1) == '\0') {
+			int idx = *tvp - '0';
+			tty_term *t = tty_find((uInt16)idx);
+			if (t == NULL) {
+				fdestroy(thr, nfp, fd);
+				thr->td_retval[0] = ENODEV;
+				return (ENODEV);
+			}
+			nfp->fd      = NULL;
+			nfp->fd_type = FD_TYPE_TTYV;
+			nfp->data    = t;
+			/* POSIX: session leader opening a terminal without O_NOCTTY
+			 * implicitly acquires it as controlling terminal. */
+			if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)
+				_current->ct_tty = t;
+			thr->td_retval[0] = fd;
+			return (0);
+		}
+	}
 
 	/* Directory open: use VFS dir layer instead of fopen */
 	if (oflags & O_DIRECTORY)

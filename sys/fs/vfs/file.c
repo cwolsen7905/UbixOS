@@ -540,11 +540,14 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
 
     path = file;
 
-    /* Determine if path is relative or absolute */
-    if (path[0] == '.' && path[1] == '\0')
+    /* Translate POSIX /dev/X -> devfs:/X for POSIX compatibility. */
+    if (strncmp(file, "/dev/", 5) == 0) {
+        snprintf(fileName, sizeof(fileName), "devfs:%s", file + 4);
+    } else if (path[0] == '.' && path[1] == '\0') {
         strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
-    else
+    } else {
         strncpy(fileName, file, sizeof(fileName) - 1);
+    }
     fileName[sizeof(fileName) - 1] = '\0';
 
     path = 0x0;
@@ -813,10 +816,15 @@ kDIR_t *vfs_opendir(const char *path) {
     if (path == 0x0 || path[0] == '\0')
         return (0x0);
 
-    if (path[0] == '.' && path[1] == '\0')
+    /* Translate POSIX /dev/X -> devfs:/X for POSIX compatibility. */
+    if (strncmp(path, "/dev", 4) == 0 && (path[4] == '/' || path[4] == '\0')) {
+        snprintf(fileName, sizeof(fileName), "devfs:%s",
+            path[4] == '\0' ? "/" : path + 4);
+    } else if (path[0] == '.' && path[1] == '\0') {
         strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
-    else
+    } else {
         strncpy(fileName, path, sizeof(fileName) - 1);
+    }
     fileName[sizeof(fileName) - 1] = '\0';
 
     if (strstr(fileName, ":")) {

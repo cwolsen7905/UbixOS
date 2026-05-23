@@ -132,6 +132,12 @@ open_fat(const char *path, fileDescriptor_t *fd)
 	fd->size  = f->file_size;
 	fd->ino   = f->start_cluster;
 	fd->perms = 0x1;
+
+	/* Synthesize POSIX inode fields for VFS stat(). FAT has no Unix modes. */
+	fd->inode.u.ufs2_i.di_mode  = 0x81ED; /* S_IFREG | 0755 */
+	fd->inode.u.ufs2_i.di_nlink = 1;
+	fd->inode.u.ufs2_i.di_size  = (int64_t)f->file_size;
+
 	return (1);
 }
 

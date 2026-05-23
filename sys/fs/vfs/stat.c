@@ -83,7 +83,7 @@ int _sys_stat(char *path, struct stat *sb, int flags) {
     sb->st_atime = fd->inode.u.ufs2_i.di_atime;
     sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
     sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-    //MrOlsen kprintf("LSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X", error, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size);
+
     fclose(fd);
   }
 
@@ -112,8 +112,6 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
     args->sb->st_size = fd->size;
     args->sb->st_uid = 0;
     args->sb->st_gid = 0;
-
-    //kprintf("FSTAT DOS");
   }
   else {
     args->sb->st_dev = 0xDEADBEEF;
@@ -127,7 +125,6 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
     args->sb->st_atime = fd->inode.u.ufs2_i.di_atime;
     args->sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
     args->sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-    //kprintf("FSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->sb->st_ino, args->sb->st_mode, args->sb->st_uid, args->sb->st_gid, args->sb->st_size, fd->size);
   }
 
   td->td_retval[0] = error;
@@ -174,7 +171,14 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args) {
     sb->st_atime = fd->inode.u.ufs2_i.di_atime;
     sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
     sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-    //kprintf("FSTAT(%i:%s:%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->path, args->flag, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size, fd->size);
+
+    if (sb->st_mode == 0)
+      sb->st_mode = 0x81ED; /* S_IFREG | 0755 */
+    if (sb->st_nlink == 0)
+      sb->st_nlink = 1;
+    if (sb->st_size == 0 && fd->size != 0)
+      sb->st_size = (off_t)fd->size;
+
     if (uP == 1)
       fclose(fd);
   }

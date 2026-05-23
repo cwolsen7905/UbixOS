@@ -57,6 +57,7 @@
 #define O_CREAT         0x0200          /* create if nonexistent */
 #define O_TRUNC         0x0400          /* truncate to zero length */
 #define O_EXCL          0x0800          /* error if already exists */
+#define O_NOCTTY        0x8000          /* don't assign controlling terminal */
 #define O_DIRECT        0x00004000
 #define O_RDONLY        0x0000          /* open for reading only */
 #define O_WRONLY        0x0001          /* open for writing only */

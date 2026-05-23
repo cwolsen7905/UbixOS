@@ -305,9 +305,11 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess = schedNewTask();
 	assert(newProcess);
 
-	newProcess->gid = 0x0;
-	newProcess->uid = 0x0;
-	newProcess->pgrp = newProcess->id;
+	newProcess->gid    = 0x0;
+	newProcess->uid    = 0x0;
+	newProcess->pgrp   = newProcess->id;
+	newProcess->sid    = newProcess->id;
+	newProcess->ct_tty = NULL;
 
 	{
 		const char *base = file, *p;

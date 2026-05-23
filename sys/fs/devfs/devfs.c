@@ -275,6 +275,7 @@ int devfs_init() {
   /* Pseudo-devices always present, major=0 minor=0/1 */
   devfs_makeNode("null", 'p', 0, 0);
   devfs_makeNode("zero", 'p', 0, 1);
+  devfs_makeNode("tty",  'p', 0, 2);
 
   /* Return */
   return (0x0);

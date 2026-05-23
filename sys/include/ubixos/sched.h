@@ -85,6 +85,8 @@ typedef struct taskStruct {
     uint16_t groups[NR_GROUPS];
     pidType ppid;
     uint32_t pgrp;
+    uint32_t sid;        /* session ID — set by setsid(), inherited by fork */
+    tty_term *ct_tty;   /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
     uint32_t children; // Hack for WAIT
     uint32_t last_exit; // Hack For WAIT
     struct taskStruct *parent;

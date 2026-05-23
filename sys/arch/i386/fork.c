@@ -55,8 +55,10 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   /* Set PPID */
   newProcess->ppid = _current->id;
 
-  /* Set PGRP */
-  newProcess->pgrp = _current->pgrp;
+  /* Set PGRP, SID, and controlling terminal (inherited from parent) */
+  newProcess->pgrp   = _current->pgrp;
+  newProcess->sid    = _current->sid;
+  newProcess->ct_tty = _current->ct_tty;
 
   /* Copy File Descriptor Table */
   //memcpy(newProcess->files, _current->files, sizeof(fileDescriptor_t *) * MAX_OFILES);
@@ -174,7 +176,9 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
 
   newProcess->md.md_tss.eip = eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
-  newProcess->term = _current->term;
+  newProcess->term   = _current->term;
+  newProcess->sid    = _current->sid;
+  newProcess->ct_tty = _current->ct_tty;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->md.md_tss.back_link = 0x0;
