@@ -753,6 +753,49 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		return (0);
 	}
 
+	/* /dev/console — always the system console (ttyv0). */
+	if (strcmp(path, "/dev/console") == 0)
+	{
+		tty_term *t = tty_find(0);
+		if (t == NULL)
+		{
+			fdestroy(thr, nfp, fd);
+			thr->td_retval[0] = ENODEV;
+			return (ENODEV);
+		}
+		nfp->fd = NULL;
+		nfp->fd_type = FD_TYPE_TTYV;
+		nfp->data = t;
+		thr->td_retval[0] = fd;
+		return (0);
+	}
+
+	/* /dev/stdin, /dev/stdout, /dev/stderr — dup the process's fd 0/1/2. */
+	{
+		int src_fd = -1;
+		if (strcmp(path, "/dev/stdin") == 0)
+			src_fd = 0;
+		else if (strcmp(path, "/dev/stdout") == 0)
+			src_fd = 1;
+		else if (strcmp(path, "/dev/stderr") == 0)
+			src_fd = 2;
+		if (src_fd >= 0)
+		{
+			struct file *src = (struct file *)thr->o_files[src_fd];
+			if (src == NULL)
+			{
+				fdestroy(thr, nfp, fd);
+				thr->td_retval[0] = EBADF;
+				return (EBADF);
+			}
+			memcpy(nfp, src, sizeof(struct file));
+			if (src->fd != NULL)
+				src->fd->dup++;
+			thr->td_retval[0] = fd;
+			return (0);
+		}
+	}
+
 	/* /dev/ttyv0.../dev/ttyv3 — open a specific virtual terminal. */
 	{
 		const char *tvp = NULL;

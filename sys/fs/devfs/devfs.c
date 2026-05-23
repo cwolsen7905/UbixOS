@@ -340,6 +340,10 @@ int devfs_init() {
   devfs_makeNode("tty",     'p', 0, 2);
   devfs_makeNode("random",  'p', 0, 3);
   devfs_makeNode("urandom", 'p', 0, 4);
+  devfs_makeNode("console", 'p', 0, 5);
+  devfs_makeNode("stdin",   'p', 0, 6);
+  devfs_makeNode("stdout",  'p', 0, 7);
+  devfs_makeNode("stderr",  'p', 0, 8);
 
   return (0x0);
 }

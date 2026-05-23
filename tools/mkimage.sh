@@ -199,6 +199,9 @@ else
     echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
 fi
 
+echo "==> Creating /mnt (automountd mount point root)"
+mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true
+
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true
