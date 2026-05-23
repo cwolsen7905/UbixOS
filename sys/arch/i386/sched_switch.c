@@ -92,15 +92,21 @@ void sched() {
       aging_last = now;
       for (tmp = taskList; tmp != NULL; tmp = tmp->next) {
         uint8_t cap;
-        if (tmp->state != READY || tmp->last_run_tick == 0)
+        if (tmp->state != READY || !tmp->on_rq || tmp->last_run_tick == 0)
           continue;
         if (now - tmp->last_run_tick < AGING_STARVE)
           continue;
-        /* +1 boost, capped at base_priority + 8, never into interactive band. */
+        /* +1 boost, capped at base_priority + 8, never into interactive band.
+         * Must dequeue/re-enqueue because rq_dequeue_locked keyes on
+         * t->priority — changing it in-place corrupts the run-queue buckets. */
         cap = tmp->base_priority + 8;
         if (cap > 23) cap = 23;
-        if (tmp->priority < cap)
+        if (tmp->priority < cap) {
+          rq_dequeue_locked(tmp);
           tmp->priority++;
+          tmp->state = READY;
+          rq_enqueue_locked(tmp);
+        }
       }
     }
   }

@@ -59,19 +59,21 @@
      (1u << 12) |   /* SIGPIPE 13 */ \
      (1u << 14))    /* SIGTERM 15 */
 
-/* Signals whose SIG_DFL action is to stop (not terminate) the process. */
+/* Signals whose SIG_DFL action is to stop the process.
+ * SIGTTIN/SIGTTOU are intentionally excluded: they are already handled
+ * as EINTR in the TTY read/write paths.  Adding them here would stop
+ * boot-time daemons permanently when no job-control shell exists to
+ * send SIGCONT.  Re-add once a full job-control shell is wired up. */
 #define SIGSTOP_MASK \
-    ((1u << (SIGTSTP  - 1)) |   /* 20 */ \
-     (1u << (SIGSTOP  - 1)) |   /* 19 */ \
-     (1u << (SIGTTIN  - 1)) |   /* 21 */ \
-     (1u << (SIGTTOU  - 1)))    /* 22 */
+    ((1u << (SIGTSTP - 1)) |    /* 20 — Ctrl+Z */ \
+     (1u << (SIGSTOP - 1)))     /* 19 — unconditional stop */
 
 /* Pending stop signals cleared by SIGCONT. */
 #define SIGPENDSTOP_MASK \
-    ((1u << (SIGTSTP  - 1)) | \
-     (1u << (SIGSTOP  - 1)) | \
-     (1u << (SIGTTIN  - 1)) | \
-     (1u << (SIGTTOU  - 1)))
+    ((1u << (SIGTSTP - 1)) | \
+     (1u << (SIGSTOP - 1)) | \
+     (1u << (SIGTTIN - 1)) | \
+     (1u << (SIGTTOU - 1)))
 
 /*
  * signal_post — post signal `sig` to the task identified by `pid`.
@@ -537,6 +539,13 @@ signal_ast_check(void)
         }
 
         if ((void *)sa->sa_handler == (void *)0x0 || sa->sa_handler == NULL) {
+            if ((1u << (sig - 1)) & SIGSTOP_MASK) {
+                td->sig_pending &= ~(1u << (sig - 1));
+                /* sched_stop + yield — returns when SIGCONT wakes us. */
+                sched_stop(_current, sig);
+                sched_yield();
+                return;
+            }
             if ((1u << (sig - 1)) & SIGTERM_MASK) {
                 td->sig_pending &= ~(1u << (sig - 1));
                 kprintf("signal: AST SIG_DFL terminate sig=%d pid=%d name=%s\n",
