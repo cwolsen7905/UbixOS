@@ -503,7 +503,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 				K_PANIC("execFile: kmalloc interp");
 			kern_fseek(newProcess->files[0], programHeader[i].p_offset, 0);
 			fread(interp, programHeader[i].p_filesz, 1, newProcess->files[0]);
-			ldAddr = ldEnable(interp);
+			ldAddr = ldEnable(interp, newProcess->id);
 			kfree(interp);
 			interp = 0x0;
 		}
@@ -957,7 +957,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 #ifdef DEBUG_EXEC
 			kprintf("Interp: [%s]\n", interp);
 #endif
-			ldAddr = ldEnable(interp);
+			ldAddr = ldEnable(interp, _current->id);
 			kfree(interp);
 			interp = 0x0;
 			// ef->ld_addr = ldEnable();

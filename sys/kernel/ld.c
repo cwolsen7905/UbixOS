@@ -30,13 +30,14 @@
 #include <ubixos/sched.h>
 #include <sys/elf.h>
 #include <ubixos/kpanic.h>
+#include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <fs/vfs/vfs.h>
 #include <vmm/vmm.h>
 #include <string.h>
 #include <assert.h>
 
-uint32_t ldEnable(const char *interp)
+uint32_t ldEnable(const char *interp, uint32_t pid)
 {
 	int i = 0;
 	int x = 0;
@@ -46,17 +47,19 @@ uint32_t ldEnable(const char *interp)
 	Elf_Phdr *programHeader = 0x0;
 	uint32_t entry;
 
-	/*
-	 * PT_INTERP paths are POSIX-absolute (e.g. /lib/ld-musl-i386.so.1).
-	 * fopen() now resolves POSIX paths via longest-prefix mount matching,
-	 * so pass the interp path directly.
-	 */
+	kprintf("ldEnable: loading interp [%s] for pid %u\n", interp, pid);
+
 	ldFd = fopen(interp, "rb");
 	if (ldFd == 0x0) {
+		kprintf("ldEnable: [%s] not found, trying /libexec/ld.so\n", interp);
 		ldFd = fopen("/libexec/ld.so", "rb");
-		if (ldFd == 0x0)
+		if (ldFd == 0x0) {
+			kprintf("ldEnable: no interpreter found — dynamic linking disabled\n");
 			return (0x0);
+		}
 	}
+
+	kprintf("ldEnable: interpreter opened, loading at 0x%X\n", LD_START);
 
 	kern_fseek(ldFd, 0x0, 0x0);
 	binaryHeader = (Elf32_Ehdr *)kmalloc(sizeof(Elf32_Ehdr));
@@ -74,7 +77,7 @@ uint32_t ldEnable(const char *interp)
 		newLoc = (char *)(programHeader[i].p_vaddr + LD_START);
 		for (x = 0; x < (int)programHeader[i].p_memsz; x += 0x1000) {
 			uint32_t va = (programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START;
-			if (vmm_remapPage(vmm_findFreePage(_current->id), va, PAGE_DEFAULT, _current->id, 0) == 0x0)
+			if (vmm_remapPage(vmm_findFreePage(pid), va, PAGE_DEFAULT, pid, 0) == 0x0)
 				K_PANIC("vmmRemapPage: ld");
 			memset((void *)va, 0x0, 0x1000);
 		}
@@ -83,6 +86,9 @@ uint32_t ldEnable(const char *interp)
 	}
 
 	entry = binaryHeader->e_entry + LD_START;
+
+	kprintf("ldEnable: entry point 0x%X (e_entry=0x%X + LD_START=0x%X)\n",
+	        entry, binaryHeader->e_entry, LD_START);
 
 	kfree(programHeader);
 	kfree(binaryHeader);
