@@ -38,7 +38,6 @@
  */
 extern kTask_t *taskList;
 extern struct spinLock schedulerSpinLock;
-extern int need_resched;
 
 void pid_hash_remove(kTask_t *t);
 

@@ -65,21 +65,6 @@ void sched() {
     }
   }
 
-  /* 1.4: per-task quantum — decrement and mark need_resched when expired. */
-  if (_current != 0x0) {
-    if (_current->quantum > 0)
-      _current->quantum--;
-    if (_current->quantum == 0) {
-      _current->quantum = 6;
-      need_resched = 1;
-    }
-  }
-
-  /* Skip reschedule if nothing requested it. */
-  if (!need_resched)
-    return;
-  need_resched = 0;
-
   if (spinTryLock(&schedulerSpinLock))
     return;
 
@@ -137,6 +122,12 @@ void sched() {
     goto schedStart;
   }
 
+  /* No READY task found — nothing to switch to. */
+  if (tmpTask == 0x0 || _current == 0x0) {
+    spinUnlock(&schedulerSpinLock);
+    return;
+  }
+
   if (_current->state == READY || _current->state == RUNNING) {
 
     if (_current->oInfo.v86Task == 0x1)
@@ -174,6 +165,5 @@ void schedEndTask(pidType pid) {
 }
 
 void sched_yield() {
-  need_resched = 1;
   sched();
 }
