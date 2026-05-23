@@ -88,7 +88,7 @@ main(int argc, char *argv[])
 
 	audio_fd = audio_open("/dev/audio");
 	if (audio_fd < 0) {
-		fprintf(stderr, "mp3play: cannot open devfs:/audio\n");
+		fprintf(stderr, "mp3play: cannot open /dev/audio\n");
 		fclose(fp);
 		return (1);
 	}

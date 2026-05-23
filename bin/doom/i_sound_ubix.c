@@ -73,7 +73,7 @@ I_InitSound(boolean use_sfx_prefix)
 
 	g_audio_fd = audio_open("/dev/audio");
 	if (g_audio_fd < 0) {
-		fprintf(stderr, "doom: I_InitSound: cannot open devfs:/audio\n");
+		fprintf(stderr, "doom: I_InitSound: cannot open /dev/audio\n");
 		return;
 	}
 	audio_set_rate(g_audio_fd, MIX_RATE);

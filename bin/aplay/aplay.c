@@ -47,7 +47,7 @@ main(void)
 
 	fd = audio_open("/dev/audio");
 	if (fd < 0) {
-		printf("aplay: cannot open devfs:/audio\n");
+		printf("aplay: cannot open /dev/audio\n");
 		return 1;
 	}
 
