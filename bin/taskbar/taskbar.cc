@@ -49,8 +49,8 @@
 
 /* Flyout geometry */
 #define FLY_W 120
-#define FLY_H 80
-#define FLY_ITEM_H (FLY_H / 2)
+#define FLY_H 120
+#define FLY_ITEM_H (FLY_H / 3)
 
 /* Colours: (r<<16)|(g<<8)|b */
 static const uint32_t TB_BG = 0x003C8Cu;
@@ -249,13 +249,13 @@ class Flyout
 		font.PutString(surf_, 8, 10, "Terminal");
 
 		/* About Item */
-		surf_.ogFillRect(2, FLY_ITEM_H + 2, FLY_W - 3, FLY_H - 3, FLY_ITEM_C);
+		surf_.ogFillRect(2, FLY_ITEM_H + 2, FLY_W - 3, 2 * FLY_ITEM_H - 3, FLY_ITEM_C);
 		font_fg(font, COL_WHITE);
 		font_bg(font, FLY_ITEM_C);
 		font.PutString(surf_, 8, FLY_ITEM_H + 10, "About");
 
 		/* Log Out Item */
-		surf_.ogFillRect(2, 2 * FLY_ITEM_H + 2, FLY_W - 3, 2 * FLY_ITEM_H - 3, FLY_ITEM_C);
+		surf_.ogFillRect(2, 2 * FLY_ITEM_H + 2, FLY_W - 3, FLY_H - 3, FLY_ITEM_C);
 		font_fg(font, COL_WHITE);
 		font_bg(font, FLY_ITEM_C);
 		font.PutString(surf_, 8, 2 * FLY_ITEM_H + 10, "Log Out");

@@ -133,11 +133,16 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
    * causing sig_pending to be overwritten with garbage.  Zeroing here
    * guarantees a clean slate regardless of what vmm_copyVirtualSpace did.
    */
+  /*
+   * Clear delivery state (pending signals, queued info) — POSIX requires
+   * the child start with no pending signals.  Signal dispositions (sigact)
+   * and the signal mask are inherited, not cleared.
+   */
   newProcess->td.sig_pending = 0;
   memset(newProcess->td.sig_code,  0, sizeof(newProcess->td.sig_code));
   memset(newProcess->td.sig_extra, 0, sizeof(newProcess->td.sig_extra));
-  memset(newProcess->td.sigact, 0, sizeof(newProcess->td.sigact));
-  memset(&newProcess->td.sigmask, 0, sizeof(newProcess->td.sigmask));
+  memcpy(newProcess->td.sigact, td->sigact, sizeof(newProcess->td.sigact));
+  memcpy(&newProcess->td.sigmask, &td->sigmask, sizeof(newProcess->td.sigmask));
 
   newProcess->parent = _current;
   _current->children++;

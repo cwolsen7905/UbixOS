@@ -255,8 +255,28 @@ void schedEndTask(pidType pid) {
 }
 
 void sched_yield() {
-  /* Force an immediate switch by expiring the current quantum. */
-  if (_current != NULL)
-    _current->quantum = 0;
+  uint32_t flags;
+
+  if (_current == NULL)
+    return;
+
+  _current->quantum = 0;
+
+  /*
+   * High/Realtime tasks (priority >= 24) are never preempted by the
+   * normal quantum path in sched(), which returns early for them.
+   * For a voluntary yield we must enqueue _current as READY so the
+   * early-exit check is bypassed and another task can be dispatched.
+   */
+  if (_current->priority >= 24) {
+    save_flags(flags);
+    cli();
+    spinLock(&schedulerSpinLock);
+    _current->state = READY;
+    rq_enqueue_locked(_current);
+    spinUnlock(&schedulerSpinLock);
+    restore_flags(flags);
+  }
+
   sched();
 }

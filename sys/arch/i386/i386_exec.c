@@ -1184,9 +1184,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	taskLDT->baseHigh = data_addr >> 24;
 
 	_current->md.md_tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
-	_current->pgrp = _current->id;
 
-	/* Update foreground pgrp so tcgetpgrp() returns the new process's pgrp. */
+	/*
+	 * POSIX: exec does not change the process group.  Keep _current->pgrp
+	 * as-is (inherits from fork / setpgid).  Only sync the tty's t_pgrp so
+	 * tcgetpgrp() reflects the current foreground group.
+	 */
 	{
 		tty_term *t = _current->ct_tty ? _current->ct_tty : _current->term;
 		if (t != NULL)

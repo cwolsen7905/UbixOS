@@ -38,6 +38,7 @@
 #include <assert.h>
 #include <sys/descrip.h>
 #include <sys/resource.h>
+#include <ubixos/vitals.h>
 
 /* Shared with sched_switch.c via sched_internal.h — not static. */
 kTask_t *taskList = 0x0;
@@ -135,7 +136,9 @@ kTask_t *schedNewTask()
 	tmpTask->priority      = 12;  /* QOS_DEFAULT — mid Normal band */
 	tmpTask->base_priority = 12;
 	tmpTask->boost_quanta  = 0;
-	tmpTask->last_run_tick = 0;
+	/* Initialize to now so starvation aging can fire immediately if the
+	 * task never gets its first dispatch (last_run_tick==0 skips aging). */
+	tmpTask->last_run_tick = systemVitals ? systemVitals->sysTicks : 1;
 	tmpTask->on_rq         = 0;
 
 	spinLock(&schedulerSpinLock);
