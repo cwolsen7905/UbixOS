@@ -112,7 +112,6 @@ procfs_state_name(tState s)
 	case READY:           return "ready";
 	case RUNNING:         return "running";
 	case IDLE:            return "idle";
-	case FORK:            return "fork";
 	case WAIT:            return "wait";
 	case UNINTERRUPTIBLE: return "uninterruptible";
 	case INTERRUPTIBLE:   return "interruptible";

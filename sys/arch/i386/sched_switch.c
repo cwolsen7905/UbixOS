@@ -43,6 +43,7 @@ void sched() {
   uint32_t memAddr = 0x0;
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
+  int wrapped = 0;
 
   /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
    * and reboot when time is up. Runs before the spinlock to keep it simple. */
@@ -64,16 +65,30 @@ void sched() {
     }
   }
 
+  /* 1.4: per-task quantum — decrement and mark need_resched when expired. */
+  if (_current != 0x0) {
+    if (_current->quantum > 0)
+      _current->quantum--;
+    if (_current->quantum == 0) {
+      _current->quantum = 6;
+      need_resched = 1;
+    }
+  }
+
+  /* Skip reschedule if nothing requested it. */
+  if (!need_resched)
+    return;
+  need_resched = 0;
+
   if (spinTryLock(&schedulerSpinLock))
     return;
 
-  tmpTask = ((_current == 0) ? 0 : _current->next);
+  /* 1.3: start scan from the task after _current; wrap once. */
+  tmpTask = (_current != 0x0) ? _current->next : taskList;
+  if (tmpTask == 0x0) { tmpTask = taskList; wrapped = 1; }
   schedStart:
 
   for (; tmpTask != 0x0; tmpTask = tmpTask->next) {
-    if (tmpTask->state == FORK)
-      tmpTask->state = READY;
-
     if (tmpTask->state == READY) {
       if (_current != NULL)
         _current->state = (_current->state == DEAD) ? DEAD : READY;
@@ -103,16 +118,21 @@ void sched() {
           delTask->term->t_pgrp = 0;
       }
 
+      /* 1.1: O(1) splice — we already hold the pointer, no list re-scan. */
       tmpTask = tmpTask->next;
-
-      sched_deleteTask(delTask->id);
+      if (delTask->prev != 0x0) delTask->prev->next = delTask->next;
+      else                      taskList             = delTask->next;
+      if (delTask->next != 0x0) delTask->next->prev  = delTask->prev;
+      pid_hash_remove(delTask);
       sched_addDelTask(delTask);
 
       goto schedStart;
     }
   }
 
-  if (0x0 == tmpTask) {
+  /* 1.3: wrap once to catch tasks before _current in the list. */
+  if (tmpTask == 0x0 && !wrapped) {
+    wrapped = 1;
     tmpTask = taskList;
     goto schedStart;
   }
@@ -154,5 +174,6 @@ void schedEndTask(pidType pid) {
 }
 
 void sched_yield() {
+  need_resched = 1;
   sched();
 }

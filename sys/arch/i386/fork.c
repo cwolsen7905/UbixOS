@@ -142,10 +142,7 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->parent = _current;
   _current->children++;
 
-  newProcess->state = FORK;
-  /* Fix gcc optimization problems */
-  while (((volatile kTask_t *)newProcess)->state == FORK)
-    sched_yield();
+  newProcess->state = READY;
 
   /* Return Id of Proccess */
   td->td_retval[0] = newProcess->id;
@@ -166,7 +163,6 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
 
 /* Had to remove static though tihs function is only used in this file */
 int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi, long none, long ebx, long ecx, long edx, long eip, long cs, long eflags, long esp, long ss) {
-  volatile struct taskStruct * tmpProcPtr = newProcess;
   assert(newProcess);
   assert(_current);
 
@@ -217,11 +213,8 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space!\n" );
 
-  newProcess->state = FORK;
+  newProcess->state = READY;
 
-  /* Fix gcc optimization problems */
-  while (tmpProcPtr->state == FORK)
-    sched_yield();
   /* Return Id of Proccess */
   kprintf("Returning! [%i]", _current->id);
 

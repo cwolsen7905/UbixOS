@@ -44,7 +44,7 @@ extern "C" {
 #define NR_GROUPS 32
 
 typedef enum {
-  PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, FORK = 4, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7
+  PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7
 } tState;
 
 struct osInfo {
@@ -92,6 +92,8 @@ typedef struct taskStruct {
     struct taskStruct *parent;
     char username[256];
     uint32_t *kernelStack;
+    struct taskStruct *hash_next; /* PID hash chain — Phase 1.5 */
+    uint8_t   quantum;            /* ticks remaining in current time slice */
 } kTask_t;
 
 int sched_init();
