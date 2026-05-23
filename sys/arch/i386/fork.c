@@ -83,6 +83,9 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
           ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
           memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, ((struct file *)td->o_files[i])->fd->buffer, 4096);
         }
+      } else {
+        /* Raw TTY placeholder fd (fd->fd == NULL): ensure fd_type is tagged. */
+        ((struct file *)newProcess->td.o_files[i])->fd_type = FD_TYPE_TTY;
       }
     }
 
@@ -142,7 +145,7 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->parent = _current;
   _current->children++;
 
-  newProcess->state = READY;
+  sched_ready(newProcess);
 
   /* Return Id of Proccess */
   td->td_retval[0] = newProcess->id;
@@ -213,7 +216,7 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space!\n" );
 
-  newProcess->state = READY;
+  sched_ready(newProcess);
 
   /* Return Id of Proccess */
   kprintf("Returning! [%i]", _current->id);
