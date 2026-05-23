@@ -48,6 +48,17 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   struct vfs_mountPoint *mp = 0x0;
   struct ubx_device *device = 0x0;
 
+  /* If an exact mount already exists at this path, treat as success (no-op).
+   * Matches FreeBSD behaviour: fstab entries for kernel-pre-mounted FSes
+   * (devfs, procfs) succeed silently rather than double-mounting. */
+  {
+    struct vfs_mountPoint *existing = vfs_findMount(mountPoint);
+    if (existing != NULL && strcmp(existing->mountPoint, mountPoint) == 0) {
+      kprintf("vfs_mount: %s already mounted, skipping\n", mountPoint);
+      return (0x0);
+    }
+  }
+
   /* Allocate Memory For Mount Point */
   if ( (mp = (struct vfs_mountPoint *) kmalloc( sizeof(struct vfs_mountPoint) )) == NULL ) {
     kprintf( "vfs_mount: failed to allocate mp\n" );
