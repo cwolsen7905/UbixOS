@@ -43,10 +43,12 @@
 
 #include <fs/procfs/procfs.h>
 #include <fs/vfs/vfs.h>
+#include <fs/vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
+#include <ubixos/vitals.h>
 #include <sys/klog.h>
 #include <sys/descrip.h>
 #include <sys/thread.h>
@@ -63,6 +65,7 @@
 #define PFILE_STAT     3
 #define PFILE_MAPS     4
 #define PFILE_FD_ENTRY 5   /* individual /proc/N/fd/M */
+#define PFILE_MOUNTS   6   /* /proc/mounts — global mount table */
 
 /* procfs_dir_state.type values */
 #define PDIR_ROOT  0
@@ -74,6 +77,7 @@ struct procfs_dir_state {
 	kTask_t *cursor;  /* PDIR_ROOT: next task to return */
 	int      subidx;  /* PDIR_PID: file index; PDIR_FD: o_files scan position */
 	uint32_t pid;
+	int      root_phase; /* PDIR_ROOT: 0=global files, 1=pid dirs */
 };
 
 /* -----------------------------------------------------------------------
@@ -251,6 +255,46 @@ procfs_build_fd_entry(kTask_t *t, int fdno, char *buf, int bufsz)
 	return sprintf(buf, "fd:\t%d\ntype:\t%s\n", fdno, type_str);
 }
 
+static const char *
+procfs_fstype_name(int vfsType)
+{
+	switch (vfsType) {
+	case 0xFA: return "fat";
+	case 0x01: return "devfs";
+	case 0x02: return "procfs";
+	case 0xAA: return "ufs";
+	default:   return "unknown";
+	}
+}
+
+static int
+procfs_build_mounts(char *buf, int bufsz)
+{
+	struct vfs_mountPoint *mp;
+	int len = 0;
+
+	if (!systemVitals)
+		return 0;
+
+	for (mp = systemVitals->mountPoints; mp != NULL; mp = mp->next) {
+		const char *fsname = "none";
+		const char *dev    = "none";
+		const char *perms  = (mp->perms == 'r') ? "ro" : "rw";
+
+		if (mp->fs)
+			fsname = procfs_fstype_name(mp->fs->vfsType);
+
+		len += snprintf(buf + len, bufsz - len,
+		    "%s %s %s %s 0 0\n",
+		    dev, mp->mountPoint, fsname, perms);
+
+		if (len >= bufsz - 1)
+			break;
+	}
+
+	return len;
+}
+
 /* -----------------------------------------------------------------------
  * vfsInitFS
  * --------------------------------------------------------------------- */
@@ -308,6 +352,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		strncpy(pidstr, p, sizeof(pidstr) - 1);
 		pidstr[sizeof(pidstr) - 1] = '\0';
 		rest = "";
+	}
+
+	/* Global files: /proc/mounts */
+	if (strcmp(pidstr, "mounts") == 0 && *rest == '\0') {
+		char tmp2[1024];
+		int  mlen = procfs_build_mounts(tmp2, sizeof(tmp2));
+		fd->ino   = 0;
+		fd->start = PFILE_MOUNTS;
+		fd->size  = (uint32_t)mlen;
+		return 1;
 	}
 
 	if (!procfs_isdigits(pidstr))
@@ -403,6 +457,20 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 
 	if (fd->start == PFILE_DIR)
 		return 0;
+
+	/* Global files don't belong to a task */
+	if (fd->start == PFILE_MOUNTS) {
+		char     mtmp[1024];
+		int      mlen = procfs_build_mounts(mtmp, sizeof(mtmp));
+		long     mn;
+		if (offset >= (long)mlen)
+			return 0;
+		mn = (long)mlen - offset;
+		if (mn > size)
+			mn = size;
+		memcpy(data, mtmp + offset, mn);
+		return (int)mn;
+	}
 
 	t = schedFindTask(fd->ino);
 	if (!t)
@@ -539,8 +607,19 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 	if (!s)
 		return -1;
 
-	/* ── Root: enumerate live tasks ── */
+	/* ── Root: global files first, then live task dirs ── */
 	if (s->type == PDIR_ROOT) {
+		/* Phase 0: emit global synthetic files */
+		if (s->root_phase == 0) {
+			s->root_phase = 1;
+			strncpy(ent->d_name, "mounts", sizeof(ent->d_name) - 1);
+			ent->d_name[sizeof(ent->d_name) - 1] = '\0';
+			ent->d_ino  = 0;
+			ent->d_type = KDT_REG;
+			return 0;
+		}
+
+		/* Phase 1: per-pid directories */
 		while (s->cursor &&
 		    (s->cursor->state == DEAD ||
 		     s->cursor->state == PLACEHOLDER))
