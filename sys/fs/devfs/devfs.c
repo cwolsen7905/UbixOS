@@ -82,7 +82,7 @@ static int                 devfs_mounted  = 0;
  This is the initialized called by the vfs system when enabling devfs
  basically it allocates memory for the devfs module
  */
-static void devfs_initialize(struct vfs_mountPoint *mp) {
+static int devfs_initialize(struct vfs_mountPoint *mp) {
   struct devfs_info *fsInfo = 0x0;
   int i;
 
@@ -99,6 +99,7 @@ static void devfs_initialize(struct vfs_mountPoint *mp) {
     devfs_makeNode(devfs_queue[i].name, devfs_queue[i].type,
                    devfs_queue[i].major, devfs_queue[i].minor);
   devfs_queue_n = 0;
+  return (1);
 }
 
 /**
