@@ -133,7 +133,7 @@ static void test_mkdir_rmdir(void) {
   printf("\n[mkdir / rmdir]\n");
 
   /* Use a path under sys: which is our mounted FAT volume */
-  const char *dir = "sys:/tmp_syscheck";
+  const char *dir = "/tmp_syscheck";
 
   if (mkdir(dir, 0755) == 0)
     PASS("mkdir creates directory");

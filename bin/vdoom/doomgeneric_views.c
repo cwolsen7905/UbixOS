@@ -288,7 +288,7 @@ DG_SetWindowTitle(const char *title)
 int
 main(int argc, char **argv)
 {
-	freopen("sys:/vdoom.log", "w", stderr);
+	freopen("/vdoom.log", "w", stderr);
 	fprintf(stderr, "vdoom: starting\n");
 	fflush(stderr);
 
@@ -299,7 +299,7 @@ main(int argc, char **argv)
 			break;
 		}
 	}
-	static char  default_iwad_path[] = "sys:/bin/doom1.wad";
+	static char  default_iwad_path[] = "/bin/doom1.wad";
 	static char *new_argv[64];
 	int          new_argc = argc;
 	if (!has_iwad && argc < 62) {

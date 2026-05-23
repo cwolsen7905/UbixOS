@@ -340,8 +340,9 @@ void execFile(char *file, char **argv, char **envp, int console)
 		return;
 	}
 
-	/* Set tty ownership */
+	/* Set tty ownership and foreground pgrp so tcgetpgrp() works. */
 	newProcess->term->owner = newProcess->id;
+	newProcess->term->t_pgrp = (int)newProcess->pgrp;
 
 	/* Now We Must Create A Virtual Space For This Proccess To Run In */
 	newProcess->md.md_tss.cr3 = (uint32_t)vmm_createVirtualSpace(newProcess->id);
@@ -621,7 +622,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	             :
 	             : "d"((uint32_t *)(kernelPageDirectory)));
 
-	sprintf(newProcess->oInfo.cwd, "sys:/");
+	sprintf(newProcess->oInfo.cwd, "/");
 
 	// MrOlsen 2018 kprintf("execFile Return: 0x%X - %i\n",
 	// newProcess->md.md_tss.eip, newProcess->id);
@@ -1157,6 +1158,13 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	_current->md.md_tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
 	_current->pgrp = _current->id;
+
+	/* Update foreground pgrp so tcgetpgrp() returns the new process's pgrp. */
+	{
+		tty_term *t = _current->ct_tty ? _current->ct_tty : _current->term;
+		if (t != NULL)
+			t->t_pgrp = (int)_current->pgrp;
+	}
 
 	return (0x0);
 }

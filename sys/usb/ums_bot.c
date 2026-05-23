@@ -456,7 +456,7 @@ ums_bot_attach(struct usb_device *dev)
 	 * point name — fat_bpb_parse will override it with the volume label
 	 * (e.g. "ubix" for a disk formatted with label UBIX).
 	 */
-	if (vfs_mount(UMS_MAJOR, 0, 0, 0xFA, "usb0", "rw") != 0) {
+	if (vfs_mount(UMS_MAJOR, 0, 0, 0xFA, "/mnt/usb0", "rw") != 0) {
 		kprintf("ums: vfs_mount failed\n");
 		klog(KLOG_WARNING, "ums: vfs_mount failed (no FAT filesystem?)");
 	} else {

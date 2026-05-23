@@ -97,7 +97,7 @@ asm(
 extern void _klog_write_stub(uint8_t level, const char *msg);
 #define sys_klog_write _klog_write_stub
 
-#define LOG_PATH    "sys:/var/log/messages"
+#define LOG_PATH    "/var/log/messages"
 #define BATCH_SIZE  32
 
 static const char *level_name(uint8_t level)

@@ -43,7 +43,7 @@
 #include <sys/mpi.h>
 #include <authd.h>
 
-#define USERDB_PATH  "sys:/etc/userdb"
+#define USERDB_PATH  "/etc/userdb"
 #define USERDB_MAX   64
 
 /* Must match the binary layout written by tools/userdb */

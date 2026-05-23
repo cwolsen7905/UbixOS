@@ -53,8 +53,7 @@ int lwip_recv(int s, void *mem, size_t len, int flags);
 
 /* True when an unblocked signal is pending — used to make blocking I/O
  * loops interruptible.  td must be struct thread *. */
-#define SIG_PENDING_UNBLOCKED(td) \
-    ((td)->sig_pending & ~(td)->sigmask.__bits[0])
+#define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 
 #define FD_TYPE_DIR 4
 
@@ -71,7 +70,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args)
 int sys_close(struct thread *td, struct sys_close_args *args)
 {
 	struct file *fd = 0x0;
-	struct pipeInfo *pFD = 0x0;
+	struct pipeInfo *p_fd = 0x0;
 
 	getfd(td, &fd, args->fd);
 
@@ -100,32 +99,38 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 			td->td_retval[0] = 0;
 			break;
 		case 3:
-			pFD = fd->data;
-			if (args->fd == pFD->rFD)
+			p_fd = fd->data;
+			if (args->fd == p_fd->rFD)
 			{
-				if (pFD->rfdCNT < 2 && td->o_files[args->fd] != NULL)
-					if (fdestroy(td, fd, args->fd) != 0)
+				if (p_fd->rfdCNT < 2 && td->o_files[args->fd] != NULL) {
+					if (fdestroy(td, fd, args->fd) != 0) {
 						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe rFD %d", args->fd);
-				pFD->rfdCNT--;
+}
+}
+				p_fd->rfdCNT--;
 			}
 
-			if (args->fd == pFD->wFD)
+			if (args->fd == p_fd->wFD)
 			{
-				if (pFD->wfdCNT < 2 && td->o_files[args->fd] != NULL)
-					if (fdestroy(td, fd, args->fd) != 0)
+				if (p_fd->wfdCNT < 2 && td->o_files[args->fd] != NULL) {
+					if (fdestroy(td, fd, args->fd) != 0) {
 						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe wFD %d", args->fd);
-				pFD->wfdCNT--;
+}
+}
+				p_fd->wfdCNT--;
 			}
 
-			if (pFD->rfdCNT <= 0 && pFD->wfdCNT <= 0) {
-				struct pipeBuf *pbuf = pFD->headPB;
-				while (pbuf != NULL) {
+			if (p_fd->rfdCNT <= 0 && p_fd->wfdCNT <= 0)
+			{
+				struct pipeBuf *pbuf = p_fd->headPB;
+				while (pbuf != NULL)
+				{
 					struct pipeBuf *next = pbuf->next;
 					kfree(pbuf->buffer);
 					kfree(pbuf);
 					pbuf = next;
 				}
-				kfree(pFD);
+				kfree(p_fd);
 			}
 
 			td->td_retval[0] = 0;
@@ -133,20 +138,23 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 		case FD_TYPE_TTY:
 		case FD_TYPE_TTYV:
 			/* tty fds have no underlying fileDescriptor_t to close */
-			if (args->fd >= 3)
+			if (args->fd >= 3) {
 				fdestroy(td, fd, args->fd);
+}
 			td->td_retval[0] = 0;
 			break;
 		default:
-			if (args->fd < 3)
+			if (args->fd < 3) {
 				td->td_retval[0] = 0;
-			else
+			} else
 			{
-				if (fd->fd != NULL && fclose(fd->fd) != 0)
+				if (fd->fd != NULL && fclose(fd->fd) != 0) {
 					td->td_retval[0] = -1;
+}
 
-				if (fdestroy(td, fd, args->fd) != 0x0)
+				if (fdestroy(td, fd, args->fd) != 0x0) {
 					kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
+}
 
 				td->td_retval[0] = 0;
 			}
@@ -164,12 +172,12 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 
 	struct file *fd = 0x0;
 
-	struct pipeInfo *pFD = 0x0;
-	struct pipeBuf *rpFD = 0x0;
+	struct pipeInfo *p_fd = 0x0;
+	struct pipeBuf *rp_fd = 0x0;
 
 	size_t nbytes;
 
-	int rpCNT = 0;
+	int rp_cnt = 0;
 
 	getfd(td, &fd, args->fd);
 
@@ -177,10 +185,15 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	if (fd != NULL && fd->fd_type == 2)
 	{
 		void *kbuf = kmalloc(args->nbyte);
-		if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+		if (!kbuf)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
 		int r = lwip_recv(fd->socket, kbuf, args->nbyte, 0);
-		if (r > 0)
+		if (r > 0) {
 			memcpy((void *)args->buf, kbuf, (size_t)r);
+}
 		kfree(kbuf);
 		td->td_retval[0] = r;
 		return (0);
@@ -189,11 +202,11 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	/* Check fd_type first so dup2'd pipe fds work on stdin slot (0-3) */
 	if (fd != 0x0 && fd->fd_type == 3)
 	{
-		pFD = fd->data;
+		p_fd = fd->data;
 		if (fd->f_flag & O_NONBLOCK)
 		{
 			/* Non-blocking: return 0 immediately if no data */
-			if (pFD->bCNT == 0)
+			if (p_fd->bCNT == 0)
 			{
 				td->td_retval[0] = 0;
 				return (0);
@@ -202,8 +215,10 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		else
 		{
 			/* Blocking: wait until data arrives or a signal fires. */
-			while (pFD->bCNT == 0) {
-				if (SIG_PENDING_UNBLOCKED(td)) {
+			while (p_fd->bCNT == 0)
+			{
+				if (SIG_PENDING_UNBLOCKED(td))
+				{
 					td->td_retval[0] = EINTR;
 					return (EINTR);
 				}
@@ -211,19 +226,20 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			}
 		}
 		{
-			nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
-			memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
-			pFD->headPB->offset += nbytes;
+			nbytes = (args->nbyte - (p_fd->headPB->nbytes - p_fd->headPB->offset) <= 0) ? args->nbyte : (p_fd->headPB->nbytes - p_fd->headPB->offset);
+			memcpy(args->buf, p_fd->headPB->buffer + p_fd->headPB->offset, nbytes);
+			p_fd->headPB->offset += nbytes;
 
-			if (pFD->headPB->offset >= pFD->headPB->nbytes)
+			if (p_fd->headPB->offset >= p_fd->headPB->nbytes)
 			{
-				rpFD = pFD->headPB;
-				pFD->headPB = pFD->headPB->next;
-				if (pFD->headPB == NULL)
-					pFD->tailPB = NULL;
-				kfree(rpFD->buffer);
-				kfree(rpFD);
-				pFD->bCNT--;
+				rp_fd = p_fd->headPB;
+				p_fd->headPB = p_fd->headPB->next;
+				if (p_fd->headPB == NULL) {
+					p_fd->tailPB = NULL;
+}
+				kfree(rp_fd->buffer);
+				kfree(rp_fd);
+				p_fd->bCNT--;
 			}
 
 			td->td_retval[0] = nbytes;
@@ -238,21 +254,28 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 	{
 		/* Specific virtual terminal fd: read from the bound tty_term. */
 		tty_term *t = (tty_term *)fd->data;
-		for (;;) {
-			if (SIG_PENDING_UNBLOCKED(td)) {
+		for (;;)
+		{
+			if (SIG_PENDING_UNBLOCKED(td))
+			{
 				td->td_retval[0] = EINTR;
 				return (EINTR);
 			}
-			if (t->stdinSize > 0) {
+			if (t->stdinSize > 0)
+			{
 				int i;
 				c = t->stdin[0];
 				t->stdinSize--;
-				for (i = 0; i < t->stdinSize; i++)
+				for (i = 0; i < t->stdinSize; i++) {
 					t->stdin[i] = t->stdin[i + 1];
+}
 				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte)
+				if (c == '\n' || x >= (int)args->nbyte) {
 					break;
-			} else {
+}
+			}
+			else
+			{
 				sched_yield();
 			}
 		}
@@ -272,23 +295,27 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		while (x < (int)args->nbyte)
 		{
 			int raw;
-			while ((raw = serial_rx_getbyte()) >= 0)
+			while ((raw = serial_rx_getbyte()) >= 0) {
 				tty_inject(_current->term, (char)raw);
+}
 
 			if (_current->term->stdinSize > 0)
 			{
 				int i;
 				c = _current->term->stdin[0];
 				_current->term->stdinSize--;
-				for (i = 0; i < _current->term->stdinSize; i++)
+				for (i = 0; i < _current->term->stdinSize; i++) {
 					_current->term->stdin[i] = _current->term->stdin[i + 1];
+}
 				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte)
+				if (c == '\n' || x >= (int)args->nbyte) {
 					break;
+}
 			}
 			else
 			{
-				if (SIG_PENDING_UNBLOCKED(td)) {
+				if (SIG_PENDING_UNBLOCKED(td))
+				{
 					td->td_retval[0] = EINTR;
 					return (EINTR);
 				}
@@ -312,7 +339,8 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		 * so it sets the flag and we perform the switch here in task context. */
 		for (;;)
 		{
-			if (SIG_PENDING_UNBLOCKED(td)) {
+			if (SIG_PENDING_UNBLOCKED(td))
+			{
 				td->td_retval[0] = EINTR;
 				return (EINTR);
 			}
@@ -339,8 +367,9 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			if (c != 0x0)
 			{
 				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte)
+				if (c == '\n' || x >= (int)args->nbyte) {
 					break;
+}
 			}
 			else
 			{
@@ -364,7 +393,8 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 
 	getfd(td, &fd, args->fd);
 
-	if (fd == NULL) {
+	if (fd == NULL)
+	{
 		td->td_retval[0] = -1;
 		return (-1);
 	}
@@ -379,8 +409,9 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 	else
 	{
 		bf[1] = '\0';
-		if (_current->term == tty_foreground)
+		if (_current->term == tty_foreground) {
 			c = getchar();
+}
 
 		for (x = 0; x < args->nbyte && c != '\n';)
 		{
@@ -408,8 +439,9 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 				sched_yield();
 			}
 		}
-		if (c == '\n')
+		if (c == '\n') {
 			buf[x++] = '\n';
+}
 
 		bf[0] = '\n';
 		kprintf(bf);
@@ -424,8 +456,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	char *buffer = 0x0;
 	struct file *fd = 0x0;
 
-	struct pipeInfo *pFD = 0x0;
-	struct pipeBuf *pBuf = 0x0;
+	struct pipeInfo *p_fd = 0x0;
+	struct pipeBuf *p_buf = 0x0;
 
 	size_t nbytes;
 
@@ -435,7 +467,11 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	if (fd != NULL && fd->fd_type == 2)
 	{
 		void *kbuf = kmalloc(uap->nbyte);
-		if (!kbuf) { td->td_retval[0] = -1; return (-1); }
+		if (!kbuf)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
 		memcpy(kbuf, uap->buf, uap->nbyte);
 		int r = lwip_send(fd->socket, kbuf, uap->nbyte, 0);
 		kfree(kbuf);
@@ -446,27 +482,38 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	/* Check fd_type first so dup2'd pipe fds work on stdout/stderr slots */
 	if (fd != 0x0 && fd->fd_type == 3)
 	{
-		pFD = fd->data;
-		pBuf = (struct pipeBuf *)kmalloc(sizeof(struct pipeBuf));
-		if (!pBuf) { td->td_retval[0] = -1; return (-1); }
-		pBuf->buffer = kmalloc(uap->nbyte);
-		if (!pBuf->buffer) { kfree(pBuf); td->td_retval[0] = -1; return (-1); }
-		pBuf->next = 0x0;
-		pBuf->offset = 0;
+		p_fd = fd->data;
+		p_buf = (struct pipeBuf *)kmalloc(sizeof(struct pipeBuf));
+		if (!p_buf)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		p_buf->buffer = kmalloc(uap->nbyte);
+		if (!p_buf->buffer)
+		{
+			kfree(p_buf);
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		p_buf->next = 0x0;
+		p_buf->offset = 0;
 
-		memcpy(pBuf->buffer, uap->buf, uap->nbyte);
+		memcpy(p_buf->buffer, uap->buf, uap->nbyte);
 
-		pBuf->nbytes = uap->nbyte;
+		p_buf->nbytes = uap->nbyte;
 
-		if (pFD->tailPB)
-			pFD->tailPB->next = pBuf;
+		if (p_fd->tailPB) {
+			p_fd->tailPB->next = p_buf;
+}
 
-		pFD->tailPB = pBuf;
+		p_fd->tailPB = p_buf;
 
-		if (!pFD->headPB)
-			pFD->headPB = pBuf;
+		if (!p_fd->headPB) {
+			p_fd->headPB = p_buf;
+}
 
-		pFD->bCNT++;
+		p_fd->bCNT++;
 
 		td->td_retval[0] = uap->nbyte;
 	}
@@ -475,14 +522,22 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		/* Specific virtual terminal fd: write to the bound tty_term. */
 		tty_term *t = (tty_term *)fd->data;
 		buffer = kmalloc(uap->nbyte + 1);
-		if (!buffer) { td->td_retval[0] = -1; return (-1); }
+		if (!buffer)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
 		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
-		if (t != NULL && t->t_type == TTY_TYPE_SERIAL) {
+		if (t != NULL && t->t_type == TTY_TYPE_SERIAL)
+		{
 			size_t i;
-			for (i = 0; i < uap->nbyte; i++)
+			for (i = 0; i < uap->nbyte; i++) {
 				rs232_putc(buffer[i]);
-		} else if (t != NULL) {
+}
+		}
+		else if (t != NULL)
+		{
 			tty_print(buffer, t);
 		}
 		kfree(buffer);
@@ -492,14 +547,19 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 	{
 		/* TTY placeholder: original fds 1/2 or any dup2'd copy thereof */
 		buffer = kmalloc(uap->nbyte + 1);
-		if (!buffer) { td->td_retval[0] = -1; return (-1); }
+		if (!buffer)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
 		memset(buffer, '\0', uap->nbyte + 1);
 		memcpy(buffer, uap->buf, uap->nbyte);
 		if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
 		{
 			size_t i;
-			for (i = 0; i < uap->nbyte; i++)
+			for (i = 0; i < uap->nbyte; i++) {
 				rs232_putc(buffer[i]);
+}
 		}
 		else if (_current->term != NULL)
 		{
@@ -555,12 +615,14 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 
 	while (remaining > 0)
 	{
-		if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0)
+		if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0) {
 			break;
+}
 
 		namelen = strlen(kent.d_name);
-		if (namelen == 0)
+		if (namelen == 0) {
 			continue;
+}
 		/*
 		 * linux_dirent64 layout (musl/Linux i386 ABI):
 		 *   d_ino    uint64_t  offset 0  (8 bytes)
@@ -572,8 +634,9 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 		 */
 		reclen = (19 + namelen + 1 + 7) & ~7u;
 
-		if (reclen > remaining)
+		if (reclen > remaining) {
 			break;
+}
 
 		uint8_t *p = buf + total;
 		memset(p, 0, reclen);
@@ -593,13 +656,40 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 
 int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 {
-	/* XXX - Need to implement readlink */
+	const char *path = args->path;
 
-	kprintf("RL: %s:\n", args->path, args->count);
+	/* /proc/self/fd/N → synthesize a path from the open fd. */
+	if (strncmp(path, "/proc/self/fd/", 14) == 0) {
+		int fdno = 0;
+		const char *p = path + 14;
+		while (*p >= '0' && *p <= '9')
+			fdno = fdno * 10 + (*p++ - '0');
+		struct file *fp = NULL;
+		char target[32];
+		if (fdno >= 0 && fdno < O_FILES)
+			fp = (struct file *)thr->o_files[fdno];
+		if (fp == NULL) {
+			thr->td_retval[0] = EBADF;
+			return (EBADF);
+		}
+		/* Synthesize a stable name: fd objects don't have a stored path,
+		 * so return the VFS cwd as a stand-in for terminal fds. */
+		if (fp->fd == NULL) {
+			/* TTY or pipe fd — return "terminal" so callers know. */
+			snprintf(target, sizeof(target), "/dev/tty");
+		} else {
+			snprintf(target, sizeof(target), "/proc/self/fd/%d", fdno);
+		}
+		size_t n = strlen(target);
+		if ((size_t)args->count < n)
+			n = (size_t)args->count;
+		memcpy(args->buf, target, n);
+		thr->td_retval[0] = (int)n;
+		return (0);
+	}
 
-	// Return Error
-	thr->td_retval[0] = 2;
-	return (-1);
+	thr->td_retval[0] = ENOENT;
+	return (ENOENT);
 }
 
 int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
@@ -615,8 +705,9 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	 */
 	if (flags & O_EXEC)
 	{
-		if (flags & O_ACCMODE)
+		if (flags & O_ACCMODE) {
 			return (EINVAL);
+}
 	}
 	else if ((flags & O_ACCMODE) == O_ACCMODE)
 	{
@@ -641,8 +732,10 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	 * Fall back to _current->term when ct_tty is NULL (e.g. right after
 	 * setsid()) — UbixOS has no /dev/ttyN device for the app to open and
 	 * then call TIOCSCTTY on, so we treat the inherited term as good enough. */
-	if (strcmp(path, "/dev/tty") == 0 || strcmp(path, "devfs:/tty") == 0) {
-		if (_current->ct_tty == NULL && _current->term == NULL) {
+	if (strcmp(path, "/dev/tty") == 0)
+	{
+		if (_current->ct_tty == NULL && _current->term == NULL)
+		{
 			fdestroy(thr, nfp, fd);
 			thr->td_retval[0] = ENXIO;
 			return (ENXIO);
@@ -650,7 +743,10 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		/* If no explicit ct_tty yet, promote the inherited term. */
 		if (_current->ct_tty == NULL)
 			_current->ct_tty = _current->term;
-		nfp->fd      = NULL;
+		/* Claim foreground pgrp so tcgetpgrp() matches the opener's pgrp. */
+		if (_current->ct_tty->t_pgrp == 0)
+			_current->ct_tty->t_pgrp = (int)_current->pgrp;
+		nfp->fd = NULL;
 		nfp->fd_type = FD_TYPE_TTY;
 		thr->td_retval[0] = fd;
 		return (0);
@@ -661,23 +757,26 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		const char *tvp = NULL;
 		if (strncmp(path, "/dev/ttyv", 9) == 0)
 			tvp = path + 9;
-		else if (strncmp(path, "devfs:/ttyv", 11) == 0)
-			tvp = path + 11;
-		if (tvp != NULL && *tvp >= '0' && *tvp <= '3' && *(tvp + 1) == '\0') {
+		if (tvp != NULL && *tvp >= '0' && *tvp <= '3' && *(tvp + 1) == '\0')
+		{
 			int idx = *tvp - '0';
 			tty_term *t = tty_find((uInt16)idx);
-			if (t == NULL) {
+			if (t == NULL)
+			{
 				fdestroy(thr, nfp, fd);
 				thr->td_retval[0] = ENODEV;
 				return (ENODEV);
 			}
-			nfp->fd      = NULL;
+			nfp->fd = NULL;
 			nfp->fd_type = FD_TYPE_TTYV;
-			nfp->data    = t;
+			nfp->data = t;
 			/* POSIX: session leader opening a terminal without O_NOCTTY
 			 * implicitly acquires it as controlling terminal. */
-			if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)
+			if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL) {
 				_current->ct_tty = t;
+				if (t->t_pgrp == 0)
+					t->t_pgrp = (int)_current->pgrp;
+			}
 			thr->td_retval[0] = fd;
 			return (0);
 		}
@@ -700,19 +799,21 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		return (0);
 	}
 
-	if ((oflags & O_WRONLY) && (oflags & O_APPEND))
+	if ((oflags & O_WRONLY) && (oflags & O_APPEND)) {
 		nfp->fd = fopen(path, "a");
-	else if (oflags & O_WRONLY)
+	} else if (oflags & O_WRONLY) {
 		nfp->fd = fopen(path, "w");
-	else if (oflags & O_RDWR)
+	} else if (oflags & O_RDWR) {
 		nfp->fd = fopen(path, "rwb");
-	else
+	} else {
 		nfp->fd = fopen(path, "r");
+}
 
 	if (nfp->fd == 0x0)
 	{
-		if (fdestroy(thr, nfp, fd) != 0x0)
+		if (fdestroy(thr, nfp, fd) != 0x0) {
 			kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
+}
 
 		thr->td_retval[0] = ENOENT;
 		return (ENOENT);
@@ -726,7 +827,8 @@ int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
 {
 	int error = 0x0;
 	td->td_retval[0] = unlink(uap->path);
-	if (td->td_retval[0] != 0x0)
+	if (td->td_retval[0] != 0x0) {
 		kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
+}
 	return (error);
 }

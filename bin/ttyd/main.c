@@ -23,7 +23,7 @@
 #include <sched.h>
 #include <api/ubix.h>
 
-#define TTYS_PATH   "sys:/etc/ttys"
+#define TTYS_PATH   "/etc/ttys"
 #define MAX_TTYS    8
 
 extern int pidStatus(int pid);

@@ -37,7 +37,7 @@
 
 int pidStatus(int pid);
 
-#define MOTD_PATH   "sys:/etc/motd"
+#define MOTD_PATH   "/etc/motd"
 #define REPLY_MBOX_MAX 32
 
 static char reply_mbox[REPLY_MBOX_MAX];
@@ -183,20 +183,20 @@ getUsername:
 		i = 0;
 		snprintf(envp_buf[i], 128, "HOME=%s",  resp.home[0] ? resp.home : "/"); i++;
 		snprintf(envp_buf[i], 128, "PWD=%s",   resp.home[0] ? resp.home : "/"); i++;
-		snprintf(envp_buf[i], 128, "SHELL=%s", resp.shell[0] ? resp.shell : "sys:/bin/shell"); i++;
+		snprintf(envp_buf[i], 128, "SHELL=%s", resp.shell[0] ? resp.shell : "/bin/shell"); i++;
 		snprintf(envp_buf[i], 128, "PATH=/bin:/sbin:/usr/bin:/usr/sbin"); i++;
 		snprintf(envp_buf[i], 128, "USER=%s",  userName); i++;
 		snprintf(envp_buf[i], 128, "LOGNAME=%s", userName); i++;
 		snprintf(envp_buf[i], 128, "HOST=Dev.uBixOS.com"); i++;
-		snprintf(envp_buf[i], 128, "TERM=xterm"); i++;
+		snprintf(envp_buf[i], 128, "TERM=vt100"); i++;
 		snprintf(envp_buf[i], 128, "LD_LIBRARY_PATH=/lib:/usr/lib"); i++;
 		envp_buf[i][0] = '\0'; i++;
 		for (int j = 0; j < i; j++) envp_shell[j] = envp_buf[j];
 		envp_shell[i] = NULL;
 
-		chdir(resp.home[0] ? resp.home : "sys:/bin/");
+		chdir(resp.home[0] ? resp.home : "/");
 		fflush(stdout);
-		execve(resp.shell[0] ? resp.shell : "sys:/bin/shell",
+		execve(resp.shell[0] ? resp.shell : "/bin/shell",
 		    argv_shell, envp_shell);
 		printf("login: failed to exec shell\n");
 		exit(-1);

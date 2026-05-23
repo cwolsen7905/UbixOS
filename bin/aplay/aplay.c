@@ -45,7 +45,7 @@ main(void)
 	int      cycle, half, i, s, total_cycles;
 	int16_t  buf[RATE / FREQ * 2];   /* one full cycle, interleaved stereo */
 
-	fd = audio_open("devfs:/audio");
+	fd = audio_open("/dev/audio");
 	if (fd < 0) {
 		printf("aplay: cannot open devfs:/audio\n");
 		return 1;

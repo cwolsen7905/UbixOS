@@ -186,7 +186,7 @@ int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor) {
 
   spinLock(&devfsSpinLock);
 
-  mp = vfs_findMount("devfs");
+  mp = vfs_findMount("/dev");
 
   if (mp == 0x0) {
     kprintf("Error: Can't Find Mount Point\n");
@@ -270,7 +270,7 @@ int devfs_init() {
     return (0x1);
   }
   /* Mount our devfs this will build the devfs container node */
-  vfs_mount(0x0, 0x0, 0x0, 0x1, "devfs", "rw"); // Mount Device File System
+  vfs_mount(0x0, 0x0, 0x0, 0x1, "/dev", "rw"); /* mount devfs at /dev */
 
   /* Pseudo-devices always present, major=0 minor=0/1 */
   devfs_makeNode("null", 'p', 0, 0);

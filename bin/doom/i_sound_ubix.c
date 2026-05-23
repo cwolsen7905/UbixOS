@@ -71,7 +71,7 @@ I_InitSound(boolean use_sfx_prefix)
 {
 	(void)use_sfx_prefix;
 
-	g_audio_fd = audio_open("devfs:/audio");
+	g_audio_fd = audio_open("/dev/audio");
 	if (g_audio_fd < 0) {
 		fprintf(stderr, "doom: I_InitSound: cannot open devfs:/audio\n");
 		return;

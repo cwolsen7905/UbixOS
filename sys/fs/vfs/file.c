@@ -132,36 +132,22 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *args) {
 
 void sysRmDir(const char *path) {
     char fullpath[1024];
-    char work[1024];
-    char *mp_name = 0x0;
-    char *dir_path = 0x0;
-    char *_strtok_last = NULL;
+    const char *dir_path = 0x0;
     struct vfs_mountPoint *mp = 0x0;
 
-    if (strstr(path, ":") == 0x0)
+    if (path[0] != '/')
         snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, path);
     else
         strncpy(fullpath, path, sizeof(fullpath) - 1);
     fullpath[sizeof(fullpath) - 1] = '\0';
 
-    strncpy(work, fullpath, sizeof(work) - 1);
-    work[sizeof(work) - 1] = '\0';
-
-    if (strstr(work, ":")) {
-        mp_name  = strtok_r(work, ":", &_strtok_last);
-        dir_path = strtok_r(NULL, "\n", &_strtok_last);
-        if (dir_path == 0x0 || dir_path[0] == '\0')
-            dir_path = "/";
-    } else {
-        mp       = vfs_findMount("sys");
-        dir_path = work;
-    }
-
-    if (mp_name != 0x0)
-        mp = vfs_findMount(mp_name);
-
+    mp = vfs_findMount(fullpath);
     if (mp == 0x0 || mp->fs == 0x0 || mp->fs->vfsRemDir == 0x0)
         return;
+
+    size_t mlen = strlen(mp->mountPoint);
+    dir_path = (mlen > 1) ? fullpath + mlen : fullpath;
+    if (dir_path[0] == '\0') dir_path = "/";
 
     mp->fs->vfsRemDir(dir_path, mp);
 }
@@ -258,21 +244,10 @@ int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
     size_t len;
     kDIR_t *dir = 0x0;
 
-    /* Build the candidate path without touching cwd yet */
-    if (strstr(args->path, ":") != 0x0) {
-        /* mountpoint-qualified: use as-is (e.g. "sys:/bin") */
+    /* Build the candidate path without touching cwd yet.
+     * Absolute path: use as-is.  Relative path: prepend CWD. */
+    if (args->path[0] == '/') {
         snprintf(newcwd, sizeof(newcwd), "%s", args->path);
-    } else if (args->path[0] == '/') {
-        /* bare absolute path: preserve current mountpoint prefix */
-        char *p = _current->oInfo.cwd;
-        while (*p && *p != ':')
-            p++;
-        if (*p == ':') {
-            int pfxlen = (int)(p - _current->oInfo.cwd) + 1;
-            snprintf(newcwd, sizeof(newcwd), "%.*s%s", pfxlen, _current->oInfo.cwd, args->path);
-        } else {
-            snprintf(newcwd, sizeof(newcwd), "%s", args->path);
-        }
     } else {
         snprintf(newcwd, sizeof(newcwd), "%s%s", _current->oInfo.cwd, args->path);
     }
@@ -311,16 +286,7 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args) {
 
     fd = fdd->fd;
 
-    {
-        if (strstr(fd->fileName, ":") == 0x0) {
-            snprintf(_current->oInfo.cwd, sizeof(_current->oInfo.cwd),
-                "%s%s", _current->oInfo.cwd, fd->fileName);
-        }
-        else {
-            snprintf(_current->oInfo.cwd, sizeof(_current->oInfo.cwd),
-                "%s", fd->fileName);
-        }
-    }
+    snprintf(_current->oInfo.cwd, sizeof(_current->oInfo.cwd), "%s", fd->fileName);
     return (error);
 }
 
@@ -519,9 +485,7 @@ int fgetc(fileDescriptor_t *fd) {
 fileDescriptor_t* fopen(const char *file, const char *flags) {
 
     int i = 0x0;
-    char *path = 0x0;
-    char *mountPoint = 0x0;
-    char *_strtok_last = NULL;
+    const char *path = 0x0;
     char fileName[1024];
     fileDescriptor_t *tmpFd = 0x0;
 
@@ -538,28 +502,31 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
         return (NULL);
     }
 
-    path = file;
-
-    /* Translate POSIX /dev/X -> devfs:/X for POSIX compatibility. */
-    if (strncmp(file, "/dev/", 5) == 0) {
-        snprintf(fileName, sizeof(fileName), "devfs:%s", file + 4);
-    } else if (path[0] == '.' && path[1] == '\0') {
+    /* Resolve path: '.' expands to CWD; everything else is taken as-is. */
+    if (file[0] == '.' && file[1] == '\0') {
         strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
     } else {
         strncpy(fileName, file, sizeof(fileName) - 1);
     }
     fileName[sizeof(fileName) - 1] = '\0';
+    path = fileName;
 
-    path = 0x0;
-
-    if (strstr(fileName, ":")) {
-        mountPoint = (char*) strtok_r((char*) &fileName, ":", &_strtok_last);
-        path = strtok_r(NULL, "\n", &_strtok_last);
-        if (path == 0x0 || path[0] == '\0')
-            path = "/";
+    /* Find mount by longest POSIX prefix match. */
+    tmpFd->mp = vfs_findMount(path);
+    if (tmpFd->mp == 0x0) {
+        kfree(tmpFd);
+        return (0x0);
     }
-    else {
-        path = fileName;
+
+    /* Compute FS-relative path by stripping the mount prefix.
+     * Root mount "/" passes the full path through unchanged. */
+    {
+        size_t mlen = strlen(tmpFd->mp->mountPoint);
+        if (mlen > 1) {
+            path = fileName + mlen;
+            if (path[0] == '\0')
+                path = "/";
+        }
     }
 
     if (path[0] == '/')
@@ -567,20 +534,6 @@ fileDescriptor_t* fopen(const char *file, const char *flags) {
     else
         snprintf(tmpFd->fileName, sizeof(tmpFd->fileName), "/%s", path);
     tmpFd->fileName[sizeof(tmpFd->fileName) - 1] = '\0';
-
-    /* Find our mount point or set default to sys */
-    if (mountPoint == 0x0) {
-        tmpFd->mp = vfs_findMount("sys");
-    }
-    else {
-        tmpFd->mp = vfs_findMount(mountPoint);
-    }
-
-    if (tmpFd->mp == 0x0) {
-        kprintf("Mount Point Bad\n");
-        kfree(tmpFd);
-        return (0x0);
-    }
 
     /* This Will Set Up The Descriptor Modes */
     tmpFd->mode = 0;
@@ -722,34 +675,38 @@ int fclose(fileDescriptor_t *fd) {
  ************************************************************************/
 void sysMkDir(const char *path) {
     fileDescriptor_t *tmpFD = 0x0;
-    char tmpDir[1024];
-    char rootPath[256];
-    char *dir = 0x0;  //UBU*mountPoint = 0x0;
-    char *tmp = 0x0;
-    char *_strtok_last = NULL;
-    rootPath[0] = '\0';
-    dir = (char*) path;
+    char fullpath[1024];
+    char parentpath[1024];
+    const char *basename = 0x0;
 
-    if (strstr(path, ":") == 0x0) {
-        snprintf(tmpDir, sizeof(tmpDir), "%s%s", _current->oInfo.cwd, path);
-        dir = (char*) &tmpDir;
+    /* Resolve relative paths against CWD. */
+    if (path[0] != '/')
+        snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, path);
+    else
+        strncpy(fullpath, path, sizeof(fullpath) - 1);
+    fullpath[sizeof(fullpath) - 1] = '\0';
+
+    /* Split fullpath into parent dir and last component. */
+    char *last_slash = NULL;
+    {
+        char *p = fullpath;
+        while (*p) { if (*p == '/') last_slash = p; p++; }
     }
-    while (strstr(dir, "/")) {
-        char *_seg = strtok_r(dir, "/", &_strtok_last);
-        if (rootPath[0] == 0x0)
-            snprintf(rootPath, sizeof(rootPath), "%s/", _seg);
-        else
-            snprintf(rootPath, sizeof(rootPath), "%s%s/", rootPath, _seg);
-        tmp = strtok_r(NULL, "\n", &_strtok_last);
-        dir = tmp;
+    if (last_slash == NULL)
+        return;
+    basename = last_slash + 1;
+    if (last_slash == fullpath) {
+        strncpy(parentpath, "/", sizeof(parentpath) - 1);
+    } else {
+        size_t n = (size_t)(last_slash - fullpath);
+        strncpy(parentpath, fullpath, n);
+        parentpath[n] = '\0';
     }
 
-    //kprintf("rootPath: [%s]\n",rootPath);
-    tmpFD = fopen(rootPath, "rb");
-
+    tmpFD = fopen(parentpath, "rb");
     if (tmpFD == NULL || tmpFD->mp == NULL) {
-        kprintf("sysMkDir: invalid mount point for %s\n", rootPath);
-        klog(KLOG_ERR, "sysMkDir: invalid mount point for %s", rootPath);
+        kprintf("sysMkDir: invalid mount point for %s\n", parentpath);
+        klog(KLOG_ERR, "sysMkDir: invalid mount point for %s", parentpath);
         return;
     }
     if (tmpFD->mp->fs->vfsMakeDir == NULL) {
@@ -758,11 +715,8 @@ void sysMkDir(const char *path) {
         fclose(tmpFD);
         return;
     }
-    tmpFD->mp->fs->vfsMakeDir(dir, tmpFD);
-
+    tmpFD->mp->fs->vfsMakeDir(basename, tmpFD);
     fclose(tmpFD);
-
-    return;
 }
 
 /************************************************************************
@@ -774,80 +728,75 @@ void sysMkDir(const char *path) {
  ************************************************************************/
 
 int unlink(const char *node) {
-    char *path = 0x0, *mountPoint = 0x0;
-    char *_strtok_last = NULL;
+    char fullpath[1024];
+    const char *fs_path = 0x0;
     struct vfs_mountPoint *mp = 0x0;
 
-    path = (char*) strtok_r((char*) node, "@", &_strtok_last);
-
-    mountPoint = strtok_r(NULL, "\n", &_strtok_last);
-
-    if (mountPoint == 0x0) {
-        mp = vfs_findMount("sys"); /* _current->oInfo.container; */
-    }
-    else {
-        mp = vfs_findMount(mountPoint);
-    }
-    if (mp == 0x0) {
-
-        kprintf("DBG: Mount Point Bad");
-        //kpanic("Mount Point Bad");
+    if (node == NULL || node[0] == '\0')
         return (0x0);
 
+    if (node[0] != '/')
+        snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, node);
+    else
+        strncpy(fullpath, node, sizeof(fullpath) - 1);
+    fullpath[sizeof(fullpath) - 1] = '\0';
+
+    mp = vfs_findMount(fullpath);
+    if (mp == 0x0) {
+        kprintf("DBG: Mount Point Bad");
+        return (0x0);
     }
+
+    size_t mlen = strlen(mp->mountPoint);
+    fs_path = (mlen > 1) ? fullpath + mlen : fullpath;
+    if (fs_path[0] == '\0') fs_path = "/";
 
     if (mp->fs->vfsUnlink == NULL) {
-        klog(KLOG_ERR, "unlink: filesystem does not support unlink for %s", path);
+        klog(KLOG_ERR, "unlink: filesystem does not support unlink for %s", fs_path);
         return (0x0);
     }
-    mp->fs->vfsUnlink(path, mp);
+    mp->fs->vfsUnlink(fs_path, mp);
 
     return (0x0);
 }
 
 kDIR_t *vfs_opendir(const char *path) {
     char fileName[1024];
-    char *mountPoint = 0x0;
-    char *dirPath = 0x0;
-    char *_strtok_last = NULL;
+    const char *dirPath = 0x0;
     struct vfs_mountPoint *mp = 0x0;
     kDIR_t *dir = 0x0;
 
     if (path == 0x0 || path[0] == '\0')
         return (0x0);
 
-    /* Translate POSIX /dev/X -> devfs:/X for POSIX compatibility. */
-    if (strncmp(path, "/dev", 4) == 0 && (path[4] == '/' || path[4] == '\0')) {
-        snprintf(fileName, sizeof(fileName), "devfs:%s",
-            path[4] == '\0' ? "/" : path + 4);
-    } else if (path[0] == '.' && path[1] == '\0') {
+    /* Resolve '.' to CWD; everything else taken as-is. */
+    if (path[0] == '.' && path[1] == '\0') {
         strncpy(fileName, _current->oInfo.cwd, sizeof(fileName) - 1);
     } else {
         strncpy(fileName, path, sizeof(fileName) - 1);
     }
     fileName[sizeof(fileName) - 1] = '\0';
 
-    if (strstr(fileName, ":")) {
-        mountPoint = strtok_r(fileName, ":", &_strtok_last);
-        dirPath = strtok_r(NULL, "\n", &_strtok_last);
-        if (dirPath == 0x0 || dirPath[0] == '\0')
+    /* Find mount by longest POSIX prefix match. */
+    mp = vfs_findMount(fileName);
+    if (mp == 0x0)
+        return (0x0);
+
+    /* Strip mount prefix for the FS-relative path. */
+    {
+        size_t mlen = strlen(mp->mountPoint);
+        dirPath = (mlen > 1) ? fileName + mlen : fileName;
+        if (dirPath[0] == '\0')
             dirPath = "/";
-    } else {
-        dirPath = fileName;
     }
 
-    if (dirPath[0] != '/')  {
+    if (dirPath[0] != '/') {
         char tmp[1024];
         snprintf(tmp, sizeof(tmp), "/%s", dirPath);
         strncpy(fileName, tmp, sizeof(fileName) - 1);
         fileName[sizeof(fileName) - 1] = '\0';
         dirPath = fileName;
     }
-
-    if (mountPoint == 0x0)
-        mp = vfs_findMount("sys");
-    else
-        mp = vfs_findMount(mountPoint);
 
     if (mp == 0x0 || mp->fs->vfsOpenDir == 0x0)
         return (0x0);

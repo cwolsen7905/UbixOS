@@ -35,7 +35,7 @@
 #include <sys/sched.h>
 #include <sys/mpi.h>
 
-#define INITD_PATH    "sys:/etc/init.d"
+#define INITD_PATH    "/etc/init.d"
 #define INITD_MAXSVCS 64
 #define INITD_PATHMAX 256
 
@@ -143,7 +143,7 @@ int main(int argc,char **argv, char **envp) {
 
   if (0x0 == i) {
     printf("Starting TTYD\n");
-    execve("sys:/bin/ttyd", argv_login, envp_login);
+    execve("/bin/ttyd", argv_login, envp_login);
     printf("Error: Could not start TTYD\n");
     exit(0x0);
   }
@@ -153,7 +153,7 @@ int main(int argc,char **argv, char **envp) {
   i = fork();
   if (0x0 == i) {
     printf("Starting Ubix Registry (ubistry)\n");
-    exec("sys:/bin/ubistry",0x0);
+    exec("/bin/ubistry",0x0);
     printf("Error: Error Starting ubistry\n");
     exit(0x0);
   }

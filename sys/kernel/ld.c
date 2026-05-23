@@ -30,7 +30,6 @@
 #include <ubixos/sched.h>
 #include <sys/elf.h>
 #include <ubixos/kpanic.h>
-#include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <fs/vfs/vfs.h>
 #include <vmm/vmm.h>
@@ -39,165 +38,55 @@
 
 uint32_t ldEnable(const char *interp)
 {
-	int i = 0x0;
-	int x = 0x0;
-	int rel = 0x0;
-	int sym = 0x0;
+	int i = 0;
+	int x = 0;
 	char *newLoc = 0x0;
-	char *shStr = 0x0;
-	char *dynStr = 0x0;
-	uint32_t *reMap = 0x0;
 	fileDescriptor_t *ldFd = 0x0;
 	Elf_Ehdr *binaryHeader = 0x0;
 	Elf_Phdr *programHeader = 0x0;
-	Elf_Shdr *sectionHeader = 0x0;
-	Elf_Sym *relSymTab = 0x0;
-	Elf_Rel *elfRel = 0x0;
-	Elf_Rela *elfRela = 0x0;
-	Elf_Addr addr;
+	uint32_t entry;
 
-	/* Open our dynamic linker */
+	/*
+	 * PT_INTERP paths are POSIX-absolute (e.g. /lib/ld-musl-i386.so.1).
+	 * fopen() now resolves POSIX paths via longest-prefix mount matching,
+	 * so pass the interp path directly.
+	 */
 	ldFd = fopen(interp, "rb");
-	if (ldFd == 0x0)
-	{
-		ldFd = fopen("sys:/libexec/ld.so", "rb");
+	if (ldFd == 0x0) {
+		ldFd = fopen("/libexec/ld.so", "rb");
 		if (ldFd == 0x0)
 			return (0x0);
 	}
 
 	kern_fseek(ldFd, 0x0, 0x0);
 	binaryHeader = (Elf32_Ehdr *)kmalloc(sizeof(Elf32_Ehdr));
-
 	assert(binaryHeader);
 	fread(binaryHeader, sizeof(Elf32_Ehdr), 1, ldFd);
 
 	programHeader = (Elf_Phdr *)kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
 	assert(programHeader);
-
 	kern_fseek(ldFd, binaryHeader->e_phoff, 0);
 	fread(programHeader, sizeof(*programHeader), binaryHeader->e_phnum, ldFd);
 
-	sectionHeader = (Elf_Shdr *)kmalloc(sizeof(Elf_Shdr) * binaryHeader->e_shnum);
-
-	assert(sectionHeader);
-	kern_fseek(ldFd, binaryHeader->e_shoff, 0);
-	fread(sectionHeader, sizeof(Elf_Shdr), binaryHeader->e_shnum, ldFd);
-
-	shStr = (char *)kmalloc(sectionHeader[binaryHeader->e_shstrndx].sh_size);
-	kern_fseek(ldFd, sectionHeader[binaryHeader->e_shstrndx].sh_offset, 0);
-	fread(shStr, sectionHeader[binaryHeader->e_shstrndx].sh_size, 1, ldFd);
-
-	for (i = 0x0; i < binaryHeader->e_phnum; i++)
-	{
-		switch (programHeader[i].p_type)
-		{
-		case PT_LOAD:
-			newLoc = (char *)programHeader[i].p_vaddr + LD_START;
-			/*
-			 Allocate Memory Im Going To Have To Make This Load Memory With Correct
-			 Settings so it helps us in the future
-			 */
-			for (x = 0; x < (programHeader[i].p_memsz); x += 0x1000)
-			{
-				/* make r/w or ro */
-				if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT, _current->id, 0)) == 0x0)
-					K_PANIC("vmmRemapPage: ld");
-				memset((void *)((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
-			}
-			/* Now Load Section To Memory */
-			kern_fseek(ldFd, programHeader[i].p_offset, 0x0);
-			fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
-
-			break;
-		case PT_DYNAMIC:
-			/* NOT IMPLEMENTED: dynamic segment is processed by ld.so at runtime */
-			break;
-		case PT_GNU_STACK:
-			/* NOT IMPLEMENTED: stack executable flag not yet enforced */
-			break;
-		default:
-			kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].p_type);
-			break;
-		}
-	}
-
-	/* Pass 1: load dynstr and dynsym before processing relocations */
-	for (i = 0x0; i < binaryHeader->e_shnum; i++)
-	{
-		switch (sectionHeader[i].sh_type)
-		{
-		case SHT_STRTAB:
-			if (!strcmp((shStr + sectionHeader[i].sh_name), ".dynstr"))
-			{
-				dynStr = (char *)kmalloc(sectionHeader[i].sh_size);
-				kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-				fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
-			}
-			break;
-		case SHT_DYNSYM:
-			relSymTab = (Elf_Sym *)kmalloc(sectionHeader[i].sh_size);
-			kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-			fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
-			sym = i;
-			break;
-		default:
-			break;
-		}
-	}
-
-	/* Pass 2: apply relocations now that symtab is loaded */
-	for (i = 0x0; i < binaryHeader->e_shnum; i++)
-	{
-		if (sectionHeader[i].sh_type != SHT_REL)
+	for (i = 0; i < binaryHeader->e_phnum; i++) {
+		if (programHeader[i].p_type != PT_LOAD)
 			continue;
-		elfRel = (Elf_Rel *)kmalloc(sectionHeader[i].sh_size);
-		kern_fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-		fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
-
-		for (x = 0x0; x < (int)(sectionHeader[i].sh_size / sizeof(Elf_Rel)); x++)
-		{
-			rel = ELF32_R_SYM(elfRel[x].r_info);
-			reMap = (uint32_t *)((uint32_t)LD_START + elfRel[x].r_offset);
-			switch (ELF32_R_TYPE(elfRel[x].r_info))
-			{
-			case R_386_32:
-				if (relSymTab != 0x0)
-					*reMap += ((uint32_t)LD_START + relSymTab[rel].st_value);
-				break;
-			case R_386_PC32:
-				if (relSymTab != 0x0)
-					*reMap += ((uint32_t)LD_START + relSymTab[rel].st_value) - (uint32_t)reMap;
-				break;
-			case R_386_RELATIVE:
-				*reMap += (uint32_t)LD_START;
-				break;
-			case R_386_GLOB_DAT:
-				if (relSymTab != 0x0)
-					*reMap = (uint32_t)LD_START + relSymTab[rel].st_value;
-				break;
-			case R_386_JMP_SLOT:
-				if (relSymTab != 0x0)
-					*reMap = (uint32_t)LD_START + relSymTab[rel].st_value;
-				break;
-			case R_386_NONE:
-				break;
-			default:
-				kprintf("ldEnable: unhandled reloc %s at 0x%X\n", elfGetRelType(ELF32_R_TYPE(elfRel[x].r_info)), elfRel[x].r_offset);
-				break;
-			}
+		newLoc = (char *)(programHeader[i].p_vaddr + LD_START);
+		for (x = 0; x < (int)programHeader[i].p_memsz; x += 0x1000) {
+			uint32_t va = (programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START;
+			if (vmm_remapPage(vmm_findFreePage(_current->id), va, PAGE_DEFAULT, _current->id, 0) == 0x0)
+				K_PANIC("vmmRemapPage: ld");
+			memset((void *)va, 0x0, 0x1000);
 		}
-		kfree(elfRel);
+		kern_fseek(ldFd, programHeader[i].p_offset, 0x0);
+		fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
 	}
 
-	i = binaryHeader->e_entry + LD_START;
+	entry = binaryHeader->e_entry + LD_START;
 
-	kfree(dynStr);
-	kfree(shStr);
-	kfree(relSymTab);
-	kfree(sectionHeader);
 	kfree(programHeader);
 	kfree(binaryHeader);
 	fclose(ldFd);
 
-	return ((uint32_t)i);
+	return (entry);
 }

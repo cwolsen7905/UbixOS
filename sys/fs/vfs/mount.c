@@ -130,16 +130,42 @@ int vfs_addMount( struct vfs_mountPoint *mp ) {
  Notes:
 
  ************************************************************************/
-struct vfs_mountPoint *vfs_findMount( char *mountPoint ) {
+/*
+ * vfs_findMount — longest-prefix mount lookup.
+ *
+ * Given a POSIX path like "/dev/tty" or "/bin/ls", walk the mount table and
+ * return the entry whose mountPoint is the longest prefix of path.  The root
+ * mount "/" always matches as a fallback.  A non-root mount must be followed
+ * by '/' or end-of-string to avoid false matches (e.g. "/developer" must not
+ * match a "/dev" mount).
+ */
+struct vfs_mountPoint *vfs_findMount( const char *path ) {
   struct vfs_mountPoint *tmpMp = 0x0;
+  struct vfs_mountPoint *best  = NULL;
+  size_t best_len = 0;
+  size_t path_len;
+
+  if (path == NULL)
+    return NULL;
+
+  path_len = strlen(path);
 
   for ( tmpMp = systemVitals->mountPoints; tmpMp; tmpMp = tmpMp->next ) {
-    if ( strcmp( tmpMp->mountPoint, mountPoint ) == 0x0 ) {
-      return (tmpMp);
+    size_t mlen = strlen(tmpMp->mountPoint);
+    if (mlen > path_len)
+      continue;
+    if (strncmp(path, tmpMp->mountPoint, mlen) != 0)
+      continue;
+    /* Boundary check: root "/" matches everything; otherwise the next
+     * character must be '/' or '\0'. */
+    if (mlen > 1 && path[mlen] != '/' && path[mlen] != '\0')
+      continue;
+    if (mlen > best_len) {
+      best     = tmpMp;
+      best_len = mlen;
     }
   }
-  /* Return NULL If Mount Point Not Found */
-  return NULL;
+  return best;
 }
 
 /***

@@ -238,7 +238,7 @@ static int run_recipe(const char *recipe, const char *target,
     if (pid < 0) { perror("make: fork"); return 1; }
     if (pid == 0) {
         char *argv[] = { "shell", "-c", step2, NULL };
-        execve("sys:/bin/shell", argv, environ);
+        execve("/bin/shell", argv, environ);
         _exit(127);
     }
     int status;

@@ -215,14 +215,8 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args) {
 }
 
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
-  char *cwd = _current->oInfo.cwd;
-  size_t len;
-
-  /* skip mount-point prefix — advance past the first ':' */
-  while (*cwd && *cwd != '/')
-    cwd++;
-
-  len = strlen(cwd) + 1;
+  const char *cwd = _current->oInfo.cwd;
+  size_t len = strlen(cwd) + 1;
 
   if (args->buf) {
     if (len > args->size) {

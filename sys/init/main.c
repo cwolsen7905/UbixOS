@@ -178,12 +178,12 @@ int kmain(uint32_t rootdev)
 		}
 
 		kprintf("kmain: calling vfs_mount major=%i minor=%i\n", sys_major, sys_minor);
-		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "sys", "rw") != 0x0)
-			kprintf("Problem Mounting sys (FAT) from major=%i "
+		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "/", "rw") != 0x0)
+			kprintf("Problem Mounting root (FAT) from major=%i "
 			        "minor=%i\n",
 			        sys_major, sys_minor);
 		else
-			kprintf("Mounted sys (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
+			kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
 	}
 
 	/* Initialize the system */
@@ -199,7 +199,7 @@ int kmain(uint32_t rootdev)
 
 	execThread(systemTask, 0x2000, 0x0, "systemTask");
 
-	execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 
 	irqEnable(0x0);
 
