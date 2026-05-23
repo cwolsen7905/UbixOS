@@ -44,7 +44,8 @@ extern "C" {
 #define NR_GROUPS 32
 
 typedef enum {
-  PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7
+  PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7,
+  STOPPED = 8
 } tState;
 
 struct osInfo {
@@ -99,6 +100,7 @@ typedef struct taskStruct {
     uint8_t   on_rq;             /* 1 if currently in a run queue */
     struct taskStruct *rq_next;  /* per-priority run queue forward link */
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
+    int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
 } kTask_t;
 
 int sched_init();
@@ -116,6 +118,7 @@ void sched_ready(kTask_t *t);           /* READY  — task is runnable        */
 void sched_dead(kTask_t *t);            /* DEAD   — task has exited          */
 void sched_sleep(kTask_t *t, tState s); /* WAIT / UNINTERRUPTIBLE — blocked  */
 void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work */
+void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     */
 
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();

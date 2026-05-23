@@ -435,3 +435,23 @@ void sched_wakeup(kTask_t *t)
 	if (t != NULL)
 		t->state = RUNNING;
 }
+
+void sched_stop(kTask_t *t, int sig)
+{
+	uint32_t flags;
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	rq_dequeue_locked(t);
+	t->state = STOPPED;
+	t->t_stopped_sig = sig;
+	/* Wake parent so it can collect the stop event via WUNTRACED. */
+	if (t->parent != NULL && t->parent->state == WAIT) {
+		t->parent->state = READY;
+		rq_enqueue_locked(t->parent);
+	}
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}

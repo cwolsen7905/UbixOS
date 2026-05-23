@@ -59,6 +59,20 @@
      (1u << 12) |   /* SIGPIPE 13 */ \
      (1u << 14))    /* SIGTERM 15 */
 
+/* Signals whose SIG_DFL action is to stop (not terminate) the process. */
+#define SIGSTOP_MASK \
+    ((1u << (SIGTSTP  - 1)) |   /* 20 */ \
+     (1u << (SIGSTOP  - 1)) |   /* 19 */ \
+     (1u << (SIGTTIN  - 1)) |   /* 21 */ \
+     (1u << (SIGTTOU  - 1)))    /* 22 */
+
+/* Pending stop signals cleared by SIGCONT. */
+#define SIGPENDSTOP_MASK \
+    ((1u << (SIGTSTP  - 1)) | \
+     (1u << (SIGSTOP  - 1)) | \
+     (1u << (SIGTTIN  - 1)) | \
+     (1u << (SIGTTOU  - 1)))
+
 /*
  * signal_post — post signal `sig` to the task identified by `pid`.
  *
@@ -77,6 +91,13 @@ signal_post(int pid, int sig)
     if (t == NULL)
         return;
 
+    if (sig == SIGCONT) {
+        t->td.sig_pending &= ~SIGPENDSTOP_MASK;
+        if (t->state == STOPPED) {
+            t->t_stopped_sig = 0;
+            sched_ready(t);
+        }
+    }
     t->td.sig_code[sig - 1] = SI_KERNEL;
     t->td.sig_pending |= (1u << (sig - 1));
 }
@@ -163,6 +184,10 @@ signal_post_tty(tty_term *term, int sig)
 
 /*
  * signal_post_pgrp — post signal `sig` to every task in process group `pgrp`.
+ *
+ * Special handling for SIGCONT: wake any STOPPED tasks immediately so they
+ * can resume (they won't reach signal_check otherwise), and discard pending
+ * stop signals per POSIX.
  */
 void
 signal_post_pgrp(pid_t pgrp, int sig)
@@ -174,6 +199,15 @@ signal_post_pgrp(pid_t pgrp, int sig)
     for (t = taskList; t != NULL; t = t->next) {
         if (t->state == DEAD || (pid_t)t->pgrp != pgrp)
             continue;
+        if (sig == SIGCONT) {
+            /* Discard pending stop signals. */
+            t->td.sig_pending &= ~SIGPENDSTOP_MASK;
+            /* Wake stopped task so it can run again. */
+            if (t->state == STOPPED) {
+                t->t_stopped_sig = 0;
+                sched_ready(t);
+            }
+        }
         t->td.sig_code[sig - 1] = SI_KERNEL;
         t->td.sig_pending |= (1u << (sig - 1));
     }
@@ -221,8 +255,14 @@ signal_check(struct trapframe *frame)
 
         if ((void *)sa->sa_handler == (void *)0x0 /* SIG_DFL */ ||
             sa->sa_handler == NULL) {
-            /* Default action: terminate for signals in SIGTERM_MASK,
-             * ignore for the rest (SIGCHLD etc.). */
+            /* Default action: stop for SIGSTOP_MASK, terminate for
+             * SIGTERM_MASK, ignore for the rest (SIGCHLD etc.). */
+            if ((1u << (sig - 1)) & SIGSTOP_MASK) {
+                sched_stop(_current, sig);
+                sched_yield();
+                /* Resumes here after SIGCONT wakes us via sched_ready. */
+                return;
+            }
             if ((1u << (sig - 1)) & SIGTERM_MASK) {
                 kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n",
                     sig, _current->id, _current->name);
