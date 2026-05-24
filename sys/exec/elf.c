@@ -123,7 +123,8 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 	}
 
 	/* Load the ELF header */
-	if ((binary_header = (Elf32_Ehdr *)kmalloc(sizeof(Elf32_Ehdr))) == 0x0)
+	binary_header = (Elf32_Ehdr *)kmalloc(sizeof(Elf32_Ehdr));
+	if (binary_header == 0x0)
 	{
 		K_PANIC("malloc failed!");
 	}
@@ -153,14 +154,15 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 	}
 
 	/* Load The Program Header(s) */
-	if ((program_header = (Elf32_Phdr *)kmalloc(sizeof(Elf32_Phdr) * binary_header->e_phnum)) == 0x0)
+	program_header = (Elf32_Phdr *)kmalloc(sizeof(Elf32_Phdr) * binary_header->e_phnum);
+	if (program_header == 0x0)
 	{
 		K_PANIC("malloc failed!");
 	}
 
 	kern_fseek(exec_fd, binary_header->e_phoff, 0);
 
-	fread(program_header, (sizeof(Elf32_Phdr) * binary_header->e_phnum), 1, exec_fd);
+	fread(program_header, (size_t)(sizeof(Elf32_Phdr) * binary_header->e_phnum), 1, exec_fd);
 
 	for (numsegs = 0x0, i = 0x0; i < binary_header->e_phnum; i++)
 	{
@@ -186,7 +188,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 
 				kern_fseek(exec_fd, program_header[i].p_offset, 0);
 				fread((void *)program_header[i].p_vaddr + real_base_addr,
-				      program_header[i].p_filesz,
+				      (size_t)program_header[i].p_filesz,
 				      1,
 				      exec_fd);
 
@@ -207,6 +209,8 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 					base_addr = program_header[i].p_vaddr + real_base_addr;
 				}
 				numsegs++;
+				break;
+			default:
 				break;
 		}
 	}

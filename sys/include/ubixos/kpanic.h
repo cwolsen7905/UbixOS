@@ -29,8 +29,8 @@
 #ifndef _SYS_KPANIC_H
 #define _SYS_KPANIC_H
 
-#define K_PANIC(msg) kpanic("Error: (%s), File: %s, Line: %i\n",msg ,__FILE__,__LINE__);
+#define K_PANIC(msg) kpanic("Error: (%s), File: %s, Line: %i\n", msg, __FILE__, __LINE__);
 
-void kpanic(const char *fmt, ...);
+void kpanic(const char *fmt, ...) __attribute__((noreturn));
 
 #endif /* END _SYS_KPANIC_H */
