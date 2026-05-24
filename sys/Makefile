@@ -28,7 +28,7 @@ all:
 	@echo "Kernel Build For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
 
-kernel-build: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code usb-code net-code kernel-img
+kernel-build: init-code sys-code arch-code kern-code posix-code exec-code vmm-code mpi-code fs-code lib-code isa-code pci-code usb-code net-code kernel-img
 
 generic-code: generic
 	(cd generic;${MAKE})
@@ -39,9 +39,16 @@ init-code: init
 arch-code: arch/${_ARCH}
 	(cd arch/${_ARCH};${MAKE})
 	
-kernel-code: kernel
-	(cd kernel;${MAKE})
-	
+kern-code: kern
+	(cd kern;${MAKE})
+
+posix-code: posix
+	(cd posix;${MAKE})
+
+exec-code: exec
+	(cd exec;${MAKE})
+
+
 isa-code: isa
 	(cd isa;${MAKE})
 
@@ -102,7 +109,9 @@ clean:
 	(cd init;${MAKE} clean)
 	(cd arch/${_ARCH};${MAKE} clean)
 	(cd sys;${MAKE} clean)
-	(cd kernel;${MAKE} clean)
+	(cd kern;${MAKE} clean)
+	(cd posix;${MAKE} clean)
+	(cd exec;${MAKE} clean)
 	(cd vmm;${MAKE} clean)
 	(cd mpi;${MAKE} clean)
 	(cd fs;${MAKE} clean)
