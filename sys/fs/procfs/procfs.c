@@ -56,7 +56,7 @@
 #include <vmm/vmm.h>
 #include <string.h>
 
-#define PROCFS_TYPE  0x02
+#define PROCFS_TYPE  VFS_TYPE_PROCFS
 
 /* fd->start values identifying the file type */
 #define PFILE_DIR      0
@@ -259,11 +259,11 @@ static const char *
 procfs_fstype_name(int vfsType)
 {
 	switch (vfsType) {
-	case 0xFA: return "fat";
-	case 0x01: return "devfs";
-	case 0x02: return "procfs";
-	case 0xAA: return "ufs";
-	default:   return "unknown";
+	case VFS_TYPE_FAT:    return "fat";
+	case VFS_TYPE_DEVFS:  return "devfs";
+	case VFS_TYPE_PROCFS: return "procfs";
+	case VFS_TYPE_UFS:    return "ufs";
+	default:              return "unknown";
 	}
 }
 

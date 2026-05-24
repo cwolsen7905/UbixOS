@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,6 +29,7 @@
 #include <sys/descrip.h>
 #include <sys/errno.h>
 #include <sys/bus.h>
+#include <sys/ioctl.h>
 #include <fs/devfs/devfs.h>
 #include <pci/ac97.h>
 
@@ -52,18 +53,17 @@
 #include <sys/pipe.h>
 #include <string.h>
 
+static int close_fdslot(struct thread *td, int fd);
+static int duplicate_descriptor(struct thread *td, int from, int to);
+
 /* Forward-declare lwip_select to avoid pulling in sockets.h macros. */
 struct timeval;
 struct fd_set;
 int lwip_select(int, struct fd_set *, struct fd_set *, struct fd_set *, struct timeval *);
 
-// XXX MrOlsen (2020-01-30) No longer needed -> static struct file *kern_files = 0x0;
-
 int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 {
 	struct file *fp = 0x0;
-
-	struct file *dup_fp = 0x0;
 	int i = 0;
 
 	if (uap->fd < 0 || uap->fd >= O_FILES || td->o_files[uap->fd] == 0x0)
@@ -73,43 +73,31 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap)
 
 	switch (uap->cmd)
 	{
-	case 17:
-		/* First 5 Descriptors Are Reserved */
-		for (i = 5; i < O_FILES; i++)
+	case F_DUPFD:
+	{
+		int start = (uap->arg < 5) ? 5 : uap->arg;
+		for (i = start; i < O_FILES; i++)
 		{
 			if (td->o_files[i] == 0x0)
 			{
-				dup_fp = (struct file *)kmalloc(sizeof(struct file));
-				memcpy(dup_fp, fp, sizeof(struct file));
-
-				td->o_files[i] = (void *)dup_fp;
+				if (duplicate_descriptor(td, uap->fd, i) != 0)
+					return (-EMFILE);
 				td->td_retval[0] = i;
-
-				((struct file *)td->o_files[uap->fd])->fd->dup++;
-
-				fclose(((struct file *)td->o_files[uap->fd])->fd);
-
-				// td->o_files[uap->fd] = 0;
-
-				if (fdestroy(td, fp, uap->fd) != 0x0)
-					kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fp, td->o_files[uap->fd]);
-
-				kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
-
 				break;
 			}
 		}
+		if (td->td_retval[0] == 0)
+			return (-EMFILE);
 		break;
-	case 3:
-		if (uap->fd > 3)
-			fp->f_flag = O_RDWR & O_ACCMODE;
+	}
+	case F_GETFL:
 		td->td_retval[0] = fp->f_flag;
 		break;
-	case 2:
-		/* F_SETFD: store close-on-exec and other fd flags; silently accept */
+	case F_SETFD:
+		/* store close-on-exec and other fd flags; silently accept */
 		td->td_retval[0] = 0;
 		break;
-	case 4:
+	case F_SETFL:
 		fp->f_flag &= ~FCNTLFLAGS;
 		fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
 		break;
@@ -132,7 +120,8 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 	int i = 0;
 
 	fp = (struct file *)kmalloc(sizeof(struct file));
-	if (fp == 0x0) {
+	if (fp == 0x0)
+	{
 		if (resultfp)
 			*resultfp = 0x0;
 		if (resultfd)
@@ -168,10 +157,6 @@ allocated:
 
 	return (0x0);
 }
-
-#include <sys/ioctl.h>
-#include <ubixos/sched.h>
-#include <ubixos/tty.h>
 
 /**
  * @brief   This destroys a thread local file descriptor.
@@ -209,6 +194,85 @@ int fdestroy(struct thread *td, struct file *fp, int fd)
 	return (error);
 }
 
+static int close_fdslot(struct thread *td, int fd)
+{
+	if (fd < 0 || fd >= O_FILES || td->o_files[fd] == NULL)
+		return (-1);
+
+	struct file *f = (struct file *)td->o_files[fd];
+
+	switch (f->fd_type)
+	{
+	case FD_TYPE_DIR:
+		if (f->data != NULL)
+			vfs_closedir((kDIR_t *)f->data);
+		return fdestroy(td, f, fd);
+
+	case FD_TYPE_TTY:
+	case FD_TYPE_TTYV:
+		return fdestroy(td, f, fd);
+
+	case FD_TYPE_PIPE:
+		if (f->data != NULL)
+		{
+			struct pipeInfo *pi = (struct pipeInfo *)f->data;
+			if (fd == pi->rFD)
+				pi->rfdCNT--;
+			else if (fd == pi->wFD)
+				pi->wfdCNT--;
+			if (pi->rfdCNT <= 0 && pi->wfdCNT <= 0)
+			{
+				struct pipeBuf *pbuf = pi->headPB;
+				while (pbuf != NULL)
+				{
+					struct pipeBuf *next = pbuf->next;
+					kfree(pbuf->buffer);
+					kfree(pbuf);
+					pbuf = next;
+				}
+				kfree(pi);
+			}
+		}
+		return fdestroy(td, f, fd);
+
+	default:
+		if (f->fd != NULL)
+			fclose(f->fd);
+		return fdestroy(td, f, fd);
+	}
+}
+
+static int duplicate_descriptor(struct thread *td, int from, int to)
+{
+	struct file *fp = NULL;
+	struct file *dup_fp = NULL;
+
+	if (from < 0 || from >= O_FILES || td->o_files[from] == NULL)
+		return (-1);
+	if (to < 0 || to >= O_FILES)
+		return (-1);
+	if (from == to)
+		return (0);
+
+	if (td->o_files[to] != NULL)
+	{
+		if (close_fdslot(td, to) != 0)
+			return (-1);
+	}
+
+	fp = (struct file *)td->o_files[from];
+	dup_fp = (struct file *)kmalloc(sizeof(struct file));
+	if (dup_fp == NULL)
+		return (-ENOMEM);
+	memcpy(dup_fp, fp, sizeof(struct file));
+
+	if (fp->fd != NULL)
+		fp->fd->dup++;
+
+	td->o_files[to] = (void *)dup_fp;
+	return (0);
+}
+
 int close(struct thread *td, struct close_args *uap)
 {
 #ifdef DEBUG
@@ -219,8 +283,13 @@ int close(struct thread *td, struct close_args *uap)
 		td->td_retval[0] = -1;
 		return (-1);
 	}
-	kfree((void *)td->o_files[uap->fd]);
-	td->o_files[uap->fd] = 0x0;
+
+	if (close_fdslot(td, uap->fd) != 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
 	td->td_retval[0] = 0x0;
 	return (0x0);
 }
@@ -274,7 +343,8 @@ int getfd(struct thread *td, struct file **fp, int fd)
 	kprintf("[%s:%i]", __FILE__, __LINE__);
 #endif
 
-	if (fd < 0 || fd >= O_FILES) {
+	if (fd < 0 || fd >= O_FILES)
+	{
 		*fp = NULL;
 		return (-1);
 	}
@@ -301,47 +371,53 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 	 * tty fd inherited from parent), was opened via /dev/tty (FD_TYPE_TTY),
 	 * or is a specific vty (FD_TYPE_TTYV).
 	 */
-	int on_tty = (tty_fp != NULL &&
-	    (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY ||
-	    tty_fp->fd_type == FD_TYPE_TTYV)) &&
-	    term != NULL;
+	int on_tty = (tty_fp != NULL && (tty_fp->fd == NULL || tty_fp->fd_type == FD_TYPE_TTY || tty_fp->fd_type == FD_TYPE_TTYV)) && term != NULL;
 
 	switch (args->com)
 	{
 	case TIOCGETA:
-		if (on_tty) {
+		if (on_tty)
+		{
 			struct termios *t = (struct termios *)args->data;
 			*t = term->t_termios;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCSETA:
 	case TIOCSETAW:
-		if (on_tty) {
+		if (on_tty)
+		{
 			struct termios *t = (struct termios *)args->data;
 			term->t_termios = *t;
-			term->t_raw  = (t->c_lflag & ICANON) ? 0 : 1;
-			term->t_echo = (t->c_lflag & ECHO)   ? 1 : 0;
+			term->t_raw = (t->c_lflag & ICANON) ? 0 : 1;
+			term->t_echo = (t->c_lflag & ECHO) ? 1 : 0;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCSETAF:
 		/* Flush pending input before applying new attributes. */
-		if (on_tty) {
+		if (on_tty)
+		{
 			struct termios *t = (struct termios *)args->data;
 			term->stdinSize = 0;
 			term->t_linelen = 0;
 			term->t_termios = *t;
-			term->t_raw  = (t->c_lflag & ICANON) ? 0 : 1;
-			term->t_echo = (t->c_lflag & ECHO)   ? 1 : 0;
+			term->t_raw = (t->c_lflag & ICANON) ? 0 : 1;
+			term->t_echo = (t->c_lflag & ECHO) ? 1 : 0;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
@@ -352,86 +428,118 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		return (0);
 
 	case TIOCFLUSH:
-		if (on_tty) {
+		if (on_tty)
+		{
 			int flags = args->data ? *(int *)args->data : (FREAD | FWRITE);
-			if (flags & FREAD) {
+			if (flags & FREAD)
+			{
 				term->stdinSize = 0;
 				term->t_linelen = 0;
 			}
 			/* FWRITE: output is synchronous, nothing to flush. */
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCGWINSZ:
-		if (on_tty) {
+		if (on_tty)
+		{
 			struct winsize *win = (struct winsize *)args->data;
 			*win = term->t_winsize;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCSWINSZ:
-		if (on_tty) {
+		if (on_tty)
+		{
 			struct winsize *win = (struct winsize *)args->data;
 			term->t_winsize = *win;
 			signal_post_tty(term, SIGWINCH);
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCSCTTY:
 		/* Claim this tty as the controlling terminal for this session. */
-		if (on_tty) {
+		if (on_tty)
+		{
 			_current->ct_tty = term;
 			term->t_pgrp = (int)_current->pgrp;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCGPGRP:
-		if (on_tty) {
+		if (on_tty)
+		{
 			*(int *)args->data = term->t_pgrp;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCSPGRP:
-		if (on_tty) {
+		if (on_tty)
+		{
 			term->t_pgrp = *(int *)args->data;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case FIONREAD:
-		if (on_tty) {
+		if (on_tty)
+		{
 			*(int *)args->data = term->stdinSize;
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
 
 	case TIOCEXCL:
-		if (on_tty) { term->t_exclusive = 1; td->td_retval[0] = 0; }
-		else          td->td_retval[0] = -1;
+		if (on_tty)
+		{
+			term->t_exclusive = 1;
+			td->td_retval[0] = 0;
+		}
+		else
+			td->td_retval[0] = -1;
 		return (0);
 
 	case TIOCNXCL:
-		if (on_tty) { term->t_exclusive = 0; td->td_retval[0] = 0; }
-		else          td->td_retval[0] = -1;
+		if (on_tty)
+		{
+			term->t_exclusive = 0;
+			td->td_retval[0] = 0;
+		}
+		else
+			td->td_retval[0] = -1;
 		return (0);
 
 	case TIOCNOTTY:
@@ -448,10 +556,13 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 
 	case TIOCSTI:
 		/* Inject one byte into the tty line discipline. */
-		if (on_tty && args->data) {
+		if (on_tty && args->data)
+		{
 			tty_inject(term, *(char *)args->data);
 			td->td_retval[0] = 0;
-		} else {
+		}
+		else
+		{
 			td->td_retval[0] = -1;
 		}
 		return (0);
@@ -461,19 +572,18 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 		td->td_retval[0] = 0;
 		return (0);
 
-	default: {
+	default:
+	{
 		/* Route audio ioctls to the devfs character device. */
 		struct file *fp = NULL;
 		getfd(td, &fp, args->fd);
-		if (fp != NULL && fp->fd != NULL && fp->fd->mp != NULL &&
-		    fp->fd->mp->fs->vfsType == 1) {
-			struct devfs_devices *node =
-			    (struct devfs_devices *)(uintptr_t)fp->fd->start;
-			struct ubx_device *dev =
-			    ubx_device_find(node->devMajor, node->devMinor);
-			if (dev != NULL && dev->dev_char_ioctl != NULL) {
-				td->td_retval[0] = dev->dev_char_ioctl(
-				    dev, (uint32_t)args->com, args->data);
+		if (fp != NULL && fp->fd != NULL && fp->fd->mp != NULL && fp->fd->mp->fs->vfsType == VFS_TYPE_DEVFS)
+		{
+			struct devfs_devices *node = (struct devfs_devices *)(uintptr_t)fp->fd->start;
+			struct ubx_device *dev = ubx_device_find(node->devMajor, node->devMinor);
+			if (dev != NULL && dev->dev_char_ioctl != NULL)
+			{
+				td->td_retval[0] = dev->dev_char_ioctl(dev, (uint32_t)args->com, args->data);
 				return (0);
 			}
 		}
@@ -487,6 +597,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 {
 	int i, nd, total;
 	fd_set lwip_rfds, lwip_wfds;
+	fd_set watch_in, watch_out;
 	int kern_to_lwip_r[MAX_FILES]; /* kernel fd → lwIP socket for read set */
 	int kern_to_lwip_w[MAX_FILES]; /* kernel fd → lwIP socket for write set */
 	int max_lwip;
@@ -501,54 +612,79 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	max_lwip = 0;
 	has_stdin_rd = 0;
 
+	/* Copy and clear input sets immediately so args->in/ou become result sets. */
+	if (args->in)
+	{
+		watch_in = *args->in;
+		FD_ZERO(args->in);
+	}
+	if (args->ou)
+	{
+		watch_out = *args->ou;
+		FD_ZERO(args->ou);
+	}
+
 	/* Scan read fd_set: separate stdin from socket fds */
-	if (args->in) {
-		for (i = 0; i < nd; i++) {
-			if (!FD_ISSET(i, args->in))
+	if (args->in)
+	{
+		for (i = 0; i < nd; i++)
+		{
+			if (!FD_ISSET(i, &watch_in))
 				continue;
-			if (i == 0) {
+			if (i == 0)
+			{
 				has_stdin_rd = 1;
-			} else {
+			}
+			else
+			{
 				struct file *f = td->o_files[i];
-				if (f && f->fd_type == 2) {
+				if (f && f->fd_type == FD_TYPE_SOCKET)
+				{
 					kern_to_lwip_r[i] = f->socket;
 					FD_SET(f->socket, &lwip_rfds);
 					if (f->socket + 1 > max_lwip)
 						max_lwip = f->socket + 1;
-				} else if (f && f->fd_type == 3) {
+				}
+				else if (f && f->fd_type == FD_TYPE_PIPE)
+				{
 					/* Pipe: mark immediately ready if data available */
 					struct pipeInfo *pi = (struct pipeInfo *)f->data;
-					if (pi && pi->bCNT > 0) {
+					if (pi && pi->bCNT > 0)
+					{
 						FD_SET(i, args->in);
 						has_stdin_rd = 1; /* reuse flag to skip the poll loop */
 					}
-				} else if (f && f->fd_type == 1) {
+				}
+				else if (f && f->fd_type == FD_TYPE_FILE)
+				{
 					/* Regular file: always ready */
 					FD_SET(i, args->in);
-				} else if (f && (f->fd_type == FD_TYPE_TTY ||
-				    f->fd_type == FD_TYPE_TTYV)) {
+				}
+				else if (f && (f->fd_type == FD_TYPE_TTY || f->fd_type == FD_TYPE_TTYV))
+				{
 					/* /dev/tty and /dev/ttyN: treat as terminal stdin */
 					has_stdin_rd = 1;
 				}
 			}
 		}
-		FD_ZERO(args->in);
 	}
 
 	/* Scan write fd_set */
-	if (args->ou) {
-		for (i = 0; i < nd; i++) {
-			if (!FD_ISSET(i, args->ou))
+	if (args->ou)
+	{
+		for (i = 0; i < nd; i++)
+		{
+			if (!FD_ISSET(i, &watch_out))
 				continue;
 			struct file *f = (i < MAX_FILES) ? td->o_files[i] : NULL;
-			if (f && f->fd_type == 2) {
+			if (f && f->fd_type == FD_TYPE_SOCKET)
+			{
 				kern_to_lwip_w[i] = f->socket;
 				FD_SET(f->socket, &lwip_wfds);
 				if (f->socket + 1 > max_lwip)
 					max_lwip = f->socket + 1;
 			}
 		}
-		FD_ZERO(args->ou);
 	}
 
 	zero_tv.tv_sec = 0;
@@ -557,44 +693,54 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 	/* Compute deadline in sysTicks (PIT_TIMER ticks/sec).
 	 * deadline == 0 means no timeout (block until ready). */
 	uint32_t deadline = 0;
-	if (args->tv != NULL) {
+	if (args->tv != NULL)
+	{
 		/* Clamp tv_sec to avoid overflow: 3600 s = 720,000 ticks at 200 Hz */
 		long tv_sec = args->tv->tv_sec;
-		if (tv_sec < 0) tv_sec = 0;
-		if (tv_sec > 3600) tv_sec = 3600;
+		if (tv_sec < 0)
+			tv_sec = 0;
+		if (tv_sec > 3600)
+			tv_sec = 3600;
 		uint32_t ms = (uint32_t)(tv_sec * 1000 + args->tv->tv_usec / 1000);
 		deadline = systemVitals->sysTicks + ms * PIT_TIMER / 1000 + 1;
 	}
 
 	/* Poll loop: yield until stdin or a socket becomes ready */
-	for (;;) {
+	for (;;)
+	{
 		total = 0;
 
 		/* Check TTY stdin readiness */
-		if (has_stdin_rd && _current->term) {
+		if (has_stdin_rd && _current->term)
+		{
 			int stdin_ready = 0;
-			if (_current->term->t_type == TTY_TYPE_SERIAL) {
+			if (_current->term->t_type == TTY_TYPE_SERIAL)
+			{
 				/* Drain serial rx ring so stdinSize is current */
 				int raw;
 				while ((raw = serial_rx_getbyte()) >= 0)
 					tty_inject(_current->term, (char)raw);
 				stdin_ready = (_current->term->stdinSize > 0);
-			} else {
+			}
+			else
+			{
 				/* VGA console: drain ring through tty_inject (echoes chars
 				 * to screen) and report ready only when a full canonical
 				 * line has been flushed to tty_foreground->stdin[]. */
 				kbd_event_t _kev;
-				while (kbd_getEvent(&_kev) == 0) {
-					if (_kev.pressed) {
+				while (kbd_getEvent(&_kev) == 0)
+				{
+					if (_kev.pressed)
+					{
 						uint32_t _kc = _kev.keycode;
 						if (_kc != 0 && _kc < 0x100 && tty_foreground != NULL)
 							tty_inject(tty_foreground, (char)(uint8_t)_kc);
 					}
 				}
-				stdin_ready = (tty_foreground != NULL &&
-				    tty_foreground->stdinSize > 0);
+				stdin_ready = (tty_foreground != NULL && tty_foreground->stdinSize > 0);
 			}
-			if (stdin_ready) {
+			if (stdin_ready)
+			{
 				if (args->in)
 					FD_SET(0, args->in);
 				total++;
@@ -602,19 +748,22 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 		}
 
 		/* Check sockets (non-blocking) */
-		if (max_lwip > 0) {
+		if (max_lwip > 0)
+		{
 			fd_set tmp_r = lwip_rfds;
 			fd_set tmp_w = lwip_wfds;
 			int r = lwip_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
-			if (r > 0) {
-				for (i = 0; i < nd; i++) {
-					if (args->in && kern_to_lwip_r[i] >= 0 &&
-					    FD_ISSET(kern_to_lwip_r[i], &tmp_r)) {
+			if (r > 0)
+			{
+				for (i = 0; i < nd; i++)
+				{
+					if (args->in && kern_to_lwip_r[i] >= 0 && FD_ISSET(kern_to_lwip_r[i], &tmp_r))
+					{
 						FD_SET(i, args->in);
 						total++;
 					}
-					if (args->ou && kern_to_lwip_w[i] >= 0 &&
-					    FD_ISSET(kern_to_lwip_w[i], &tmp_w)) {
+					if (args->ou && kern_to_lwip_w[i] >= 0 && FD_ISSET(kern_to_lwip_w[i], &tmp_w))
+					{
 						FD_SET(i, args->ou);
 						total++;
 					}
@@ -626,8 +775,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 			break;
 
 		/* Timeout: return 0 if deadline reached */
-		if (args->tv != NULL &&
-		    TICKS_AFTER(systemVitals->sysTicks, deadline))
+		if (args->tv != NULL && TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
 
 		sched_yield();
@@ -652,7 +800,8 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 	int kern_to_lwip[MAX_FILES]; /* kernel fd → lwIP socket */
 	struct timeval zero_tv;
 
-	if (args->fds == NULL || args->nfds == 0) {
+	if (args->fds == NULL || args->nfds == 0)
+	{
 		td->td_retval[0] = 0;
 		return (0);
 	}
@@ -669,7 +818,8 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 	max_lwip = 0;
 
 	/* build lwIP fd_sets from poll events */
-	for (i = 0; i < nfds; i++) {
+	for (i = 0; i < nfds; i++)
+	{
 		int kfd = args->fds[i].fd;
 		short ev = args->fds[i].events;
 		if (kfd < 0 || kfd >= MAX_FILES)
@@ -677,7 +827,8 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 		if (kfd == 0)
 			continue; /* stdin handled separately */
 		struct file *f = td->o_files[kfd];
-		if (f && f->fd_type == 2) {
+		if (f && f->fd_type == FD_TYPE_SOCKET)
+		{
 			kern_to_lwip[kfd] = f->socket;
 			if (ev & (POLLIN | POLLRDNORM))
 				FD_SET(f->socket, &lwip_rfds);
@@ -694,54 +845,64 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 	/* deadline in sysTicks; 0 = infinite (-1 timeout), else absolute tick */
 	uint32_t deadline = 0;
 	if (args->timeout > 0)
-		deadline = systemVitals->sysTicks +
-		    (uint32_t)args->timeout * PIT_TIMER / 1000 + 1;
+		deadline = systemVitals->sysTicks + (uint32_t)args->timeout * PIT_TIMER / 1000 + 1;
 
-	for (;;) {
+	for (;;)
+	{
 		total = 0;
 
 		/* stdin readiness */
-		for (i = 0; i < nfds; i++) {
+		for (i = 0; i < nfds; i++)
+		{
 			if (args->fds[i].fd != 0)
 				continue;
 			if (!(args->fds[i].events & (POLLIN | POLLRDNORM)))
 				continue;
 			if (_current->term == NULL)
 				continue;
-			if (_current->term->t_type == TTY_TYPE_SERIAL) {
+			if (_current->term->t_type == TTY_TYPE_SERIAL)
+			{
 				int raw;
 				while ((raw = serial_rx_getbyte()) >= 0)
 					tty_inject(_current->term, (char)raw);
-			} else {
+			}
+			else
+			{
 				kbd_event_t kev;
-				while (kbd_getEvent(&kev) == 0) {
-					if (kev.pressed && kev.keycode != 0 &&
-					    kev.keycode < 0x100 && tty_foreground != NULL)
+				while (kbd_getEvent(&kev) == 0)
+				{
+					if (kev.pressed && kev.keycode != 0 && kev.keycode < 0x100 && tty_foreground != NULL)
 						tty_inject(tty_foreground, (char)(uint8_t)kev.keycode);
 				}
 			}
-			if (tty_foreground != NULL && tty_foreground->stdinSize > 0) {
+			if (tty_foreground != NULL && tty_foreground->stdinSize > 0)
+			{
 				args->fds[i].revents |= POLLIN;
 				total++;
 			}
 		}
 
 		/* socket readiness */
-		if (max_lwip > 0) {
+		if (max_lwip > 0)
+		{
 			fd_set tmp_r = lwip_rfds;
 			fd_set tmp_w = lwip_wfds;
 			int r = lwip_select(max_lwip, &tmp_r, &tmp_w, NULL, &zero_tv);
-			if (r > 0) {
-				for (i = 0; i < nfds; i++) {
+			if (r > 0)
+			{
+				for (i = 0; i < nfds; i++)
+				{
 					int kfd = args->fds[i].fd;
 					if (kfd < 0 || kfd >= MAX_FILES || kern_to_lwip[kfd] < 0)
 						continue;
 					int ls = kern_to_lwip[kfd];
-					if (FD_ISSET(ls, &tmp_r)) {
+					if (FD_ISSET(ls, &tmp_r))
+					{
 						args->fds[i].revents |= POLLIN;
 						total++;
 					}
-					if (FD_ISSET(ls, &tmp_w)) {
+					if (FD_ISSET(ls, &tmp_w))
+					{
 						args->fds[i].revents |= POLLOUT;
 						total++;
 					}
@@ -757,8 +918,7 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 			break;
 
 		/* positive timeout: check deadline */
-		if (args->timeout > 0 &&
-		    TICKS_AFTER(systemVitals->sysTicks, deadline))
+		if (args->timeout > 0 && TICKS_AFTER(systemVitals->sysTicks, deadline))
 			break;
 
 		sched_yield();
@@ -770,53 +930,17 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to)
 {
-
-	struct file *fp = 0x0;
-	struct file *dup_fp = 0x0;
-
-	if (to >= MAX_FILES)
-	{
-		kprintf("TO: %i >= MAX_FILES: %i", to, MAX_FILES);
-		return (-1);
-	}
-	else if (td->o_files[to] != 0x0)
-	{
-		struct file *old = (struct file *)td->o_files[to];
-		if (old->fd_type != 3 && old->fd != 0x0)
-			fclose(old->fd);
-		if (fdestroy(td, old, to) != 0x0)
-			kprintf("[%s:%i] Error with fdestroy!", __FILE__, __LINE__);
-	}
-
-	fp = (struct file *)td->o_files[from];
-	if (fp == 0x0)
-	{
-		kprintf("dup2: from fd %u is not open\n", from);
-		return (-1);
-	}
-	if (from == to)
-		return (0x0);
-
-	dup_fp = (struct file *)kmalloc(sizeof(struct file));
-	if (dup_fp == 0x0)
-		return (-ENOMEM);
-	memcpy(dup_fp, fp, sizeof(struct file));
-
-	td->o_files[to] = (void *)dup_fp;
-
-	if (fp->fd != 0x0)
-		fp->fd->dup++;
-
-	return (0x0);
+	return duplicate_descriptor(td, from, to);
 }
 
 int sys_dup2(struct thread *td, struct sys_dup2_args *args)
 {
-
 	int error = 0x0;
+	int ret = dup2(td, args->from, args->to);
 
-	if ((td->td_retval[0] = dup2(td, args->from, args->to)) == -1)
-		error = -1;
+	td->td_retval[0] = ret;
+	if (ret < 0)
+		error = ret;
 
 	return (error);
 }
@@ -825,22 +949,26 @@ int sys_dup(struct thread *td, struct sys_dup_args *args)
 {
 	int i;
 
-	if (args->fd >= MAX_FILES || td->o_files[args->fd] == NULL) {
+	if (args->fd >= O_FILES || td->o_files[args->fd] == NULL)
+	{
 		td->td_retval[0] = -1;
 		return (EBADF);
 	}
 
 	/* Find lowest available fd slot. */
-	for (i = 0; i < MAX_FILES; i++) {
+	for (i = 0; i < O_FILES; i++)
+	{
 		if (td->o_files[i] == NULL)
 			break;
 	}
-	if (i >= MAX_FILES) {
+	if (i >= O_FILES)
+	{
 		td->td_retval[0] = -1;
 		return (EMFILE);
 	}
 
-	if (dup2(td, args->fd, (u_int32_t)i) == -1) {
+	if (dup2(td, args->fd, (u_int32_t)i) == -1)
+	{
 		td->td_retval[0] = -1;
 		return (EBADF);
 	}

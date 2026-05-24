@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -35,6 +35,12 @@
 #include <sys/thread.h>
 #include <net/net.h>
 #include <ubixos/wait.h>
+
+/* vfsType identifiers — used in struct fileSystem and vfs_mountPoint comparisons */
+#define VFS_TYPE_DEVFS   0x01
+#define VFS_TYPE_PROCFS  0x02
+#define VFS_TYPE_FAT     0xFA
+#define VFS_TYPE_UFS     0xAA
 
 #define MAY_EXEC 1
 #define MAY_WRITE 2

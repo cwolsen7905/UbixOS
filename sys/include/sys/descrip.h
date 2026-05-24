@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -65,8 +65,12 @@ struct uio {
 };
 
 /* fd_type values for struct file */
-#define FD_TYPE_TTY  5   /* opened via /dev/tty — uses process ct_tty */
-#define FD_TYPE_TTYV 6   /* opened via /dev/ttvX — specific tty_term in fd->data */
+#define FD_TYPE_FILE   1   /* regular VFS file */
+#define FD_TYPE_SOCKET 2   /* lwIP socket */
+#define FD_TYPE_PIPE   3   /* pipe (struct pipeInfo in fd->data) */
+#define FD_TYPE_DIR    4   /* open directory (kDIR_t in fd->data) */
+#define FD_TYPE_TTY    5   /* opened via /dev/tty — uses process ct_tty */
+#define FD_TYPE_TTYV   6   /* opened via /dev/ttyX — specific tty_term in fd->data */
 
 struct file {
     uint32_t f_flag;
