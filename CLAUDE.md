@@ -184,24 +184,32 @@ Requires: `brew install clang-format` (already in PATH) and `brew install llvm` 
 
 ### Mandatory rules for all new code
 
-**Every new function or method must have a doc block** immediately above its definition using this format:
+**Every new function or method must have a Doxygen doc block** immediately above its definition using this format:
 
 ```c
-/*
+/**
  * Brief one-line description of what the function does.
  *
  * Longer explanation if the behaviour is non-obvious — constraints,
  * side-effects, locking requirements, etc.  Omit if the brief line
  * is sufficient.
  *
- * Returns 0 on success, -errno on failure.  (omit for void functions)
+ * @param foo  Only when range, ownership, or in/out direction is non-obvious.
+ * @return 0 on success, -errno on failure.  (omit for void functions)
  */
 ```
 
 - The brief line is **required** for every new function — no exceptions.
 - Expand to multiple paragraphs only when the WHY or constraints are non-obvious.
-- Do **not** list every parameter mechanically (`@param foo the foo value` adds no information). Only document a parameter when its valid range, ownership, or purpose is not obvious from its name and type.
-- C++ methods follow the same format; use `/* */` not `//`.
+- Use `@param` **selectively** — only when the parameter's valid range, ownership, or in/out direction is not obvious from its name and type. Do not list every parameter mechanically (`@param foo the foo value` adds no information).
+- Always include `@return` for non-void functions.
+- C++ methods follow the same format; use `/** */` not `//`.
+
+**File-scope variable rules:**
+
+- File-scope variables that are not part of the public API **must be `static`** — enforced by `misc-use-internal-linkage` in `.clang-tidy`.
+- All `static` data definitions must appear **at the top of the source file**, after `#include`s and before any function definitions. Do not scatter them between functions.
+- Dead file-scope variables (no callers in the translation unit and no declaration in any header) must be removed, not left for later.
 
 **Formatting and linting are mandatory on every touched file:**
 
