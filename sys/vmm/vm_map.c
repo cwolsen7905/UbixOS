@@ -64,7 +64,7 @@ static int vma_cmp_key(const struct rb_node *n, uintptr_t addr)
 /* Public API                                                           */
 /* ------------------------------------------------------------------ */
 
-int vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end, uint32_t prot, uint32_t flags)
+int vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end, u_int32_t prot, u_int32_t flags)
 {
 	vm_map_entry_t *e = kmalloc(sizeof *e);
 

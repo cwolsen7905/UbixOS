@@ -53,22 +53,22 @@ void *vmm_copyVirtualSpace(pidType pid)
 {
 	void *new_page_directory_address = 0x0;
 
-	uint32_t *parent_page_directory = 0x0, *new_page_directory = 0x0;
-	uint32_t *parent_page_table = 0x0, *new_page_table = 0x0;
-	uint32_t *parent_stack_page = 0x0, *new_stack_page = 0x0;
-	uint16_t x = 0, i = 0, s = 0;
+	u_int32_t *parent_page_directory = 0x0, *new_page_directory = 0x0;
+	u_int32_t *parent_page_table = 0x0, *new_page_table = 0x0;
+	u_int32_t *parent_stack_page = 0x0, *new_stack_page = 0x0;
+	u_int16_t x = 0, i = 0, s = 0;
 
 	spinLock(&g_cvs_spin_lock);
 
 	/* Set Address Of Parent Page Directory */
-	parent_page_directory = (uint32_t *)PD_BASE_ADDR;
+	parent_page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Allocate A New Page For The New Page Directory */
-	if ((new_page_directory = (uint32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+	if ((new_page_directory = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
 		kpanic("Error: new_page_directory == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
 	/* Set new_page_directory_address To The Newly Created Page Directories Page */
-	new_page_directory_address = (void *)vmm_getPhysicalAddr((uint32_t)new_page_directory);
+	new_page_directory_address = (void *)vmm_getPhysicalAddr((u_int32_t)new_page_directory);
 
 	/* First Set Up A Flushed Page Directory */
 	bzero(new_page_directory, PAGE_SIZE);
@@ -77,10 +77,10 @@ void *vmm_copyVirtualSpace(pidType pid)
 	new_page_directory[0] = parent_page_directory[0];
 	// XXX: We Dont Need This - new_page_directory[1] = parent_page_directory[1];
 
-	if ((new_page_table = (uint32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+	if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
 		kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
-	parent_page_table = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1));
+	parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1));
 
 	for (x = 0; x < PT_ENTRIES; x++)
 	{
@@ -88,10 +88,10 @@ void *vmm_copyVirtualSpace(pidType pid)
 		{
 
 			{
-				uint32_t phys = (uint32_t)parent_page_table[x] & 0xFFFFF000;
+				u_int32_t phys = (u_int32_t)parent_page_table[x] & 0xFFFFF000;
 
 				/* MMIO pages — share as-is, no COW */
-				if ((phys >> 12) >= (uint32_t)numPages)
+				if ((phys >> 12) >= (u_int32_t)numPages)
 				{
 					new_page_table[x] = parent_page_table[x];
 				}
@@ -102,7 +102,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 					new_page_table[x] = (phys | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
 					/* Increment The COW Counter For This Page */
-					if (((uint32_t)parent_page_table[x] & PAGE_COW) == PAGE_COW)
+					if (((u_int32_t)parent_page_table[x] & PAGE_COW) == PAGE_COW)
 					{
 						adjustCowCounter(phys, 1);
 					}
@@ -119,9 +119,9 @@ void *vmm_copyVirtualSpace(pidType pid)
 			new_page_table[x] = parent_page_table[x];
 	}
 
-	new_page_directory[1] = (vmm_getPhysicalAddr((uint32_t)new_page_table) | KERNEL_PAGE_DEFAULT);
+	new_page_directory[1] = (vmm_getPhysicalAddr((u_int32_t)new_page_table) | KERNEL_PAGE_DEFAULT);
 
-	vmm_unmapPage((uint32_t)new_page_table, 1);
+	vmm_unmapPage((u_int32_t)new_page_table, 1);
 
 	new_page_table = 0x0;
 
@@ -135,10 +135,10 @@ void *vmm_copyVirtualSpace(pidType pid)
 		if ((parent_page_directory[x] & PAGE_PRESENT) == PAGE_PRESENT)
 		{
 			/* Set Parent To Propper Page Table */
-			parent_page_table = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
+			parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
 
 			/* Allocate A New Page Table */
-			if ((new_page_table = (uint32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
 			bzero(new_page_table, PAGE_SIZE);
@@ -149,30 +149,30 @@ void *vmm_copyVirtualSpace(pidType pid)
 				{
 
 					/* Alloc A New Page For This Stack Page */
-					if ((new_stack_page = (uint32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+					if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
 						kpanic("Error: new_stack_page == NULL, File: %s, Line: %i\n",
 						       __FILE__,
 						       __LINE__);
 
 					/* Set Pointer To Parents Stack Page */
 					parent_stack_page =
-					    (uint32_t *)(((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
+					    (u_int32_t *)(((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
 
 					/* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
 					memcpy(new_stack_page, parent_stack_page, PAGE_SIZE);
 
 					/* Insert New Stack Into Page Table */
 					new_page_table[i] =
-					    (vmm_getPhysicalAddr((uint32_t)new_stack_page) | PAGE_DEFAULT | PAGE_STACK);
+					    (vmm_getPhysicalAddr((u_int32_t)new_stack_page) | PAGE_DEFAULT | PAGE_STACK);
 
 					/* Unmap From Kernel Space */
-					vmm_unmapPage((uint32_t)new_stack_page, 1);
+					vmm_unmapPage((u_int32_t)new_stack_page, 1);
 				}
 			}
 			/* Put New Page Table Into New Page Directory */
-			new_page_directory[x] = (vmm_getPhysicalAddr((uint32_t)new_page_table) | PAGE_DEFAULT);
+			new_page_directory[x] = (vmm_getPhysicalAddr((u_int32_t)new_page_table) | PAGE_DEFAULT);
 			/* Unmap Page From Kernel Space But Keep It Marked As Not Avail */
-			vmm_unmapPage((uint32_t)new_page_table, 1);
+			vmm_unmapPage((u_int32_t)new_page_table, 1);
 		}
 	}
 
@@ -192,10 +192,10 @@ void *vmm_copyVirtualSpace(pidType pid)
 		{
 
 			/* Set Parent To Propper Page Table */
-			parent_page_table = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
+			parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
 
 			/* Allocate A New Page Table */
-			if ((new_page_table = (uint32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
 			bzero(new_page_table, PAGE_SIZE);
@@ -209,37 +209,37 @@ void *vmm_copyVirtualSpace(pidType pid)
 				{
 
 					/* Check To See If Its A Stack Page */
-					if (((uint32_t)parent_page_table[i] & PAGE_STACK) == PAGE_STACK)
+					if (((u_int32_t)parent_page_table[i] & PAGE_STACK) == PAGE_STACK)
 					{
 
 						/* Alloc A New Page For This Stack Page */
-						if ((new_stack_page = (uint32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+						if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
 							kpanic("Error: new_stack_page == NULL, File: %s, Line: %i\n",
 							       __FILE__,
 							       __LINE__);
 
 						/* Set Pointer To Parents Stack Page */
 						parent_stack_page =
-						    (uint32_t *)(((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
+						    (u_int32_t *)(((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
 
 						/* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
 						memcpy(new_stack_page, parent_stack_page, PAGE_SIZE);
 
 						/* Insert New Stack Into Page Table */
-						new_page_table[i] = (vmm_getPhysicalAddr((uint32_t)new_stack_page) |
-						                   PAGE_DEFAULT | PAGE_STACK);
+						new_page_table[i] = (vmm_getPhysicalAddr((u_int32_t)new_stack_page) |
+						                     PAGE_DEFAULT | PAGE_STACK);
 
 						/* Unmap From Kernel Space */
-						vmm_unmapPage((uint32_t)new_stack_page, 1);
+						vmm_unmapPage((u_int32_t)new_stack_page, 1);
 					}
 					else
 					{
-						uint32_t phys = (uint32_t)parent_page_table[i] & 0xFFFFF000;
+						u_int32_t phys = (u_int32_t)parent_page_table[i] & 0xFFFFF000;
 
 						/* MMIO/device pages (framebuffer etc.) live above RAM.
 						 * They must not be COW'd — share the mapping as-is so
 						 * the parent keeps write access after the fork. */
-						if ((phys >> 12) >= (uint32_t)numPages)
+						if ((phys >> 12) >= (u_int32_t)numPages)
 						{
 							new_page_table[i] = parent_page_table[i];
 						}
@@ -251,7 +251,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 							    (phys | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
 							/* Increment The COW Counter For This Page */
-							if (((uint32_t)parent_page_table[i] & PAGE_COW) == PAGE_COW)
+							if (((u_int32_t)parent_page_table[i] & PAGE_COW) == PAGE_COW)
 							{
 								adjustCowCounter(phys, 1);
 							}
@@ -267,14 +267,14 @@ void *vmm_copyVirtualSpace(pidType pid)
 				}
 				else
 				{
-					new_page_table[i] = (uint32_t)0x0;
+					new_page_table[i] = (u_int32_t)0x0;
 				}
 			}
 
 			/* Put New Page Table Into New Page Directory */
-			new_page_directory[x] = (vmm_getPhysicalAddr((uint32_t)new_page_table) | PAGE_DEFAULT);
+			new_page_directory[x] = (vmm_getPhysicalAddr((u_int32_t)new_page_table) | PAGE_DEFAULT);
 			/* Unmap Page From Kernel Space But Keep It Marked As Not Avail */
-			vmm_unmapPage((uint32_t)new_page_table, 1);
+			vmm_unmapPage((u_int32_t)new_page_table, 1);
 		}
 	}
 
@@ -289,14 +289,14 @@ void *vmm_copyVirtualSpace(pidType pid)
 	 * First Page After Page Tables
 	 * This must be mapped into the page directory before we map all 1024 page directories into the memory space
 	 */
-	new_page_table = (uint32_t *)vmm_getFreeKernelPage(pid, 1);
+	new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
 
 	new_page_directory[PD_INDEX(PD_BASE_ADDR)] =
-	    (uint32_t)(vmm_getPhysicalAddr((uint32_t)new_page_table) | PAGE_DEFAULT);
+	    (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) | PAGE_DEFAULT);
 
-	new_page_table[0] = (uint32_t)((uint32_t)(new_page_directory_address) | PAGE_DEFAULT);
+	new_page_table[0] = (u_int32_t)((u_int32_t)(new_page_directory_address) | PAGE_DEFAULT);
 
-	vmm_unmapPage((uint32_t)new_page_table, 1);
+	vmm_unmapPage((u_int32_t)new_page_table, 1);
 
 	/*
 	 *
@@ -305,10 +305,10 @@ void *vmm_copyVirtualSpace(pidType pid)
 	 *
 	 */
 
-	new_page_table = (uint32_t *)vmm_getFreeKernelPage(pid, 1);
+	new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
 
 	new_page_directory[PD_INDEX(PT_BASE_ADDR)] =
-	    (uint32_t)(vmm_getPhysicalAddr((uint32_t)new_page_table) | PAGE_DEFAULT);
+	    (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) | PAGE_DEFAULT);
 
 	/* Flush The Page From Garbage In Memory */
 	bzero(new_page_table, PAGE_SIZE);
@@ -328,10 +328,10 @@ void *vmm_copyVirtualSpace(pidType pid)
 		new_page_table[x] = new_page_directory[x];
 
 	/* Unmap Page From Virtual Space */
-	vmm_unmapPage((uint32_t)new_page_table, 1);
+	vmm_unmapPage((u_int32_t)new_page_table, 1);
 
 	/* Now We Are Done With The Page Directory So Lets Unmap That Too */
-	vmm_unmapPage((uint32_t)new_page_directory, 1);
+	vmm_unmapPage((u_int32_t)new_page_directory, 1);
 
 	spinUnlock(&g_cvs_spin_lock);
 

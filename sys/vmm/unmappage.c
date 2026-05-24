@@ -32,7 +32,7 @@ extern int numPages;
 
 /************************************************************************
 
- Function: void vmm_unmapPage(uInt32 pageAddr,int flags);
+ Function: void vmm_unmapPage(u_int32_t page_addr,int flags);
  Description: This Function Will Unmap A Page From The Kernel VM Space
  The Flags Variable Decides If Its To Free The Page Or Not
  A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -47,36 +47,36 @@ extern int numPages;
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags)
+void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
 {
-	int pageDirectoryIndex = 0, pageTableIndex = 0;
-	uint32_t *pageTable = 0x0;
-	uint32_t *pageDirectory = 0x0;
+	int page_directory_index = 0, page_table_index = 0;
+	u_int32_t *page_table = 0x0;
+	u_int32_t *page_directory = 0x0;
 
-	pageDirectory = (uint32_t *)PD_BASE_ADDR;
+	page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Get The Index To The Page Directory */
-	pageDirectoryIndex = (pageAddr >> 22);
+	page_directory_index = (page_addr >> 22);
 
-	if ((pageDirectory[pageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_directory[page_directory_index] & PAGE_PRESENT) != PAGE_PRESENT)
 		return;
 
 	// Calculate The Page Table Index
-	pageTableIndex = ((pageAddr >> 12) & 0x3FF);
+	page_table_index = ((page_addr >> 12) & 0x3FF);
 
-	/* Set pageTable To The Virtual Address Of Table */
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+	/* Set page_table To The Virtual Address Of Table */
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * page_directory_index));
 
 	/* Free The Physical Page If Flags Is 0, guarding non-present and MMIO frames */
-	if (flags == 0 && (pageTable[pageTableIndex] & PAGE_PRESENT))
+	if (flags == 0 && (page_table[page_table_index] & PAGE_PRESENT))
 	{
-		uint32_t phys = pageTable[pageTableIndex] & 0xFFFFF000;
-		if ((phys >> 12) < (uint32_t)numPages)
+		u_int32_t phys = page_table[page_table_index] & 0xFFFFF000;
+		if ((phys >> 12) < (u_int32_t)numPages)
 			freePage(phys);
 	}
 
 	/* Unmap The Page */
-	pageTable[pageTableIndex] = 0x0;
+	page_table[page_table_index] = 0x0;
 
 	/* Rehash The Page Directory */
 	asm volatile("movl %cr3,%eax\n"
@@ -88,7 +88,7 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags)
 
 /************************************************************************
 
- Function: void vmm_unmapPages(uInt32 pageAddr,int flags);
+ Function: void vmm_unmapPages(u_int32_t page_addr,int flags);
  Description: This Function Will Unmap A Page From The Kernel VM Space
  The Flags Variable Decides If Its To Free The Page Or Not
  A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -103,10 +103,10 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags)
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPages(void *ptr, uint32_t size, unmapFlags_t flags)
+void vmm_unmapPages(void *ptr, u_int32_t size, unmapFlags_t flags)
 {
-	uInt32 addr = (uInt32)ptr & 0xFFFFF000;
-	uInt32 end = addr + (((size + 4095) / 4096) * 4096);
+	u_int32_t addr = (u_int32_t)ptr & 0xFFFFF000;
+	u_int32_t end = addr + (((size + 4095) / 4096) * 4096);
 
 	while (addr < end)
 	{

@@ -51,8 +51,8 @@
  */
 void pageout_daemon(void)
 {
-	uint32_t kern_cr3;
-	uint32_t last_tick = 0;
+	u_int32_t kern_cr3;
+	u_int32_t last_tick = 0;
 	kTask_t *t;
 
 	/* Save the kernel page directory CR3 for restoration after each task walk. */
@@ -75,12 +75,12 @@ void pageout_daemon(void)
 		if (!swap_enabled())
 			continue;
 
-		if (systemVitals->freePages >= (uint32_t)PAGEOUT_LOW_WATERMARK(numPages))
+		if (systemVitals->freePages >= (u_int32_t)PAGEOUT_LOW_WATERMARK(numPages))
 			continue;
 
 		kprintf("pageout: low memory (%u free pages, target %u), reclaiming\n",
 		        systemVitals->freePages,
-		        (uint32_t)PAGEOUT_HIGH_WATERMARK(numPages));
+		        (u_int32_t)PAGEOUT_HIGH_WATERMARK(numPages));
 
 		/*
 		 * Walk the task list.  For each user process, temporarily switch
@@ -89,7 +89,7 @@ void pageout_daemon(void)
 		 */
 		for (t = taskList; t != NULL; t = t->next)
 		{
-			if (systemVitals->freePages >= (uint32_t)PAGEOUT_HIGH_WATERMARK(numPages))
+			if (systemVitals->freePages >= (u_int32_t)PAGEOUT_HIGH_WATERMARK(numPages))
 				break;
 
 			/* Skip kernel threads — they share kernelPageDirectory. */

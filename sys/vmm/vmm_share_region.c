@@ -47,21 +47,21 @@
  */
 uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 {
-	uint32_t n, i, old_cr3, dst_vaddr;
-	uint32_t *phys;
+	u_int32_t n, i, old_cr3, dst_vaddr;
+	u_int32_t *phys;
 	kTask_t *dst;
 
 	if (vaddr == 0 || size == 0)
 		return 0;
 
-	n = (uint32_t)((size + PAGE_SIZE - 1) / PAGE_SIZE);
+	n = (u_int32_t)((size + PAGE_SIZE - 1) / PAGE_SIZE);
 	if (n > 4096)
 	{
 		kprintf("vmm_share_region: region too large (%u pages)\n", n);
 		return 0;
 	}
 
-	phys = kmalloc(n * sizeof(uint32_t));
+	phys = kmalloc(n * sizeof(u_int32_t));
 	if (!phys)
 		return 0;
 
@@ -103,11 +103,11 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	 * copy the stale-prone entries, then unmap before switching CR3.
 	 */
 	{
-		uint32_t *src_pd = (uint32_t *)PD_BASE_ADDR;
-		uint32_t *dst_pd;
-		uint32_t kstart = PD_INDEX(VMM_KERN_START);
-		uint32_t kend = PD_INDEX(VMM_KERN_END);
-		uint32_t x;
+		u_int32_t *src_pd = (u_int32_t *)PD_BASE_ADDR;
+		u_int32_t *dst_pd;
+		u_int32_t kstart = PD_INDEX(VMM_KERN_START);
+		u_int32_t kend = PD_INDEX(VMM_KERN_END);
+		u_int32_t x;
 
 		if (vmm_remapPage(dst->md.md_tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0)
 		{
@@ -116,7 +116,7 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 			kfree(phys);
 			return 0;
 		}
-		dst_pd = (uint32_t *)VMM_CHILD_PD_WINDOW;
+		dst_pd = (u_int32_t *)VMM_CHILD_PD_WINDOW;
 		for (x = kstart; x <= kend; x++)
 			dst_pd[x] = src_pd[x];
 		vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
@@ -130,7 +130,7 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	 */
 	asm volatile("cli");
 	asm volatile("movl %%cr3, %0" : "=r"(old_cr3));
-	asm volatile("movl %0, %%cr3" ::"r"((uint32_t)dst->md.md_tss.cr3));
+	asm volatile("movl %0, %%cr3" ::"r"((u_int32_t)dst->md.md_tss.cr3));
 
 	for (i = 0; i < n; i++)
 	{
@@ -138,7 +138,7 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		{
 			kprintf("vmm_share_region: vmm_remapPage failed at page %u\n", i);
 			/* Unmap pages already installed before the failure */
-			for (uint32_t j = 0; j < i; j++)
+			for (u_int32_t j = 0; j < i; j++)
 				vmm_unmapPage(dst_vaddr + j * PAGE_SIZE, 1);
 			asm volatile("movl %0, %%cr3" ::"r"(old_cr3));
 			asm volatile("sti");

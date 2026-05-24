@@ -46,12 +46,12 @@ int sys_mmap2(struct thread *td, struct sys_mmap_args *uap)
 
 int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 {
-	uint32_t base = (uint32_t)uap->addr & ~0xFFFU;
-	uint32_t end = base + round_page(uap->len);
+	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
+	u_int32_t end = base + round_page(uap->len);
 
 	vm_map_remove(&_current->vm_map, base, end);
 
-	for (uint32_t va = base; va < end; va += PAGE_SIZE)
+	for (u_int32_t va = base; va < end; va += PAGE_SIZE)
 	{
 		vmm_unmapPage(va, VMM_FREE);
 	}
@@ -77,8 +77,8 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		{
 			/* MAP_FIXED anonymous: caller specifies address; unmap any existing
 			 * mapping there, record the VMA, and let page faults back pages lazily. */
-			uint32_t map_base = (uint32_t)uap->addr & 0xFFFFF000;
-			uint32_t map_end = map_base + round_page(uap->len);
+			u_int32_t map_base = (u_int32_t)uap->addr & 0xFFFFF000;
+			u_int32_t map_end = map_base + round_page(uap->len);
 			if (map_base < VMM_USER_START || map_end > VMM_USER_END)
 			{
 				td->td_retval[0] = -1;
@@ -87,7 +87,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			for (x = 0; x < (int)round_page(uap->len); x += 0x1000)
 				vmm_unmapPage(map_base + x, VMM_FREE);
 			vm_map_insert(&_current->vm_map, map_base, map_end, VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
-			td->td_retval[0] = (uint32_t)uap->addr;
+			td->td_retval[0] = (u_int32_t)uap->addr;
 			return (0x0);
 		}
 
@@ -122,11 +122,11 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			for (x = 0x0; x < round_page(uap->len); x += 0x1000)
 			{
 
-				vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
+				vmm_unmapPage(((u_int32_t)uap->addr & 0xFFFFF000) + x, 1);
 
 				/* Make readonly and read/write !!! */
 				if (vmm_remapPage(vmm_findFreePage(_current->id),
-				                  (((uint32_t)uap->addr & 0xFFFFF000) + x),
+				                  (((u_int32_t)uap->addr & 0xFFFFF000) + x),
 				                  PAGE_DEFAULT,
 				                  _current->id,
 				                  0) == 0x0)
@@ -140,7 +140,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		kern_fseek(fd->fd, uap->pos, 0x0);
 		fread(tmp, uap->len, 0x1, fd->fd);
 
-		td->td_retval[0] = (uint32_t)tmp;
+		td->td_retval[0] = (u_int32_t)tmp;
 
 		if (td->td_retval[0] == (caddr_t)-1)
 		{

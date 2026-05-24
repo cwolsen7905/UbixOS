@@ -30,20 +30,20 @@
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 
-int vmm_freeVirtualPage(uint32_t addr)
+int vmm_freeVirtualPage(u_int32_t addr)
 {
-	uint32_t *page_dir = (uint32_t *)PD_BASE_ADDR;
-	uint32_t *page_table = 0x0;
-	uint32_t pd_index = PD_INDEX(addr);
-	uint32_t pt_index = PT_INDEX(addr);
-	uint32_t phys = 0x0;
+	u_int32_t *page_dir = (u_int32_t *)PD_BASE_ADDR;
+	u_int32_t *page_table = 0x0;
+	u_int32_t pd_index = PD_INDEX(addr);
+	u_int32_t pt_index = PT_INDEX(addr);
+	u_int32_t phys = 0x0;
 
 	addr &= 0xFFFFF000;
 
 	if ((page_dir[pd_index] & PAGE_PRESENT) != PAGE_PRESENT)
 		return (-1);
 
-	page_table = (uint32_t *)(PT_BASE_ADDR + (pd_index * PAGE_SIZE));
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_index * PAGE_SIZE));
 
 	if ((page_table[pt_index] & PAGE_PRESENT) != PAGE_PRESENT)
 		return (-1);
@@ -52,7 +52,7 @@ int vmm_freeVirtualPage(uint32_t addr)
 
 	if ((page_table[pt_index] & PAGE_COW) == PAGE_COW)
 		adjustCowCounter(phys, -1);
-	else if ((phys >> 12) < (uint32_t)numPages)
+	else if ((phys >> 12) < (u_int32_t)numPages)
 		freePage(phys);
 
 	page_table[pt_index] = 0x0;

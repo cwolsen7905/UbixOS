@@ -39,14 +39,14 @@
 
 #include <machine/cpu.h>
 
-static uint32_t freePages = 0;
-static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
+static u_int32_t g_free_pages = 0;
+static struct spinLock g_vmm_spin_lock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
 
 /* Physical address where the page bitmap is staged (set in vmm_memMapInit,
  * read by paging.c to remap the bitmap into kernel virtual space). */
-uint32_t vmm_bitmap_phys = 0;
+u_int32_t vmm_bitmap_phys = 0;
 
 mMap *vmmMemoryMap = NULL;
 
@@ -66,8 +66,8 @@ extern char _end[];
 int vmm_memMapInit()
 {
 	int i = 0x0;
-	uint32_t kernel_start_page, bitmap_end_page;
-	uint32_t bitmap_size;
+	u_int32_t kernel_start_page, bitmap_end_page;
+	u_int32_t bitmap_size;
 
 	/* Count System Memory */
 	numPages = countMemory();
@@ -78,10 +78,10 @@ int vmm_memMapInit()
 	 * N*sizeof(mMap) bytes, and free pages begin right after it regardless of
 	 * how much RAM is installed.
 	 */
-	vmm_bitmap_phys = ((uint32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
+	vmm_bitmap_phys = ((u_int32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
 	vmmMemoryMap = (mMap *)vmm_bitmap_phys;
 
-	bitmap_size = (uint32_t)numPages * sizeof(mMap);
+	bitmap_size = (u_int32_t)numPages * sizeof(mMap);
 	bitmap_end_page = (vmm_bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE;
 
 	/* Initialize every entry — bitmap lives in raw RAM, not in BSS, so we
@@ -101,26 +101,26 @@ int vmm_memMapInit()
 	 *
 	 * The first 1 MB (0x0–0xFFFFF) stays reserved: ISA devices, VGA, BIOS.
 	 */
-	kernel_start_page = ((uint32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
+	kernel_start_page = ((u_int32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
 
 	for (i = 0x100; i < (int)kernel_start_page; i++)
 	{
 		vmmMemoryMap[i].status = memAvail;
-		freePages++;
+		g_free_pages++;
 	}
 
 	for (i = (int)bitmap_end_page; i < numPages; i++)
 	{
 		vmmMemoryMap[i].status = memAvail;
-		freePages++;
+		g_free_pages++;
 	}
 
 	if (systemVitals)
-		systemVitals->freePages = freePages;
+		systemVitals->freePages = g_free_pages;
 
 	/* Print Out Amount Of Memory */
 	kprintf("Real Memory:      %iKB\n", numPages * 4);
-	kprintf("Available Memory: %iKB\n", freePages * 4);
+	kprintf("Available Memory: %iKB\n", g_free_pages * 4);
 	kprintf("vmm: bitmap phys=0x%X pages=%i end_page=%i\n", vmm_bitmap_phys, numPages, bitmap_end_page);
 
 	/* Return */
@@ -138,18 +138,18 @@ int vmm_memMapInit()
  ************************************************************************/
 int countMemory()
 {
-	register uInt32 *mem = 0x0;
-	unsigned long memCount = -1, tempMemory = 0x0;
-	unsigned short memKb = 8;
-	unsigned char irq1State, irq2State;
+	register u_int32_t *mem = 0x0;
+	unsigned long mem_count = -1, temp_memory = 0x0;
+	unsigned short mem_kb = 8;
+	unsigned char irq1_state, irq2_state;
 	unsigned long cr0 = 0x0;
 
 	/*
 	 * Save The States Of Both IRQ 1 And 2 So We Can Turn Them Off And Restore
 	 * Them Later
 	 */
-	irq1State = inportByte(0x21);
-	irq2State = inportByte(0xA1);
+	irq1_state = inportByte(0x21);
+	irq2_state = inportByte(0xA1);
 
 	/* Turn Off IRQ 1 And 2 To Prevent Chances Of Faults While Examining Memory */
 	outportByte(0x21, 0xFF);
@@ -180,18 +180,18 @@ int countMemory()
 	 );
 	 */
 
-	while (memKb < 4096 && memCount != 0)
+	while (mem_kb < 4096 && mem_count != 0)
 	{
-		memKb++;
+		mem_kb++;
 
-		if (memCount == -1)
-			memCount = 8388608;
+		if (mem_count == -1)
+			mem_count = 8388608;
 		else
-			memCount += 1024 * 1024;
+			mem_count += 1024 * 1024;
 
-		mem = (uInt32 *)memCount;
+		mem = (u_int32_t *)mem_count;
 
-		tempMemory = *mem;
+		temp_memory = *mem;
 
 		*mem = 0x55AA55AA;
 
@@ -199,7 +199,7 @@ int countMemory()
 
 		if (*mem != 0x55AA55AA)
 		{
-			memCount = 0;
+			mem_count = 0;
 		}
 		else
 		{
@@ -207,17 +207,17 @@ int countMemory()
 			asm("" : : : "memory");
 			if (*mem != 0xAA55AA55)
 			{
-				memCount = 0;
+				mem_count = 0;
 			}
 		}
 		asm("" : : : "memory");
-		*mem = tempMemory;
+		*mem = temp_memory;
 	}
 
 	asm("nop");
 
 	// MrOlsen (2016-01-10) NOTE: I don't like this but I start incrementing form the start.
-	memKb--;
+	mem_kb--;
 
 	asm("nop");
 
@@ -235,18 +235,18 @@ int countMemory()
 	asm("nop");
 
 	/* Restore States For Both IRQ 1 And 2 */
-	outportByte(0x21, irq1State);
-	outportByte(0xA1, irq2State);
+	outportByte(0x21, irq1_state);
+	outportByte(0xA1, irq2_state);
 
 	asm("nop");
 
 	/* Return Amount Of Memory In Pages */
-	return ((memKb * 1024 * 1024) / PAGE_SIZE);
+	return ((mem_kb * 1024 * 1024) / PAGE_SIZE);
 }
 
 /************************************************************************
 
- Function: uInt32 vmm_findFreePage(pid_t pid);
+ Function: u_int32_t vmm_findFreePage(pid_t pid);
 
  Description: This Returns A Free  Physical Page Address Then Marks It
  Not Available As Well As Setting The PID To The Proccess
@@ -254,18 +254,18 @@ int countMemory()
  Notes:
 
  ************************************************************************/
-uint32_t vmm_findFreePage(pidType pid)
+u_int32_t vmm_findFreePage(pidType pid)
 {
 
 	int i = 0x0;
-	uint32_t evicted = 0x0;
+	u_int32_t evicted = 0x0;
 
 	/* Lets Look For A Free Page */
 	if (pid < sysID)
 		kpanic("Error: invalid PID %i\n", pid);
 
 retry:
-	spinLock(&vmmSpinLock);
+	spinLock(&g_vmm_spin_lock);
 
 	for (i = 0; i < numPages; i++)
 	{
@@ -278,16 +278,16 @@ retry:
 		{
 			vmmMemoryMap[i].status = memNotavail;
 			vmmMemoryMap[i].pid = pid;
-			freePages--;
+			g_free_pages--;
 			if (systemVitals)
-				systemVitals->freePages = freePages;
+				systemVitals->freePages = g_free_pages;
 
-			spinUnlock(&vmmSpinLock);
+			spinUnlock(&g_vmm_spin_lock);
 			return (vmmMemoryMap[i].pageAddr);
 		}
 	}
 
-	spinUnlock(&vmmSpinLock);
+	spinUnlock(&g_vmm_spin_lock);
 
 	/* No free pages — attempt to evict a page to swap. */
 	kprintf("vmm: OOM (pid %i) — attempting page eviction\n", pid);
@@ -308,49 +308,49 @@ retry:
 
 /************************************************************************
 
- Function: int freePage(uInt32 pageAddr);
+ Function: int freePage(u_int32_t pageAddr);
 
  Description: This Function Marks The Page As Free
 
  Notes:
 
  ************************************************************************/
-int freePage(uint32_t pageAddr)
+int freePage(u_int32_t page_addr)
 {
 
-	int pageIndex = 0x0;
-	assert((pageAddr & 0xFFF) == 0x0);
+	int page_index = 0x0;
+	assert((page_addr & 0xFFF) == 0x0);
 
 	/* Find The Page Index To The Memory Map */
-	pageIndex = (pageAddr / 4096);
+	page_index = (page_addr / 4096);
 
-	if (pageIndex < 0 || pageIndex >= numPages)
+	if (page_index < 0 || page_index >= numPages)
 	{
 		kprintf("freePage: addr 0x%X out of bounds (index %i numPages %i mmap 0x%X)\n",
-		        pageAddr,
-		        pageIndex,
+		        page_addr,
+		        page_index,
 		        numPages,
-		        (uint32_t)vmmMemoryMap);
+		        (u_int32_t)vmmMemoryMap);
 		return (-1);
 	}
 
 	/* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
-	spinLock(&vmmSpinLock);
-	if (vmmMemoryMap[pageIndex].cowCounter == 0)
+	spinLock(&g_vmm_spin_lock);
+	if (vmmMemoryMap[page_index].cowCounter == 0)
 	{
 		/* Set Page As Avail So It Can Be Used Again */
-		vmmMemoryMap[pageIndex].status = memAvail;
-		vmmMemoryMap[pageIndex].cowCounter = 0x0;
-		vmmMemoryMap[pageIndex].pid = -2;
-		freePages++;
-		systemVitals->freePages = freePages;
-		spinUnlock(&vmmSpinLock);
+		vmmMemoryMap[page_index].status = memAvail;
+		vmmMemoryMap[page_index].cowCounter = 0x0;
+		vmmMemoryMap[page_index].pid = -2;
+		g_free_pages++;
+		systemVitals->freePages = g_free_pages;
+		spinUnlock(&g_vmm_spin_lock);
 	}
 	else
 	{
-		spinUnlock(&vmmSpinLock);
+		spinUnlock(&g_vmm_spin_lock);
 		/* Adjust The COW Counter */
-		adjustCowCounter(((uint32_t)vmmMemoryMap[pageIndex].pageAddr), -1);
+		adjustCowCounter(((u_int32_t)vmmMemoryMap[page_index].pageAddr), -1);
 	}
 
 	/* Return */
@@ -359,7 +359,7 @@ int freePage(uint32_t pageAddr)
 
 /************************************************************************
 
- Function: int adjustCowCounter(uInt32 baseAddr,int adjustment);
+ Function: int adjustCowCounter(u_int32_t baseAddr,int adjustment);
 
  Description: This Adjust The COW Counter For Page At baseAddr It Will
  Error If The Count Goes Below 0
@@ -369,40 +369,40 @@ int freePage(uint32_t pageAddr)
  08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
  ************************************************************************/
-int adjustCowCounter(uInt32 baseAddr, int adjustment)
+int adjustCowCounter(u_int32_t base_addr, int adjustment)
 {
 
-	int vmmMemoryMapIndex = (baseAddr / PAGE_SIZE);
+	int vmm_memory_map_index = (base_addr / PAGE_SIZE);
 
-	assert((baseAddr & 0xFFF) == 0x0);
+	assert((base_addr & 0xFFF) == 0x0);
 
-	if (vmmMemoryMapIndex < 0 || vmmMemoryMapIndex >= numPages)
+	if (vmm_memory_map_index < 0 || vmm_memory_map_index >= numPages)
 	{
 		kprintf("adjustCowCounter: addr 0x%X out of bounds (index %i, numPages %i)\n",
-		        baseAddr,
-		        vmmMemoryMapIndex,
+		        base_addr,
+		        vmm_memory_map_index,
 		        numPages);
 		return (-1);
 	}
 
-	spinLock(&vmmSpinLock);
+	spinLock(&g_vmm_spin_lock);
 	/* Adjust COW Counter */
-	vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
+	vmmMemoryMap[vmm_memory_map_index].cowCounter += adjustment;
 
-	if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter <= 0)
+	if (vmmMemoryMap[vmm_memory_map_index].cowCounter <= 0)
 	{
 
-		if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter < 0)
+		if (vmmMemoryMap[vmm_memory_map_index].cowCounter < 0)
 			kprintf("ERROR: Why is COW less than 0");
 
-		vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
-		vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
-		vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
-		freePages++;
-		systemVitals->freePages = freePages;
+		vmmMemoryMap[vmm_memory_map_index].cowCounter = 0x0;
+		vmmMemoryMap[vmm_memory_map_index].pid = vmmID;
+		vmmMemoryMap[vmm_memory_map_index].status = memAvail;
+		g_free_pages++;
+		systemVitals->freePages = g_free_pages;
 	}
 
-	spinUnlock(&vmmSpinLock);
+	spinUnlock(&g_vmm_spin_lock);
 	/* Return */
 	return (0);
 }
@@ -423,7 +423,7 @@ void vmm_freeProcessPages(pidType pid)
 {
 	int i = 0;
 
-	spinLock(&vmmSpinLock);
+	spinLock(&g_vmm_spin_lock);
 
 	/*
 	 * By the time we are called, endTask() has already run
@@ -443,12 +443,12 @@ void vmm_freeProcessPages(pidType pid)
 		{
 			vmmMemoryMap[i].status = memAvail;
 			vmmMemoryMap[i].pid = vmmID;
-			freePages++;
-			systemVitals->freePages = freePages;
+			g_free_pages++;
+			systemVitals->freePages = g_free_pages;
 		}
 	}
 
 	/* Return */
-	spinUnlock(&vmmSpinLock);
+	spinUnlock(&g_vmm_spin_lock);
 	return;
 }

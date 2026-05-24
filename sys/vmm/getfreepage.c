@@ -45,8 +45,8 @@ static struct spinLock g_vmm_gfp_lock = SPIN_LOCK_INITIALIZER;
  ************************************************************************/
 void *vmm_getFreePage(pidType pid)
 {
-	uInt16 x = 0x0, y = 0x0;
-	uInt32 *page_table_src = 0x0;
+	u_int16_t x = 0x0, y = 0x0;
+	u_int32_t *page_table_src = 0x0;
 
 	spinLock(&g_vmm_gfp_lock);
 
@@ -55,13 +55,13 @@ void *vmm_getFreePage(pidType pid)
 	{
 
 		/* Set Page Table Address */
-		page_table_src = (uInt32 *)(PT_BASE_ADDR + (0x1000 * x));
+		page_table_src = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * x));
 
 		for (y = 0x0; y < 1024; y++)
 		{
 
 			/* Loop Through The Page Table Find An UnAllocated Page */
-			if ((uInt32)page_table_src[y] == (uInt32)0x0)
+			if ((u_int32_t)page_table_src[y] == (u_int32_t)0x0)
 			{
 
 				/* Map A Physical Page To The Virtual Page */
@@ -73,7 +73,7 @@ void *vmm_getFreePage(pidType pid)
 					kpanic("vmmRemapPage: vmm_getFreePage\n");
 
 				/* Clear This Page So No Garbage Is There */
-				vmm_clearVirtualPage((uInt32)((x * 0x400000) + (y * 0x1000)));
+				vmm_clearVirtualPage((u_int32_t)((x * 0x400000) + (y * 0x1000)));
 
 				/* Return The Address Of The Newly Allocate Page */
 				spinUnlock(&g_vmm_gfp_lock);

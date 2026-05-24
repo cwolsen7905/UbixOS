@@ -50,15 +50,15 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
 {
 	int y = 0, counter = 0, pd_i = 0x0, pt_i = 0x0;
 
-	uint32_t *page_directory = 0x0;
-	uint32_t *page_table = 0x0;
+	u_int32_t *page_directory = 0x0;
+	u_int32_t *page_table = 0x0;
 
-	uint32_t start_page = 0x0;
-	uint32_t map_from = 0x0;
+	u_int32_t start_page = 0x0;
+	u_int32_t map_from = 0x0;
 
 	spinLock(&g_fvp_spin_lock);
 
-	page_directory = (uint32_t *)PD_BASE_ADDR;
+	page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Lets Search For A Free Page */
 	if (_current->oInfo.vmStart <= 0x100000)
@@ -67,7 +67,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
 	/* Get Our Starting Address */
 	if (type == VM_THRD)
 	{
-		start_page = (uint32_t)(_current->td.vm_daddr + ctob(_current->td.vm_dsize));
+		start_page = (u_int32_t)(_current->td.vm_daddr + ctob(_current->td.vm_dsize));
 	}
 	else if (type == VM_TASK)
 	{
@@ -92,7 +92,7 @@ keepMapping:
 		vmm_allocPageTable(pd_i, pid);
 	}
 
-	page_table = (uint32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
 
 	pt_i = PT_INDEX(start_page);
 
@@ -132,7 +132,7 @@ gotPages:
 	for (counter = 0; counter < count; counter++)
 	{
 		if ((vmm_remapPage(
-		        (uint32_t)vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) ==
+		        (u_int32_t)vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) ==
 		    0x0)
 			kpanic(
 			    "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
@@ -156,14 +156,14 @@ doneMapping:
 void *vmm_reserve_anon_range(pidType pid, int count)
 {
 	int y = 0, counter = 0, pd_i = 0x0, pt_i = 0x0;
-	uint32_t *page_directory = 0x0;
-	uint32_t *page_table = 0x0;
-	uint32_t start_page = 0x0;
-	uint32_t map_from = 0x0;
+	u_int32_t *page_directory = 0x0;
+	u_int32_t *page_table = 0x0;
+	u_int32_t start_page = 0x0;
+	u_int32_t map_from = 0x0;
 
 	spinLock(&g_fvp_spin_lock);
 
-	page_directory = (uint32_t *)PD_BASE_ADDR;
+	page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	if (_current->oInfo.vmStart <= 0x100000)
 		kpanic("Invalid vmStart\n");
@@ -191,7 +191,7 @@ keepMapping:
 		goto keepMapping;
 	}
 
-	page_table = (uint32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
 	pt_i = PT_INDEX(start_page);
 
 	for (y = pt_i; y < PT_ENTRIES && counter < count; y++, counter++)

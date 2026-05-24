@@ -4,38 +4,38 @@
 #include <ubixos/kpanic.h>
 #include <string.h>
 
-int vmm_allocPageTable(uint32_t pdI, pidType pid)
+int vmm_allocPageTable(u_int32_t pd_i, pidType pid)
 {
-	uint32_t *pageDirectory = (uint32_t *)PD_BASE_ADDR;
-	uint32_t *pageTable = 0x0;
+	u_int32_t *page_directory = (u_int32_t *)PD_BASE_ADDR;
+	u_int32_t *page_table = 0x0;
 
-	if ((pdI >= PD_ENTRIES) || ((pageDirectory[pdI] & PAGE_PRESENT) == PAGE_PRESENT))
+	if ((pd_i >= PD_ENTRIES) || ((page_directory[pd_i] & PAGE_PRESENT) == PAGE_PRESENT))
 		return (-1);
 
 	/* Lock The Page Directory So We Dont Collide With Another Thread */
 	// spinLock(&pdSpinLock);
 
 	/* Map Page Table Page Into Page Directory */
-	if ((pdI >= PD_INDEX(VMM_USER_START)) && (pdI <= PD_INDEX(VMM_USER_END)))
-		pageDirectory[pdI] = (uint32_t)vmm_findFreePage(pid) | PAGE_DEFAULT;
+	if ((pd_i >= PD_INDEX(VMM_USER_START)) && (pd_i <= PD_INDEX(VMM_USER_END)))
+		page_directory[pd_i] = (u_int32_t)vmm_findFreePage(pid) | PAGE_DEFAULT;
 	else
-		pageDirectory[pdI] = (uint32_t)vmm_findFreePage(pid) | KERNEL_PAGE_DEFAULT;
+		page_directory[pd_i] = (u_int32_t)vmm_findFreePage(pid) | KERNEL_PAGE_DEFAULT;
 
 	/* Map Page Table To Virtual Space So We Can Easily Manipulate It */
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (PD_INDEX(PT_BASE_ADDR) * PAGE_SIZE));
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (PD_INDEX(PT_BASE_ADDR) * PAGE_SIZE));
 
-	if ((pageTable[pdI] & PAGE_PRESENT) == PAGE_PRESENT)
+	if ((page_table[pd_i] & PAGE_PRESENT) == PAGE_PRESENT)
 		kpanic("How did this happen");
 
-	pageTable[pdI] = pageDirectory[pdI];
+	page_table[pd_i] = page_directory[pd_i];
 
 	/* Reload Page Directory */
 	asm("movl %cr3,%eax\n"
 	    "movl %eax,%cr3\n");
 
 	/* Clean The Page */
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (pdI * PAGE_SIZE));
-	bzero(pageTable, PAGE_SIZE);
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
+	bzero(page_table, PAGE_SIZE);
 
 	// spinUnlock(&pdSpinLock);
 

@@ -31,30 +31,30 @@
 
 /************************************************************************
 
- Function: void vmm_setPageAttributes(uInt32 pageAddr,int attributes;
+ Function: void vmm_setPageAttributes(u_int32_t pageAddr,int attributes;
  Description: This Function Will Set The Page Attributes Such As
  A Read Only Page, Stack Page, COW Page, ETC.
  Notes:
 
  ************************************************************************/
-int vmm_setPageAttributes(uint32_t memAddr, uint16_t attributes)
+int vmm_setPageAttributes(u_int32_t mem_addr, u_int16_t attributes)
 {
-	uint16_t directoryIndex = 0x0, tableIndex = 0x0;
-	uint32_t *pageTable = 0x0;
+	u_int16_t directory_index = 0x0, table_index = 0x0;
+	u_int32_t *page_table = 0x0;
 
 	/* Calculate The Page Directory Index */
-	directoryIndex = (memAddr >> 22);
+	directory_index = (mem_addr >> 22);
 
 	/* Calculate The Page Table Index */
-	tableIndex = ((memAddr >> 12) & 0x3FF);
+	table_index = ((mem_addr >> 12) & 0x3FF);
 
 	/* Set Table Pointer */
-	if ((pageTable = (uint32_t *)(PT_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
-		kpanic("Error: pageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+	if ((page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * directory_index))) == 0x0)
+		kpanic("Error: page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
 	/* Set Attribute If Page Is Mapped */
-	if (pageTable[tableIndex] != 0x0)
-		pageTable[tableIndex] = ((pageTable[tableIndex] & 0xFFFFF000) | attributes);
+	if (page_table[table_index] != 0x0)
+		page_table[table_index] = ((page_table[table_index] & 0xFFFFF000) | attributes);
 
 	/* Reload The Page Table; */
 	asm volatile("push %eax     \n"
