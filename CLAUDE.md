@@ -162,7 +162,7 @@ Build tasks (`Ctrl+Shift+B`): Build Kernel, Build World, Build All, Create Disk 
 
 ## Code Style and Tooling
 
-Coding style is **FreeBSD `style(9)`**: 8-space hard tabs, Allman braces, 80-column limit, pointer aligned to variable name (`int *foo`). Style is enforced by `.clang-format` at the repo root.
+Coding style is **FreeBSD `style(9)`**: 8-space hard tabs, Allman braces, 120-column limit (see `.clang-format`), pointer aligned to variable name (`int *foo`). Style is enforced by `.clang-format` at the repo root.
 
 Apply **file-by-file as files are touched** — do not reformat the whole tree at once (breaks `git blame`).
 
@@ -181,6 +181,33 @@ tools/mcr.sh --format-only    # skip clang-tidy (faster)
 ```
 
 Requires: `brew install clang-format` (already in PATH) and `brew install llvm` (clang-tidy at `/opt/homebrew/opt/llvm/bin/clang-tidy`).
+
+### Mandatory rules for all new code
+
+**Every new function or method must have a doc block** immediately above its definition using this format:
+
+```c
+/*
+ * Brief one-line description of what the function does.
+ *
+ * Longer explanation if the behaviour is non-obvious — constraints,
+ * side-effects, locking requirements, etc.  Omit if the brief line
+ * is sufficient.
+ *
+ * Returns 0 on success, -errno on failure.  (omit for void functions)
+ */
+```
+
+- The brief line is **required** for every new function — no exceptions.
+- Expand to multiple paragraphs only when the WHY or constraints are non-obvious.
+- Do **not** list every parameter mechanically (`@param foo the foo value` adds no information). Only document a parameter when its valid range, ownership, or purpose is not obvious from its name and type.
+- C++ methods follow the same format; use `/* */` not `//`.
+
+**Formatting and linting are mandatory on every touched file:**
+
+1. Run `clang-format -i <file>` on every `.c`, `.cc`, `.cpp`, `.h` file you write or modify.
+2. Run `tools/mcr.sh <file>` (clang-format + clang-tidy) before committing. Fix all errors; warnings in existing code may be left but must not be introduced by new code.
+3. Naming conventions enforced by `.clang-tidy`: functions and variables `lower_case`, global/static variables `g_` prefix, typedefs `_t` suffix, enum values `UPPER_CASE`, macros `UPPER_CASE`.
 
 ## Versioning
 
