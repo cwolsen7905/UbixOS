@@ -4,6 +4,6 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 OBJS = support.o strcpy.o strcmp.o strncmp.o memset.o memcmp.o kpanic.o timer.o spinlock.o i386_exec.o sys_call_posix.o sys_call.o bioscall.o fork.o systemtask.o sched_switch.o cpu.o trap.o bios16code.o vesa.o idt.o io.o
-# ap-boot.o smp.o vitals.o (obsolete)
+# ap-boot.o smp.o  (SMP not yet wired up — smp.c needs <string.h> fix and AP trampoline integration)
 
 .include "${UBIX_MK}/ubix.kern.mk"
