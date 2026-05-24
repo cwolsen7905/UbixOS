@@ -49,7 +49,8 @@ int vmm_setPageAttributes(u_int32_t mem_addr, u_int16_t attributes)
 	table_index = ((mem_addr >> 12) & 0x3FF);
 
 	/* Set Table Pointer */
-	if ((page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * directory_index))) == 0x0)
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * directory_index));
+	if (page_table == 0x0)
 	{
 		kpanic("Error: page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 	}

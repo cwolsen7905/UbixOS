@@ -64,7 +64,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 	parent_page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Allocate A New Page For The New Page Directory */
-	if ((new_page_directory = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+	new_page_directory = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
+	if (new_page_directory == 0x0)
 	{
 		kpanic("Error: new_page_directory == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 	}
@@ -79,7 +80,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 	new_page_directory[0] = parent_page_directory[0];
 	// XXX: We Dont Need This - new_page_directory[1] = parent_page_directory[1];
 
-	if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+	new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
+	if (new_page_table == 0x0)
 	{
 		kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 	}
@@ -146,7 +148,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 			parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
 
 			/* Allocate A New Page Table */
-			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+			new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
+			if (new_page_table == 0x0)
 			{
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 			}
@@ -159,7 +162,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 				{
 
 					/* Alloc A New Page For This Stack Page */
-					if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+					new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
+					if (new_stack_page == 0x0)
 					{
 						kpanic("Error: new_stack_page == NULL, File: %s, Line: %i\n",
 						       __FILE__,
@@ -207,7 +211,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 			parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
 
 			/* Allocate A New Page Table */
-			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+			new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
+			if (new_page_table == 0x0)
 			{
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 			}
@@ -227,8 +232,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 					{
 
 						/* Alloc A New Page For This Stack Page */
-						if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) ==
-						    0x0)
+						new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1);
+						if (new_stack_page == 0x0)
 						{
 							kpanic("Error: new_stack_page == NULL, File: %s, Line: %i\n",
 							       __FILE__,

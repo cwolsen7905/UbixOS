@@ -75,7 +75,8 @@ int vmm_pagingInit()
 	memset(kernelPageDirectory, 0, PAGE_SIZE);
 
 	/* Allocate a page for the first 4MB of memory */
-	if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
+	page_table = (u_int32_t *)vmm_findFreePage(sysID);
+	if (page_table == 0x0)
 	{
 		K_PANIC("Error: vmm_findFreePage Failed");
 	}
@@ -96,7 +97,8 @@ int vmm_pagingInit()
 	} /* end for */
 
 	/* Allocate a page for the second 4MB of memory */
-	if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
+	page_table = (u_int32_t *)vmm_findFreePage(sysID);
+	if (page_table == 0x0)
 	{
 		K_PANIC("Error: vmm_findFreePage Failed");
 	}
@@ -113,7 +115,8 @@ int vmm_pagingInit()
 
 	for (i = PD_INDEX(VMM_KERN_START); i <= PD_INDEX(VMM_KERN_END); i++)
 	{
-		if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
+		page_table = (u_int32_t *)vmm_findFreePage(sysID);
+		if (page_table == 0x0)
 		{
 			K_PANIC("Error: vmm_findFreePage Failed");
 		}
@@ -145,7 +148,8 @@ int vmm_pagingInit()
 	 */
 	if (kernelPageDirectory[PD_INDEX(PT_BASE_ADDR)] == 0)
 	{
-		if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
+		page_table = (u_int32_t *)vmm_findFreePage(sysID);
+		if (page_table == 0x0)
 		{
 			K_PANIC("Error: vmm_findFreePage Failed");
 		}
@@ -169,7 +173,8 @@ int vmm_pagingInit()
 	 */
 	if (kernelPageDirectory[PD_INDEX(PD_BASE_ADDR)] == 0)
 	{
-		if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
+		page_table = (u_int32_t *)vmm_findFreePage(sysID);
+		if (page_table == 0x0)
 		{
 			K_PANIC("Error: vmm_findFreePage Failed");
 		}
@@ -184,7 +189,8 @@ int vmm_pagingInit()
 	page_table[0] = (u_int32_t)((u_int32_t)(kernelPageDirectory) | KERNEL_PAGE_DEFAULT);
 
 	/* Allocate New Stack Space */
-	if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
+	page_table = (u_int32_t *)vmm_findFreePage(sysID);
+	if (page_table == 0x0)
 	{
 		K_PANIC("ERROR: vmm_findFreePage Failed");
 	}
