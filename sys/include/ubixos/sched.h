@@ -51,15 +51,15 @@ typedef enum {
 } tState;
 
 struct osInfo {
-    uInt8 timer;
-    uInt8 v86Task;
+    u_int8_t timer;
+    u_int8_t v86Task;
     bool v86If;
-    uInt32 vmStart;
-    uInt32 stdinSize;
-    uInt32 controlKeys;
+    u_int32_t vmStart;
+    u_int32_t stdinSize;
+    u_int32_t controlKeys;
     char *stdin;
     char cwd[1024]; /* current working dir */
-    uint8_t gpf;
+    u_int8_t gpf;
 };
 
 typedef struct taskStruct {
@@ -73,10 +73,10 @@ typedef struct taskStruct {
     //fileDescriptor *imageFd;
     fileDescriptor_t *files[MAX_OFILES];
     tState state;
-    uint32_t uid, gid;
-    uint16_t euid, suid;
-    uint16_t egid, sgid;
-    uInt16 usedMath;
+    u_int32_t uid, gid;
+    u_int16_t euid, suid;
+    u_int16_t egid, sgid;
+    u_int16_t usedMath;
     tty_term *term;
     struct thread td;
     struct {
@@ -84,27 +84,27 @@ typedef struct taskStruct {
         struct inode *root;
         struct inode *exec;
     } inodes;
-    uint32_t counter;
-    uint16_t groups[NR_GROUPS];
+    u_int32_t counter;
+    u_int16_t groups[NR_GROUPS];
     pidType ppid;
-    uint32_t pgrp;
-    uint32_t sid;        /* session ID — set by setsid(), inherited by fork */
+    u_int32_t pgrp;
+    u_int32_t sid;        /* session ID — set by setsid(), inherited by fork */
     tty_term *ct_tty;   /* controlling terminal — set by TIOCSCTTY, cleared by setsid() */
-    uint32_t children; // Hack for WAIT
-    uint32_t last_exit; // Hack For WAIT
+    u_int32_t children; // Hack for WAIT
+    u_int32_t last_exit; // Hack For WAIT
     struct taskStruct *parent;
     char username[256];
-    uint32_t *kernelStack;
+    u_int32_t *kernelStack;
     struct taskStruct *hash_next; /* PID hash chain — Phase 1.5 */
-    uint8_t   quantum;            /* ticks remaining in current time slice */
-    uint8_t   priority;          /* current scheduling priority (0–31) */
-    uint8_t   base_priority;     /* QoS floor — boosts never go below this */
-    uint8_t   boost_quanta;      /* ticks remaining on temporary I/O priority boost */
-    uint8_t   on_rq;             /* 1 if currently in a run queue */
+    u_int8_t   quantum;            /* ticks remaining in current time slice */
+    u_int8_t   priority;          /* current scheduling priority (0–31) */
+    u_int8_t   base_priority;     /* QoS floor — boosts never go below this */
+    u_int8_t   boost_quanta;      /* ticks remaining on temporary I/O priority boost */
+    u_int8_t   on_rq;             /* 1 if currently in a run queue */
     struct taskStruct *rq_next;  /* per-priority run queue forward link */
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
-    uint32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
+    u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
 } kTask_t;
 
@@ -140,12 +140,12 @@ void sched_wakeup(kTask_t *t);          /* RUNNING — unblocked, back to work *
 void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     */
 void sched_zombie(kTask_t *t);          /* ZOMBIE  — exited, awaiting wait() */
 void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
-void sched_pi_boost(kTask_t *t, uint8_t pri);  /* PI: raise t to pri if higher      */
+void sched_pi_boost(kTask_t *t, u_int8_t pri);  /* PI: raise t to pri if higher      */
 void sched_pi_restore(kTask_t *t);             /* PI: drop t back to base_priority  */
 
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
-kTask_t *schedFindTask(uInt32 id);
+kTask_t *schedFindTask(u_int32_t id);
 
 extern kTask_t *_current;
 extern kTask_t *_usedMath;

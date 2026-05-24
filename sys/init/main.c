@@ -133,7 +133,7 @@ u_long _boothowto;
  *
  * \param rootdev address of root device structure
  */
-int kmain(uint32_t rootdev)
+int kmain(u_int32_t rootdev)
 {
 	/* Set up counter for startup routine */
 	int i = 0x0;

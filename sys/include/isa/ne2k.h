@@ -35,10 +35,10 @@
 #define ether_addr  ether_addr_t
 typedef struct dp_rcvhdr
 {
-        uInt8 dr_status;                 /* Copy of rsr                       */
-        uInt8 dr_next;                   /* Pointer to next packet            */
-        uInt8 dr_rbcl;                   /* Receive Byte Count Low            */
-        uInt8 dr_rbch;                   /* Receive Byte Count High           */
+        u_int8_t dr_status;                 /* Copy of rsr                       */
+        u_int8_t dr_next;                   /* Pointer to next packet            */
+        u_int8_t dr_rbcl;                   /* Receive Byte Count Low            */
+        u_int8_t dr_rbch;                   /* Receive Byte Count High           */
 } dp_rcvhdr_t;
 
 typedef union etheraddr {
@@ -147,7 +147,7 @@ typedef union etheraddr {
 #define DP_PAGESIZE     256
 
 extern char *nicPacket;
-extern uInt32 packetLength;
+extern u_int32_t packetLength;
 
 
 int ne2k_init();

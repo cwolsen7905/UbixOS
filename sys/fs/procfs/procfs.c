@@ -76,7 +76,7 @@ struct procfs_dir_state {
 	int      type;
 	kTask_t *cursor;  /* PDIR_ROOT: next task to return */
 	int      subidx;  /* PDIR_PID: file index; PDIR_FD: o_files scan position */
-	uint32_t pid;
+	u_int32_t pid;
 	int      root_phase; /* PDIR_ROOT: 0=global files, 1=pid dirs */
 };
 
@@ -319,7 +319,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 	char     *slash;
 	int       plen;
 	const char *rest;
-	uint32_t  pid;
+	u_int32_t  pid;
 	kTask_t  *t;
 	char      tmp[512];
 	int       len;
@@ -360,14 +360,14 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		int  mlen = procfs_build_mounts(tmp2, sizeof(tmp2));
 		fd->ino   = 0;
 		fd->start = PFILE_MOUNTS;
-		fd->size  = (uint32_t)mlen;
+		fd->size  = (u_int32_t)mlen;
 		return 1;
 	}
 
 	if (!procfs_isdigits(pidstr))
 		return 0;
 
-	pid = (uint32_t)procfs_atoi(pidstr);
+	pid = (u_int32_t)procfs_atoi(pidstr);
 	t   = schedFindTask(pid);
 
 	/* /N or /N/ — PID directory open */
@@ -385,7 +385,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		len = procfs_build_status(t, tmp, sizeof(tmp));
 		fd->ino   = pid;
 		fd->start = PFILE_STATUS;
-		fd->size  = (uint32_t)len;
+		fd->size  = (u_int32_t)len;
 		return 1;
 	}
 
@@ -393,7 +393,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		len = procfs_build_cmdline(t, tmp, sizeof(tmp));
 		fd->ino   = pid;
 		fd->start = PFILE_CMDLINE;
-		fd->size  = (uint32_t)len;
+		fd->size  = (u_int32_t)len;
 		return 1;
 	}
 
@@ -401,7 +401,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		len = procfs_build_stat(t, tmp, sizeof(tmp));
 		fd->ino   = pid;
 		fd->start = PFILE_STAT;
-		fd->size  = (uint32_t)len;
+		fd->size  = (u_int32_t)len;
 		return 1;
 	}
 
@@ -409,7 +409,7 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		len = procfs_build_maps(t, tmp, sizeof(tmp));
 		fd->ino   = pid;
 		fd->start = PFILE_MAPS;
-		fd->size  = (uint32_t)len;
+		fd->size  = (u_int32_t)len;
 		return 1;
 	}
 
@@ -435,8 +435,8 @@ procfs_open(char *file, fileDescriptor_t *fd)
 			return 0;
 		fd->ino   = pid;
 		fd->start = PFILE_FD_ENTRY;
-		fd->resid = (uint32_t)fdno;
-		fd->size  = (uint32_t)flen;
+		fd->resid = (u_int32_t)fdno;
+		fd->size  = (u_int32_t)flen;
 		return 1;
 	}
 
@@ -518,7 +518,7 @@ procfs_opendir(const char *path, kDIR_t *dir)
 	char     p[256];
 	char    *q;
 	int      l;
-	uint32_t pid;
+	u_int32_t pid;
 	kTask_t *t;
 
 	s = (struct procfs_dir_state *)kmalloc(sizeof(struct procfs_dir_state));
@@ -552,7 +552,7 @@ procfs_opendir(const char *path, kDIR_t *dir)
 		if (*sl == '/') {
 			*sl = '\0';
 			if (procfs_isdigits(q) && strcmp(sl + 1, "fd") == 0) {
-				pid = (uint32_t)procfs_atoi(q);
+				pid = (u_int32_t)procfs_atoi(q);
 				t   = schedFindTask(pid);
 				if (!t) {
 					kfree(s);
@@ -571,7 +571,7 @@ procfs_opendir(const char *path, kDIR_t *dir)
 
 	/* "N" — per-pid directory */
 	if (procfs_isdigits(q)) {
-		pid = (uint32_t)procfs_atoi(q);
+		pid = (u_int32_t)procfs_atoi(q);
 		t   = schedFindTask(pid);
 		if (!t) {
 			kfree(s);
@@ -642,7 +642,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		strncpy(ent->d_name, procfs_pid_files[s->subidx],
 		    sizeof(ent->d_name) - 1);
 		ent->d_name[sizeof(ent->d_name) - 1] = '\0';
-		ent->d_ino  = s->pid * 10u + (uint32_t)s->subidx;
+		ent->d_ino  = s->pid * 10u + (u_int32_t)s->subidx;
 		ent->d_type = (s->subidx == PROCFS_PID_FD_IDX) ? KDT_DIR : KDT_REG;
 		s->subidx++;
 		return 0;
@@ -659,7 +659,7 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 		if (s->subidx >= O_FILES)
 			return -1;
 		sprintf(ent->d_name, "%d", s->subidx);
-		ent->d_ino  = s->pid * 1000u + (uint32_t)s->subidx;
+		ent->d_ino  = s->pid * 1000u + (u_int32_t)s->subidx;
 		ent->d_type = KDT_REG;
 		s->subidx++;
 		return 0;

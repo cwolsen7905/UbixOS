@@ -196,19 +196,19 @@ void sysGetFreePage(long *ptr, int count, int type) {
   return;
 }
 
-void sysGetDrives(uInt32 *ptr) {
+void sysGetDrives(u_int32_t *ptr) {
   if (ptr)
-    *ptr = 0x0; //(uInt32)devices;
+    *ptr = 0x0; //(u_int32_t)devices;
   return;
 }
 
-void sysGetUptime(uInt32 *ptr) {
+void sysGetUptime(u_int32_t *ptr) {
   if (ptr)
     *ptr = systemVitals->sysTicks;
   return;
 }
 
-void sysGetTime(uInt32 *ptr) {
+void sysGetTime(u_int32_t *ptr) {
   if (ptr)
     *ptr = systemVitals->sysUptime + systemVitals->timeStart;
   return;
@@ -229,7 +229,7 @@ void sysStartSDE() {
   for (i = 0; i < 1400; i++) {
     asm("hlt");
   }
-  //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
+  //execThread(sdeThread,(u_int32_t)(kmalloc(0x2000)+0x2000),0x0);
   for (i = 0; i < 1400; i++) {
     asm("hlt");
   }

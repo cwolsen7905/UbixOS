@@ -59,12 +59,12 @@ static unsigned char *videoBuffer = (unsigned char*) 0xB8000;
  * and notifies views to repaint.
  */
 static pidType disp_owner_pid  = 0;
-static uint16_t disp_saved_mode = 0;
+static u_int16_t disp_saved_mode = 0;
 
 void systemTask() {
 
   mpi_message_t myMsg;
-  uint32_t counter = 0x0;
+  u_int32_t counter = 0x0;
   int i = 0x0;
   int *x = 0x0;
   kTask_t *tmpTask = 0x0;
@@ -114,7 +114,7 @@ void systemTask() {
            * we only track transient fullscreen apps that will eventually die. */
           mpi_message_t reply;
           int vesa_ok = 0;
-          uint16_t prev_mode = vesa_current_mode;
+          u_int16_t prev_mode = vesa_current_mode;
 
           if (vesa_init(0x118) == 0) {
             vesa_map_fb();

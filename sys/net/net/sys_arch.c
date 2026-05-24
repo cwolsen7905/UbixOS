@@ -30,7 +30,7 @@ static struct timeval starttime;
 static struct spinLock netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
-static uint32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint32_t timeout);
+static u_int32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, u_int32_t timeout);
 static void sys_sem_free_internal(struct sys_sem *sem);
 
 /* sys_arch layer initializer */
@@ -40,7 +40,7 @@ void sys_init() {
 }
 
 #ifdef _IGNORE
-static struct sys_sem *sys_sem_new_internal(uint8_t count) {
+static struct sys_sem *sys_sem_new_internal(u_int8_t count) {
   struct sys_sem *sem;
 
   sem = (struct sys_sem *) kmalloc(sizeof(struct sys_sem));
@@ -54,7 +54,7 @@ static struct sys_sem *sys_sem_new_internal(uint8_t count) {
 #endif
 
 /* Create a new semaphore */
-err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
+err_t sys_sem_new(sys_sem_t **sem, u_int8_t count) {
   return (sem_init(sem, count));
 
 #ifdef __IGNORE
@@ -106,8 +106,8 @@ void sys_sem_signal(struct sys_sem **s) {
   ubthread_mutex_unlock(&(sem->mutex));
 }
 
-uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout) {
-  uint32_t time_needed = 0;
+u_int32_t sys_arch_sem_wait(struct sys_sem **s, u_int32_t timeout) {
+  u_int32_t time_needed = 0;
   struct sys_sem *sem;
   LWIP_ASSERT("invalid sem", (s != NULL) && (*s != NULL));
   sem = *s;
@@ -220,7 +220,7 @@ void sys_mbox_free(struct sys_mbox **mb) {
 }
 
 void sys_mbox_post(struct sys_mbox **mb, void *msg) {
-  uint8_t head;
+  u_int8_t head;
   struct sys_mbox *mbox;
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
   mbox = *mb;
@@ -258,7 +258,7 @@ void sys_mbox_post(struct sys_mbox **mb, void *msg) {
 }
 
 err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
-  uint8_t head;
+  u_int8_t head;
   struct sys_mbox *mbox;
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
   mbox = *mb;
@@ -293,8 +293,8 @@ err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
   return ERR_OK;
 }
 
-uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout) {
-  uint32_t time_needed = 0x0;
+u_int32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, u_int32_t timeout) {
+  u_int32_t time_needed = 0x0;
   struct sys_mbox *mbox = 0x0;
 
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
@@ -342,7 +342,7 @@ uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout)
   return time_needed;
 }
 
-uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
+u_int32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
   struct sys_mbox *mbox;
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
   mbox = *mb;
@@ -422,7 +422,7 @@ struct thread_start_param {
   void *arg;
 };
 
-static uint32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint32_t timeout) {
+static u_int32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, u_int32_t timeout) {
   ubthread_cond_t ubcond = *cond;
   struct timeval rtime1, rtime2, deadline;
   struct timezone tz;
@@ -516,7 +516,7 @@ unsigned long sys_unix_now() {
   return msec;
 }
 
-uint32_t sys_now() {
+u_int32_t sys_now() {
   return (sys_unix_now());
 }
 
@@ -572,17 +572,17 @@ int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
  * lwip_to_posix_addr() does the reverse for addresses returned by lwIP
  * (e.g. from recvfrom) before writing them back to userland.
  */
-static void posix_to_lwip_addr(uint8_t *dst, const uint8_t *src, int len) {
-  uint16_t family;
+static void posix_to_lwip_addr(u_int8_t *dst, const u_int8_t *src, int len) {
+  u_int16_t family;
   if (len < 2) return;
   memcpy(dst, src, len);
-  family = src[0] | ((uint16_t)src[1] << 8); /* little-endian uint16 family */
-  dst[0] = (uint8_t)len;      /* sin_len */
-  dst[1] = (uint8_t)family;   /* sin_family (low byte = AF_INET=2) */
+  family = src[0] | ((u_int16_t)src[1] << 8); /* little-endian uint16 family */
+  dst[0] = (u_int8_t)len;      /* sin_len */
+  dst[1] = (u_int8_t)family;   /* sin_family (low byte = AF_INET=2) */
 }
 
-static void lwip_to_posix_addr(uint8_t *dst, const uint8_t *src, int len) {
-  uint8_t family;
+static void lwip_to_posix_addr(u_int8_t *dst, const u_int8_t *src, int len) {
+  u_int8_t family;
   if (len < 2) return;
   memcpy(dst, src, len);
   family = src[1];            /* lwIP sin_family */
@@ -612,9 +612,9 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
   memcpy(kbuf, args->buf, args->len);
 
   if (args->to && args->tolen > 0 && args->tolen <= 28) {
-    uint32_t kaddr_storage[7]; /* 28 bytes, 4-byte aligned for IS_SOCK_ADDR_ALIGNED */
-    uint8_t *kaddr = (uint8_t *)kaddr_storage;
-    posix_to_lwip_addr(kaddr, (const uint8_t *)args->to, args->tolen);
+    u_int32_t kaddr_storage[7]; /* 28 bytes, 4-byte aligned for IS_SOCK_ADDR_ALIGNED */
+    u_int8_t *kaddr = (u_int8_t *)kaddr_storage;
+    posix_to_lwip_addr(kaddr, (const u_int8_t *)args->to, args->tolen);
     ret = lwip_sendto(fd->socket, kbuf, args->len, args->flags,
         (void *)kaddr, args->tolen);
   } else {
@@ -629,7 +629,7 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
 int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
   struct file *fd = 0x0;
   int ret;
-  uint8_t kfrom[28];
+  u_int8_t kfrom[28];
   unsigned int kfromlen = sizeof(kfrom);
   void *kbuf;
 
@@ -657,7 +657,7 @@ int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
     if (ret >= 0 && kfromlen > 0) {
       unsigned int outlen = *(unsigned int *)args->fromlenaddr;
       if (outlen > kfromlen) outlen = kfromlen;
-      lwip_to_posix_addr((uint8_t *)args->from, kfrom, outlen);
+      lwip_to_posix_addr((u_int8_t *)args->from, kfrom, outlen);
       *(unsigned int *)args->fromlenaddr = kfromlen;
     }
   } else {
@@ -673,15 +673,15 @@ int sys_recvfrom(struct thread *td, struct sys_recvfrom_args *args) {
 
 int sys_connect(struct thread *td, struct sys_connect_args *args) {
   struct file *fd = 0x0;
-  uint32_t kaddr_storage[7];
-  uint8_t *kaddr = (uint8_t *)kaddr_storage;
+  u_int32_t kaddr_storage[7];
+  u_int8_t *kaddr = (u_int8_t *)kaddr_storage;
   int ret;
 
   getfd(td, &fd, args->s);
   if (!fd) { td->td_retval[0] = -1; return (-1); }
 
   if (args->name && args->namelen > 0 && args->namelen <= 28) {
-    posix_to_lwip_addr(kaddr, (const uint8_t *)args->name, args->namelen);
+    posix_to_lwip_addr(kaddr, (const u_int8_t *)args->name, args->namelen);
     ret = lwip_connect(fd->socket, (void *)kaddr, args->namelen);
   } else {
     ret = lwip_connect(fd->socket, (void *)args->name, args->namelen);
@@ -692,15 +692,15 @@ int sys_connect(struct thread *td, struct sys_connect_args *args) {
 
 int sys_bind(struct thread *td, struct sys_bind_args *args) {
   struct file *fd = 0x0;
-  uint32_t kaddr_storage[7];
-  uint8_t *kaddr = (uint8_t *)kaddr_storage;
+  u_int32_t kaddr_storage[7];
+  u_int8_t *kaddr = (u_int8_t *)kaddr_storage;
   int ret;
 
   getfd(td, &fd, args->s);
   if (!fd) { td->td_retval[0] = -1; return (-1); }
 
   if (args->name && args->namelen > 0 && args->namelen <= 28) {
-    posix_to_lwip_addr(kaddr, (const uint8_t *)args->name, args->namelen);
+    posix_to_lwip_addr(kaddr, (const u_int8_t *)args->name, args->namelen);
     ret = lwip_bind(fd->socket, (void *)kaddr, args->namelen);
   } else {
     ret = lwip_bind(fd->socket, (void *)args->name, args->namelen);
@@ -725,7 +725,7 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
   struct file *fd = 0x0;
   struct file *nfp = 0x0;
   int newfd = 0x0;
-  uint8_t kfrom[28];
+  u_int8_t kfrom[28];
   unsigned int kfromlen = sizeof(kfrom);
   int newsock;
   int error;
@@ -754,7 +754,7 @@ int sys_accept(struct thread *td, struct sys_accept_args *args) {
     }
     outlen = (unsigned int)*args->anamelen;
     if (outlen > kfromlen) outlen = kfromlen;
-    lwip_to_posix_addr((uint8_t *)args->name, kfrom, outlen);
+    lwip_to_posix_addr((u_int8_t *)args->name, kfrom, outlen);
     *args->anamelen = (int)kfromlen;
   }
 
@@ -773,7 +773,7 @@ int sys_sendmsg(struct thread *td, struct sys_sendmsg_args *args) {
   size_t total, off;
   unsigned int i;
   void *kbuf = NULL;
-  uint8_t kaddr[28];
+  u_int8_t kaddr[28];
   int flags, ret;
 
   getfd(td, &fd, args->s);
@@ -811,7 +811,7 @@ int sys_sendmsg(struct thread *td, struct sys_sendmsg_args *args) {
 
   if (umsg->msg_name && umsg->msg_namelen > 0 &&
       umsg->msg_namelen <= (int)sizeof(kaddr)) {
-    posix_to_lwip_addr(kaddr, (const uint8_t *)umsg->msg_name,
+    posix_to_lwip_addr(kaddr, (const u_int8_t *)umsg->msg_name,
         umsg->msg_namelen);
     ret = lwip_sendto(fd->socket, kbuf, (int)total, flags,
         kaddr, umsg->msg_namelen);
@@ -834,7 +834,7 @@ int sys_recvmsg(struct thread *td, struct sys_recvmsg_args *args) {
   size_t total, off, chunk;
   unsigned int i;
   void *kbuf = NULL;
-  uint8_t kfrom[28];
+  u_int8_t kfrom[28];
   unsigned int kfromlen = sizeof(kfrom);
   int ret;
 
@@ -875,7 +875,7 @@ int sys_recvmsg(struct thread *td, struct sys_recvmsg_args *args) {
     if (umsg->msg_name && kfromlen > 0) {
       unsigned int outlen = (unsigned int)umsg->msg_namelen;
       if (outlen > kfromlen) outlen = kfromlen;
-      lwip_to_posix_addr((uint8_t *)umsg->msg_name, kfrom, outlen);
+      lwip_to_posix_addr((u_int8_t *)umsg->msg_name, kfrom, outlen);
       umsg->msg_namelen = (int)kfromlen;
     }
   }

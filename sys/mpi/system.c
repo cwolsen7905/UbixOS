@@ -114,14 +114,14 @@ int mpi_createMbox(char *name)
 
 /*****************************************************************************************
 
- Function: int mpiSpam(uInt32 type,void *data)
+ Function: int mpiSpam(u_int32_t type,void *data)
 
  Description: This function will send a message to every mailbox
 
  Notes:
 
  *****************************************************************************************/
-int mpi_spam(uInt32 type, void *data)
+int mpi_spam(u_int32_t type, void *data)
 {
 	mpi_mbox_t *mbox = 0x0;
 	mpi_message_t *message = 0x0;
@@ -156,14 +156,14 @@ int mpi_spam(uInt32 type, void *data)
 
 /*****************************************************************************************
 
- Function: int mpiPostMessage(char *name,uInt32 type,void *data)
+ Function: int mpiPostMessage(char *name,u_int32_t type,void *data)
 
  Description: This function will post a message to specified mailbox
 
  Notes:
 
  *****************************************************************************************/
-int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg)
+int mpi_postMessage(char *name, u_int32_t type, mpi_message_t *msg)
 {
 	mpi_mbox_t *mbox = 0x0;
 	mpi_message_t *message = 0x0;

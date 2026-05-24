@@ -33,9 +33,9 @@
 #include <sys/types.h>
 
 typedef struct DrvGeom {
-   Int8 heads;
-   Int8 tracks;
-   Int8 spt;
+   int8_t heads;
+   int8_t tracks;
+   int8_t spt;
 } drvGeom;
 
 
@@ -64,7 +64,7 @@ typedef struct DrvGeom {
 int fdc_init();
 void floppyIsr();
 void floppyIsrhndlr();
-void sendByte(int Int8);
+void sendByte(int val);
 int getByte();
 bool fdcRw(int block,unsigned char *blockBuffer,bool read,unsigned long numSectors);
 void block2Hts(int block,int *head,int *track,int *sector);
@@ -73,12 +73,12 @@ void motorOff(void);
 bool seek(int track);
 bool waitFdc(bool sensei);
 int getByte();
-void sendByte(int Int8);
+void sendByte(int val);
 void recalibrate(void);
 void reset(void);
-bool writeBlock(int block,Int8 *blockBuffer, unsigned long numSectors);
-bool readBlock(int block,Int8 *blockBuffer, unsigned long numSectors);
-void fdcWrite(void *info,void *,uInt32 startSector,uInt32 sectorCount);
-void fdcRead(void *info,void *,uInt32 startSector,uInt32 sectorCount);
+bool writeBlock(int block,u_int8_t *blockBuffer, unsigned long numSectors);
+bool readBlock(int block,u_int8_t *blockBuffer, unsigned long numSectors);
+void fdcWrite(void *info,void *,u_int32_t startSector,u_int32_t sectorCount);
+void fdcRead(void *info,void *,u_int32_t startSector,u_int32_t sectorCount);
 
 #endif

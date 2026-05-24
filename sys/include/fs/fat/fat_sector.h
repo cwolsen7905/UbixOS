@@ -38,8 +38,8 @@
  * Callers must hold the fat_acquire() lock for the duration of any sequence
  * that depends on cache coherency.
  */
-int	fat_sector_read (struct fat_fs *fs, uint32_t lba, void *buf);
-int	fat_sector_write(struct fat_fs *fs, uint32_t lba, const void *buf);
+int	fat_sector_read (struct fat_fs *fs, u_int32_t lba, void *buf);
+int	fat_sector_write(struct fat_fs *fs, u_int32_t lba, const void *buf);
 
 /* Flush the write-behind cache slot to disk if dirty. */
 int	fat_sector_flush(struct fat_fs *fs);

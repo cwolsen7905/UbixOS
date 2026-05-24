@@ -44,8 +44,8 @@
 #define AGING_INTERVAL  10
 #define AGING_STARVE    40
 
-static inline uint8_t
-quantum_for_priority(uint8_t pri)
+static inline u_int8_t
+quantum_for_priority(u_int8_t pri)
 {
   if (pri >= 31) return 0;   /* Realtime only: unlimited, never preempted */
   if (pri >= 24) return 20;  /* High (kernel threads): long but finite quantum */
@@ -56,7 +56,7 @@ quantum_for_priority(uint8_t pri)
 }
 
 void sched() {
-  uint32_t memAddr = 0x0;
+  u_int32_t memAddr = 0x0;
   kTask_t *delTask = 0x0;
   kTask_t *next    = 0x0;
   kTask_t *t       = 0x0;
@@ -64,10 +64,10 @@ void sched() {
   /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
    * and reboot when time is up. Runs before the spinlock to keep it simple. */
   if (reboot_at_tick != 0) {
-    uint32_t now  = systemVitals->sysTicks;
-    uint32_t left = (reboot_at_tick > now) ? (reboot_at_tick - now) : 0;
-    uint32_t secs = (left + PIT_TIMER - 1) / PIT_TIMER;
-    static uint32_t last_printed = 0;
+    u_int32_t now  = systemVitals->sysTicks;
+    u_int32_t left = (reboot_at_tick > now) ? (reboot_at_tick - now) : 0;
+    u_int32_t secs = (left + PIT_TIMER - 1) / PIT_TIMER;
+    static u_int32_t last_printed = 0;
 
     if (secs != last_printed) {
       last_printed = secs;
@@ -86,13 +86,13 @@ void sched() {
 
   /* --- Phase 3.4: starvation aging — scan every ~50 ms --- */
   {
-    static uint32_t aging_last = 0;
-    uint32_t        now = systemVitals->sysTicks;
+    static u_int32_t aging_last = 0;
+    u_int32_t        now = systemVitals->sysTicks;
     if (now - aging_last >= AGING_INTERVAL) {
       kTask_t *tmp;
       aging_last = now;
       for (tmp = taskList; tmp != NULL; tmp = tmp->next) {
-        uint8_t cap;
+        u_int8_t cap;
         if (tmp->state != READY || !tmp->on_rq || tmp->last_run_tick == 0)
           continue;
         if (now - tmp->last_run_tick < AGING_STARVE)
@@ -172,7 +172,7 @@ void sched() {
   /* --- Phase 2: O(1) dispatch via ready_mask --- */
 
   if (_current != NULL && _current->state == RUNNING) {
-    uint8_t pri = _current->priority;
+    u_int8_t pri = _current->priority;
 
     if (pri >= 31) {
       /* Realtime only: never preempt — runs until it voluntarily blocks. */
@@ -197,7 +197,7 @@ void sched() {
         _current->priority = _current->base_priority;
     } else if (_current->priority > _current->base_priority) {
       /* CPU-bound decay: −2 per expired quantum (floor: base_priority). */
-      uint8_t decayed = (uint8_t)(_current->priority - 2);
+      u_int8_t decayed = (u_int8_t)(_current->priority - 2);
       _current->priority = (decayed > _current->base_priority)
           ? decayed : _current->base_priority;
     }
@@ -233,7 +233,7 @@ void sched() {
 
   asm("cli");
 
-  memAddr = (uint32_t) &(_current->md.md_tss);
+  memAddr = (u_int32_t) &(_current->md.md_tss);
   ubixGDT[4].descriptor.baseLow  = (memAddr & 0xFFFF);
   ubixGDT[4].descriptor.baseMed  = ((memAddr >> 16) & 0xFF);
   ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
@@ -258,7 +258,7 @@ void schedEndTask(pidType pid) {
 }
 
 void sched_yield() {
-  uint32_t flags;
+  u_int32_t flags;
 
   if (_current == NULL)
     return;

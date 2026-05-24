@@ -43,13 +43,13 @@ extern "C" {
       struct memDescriptor *prev;        //4
       struct memDescriptor *next;        //4
       void *baseAddr;    //4
-      uInt32 limit;        //4
-      /*uInt8                status;       //1  */
+      u_int32_t limit;        //4
+      /*u_int8_t                status;       //1  */
       /*char                 reserved[11]; //11 */
   };
 
   void kfree(void *baseAddr);
-  void *kmalloc(uInt32 len);
+  void *kmalloc(u_int32_t len);
 
 #ifdef __cplusplus
 }

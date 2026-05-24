@@ -37,39 +37,25 @@ typedef __uintfptr_t uintfptr_t;
 
 typedef char *caddr_t;
 
-/* unsigned integrals */
-typedef __uint8_t uint8_t;
-typedef __uint16_t uint16_t;
-typedef __uint32_t uint32_t;
-typedef __uint64_t uint64_t;
-typedef __uint64_t uquad_t;
-
-/* unsigned integrals (deprecated) */
-typedef __uint8_t u_int8_t;
+/* Unsigned integral types — BSD canonical names */
+typedef __uint8_t  u_int8_t;
 typedef __uint16_t u_int16_t;
 typedef __uint32_t u_int32_t;
 typedef __uint64_t u_int64_t;
 typedef __uint64_t u_quad_t;
+typedef __int64_t  quad_t;
 
-typedef __int64_t quad_t;
+typedef __int64_t  daddr_t;    /* disk address */
+typedef u_int32_t  u_daddr_t;  /* unsigned disk address */
 
-typedef __int64_t daddr_t; /* disk address */
-typedef __uint32_t u_daddr_t; /* unsigned disk address */
-
-typedef unsigned char uInt8;
-typedef unsigned short uInt16;
-typedef unsigned int uInt32;
-typedef unsigned int uInt;
-typedef char Int8;
-typedef short Int16;
-typedef long Int32;
-
-typedef unsigned char u_char;
+/* BSD traditional unsigned types */
+typedef unsigned char  u_char;
 typedef unsigned short u_short;
-typedef unsigned int u_int;
-typedef unsigned long u_long;
+typedef unsigned int   u_int;
+typedef unsigned long  u_long;
 
 typedef int pidType;
+typedef int register_t;
 
 typedef int pid_t;
 typedef int size_t; /* standard */
@@ -135,7 +121,7 @@ typedef __time_t time_t;
 #define _TIME_T_DECLARED
 #endif
 
-typedef uint32_t uintmax_t;
+typedef u_int32_t uintmax_t;
 typedef int32_t intmax_t;
 typedef int32_t ptrdiff_t;
 typedef __uintptr_t uintptr_t;

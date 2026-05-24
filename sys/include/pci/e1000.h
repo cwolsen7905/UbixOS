@@ -108,38 +108,38 @@
 
 /* RX descriptor (16 bytes, must be 16-byte aligned) */
 struct e1000_rx_desc {
-	uint64_t addr;      /* Physical address of receive buffer */
-	uint16_t length;
-	uint16_t checksum;
-	uint8_t  status;
-	uint8_t  errors;
-	uint16_t special;
+	u_int64_t addr;      /* Physical address of receive buffer */
+	u_int16_t length;
+	u_int16_t checksum;
+	u_int8_t  status;
+	u_int8_t  errors;
+	u_int16_t special;
 } __attribute__((packed));
 
 /* TX descriptor (16 bytes, must be 16-byte aligned) */
 struct e1000_tx_desc {
-	uint64_t addr;      /* Physical address of transmit buffer */
-	uint16_t length;
-	uint8_t  cso;       /* Checksum Offset */
-	uint8_t  cmd;
-	uint8_t  status;
-	uint8_t  css;       /* Checksum Start Field */
-	uint16_t special;
+	u_int64_t addr;      /* Physical address of transmit buffer */
+	u_int16_t length;
+	u_int8_t  cso;       /* Checksum Offset */
+	u_int8_t  cmd;
+	u_int8_t  status;
+	u_int8_t  css;       /* Checksum Start Field */
+	u_int16_t special;
 } __attribute__((packed));
 
 /* Published state */
-extern uint8_t         e1000_mac[6];
+extern u_int8_t         e1000_mac[6];
 extern int             e1000_ready;
 extern volatile int    e1000_irq_pending;
 
 /* Public API */
-int             initE1000(uint32_t bar0_phys, uint8_t irq);
+int             initE1000(u_int32_t bar0_phys, u_int8_t irq);
 
 /* newbus-lite driver registration — referenced by pci_drv_table[] in pci.c */
 extern struct ubx_driver e1000_ubx_driver;
-void            e1000_send_packet(const void *data, uint16_t len);
+void            e1000_send_packet(const void *data, u_int16_t len);
 void            e1000_handle_irq(void);
 void            e1000_thread(void);
-const uint8_t  *e1000_get_rx_packet(uint16_t *out_len);    /* for netif bridge */
+const u_int8_t  *e1000_get_rx_packet(u_int16_t *out_len);    /* for netif bridge */
 
 #endif /* _PCI_E1000_H */

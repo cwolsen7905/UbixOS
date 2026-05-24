@@ -44,7 +44,7 @@
 #include <stdarg.h>
 
 static struct klog_entry klog_ring[KLOG_RING_SIZE];
-static volatile uint32_t klog_seq = 0; /* next seq to assign */
+static volatile u_int32_t klog_seq = 0; /* next seq to assign */
 
 /**
  * klog_push - append a message to the kernel log ring buffer
@@ -54,10 +54,10 @@ static volatile uint32_t klog_seq = 0; /* next seq to assign */
  * Add a new entry to the kernel log ring buffer. This is safe to call from
  * interrupt context and will overwrite the oldest entry when the ring is full.
  */
-void klog_push(uint8_t level, const char *msg)
+void klog_push(u_int8_t level, const char *msg)
 {
-	uint32_t seq = klog_seq++;
-	uint32_t slot = seq & (KLOG_RING_SIZE - 1);
+	u_int32_t seq = klog_seq++;
+	u_int32_t slot = seq & (KLOG_RING_SIZE - 1);
 	struct klog_entry *e = &klog_ring[slot];
 
 	e->ke_seq = seq;
@@ -78,7 +78,7 @@ void klog_push(uint8_t level, const char *msg)
  * Format a log message into a temporary buffer and push it into the log
  * ring buffer via klog_push().
  */
-void klog(uint8_t level, const char *fmt, ...)
+void klog(u_int8_t level, const char *fmt, ...)
 {
 	char buf[KLOG_MSG_MAX];
 	va_list ap;
@@ -102,12 +102,12 @@ void klog(uint8_t level, const char *fmt, ...)
  * @start_seq. Entries that have been overwritten before @start_seq are
  * skipped and the starting sequence is clamped to the oldest available entry.
  */
-int klog_read(struct klog_entry *buf, int max_entries, uint32_t start_seq)
+int klog_read(struct klog_entry *buf, int max_entries, u_int32_t start_seq)
 {
-	uint32_t cur_seq = klog_seq;
-	uint32_t oldest;
+	u_int32_t cur_seq = klog_seq;
+	u_int32_t oldest;
 	int n = 0;
-	uint32_t s;
+	u_int32_t s;
 
 	if (max_entries <= 0)
 		return (0);
@@ -121,7 +121,7 @@ int klog_read(struct klog_entry *buf, int max_entries, uint32_t start_seq)
 
 	for (s = start_seq; s < cur_seq && n < max_entries; s++)
 	{
-		uint32_t slot = s & (KLOG_RING_SIZE - 1);
+		u_int32_t slot = s & (KLOG_RING_SIZE - 1);
 		/* Verify seq matches — entry may have been overwritten mid-read */
 		if (klog_ring[slot].ke_seq == s)
 			buf[n++] = klog_ring[slot];
@@ -136,7 +136,7 @@ int klog_read(struct klog_entry *buf, int max_entries, uint32_t start_seq)
  * This sequence value can be used by consumers to track the next available
  * log entry in the ring buffer.
  */
-uint32_t klog_next_seq(void)
+u_int32_t klog_next_seq(void)
 {
 	return (klog_seq);
 }

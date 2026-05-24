@@ -43,9 +43,9 @@ struct cacheNode {
     int * size;
     int present;
     int dirty;
-    uInt32 * startCluster;
-    uInt16 * attributes;
-    uInt16 * permissions;
+    u_int32_t * startCluster;
+    u_int16_t * attributes;
+    u_int16_t * permissions;
 };
 /* cacheNode */
 

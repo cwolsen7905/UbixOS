@@ -111,7 +111,7 @@ int
 open_fat(const char *path, fileDescriptor_t *fd)
 {
 	struct fat_fs	*fs = fat_fs_from_mp(fd->mp);
-	uint8_t		 mode;
+	u_int8_t		 mode;
 	struct fat_file	*f;
 
 	if ((fd->mode & fileRead) && !(fd->mode & fileWrite))
@@ -157,7 +157,7 @@ int
 read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 {
 	struct fat_file	*f = (struct fat_file *)fd->res;
-	uint32_t	 got = 0;
+	u_int32_t	 got = 0;
 
 	(void)fat_fs_from_mp(fd->mp); /* assert mp->fsInfo is set */
 
@@ -165,8 +165,8 @@ read_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (0);
 
 	fat_acquire(f->fs);
-	fat_file_seek(f, (uint32_t)offset);
-	fat_file_read(f, data, (uint32_t)size, &got);
+	fat_file_seek(f, (u_int32_t)offset);
+	fat_file_read(f, data, (u_int32_t)size, &got);
 	fat_release(f->fs);
 
 	return ((int)got);
@@ -183,8 +183,8 @@ write_fat(fileDescriptor_t *fd, char *data, off_t offset, long size)
 		return (0);
 
 	fat_acquire(f->fs);
-	fat_file_seek(f, (uint32_t)offset);
-	fat_file_write(f, data, (uint32_t)size);
+	fat_file_seek(f, (u_int32_t)offset);
+	fat_file_write(f, data, (u_int32_t)size);
 	fat_file_flush(f);
 	fat_release(f->fs);
 
@@ -199,7 +199,7 @@ fat_opendir(const char *path, kDIR_t *dir)
 {
 	struct fat_fs		*fs = fat_fs_from_mp(dir->mp);
 	struct fat_dir_iter	*it;
-	uint32_t		 cluster;
+	u_int32_t		 cluster;
 
 	it = (struct fat_dir_iter *)kmalloc(sizeof(struct fat_dir_iter));
 	if (it == NULL)
@@ -224,8 +224,8 @@ fat_readdir(kDIR_t *dir, struct kdirent *ent)
 	struct fat_dir_iter	*it = (struct fat_dir_iter *)dir->dirHandle;
 	struct fat_raw_dirent	 raw;
 	char			 name[256];
-	uint32_t		 sec;
-	uint16_t		 off;
+	u_int32_t		 sec;
+	u_int16_t		 off;
 	int			 r;
 
 	fat_acquire(it->fs);
@@ -235,7 +235,7 @@ fat_readdir(kDIR_t *dir, struct kdirent *ent)
 	if (r != 0)
 		return (-1);
 
-	ent->d_ino  = ((uint32_t)raw.clus_hi << 16) | raw.clus_lo;
+	ent->d_ino  = ((u_int32_t)raw.clus_hi << 16) | raw.clus_lo;
 	ent->d_type = (raw.attr & FAT_ATTR_DIR) ? KDT_DIR : KDT_REG;
 	strncpy(ent->d_name, name, 255);
 	ent->d_name[255] = '\0';

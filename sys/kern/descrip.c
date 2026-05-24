@@ -583,7 +583,7 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args)
 			struct ubx_device *dev = ubx_device_find(node->devMajor, node->devMinor);
 			if (dev != NULL && dev->dev_char_ioctl != NULL)
 			{
-				td->td_retval[0] = dev->dev_char_ioctl(dev, (uint32_t)args->com, args->data);
+				td->td_retval[0] = dev->dev_char_ioctl(dev, (u_int32_t)args->com, args->data);
 				return (0);
 			}
 		}
@@ -692,7 +692,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 
 	/* Compute deadline in sysTicks (PIT_TIMER ticks/sec).
 	 * deadline == 0 means no timeout (block until ready). */
-	uint32_t deadline = 0;
+	u_int32_t deadline = 0;
 	if (args->tv != NULL)
 	{
 		/* Clamp tv_sec to avoid overflow: 3600 s = 720,000 ticks at 200 Hz */
@@ -701,7 +701,7 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 			tv_sec = 0;
 		if (tv_sec > 3600)
 			tv_sec = 3600;
-		uint32_t ms = (uint32_t)(tv_sec * 1000 + args->tv->tv_usec / 1000);
+		u_int32_t ms = (u_int32_t)(tv_sec * 1000 + args->tv->tv_usec / 1000);
 		deadline = systemVitals->sysTicks + ms * PIT_TIMER / 1000 + 1;
 	}
 
@@ -732,9 +732,9 @@ int sys_select(struct thread *td, struct sys_select_args *args)
 				{
 					if (_kev.pressed)
 					{
-						uint32_t _kc = _kev.keycode;
+						u_int32_t _kc = _kev.keycode;
 						if (_kc != 0 && _kc < 0x100 && tty_foreground != NULL)
-							tty_inject(tty_foreground, (char)(uint8_t)_kc);
+							tty_inject(tty_foreground, (char)(u_int8_t)_kc);
 					}
 				}
 				stdin_ready = (tty_foreground != NULL && tty_foreground->stdinSize > 0);
@@ -843,9 +843,9 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 	zero_tv.tv_usec = 0;
 
 	/* deadline in sysTicks; 0 = infinite (-1 timeout), else absolute tick */
-	uint32_t deadline = 0;
+	u_int32_t deadline = 0;
 	if (args->timeout > 0)
-		deadline = systemVitals->sysTicks + (uint32_t)args->timeout * PIT_TIMER / 1000 + 1;
+		deadline = systemVitals->sysTicks + (u_int32_t)args->timeout * PIT_TIMER / 1000 + 1;
 
 	for (;;)
 	{
@@ -872,7 +872,7 @@ int sys_poll(struct thread *td, struct sys_poll_args *args)
 				while (kbd_getEvent(&kev) == 0)
 				{
 					if (kev.pressed && kev.keycode != 0 && kev.keycode < 0x100 && tty_foreground != NULL)
-						tty_inject(tty_foreground, (char)(uint8_t)kev.keycode);
+						tty_inject(tty_foreground, (char)(u_int8_t)kev.keycode);
 				}
 			}
 			if (tty_foreground != NULL && tty_foreground->stdinSize > 0)

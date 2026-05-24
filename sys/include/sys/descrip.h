@@ -72,8 +72,8 @@ struct uio {
 #define FD_TYPE_TTYV   6   /* opened via /dev/ttyX — specific tty_term in fd->data */
 
 struct file {
-    uint32_t f_flag;
-    uint16_t f_type;
+    u_int32_t f_flag;
+    u_int16_t f_type;
     struct fileOps *f_ops;
     fileDescriptor_t *fd;
     int fd_type;

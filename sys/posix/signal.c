@@ -88,7 +88,7 @@ void signal_post(int pid, int sig)
 	if (sig < 1 || sig > 31)
 		return;
 
-	t = schedFindTask((uint32_t)pid);
+	t = schedFindTask((u_int32_t)pid);
 	if (t == NULL)
 		return;
 
@@ -122,7 +122,7 @@ void signal_post_kill(int sender_pid, int target_pid, int sig)
 	if (sig < 1 || sig > 31)
 		return;
 
-	t = schedFindTask((uint32_t)target_pid);
+	t = schedFindTask((u_int32_t)target_pid);
 	if (t == NULL)
 		return;
 
@@ -150,7 +150,7 @@ void signal_post_fault(int sig, void *fault_addr, int fault_code)
 		return;
 
 	td = &_current->td;
-	td->sig_code[sig - 1] = (uint8_t)fault_code;
+	td->sig_code[sig - 1] = (u_int8_t)fault_code;
 	td->sig_extra[sig - 1].si_addr = fault_addr;
 	td->sig_pending |= (1u << (sig - 1));
 }
@@ -249,7 +249,7 @@ void signal_post_pgrp(pid_t pgrp, int sig)
 void signal_check(struct trapframe *frame)
 {
 	struct thread *td = &_current->td;
-	uint32_t pending, unblocked;
+	u_int32_t pending, unblocked;
 	int sig;
 	struct sigaction *sa;
 
@@ -280,7 +280,7 @@ void signal_check(struct trapframe *frame)
 			return;
 		}
 
-		kprintf("signal_check: sig=%d handler=0x%X\n", sig, (uint32_t)sa->sa_handler);
+		kprintf("signal_check: sig=%d handler=0x%X\n", sig, (u_int32_t)sa->sa_handler);
 
 		if ((void *)sa->sa_handler == (void *)0x0 /* SIG_DFL */ || sa->sa_handler == NULL)
 		{
@@ -321,13 +321,13 @@ void signal_check(struct trapframe *frame)
  * The trampoline code pushes the sigcontext address and a zero return
  * value, then executes syscall 417 via `int $0x80` to invoke `sys_sigreturn`.
  */
-static void write_trampoline(uint8_t *buf, uint32_t sc_addr)
+static void write_trampoline(u_int8_t *buf, u_int32_t sc_addr)
 {
 	buf[0] = 0x68;
-	buf[1] = (uint8_t)(sc_addr >> 0);
-	buf[2] = (uint8_t)(sc_addr >> 8);
-	buf[3] = (uint8_t)(sc_addr >> 16);
-	buf[4] = (uint8_t)(sc_addr >> 24);
+	buf[1] = (u_int8_t)(sc_addr >> 0);
+	buf[2] = (u_int8_t)(sc_addr >> 8);
+	buf[3] = (u_int8_t)(sc_addr >> 16);
+	buf[4] = (u_int8_t)(sc_addr >> 24);
 	buf[5] = 0x6A;
 	buf[6] = 0x00;
 	buf[7] = 0xB8;
@@ -353,19 +353,19 @@ static void write_trampoline(uint8_t *buf, uint32_t sc_addr)
  */
 static void save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame, struct thread *td, struct sigaction *sa, int sig)
 {
-	uint32_t sc_num = frame->tf_err & 0xFFFF;
-	uint32_t sc_err = (frame->tf_err >> 16) & 0xFFFF;
+	u_int32_t sc_num = frame->tf_err & 0xFFFF;
+	u_int32_t sc_err = (frame->tf_err >> 16) & 0xFFFF;
 
-	sc->sc_eax = (uint32_t)frame->tf_eax;
-	sc->sc_ecx = (uint32_t)frame->tf_ecx;
-	sc->sc_edx = (uint32_t)frame->tf_edx;
-	sc->sc_ebx = (uint32_t)frame->tf_ebx;
-	sc->sc_esp = (uint32_t)frame->tf_esp;
-	sc->sc_ebp = (uint32_t)frame->tf_ebp;
-	sc->sc_esi = (uint32_t)frame->tf_esi;
-	sc->sc_edi = (uint32_t)frame->tf_edi;
-	sc->sc_eip = (uint32_t)frame->tf_eip;
-	sc->sc_eflags = (uint32_t)frame->tf_eflags;
+	sc->sc_eax = (u_int32_t)frame->tf_eax;
+	sc->sc_ecx = (u_int32_t)frame->tf_ecx;
+	sc->sc_edx = (u_int32_t)frame->tf_edx;
+	sc->sc_ebx = (u_int32_t)frame->tf_ebx;
+	sc->sc_esp = (u_int32_t)frame->tf_esp;
+	sc->sc_ebp = (u_int32_t)frame->tf_ebp;
+	sc->sc_esi = (u_int32_t)frame->tf_esi;
+	sc->sc_edi = (u_int32_t)frame->tf_edi;
+	sc->sc_eip = (u_int32_t)frame->tf_eip;
+	sc->sc_eflags = (u_int32_t)frame->tf_eflags;
 	/* When interrupted from sigsuspend, restore the pre-sigsuspend mask. */
 	if (td->td_pflags & TDP_OLDMASK)
 	{
@@ -380,7 +380,7 @@ static void save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame, 
 	/* SA_RESTART: re-execute the interrupted syscall after the handler. */
 	if ((sa->sa_flags & SA_RESTART) && sc_err == EINTR && sc_num != 0)
 	{
-		sc->sc_eip = (uint32_t)frame->tf_eip - 2; /* point back to int $0x80 */
+		sc->sc_eip = (u_int32_t)frame->tf_eip - 2; /* point back to int $0x80 */
 		sc->sc_eax = sc_num;                      /* restore original syscall# */
 	}
 
@@ -402,28 +402,28 @@ static void save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame, 
  */
 void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
 {
-	uint32_t new_esp, sc_addr;
+	u_int32_t new_esp, sc_addr;
 
 	if (sa->sa_flags & SA_SIGINFO)
 	{
 		struct ubx_sigframe_info *fp;
-		uint32_t info_addr;
+		u_int32_t info_addr;
 
-		new_esp = ((uint32_t)frame->tf_esp - (uint32_t)sizeof(struct ubx_sigframe_info)) & ~3u;
+		new_esp = ((u_int32_t)frame->tf_esp - (u_int32_t)sizeof(struct ubx_sigframe_info)) & ~3u;
 		fp = (struct ubx_sigframe_info *)new_esp;
-		sc_addr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_sc);
-		info_addr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_info);
+		sc_addr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_sc);
+		info_addr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_info);
 
 		write_trampoline(fp->sf_trampoline, sc_addr);
-		fp->sf_retaddr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_trampoline);
-		fp->sf_signo = (uint32_t)sig;
+		fp->sf_retaddr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_trampoline);
+		fp->sf_signo = (u_int32_t)sig;
 		fp->sf_info_ptr = info_addr;
 		fp->sf_uctx_ptr = 0;
 
 		memset(&fp->sf_info, 0, sizeof(fp->sf_info));
 		fp->sf_info.si_signo = sig;
 		fp->sf_info.si_errno = 0;
-		fp->sf_info.si_code = (int)(uint8_t)td->sig_code[sig - 1];
+		fp->sf_info.si_code = (int)(u_int8_t)td->sig_code[sig - 1];
 		if (fp->sf_info.si_code == SI_USER)
 		{
 			fp->sf_info.u.__kill.si_pid = td->sig_extra[sig - 1].si_pid;
@@ -441,13 +441,13 @@ void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame
 	{
 		struct ubx_sigframe *fp;
 
-		new_esp = ((uint32_t)frame->tf_esp - (uint32_t)sizeof(struct ubx_sigframe)) & ~3u;
+		new_esp = ((u_int32_t)frame->tf_esp - (u_int32_t)sizeof(struct ubx_sigframe)) & ~3u;
 		fp = (struct ubx_sigframe *)new_esp;
-		sc_addr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe, sf_sc);
+		sc_addr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe, sf_sc);
 
 		write_trampoline(fp->sf_trampoline, sc_addr);
-		fp->sf_retaddr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe, sf_trampoline);
-		fp->sf_signum = (uint32_t)sig;
+		fp->sf_retaddr = new_esp + (u_int32_t)__builtin_offsetof(struct ubx_sigframe, sf_trampoline);
+		fp->sf_signum = (u_int32_t)sig;
 
 		save_sigcontext(&fp->sf_sc, frame, td, sa, sig);
 		frame->tf_esp = (int)new_esp;
@@ -583,7 +583,7 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
 void signal_ast_check(void)
 {
 	struct thread *td;
-	uint32_t pending, unblocked;
+	u_int32_t pending, unblocked;
 	int sig;
 	struct sigaction *sa;
 

@@ -154,15 +154,15 @@ int access(struct thread *td, struct access_args *uap)
 
 int mprotect(struct thread *td, struct mprotect_args *uap)
 {
-	uint32_t base = (uint32_t)uap->addr & ~0xFFFU;
-	uint32_t end = base + round_page(uap->len);
-	uint16_t flags = PAGE_PRESENT | PAGE_USER;
+	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
+	u_int32_t end = base + round_page(uap->len);
+	u_int16_t flags = PAGE_PRESENT | PAGE_USER;
 
 	if (uap->prot & PROT_WRITE) {
 		flags |= PAGE_WRITE;
 }
 
-	for (uint32_t va = base; va < end; va += PAGE_SIZE) {
+	for (u_int32_t va = base; va < end; va += PAGE_SIZE) {
 		vmm_setPageAttributes(va, flags);
 }
 
@@ -252,7 +252,7 @@ int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 	struct gdtDescriptor *tls_desc = 0x0;
 
 	/* uap->u_info IS the TLS base pointer (pthread struct address). */
-	uint32_t base_addr = (uint32_t)uap->u_info;
+	u_int32_t base_addr = (u_int32_t)uap->u_info;
 
 	if (base_addr == 0)
 	{
@@ -449,7 +449,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 			}
 		}
 	} else {
-		kTask_t *t = schedFindTask((uint32_t)args->pid);
+		kTask_t *t = schedFindTask((u_int32_t)args->pid);
 		if (t == NULL || t->parent != _current) {
 			td->td_retval[0] = -ECHILD;
 			return (ECHILD);
@@ -513,7 +513,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
 {
 
 	void **segbase = 0x0;
-	uint32_t base_addr = 0x0;
+	u_int32_t base_addr = 0x0;
 
 	if (args->op == 10)
 	{
@@ -522,7 +522,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
 		segbase = (void **)args->parms;
 
 		kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
-		base_addr = (uint32_t)segbase[0];
+		base_addr = (u_int32_t)segbase[0];
 
 		struct gdtDescriptor *tmp_desc = 0x0;
 
@@ -606,19 +606,19 @@ int sys_setpgid(struct thread *td, struct sys_setpgid_args *args)
 	/* Target is the calling process itself. */
 	if (args->pid == 0 || args->pid == _current->id)
 	{
-		_current->pgrp = (args->pgid == 0) ? (uint32_t)_current->id : (uint32_t)args->pgid;
+		_current->pgrp = (args->pgid == 0) ? (u_int32_t)_current->id : (u_int32_t)args->pgid;
 		td->td_retval[0] = 0;
 		return (0);
 	}
 
 	/* Target is another process — must be a direct child of the caller. */
-	t = schedFindTask((uint32_t)args->pid);
+	t = schedFindTask((u_int32_t)args->pid);
 	if (t == NULL || t->parent != _current)
 	{
 		td->td_retval[0] = -1;
 		return (0);
 	}
-	t->pgrp = (args->pgid == 0) ? (uint32_t)t->id : (uint32_t)args->pgid;
+	t->pgrp = (args->pgid == 0) ? (u_int32_t)t->id : (u_int32_t)args->pgid;
 	td->td_retval[0] = 0;
 	return (0);
 }
@@ -849,8 +849,8 @@ int sys_set_tid_address(struct thread *td, struct sys_set_tid_address_args *uap)
 /* setsid(2) — FreeBSD 147. Become session leader; new session has no ctty. */
 int sys_setsid(struct thread *td, struct sys_setsid_args *args)
 {
-	_current->pgrp = (uint32_t)_current->id;
-	_current->sid = (uint32_t)_current->id;
+	_current->pgrp = (u_int32_t)_current->id;
+	_current->sid = (u_int32_t)_current->id;
 	_current->ct_tty = NULL;
 	td->td_retval[0] = (int)_current->id;
 	return (0);

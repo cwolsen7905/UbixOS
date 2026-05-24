@@ -95,15 +95,15 @@ int freeBlocks(int block,fileDescriptor_t *fd) {
   }
   
 int getFreeBlocks(int count,fileDescriptor_t *fd) {
-  uInt32 i = 0x0;
-  uInt32 x = 0x0;
+  u_int32_t i = 0x0;
+  u_int32_t x = 0x0;
   
   struct ubixFSInfo *fsInfo = fd->mp->fsInfo;
 
   getBlocks:
   for (i=1;i < fsInfo->batEntries;i++) {
     if (fsInfo->blockAllocationTable[i].attributes == 0x0) {
-      for (x = 1; x < (uInt32)count; x++) {
+      for (x = 1; x < (u_int32_t)count; x++) {
         if (fsInfo->blockAllocationTable[i + x].attributes != 0x0) {
           goto getBlocks;
           }

@@ -38,18 +38,18 @@
  */
 struct dma_buf {
 	void		*db_vaddr;	/* kernel virtual address */
-	uint32_t	 db_paddr;	/* physical address */
-	uint32_t	 db_size;	/* allocation size in bytes */
+	u_int32_t	 db_paddr;	/* physical address */
+	u_int32_t	 db_size;	/* allocation size in bytes */
 };
 
-int	 dma_alloc(uint32_t size, uint32_t align, struct dma_buf *buf);
+int	 dma_alloc(u_int32_t size, u_int32_t align, struct dma_buf *buf);
 void	 dma_free(struct dma_buf *buf);
 
 /* Convert a kernel virtual address to its physical address. */
-static inline uint32_t
+static inline u_int32_t
 dma_paddr(void *vaddr)
 {
-	return ((uint32_t)vaddr);
+	return ((u_int32_t)vaddr);
 }
 
 #endif /* _SYS_DMA_MEM_H */

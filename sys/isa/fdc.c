@@ -45,21 +45,21 @@ static volatile bool done = FALSE;
 static drvGeom geometry = {dg144Heads, dg144Tracks, dg144Spt};
 static bool diskChange = FALSE;
 static bool motor = FALSE;
-static volatile Int8 fdcTrack = 0xff;
-static Int8 sr0 = 0;
+static volatile int8_t fdcTrack = 0xff;
+static int8_t sr0 = 0;
 static volatile int timeOut = 0;
-static Int8 statSize = 0;
-static Int8 status[7] = {0};
+static int8_t statSize = 0;
+static int8_t status[7] = {0};
 
 unsigned long tbaddr = 0x80000L;
 
-static int fdc_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
+static int fdc_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	fdcRead(NULL, buf, lba, count);
 	return (0);
 }
 
-static int fdc_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
+static int fdc_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	fdcWrite(NULL, buf, lba, count);
 	return (0);
@@ -106,7 +106,7 @@ void floppyIsrhndlr()
 	outportByte(0x20, 0x20);
 }
 
-void sendByte(int Int8)
+void sendByte(int val)
 {
 	volatile int msr;
 	int tmo;
@@ -115,7 +115,7 @@ void sendByte(int Int8)
 		msr = inportByte(fdcMsr);
 		if ((msr & 0xc0) == 0x80)
 		{
-			outportByte(fdcData, Int8);
+			outportByte(fdcData, val);
 			return;
 		}
 		inportByte(0x80);
@@ -273,7 +273,7 @@ bool seek(int track)
 	}
 }
 
-bool readBlock(int block, Int8 *blockBuffer, unsigned long numSectors)
+bool readBlock(int block, u_int8_t *blockBuffer, unsigned long numSectors)
 {
 	int result = 0x0, loop = 0x0;
 	if (numSectors > 1)
@@ -287,7 +287,7 @@ bool readBlock(int block, Int8 *blockBuffer, unsigned long numSectors)
 	return fdcRw(block, blockBuffer, TRUE, numSectors);
 }
 
-bool writeBlock(int block, Int8 *blockBuffer, unsigned long numSectors)
+bool writeBlock(int block, u_int8_t *blockBuffer, unsigned long numSectors)
 {
 	return fdcRw(block, blockBuffer, FALSE, numSectors);
 }
@@ -349,14 +349,14 @@ void reset(void)
 	return;
 }
 
-void fdcRead(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
+void fdcRead(void *info, void *baseAddr, u_int32_t startSector, u_int32_t sectorCount)
 {
 	spinLock(&fdcSpinLock);
 	readBlock(startSector, baseAddr, sectorCount);
 	spinUnlock(&fdcSpinLock);
 	return;
 }
-void fdcWrite(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
+void fdcWrite(void *info, void *baseAddr, u_int32_t startSector, u_int32_t sectorCount)
 {
 	spinLock(&fdcSpinLock);
 	writeBlock(startSector, baseAddr, sectorCount);
@@ -441,7 +441,7 @@ void fdcWrite(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount
  Minor Changes To Source Code To Prepare It For Open Source Release
 
  Revision 1.6  2004/04/30 14:16:04  reddawg
- Fixed all the datatypes to be consistant uInt8,uInt16,uInt32,Int8,Int16,Int32
+ Fixed all the datatypes to be consistant u_int8_t,u_int16_t,u_int32_t,int8_t,int16_t,int32_t
 
  Revision 1.5  2004/04/29 15:29:20  reddawg
  Fixed All Running Issues

@@ -75,7 +75,7 @@ extern "C" {
     extern struct spinLock pdSpinLock;
 
     typedef struct {
-            uint32_t pageAddr;
+            u_int32_t pageAddr;
             u_int16_t status;
             u_int16_t reserved;
             pid_t pid;
@@ -89,20 +89,20 @@ extern "C" {
 
     extern int numPages;
     extern mMap *vmmMemoryMap;
-    extern uint32_t vmm_bitmap_phys;
+    extern u_int32_t vmm_bitmap_phys;
 
     int vmm_init();
     int vmm_memMapInit();
     int countMemory();
-    uint32_t vmm_findFreePage(pidType pid);
-    int freePage(uint32_t pageAddr);
-    int adjustCowCounter(uint32_t baseAddr, int adjustment);
+    u_int32_t vmm_findFreePage(pidType pid);
+    int freePage(u_int32_t pageAddr);
+    int adjustCowCounter(u_int32_t baseAddr, int adjustment);
     void vmm_freeProcessPages(pidType pid);
 
-    int vmm_allocPageTable(uint32_t, pidType);
-    void vmm_unmapPage(uint32_t, unmapFlags_t);
-    void vmm_unmapPages(void*, uint32_t, unmapFlags_t);
-    int vmm_freeVirtualPage(uint32_t addr);
+    int vmm_allocPageTable(u_int32_t, pidType);
+    void vmm_unmapPage(u_int32_t, unmapFlags_t);
+    void vmm_unmapPages(void*, u_int32_t, unmapFlags_t);
+    int vmm_freeVirtualPage(u_int32_t addr);
     uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid);
 
 #ifdef __cplusplus

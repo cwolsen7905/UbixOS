@@ -35,11 +35,11 @@
 
 static struct spinLock initSpinLock = SPIN_LOCK_INITIALIZER;
 static struct spinLock cpuInfoLock = SPIN_LOCK_INITIALIZER;
-static uInt32 cpus = 0;
+static u_int32_t cpus = 0;
 struct cpuinfo_t cpuinfo[8];
 
-uInt8 kernel_function(void);
-uInt8 *vram = (uInt8 *)0xB8000;
+u_int8_t kernel_function(void);
+u_int8_t *vram = (u_int8_t *)0xB8000;
 
 static inline unsigned int apicRead(address)
 {
@@ -53,27 +53,27 @@ static inline void apicWrite(unsigned int address, unsigned int data)
 
 static __inline__ void setDr3(void *dr3)
 {
-	register uInt32 value = (uInt32)dr3;
+	register u_int32_t value = (u_int32_t)dr3;
 	__asm__ __volatile__("mov %0, %%dr3" ::"r"(value));
 }
 
-static __inline__ uInt32 getDr3(void)
+static __inline__ u_int32_t getDr3(void)
 {
-	register uInt32 value;
+	register u_int32_t value;
 	__asm__ __volatile__("mov %%dr3, %0" : "=r"(value));
 	return value;
 }
 
 struct gdt_descr
 {
-	uInt16 limit;
-	uInt32 *base __attribute__((packed));
+	u_int16_t limit;
+	u_int32_t *base __attribute__((packed));
 };
 
 static void GDT_fixer()
 {
 	struct gdt_descr gdt_descr;
-	uInt32 *gdt = (uInt32 *)0x20000; // 128KB
+	u_int32_t *gdt = (u_int32_t *)0x20000; // 128KB
 
 	gdt[0] = 0;
 	gdt[1] = 0;
@@ -132,7 +132,7 @@ void cpu3_thread(void)
 }
 
 static struct spinLock bkl = SPIN_LOCK_INITIALIZER;
-uInt8 kernel_function(void)
+u_int8_t kernel_function(void)
 {
 	struct cpuinfo_t *cpu;
 
@@ -196,9 +196,9 @@ void cpuidDetect()
 	}
 }
 
-uInt8 cpuInfo()
+u_int8_t cpuInfo()
 {
-	uInt32 data[4], i;
+	u_int32_t data[4], i;
 
 	if (!(getEflags() & (1 << 21)))
 	{                                           // If the cpuid bit in eflags not set..
@@ -215,9 +215,9 @@ uInt8 cpuInfo()
 	cpuinfo[cpus].apic_ver = apicRead(0x30) & 0xFF;
 
 	cpuid(0, data);
-	*(uInt32 *)&cpuinfo[cpus].ident[0] = data[1];
-	*(uInt32 *)&cpuinfo[cpus].ident[4] = data[3];
-	*(uInt32 *)&cpuinfo[cpus].ident[8] = data[2];
+	*(u_int32_t *)&cpuinfo[cpus].ident[0] = data[1];
+	*(u_int32_t *)&cpuinfo[cpus].ident[4] = data[3];
+	*(u_int32_t *)&cpuinfo[cpus].ident[8] = data[2];
 	cpuinfo[cpus].ident[17] = 0;
 	cpuinfo[cpus].max = data[0];
 
@@ -257,7 +257,7 @@ uInt8 cpuInfo()
 extern void ap_trampoline_start(), ap_trampoline_end();
 void apicMagic(void)
 {
-	uInt32 tmp;
+	u_int32_t tmp;
 
 	kprintf("Copying %u bytes from 0x%x to 0x00\n", ap_trampoline_end - ap_trampoline_start, ap_trampoline_start);
 	memcpy(0x0, (char *)ap_trampoline_start, ap_trampoline_end - ap_trampoline_start);
@@ -278,16 +278,16 @@ void apicMagic(void)
 	// Sleep a little (should be 200ms)
 }
 
-uInt32 getEflags()
+u_int32_t getEflags()
 {
-	uInt32 eflags = 0x0;
+	u_int32_t eflags = 0x0;
 	asm("pushfl     \n"
 	    "popl %%eax \n"
 	    : "=a"(eflags));
 	return (eflags);
 }
 
-void setEflags(uInt32 eflags)
+void setEflags(u_int32_t eflags)
 {
 	asm("pushl %%eax \n"
 	    "popfl       \n"

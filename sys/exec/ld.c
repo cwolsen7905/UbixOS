@@ -37,7 +37,7 @@
 #include <string.h>
 #include <assert.h>
 
-uint32_t ldEnable(const char *interp, uint32_t pid)
+u_int32_t ldEnable(const char *interp, u_int32_t pid)
 {
 	int i = 0;
 	int x = 0;
@@ -45,7 +45,7 @@ uint32_t ldEnable(const char *interp, uint32_t pid)
 	fileDescriptor_t *ldFd = 0x0;
 	Elf_Ehdr *binaryHeader = 0x0;
 	Elf_Phdr *programHeader = 0x0;
-	uint32_t entry;
+	u_int32_t entry;
 
 	ldFd = fopen(interp, "rb");
 	if (ldFd == 0x0) {
@@ -69,7 +69,7 @@ uint32_t ldEnable(const char *interp, uint32_t pid)
 			continue;
 		newLoc = (char *)(programHeader[i].p_vaddr + LD_START);
 		for (x = 0; x < (int)programHeader[i].p_memsz; x += 0x1000) {
-			uint32_t va = (programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START;
+			u_int32_t va = (programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START;
 			if (vmm_remapPage(vmm_findFreePage(pid), va, PAGE_DEFAULT, pid, 0) == 0x0)
 				K_PANIC("vmmRemapPage: ld");
 			memset((void *)va, 0x0, 0x1000);

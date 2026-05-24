@@ -37,14 +37,14 @@
 #include <vmm/paging.h>
 #include <string.h>
 
-uint32_t vesa_fb_paddr    = 0;
-uint16_t vesa_pitch       = 0;
-uint16_t vesa_width       = 0;
-uint16_t vesa_height      = 0;
-uint8_t  vesa_bpp         = 0;
-uint16_t vesa_current_mode = 0;
+u_int32_t vesa_fb_paddr    = 0;
+u_int16_t vesa_pitch       = 0;
+u_int16_t vesa_width       = 0;
+u_int16_t vesa_height      = 0;
+u_int8_t  vesa_bpp         = 0;
+u_int16_t vesa_current_mode = 0;
 
-int vesa_init(uint16_t mode) {
+int vesa_init(u_int16_t mode) {
   struct biosRegs r;
   vbe_info_t    *info  = (vbe_info_t    *)VBE_INFO_PADDR;
   vbe_mode_info_t *mi  = (vbe_mode_info_t *)VBE_MODE_PADDR;
@@ -73,7 +73,7 @@ int vesa_init(uint16_t mode) {
   }
   kprintf("vesa: VBE %d.%d detected, %dKB video RAM\n",
       info->VbeVersion >> 8, info->VbeVersion & 0xFF,
-      (uint32_t)info->TotalMemory * 64);
+      (u_int32_t)info->TotalMemory * 64);
 
   /* --- GetModeInfo (INT 10h AX=4F01h, CX=mode, ES:DI = mode info buffer) --- */
   memset(mi, 0, 256);
@@ -100,7 +100,7 @@ int vesa_init(uint16_t mode) {
   }
 
   /* --- SetMode (INT 10h AX=4F02h, BX=mode|0x4000 for LFB) --- */
-  biosCallEx(0x10, 0x4F02, (uint16_t)(mode | 0x4000), 0, 0, 0, 0, 0, 0, &r);
+  biosCallEx(0x10, 0x4F02, (u_int16_t)(mode | 0x4000), 0, 0, 0, 0, 0, 0, &r);
   if (r.ax != 0x004F) {
     kprintf("vesa: SetMode failed: AX=0x%X\n", r.ax);
     return -1;
@@ -138,13 +138,13 @@ vesa_text_mode(void)
 }
 
 void vesa_map_fb(void) {
-  uint32_t base, end, addr;
+  u_int32_t base, end, addr;
 
   if (!vesa_fb_paddr || !vesa_pitch || !vesa_width || !vesa_height || !vesa_bpp)
     return;
 
   base = vesa_fb_paddr & ~0xFFF;
-  end  = vesa_fb_paddr + (uint32_t)vesa_pitch * vesa_height;
+  end  = vesa_fb_paddr + (u_int32_t)vesa_pitch * vesa_height;
 
   for (addr = base; addr < end; addr += PAGE_SIZE)
     vmm_remapIOPage(addr, KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
@@ -154,25 +154,25 @@ void vesa_map_fb(void) {
 }
 
 void vesa_draw_test(void) {
-  uint8_t  *fb    = (uint8_t *)vesa_fb_paddr;
-  uint32_t  bpp   = vesa_bpp / 8;
-  uint32_t  x, y;
+  u_int8_t  *fb    = (u_int8_t *)vesa_fb_paddr;
+  u_int32_t  bpp   = vesa_bpp / 8;
+  u_int32_t  x, y;
 
   if (!vesa_fb_paddr || !vesa_pitch)
     return;
 
   /* Draw a simple gradient: red fills top third, green middle, blue bottom */
   for (y = 0; y < vesa_height; y++) {
-    uint32_t color;
+    u_int32_t color;
     if (y < vesa_height / 3)
       color = 0xFF0000;                  /* red */
-    else if (y < (uint32_t)(vesa_height * 2 / 3))
+    else if (y < (u_int32_t)(vesa_height * 2 / 3))
       color = 0x00FF00;                  /* green */
     else
       color = 0x0000FF;                  /* blue */
 
     for (x = 0; x < vesa_width; x++) {
-      uint8_t *p = fb + y * vesa_pitch + x * bpp;
+      u_int8_t *p = fb + y * vesa_pitch + x * bpp;
       p[0] = color & 0xFF;              /* blue  channel (BGR layout) */
       p[1] = (color >> 8) & 0xFF;      /* green channel */
       p[2] = (color >> 16) & 0xFF;     /* red   channel */
@@ -180,9 +180,9 @@ void vesa_draw_test(void) {
   }
 }
 
-void vesa_draw_circle(uint32_t cx, uint32_t cy, uint32_t r, uint32_t color) {
-  uint8_t  *fb  = (uint8_t *)vesa_fb_paddr;
-  uint32_t  bpp = vesa_bpp / 8;
+void vesa_draw_circle(u_int32_t cx, u_int32_t cy, u_int32_t r, u_int32_t color) {
+  u_int8_t  *fb  = (u_int8_t *)vesa_fb_paddr;
+  u_int32_t  bpp = vesa_bpp / 8;
   int32_t   x, y, dx, dy;
 
   if (!vesa_fb_paddr || !vesa_pitch)
@@ -197,8 +197,8 @@ void vesa_draw_circle(uint32_t cx, uint32_t cy, uint32_t r, uint32_t color) {
 
 #define PLOT(px, py) do { \
     if ((px) >= 0 && (py) >= 0 && \
-        (uint32_t)(px) < vesa_width && (uint32_t)(py) < vesa_height) { \
-      uint8_t *p = fb + (py) * vesa_pitch + (px) * bpp; \
+        (u_int32_t)(px) < vesa_width && (u_int32_t)(py) < vesa_height) { \
+      u_int8_t *p = fb + (py) * vesa_pitch + (px) * bpp; \
       p[0] = color & 0xFF; \
       p[1] = (color >> 8) & 0xFF; \
       p[2] = (color >> 16) & 0xFF; \

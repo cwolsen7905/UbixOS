@@ -28,35 +28,35 @@
 
 #include <mpi/mpi.h>
 
-void sysMpiCreateMbox(uInt32 *status, char *name)
+void sysMpiCreateMbox(u_int32_t *status, char *name)
 {
 	if (status && name)
 		*status = mpi_createMbox(name);
 	return;
 }
 
-void sysMpiDestroyMbox(uInt32 *status, char *name)
+void sysMpiDestroyMbox(u_int32_t *status, char *name)
 {
 	if (status && name)
 		*status = mpi_destroyMbox(name);
 	return;
 }
 
-void sysMpiPostMessage(char *name, uInt32 *type, mpi_message_t *data)
+void sysMpiPostMessage(char *name, u_int32_t *type, mpi_message_t *data)
 {
 	if (type && name && data)
 		*type = mpi_postMessage(name, *type, data);
 	return;
 }
 
-void sysMpiFetchMessage(char *name, mpi_message_t *msg, uInt32 *status)
+void sysMpiFetchMessage(char *name, mpi_message_t *msg, u_int32_t *status)
 {
 	if (status && name && msg)
 		*status = mpi_fetchMessage(name, msg);
 	return;
 }
 
-void sysMpiSpam(uInt32 type, void *data, uInt32 *status)
+void sysMpiSpam(u_int32_t type, void *data, u_int32_t *status)
 {
 	if (status && data)
 		*status = mpi_spam(type, data);

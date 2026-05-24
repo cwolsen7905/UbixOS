@@ -46,13 +46,13 @@ static struct spinLock tty_spinLock = SPIN_LOCK_INITIALIZER;
 /* Protects stdin[]/stdinSize from concurrent access by the rs232 ISR and task
  * context readers.  Use irq_save/restore so the same lock is safe from both
  * ISR and task context without deadlocking on a single-CPU system. */
-static inline uint32_t irq_save_disable(void)
+static inline u_int32_t irq_save_disable(void)
 {
-	uint32_t flags;
+	u_int32_t flags;
 	asm volatile("pushfl; popl %0; cli" : "=r"(flags) : : "memory");
 	return (flags);
 }
-static inline void irq_restore(uint32_t flags)
+static inline void irq_restore(u_int32_t flags)
 {
 	asm volatile("pushl %0; popfl" : : "r"(flags) : "memory");
 }
@@ -123,10 +123,10 @@ int tty_init()
 		terms[i].t_esc_state = 0;
 		terms[i].t_esc_priv = 0;
 		terms[i].t_esc_nparams = 0;
-		terms[i].t_default_colour = (uint8_t)terms[i].tty_colour;
+		terms[i].t_default_colour = (u_int8_t)terms[i].tty_colour;
 		terms[i].t_saved_x = 0;
 		terms[i].t_saved_y = 0;
-		terms[i].t_saved_colour = (uint8_t)terms[i].tty_colour;
+		terms[i].t_saved_colour = (u_int8_t)terms[i].tty_colour;
 		memset(terms[i].t_esc_params, 0, sizeof(terms[i].t_esc_params));
 	}
 
@@ -162,7 +162,7 @@ int tty_init()
  to the foreground buffer copies the new ttys buffer to the screen and
  adjusts a couple pointers and we are good to go.
  */
-int tty_change(uInt16 tty)
+int tty_change(u_int16_t tty)
 {
 
 	if (tty >= TTY_MAX_TERMS)
@@ -195,7 +195,7 @@ int tty_change(uInt16 tty)
 }
 
 /* ANSI colour: black red green yellow blue magenta cyan white → VGA indices */
-static const uint8_t ansi_to_vga[8] = {0, 4, 2, 6, 1, 5, 3, 7};
+static const u_int8_t ansi_to_vga[8] = {0, 4, 2, 6, 1, 5, 3, 7};
 
 /* Scroll the terminal up one line and leave cursor on the last row. */
 static void tty_scroll(tty_term *term)
@@ -354,7 +354,7 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 				break;
 			case 2:
 			case 22: /* dim / normal */
-				term->tty_colour &= (uint8_t)~0x08u;
+				term->tty_colour &= (u_int8_t)~0x08u;
 				break;
 			case 5:
 			case 6: /* blink → bright bg */
@@ -362,28 +362,28 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 				break;
 			case 7:
 			{ /* reverse video */
-				uint8_t fg = term->tty_colour & 0x07u;
-				uint8_t bg = (term->tty_colour >> 4) & 0x07u;
-				term->tty_colour = (uint8_t)((fg << 4) | bg | (term->tty_colour & 0x88u));
+				u_int8_t fg = term->tty_colour & 0x07u;
+				u_int8_t bg = (term->tty_colour >> 4) & 0x07u;
+				term->tty_colour = (u_int8_t)((fg << 4) | bg | (term->tty_colour & 0x88u));
 				break;
 			}
 			case 27:
 				break; /* reverse off — no tracking */
 			case 39:       /* default fg */
-				term->tty_colour = (uint8_t)((term->tty_colour & 0xF0u) | (term->t_default_colour & 0x0Fu));
+				term->tty_colour = (u_int8_t)((term->tty_colour & 0xF0u) | (term->t_default_colour & 0x0Fu));
 				break;
 			case 49: /* default bg */
-				term->tty_colour = (uint8_t)((term->tty_colour & 0x0Fu) | (term->t_default_colour & 0xF0u));
+				term->tty_colour = (u_int8_t)((term->tty_colour & 0x0Fu) | (term->t_default_colour & 0xF0u));
 				break;
 			default:
 				if (v >= 30u && v <= 37u)
-					term->tty_colour = (uint8_t)((term->tty_colour & 0xF8u) | ansi_to_vga[v - 30u]);
+					term->tty_colour = (u_int8_t)((term->tty_colour & 0xF8u) | ansi_to_vga[v - 30u]);
 				else if (v >= 90u && v <= 97u)
-					term->tty_colour = (uint8_t)((term->tty_colour & 0xF0u) | (ansi_to_vga[v - 90u] | 8u));
+					term->tty_colour = (u_int8_t)((term->tty_colour & 0xF0u) | (ansi_to_vga[v - 90u] | 8u));
 				else if (v >= 40u && v <= 47u)
-					term->tty_colour = (uint8_t)((term->tty_colour & 0x8Fu) | (uint8_t)(ansi_to_vga[v - 40u] << 4u));
+					term->tty_colour = (u_int8_t)((term->tty_colour & 0x8Fu) | (u_int8_t)(ansi_to_vga[v - 40u] << 4u));
 				else if (v >= 100u && v <= 107u)
-					term->tty_colour = (uint8_t)((term->tty_colour & 0x0Fu) | (uint8_t)((ansi_to_vga[v - 100u] | 8u) << 4u));
+					term->tty_colour = (u_int8_t)((term->tty_colour & 0x0Fu) | (u_int8_t)((ansi_to_vga[v - 100u] | 8u) << 4u));
 				break;
 			}
 		}
@@ -481,7 +481,7 @@ int tty_print(char *string, tty_term *term)
 			{
 				if (term->t_esc_nparams == 0)
 					term->t_esc_nparams = 1;
-				term->t_esc_params[term->t_esc_nparams - 1] = (uint16_t)(term->t_esc_params[term->t_esc_nparams - 1] * 10u + (unsigned int)(character - '0'));
+				term->t_esc_params[term->t_esc_nparams - 1] = (u_int16_t)(term->t_esc_params[term->t_esc_nparams - 1] * 10u + (unsigned int)(character - '0'));
 				continue;
 			}
 			if (character == ';')
@@ -559,8 +559,8 @@ int tty_print(char *string, tty_term *term)
 	} /* while */
 
 	bufferOffset >>= 1; /* convert byte offset back to linear cursor position */
-	term->tty_x = (uint16_t)(bufferOffset & 0xFFu);
-	term->tty_y = (uint16_t)(bufferOffset >> 8u);
+	term->tty_x = (u_int16_t)(bufferOffset & 0xFFu);
+	term->tty_y = (u_int16_t)(bufferOffset >> 8u);
 
 	if (term == tty_foreground)
 	{
@@ -574,7 +574,7 @@ int tty_print(char *string, tty_term *term)
 	return (0x0);
 }
 
-tty_term *tty_find(uInt16 tty)
+tty_term *tty_find(u_int16_t tty)
 {
 	if (tty >= TTY_MAX_TERMS)
 		return (NULL);
@@ -599,7 +599,7 @@ void tty_inject(tty_term *tty, char ch)
 	/* Phase 8 IXON: Ctrl-S / Ctrl-Q flow control — consume before anything else. */
 	if (tty->t_termios.c_iflag & IXON)
 	{
-		uint8_t uc8 = (uint8_t)ch;
+		u_int8_t uc8 = (u_int8_t)ch;
 		if (uc8 == tty->t_termios.c_cc[VSTOP])
 		{
 			tty->t_stopped = 1;
@@ -616,7 +616,7 @@ void tty_inject(tty_term *tty, char ch)
 	 * forwarded to the line buffer or the raw ring. */
 	if (tty->t_termios.c_lflag & ISIG)
 	{
-		uint8_t uc = (uint8_t)ch;
+		u_int8_t uc = (u_int8_t)ch;
 		if (uc == tty->t_termios.c_cc[VINTR])
 		{
 			signal_post_tty(tty, SIGINT);
@@ -640,16 +640,16 @@ void tty_inject(tty_term *tty, char ch)
 	/* Raw mode: every byte goes straight to the ring. */
 	if (tty->t_raw)
 	{
-		uint32_t f = irq_save_disable();
+		u_int32_t f = irq_save_disable();
 		if (tty->stdinSize < 512)
-			tty->stdin[tty->stdinSize++] = (uint8_t)ch;
+			tty->stdin[tty->stdinSize++] = (u_int8_t)ch;
 		irq_restore(f);
 		return;
 	}
 
 	/* Canonical mode: c_cc[] dispatch (Phase 7). */
 	{
-		uint8_t uc = (uint8_t)ch;
+		u_int8_t uc = (u_int8_t)ch;
 
 		/* VERASE: erase one character */
 		if (uc == tty->t_termios.c_cc[VERASE])
@@ -723,7 +723,7 @@ void tty_inject(tty_term *tty, char ch)
 		/* VEOF: flush partial line without newline (Ctrl-D) */
 		if (uc == tty->t_termios.c_cc[VEOF])
 		{
-			uint32_t f = irq_save_disable();
+			u_int32_t f = irq_save_disable();
 			for (i = 0; i < tty->t_linelen && tty->stdinSize < 512; i++)
 				tty->stdin[tty->stdinSize++] = tty->t_linebuf[i];
 			irq_restore(f);
@@ -744,7 +744,7 @@ void tty_inject(tty_term *tty, char ch)
 		/* End of line: flush line buffer to stdin ring */
 		if (ch == '\n')
 		{
-			uint32_t f = irq_save_disable();
+			u_int32_t f = irq_save_disable();
 			for (i = 0; i < tty->t_linelen && tty->stdinSize < 512; i++)
 				tty->stdin[tty->stdinSize++] = tty->t_linebuf[i];
 			if (tty->stdinSize < 512)

@@ -46,8 +46,8 @@
  */
 struct ubx_resource {
 	int		 r_type;	/* UBX_RES_IRQ / _MEMORY / _IOPORT */
-	uint32_t	 r_start;	/* physical base address or IRQ number */
-	uint32_t	 r_size;	/* byte size; 0 for IRQ entries */
+	u_int32_t	 r_start;	/* physical base address or IRQ number */
+	u_int32_t	 r_size;	/* byte size; 0 for IRQ entries */
 	volatile void	*r_vaddr;	/* kernel virtual address (MEMORY only) */
 };
 
@@ -61,10 +61,10 @@ struct ubx_device;
  * Argument order: (dev, lba, count, buf) — matches standard block-driver convention.
  */
 struct ubx_blk_ops {
-	int	(*read) (struct ubx_device *dev, uint32_t lba,
-		    uint32_t count, void *buf);
-	int	(*write)(struct ubx_device *dev, uint32_t lba,
-		    uint32_t count, void *buf);
+	int	(*read) (struct ubx_device *dev, u_int32_t lba,
+		    u_int32_t count, void *buf);
+	int	(*write)(struct ubx_device *dev, u_int32_t lba,
+		    u_int32_t count, void *buf);
 };
 
 /*
@@ -96,22 +96,22 @@ struct ubx_device {
 
 	/* Character device hooks — if non-NULL, devfs routes write/ioctl here. */
 	int		(*dev_char_write)(struct ubx_device *dev, const char *buf, int len);
-	int		(*dev_char_ioctl)(struct ubx_device *dev, uint32_t cmd, void *arg);
+	int		(*dev_char_ioctl)(struct ubx_device *dev, u_int32_t cmd, void *arg);
 	char			 dev_nameunit[32];	/* e.g. "uhci0", "ata0" */
 
 	struct ubx_resource	 dev_res[UBX_MAX_RESOURCES];
 	int			 dev_nres;
 
 	/* Bus-specific identification used during probe/match. */
-	uint16_t		 dev_vendor;
-	uint16_t		 dev_device_id;
-	uint8_t			 dev_class;
-	uint8_t			 dev_subclass;
-	uint8_t			 dev_progif;
-	uint8_t			 dev_bus;
-	uint8_t			 dev_slot;
-	uint8_t			 dev_func;
-	uint8_t			 _pad[2];
+	u_int16_t		 dev_vendor;
+	u_int16_t		 dev_device_id;
+	u_int8_t			 dev_class;
+	u_int8_t			 dev_subclass;
+	u_int8_t			 dev_progif;
+	u_int8_t			 dev_bus;
+	u_int8_t			 dev_slot;
+	u_int8_t			 dev_func;
+	u_int8_t			 _pad[2];
 
 	/* Linked list of children of this bus device. */
 	struct ubx_device	*dev_children;
@@ -139,7 +139,7 @@ void			 ubx_device_free(struct ubx_device *dev);
  * Returns the kernel virtual base address, or NULL on failure.
  */
 volatile void		*ubx_alloc_memory(struct ubx_device *dev,
-			    uint32_t phys_base, uint32_t size);
+			    u_int32_t phys_base, u_int32_t size);
 
 /*
  * Claim an I/O port range for dev.
@@ -147,7 +147,7 @@ volatile void		*ubx_alloc_memory(struct ubx_device *dev,
  * Returns 0 on success, -1 if dev_res[] is full.
  */
 int			 ubx_alloc_ioport(struct ubx_device *dev,
-			    uint32_t base, uint32_t size);
+			    u_int32_t base, u_int32_t size);
 
 /*
  * Claim an IRQ for dev.
@@ -155,7 +155,7 @@ int			 ubx_alloc_ioport(struct ubx_device *dev,
  * Records in dev->dev_res[].
  * Returns 0 on success, -1 on failure.
  */
-int			 ubx_alloc_irq(struct ubx_device *dev, uint8_t irq,
+int			 ubx_alloc_irq(struct ubx_device *dev, u_int8_t irq,
 			    void (*isr)(void));
 
 /*

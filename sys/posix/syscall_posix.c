@@ -43,7 +43,7 @@ struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
 void sys_call_posix(struct trapframe *frame)
 {
-	uint32_t code = 0x0;
+	u_int32_t code = 0x0;
 	caddr_t params;
 
 	// kprintf("SYSCALL: 0x%X.", frame->tf_eip);
@@ -80,8 +80,8 @@ void sys_call_posix(struct trapframe *frame)
 	}
 	else if ((int)systemCalls_posix[code].sc_status == SYSCALL_NOTIMP)
 	{
-		kprintf("Not Implemented Call: [%i][%s] EIP=0x%x PID=%i args=0x%x,0x%x,0x%x,0x%x\n", code, systemCalls_posix[code].sc_name, frame->tf_eip, _current->id, *((uint32_t *)frame->tf_esp + 1), *((uint32_t *)frame->tf_esp + 2),
-		        *((uint32_t *)frame->tf_esp + 3), *((uint32_t *)frame->tf_esp + 4));
+		kprintf("Not Implemented Call: [%i][%s] EIP=0x%x PID=%i args=0x%x,0x%x,0x%x,0x%x\n", code, systemCalls_posix[code].sc_name, frame->tf_eip, _current->id, *((u_int32_t *)frame->tf_esp + 1), *((u_int32_t *)frame->tf_esp + 2),
+		        *((u_int32_t *)frame->tf_esp + 3), *((u_int32_t *)frame->tf_esp + 4));
 		frame->tf_eax = ENOSYS;
 		frame->tf_edx = 0x0;
 		frame->tf_eflags |= PSL_C;
@@ -92,16 +92,16 @@ void sys_call_posix(struct trapframe *frame)
 		td->td_retval[1] = frame->tf_edx;
 
 		/* Save syscall number in tf_err for SA_RESTART in signal_check. */
-		frame->tf_err = (uint32_t)code;
+		frame->tf_err = (u_int32_t)code;
 
 		if (_current->name[0] == 't' && _current->name[1] == 'c' &&
 		    _current->name[2] == 's' && _current->name[3] == 'h')
 			kprintf("tcsh>>: [%d] %s args=0x%X,0x%X,0x%X\n", code,
 			    (code < 512 && systemCalls_posix[code].sc_name) ?
 			    systemCalls_posix[code].sc_name : "?",
-			    *((uint32_t *)frame->tf_esp + 1),
-			    *((uint32_t *)frame->tf_esp + 2),
-			    *((uint32_t *)frame->tf_esp + 3));
+			    *((u_int32_t *)frame->tf_esp + 1),
+			    *((u_int32_t *)frame->tf_esp + 2),
+			    *((u_int32_t *)frame->tf_esp + 3));
 
 
 		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
@@ -143,7 +143,7 @@ void sys_call_posix(struct trapframe *frame)
 			 */
 			frame->tf_eflags &= ~PSL_C;
 			/* Pack errno into high 16 bits of tf_err for SA_RESTART check. */
-			frame->tf_err = ((uint32_t)error << 16) | (uint32_t)code;
+			frame->tf_err = ((u_int32_t)error << 16) | (u_int32_t)code;
 			if (systemCalls_posix[code].sc_status == SYSCALL_DEBUG)
 				kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
 			break;

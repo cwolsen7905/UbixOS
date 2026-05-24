@@ -58,10 +58,10 @@
 
 int          e1000_ready      = 0;
 volatile int e1000_irq_pending = 0;
-uint8_t      e1000_mac[6];
+u_int8_t      e1000_mac[6];
 
 /* Kernel-virtual base of the 128 KB MMIO region */
-static volatile uint8_t *e1000_mmio = NULL;
+static volatile u_int8_t *e1000_mmio = NULL;
 
 /* Descriptor rings — identity-mapped pages (virtual == physical).
  * vmm_findFreePage + vmm_remapIOPage guarantees this so TDBAL/RDBAL
@@ -70,16 +70,16 @@ static struct e1000_rx_desc *rx_descs;
 static struct e1000_tx_desc *tx_descs;
 
 /* Per-descriptor packet buffers — virtual pointers */
-static uint8_t *rx_bufs[E1000_NUM_RX_DESC];
-static uint8_t *tx_bufs[E1000_NUM_TX_DESC];
+static u_int8_t *rx_bufs[E1000_NUM_RX_DESC];
+static u_int8_t *tx_bufs[E1000_NUM_TX_DESC];
 
-static uint32_t rx_tail;  /* next descriptor to check for received packet */
-static uint32_t tx_tail;  /* next free TX descriptor */
+static u_int32_t rx_tail;  /* next descriptor to check for received packet */
+static u_int32_t tx_tail;  /* next free TX descriptor */
 static struct spinLock e1000_tx_lock = SPIN_LOCK_INITIALIZER;
 
 /* Scratch buffer handed to the lwIP bridge on each RX */
-static uint8_t e1000_rx_packet[E1000_BUF_SIZE];
-static uint16_t e1000_rx_len;
+static u_int8_t e1000_rx_packet[E1000_BUF_SIZE];
+static u_int16_t e1000_rx_len;
 
 /* lwIP netif handle (defined in e1000netif.c) */
 extern struct netif e1000_netif;
@@ -88,12 +88,12 @@ extern struct netif e1000_netif;
  * Register accessors
  * --------------------------------------------------------------------- */
 
-static inline uint32_t e1000_read(uint32_t reg) {
-	return *(volatile uint32_t *)(e1000_mmio + reg);
+static inline u_int32_t e1000_read(u_int32_t reg) {
+	return *(volatile u_int32_t *)(e1000_mmio + reg);
 }
 
-static inline void e1000_write(uint32_t reg, uint32_t val) {
-	*(volatile uint32_t *)(e1000_mmio + reg) = val;
+static inline void e1000_write(u_int32_t reg, u_int32_t val) {
+	*(volatile u_int32_t *)(e1000_mmio + reg) = val;
 }
 
 /* -----------------------------------------------------------------------
@@ -107,14 +107,14 @@ static inline void e1000_write(uint32_t reg, uint32_t val) {
  * (vmm_getFreeKernelPage pre-populates its range with real RAM pages).
  * PAGE_CACHE_DISABLED is required — MMIO must never be cached.
  */
-static int e1000_map_mmio(uint32_t phys) {
-	uint32_t pages = 32; /* 128 KB / 4 KB */
-	uint32_t i;
+static int e1000_map_mmio(u_int32_t phys) {
+	u_int32_t pages = 32; /* 128 KB / 4 KB */
+	u_int32_t i;
 
 	for (i = 0; i < pages; i++)
 		vmm_remapIOPage(phys + i * 0x1000,
 		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
-	e1000_mmio = (volatile uint8_t *)phys;
+	e1000_mmio = (volatile u_int8_t *)phys;
 	return 0;
 }
 
@@ -123,7 +123,7 @@ static int e1000_map_mmio(uint32_t phys) {
  * --------------------------------------------------------------------- */
 
 static int e1000_init_rx(void) {
-	uint32_t i, phys;
+	u_int32_t i, phys;
 
 	/* Identity-map descriptor ring: virtual == physical, so RDBAL == pointer. */
 	phys = vmm_findFreePage(sysID);
@@ -136,14 +136,14 @@ static int e1000_init_rx(void) {
 	memset(rx_descs, 0, E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc));
 
 	for (i = 0; i < E1000_NUM_RX_DESC; i++) {
-		uint32_t buf_phys = vmm_findFreePage(sysID);
+		u_int32_t buf_phys = vmm_findFreePage(sysID);
 		if (!buf_phys) {
 			klog(KLOG_ERR, "e1000: cannot allocate RX buffer %u", i);
 			return -1;
 		}
 		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
-		rx_bufs[i] = (uint8_t *)buf_phys;
-		rx_descs[i].addr   = (uint64_t)buf_phys; /* physical == virtual */
+		rx_bufs[i] = (u_int8_t *)buf_phys;
+		rx_descs[i].addr   = (u_int64_t)buf_phys; /* physical == virtual */
 		rx_descs[i].status = 0;
 	}
 	rx_tail = 0;
@@ -166,7 +166,7 @@ static int e1000_init_rx(void) {
 }
 
 static int e1000_init_tx(void) {
-	uint32_t i, phys;
+	u_int32_t i, phys;
 
 	/* Identity-map descriptor ring: virtual == physical, so TDBAL == pointer. */
 	phys = vmm_findFreePage(sysID);
@@ -179,14 +179,14 @@ static int e1000_init_tx(void) {
 	memset(tx_descs, 0, E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc));
 
 	for (i = 0; i < E1000_NUM_TX_DESC; i++) {
-		uint32_t buf_phys = vmm_findFreePage(sysID);
+		u_int32_t buf_phys = vmm_findFreePage(sysID);
 		if (!buf_phys) {
 			klog(KLOG_ERR, "e1000: cannot allocate TX buffer %u", i);
 			return -1;
 		}
 		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
-		tx_bufs[i] = (uint8_t *)buf_phys;
-		tx_descs[i].addr   = (uint64_t)buf_phys; /* physical == virtual */
+		tx_bufs[i] = (u_int8_t *)buf_phys;
+		tx_descs[i].addr   = (u_int64_t)buf_phys; /* physical == virtual */
 		tx_descs[i].status = E1000_TXD_STAT_DD;
 	}
 	tx_tail = 0;
@@ -216,8 +216,8 @@ static int e1000_init_tx(void) {
  * Transmit
  * --------------------------------------------------------------------- */
 
-void e1000_send_packet(const void *data, uint16_t len) {
-	uint32_t tail;
+void e1000_send_packet(const void *data, u_int16_t len) {
+	u_int32_t tail;
 	int i;
 
 	spinLock(&e1000_tx_lock);
@@ -232,13 +232,13 @@ void e1000_send_packet(const void *data, uint16_t len) {
 	/* Wait for the descriptor to be free (DD set by hardware).
 	 * Volatile cast: QEMU writes DD via DMA; compiler cannot observe the change. */
 	for (i = 0; i < 100000; i++) {
-		if (*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)
+		if (*(volatile u_int8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)
 			break;
 		__asm__ volatile("pause");
 		if ((i & 0x3FF) == 0x3FF)
 			sched_yield();
 	}
-	if (!(*(volatile uint8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)) {
+	if (!(*(volatile u_int8_t *)&tx_descs[tail].status & E1000_TXD_STAT_DD)) {
 		klog(KLOG_ERR, "e1000: TX timeout desc[%u] TDH=%u TDT=%u",
 		    tail, e1000_read(E1000_REG_TDH), e1000_read(E1000_REG_TDT));
 		spinUnlock(&e1000_tx_lock);
@@ -272,9 +272,9 @@ void e1000_send_packet(const void *data, uint16_t len) {
 static int e1000_rx_process(void) {
 	int count = 0;
 
-	while (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD) {
-		if (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_EOP) {
-			uint16_t len = rx_descs[rx_tail].length;
+	while (*(volatile u_int8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD) {
+		if (*(volatile u_int8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_EOP) {
+			u_int16_t len = rx_descs[rx_tail].length;
 			if (len <= E1000_BUF_SIZE) {
 				memcpy(e1000_rx_packet, rx_bufs[rx_tail], len);
 				e1000_rx_len = len;
@@ -302,10 +302,10 @@ static int e1000_rx_process(void) {
  * --------------------------------------------------------------------- */
 
 void e1000_handle_irq(void) {
-	uint32_t icr = e1000_read(E1000_REG_ICR); /* reading clears ICR */
+	u_int32_t icr = e1000_read(E1000_REG_ICR); /* reading clears ICR */
 
 	if (icr & E1000_ICR_LSC) {
-		uint32_t status = e1000_read(E1000_REG_STATUS);
+		u_int32_t status = e1000_read(E1000_REG_STATUS);
 		klog(KLOG_NOTICE, "e1000: link %s", (status & 0x02) ? "up" : "down");
 	}
 	if (icr & (E1000_ICR_RXT0 | E1000_ICR_RXO)) {
@@ -326,7 +326,7 @@ void e1000_thread(void) {
 		/* Fallback poll: catch packets if the IRQ path is not firing.
 		 * Required because QEMU does not always deliver the PIC IRQ
 		 * before the descriptor DD bit is visible to the driver. */
-		if (*(volatile uint8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD)
+		if (*(volatile u_int8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD)
 			e1000_rx_process();
 		sched_yield();
 	}
@@ -337,8 +337,8 @@ void e1000_thread(void) {
  * Initialization entry point (called from pci_init / init.h)
  * --------------------------------------------------------------------- */
 
-int initE1000(uint32_t bar0_phys, uint8_t irq) {
-	uint32_t ral, rah;
+int initE1000(u_int32_t bar0_phys, u_int8_t irq) {
+	u_int32_t ral, rah;
 	int      i;
 
 	klog(KLOG_INFO, "e1000: initializing 82540EM at BAR0=0x%X IRQ=%u", bar0_phys, irq);
@@ -406,7 +406,7 @@ int initE1000(uint32_t bar0_phys, uint8_t irq) {
  * Accessors for the lwIP bridge
  * --------------------------------------------------------------------- */
 
-const uint8_t *e1000_get_rx_packet(uint16_t *out_len) {
+const u_int8_t *e1000_get_rx_packet(u_int16_t *out_len) {
 	*out_len = e1000_rx_len;
 	e1000_rx_len = 0;
 	return e1000_rx_packet;
@@ -428,8 +428,8 @@ e1000_ubx_probe(struct ubx_device *dev)
 static int
 e1000_ubx_attach(struct ubx_device *dev)
 {
-	uint32_t bar0, cmd;
-	uint8_t irq;
+	u_int32_t bar0, cmd;
+	u_int8_t irq;
 	int i, ret;
 
 	bar0 = 0;
@@ -439,7 +439,7 @@ e1000_ubx_attach(struct ubx_device *dev)
 		if (dev->dev_res[i].r_type == UBX_RES_MEMORY && bar0 == 0)
 			bar0 = dev->dev_res[i].r_start;
 		else if (dev->dev_res[i].r_type == UBX_RES_IRQ)
-			irq = (uint8_t)dev->dev_res[i].r_start;
+			irq = (u_int8_t)dev->dev_res[i].r_start;
 	}
 
 	klog(KLOG_INFO, "e1000: found at bus=%u slot=%u func=%u BAR0=0x%X IRQ=%u",

@@ -59,7 +59,7 @@ int sem_timedwait(semID_t id, const struct timespec *ts)
 	return (0);
 }
 
-err_t sem_init(sys_sem_t **sem, uint8_t count)
+int sem_init(sys_sem_t **sem, u_int8_t count)
 {
 	sys_sem_t *newSem = 0x0;
 
@@ -99,7 +99,7 @@ int sem_getvalue(semID_t id, int *val)
 	return (0);
 }
 
-err_t sem_destroy(sys_sem_t **sem)
+int sem_destroy(sys_sem_t **sem)
 {
 	if (*sem == NULL)
 		return (EINVAL);

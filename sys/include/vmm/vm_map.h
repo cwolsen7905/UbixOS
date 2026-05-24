@@ -56,8 +56,8 @@ typedef struct vm_map_entry {
 	struct rb_node  rb;         /* intrusive RB node — MUST be first */
 	uintptr_t       vm_start;   /* first byte of range (page-aligned) */
 	uintptr_t       vm_end;     /* first byte past range (page-aligned) */
-	uint32_t        vm_prot;    /* VM_PROT_* */
-	uint32_t        vm_flags;   /* VM_MAP_* */
+	u_int32_t        vm_prot;    /* VM_PROT_* */
+	u_int32_t        vm_flags;   /* VM_MAP_* */
 	void           *vm_vnode;   /* NULL for anonymous; vnode ptr for file-backed (Phase 2) */
 	off_t           vm_offset;  /* offset into vm_vnode (Phase 2) */
 } vm_map_entry_t;
@@ -65,7 +65,7 @@ typedef struct vm_map_entry {
 /* Per-process VMA tree. */
 typedef struct vm_map {
 	struct rb_root  vm_root;
-	uint32_t        vm_nentries;
+	u_int32_t        vm_nentries;
 } vm_map_t;
 
 #define VM_MAP_INIT  { RB_ROOT_INIT, 0 }
@@ -80,7 +80,7 @@ typedef struct vm_map {
  * Does not check for overlaps — caller must ensure [start,end) is free.
  */
 int vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end,
-    uint32_t prot, uint32_t flags);
+    u_int32_t prot, u_int32_t flags);
 
 /*
  * vm_map_remove — remove and free all VMAs that overlap [start, end).

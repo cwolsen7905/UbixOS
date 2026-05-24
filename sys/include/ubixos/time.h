@@ -64,6 +64,6 @@ struct timezone {
 int gettimeofday(struct timeval *tp, struct timezone *tzp);
 
 int time_init();
-uint32_t timeMake(struct timeStruct *time);
+u_int32_t timeMake(struct timeStruct *time);
 
 #endif

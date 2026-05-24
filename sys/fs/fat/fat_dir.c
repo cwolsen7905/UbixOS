@@ -40,19 +40,19 @@
 /* Small helpers                                                       */
 /* ------------------------------------------------------------------ */
 
-static uint16_t
-le16(const uint8_t *p)
+static u_int16_t
+le16(const u_int8_t *p)
 {
-	return ((uint16_t)p[0] | ((uint16_t)p[1] << 8));
+	return ((u_int16_t)p[0] | ((u_int16_t)p[1] << 8));
 }
 
 static void
-put_le32(uint8_t *p, uint32_t v)
+put_le32(u_int8_t *p, u_int32_t v)
 {
-	p[0] = (uint8_t)(v);
-	p[1] = (uint8_t)(v >> 8);
-	p[2] = (uint8_t)(v >> 16);
-	p[3] = (uint8_t)(v >> 24);
+	p[0] = (u_int8_t)(v);
+	p[1] = (u_int8_t)(v >> 8);
+	p[2] = (u_int8_t)(v >> 16);
+	p[3] = (u_int8_t)(v >> 24);
 }
 
 static char
@@ -81,14 +81,14 @@ fat_names_equal(const char *a, const char *b)
  * Compute the LFN checksum over the 11-byte SFN field.
  * (right-rotate accumulator, add next byte)
  */
-static uint8_t
-sfn_checksum(const uint8_t *sfn)
+static u_int8_t
+sfn_checksum(const u_int8_t *sfn)
 {
-	uint8_t	 sum = 0;
+	u_int8_t	 sum = 0;
 	int	 i;
 
 	for (i = 11; i != 0; i--)
-		sum = (uint8_t)(((sum & 1) ? 0x80 : 0) + (sum >> 1) + *sfn++);
+		sum = (u_int8_t)(((sum & 1) ? 0x80 : 0) + (sum >> 1) + *sfn++);
 	return (sum);
 }
 
@@ -102,10 +102,10 @@ sfn_checksum(const uint8_t *sfn)
  * them, tcsh would hash "LS" but look up "ls" and always say "not found".
  */
 static void
-sfn_to_name(const uint8_t *sfn, char *out)
+sfn_to_name(const u_int8_t *sfn, char *out)
 {
 	int	 i, len = 0;
-	uint8_t	 nt = sfn[12]; /* NT_RES: 0x08 = lc base, 0x10 = lc ext */
+	u_int8_t	 nt = sfn[12]; /* NT_RES: 0x08 = lc base, 0x10 = lc ext */
 
 	/* Base name: strip trailing spaces */
 	for (i = 7; i >= 0 && sfn[i] == ' '; i--)
@@ -153,7 +153,7 @@ is_sfn_char(char c)
  * Either way, sfn_out is filled with a valid SFN (possibly with ~1 tail).
  */
 static int
-name_to_sfn(const char *name, uint8_t *sfn_out)
+name_to_sfn(const char *name, u_int8_t *sfn_out)
 {
 	const char	*dot;
 	int		 base_len, ext_len, needs_lfn = 0;
@@ -188,7 +188,7 @@ name_to_sfn(const char *name, uint8_t *sfn_out)
 		}
 		if (c == ' ')
 			needs_lfn = 1;
-		sfn_out[out_i++] = (uint8_t)c;
+		sfn_out[out_i++] = (u_int8_t)c;
 	}
 
 	/* Fill extension (up to 3 chars) */
@@ -200,7 +200,7 @@ name_to_sfn(const char *name, uint8_t *sfn_out)
 				needs_lfn = 1;
 				c = '_';
 			}
-			sfn_out[out_i++] = (uint8_t)c;
+			sfn_out[out_i++] = (u_int8_t)c;
 		}
 	}
 
@@ -224,7 +224,7 @@ name_to_sfn(const char *name, uint8_t *sfn_out)
  * Non-ASCII and 0xFFFF padding become '?' and '\0' respectively.
  */
 static void
-lfn_extract_chars(const uint8_t *raw, char *buf)
+lfn_extract_chars(const u_int8_t *raw, char *buf)
 {
 	static const int offsets[13] = {
 		1, 3, 5, 7, 9,
@@ -234,7 +234,7 @@ lfn_extract_chars(const uint8_t *raw, char *buf)
 	int	 i;
 
 	for (i = 0; i < 13; i++) {
-		uint16_t uc = le16(raw + offsets[i]);
+		u_int16_t uc = le16(raw + offsets[i]);
 		if (uc == 0xFFFF || uc == 0x0000)
 			buf[i] = '\0';
 		else if (uc > 0x7F)
@@ -249,7 +249,7 @@ lfn_extract_chars(const uint8_t *raw, char *buf)
  * Remaining slots (after NUL or end) are filled with 0xFFFF.
  */
 static void
-lfn_put_chars(uint8_t *raw, const char *chars)
+lfn_put_chars(u_int8_t *raw, const char *chars)
 {
 	static const int offsets[13] = {
 		1, 3, 5, 7, 9,
@@ -260,17 +260,17 @@ lfn_put_chars(uint8_t *raw, const char *chars)
 	int	 done = 0;
 
 	for (i = 0; i < 13; i++) {
-		uint16_t uc;
+		u_int16_t uc;
 		if (done) {
 			uc = 0xFFFF;
 		} else if (chars[i] == '\0') {
 			uc   = 0x0000;
 			done = 1;
 		} else {
-			uc = (uint16_t)(unsigned char)chars[i];
+			uc = (u_int16_t)(unsigned char)chars[i];
 		}
-		raw[offsets[i]]     = (uint8_t)(uc);
-		raw[offsets[i] + 1] = (uint8_t)(uc >> 8);
+		raw[offsets[i]]     = (u_int8_t)(uc);
+		raw[offsets[i] + 1] = (u_int8_t)(uc >> 8);
 	}
 }
 
@@ -278,7 +278,7 @@ lfn_put_chars(uint8_t *raw, const char *chars)
 /* Iterator internals                                                  */
 /* ------------------------------------------------------------------ */
 
-static uint32_t
+static u_int32_t
 iter_sector(struct fat_fs *fs, struct fat_dir_iter *it)
 {
 	if (it->cluster == 0)
@@ -303,7 +303,7 @@ iter_advance(struct fat_fs *fs, struct fat_dir_iter *it)
 			return (-1);
 	} else {
 		if (it->sector_in_cluster >= fs->sectors_per_cluster) {
-			uint32_t next = fat_cluster_next(fs, it->cluster);
+			u_int32_t next = fat_cluster_next(fs, it->cluster);
 			if (next == FAT_CLUSTER_EOC || next < 2)
 				return (-1);
 			it->cluster		= next;
@@ -318,7 +318,7 @@ iter_advance(struct fat_fs *fs, struct fat_dir_iter *it)
 /* ------------------------------------------------------------------ */
 
 void
-fat_dir_iter_open(struct fat_fs *fs, uint32_t cluster, struct fat_dir_iter *it)
+fat_dir_iter_open(struct fat_fs *fs, u_int32_t cluster, struct fat_dir_iter *it)
 {
 	it->fs			= fs;
 	it->cluster		= cluster;
@@ -332,14 +332,14 @@ fat_dir_iter_open(struct fat_fs *fs, uint32_t cluster, struct fat_dir_iter *it)
 int
 fat_dir_iter_next(struct fat_dir_iter *it, char *name_out,
     struct fat_raw_dirent *entry_out,
-    uint32_t *entry_sector, uint16_t *entry_offset)
+    u_int32_t *entry_sector, u_int16_t *entry_offset)
 {
 	struct fat_fs	*fs = it->fs;
-	uint8_t		 buf[512];
-	uint8_t		*raw;
+	u_int8_t		 buf[512];
+	u_int8_t		*raw;
 
 	for (;;) {
-		uint32_t sec = iter_sector(fs, it);
+		u_int32_t sec = iter_sector(fs, it);
 		if (fat_sector_read(fs, sec, buf) != 0)
 			return (-1);
 
@@ -359,8 +359,8 @@ fat_dir_iter_next(struct fat_dir_iter *it, char *name_out,
 		if (raw[11] == FAT_ATTR_LFN &&
 		    (raw[26] == 0 && raw[27] == 0)) {
 			/* LFN entry */
-			uint8_t	 seq      = raw[0];
-			uint8_t	 seq_num  = seq & 0x1F;
+			u_int8_t	 seq      = raw[0];
+			u_int8_t	 seq_num  = seq & 0x1F;
 			char	 chars[13];
 
 			if (seq & 0x40) {
@@ -418,15 +418,15 @@ fat_dir_iter_next(struct fat_dir_iter *it, char *name_out,
 }
 
 int
-fat_dir_find(struct fat_fs *fs, uint32_t dir_cluster, const char *name,
+fat_dir_find(struct fat_fs *fs, u_int32_t dir_cluster, const char *name,
     struct fat_raw_dirent *out,
-    uint32_t *entry_sector, uint16_t *entry_offset)
+    u_int32_t *entry_sector, u_int16_t *entry_offset)
 {
 	struct fat_dir_iter	 it;
 	char			 ename[256];
 	struct fat_raw_dirent	 ent;
-	uint32_t		 sec;
-	uint16_t		 off;
+	u_int32_t		 sec;
+	u_int16_t		 off;
 
 	fat_dir_iter_open(fs, dir_cluster, &it);
 	while (fat_dir_iter_next(&it, ename, &ent, &sec, &off) == 0) {
@@ -441,10 +441,10 @@ fat_dir_find(struct fat_fs *fs, uint32_t dir_cluster, const char *name,
 }
 
 int
-fat_dir_update_size(struct fat_fs *fs, uint32_t entry_sector,
-    uint16_t entry_offset, uint32_t new_size)
+fat_dir_update_size(struct fat_fs *fs, u_int32_t entry_sector,
+    u_int16_t entry_offset, u_int32_t new_size)
 {
-	uint8_t	 buf[512];
+	u_int8_t	 buf[512];
 
 	if (fat_sector_read(fs, entry_sector, buf) != 0)
 		return (-1);
@@ -453,10 +453,10 @@ fat_dir_update_size(struct fat_fs *fs, uint32_t entry_sector,
 }
 
 int
-fat_dir_delete_entry(struct fat_fs *fs, uint32_t entry_sector,
-    uint16_t entry_offset)
+fat_dir_delete_entry(struct fat_fs *fs, u_int32_t entry_sector,
+    u_int16_t entry_offset)
 {
-	uint8_t	 buf[512];
+	u_int8_t	 buf[512];
 
 	if (fat_sector_read(fs, entry_sector, buf) != 0)
 		return (-1);
@@ -470,26 +470,26 @@ fat_dir_delete_entry(struct fat_fs *fs, uint32_t entry_sector,
  * marks them all 0xE5 once the 8.3 entry at (entry_sec, entry_off) is found.
  */
 int
-fat_dir_delete_with_lfn(struct fat_fs *fs, uint32_t dir_cluster,
-    uint32_t entry_sec, uint16_t entry_off)
+fat_dir_delete_with_lfn(struct fat_fs *fs, u_int32_t dir_cluster,
+    u_int32_t entry_sec, u_int16_t entry_off)
 {
 #define MAX_LFN_ENTRIES 20
 	struct fat_dir_iter	 it;
-	uint8_t			 buf[512];
+	u_int8_t			 buf[512];
 
-	struct { uint32_t sec; uint16_t off; } lfn_pos[MAX_LFN_ENTRIES];
+	struct { u_int32_t sec; u_int16_t off; } lfn_pos[MAX_LFN_ENTRIES];
 	int	 lfn_count = 0;
 
 	fat_dir_iter_open(fs, dir_cluster, &it);
 
 	for (;;) {
-		uint32_t sec = iter_sector(fs, &it);
-		uint16_t off = it.entry_offset;
+		u_int32_t sec = iter_sector(fs, &it);
+		u_int16_t off = it.entry_offset;
 
 		if (fat_sector_read(fs, sec, buf) != 0)
 			return (-1);
 
-		uint8_t first = buf[off];
+		u_int8_t first = buf[off];
 
 		if (first == 0x00)
 			break;
@@ -501,7 +501,7 @@ fat_dir_delete_with_lfn(struct fat_fs *fs, uint32_t dir_cluster,
 			continue;
 		}
 
-		uint8_t attr = buf[off + 11];
+		u_int8_t attr = buf[off + 11];
 
 		if (attr == FAT_ATTR_LFN && (buf[off + 26] == 0 && buf[off + 27] == 0)) {
 			if (buf[off] & 0x40)
@@ -546,23 +546,23 @@ fat_dir_delete_with_lfn(struct fat_fs *fs, uint32_t dir_cluster,
  * or -1 if not enough space.
  */
 static int
-find_free_slots(struct fat_fs *fs, uint32_t dir_cluster, int n_slots,
-    uint32_t *first_sec, uint16_t *first_off)
+find_free_slots(struct fat_fs *fs, u_int32_t dir_cluster, int n_slots,
+    u_int32_t *first_sec, u_int16_t *first_off)
 {
 	struct fat_dir_iter	 it;
-	uint8_t			 buf[512];
+	u_int8_t			 buf[512];
 	int			 run = 0;
-	uint32_t		 run_sec = 0;
-	uint16_t		 run_off = 0;
+	u_int32_t		 run_sec = 0;
+	u_int16_t		 run_off = 0;
 
 	fat_dir_iter_open(fs, dir_cluster, &it);
 
 	for (;;) {
-		uint32_t sec = iter_sector(fs, &it);
+		u_int32_t sec = iter_sector(fs, &it);
 		if (fat_sector_read(fs, sec, buf) != 0)
 			return (-1);
 
-		uint8_t first = buf[it.entry_offset];
+		u_int8_t first = buf[it.entry_offset];
 
 		if (first == 0x00 || first == 0xE5) {
 			if (run == 0) {
@@ -589,17 +589,17 @@ find_free_slots(struct fat_fs *fs, uint32_t dir_cluster, int n_slots,
 }
 
 int
-fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
-    const char *name, uint8_t attr, uint32_t start_cluster,
-    uint32_t *entry_sector, uint16_t *entry_offset)
+fat_dir_create_entry(struct fat_fs *fs, u_int32_t dir_cluster,
+    const char *name, u_int8_t attr, u_int32_t start_cluster,
+    u_int32_t *entry_sector, u_int16_t *entry_offset)
 {
-	uint8_t		 sfn[11];
+	u_int8_t		 sfn[11];
 	int		 is_short;
 	int		 name_len, n_lfn, n_slots;
-	uint32_t	 first_sec;
-	uint16_t	 first_off;
-	uint8_t		 buf[512];
-	uint8_t		 checksum;
+	u_int32_t	 first_sec;
+	u_int16_t	 first_off;
+	u_int8_t		 buf[512];
+	u_int8_t		 checksum;
 
 	is_short = name_to_sfn(name, sfn);
 	name_len = (int)strlen(name);
@@ -616,22 +616,22 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 			return (-1);
 		}
 		/* Walk to the last cluster of this directory chain. */
-		uint32_t last = dir_cluster;
+		u_int32_t last = dir_cluster;
 		for (;;) {
-			uint32_t next = fat_cluster_next(fs, last);
+			u_int32_t next = fat_cluster_next(fs, last);
 			if (next == FAT_CLUSTER_EOC || next < 2)
 				break;
 			last = next;
 		}
-		uint32_t new_clust = fat_cluster_alloc(fs, last);
+		u_int32_t new_clust = fat_cluster_alloc(fs, last);
 		if (new_clust < 2) {
 			kprintf("fat_dir_create_entry: disk full\n");
 			return (-1);
 		}
 		/* Zero the new cluster so entries read as 0x00 (end marker). */
-		uint32_t clba = fat_cluster_to_lba(fs, new_clust);
+		u_int32_t clba = fat_cluster_to_lba(fs, new_clust);
 		memset(buf, 0, sizeof(buf));
-		for (uint32_t s = 0; s < fs->sectors_per_cluster; s++)
+		for (u_int32_t s = 0; s < fs->sectors_per_cluster; s++)
 			fat_sector_write(fs, clba + s, buf);
 		/* Retry slot search — should now succeed. */
 		if (find_free_slots(fs, dir_cluster, n_slots,
@@ -646,8 +646,8 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 	/* Write LFN entries (in reverse order before the SFN) */
 	if (n_lfn > 0) {
 		struct fat_dir_iter	 it;
-		uint32_t		 sec = first_sec;
-		uint16_t		 off = first_off;
+		u_int32_t		 sec = first_sec;
+		u_int16_t		 off = first_off;
 
 		fat_dir_iter_open(fs, dir_cluster, &it);
 
@@ -657,11 +657,11 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 		 * LBA is wrong for multi-cluster directories where the free run
 		 * may start in a later cluster.
 		 */
-		uint32_t it_cluster = (dir_cluster == 0) ? 0 : dir_cluster;
+		u_int32_t it_cluster = (dir_cluster == 0) ? 0 : dir_cluster;
 		if (dir_cluster != 0) {
-			uint32_t wc = dir_cluster;
+			u_int32_t wc = dir_cluster;
 			while (wc >= 2 && wc < FAT_CLUSTER_BAD) {
-				uint32_t clba = fat_cluster_to_lba(fs, wc);
+				u_int32_t clba = fat_cluster_to_lba(fs, wc);
 				if (sec >= clba &&
 				    sec < clba + fs->sectors_per_cluster) {
 					it_cluster = wc;
@@ -677,7 +677,7 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 		it.entry_offset		= off;
 
 		for (int seq = n_lfn; seq >= 1; seq--) {
-			uint8_t	 entry[32];
+			u_int8_t	 entry[32];
 			char	 chars[13];
 			int	 char_start = (seq - 1) * LFN_CHARS_PER_ENTRY;
 			int	 i;
@@ -688,7 +688,7 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 				chars[i] = (idx < name_len) ? name[idx] : '\0';
 			}
 
-			entry[0]  = (uint8_t)(seq |
+			entry[0]  = (u_int8_t)(seq |
 			    (seq == n_lfn ? 0x40 : 0));
 			entry[11] = FAT_ATTR_LFN;
 			entry[12] = 0;
@@ -715,10 +715,10 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 		memset(buf + it.entry_offset, 0, 32);
 		memcpy(buf + it.entry_offset, sfn, 11);
 		buf[it.entry_offset + 11] = attr;
-		buf[it.entry_offset + 26] = (uint8_t)(start_cluster & 0xFF);
-		buf[it.entry_offset + 27] = (uint8_t)(start_cluster >> 8);
-		buf[it.entry_offset + 20] = (uint8_t)(start_cluster >> 16);
-		buf[it.entry_offset + 21] = (uint8_t)(start_cluster >> 24);
+		buf[it.entry_offset + 26] = (u_int8_t)(start_cluster & 0xFF);
+		buf[it.entry_offset + 27] = (u_int8_t)(start_cluster >> 8);
+		buf[it.entry_offset + 20] = (u_int8_t)(start_cluster >> 16);
+		buf[it.entry_offset + 21] = (u_int8_t)(start_cluster >> 24);
 		/* file_size stays 0 at creation */
 
 		if (fat_sector_write(fs, sec, buf) != 0)
@@ -736,10 +736,10 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 	memset(buf + first_off, 0, 32);
 	memcpy(buf + first_off, sfn, 11);
 	buf[first_off + 11] = attr;
-	buf[first_off + 26] = (uint8_t)(start_cluster & 0xFF);
-	buf[first_off + 27] = (uint8_t)(start_cluster >> 8);
-	buf[first_off + 20] = (uint8_t)(start_cluster >> 16);
-	buf[first_off + 21] = (uint8_t)(start_cluster >> 24);
+	buf[first_off + 26] = (u_int8_t)(start_cluster & 0xFF);
+	buf[first_off + 27] = (u_int8_t)(start_cluster >> 8);
+	buf[first_off + 20] = (u_int8_t)(start_cluster >> 16);
+	buf[first_off + 21] = (u_int8_t)(start_cluster >> 24);
 
 	if (fat_sector_write(fs, first_sec, buf) != 0)
 		return (-1);
@@ -755,15 +755,15 @@ fat_dir_create_entry(struct fat_fs *fs, uint32_t dir_cluster,
 
 int
 fat_path_resolve(struct fat_fs *fs, const char *path,
-    uint32_t *dir_cluster_out,
+    u_int32_t *dir_cluster_out,
     struct fat_raw_dirent *file_entry_out,
-    uint32_t *entry_sector, uint16_t *entry_offset)
+    u_int32_t *entry_sector, u_int16_t *entry_offset)
 {
 	char		 comp[256];
-	uint32_t	 cur_cluster;
+	u_int32_t	 cur_cluster;
 	struct fat_raw_dirent	 ent;
-	uint32_t	 sec;
-	uint16_t	 off;
+	u_int32_t	 sec;
+	u_int16_t	 off;
 	const char	*p = path;
 
 	/* Start at root */
@@ -800,9 +800,9 @@ fat_path_resolve(struct fat_fs *fs, const char *path,
 			 */
 			if (fat_dir_find(fs, cur_cluster, "..", &ent,
 			    &sec, &off) == 0) {
-				uint32_t parent = ((uint32_t)le16(
-				    (uint8_t *)&ent.clus_hi) << 16) |
-				    le16((uint8_t *)&ent.clus_lo);
+				u_int32_t parent = ((u_int32_t)le16(
+				    (u_int8_t *)&ent.clus_hi) << 16) |
+				    le16((u_int8_t *)&ent.clus_lo);
 				cur_cluster = (parent == 0 && fs->type != 32)
 				    ? 0 : parent;
 			}
@@ -822,7 +822,7 @@ fat_path_resolve(struct fat_fs *fs, const char *path,
 			/* Must be a directory to descend into */
 			if (!(ent.attr & FAT_ATTR_DIR))
 				return (-1);
-			cur_cluster = ((uint32_t)ent.clus_hi << 16) |
+			cur_cluster = ((u_int32_t)ent.clus_hi << 16) |
 			    ent.clus_lo;
 			if (cur_cluster == 0 && fs->type != 32)
 				cur_cluster = 0;
@@ -844,11 +844,11 @@ fat_path_resolve(struct fat_fs *fs, const char *path,
 
 int
 fat_path_to_dir_cluster(struct fat_fs *fs, const char *path,
-    uint32_t *cluster_out)
+    u_int32_t *cluster_out)
 {
 	struct fat_raw_dirent	 ent;
-	uint32_t		 dir_cluster, sec;
-	uint16_t		 off;
+	u_int32_t		 dir_cluster, sec;
+	u_int16_t		 off;
 	int			 ret;
 
 	/* Root directory */
@@ -859,7 +859,7 @@ fat_path_to_dir_cluster(struct fat_fs *fs, const char *path,
 
 	ret = fat_path_resolve(fs, path, &dir_cluster, &ent, &sec, &off);
 	if (ret == 0 && (ent.attr & FAT_ATTR_DIR)) {
-		*cluster_out = ((uint32_t)ent.clus_hi << 16) | ent.clus_lo;
+		*cluster_out = ((u_int32_t)ent.clus_hi << 16) | ent.clus_lo;
 		if (*cluster_out == 0 && fs->type != 32)
 			*cluster_out = 0;
 		return (0);
@@ -882,10 +882,10 @@ fat_dir_mkdir(struct fat_fs *fs, const char *path)
 {
 	char		 parent_path[256];
 	const char	*base;
-	uint32_t	 parent_cluster, new_cluster;
-	uint32_t	 entry_sec, dot_sec;
-	uint16_t	 entry_off, dot_off;
-	uint8_t		 buf[512];
+	u_int32_t	 parent_cluster, new_cluster;
+	u_int32_t	 entry_sec, dot_sec;
+	u_int16_t	 entry_off, dot_off;
+	u_int8_t		 buf[512];
 
 	/* Split path into parent and basename */
 	strncpy(parent_path, path, 255);
@@ -915,8 +915,8 @@ fat_dir_mkdir(struct fat_fs *fs, const char *path)
 
 	/* Zero out the cluster */
 	memset(buf, 0, 512);
-	uint32_t lba = fat_cluster_to_lba(fs, new_cluster);
-	for (uint32_t i = 0; i < fs->sectors_per_cluster; i++) {
+	u_int32_t lba = fat_cluster_to_lba(fs, new_cluster);
+	for (u_int32_t i = 0; i < fs->sectors_per_cluster; i++) {
 		if (fat_sector_write(fs, lba + i, buf) != 0) {
 			fat_cluster_free_chain(fs, new_cluster);
 			return (-1);
@@ -927,31 +927,31 @@ fat_dir_mkdir(struct fat_fs *fs, const char *path)
 	if (fat_sector_read(fs, lba, buf) != 0)
 		return (-1);
 
-	uint8_t dot_sfn[11];
+	u_int8_t dot_sfn[11];
 	memset(dot_sfn, ' ', 11);
 	dot_sfn[0] = '.';
 	memset(buf, 0, 32);
 	memcpy(buf, dot_sfn, 11);
 	buf[11] = FAT_ATTR_DIR;
-	buf[26] = (uint8_t)(new_cluster & 0xFF);
-	buf[27] = (uint8_t)(new_cluster >> 8);
-	buf[20] = (uint8_t)(new_cluster >> 16);
-	buf[21] = (uint8_t)(new_cluster >> 24);
+	buf[26] = (u_int8_t)(new_cluster & 0xFF);
+	buf[27] = (u_int8_t)(new_cluster >> 8);
+	buf[20] = (u_int8_t)(new_cluster >> 16);
+	buf[21] = (u_int8_t)(new_cluster >> 24);
 	dot_sec = lba;
 	dot_off = 0;
 
 	/* Write '..' entry */
-	uint8_t dotdot_sfn[11];
+	u_int8_t dotdot_sfn[11];
 	memset(dotdot_sfn, ' ', 11);
 	dotdot_sfn[0] = '.';
 	dotdot_sfn[1] = '.';
 	memset(buf + 32, 0, 32);
 	memcpy(buf + 32, dotdot_sfn, 11);
 	buf[32 + 11] = FAT_ATTR_DIR;
-	buf[32 + 26] = (uint8_t)(parent_cluster & 0xFF);
-	buf[32 + 27] = (uint8_t)(parent_cluster >> 8);
-	buf[32 + 20] = (uint8_t)(parent_cluster >> 16);
-	buf[32 + 21] = (uint8_t)(parent_cluster >> 24);
+	buf[32 + 26] = (u_int8_t)(parent_cluster & 0xFF);
+	buf[32 + 27] = (u_int8_t)(parent_cluster >> 8);
+	buf[32 + 20] = (u_int8_t)(parent_cluster >> 16);
+	buf[32 + 21] = (u_int8_t)(parent_cluster >> 24);
 
 	if (fat_sector_write(fs, lba, buf) != 0) {
 		fat_cluster_free_chain(fs, new_cluster);
@@ -973,20 +973,20 @@ int
 fat_dir_rmdir(struct fat_fs *fs, const char *path)
 {
 	struct fat_raw_dirent	 ent;
-	uint32_t		 dir_cluster, target_cluster, sec;
-	uint16_t		 off;
+	u_int32_t		 dir_cluster, target_cluster, sec;
+	u_int16_t		 off;
 	struct fat_dir_iter	 it;
 	char			 name[256];
 	struct fat_raw_dirent	 child;
-	uint32_t		 csec;
-	uint16_t		 coff;
+	u_int32_t		 csec;
+	u_int16_t		 coff;
 
 	if (fat_path_resolve(fs, path, &dir_cluster, &ent, &sec, &off) != 0)
 		return (-1);
 	if (!(ent.attr & FAT_ATTR_DIR))
 		return (-1);
 
-	target_cluster = ((uint32_t)ent.clus_hi << 16) | ent.clus_lo;
+	target_cluster = ((u_int32_t)ent.clus_hi << 16) | ent.clus_lo;
 
 	/* Verify directory is empty (only '.' and '..' allowed) */
 	fat_dir_iter_open(fs, target_cluster, &it);
@@ -1006,15 +1006,15 @@ int
 fat_dir_unlink(struct fat_fs *fs, const char *path)
 {
 	struct fat_raw_dirent	 ent;
-	uint32_t		 dir_cluster, start_cluster, sec;
-	uint16_t		 off;
+	u_int32_t		 dir_cluster, start_cluster, sec;
+	u_int16_t		 off;
 
 	if (fat_path_resolve(fs, path, &dir_cluster, &ent, &sec, &off) != 0)
 		return (-1);
 	if (ent.attr & FAT_ATTR_DIR)
 		return (-1);
 
-	start_cluster = ((uint32_t)ent.clus_hi << 16) | ent.clus_lo;
+	start_cluster = ((u_int32_t)ent.clus_hi << 16) | ent.clus_lo;
 
 	if (fat_dir_delete_with_lfn(fs, dir_cluster, sec, off) != 0)
 		return (-1);

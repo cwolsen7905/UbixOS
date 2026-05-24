@@ -48,7 +48,7 @@ asm(
   
 void biosCall(int biosInt,int eax,int ebx,int ecx,int edx,int esi,int edi,int es,int ds) {
   short segment = 0x0,offset = 0x0;
-  uInt32 tmpAddr = (uInt32)&bios16Code;
+  u_int32_t tmpAddr = (u_int32_t)&bios16Code;
   kTask_t *newProcess = 0x0;
 
   offset = tmpAddr & 0xF;  // lower 4 bits
@@ -59,13 +59,13 @@ void biosCall(int biosInt,int eax,int ebx,int ecx,int edx,int esi,int edi,int es
 
 
   newProcess->tss.back_link    = 0x0;
-  newProcess->tss.esp0         = (uInt32)kmalloc(0x2000)+0x2000;
+  newProcess->tss.esp0         = (u_int32_t)kmalloc(0x2000)+0x2000;
   newProcess->tss.ss0          = 0x10;
   newProcess->tss.esp1         = 0x0;
   newProcess->tss.ss1          = 0x0;
   newProcess->tss.esp2         = 0x0;
   newProcess->tss.ss2          = 0x0;
-  newProcess->tss.cr3          = (uInt32)_current->tss.cr3;//(uInt32)vmmCreateVirtualSpace(newProcess->id);
+  newProcess->tss.cr3          = (u_int32_t)_current->tss.cr3;//(u_int32_t)vmmCreateVirtualSpace(newProcess->id);
   newProcess->tss.eip          =  offset & 0xFFFF;
   newProcess->tss.eflags       = 2 | EFLAG_IF | EFLAG_VM;
   newProcess->tss.eax          =     eax & 0xFFFF;

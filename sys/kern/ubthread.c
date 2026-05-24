@@ -48,7 +48,7 @@ kTask_t *ubthread_self()
 	return (_current);
 }
 
-int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr)
+int ubthread_cond_init(ubthread_cond_t *cond, const u_int32_t attr)
 {
 	ubthread_cond_t ubcond = kmalloc(sizeof(struct ubthread_cond));
 	if (ubcond == NULL)
@@ -62,7 +62,7 @@ int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr)
 	return (0x0);
 }
 
-int ubthread_mutex_init(ubthread_mutex_t *mutex, const uint32_t attr)
+int ubthread_mutex_init(ubthread_mutex_t *mutex, const u_int32_t attr)
 {
 	ubthread_mutex_t ubmutex = kmalloc(sizeof(struct ubthread_mutex));
 	if (ubmutex == NULL)
@@ -92,7 +92,7 @@ int ubthread_mutex_destroy(ubthread_mutex_t *mutex)
 	return (0x0);
 }
 
-int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg, const char *name)
+int ubthread_create(kTask_t **thread, const u_int32_t *attr, void (*tproc)(void), void *arg, const char *name)
 {
 	*thread = (void *)execThread(tproc, 0x2000, arg, name);
 	return (0x0);
@@ -139,7 +139,7 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex)
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex)
 {
 	ubthread_mutex_t ubmutex = *mutex;
-	uint8_t had_pi;
+	u_int8_t had_pi;
 
 	if (ubmutex->lock != TRUE)
 		kpanic("NOT LOCKED?");
@@ -170,7 +170,7 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex)
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime)
 {
 	ubthread_cond_t ubcond = *cond;
-	uint32_t enterTime = systemVitals->sysUptime + 20;
+	u_int32_t enterTime = systemVitals->sysUptime + 20;
 
 	ubthread_mutex_unlock(mutex);
 

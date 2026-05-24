@@ -119,7 +119,7 @@ static void insertFreeDesc(struct memDescriptor *freeDesc)
 		kpanic("kmalloc: inserting descriptor with zero limit\n");
 
 	/* --- insert in address order --- */
-	if (freeKernDesc == 0x0 || (uInt32)freeDesc->baseAddr < (uInt32)freeKernDesc->baseAddr)
+	if (freeKernDesc == 0x0 || (u_int32_t)freeDesc->baseAddr < (u_int32_t)freeKernDesc->baseAddr)
 	{
 		freeDesc->prev = 0x0;
 		freeDesc->next = freeKernDesc;
@@ -131,7 +131,7 @@ static void insertFreeDesc(struct memDescriptor *freeDesc)
 	{
 		for (cur = freeKernDesc; cur->next != 0x0; cur = cur->next)
 		{
-			if ((uInt32)freeDesc->baseAddr < (uInt32)cur->next->baseAddr)
+			if ((u_int32_t)freeDesc->baseAddr < (u_int32_t)cur->next->baseAddr)
 				break;
 		}
 		freeDesc->next = cur->next;
@@ -142,7 +142,7 @@ static void insertFreeDesc(struct memDescriptor *freeDesc)
 	}
 
 	/* --- coalesce with next block if physically adjacent --- */
-	if (freeDesc->next != 0x0 && (uInt32)freeDesc->baseAddr + freeDesc->limit == (uInt32)freeDesc->next->baseAddr)
+	if (freeDesc->next != 0x0 && (u_int32_t)freeDesc->baseAddr + freeDesc->limit == (u_int32_t)freeDesc->next->baseAddr)
 	{
 		struct memDescriptor *next = freeDesc->next;
 		freeDesc->limit += next->limit;
@@ -153,7 +153,7 @@ static void insertFreeDesc(struct memDescriptor *freeDesc)
 	}
 
 	/* --- coalesce with prev block if physically adjacent --- */
-	if (freeDesc->prev != 0x0 && (uInt32)freeDesc->prev->baseAddr + freeDesc->prev->limit == (uInt32)freeDesc->baseAddr)
+	if (freeDesc->prev != 0x0 && (u_int32_t)freeDesc->prev->baseAddr + freeDesc->prev->limit == (u_int32_t)freeDesc->baseAddr)
 	{
 		struct memDescriptor *prev = freeDesc->prev;
 		prev->limit += freeDesc->limit;
@@ -173,11 +173,11 @@ static void insertFreeDesc(struct memDescriptor *freeDesc)
  any unused tail is returned to the free list so it is immediately available
  for the next allocation.
 */
-void *kmalloc(uInt32 len)
+void *kmalloc(u_int32_t len)
 {
 	struct memDescriptor *tmpDesc1 = 0x0;
 	struct memDescriptor *tmpDesc2 = 0x0;
-	uInt32 pages = 0x0;
+	u_int32_t pages = 0x0;
 
 	spinLock(&mallocSpinLock);
 
@@ -215,7 +215,7 @@ void *kmalloc(uInt32 len)
 			{
 				tmpDesc2 = getEmptyDesc();
 				assert(tmpDesc2);
-				tmpDesc2->baseAddr = (struct memDescriptor *)((uInt32)tmpDesc1->baseAddr + len);
+				tmpDesc2->baseAddr = (struct memDescriptor *)((u_int32_t)tmpDesc1->baseAddr + len);
 				tmpDesc2->limit = tmpDesc1->limit - len;
 				tmpDesc2->next = 0x0;
 				tmpDesc2->prev = 0x0;
@@ -261,11 +261,11 @@ void *kmalloc(uInt32 len)
 	usedKernDesc = tmpDesc1;
 
 	/* Return any page tail above the requested size */
-	if ((uInt32)(pages * 4096) > len)
+	if ((u_int32_t)(pages * 4096) > len)
 	{
 		tmpDesc2 = getEmptyDesc();
 		assert(tmpDesc2);
-		tmpDesc2->baseAddr = (struct memDescriptor *)((uInt32)tmpDesc1->baseAddr + len);
+		tmpDesc2->baseAddr = (struct memDescriptor *)((u_int32_t)tmpDesc1->baseAddr + len);
 		tmpDesc2->limit = (pages * 4096) - len;
 		tmpDesc2->prev = 0x0;
 		tmpDesc2->next = 0x0;
@@ -321,11 +321,11 @@ void kfree(void *baseAddr)
 	for (tmpDesc = freeKernDesc; tmpDesc != 0x0; tmpDesc = tmpDesc->next) {
 		if (tmpDesc->baseAddr == baseAddr) {
 			spinUnlock(&mallocSpinLock);
-			kpanic("kfree: double-free 0x%X\n", (uInt32)baseAddr);
+			kpanic("kfree: double-free 0x%X\n", (u_int32_t)baseAddr);
 			return;
 		}
 	}
 
 	spinUnlock(&mallocSpinLock);
-	kprintf("kfree: descriptor not found for 0x%X\n", (uInt32)baseAddr);
+	kprintf("kfree: descriptor not found for 0x%X\n", (u_int32_t)baseAddr);
 }

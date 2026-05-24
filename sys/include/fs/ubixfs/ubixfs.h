@@ -38,7 +38,7 @@
 #define UBIXFS_BLOCKSIZE_BYTES     blockSize*512
 #define UBIXFS_ALIGN(size) (size + ((((size) % (UBIXFS_BLOCKSIZE_BYTES)) == 0)? 0 : ((UBIXFS_BLOCKSIZE_BYTES) - ((size) % (UBIXFS_BLOCKSIZE_BYTES)))))
 
-#define UBIXDISKMAGIC     ((uInt32)0x45) /* The disk magic number */
+#define UBIXDISKMAGIC     ((u_int32_t)0x45) /* The disk magic number */
 #define MAXUBIXPARTITIONS 16
 #define blockSize         8
 
@@ -53,7 +53,7 @@
 struct directoryList {
     char dirName[256];
     char *dirCache;
-    uInt32 dirBlock;
+    u_int32_t dirBlock;
     struct directoryList *next;
     struct directoryList *prev;
 };
@@ -65,25 +65,25 @@ dirList_t ubixFSLoadDir(char *);
 
 //Partition Information
 struct ubixDiskLabel {
-    uInt32 magicNum;
-    uInt32 magicNum2;
-    uInt16 driveType;
-    uInt16 numPartitions;
+    u_int32_t magicNum;
+    u_int32_t magicNum2;
+    u_int16_t driveType;
+    u_int16_t numPartitions;
     struct ubixPartitions {  //the partition table
-        uInt32 pSize;            //number of sectors in partition
-        uInt32 pOffset;          //starting sector
-        uInt32 pFsSize;          //filesystem basic fragment size
-        uInt32 pBatSize;         //BAT size
-        uInt8 pFsType;          //filesystem type, see below
-        uInt8 pFrag;            //filesystem fragments per block
+        u_int32_t pSize;            //number of sectors in partition
+        u_int32_t pOffset;          //starting sector
+        u_int32_t pFsSize;          //filesystem basic fragment size
+        u_int32_t pBatSize;         //BAT size
+        u_int8_t pFsType;          //filesystem type, see below
+        u_int8_t pFrag;            //filesystem fragments per block
     } partitions[MAXUBIXPARTITIONS];
 };
 
 struct partitionInformation {
-    uInt32 size;                 //Size In Sectors
-    uInt32 startSector;          //Base Sector Of Partition
-    uInt32 blockAllocationTable; //Base Sector Of BAT
-    uInt32 rootDirectory;        //Base Sector Of Root Directory
+    u_int32_t size;                 //Size In Sectors
+    u_int32_t startSector;          //Base Sector Of Partition
+    u_int32_t blockAllocationTable; //Base Sector Of BAT
+    u_int32_t rootDirectory;        //Base Sector Of Root Directory
 };
 
 //Block Allocation Table Entry
@@ -96,37 +96,37 @@ struct blockAllocationTableEntry {
 
 //UbixFS Directory Entry
 struct directoryEntry {
-    uInt32 startCluster;   //Starting Cluster Of File
-    uInt32 size;           //Size Of File
-    uInt32 creationDate;  //Date Created
-    uInt32 lastModified;  //Date Last Modified
-    uInt32 uid;           //UID Of Owner
-    uInt32 gid;           //GID Of Owner
-    uInt16 attributes;    //Files Attributes
-    uInt16 permissions;   //Files Permissions
+    u_int32_t startCluster;   //Starting Cluster Of File
+    u_int32_t size;           //Size Of File
+    u_int32_t creationDate;  //Date Created
+    u_int32_t lastModified;  //Date Last Modified
+    u_int32_t uid;           //UID Of Owner
+    u_int32_t gid;           //GID Of Owner
+    u_int16_t attributes;    //Files Attributes
+    u_int16_t permissions;   //Files Permissions
     char fileName[256]; //File Name
 };
 
 struct bootSect {
-    uInt8 jmp[4];
-    uInt8 id[6];
-    uInt16 version;
-    uInt16 tmp;
-    uInt16 fsStart;
-    uInt16 tmp2;
-    uInt32 krnl_start;
-    uInt BytesPerSector;
-    uInt SectersPerTrack;
-    uInt TotalHeads;
-    uInt32 TotalSectors;
-    uInt8 code[479];
+    u_int8_t jmp[4];
+    u_int8_t id[6];
+    u_int16_t version;
+    u_int16_t tmp;
+    u_int16_t fsStart;
+    u_int16_t tmp2;
+    u_int32_t krnl_start;
+    u_int32_t BytesPerSector;
+    u_int32_t SectersPerTrack;
+    u_int32_t TotalHeads;
+    u_int32_t TotalSectors;
+    u_int8_t code[479];
 };
 
 struct ubixFSInfo {
     struct blockAllocationTableEntry *blockAllocationTable;
     struct cacheNode * dirCache;
-    uInt32 batEntries;
-    uInt32 rootDir;
+    u_int32_t batEntries;
+    u_int32_t rootDir;
 };
 /* ubixFSInfo */
 

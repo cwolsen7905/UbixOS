@@ -77,7 +77,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 	unsigned short ss;
 	unsigned long *stack;
 
-	kprintf("DIK: str=0x%X regs=0x%X err=0x%X v86=%d\n", (uint32_t)str, (uint32_t)regs, (uint32_t)err, _current->oInfo.v86Task);
+	kprintf("DIK: str=0x%X regs=0x%X err=0x%X v86=%d\n", (u_int32_t)str, (u_int32_t)regs, (u_int32_t)err, _current->oInfo.v86Task);
 
 	/* If this is a VM86 task, kill it gracefully instead of dumping */
 	if (_current->oInfo.v86Task)

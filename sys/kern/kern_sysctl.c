@@ -50,47 +50,47 @@ struct Trie *sysctl_headTrie = 0x0;
 static void def_ctls()
 {
 	int name[CTL_MAXNAME], name_len;
-	uint32_t page_val = 0x1000;
+	u_int32_t page_val = 0x1000;
 	int32_t usPage_val = 0x0;
 	name[0] = 6;
 	name[1] = 7;
 	name_len = 2;
-	sysctl_add(name, name_len, "pagesizes", &page_val, sizeof(uint32_t));
+	sysctl_add(name, name_len, "pagesizes", &page_val, sizeof(u_int32_t));
 
 	/* Clock Rate */
 	name[0] = 1;
 	name[1] = 12;
 	page_val = 0x3E8;
-	sysctl_add(name, name_len, "page_size", &page_val, sizeof(uInt32));
+	sysctl_add(name, name_len, "page_size", &page_val, sizeof(u_int32_t));
 
 	/* KERN: OS Release */
 	name[0] = 1;
 	name[1] = 24;
 	page_val = 101000;
-	sysctl_add(name, name_len, "kern.osreldate", &page_val, sizeof(uInt32));
+	sysctl_add(name, name_len, "kern.osreldate", &page_val, sizeof(u_int32_t));
 
 	/* KERN: User Stack */
 	name[0] = 1;
 	name[1] = 33;
 	page_val = 0xCBE8000;
-	sysctl_add(name, name_len, "page_size", &page_val, sizeof(uInt32));
+	sysctl_add(name, name_len, "page_size", &page_val, sizeof(u_int32_t));
 
 	/* KERN: ARND */
 	name[0] = 1;
 	name[1] = 37;
 	page_val = 0x1;
-	sysctl_add(name, name_len, "kern_arnd", &page_val, sizeof(uint32_t));
+	sysctl_add(name, name_len, "kern_arnd", &page_val, sizeof(u_int32_t));
 
 	/* HW: NCPU */
 	name[0] = 6;
 	name[1] = 3;
 	page_val = 0x1;
-	sysctl_add(name, name_len, "hw.ncpu", &page_val, sizeof(uint32_t));
+	sysctl_add(name, name_len, "hw.ncpu", &page_val, sizeof(u_int32_t));
 
 	name[0] = 9;
 	name[1] = 20;
 	page_val = 0x4000;
-	sysctl_add(name, name_len, "p1003_1b.pagesize", &page_val, sizeof(uint32_t));
+	sysctl_add(name, name_len, "p1003_1b.pagesize", &page_val, sizeof(u_int32_t));
 
 	/* kern.ostype — MIB 1,1 */
 	name[0] = 1;
@@ -279,8 +279,8 @@ int __sysctl(struct thread *td, struct sysctl_args *uap)
 		endTask(_current->id);
 	}
 
-	if ((uint32_t)uap->oldlenp < tmpCtl->val_len)
-		memcpy(uap->oldp, tmpCtl->value, (uInt32)uap->oldlenp);
+	if ((u_int32_t)uap->oldlenp < tmpCtl->val_len)
+		memcpy(uap->oldp, tmpCtl->value, (u_int32_t)uap->oldlenp);
 	else
 		memcpy(uap->oldp, tmpCtl->value, tmpCtl->val_len);
 
@@ -364,8 +364,8 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args)
 
       */
 
-	if ((uint32_t)args->oldlenp < tmpCtl->val_len)
-		memcpy(args->oldp, tmpCtl->value, (uInt32)args->oldlenp);
+	if ((u_int32_t)args->oldlenp < tmpCtl->val_len)
+		memcpy(args->oldp, tmpCtl->value, (u_int32_t)args->oldlenp);
 	else
 		memcpy(args->oldp, tmpCtl->value, tmpCtl->val_len);
 

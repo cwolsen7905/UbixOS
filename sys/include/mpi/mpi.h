@@ -39,7 +39,7 @@
 
 struct mpi_message {
     char data[MESSAGE_LENGTH];
-    uInt32 header;
+    u_int32_t header;
     pidType pid;
     struct mpi_message *next;
 };
@@ -58,8 +58,8 @@ typedef struct mpi_message mpi_message_t;
 
 int mpi_createMbox(char *);
 int mpi_destroyMbox(char *);
-int mpi_postMessage(char *, uInt32, mpi_message_t *);
+int mpi_postMessage(char *, u_int32_t, mpi_message_t *);
 int mpi_fetchMessage(char *, mpi_message_t *);
-int mpi_spam(uInt32, void *);
+int mpi_spam(u_int32_t, void *);
 
 #endif

@@ -28,7 +28,7 @@
  *****************************************************************************************/
 
 #include <assert.h>
-#include <fs/ubixfs/dirCache.h>
+#include <fs/ubixfs/dir_cache.h>
 #include <fs/ubixfs/ubixfs.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -39,7 +39,7 @@
 static struct spinLock dca_spinLock = SPIN_LOCK_INITIALIZER;
 
 static struct directoryEntry *
-ubixfs_findName( struct directoryEntry * dirList, uInt32 size, char * name ) {
+ubixfs_findName( struct directoryEntry * dirList, u_int32_t size, char * name ) {
   unsigned int i;
 
   if ( dirList == NULL || name == NULL )

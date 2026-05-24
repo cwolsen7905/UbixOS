@@ -82,7 +82,7 @@ int sysExit(int status);
 int sysExec(void);
 
 int sysCheckPid(int pid, int *ptr);
-int sysGetFreePage(struct thread *, uint32_t *count);
+int sysGetFreePage(struct thread *, u_int32_t *count);
 
 int sysFgetc(void);
 int sysFopen(void);
@@ -90,11 +90,11 @@ int sysFclose(void);
 int sysMkDir(void);
 int sysRmDir(void);
 
-int sysGetDrives(uInt32 *ptr);
+int sysGetDrives(u_int32_t *ptr);
 int sysGetCwd(void);
 int sysChDir(void);
-int sysGetUptime(uInt32 *ptr);
-int sysGetTime(uInt32 *ptr);
+int sysGetUptime(u_int32_t *ptr);
+int sysGetTime(u_int32_t *ptr);
 int sysStartSDE(void);
 int sysUnlink(const char *path, int *retVal);
 int sysMpiCreateMbox(void);

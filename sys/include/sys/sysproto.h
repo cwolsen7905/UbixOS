@@ -33,8 +33,6 @@
 #include <sys/fb.h>
 #include <sys/klog.h>
 
-typedef int register_t;
-
 #define PAD_(t) (sizeof(register_t) <= sizeof(t) ? 0 : sizeof(register_t) - sizeof(t))
 
 #if BYTE_ORDER == LITTLE_ENDIAN
@@ -71,9 +69,9 @@ struct sys_mpiPostMessage_args {
     char name_l_[PADL_(char *)];
     char *name;
     char name_r_[PADR_(char *)];
-    char type_l_[PADL_(uint32_t)];
-    uint32_t type;
-    char type_r_[PADR_(uint32_t)];
+    char type_l_[PADL_(u_int32_t)];
+    u_int32_t type;
+    char type_r_[PADR_(u_int32_t)];
     char msg_l_[PADL_(const void *)];
     const void *msg;
     char msg_r_[PADR_(const void *)];
@@ -84,9 +82,9 @@ struct sys_getvfscwd_args {
   char buf_l_[PADL_(char *)];
   char *buf;
   char buf_r_[PADR_(char *)];
-  char size_l_[PADL_(uint32_t)];
-  uint32_t size;
-  char size_r_[PADR_(uint32_t)];
+  char size_l_[PADL_(u_int32_t)];
+  u_int32_t size;
+  char size_r_[PADR_(u_int32_t)];
 };
 
 struct sys_pidStatus_args {
@@ -119,20 +117,20 @@ int sys_getkbd(struct thread *, struct sys_getkbd_args *);
 struct sys_shareregion_args {
     pid_t     dst_pid;
     void     *vaddr;
-    uint32_t  size;
-    uint32_t *out_vaddr;
+    u_int32_t  size;
+    u_int32_t *out_vaddr;
 };
 int sys_shareregion(struct thread *, struct sys_shareregion_args *);
 
 struct sys_klog_read_args {
     struct klog_entry *buf;        /* userspace array to fill */
     int                max_entries;
-    uint32_t           start_seq;  /* read entries with seq >= start_seq */
+    u_int32_t           start_seq;  /* read entries with seq >= start_seq */
 };
 int sys_klog_read(struct thread *, struct sys_klog_read_args *);
 
 struct sys_klog_write_args {
-    uint8_t     level;   /* KLOG_* severity */
+    u_int8_t     level;   /* KLOG_* severity */
     const char *msg;     /* NUL-terminated message string */
 };
 int sys_klog_write(struct thread *, struct sys_klog_write_args *);

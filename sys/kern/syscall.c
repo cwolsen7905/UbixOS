@@ -45,7 +45,7 @@
 
 void sys_call(struct trapframe *frame)
 {
-	uint32_t code = 0x0;
+	u_int32_t code = 0x0;
 	caddr_t params;
 
 	struct thread *td = &_current->td;
@@ -63,9 +63,9 @@ void sys_call(struct trapframe *frame)
 		die_if_kernel("Invalid System uCall", frame, frame->tf_eax);
 		kpanic("PID: %i", _current->id);
 	}
-	else if ((uint32_t)systemCalls[code].sc_status == SYSCALL_INVALID)
+	else if ((u_int32_t)systemCalls[code].sc_status == SYSCALL_INVALID)
 	{
-		kprintf("Invalid Call: [%i][0x%X]\n", code, (uint32_t)systemCalls[code].sc_name);
+		kprintf("Invalid Call: [%i][0x%X]\n", code, (u_int32_t)systemCalls[code].sc_name);
 		frame->tf_eax = -1;
 		frame->tf_edx = 0x0;
 	}
@@ -191,7 +191,7 @@ int sysCheckPid(int pid, int *ptr)
  Notes:
 
  ************************************************************************/
-int sysGetFreePage(struct thread *td, uint32_t *count)
+int sysGetFreePage(struct thread *td, u_int32_t *count)
 {
 
 	td->td_retval[0] = (int)vmm_getFreeVirtualPage(_current->id, *count, VM_THRD);
@@ -199,21 +199,21 @@ int sysGetFreePage(struct thread *td, uint32_t *count)
 	// return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
 }
 
-int sysGetDrives(uInt32 *ptr)
+int sysGetDrives(u_int32_t *ptr)
 {
 	if (ptr)
-		*ptr = 0x0; //(uInt32)devices;
+		*ptr = 0x0; //(u_int32_t)devices;
 	return (0);
 }
 
-int sysGetUptime(uInt32 *ptr)
+int sysGetUptime(u_int32_t *ptr)
 {
 	if (ptr)
 		*ptr = systemVitals->sysTicks;
 	return (0);
 }
 
-int sysGetTime(uInt32 *ptr)
+int sysGetTime(u_int32_t *ptr)
 {
 	if (ptr)
 		*ptr = systemVitals->sysUptime + systemVitals->timeStart;
@@ -264,7 +264,7 @@ int sys_sched_yield(struct thread *td, void *args)
  */
 int sys_nanosleep(struct thread *td, void *args)
 {
-	uint32_t *params = (uint32_t *)args;
+	u_int32_t *params = (u_int32_t *)args;
 	const long *rqtp = (const long *)params[0]; /* struct timespec * */
 	long *rmtp = (long *)params[1];
 
@@ -283,9 +283,9 @@ int sys_nanosleep(struct thread *td, void *args)
 	}
 
 	/* Convert requested time to PIT ticks (round up). */
-	uint32_t ticks = (uint32_t)(tv_sec * PIT_TIMER) + (uint32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) / (1000000000L / PIT_TIMER));
+	u_int32_t ticks = (u_int32_t)(tv_sec * PIT_TIMER) + (u_int32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) / (1000000000L / PIT_TIMER));
 
-	uint32_t deadline = systemVitals->sysTicks + ticks;
+	u_int32_t deadline = systemVitals->sysTicks + ticks;
 	while (!TICKS_AFTER(systemVitals->sysTicks, deadline))
 		sched_yield();
 

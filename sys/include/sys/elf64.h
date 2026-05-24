@@ -35,14 +35,14 @@
  * ELF definitions common to all 64-bit architectures.
  */
 
-typedef uint64_t Elf64_Addr;
-typedef uint16_t Elf64_Half;
-typedef uint64_t Elf64_Off;
+typedef u_int64_t Elf64_Addr;
+typedef u_int16_t Elf64_Half;
+typedef u_int64_t Elf64_Off;
 typedef int32_t Elf64_Sword;
 typedef int64_t Elf64_Sxword;
-typedef uint32_t Elf64_Word;
-typedef uint64_t Elf64_Lword;
-typedef uint64_t Elf64_Xword;
+typedef u_int32_t Elf64_Word;
+typedef u_int64_t Elf64_Lword;
+typedef u_int64_t Elf64_Xword;
 
 /*
  * Types of dynamic symbol hash table bucket and chain elements.

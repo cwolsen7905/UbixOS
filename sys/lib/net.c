@@ -34,13 +34,13 @@
 #include "lib/kprintf.h"
 
 #ifndef _IN_ADDR_T_DECLARED
-typedef uInt32 in_addr_t;
+typedef u_int32_t in_addr_t;
 #define _IN_ADDR_T_DECLARED
 #endif
 
 /*
- uInt32 htonl(uInt32 n) {
- uInt32 retVal = 0x0;
+ u_int32_t htonl(u_int32_t n) {
+ u_int32_t retVal = 0x0;
  retVal += ((n & 0xff) << 24);
  retVal += ((n & 0xff00) << 8);
  retVal += ((n & 0xff0000) >> 8);
@@ -50,8 +50,8 @@ typedef uInt32 in_addr_t;
  */
 
 /*
- uInt32 htons(uInt32 n) {
- uInt32 retVal = 0x0;
+ u_int32_t htons(u_int32_t n) {
+ u_int32_t retVal = 0x0;
  retVal = (((n & 0xff) << 8) | ((n & 0xff00) >> 8));
  return(retVal);
  }
@@ -61,7 +61,7 @@ typedef uInt32 in_addr_t;
 int inet_aton(cp, addr) const char *cp;
 struct in_addr *addr;
 {
-	uInt32 parts[4];
+	u_int32_t parts[4];
 	in_addr_t val;
 	char *c;
 	char *endptr;

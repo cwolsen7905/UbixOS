@@ -38,7 +38,7 @@
 static const struct
 {
 	char *phTypeName;
-	uInt32 id;
+	u_int32_t id;
 } g_elf_ph_type[] = {
     {"PT_NULL", 0},
     {"PT_LOAD", 1},
@@ -55,7 +55,7 @@ static const struct
 static const struct
 {
 	char *shTypeName;
-	uInt32 id;
+	u_int32_t id;
 } g_elf_sh_type[] = {
     {"SHT_NULL", 0},
     {"SHT_PROGBITS", 1},
@@ -75,7 +75,7 @@ static const struct
 static const struct
 {
 	char *relTypeName;
-	uInt32 id;
+	u_int32_t id;
 } g_elf_rel_type[] = {
     {"R_386_NONE", 0},
     {"R_386_32", 1},
@@ -101,15 +101,15 @@ static const struct
  * @param entry  Out: program entry point virtual address.
  * @return 0 on success, -1 if the file cannot be opened or is not a supported ELF type.
  */
-int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
+int elf_load_file(kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entry)
 {
 	int ret = 0;
 	int i = 0x0;
 	int x = 0x0;
 	int numsegs = 0x0;
 
-	uint32_t base_addr = 0x0;
-	uint32_t real_base_addr = 0x0;
+	u_int32_t base_addr = 0x0;
+	u_int32_t real_base_addr = 0x0;
 
 	Elf32_Ehdr *binary_header = 0x0;
 	Elf32_Phdr *program_header = 0x0;

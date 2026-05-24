@@ -42,11 +42,8 @@ struct msghdr;
 #include <fs/vfs/file.h>
 #include <fs/vfs/stat.h>
 
-#ifndef _SYS_SYSPROTO_H   /* avoid redefinition if sysproto.h was included first */
-typedef int register_t;
-
+#ifndef PAD_
 #define PAD_(t) (sizeof(register_t) <= sizeof(t) ? 0 : sizeof(register_t) - sizeof(t))
-
 #if BYTE_ORDER == LITTLE_ENDIAN
 #define PADL_(t) 0
 #define PADR_(t) PAD_(t)
@@ -54,7 +51,7 @@ typedef int register_t;
 #define PADL_(t) PAD_(t)
 #define PADR_(t) 0
 #endif
-#endif /* _SYS_SYSPROTO_H */
+#endif
 
 struct sys_exit_args
 {
@@ -154,9 +151,9 @@ struct sys_getcwd_args
 	void *buf;
 	char buf_r_[PADR_(const void *)];
 
-	char size_l_[PADL_(uint32_t)];
-	uint32_t size;
-	char size_r_[PADR_(uint32_t)];
+	char size_l_[PADL_(u_int32_t)];
+	u_int32_t size;
+	char size_r_[PADR_(u_int32_t)];
 };
 
 struct sys_setUID_args

@@ -36,17 +36,17 @@
 #include <sys/types.h>
 
 /* Little-endian reads from an unaligned byte buffer */
-static uint16_t
-le16(const uint8_t *p)
+static u_int16_t
+le16(const u_int8_t *p)
 {
-	return ((uint16_t)p[0] | ((uint16_t)p[1] << 8));
+	return ((u_int16_t)p[0] | ((u_int16_t)p[1] << 8));
 }
 
-static uint32_t
-le32(const uint8_t *p)
+static u_int32_t
+le32(const u_int8_t *p)
 {
-	return ((uint32_t)p[0] | ((uint32_t)p[1] << 8) |
-	    ((uint32_t)p[2] << 16) | ((uint32_t)p[3] << 24));
+	return ((u_int32_t)p[0] | ((u_int32_t)p[1] << 8) |
+	    ((u_int32_t)p[2] << 16) | ((u_int32_t)p[3] << 24));
 }
 
 /*
@@ -70,12 +70,12 @@ le32(const uint8_t *p)
 int
 fat_bpb_parse(struct fat_fs *fs)
 {
-	uint8_t		 buf[512];
-	uint16_t	 bytes_per_sec, rsvd_sec, root_ent_cnt;
-	uint16_t	 fat_sz16, tot_sec16;
-	uint32_t	 fat_sz32, tot_sec32, fat_sz;
-	uint32_t	 tot_sec, root_dir_sectors, data_sec;
-	uint8_t		 num_fats, sec_per_clus;
+	u_int8_t		 buf[512];
+	u_int16_t	 bytes_per_sec, rsvd_sec, root_ent_cnt;
+	u_int16_t	 fat_sz16, tot_sec16;
+	u_int32_t	 fat_sz32, tot_sec32, fat_sz;
+	u_int32_t	 tot_sec, root_dir_sectors, data_sec;
+	u_int8_t		 num_fats, sec_per_clus;
 
 	if (fs->mp->device->dev_blk_ops->read(fs->mp->device, 0, 1, buf) != 0) {
 		kprintf("fat_bpb: sector 0 read failed\n");
@@ -114,7 +114,7 @@ fat_bpb_parse(struct fat_fs *fs)
 	 * Sector counts for each region.  All values are partition-relative;
 	 * the block driver adds parOffset transparently.
 	 */
-	root_dir_sectors = ((uint32_t)root_ent_cnt * 32 + bytes_per_sec - 1) /
+	root_dir_sectors = ((u_int32_t)root_ent_cnt * 32 + bytes_per_sec - 1) /
 	    bytes_per_sec;
 
 	fs->bytes_per_sector	= bytes_per_sec;
@@ -122,7 +122,7 @@ fat_bpb_parse(struct fat_fs *fs)
 	fs->fat_begin_lba	= rsvd_sec;
 	fs->fat_sectors		= fat_sz;
 	fs->fat_copies		= num_fats;
-	fs->root_lba		= rsvd_sec + (uint32_t)num_fats * fat_sz;
+	fs->root_lba		= rsvd_sec + (u_int32_t)num_fats * fat_sz;
 	fs->root_sectors	= root_dir_sectors;
 	fs->data_lba		= fs->root_lba + root_dir_sectors;
 
@@ -162,7 +162,7 @@ fat_bpb_parse(struct fat_fs *fs)
 	 * FAT12/16 extended BPB: BS_VolLab at byte 43 (11 bytes)
 	 */
 	{
-		uint8_t vol_off = (fs->type == FAT_TYPE_32) ? 71 : 43;
+		u_int8_t vol_off = (fs->type == FAT_TYPE_32) ? 71 : 43;
 		char    label[12];
 		int     i, last;
 
@@ -195,12 +195,12 @@ fat_bpb_parse(struct fat_fs *fs)
 int
 fat_read_vol_label(struct ubx_device *dev, char *out, size_t len)
 {
-	uint8_t  buf[512];
-	uint32_t fat_sz16, fat_sz32, tot_sec16, tot_sec32, fat_sz, tot_sec;
-	uint32_t data_sec, total_clusters;
-	uint16_t root_ent_cnt, bytes_per_sec;
-	uint8_t  num_fats, sec_per_clus, fat_type;
-	uint8_t  vol_off;
+	u_int8_t  buf[512];
+	u_int32_t fat_sz16, fat_sz32, tot_sec16, tot_sec32, fat_sz, tot_sec;
+	u_int32_t data_sec, total_clusters;
+	u_int16_t root_ent_cnt, bytes_per_sec;
+	u_int8_t  num_fats, sec_per_clus, fat_type;
+	u_int8_t  vol_off;
 	char     label[12];
 	int      i, last;
 
@@ -232,10 +232,10 @@ fat_read_vol_label(struct ubx_device *dev, char *out, size_t len)
 		return (-1);
 
 	{
-		uint32_t rsvd       = le16(buf + BPB_RsvdSecCnt);
-		uint32_t root_secs  = ((uint32_t)root_ent_cnt * 32 +
+		u_int32_t rsvd       = le16(buf + BPB_RsvdSecCnt);
+		u_int32_t root_secs  = ((u_int32_t)root_ent_cnt * 32 +
 		    bytes_per_sec - 1) / bytes_per_sec;
-		uint32_t data_lba   = rsvd + (uint32_t)num_fats * fat_sz + root_secs;
+		u_int32_t data_lba   = rsvd + (u_int32_t)num_fats * fat_sz + root_secs;
 
 		if (tot_sec <= data_lba)
 			return (-1);

@@ -59,9 +59,9 @@ irq_dispatch(int irq)
 }
 
 void
-irq_register(uint8_t irq, void (*handler)(void))
+irq_register(u_int8_t irq, void (*handler)(void))
 {
-	uint16_t vec;
+	u_int16_t vec;
 
 	if (irq > 15) {
 		kprintf("irq_register: bad IRQ %d\n", irq);

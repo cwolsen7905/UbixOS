@@ -45,7 +45,7 @@
 
 static kTask_t *taskList = 0x0;
 static kTask_t *delList = 0x0;
-static uInt32 nextID = -1;
+static u_int32_t nextID = -1;
 
 kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
@@ -79,7 +79,7 @@ int sched_init() {
 }
 
 void sched() {
-  uInt32 memAddr = 0x0;
+  u_int32_t memAddr = 0x0;
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
 
@@ -117,7 +117,7 @@ void sched() {
     if (_current->oInfo.v86Task == 0x1)
       irqDisable(0x0);
     asm("cli");
-    memAddr = (uInt32) &(_current->tss);
+    memAddr = (u_int32_t) &(_current->tss);
     ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
     ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
     ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
@@ -148,7 +148,7 @@ kTask_t *schedNewTask() {
   /* HACK */
   for (i = 0; i < 3; i++) {
     fp = (void *) kmalloc(sizeof(struct file));
-    tmpTask->td.o_files[i] = (uint32_t) fp;
+    tmpTask->td.o_files[i] = (u_int32_t) fp;
     fp->f_flag = 0x4;
   }
 
@@ -205,7 +205,7 @@ kTask_t *sched_getDelTask() {
 }
 
 kTask_t *
-schedFindTask(uInt32 id) {
+schedFindTask(u_int32_t id) {
   kTask_t *tmpTask = 0x0;
 
   for (tmpTask = taskList; tmpTask; tmpTask = tmpTask->next) {

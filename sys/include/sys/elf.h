@@ -84,6 +84,6 @@ char *elfGetShType( int );
 char *elfGetPhType( int );
 char *elfGetRelType( int );
 
-int elf_load_file( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
+int elf_load_file( kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entry );
 
 #endif /* END _SYS_ELF_H */

@@ -63,20 +63,20 @@ typedef struct fileDescriptor {
     struct fileDescriptor *prev;
     struct fileDescriptor *next;
     struct vfs_mountPoint *mp;
-    uint32_t ino;
-    uint16_t status;
-    uint16_t mode;
+    u_int32_t ino;
+    u_int16_t status;
+    u_int16_t mode;
     off_t offset;
-    uint32_t size;
-    uint16_t length;
-    uint32_t start;
+    u_int32_t size;
+    u_int16_t length;
+    u_int32_t start;
     char fileName[512];
     char *buffer;
     struct cacheNode *cacheNode;
-    uint32_t perms;
+    u_int32_t perms;
     struct dmadat *dmadat;
     int dsk_meta;
-    uint32_t resid;
+    u_int32_t resid;
     struct inode inode;
     int fd_type;
     void *res;
@@ -85,7 +85,7 @@ typedef struct fileDescriptor {
 
 typedef struct userFileDescriptorStruct {
     struct fileDescriptor *fd;
-    uint32_t fdSize;
+    u_int32_t fdSize;
 } userFileDescriptor;
 
 /* Kernel-side directory handle used by vfs_opendir/readdir/closedir */
@@ -96,8 +96,8 @@ typedef struct kDIR {
 
 /* Userland-visible dirent / DIR passed through syscalls */
 struct kdirent {
-    uint32_t d_ino;
-    uint8_t  d_type;
+    u_int32_t d_ino;
+    u_int8_t  d_type;
     char     d_name[256];
 };
 #define KDT_REG 8

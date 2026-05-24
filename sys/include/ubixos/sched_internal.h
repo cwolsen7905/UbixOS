@@ -42,7 +42,7 @@ extern struct spinLock schedulerSpinLock;
 /* Phase 2: priority run queues. */
 #define SCHED_PRIORITIES 32
 extern kTask_t  *run_queue[SCHED_PRIORITIES];
-extern uint32_t  ready_mask;          /* bit N set ↔ run_queue[N] non-empty */
+extern u_int32_t  ready_mask;          /* bit N set ↔ run_queue[N] non-empty */
 
 void pid_hash_remove(kTask_t *t);
 

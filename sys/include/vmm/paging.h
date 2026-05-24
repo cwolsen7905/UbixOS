@@ -68,8 +68,8 @@
 /* When PAGE_PRESENT=0, hardware ignores all other bits; bits[31:12] hold the
  * swap slot number and PAGE_SWAPPED marks the PTE as a valid swap reference. */
 #define PAGE_SWAPPED        0x00000002
-#define PTE_SWAP_SLOT(pte)      ((uint32_t)(pte) >> 12)
-#define PTE_SWAP_ENCODE(slot)   (((uint32_t)(slot) << 12) | PAGE_SWAPPED)
+#define PTE_SWAP_SLOT(pte)      ((u_int32_t)(pte) >> 12)
+#define PTE_SWAP_ENCODE(slot)   (((u_int32_t)(slot) << 12) | PAGE_SWAPPED)
 
 #define PAGE_DEFAULT        (PAGE_PRESENT|PAGE_WRITE|PAGE_USER)
 #define KERNEL_PAGE_DEFAULT (PAGE_PRESENT|PAGE_WRITE)
@@ -80,33 +80,33 @@
 #define ctob(x)         ((x)<<PAGE_SHIFT)
 #define btoc(x)         (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
-int vmm_clearVirtualPage(uint32_t pageAddr);
+int vmm_clearVirtualPage(u_int32_t pageAddr);
 
-void *vmm_mapFromTask(pidType, void *, uint32_t);
+void *vmm_mapFromTask(pidType, void *, u_int32_t);
 void *vmm_copyVirtualSpace(pidType);
 void *vmm_getFreePage(pidType);
-void *vmm_getFreeKernelPage(pidType pid, uint16_t count);
+void *vmm_getFreeKernelPage(pidType pid, u_int16_t count);
 void *vmm_createVirtualSpace(pidType);
 void *vmm_getFreeVirtualPage(pidType, int, int);
 void *vmm_reserve_anon_range(pidType pid, int count);
 
-uint32_t vmm_getPhysicalAddr(uint32_t);
-uint32_t vmm_getRealAddr(uint32_t);
-int vmm_setPageAttributes(uint32_t, uint16_t);
-int vmm_remapPage(uint32_t, uint32_t, uint16_t, pidType, int haveLock);
-int vmm_remapIOPage(uint32_t phys, uint16_t perms, pidType pid);
+u_int32_t vmm_getPhysicalAddr(u_int32_t);
+u_int32_t vmm_getRealAddr(u_int32_t);
+int vmm_setPageAttributes(u_int32_t, u_int16_t);
+int vmm_remapPage(u_int32_t, u_int32_t, u_int16_t, pidType, int haveLock);
+int vmm_remapIOPage(u_int32_t phys, u_int16_t perms, pidType pid);
 int vmm_pagingInit();
-void *vmm_getFreeMallocPage(uint16_t count);
-//void vmm_pageFault( uint32_t, uint32_t, uint32_t );
-void vmm_pageFault(struct trapframe *, uint32_t);
+void *vmm_getFreeMallocPage(u_int16_t count);
+//void vmm_pageFault( u_int32_t, u_int32_t, u_int32_t );
+void vmm_pageFault(struct trapframe *, u_int32_t);
 void _vmm_pageFault();
 int mmap(struct thread *, struct sys_mmap_args *);
 int obreak(struct thread *, struct obreak_args *);
 int munmap(struct thread *, struct sys_munmap_args *);
 
-int vmm_cleanVirtualSpace(uint32_t);
+int vmm_cleanVirtualSpace(u_int32_t);
 void *vmm_getFreeVirtualPage(pidType pid, int count, int type);
 
-extern uint32_t *kernelPageDirectory;
+extern u_int32_t *kernelPageDirectory;
 
 #endif

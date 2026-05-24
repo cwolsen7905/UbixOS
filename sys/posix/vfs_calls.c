@@ -383,7 +383,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			{
 				int slot = vesa_text_slot;
 				vesa_text_slot = -1;
-				tty_change((uInt16)slot);
+				tty_change((u_int16_t)slot);
 				vesa_text_mode();
 				kbd_gui_mode = 0;
 			}
@@ -391,7 +391,7 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			{
 				int slot = tty_switch_slot;
 				tty_switch_slot = -1;
-				tty_change((uInt16)slot);
+				tty_change((u_int16_t)slot);
 			}
 			if (kbd_gui_mode || _current->term != tty_foreground)
 			{
@@ -557,7 +557,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		/* Phase 3.2: boost the blocked reader so it runs before CPU-bound tasks. */
 		if (p_fd->reader_pid != 0) {
-			kTask_t *reader = schedFindTask((uint32_t)p_fd->reader_pid);
+			kTask_t *reader = schedFindTask((u_int32_t)p_fd->reader_pid);
 			if (reader != NULL)
 				sched_io_wakeup(reader);
 		}
@@ -666,8 +666,8 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 {
 	struct file *fd = NULL;
 	struct kdirent kent;
-	uint8_t *buf;
-	uint32_t remaining, total, namelen, reclen;
+	u_int8_t *buf;
+	u_int32_t remaining, total, namelen, reclen;
 
 	getfd(td, &fd, args->fd);
 
@@ -677,7 +677,7 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 		return (EBADF);
 	}
 
-	buf = (uint8_t *)args->buf;
+	buf = (u_int8_t *)args->buf;
 	remaining = args->count;
 	total = 0;
 
@@ -693,10 +693,10 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 }
 		/*
 		 * linux_dirent64 layout (musl/Linux i386 ABI):
-		 *   d_ino    uint64_t  offset 0  (8 bytes)
+		 *   d_ino    u_int64_t  offset 0  (8 bytes)
 		 *   d_off    int64_t   offset 8  (8 bytes)
-		 *   d_reclen uint16_t  offset 16 (2 bytes)
-		 *   d_type   uint8_t   offset 18 (1 byte)
+		 *   d_reclen u_int16_t  offset 16 (2 bytes)
+		 *   d_type   u_int8_t   offset 18 (1 byte)
 		 *   d_name   char[]    offset 19 (variable, NUL-terminated)
 		 * Total header = 19 bytes; reclen aligned to 8.
 		 */
@@ -706,12 +706,12 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 			break;
 }
 
-		uint8_t *p = buf + total;
+		u_int8_t *p = buf + total;
 		memset(p, 0, reclen);
-		*(uint64_t *)(p + 0) = (uint64_t)kent.d_ino;       /* d_ino */
-		*(uint64_t *)(p + 8) = (uint64_t)(total + reclen); /* d_off */
-		*(uint16_t *)(p + 16) = (uint16_t)reclen;
-		*(uint8_t *)(p + 18) = kent.d_type;
+		*(u_int64_t *)(p + 0) = (u_int64_t)kent.d_ino;       /* d_ino */
+		*(u_int64_t *)(p + 8) = (u_int64_t)(total + reclen); /* d_off */
+		*(u_int16_t *)(p + 16) = (u_int16_t)reclen;
+		*(u_int8_t *)(p + 18) = kent.d_type;
 		memcpy(p + 19, kent.d_name, namelen + 1);
 
 		total += reclen;
@@ -871,7 +871,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		if (tvp != NULL && *tvp >= '0' && *tvp <= '3' && *(tvp + 1) == '\0')
 		{
 			int idx = *tvp - '0';
-			tty_term *t = tty_find((uInt16)idx);
+			tty_term *t = tty_find((u_int16_t)idx);
 			if (t == NULL)
 			{
 				fdestroy(thr, nfp, fd);

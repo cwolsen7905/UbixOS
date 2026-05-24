@@ -129,7 +129,7 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
+  newProcess->md.md_tss.cr3 = (u_int32_t) vmm_copyVirtualSpace(newProcess->id);
   memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
   vm_map_copy(&newProcess->vm_map, &_current->vm_map);
 
@@ -223,7 +223,7 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
 
   /* Create A Copy Of The VM Space For New Task */
   //MrOlsen 2018kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->md.md_tss.esp0, newProcess->md.md_tss.esp, newProcess->md.md_tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr);
-  newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
+  newProcess->md.md_tss.cr3 = (u_int32_t) vmm_copyVirtualSpace(newProcess->id);
   memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
   vm_map_copy(&newProcess->vm_map, &_current->vm_map);
 

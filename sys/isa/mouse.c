@@ -42,7 +42,7 @@ static volatile int mouse_head = 0;
 static volatile int mouse_tail = 0;
 
 /* PS/2 packet accumulator */
-static uint8_t pkt[3];
+static u_int8_t pkt[3];
 static int pkt_idx = 0;
 
 static void mouse_push(mouse_event_t *ev)
@@ -64,10 +64,10 @@ int mouse_getEvent(mouse_event_t *ev)
 	return 0;
 }
 
-static uInt8 kbdRead(void)
+static u_int8_t kbdRead(void)
 {
 	unsigned long timeout;
-	uInt8 stat, data;
+	u_int8_t stat, data;
 
 	for (timeout = 50000L; timeout != 0; timeout--)
 	{
@@ -79,13 +79,13 @@ static uInt8 kbdRead(void)
 				return data;
 		}
 	}
-	return (uInt8)-1;
+	return (u_int8_t)-1;
 }
 
-static void kbdWrite(uInt16 port, uInt8 data)
+static void kbdWrite(u_int16_t port, u_int8_t data)
 {
-	uInt32 timeout;
-	uInt8 stat;
+	u_int32_t timeout;
+	u_int8_t stat;
 
 	for (timeout = 500000L; timeout != 0; timeout--)
 	{
@@ -97,7 +97,7 @@ static void kbdWrite(uInt16 port, uInt8 data)
 		outportByte(port, data);
 }
 
-static uInt8 kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
+static u_int8_t kbdWriteRead(u_int16_t port, u_int8_t data, const char *expect)
 {
 	int retval;
 
@@ -105,7 +105,7 @@ static uInt8 kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
 	for (; *expect; expect++)
 	{
 		retval = kbdRead();
-		if ((uInt8)*expect != retval)
+		if ((u_int8_t)*expect != retval)
 			return retval;
 	}
 	return 0;
@@ -113,7 +113,7 @@ static uInt8 kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
 
 int mouseInit(void)
 {
-	uInt8 ccb;
+	u_int8_t ccb;
 
 	/* Enable the auxiliary (mouse) port */
 	kbdWrite(0x64, 0xA8);
@@ -169,7 +169,7 @@ asm(".globl mouseISR   \n"
 void mouseHandler(void)
 {
 	static int first = 1;
-	uint8_t byte = inportByte(0x60);
+	u_int8_t byte = inportByte(0x60);
 	if (first)
 	{
 		kprintf("psm0: IRQ12 firing, byte=0x%X\n", byte);

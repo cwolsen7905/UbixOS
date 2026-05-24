@@ -43,7 +43,7 @@
 int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 {
 	struct fb_info *out = args->info;
-	uint32_t paddr, end, addr, vaddr;
+	u_int32_t paddr, end, addr, vaddr;
 	pidType pid = _current->id;
 
 	if (!vesa_fb_paddr || !vesa_pitch || !vesa_width || !vesa_height || !vesa_bpp)
@@ -60,7 +60,7 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 	 * address — map it at 0x10000000 instead, which is safely in user space.
 	 */
 	paddr = vesa_fb_paddr & ~0xFFFU;
-	end = vesa_fb_paddr + (uint32_t)vesa_pitch * vesa_height;
+	end = vesa_fb_paddr + (u_int32_t)vesa_pitch * vesa_height;
 	vaddr = 0x10000000U;
 
 	for (addr = paddr; addr < end; addr += 0x1000, vaddr += 0x1000)
@@ -93,7 +93,7 @@ int sys_shareregion(struct thread *td, struct sys_shareregion_args *args)
 		return (-1);
 	}
 
-	*args->out_vaddr = (uint32_t)client_vaddr;
+	*args->out_vaddr = (u_int32_t)client_vaddr;
 	td->td_retval[0] = 0;
 	return (0);
 }

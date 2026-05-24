@@ -357,7 +357,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
       stx->stx_uid       = 0;
       stx->stx_gid       = 0;
       stx->stx_mode      = 0020620; /* S_IFCHR | 0620 */
-      stx->stx_ino       = (uint64_t)(uintptr_t)args->dirfd + 1;
+      stx->stx_ino       = (u_int64_t)(uintptr_t)args->dirfd + 1;
       stx->stx_size      = 0;
       stx->stx_blocks    = 0;
       stx->stx_dev_major = 5;
@@ -424,7 +424,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
       /* /dev files: detect device type from the devfs mount. */
       if (fd->mp != NULL && fd->mp->fs != NULL &&
           fd->mp->fs->vfsType == VFS_TYPE_DEVFS) {
-        if (fd->start == (uint32_t)(uintptr_t)-1) {
+        if (fd->start == (u_int32_t)(uintptr_t)-1) {
           /* devfs root (the /dev directory itself) */
           stx->stx_mode  = 0040755; /* S_IFDIR | 0755 */
           stx->stx_nlink = 2;
@@ -439,7 +439,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
         if ((stx->stx_mode & 0170000) == 0)
           stx->stx_mode |= 0100755;
       }
-      stx->stx_ino        = fd->ino ? fd->ino : (uint64_t)(uintptr_t)fd;
+      stx->stx_ino        = fd->ino ? fd->ino : (u_int64_t)(uintptr_t)fd;
       stx->stx_size       = fd->size;
       stx->stx_blocks     = (fd->size + 511) / 512;
       stx->stx_dev_major  = 1;

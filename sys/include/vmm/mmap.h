@@ -29,12 +29,10 @@
 #ifndef _VMM_MMAP_H
 #define _VMM_MMAP_H
 
-// @formatter:off
-typedef __uint32_t  __vm_size_t;    // MrOlsen (2016-01-15) TEMP: Put These somewhere else
-typedef __vm_size_t vm_size_t;      // vm_size_t
-// @formatter:on
+#include <sys/types.h>
 
-#define EINVAL                  22  // Invalid argument
+typedef u_int32_t __vm_size_t;
+typedef __vm_size_t vm_size_t;
 #define MAP_ALIGNED(n)          ((n) << MAP_ALIGNMENT_SHIFT)
 #define MAP_ALIGNMENT_SHIFT     24
 #define MAP_ALIGNMENT_MASK      MAP_ALIGNED(0xff)

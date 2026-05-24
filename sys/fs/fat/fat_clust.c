@@ -37,41 +37,41 @@
 /* Helpers                                                             */
 /* ------------------------------------------------------------------ */
 
-static uint16_t
-le16(const uint8_t *p)
+static u_int16_t
+le16(const u_int8_t *p)
 {
-	return ((uint16_t)p[0] | ((uint16_t)p[1] << 8));
+	return ((u_int16_t)p[0] | ((u_int16_t)p[1] << 8));
 }
 
-static uint32_t
-le32(const uint8_t *p)
+static u_int32_t
+le32(const u_int8_t *p)
 {
-	return ((uint32_t)p[0] | ((uint32_t)p[1] << 8) |
-	    ((uint32_t)p[2] << 16) | ((uint32_t)p[3] << 24));
-}
-
-static void
-put_le16(uint8_t *p, uint16_t v)
-{
-	p[0] = (uint8_t)(v);
-	p[1] = (uint8_t)(v >> 8);
+	return ((u_int32_t)p[0] | ((u_int32_t)p[1] << 8) |
+	    ((u_int32_t)p[2] << 16) | ((u_int32_t)p[3] << 24));
 }
 
 static void
-put_le32(uint8_t *p, uint32_t v)
+put_le16(u_int8_t *p, u_int16_t v)
 {
-	p[0] = (uint8_t)(v);
-	p[1] = (uint8_t)(v >> 8);
-	p[2] = (uint8_t)(v >> 16);
-	p[3] = (uint8_t)(v >> 24);
+	p[0] = (u_int8_t)(v);
+	p[1] = (u_int8_t)(v >> 8);
+}
+
+static void
+put_le32(u_int8_t *p, u_int32_t v)
+{
+	p[0] = (u_int8_t)(v);
+	p[1] = (u_int8_t)(v >> 8);
+	p[2] = (u_int8_t)(v >> 16);
+	p[3] = (u_int8_t)(v >> 24);
 }
 
 /* ------------------------------------------------------------------ */
 /* Cluster ↔ LBA                                                       */
 /* ------------------------------------------------------------------ */
 
-uint32_t
-fat_cluster_to_lba(struct fat_fs *fs, uint32_t cluster)
+u_int32_t
+fat_cluster_to_lba(struct fat_fs *fs, u_int32_t cluster)
 {
 	if (cluster < 2) {
 		kprintf("fat_cluster_to_lba: invalid cluster %u\n", cluster);
@@ -79,19 +79,19 @@ fat_cluster_to_lba(struct fat_fs *fs, uint32_t cluster)
 	}
 	/* Cast to 64-bit before multiply to avoid overflow on large FAT32 volumes. */
 	return (fs->data_lba +
-	    (uint32_t)((uint64_t)(cluster - 2) * fs->sectors_per_cluster));
+	    (u_int32_t)((u_int64_t)(cluster - 2) * fs->sectors_per_cluster));
 }
 
 /* ------------------------------------------------------------------ */
 /* FAT entry read                                                      */
 /* ------------------------------------------------------------------ */
 
-uint32_t
-fat_cluster_next(struct fat_fs *fs, uint32_t cluster)
+u_int32_t
+fat_cluster_next(struct fat_fs *fs, u_int32_t cluster)
 {
-	uint8_t		 buf[512];
-	uint32_t	 fat_offset, fat_sector, offset_in_sector;
-	uint32_t	 entry;
+	u_int8_t		 buf[512];
+	u_int32_t	 fat_offset, fat_sector, offset_in_sector;
+	u_int32_t	 entry;
 
 	switch (fs->type) {
 	case 12: {
@@ -109,11 +109,11 @@ fat_cluster_next(struct fat_fs *fs, uint32_t cluster)
 
 		if (offset_in_sector == 511) {
 			/* Entry straddles two sectors — grab second byte. */
-			uint8_t	 byte0 = buf[511];
-			uint8_t	 buf2[512];
+			u_int8_t	 byte0 = buf[511];
+			u_int8_t	 buf2[512];
 			if (fat_sector_read(fs, fat_sector + 1, buf2) != 0)
 				return (0);
-			entry = (uint32_t)byte0 | ((uint32_t)buf2[0] << 8);
+			entry = (u_int32_t)byte0 | ((u_int32_t)buf2[0] << 8);
 		} else {
 			entry = le16(buf + offset_in_sector);
 		}
@@ -160,10 +160,10 @@ fat_cluster_next(struct fat_fs *fs, uint32_t cluster)
 /* ------------------------------------------------------------------ */
 
 int
-fat_cluster_write_entry(struct fat_fs *fs, uint32_t cluster, uint32_t value)
+fat_cluster_write_entry(struct fat_fs *fs, u_int32_t cluster, u_int32_t value)
 {
-	uint8_t		 buf[512];
-	uint32_t	 fat_offset, fat_sector, offset_in_sector;
+	u_int8_t		 buf[512];
+	u_int32_t	 fat_offset, fat_sector, offset_in_sector;
 
 	switch (fs->type) {
 	case 12: {
@@ -176,29 +176,29 @@ fat_cluster_write_entry(struct fat_fs *fs, uint32_t cluster, uint32_t value)
 
 		if (offset_in_sector == 511) {
 			/* Entry straddles two sectors. */
-			uint8_t	 buf2[512];
+			u_int8_t	 buf2[512];
 			if (fat_sector_read(fs, fat_sector + 1, buf2) != 0)
 				return (-1);
 
 			if (cluster & 1) {
 				buf[511] = (buf[511] & 0x0F) |
-				    (uint8_t)((value & 0x0F) << 4);
-				buf2[0]  = (uint8_t)(value >> 4);
+				    (u_int8_t)((value & 0x0F) << 4);
+				buf2[0]  = (u_int8_t)(value >> 4);
 			} else {
-				buf[511] = (uint8_t)(value & 0xFF);
+				buf[511] = (u_int8_t)(value & 0xFF);
 				buf2[0]  = (buf2[0] & 0xF0) |
-				    (uint8_t)((value >> 8) & 0x0F);
+				    (u_int8_t)((value >> 8) & 0x0F);
 			}
 			if (fat_sector_write(fs, fat_sector, buf) != 0)
 				return (-1);
 			if (fat_sector_write(fs, fat_sector + 1, buf2) != 0)
 				return (-1);
 		} else {
-			uint16_t word = le16(buf + offset_in_sector);
+			u_int16_t word = le16(buf + offset_in_sector);
 			if (cluster & 1)
-				word = (word & 0x000F) | (uint16_t)(value << 4);
+				word = (word & 0x000F) | (u_int16_t)(value << 4);
 			else
-				word = (word & 0xF000) | (uint16_t)(value & 0x0FFF);
+				word = (word & 0xF000) | (u_int16_t)(value & 0x0FFF);
 			put_le16(buf + offset_in_sector, word);
 			if (fat_sector_write(fs, fat_sector, buf) != 0)
 				return (-1);
@@ -212,7 +212,7 @@ fat_cluster_write_entry(struct fat_fs *fs, uint32_t cluster, uint32_t value)
 		offset_in_sector = fat_offset % 512;
 		if (fat_sector_read(fs, fat_sector, buf) != 0)
 			return (-1);
-		put_le16(buf + offset_in_sector, (uint16_t)(value & 0xFFFF));
+		put_le16(buf + offset_in_sector, (u_int16_t)(value & 0xFFFF));
 		return (fat_sector_write(fs, fat_sector, buf));
 	}
 
@@ -223,8 +223,8 @@ fat_cluster_write_entry(struct fat_fs *fs, uint32_t cluster, uint32_t value)
 		if (fat_sector_read(fs, fat_sector, buf) != 0)
 			return (-1);
 		/* Preserve top 4 bits (reserved) */
-		uint32_t existing = le32(buf + offset_in_sector);
-		uint32_t updated  = (existing & 0xF0000000) | (value & 0x0FFFFFFF);
+		u_int32_t existing = le32(buf + offset_in_sector);
+		u_int32_t updated  = (existing & 0xF0000000) | (value & 0x0FFFFFFF);
 		put_le32(buf + offset_in_sector, updated);
 		return (fat_sector_write(fs, fat_sector, buf));
 	}
@@ -240,10 +240,10 @@ fat_cluster_write_entry(struct fat_fs *fs, uint32_t cluster, uint32_t value)
 /* Cluster allocation                                                  */
 /* ------------------------------------------------------------------ */
 
-uint32_t
-fat_cluster_alloc(struct fat_fs *fs, uint32_t after)
+u_int32_t
+fat_cluster_alloc(struct fat_fs *fs, u_int32_t after)
 {
-	uint32_t	 start, c, next;
+	u_int32_t	 start, c, next;
 
 	start = (fs->type == 32 && fs->free_cluster_hint >= 2)
 	    ? fs->free_cluster_hint : 2;
@@ -299,9 +299,9 @@ fat_cluster_alloc(struct fat_fs *fs, uint32_t after)
 /* ------------------------------------------------------------------ */
 
 int
-fat_cluster_free_chain(struct fat_fs *fs, uint32_t start)
+fat_cluster_free_chain(struct fat_fs *fs, u_int32_t start)
 {
-	uint32_t	 c, next;
+	u_int32_t	 c, next;
 
 	c = start;
 	while (c >= 2 && c < FAT_CLUSTER_BAD) {

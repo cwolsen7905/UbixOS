@@ -49,7 +49,7 @@
 struct netif e1000_netif;
 
 /* Declared in e1000.c — returns pointer to the last-received packet */
-extern const uint8_t *e1000_get_rx_packet(uint16_t *out_len);
+extern const u_int8_t *e1000_get_rx_packet(u_int16_t *out_len);
 
 /* -----------------------------------------------------------------------
  * low_level_init — called once by netif_add via e1000netif_init
@@ -75,8 +75,8 @@ static void low_level_init(struct netif *netif) {
 static err_t low_level_output(struct netif *netif, struct pbuf *p) {
 	/* Flatten the pbuf chain into a single linear buffer.
 	 * The e1000 supports scatter-gather but this keeps the driver simple. */
-	uint8_t tx_scratch[1518]; /* max Ethernet frame without VLAN */
-	uint16_t       total = 0;
+	u_int8_t tx_scratch[1518]; /* max Ethernet frame without VLAN */
+	u_int16_t       total = 0;
 	struct pbuf   *q;
 
 	(void)netif;
@@ -106,10 +106,10 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p) {
  * --------------------------------------------------------------------- */
 
 static struct pbuf *low_level_input(struct netif *netif) {
-	uint16_t       len;
-	const uint8_t *buf = e1000_get_rx_packet(&len);
+	u_int16_t       len;
+	const u_int8_t *buf = e1000_get_rx_packet(&len);
 	struct pbuf   *p, *q;
-	uint16_t       copied = 0;
+	u_int16_t       copied = 0;
 
 	(void)netif;
 
@@ -125,7 +125,7 @@ static struct pbuf *low_level_input(struct netif *netif) {
 	}
 
 	for (q = p; q != NULL && copied < len; q = q->next) {
-		uint16_t n = (q->len < (len - copied)) ? q->len : (len - copied);
+		u_int16_t n = (q->len < (len - copied)) ? q->len : (len - copied);
 		memcpy(q->payload, buf + copied, n);
 		copied += n;
 	}

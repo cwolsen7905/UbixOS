@@ -65,8 +65,8 @@ static void prompt(struct netconn *conn) {
 
 static void shell_main(struct netconn *conn) {
   struct netbuf *buf = 0x0;
-  uInt32 len;
-  uInt32 err = 0;
+  u_int32_t len;
+  u_int32_t err = 0;
   prompt(conn);
   while (1) {
     buf = 0x0;

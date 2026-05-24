@@ -30,15 +30,15 @@
 struct driveInfo;
 
 /* Called by the disk driver when a swap partition (type 0x82) is found. */
-void swap_register_dev(struct driveInfo *hdd, uint32_t total_pages);
+void swap_register_dev(struct driveInfo *hdd, u_int32_t total_pages);
 
 /* Returns non-zero if a swap device has been registered. */
 int swap_enabled(void);
 
-uint32_t swap_alloc_slot(void);
-void     swap_free_slot(uint32_t slot);
-int      swap_write_page(uint32_t slot, void *virt_addr);
-int      swap_read_page(uint32_t slot, void *virt_addr);
+u_int32_t swap_alloc_slot(void);
+void     swap_free_slot(u_int32_t slot);
+int      swap_write_page(u_int32_t slot, void *virt_addr);
+int      swap_read_page(u_int32_t slot, void *virt_addr);
 
 /*
  * Try to evict one user page from _current's address space.
@@ -46,6 +46,6 @@ int      swap_read_page(uint32_t slot, void *virt_addr);
  * and returns the physical address of the reclaimed page.
  * Returns 0 if no page could be evicted.
  */
-uint32_t swap_evict_page(void);
+u_int32_t swap_evict_page(void);
 
 #endif /* VMM_SWAP_H */

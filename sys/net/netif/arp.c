@@ -54,10 +54,10 @@
 PACK_STRUCT_BEGIN
 struct arp_hdr {
   PACK_STRUCT_FIELD(struct eth_hdr ethhdr);
-  PACK_STRUCT_FIELD(uInt16 hwtype);
-  PACK_STRUCT_FIELD(uInt16 proto);
-  PACK_STRUCT_FIELD(uInt16 _hwlen_protolen);
-  PACK_STRUCT_FIELD(uInt16 opcode);
+  PACK_STRUCT_FIELD(u_int16_t hwtype);
+  PACK_STRUCT_FIELD(u_int16_t proto);
+  PACK_STRUCT_FIELD(u_int16_t _hwlen_protolen);
+  PACK_STRUCT_FIELD(u_int16_t opcode);
   PACK_STRUCT_FIELD(struct eth_addr shwaddr);
   PACK_STRUCT_FIELD(struct ip_addr sipaddr);
   PACK_STRUCT_FIELD(struct eth_addr dhwaddr);
@@ -82,17 +82,17 @@ PACK_STRUCT_END
 struct arp_entry {
   struct ip_addr ipaddr;
   struct eth_addr ethaddr;
-  uInt8 ctime;
+  u_int8_t ctime;
 };
 
 static struct arp_entry arp_table[ARP_TABLE_SIZE];
-static uInt8 ctime;
+static u_int8_t ctime;
 
 /*-----------------------------------------------------------------------------------*/
 void
 arp_init(void)
 {
-  uInt8 i;
+  u_int8_t i;
   
   for(i = 0; i < ARP_TABLE_SIZE; ++i) {
     ip_addr_set(&(arp_table[i].ipaddr),
@@ -103,7 +103,7 @@ arp_init(void)
 void
 arp_tmr(void)
 {
-  uInt8 i;
+  u_int8_t i;
   
   ++ctime;
   for(i = 0; i < ARP_TABLE_SIZE; ++i) {
@@ -119,8 +119,8 @@ arp_tmr(void)
 static void
 add_arp_entry(struct ip_addr *ipaddr, struct eth_addr *ethaddr)
 {
-  uInt8 i, j, k;
-  uInt8 maxtime;
+  u_int8_t i, j, k;
+  u_int8_t maxtime;
   
   /* Walk through the ARP mapping table and try to find an entry to
      update. If none is found, the IP -> MAC address mapping is
@@ -197,7 +197,7 @@ struct pbuf *
 arp_arp_input(struct netif *netif, struct eth_addr *ethaddr, struct pbuf *p)
 {
   struct arp_hdr *hdr;
-  uInt8 i;
+  u_int8_t i;
   
   if(p->tot_len < sizeof(struct arp_hdr)) {
     kprintf("arp_arp_input: packet too short (%d/%d)\n", p->tot_len, sizeof(struct arp_hdr));
@@ -259,7 +259,7 @@ arp_arp_input(struct netif *netif, struct eth_addr *ethaddr, struct pbuf *p)
 struct eth_addr *
 arp_lookup(struct ip_addr *ipaddr)
 {
-  uInt8 i;
+  u_int8_t i;
   
   for(i = 0; i < ARP_TABLE_SIZE; ++i) {
     if(ip_addr_cmp(ipaddr, &arp_table[i].ipaddr)) {
@@ -274,7 +274,7 @@ arp_query(struct netif *netif, struct eth_addr *ethaddr, struct ip_addr *ipaddr)
 {
   struct arp_hdr *hdr;
   struct pbuf *p;
-  uInt8 i;
+  u_int8_t i;
 
   p = pbuf_alloc(PBUF_LINK, sizeof(struct arp_hdr), PBUF_RAM);
   if(p == NULL) {

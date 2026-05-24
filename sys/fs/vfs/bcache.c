@@ -42,7 +42,7 @@
  * the first access to each FAT/directory sector.
  */
 static volatile int		_bcache_lock;
-static uint8_t			_prefetch_buf[BCACHE_PREFETCH_SECS * BCACHE_SEC_BYTES];
+static u_int8_t			_prefetch_buf[BCACHE_PREFETCH_SECS * BCACHE_SEC_BYTES];
 
 static void
 bcache_acquire(void)
@@ -63,10 +63,10 @@ bcache_release(void)
 
 struct bcache_slot {
 	struct ubx_device	*dev;
-	uint32_t		 lba;
-	uint8_t			 valid;
-	uint8_t			 ref;		/* clock second-chance bit */
-	uint8_t			 data[BCACHE_SEC_BYTES];
+	u_int32_t		 lba;
+	u_int8_t			 valid;
+	u_int8_t			 ref;		/* clock second-chance bit */
+	u_int8_t			 data[BCACHE_SEC_BYTES];
 };
 
 static struct bcache_slot	_slots[BCACHE_SLOTS];
@@ -77,7 +77,7 @@ static int			_clock_hand;
 /* ------------------------------------------------------------------ */
 
 static int
-slot_find(struct ubx_device *dev, uint32_t lba)
+slot_find(struct ubx_device *dev, u_int32_t lba)
 {
 	int	i;
 
@@ -128,7 +128,7 @@ bcache_init(void)
 }
 
 int
-bcache_read(struct ubx_device *dev, uint32_t lba, void *buf)
+bcache_read(struct ubx_device *dev, u_int32_t lba, void *buf)
 {
 	int	 idx;
 
@@ -172,7 +172,7 @@ bcache_read(struct ubx_device *dev, uint32_t lba, void *buf)
 }
 
 int
-bcache_write(struct ubx_device *dev, uint32_t lba, const void *buf)
+bcache_write(struct ubx_device *dev, u_int32_t lba, const void *buf)
 {
 	int	idx;
 	int	r;

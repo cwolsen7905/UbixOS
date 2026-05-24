@@ -57,10 +57,10 @@ struct hid_kbd_softc
 /* -----------------------------------------------------------------------
  * HID Usage Page 0x07 keycode → ASCII/KEY_* translation
  * --------------------------------------------------------------------- */
-static uint32_t hid_to_key(uint8_t hid, int shifted)
+static u_int32_t hid_to_key(u_int8_t hid, int shifted)
 {
 	if (hid >= 0x04 && hid <= 0x1D)
-		return ((uint32_t)(shifted ? 'A' : 'a') + (hid - 0x04));
+		return ((u_int32_t)(shifted ? 'A' : 'a') + (hid - 0x04));
 
 	switch (hid)
 	{
@@ -168,12 +168,12 @@ static uint32_t hid_to_key(uint8_t hid, int shifted)
 /* -----------------------------------------------------------------------
  * Interrupt callback — runs in ISR context; no kmalloc, no blocking
  * --------------------------------------------------------------------- */
-static void hid_kbd_callback(void *arg, uint8_t *data, int len)
+static void hid_kbd_callback(void *arg, u_int8_t *data, int len)
 {
 	struct hid_kbd_softc *sc = (struct hid_kbd_softc *)arg;
 	struct hid_kbd_report *cur, *last;
 	int shifted, ctrl, alt, i, j, found;
-	uint32_t kc;
+	u_int32_t kc;
 
 	if (len < 3)
 		return;
@@ -229,7 +229,7 @@ static void hid_kbd_callback(void *arg, uint8_t *data, int len)
 	/* Modifier transitions: emit KEY_L* events so GUI apps see Ctrl/Alt/Shift
 	 * as first-class key events (mirrors the PS/2 atkbd treatment). */
 	{
-		uint8_t changed = cur->modifier ^ last->modifier;
+		u_int8_t changed = cur->modifier ^ last->modifier;
 		if (changed & (HID_MOD_LCTRL | HID_MOD_RCTRL)) {
 			kbd_ring_push(KEY_LCTRL,
 			    (cur->modifier & (HID_MOD_LCTRL | HID_MOD_RCTRL)) ? 1 : 0);

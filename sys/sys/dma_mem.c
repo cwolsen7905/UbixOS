@@ -41,9 +41,9 @@
  * Returns 0 on success, -1 on failure.
  */
 int
-dma_alloc(uint32_t size, uint32_t align, struct dma_buf *buf)
+dma_alloc(u_int32_t size, u_int32_t align, struct dma_buf *buf)
 {
-	uint32_t phys;
+	u_int32_t phys;
 
 	(void)align;
 
@@ -75,7 +75,7 @@ dma_free(struct dma_buf *buf)
 		return;
 
 	freePage(buf->db_paddr);
-	vmm_unmapPage((uint32_t)buf->db_vaddr, VMM_KEEP);
+	vmm_unmapPage((u_int32_t)buf->db_vaddr, VMM_KEEP);
 
 	buf->db_vaddr = NULL;
 	buf->db_paddr = 0;

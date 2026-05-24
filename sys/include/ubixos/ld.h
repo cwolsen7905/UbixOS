@@ -33,6 +33,6 @@
 
 #define LD_START 0xAAA00000 //0x1000000
 
-uInt32 ldEnable(const char *interp, uInt32 pid);
+u_int32_t ldEnable(const char *interp, u_int32_t pid);
 
 #endif /* END _UBIXOS_LD_H */

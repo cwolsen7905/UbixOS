@@ -46,10 +46,10 @@ struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Phase 2: 32 per-priority run queues + bitmask (Windows ReadySummary trick). */
 kTask_t  *run_queue[SCHED_PRIORITIES];
-uint32_t  ready_mask = 0;
+u_int32_t  ready_mask = 0;
 
 static kTask_t *delList = 0x0;
-static uint32_t nextID = 1;
+static u_int32_t nextID = 1;
 
 /* Phase 1.5 — 256-bucket PID hash for O(1) schedFindTask. */
 #define SCHED_HASH_BUCKETS 256
@@ -107,10 +107,10 @@ kTask_t *schedNewTask()
 
 	memset(tmpTask, 0x0, sizeof(kTask_t));
 
-	tmpTask->kernelStack = (uint32_t *)kmalloc(8192);
+	tmpTask->kernelStack = (u_int32_t *)kmalloc(8192);
 	if (tmpTask->kernelStack == 0x0)
 		kpanic("Error: schedNewTask() - kmalloc failed allocating kernel stack\n");
-	tmpTask->md.md_tss.esp0 = (uint32_t)tmpTask->kernelStack + 8192;
+	tmpTask->md.md_tss.esp0 = (u_int32_t)tmpTask->kernelStack + 8192;
 	tmpTask->md.md_tss.ss0 = 0x10;
 
 	tmpTask->usedMath = 0x0;
@@ -266,7 +266,7 @@ kTask_t *sched_getDelTask()
 	return (tmpTask);
 }
 
-kTask_t *schedFindTask(uint32_t id)
+kTask_t *schedFindTask(u_int32_t id)
 {
 	kTask_t *t = pid_hash[id & (SCHED_HASH_BUCKETS - 1)];
 	for (; t; t = t->hash_next)
@@ -393,7 +393,7 @@ void wake_up(struct wait_queue **q)
 
 void sched_ready(kTask_t *t)
 {
-	uint32_t flags;
+	u_int32_t flags;
 	if (t == NULL)
 		return;
 	save_flags(flags);
@@ -409,7 +409,7 @@ void sched_ready(kTask_t *t)
 
 void sched_dead(kTask_t *t)
 {
-	uint32_t flags;
+	u_int32_t flags;
 	if (t == NULL)
 		return;
 	save_flags(flags);
@@ -423,7 +423,7 @@ void sched_dead(kTask_t *t)
 
 void sched_sleep(kTask_t *t, tState s)
 {
-	uint32_t flags;
+	u_int32_t flags;
 	if (t == NULL)
 		return;
 	save_flags(flags);
@@ -452,7 +452,7 @@ void sched_wakeup(kTask_t *t)
 void
 sched_zombie(kTask_t *t)
 {
-	uint32_t flags;
+	u_int32_t flags;
 	if (t == NULL)
 		return;
 	save_flags(flags);
@@ -466,7 +466,7 @@ sched_zombie(kTask_t *t)
 
 void sched_stop(kTask_t *t, int sig)
 {
-	uint32_t flags;
+	u_int32_t flags;
 	if (t == NULL)
 		return;
 	save_flags(flags);
@@ -498,9 +498,9 @@ void sched_stop(kTask_t *t, int sig)
  * in-place for RUNNING or sleeping tasks (not in any queue).
  */
 void
-sched_pi_boost(kTask_t *t, uint8_t pri)
+sched_pi_boost(kTask_t *t, u_int8_t pri)
 {
-	uint32_t flags;
+	u_int32_t flags;
 
 	if (t == NULL || pri <= t->priority)
 		return;
@@ -528,7 +528,7 @@ sched_pi_boost(kTask_t *t, uint8_t pri)
 void
 sched_pi_restore(kTask_t *t)
 {
-	uint32_t flags;
+	u_int32_t flags;
 
 	if (t == NULL || t->priority <= t->base_priority)
 		return;
@@ -551,8 +551,8 @@ sched_pi_restore(kTask_t *t)
 void
 sched_io_wakeup(kTask_t *t)
 {
-	uint32_t flags;
-	uint8_t  boosted;
+	u_int32_t flags;
+	u_int8_t  boosted;
 
 	if (t == NULL)
 		return;
@@ -560,7 +560,7 @@ sched_io_wakeup(kTask_t *t)
 	cli();
 	spinLock(&schedulerSpinLock);
 
-	boosted = (uint8_t)(t->base_priority + 4);
+	boosted = (u_int8_t)(t->base_priority + 4);
 	if (boosted > 23)
 		boosted = 23;
 

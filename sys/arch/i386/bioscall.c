@@ -46,7 +46,7 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
    * GetModeInfo sub-routine spins waiting for this byte to become 0.
    * Clear it before every BIOS call so the BIOS doesn't loop forever.
    */
-  *(volatile uint8_t *)0xC01A4 = 0x0;
+  *(volatile u_int8_t *)0xC01A4 = 0x0;
 
   /*
    * Build a per-call 7-byte 16-bit stub at physical 0x600 (free conventional
@@ -58,9 +58,9 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
    *   EB FD    — JMP -3        (loop back to HLT)
    */
   {
-    volatile uint8_t *stub = (volatile uint8_t *)0x600;
+    volatile u_int8_t *stub = (volatile u_int8_t *)0x600;
     stub[0] = 0xCD;
-    stub[1] = (uint8_t)(biosInt & 0xFF);
+    stub[1] = (u_int8_t)(biosInt & 0xFF);
     stub[2] = 0xCD;
     stub[3] = 0x69;
     stub[4] = 0xF4;
@@ -72,13 +72,13 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
   assert(newProcess);
 
   newProcess->md.md_tss.back_link = 0x0;
-  newProcess->md.md_tss.esp0 = (uint32_t) vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4);
+  newProcess->md.md_tss.esp0 = (u_int32_t) vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4);
   newProcess->md.md_tss.ss0 = 0x10;
   newProcess->md.md_tss.esp1 = 0x0;
   newProcess->md.md_tss.ss1 = 0x0;
   newProcess->md.md_tss.esp2 = 0x0;
   newProcess->md.md_tss.ss2 = 0x0;
-  newProcess->md.md_tss.cr3 = (uint32_t)kernelPageDirectory;
+  newProcess->md.md_tss.cr3 = (u_int32_t)kernelPageDirectory;
   newProcess->md.md_tss.eip = 0x0000;        /* offset within stub paragraph */
   newProcess->md.md_tss.eflags = 2 | EFLAG_IF | EFLAG_VM;
   newProcess->md.md_tss.eax = eax & 0xFFFF;

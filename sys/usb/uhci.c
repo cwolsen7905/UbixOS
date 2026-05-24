@@ -64,22 +64,22 @@ static struct uhci_softc uhci_sc;
 /* -----------------------------------------------------------------------
  * Register accessors
  * --------------------------------------------------------------------- */
-static inline uint16_t uhci_rd16(struct uhci_softc *sc, uint16_t reg)
+static inline u_int16_t uhci_rd16(struct uhci_softc *sc, u_int16_t reg)
 {
 	return (inportWord(sc->sc_iobase + reg));
 }
 
-static inline void uhci_wr16(struct uhci_softc *sc, uint16_t reg, uint16_t val)
+static inline void uhci_wr16(struct uhci_softc *sc, u_int16_t reg, u_int16_t val)
 {
 	outportWord(sc->sc_iobase + reg, val);
 }
 
-static inline uint32_t uhci_rd32(struct uhci_softc *sc, uint16_t reg)
+static inline u_int32_t uhci_rd32(struct uhci_softc *sc, u_int16_t reg)
 {
 	return (inportDWord(sc->sc_iobase + reg));
 }
 
-static inline void uhci_wr32(struct uhci_softc *sc, uint16_t reg, uint32_t val)
+static inline void uhci_wr32(struct uhci_softc *sc, u_int16_t reg, u_int32_t val)
 {
 	outportDWord(sc->sc_iobase + reg, val);
 }
@@ -156,7 +156,7 @@ asm(".globl uhci_isr_trampoline   \n"
 void uhci_isr_handler(void)
 {
 	struct uhci_softc *sc = &uhci_sc;
-	uint16_t sts;
+	u_int16_t sts;
 
 	/* Must read and clear status before any other work to prevent re-fire. */
 	sts = uhci_rd16(sc, UHCI_USBSTS);
@@ -166,7 +166,7 @@ void uhci_isr_handler(void)
 		int i;
 		for (i = 0; i < UHCI_INTR_SLOTS; i++) {
 			struct uhci_intr_slot *slot = &sc->sc_intr[i];
-			uint32_t actlen_raw;
+			u_int32_t actlen_raw;
 			int actual;
 
 			if (!slot->is_used)
@@ -180,7 +180,7 @@ void uhci_isr_handler(void)
 				actlen_raw = (slot->is_td->td_status >> 16) & 0x7FFu;
 				actual = (actlen_raw == 0x7FFu) ? 0 : (int)(actlen_raw + 1);
 				slot->is_cb(slot->is_arg,
-				    (uint8_t *)slot->is_buf.db_vaddr, actual);
+				    (u_int8_t *)slot->is_buf.db_vaddr, actual);
 			}
 
 			/* Re-arm: toggle DATA, mark active again */
@@ -192,7 +192,7 @@ void uhci_isr_handler(void)
 			slot->is_td->td_link   = UHCI_PTR_T;
 			slot->is_td->td_status = UHCI_TD_ACTIVE | UHCI_TD_IOC |
 			    UHCI_TD_ERRCNT(3) | UHCI_TD_SPD;
-			slot->is_qh->qh_elt = (uint32_t)slot->is_td;
+			slot->is_qh->qh_elt = (u_int32_t)slot->is_td;
 		}
 	}
 
@@ -207,12 +207,12 @@ void uhci_isr_handler(void)
 void uhci_root_port_init(struct uhci_softc *sc)
 {
 	int port, i;
-	uint16_t portsc;
-	uint16_t portsc_regs[2] = {UHCI_PORTSC1, UHCI_PORTSC2};
+	u_int16_t portsc;
+	u_int16_t portsc_regs[2] = {UHCI_PORTSC1, UHCI_PORTSC2};
 
 	for (port = 0; port < 2; port++)
 	{
-		uint16_t reg = portsc_regs[port];
+		u_int16_t reg = portsc_regs[port];
 
 		portsc = uhci_rd16(sc, reg);
 		if (!(portsc & UHCI_PORTSC_CCS))
@@ -262,13 +262,13 @@ void uhci_root_port_init(struct uhci_softc *sc)
  * polls until complete, then reclaims TDs.
  * direction: 0=host-to-device (OUT data), 1=device-to-host (IN data).
  * --------------------------------------------------------------------- */
-int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8_t *setup_pkt, void *data, uint16_t datalen, int direction)
+int uhci_control_transfer(struct uhci_softc *sc, u_int8_t addr, u_int8_t ep, u_int8_t *setup_pkt, void *data, u_int16_t datalen, int direction)
 {
 	struct uhci_td *setup_td, *data_td, *status_td, *td;
 	struct uhci_qh *qh;
 	struct dma_buf setup_buf, data_buf;
-	uint32_t qh_phys, setup_phys, data_phys, status_phys;
-	uint8_t toggle;
+	u_int32_t qh_phys, setup_phys, data_phys, status_phys;
+	u_int8_t toggle;
 	int i, timeout;
 
 	/* Allocate DMA buffers for SETUP packet (8 bytes) and data stage */
@@ -301,7 +301,7 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
 		dma_free(&data_buf);
 		return (-1);
 	}
-	setup_phys = (uint32_t)setup_td; /* physical == virtual on UbixOS */
+	setup_phys = (u_int32_t)setup_td; /* physical == virtual on UbixOS */
 	setup_td->td_status = UHCI_TD_ACTIVE | UHCI_TD_ERRCNT(3);
 	setup_td->td_token = UHCI_TOKEN(8, 0, ep, addr, UHCI_PID_SETUP);
 	setup_td->td_buffer = setup_buf.db_paddr;
@@ -322,7 +322,7 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
 		data_td->td_buffer = data_phys;
 		toggle ^= 1;
 
-		setup_td->td_link = (uint32_t)data_td; /* phys == virt */
+		setup_td->td_link = (u_int32_t)data_td; /* phys == virt */
 	}
 
 	status_td = uhci_alloc_td(sc);
@@ -340,9 +340,9 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
 	status_td->td_link = UHCI_PTR_T;
 
 	if (data_td != NULL)
-		data_td->td_link = (uint32_t)status_td;
+		data_td->td_link = (u_int32_t)status_td;
 	else
-		setup_td->td_link = (uint32_t)status_td;
+		setup_td->td_link = (u_int32_t)status_td;
 
 	/* Allocate a QH for this transfer and wire it in */
 	sc->sc_qh_used = UHCI_CTRL_BASE; /* preserve skeleton + intr slot QHs */
@@ -353,9 +353,9 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
 		dma_free(&data_buf);
 		return (-1);
 	}
-	qh->qh_elt = (uint32_t)setup_td;
+	qh->qh_elt = (u_int32_t)setup_td;
 	qh->qh_link = sc->sc_ctl_qh->qh_link; /* insert before bulk QH */
-	sc->sc_ctl_qh->qh_link = (uint32_t)qh | UHCI_PTR_QH;
+	sc->sc_ctl_qh->qh_link = (u_int32_t)qh | UHCI_PTR_QH;
 
 	/* Poll for completion (max 500 ms) */
 	timeout = 500;
@@ -400,16 +400,16 @@ int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8
  * within the TD slab and the sc_xfer_buf page.  Eliminates per-transfer
  * dma_alloc/free overhead.
  * --------------------------------------------------------------------- */
-int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *data, uint32_t datalen, int direction, uint8_t *toggle)
+int uhci_bulk_transfer(struct uhci_softc *sc, u_int8_t addr, u_int8_t ep, void *data, u_int32_t datalen, int direction, u_int8_t *toggle)
 {
 	struct uhci_td *td, *first_td, *prev_td;
 	struct uhci_qh *qh;
-	uint8_t *p = (uint8_t *)data;
-	uint32_t transferred = 0;
+	u_int8_t *p = (u_int8_t *)data;
+	u_int32_t transferred = 0;
 
 	while (transferred < datalen) {
-		uint32_t seg   = datalen - transferred;
-		uint32_t pkt_offset, chunk;
+		u_int32_t seg   = datalen - transferred;
+		u_int32_t pkt_offset, chunk;
 		int timeout;
 
 		if (seg > UHCI_BULK_CHUNK)
@@ -440,7 +440,7 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
 			*toggle ^= 1;
 
 			if (prev_td != NULL)
-				prev_td->td_link = (uint32_t)td;
+				prev_td->td_link = (u_int32_t)td;
 			else
 				first_td = td;
 			prev_td    = td;
@@ -451,9 +451,9 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
 		qh = uhci_alloc_qh(sc);
 		if (qh == NULL)
 			return (-1);
-		qh->qh_elt  = (uint32_t)first_td;
+		qh->qh_elt  = (u_int32_t)first_td;
 		qh->qh_link = sc->sc_bulk_qh->qh_link;
-		sc->sc_bulk_qh->qh_link = (uint32_t)qh | UHCI_PTR_QH;
+		sc->sc_bulk_qh->qh_link = (u_int32_t)qh | UHCI_PTR_QH;
 
 		/*
 		 * Poll for completion.  Break when the last TD clears ACTIVE
@@ -472,7 +472,7 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
 				if (!(prev_td->td_status & UHCI_TD_ACTIVE))
 					break;
 				for (i = UHCI_CTRL_BASE; i < sc->sc_td_used; i++) {
-					uint32_t s = sc->sc_td_pool[i].td_status;
+					u_int32_t s = sc->sc_td_pool[i].td_status;
 					if (!(s & UHCI_TD_ACTIVE) &&
 					    (s & UHCI_TD_ERR_MASK)) {
 						any_error = 1;
@@ -527,9 +527,9 @@ int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *da
  * 1024 frame entries, marks TD active.  ISR re-arms on each completion.
  * --------------------------------------------------------------------- */
 struct uhci_qh *
-uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr, uint8_t ep,
-    uint16_t maxpkt, uint32_t interval_ms, void (*callback)(void *arg,
-    uint8_t *data, int len), void *arg)
+uhci_schedule_intr(struct uhci_softc *sc, u_int8_t addr, u_int8_t ep,
+    u_int16_t maxpkt, u_int32_t interval_ms, void (*callback)(void *arg,
+    u_int8_t *data, int len), void *arg)
 {
 	struct uhci_intr_slot *slot;
 	struct uhci_qh *qh;
@@ -565,14 +565,14 @@ uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr, uint8_t ep,
 	td->td_buffer = slot->is_buf.db_paddr;
 	td->td_link   = UHCI_PTR_T;
 
-	qh->qh_elt    = (uint32_t)td;
+	qh->qh_elt    = (u_int32_t)td;
 	/* Link new QH → whatever the frame list currently points to */
 	qh->qh_link   = sc->sc_fl[0];
 	qh->qh_softc  = slot;
 
 	/* Insert before existing head in all frame entries */
 	for (i = 0; i < UHCI_FRAMELIST_COUNT; i++)
-		sc->sc_fl[i] = (uint32_t)qh | UHCI_PTR_QH;
+		sc->sc_fl[i] = (u_int32_t)qh | UHCI_PTR_QH;
 
 	slot->is_qh      = qh;
 	slot->is_td      = td;
@@ -606,7 +606,7 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 {
 	struct uhci_softc *sc = &uhci_sc;
 	struct ubx_resource *res;
-	uint32_t i;
+	u_int32_t i;
 
 	kprintf("uhci: attaching (vendor=0x%X dev=0x%X)\n", dev->dev_vendor, dev->dev_device_id);
 
@@ -614,13 +614,13 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 	sc->sc_dev = dev;
 
 	/* Extract I/O BAR and IRQ from device resources */
-	for (i = 0; i < (uint32_t)dev->dev_nres; i++)
+	for (i = 0; i < (u_int32_t)dev->dev_nres; i++)
 	{
 		res = &dev->dev_res[i];
 		if (res->r_type == UBX_RES_IOPORT && sc->sc_iobase == 0)
-			sc->sc_iobase = (uint16_t)res->r_start;
+			sc->sc_iobase = (u_int16_t)res->r_start;
 		else if (res->r_type == UBX_RES_IRQ && sc->sc_irq == 0)
-			sc->sc_irq = (uint8_t)res->r_start;
+			sc->sc_irq = (u_int8_t)res->r_start;
 	}
 
 	if (sc->sc_iobase == 0)
@@ -633,7 +633,7 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 
 	/* Ensure PCI I/O Space Enable (bit 0) and Bus Master (bit 2) are set. */
 	{
-		uInt32 cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
+		u_int32_t cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
 		pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04,
 		    cmd | 0x05, 2);
 	}
@@ -665,7 +665,7 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 		kprintf("uhci: frame list alloc failed\n");
 		return (-1);
 	}
-	sc->sc_fl = (uint32_t *)sc->sc_fl_buf.db_vaddr;
+	sc->sc_fl = (u_int32_t *)sc->sc_fl_buf.db_vaddr;
 	for (i = 0; i < UHCI_FRAMELIST_COUNT; i++)
 		sc->sc_fl[i] = UHCI_PTR_T;
 
@@ -706,12 +706,12 @@ static int uhci_ubx_attach(struct ubx_device *dev)
 	sc->sc_bulk_qh = uhci_alloc_qh(sc);
 
 	sc->sc_bulk_qh->qh_link = UHCI_PTR_T;
-	sc->sc_ctl_qh->qh_link = (uint32_t)sc->sc_bulk_qh | UHCI_PTR_QH;
-	sc->sc_int_qh->qh_link = (uint32_t)sc->sc_ctl_qh | UHCI_PTR_QH;
+	sc->sc_ctl_qh->qh_link = (u_int32_t)sc->sc_bulk_qh | UHCI_PTR_QH;
+	sc->sc_int_qh->qh_link = (u_int32_t)sc->sc_ctl_qh | UHCI_PTR_QH;
 
 	/* Point every frame list entry at the interrupt QH */
 	for (i = 0; i < UHCI_FRAMELIST_COUNT; i++)
-		sc->sc_fl[i] = (uint32_t)sc->sc_int_qh | UHCI_PTR_QH;
+		sc->sc_fl[i] = (u_int32_t)sc->sc_int_qh | UHCI_PTR_QH;
 
 	/* --- Program hardware --- */
 	uhci_wr32(sc, UHCI_FRBASEADD, sc->sc_fl_buf.db_paddr);

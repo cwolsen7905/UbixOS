@@ -89,9 +89,9 @@ int time_init()
 	return (0x0);
 }
 
-uint32_t timeMake(struct timeStruct *time)
+u_int32_t timeMake(struct timeStruct *time)
 {
-	uint32_t res;
+	u_int32_t res;
 	int year;
 
 	year = (time->year + 100) - 70;
@@ -115,7 +115,7 @@ uint32_t timeMake(struct timeStruct *time)
 
 int gettimeofday(struct timeval *tp, struct timezone *tzp)
 {
-	uint32_t ticks = systemVitals->sysTicks;
+	u_int32_t ticks = systemVitals->sysTicks;
 
 	/*
 	 * Return elapsed-since-boot time.  timeStart holds the wall-clock

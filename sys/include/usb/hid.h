@@ -33,9 +33,9 @@
 
 /* 8-byte HID boot-protocol keyboard report */
 struct hid_kbd_report {
-	uint8_t modifier;   /* bit 0=LCtrl 1=LShift 2=LAlt 3=LMeta 4=RCtrl 5=RShift 6=RAlt 7=RMeta */
-	uint8_t reserved;
-	uint8_t keycode[6]; /* up to 6 simultaneous keys; 0 = no key */
+	u_int8_t modifier;   /* bit 0=LCtrl 1=LShift 2=LAlt 3=LMeta 4=RCtrl 5=RShift 6=RAlt 7=RMeta */
+	u_int8_t reserved;
+	u_int8_t keycode[6]; /* up to 6 simultaneous keys; 0 = no key */
 } __attribute__((packed));
 
 #define HID_MOD_LCTRL  0x01
