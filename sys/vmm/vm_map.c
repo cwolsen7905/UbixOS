@@ -38,10 +38,12 @@ static int vma_cmp(const struct rb_node *a, const struct rb_node *b)
 	const vm_map_entry_t *ea = (const vm_map_entry_t *)a;
 	const vm_map_entry_t *eb = (const vm_map_entry_t *)b;
 
-	if (ea->vm_start < eb->vm_start) {
+	if (ea->vm_start < eb->vm_start)
+	{
 		return (-1);
 	}
-	if (ea->vm_start > eb->vm_start) {
+	if (ea->vm_start > eb->vm_start)
+	{
 		return (1);
 	}
 	return (0);
@@ -55,10 +57,12 @@ static int vma_cmp_key(const struct rb_node *n, uintptr_t addr)
 {
 	const vm_map_entry_t *e = (const vm_map_entry_t *)n;
 
-	if (addr < e->vm_start) {
+	if (addr < e->vm_start)
+	{
 		return (1);
 	}
-	if (addr >= e->vm_end) {
+	if (addr >= e->vm_end)
+	{
 		return (-1);
 	}
 	return (0);
@@ -72,7 +76,8 @@ int vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end, u_int32_t prot,
 {
 	vm_map_entry_t *e = kmalloc(sizeof *e);
 
-	if (e == NULL) {
+	if (e == NULL)
+	{
 		return (-1);
 	}
 
@@ -98,7 +103,8 @@ void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 		struct rb_node *next = rb_next(n);
 
 		/* No overlap — entries are sorted; once we pass end we're done. */
-		if (e->vm_start >= end) {
+		if (e->vm_start >= end)
+		{
 			break;
 		}
 
@@ -185,7 +191,8 @@ int vm_map_copy(vm_map_t *dst, const vm_map_t *src)
 		const vm_map_entry_t *se = (const vm_map_entry_t *)n;
 		vm_map_entry_t *de = kmalloc(sizeof *de);
 
-		if (de == NULL) {
+		if (de == NULL)
+		{
 			return (-1);
 		}
 

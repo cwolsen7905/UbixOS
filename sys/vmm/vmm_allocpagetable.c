@@ -9,7 +9,8 @@ int vmm_allocPageTable(u_int32_t pd_i, pidType pid)
 	u_int32_t *page_directory = (u_int32_t *)PD_BASE_ADDR;
 	u_int32_t *page_table = 0x0;
 
-	if ((pd_i >= PD_ENTRIES) || ((page_directory[pd_i] & PAGE_PRESENT) == PAGE_PRESENT)) {
+	if ((pd_i >= PD_ENTRIES) || ((page_directory[pd_i] & PAGE_PRESENT) == PAGE_PRESENT))
+	{
 		return (-1);
 	}
 
@@ -18,15 +19,21 @@ int vmm_allocPageTable(u_int32_t pd_i, pidType pid)
 
 	/* Map Page Table Page Into Page Directory */
 	if ((pd_i >= PD_INDEX(VMM_USER_START)) && (pd_i <= PD_INDEX(VMM_USER_END)))
+	{
 		page_directory[pd_i] = (u_int32_t)vmm_findFreePage(pid) | PAGE_DEFAULT;
+	}
 	else
+	{
 		page_directory[pd_i] = (u_int32_t)vmm_findFreePage(pid) | KERNEL_PAGE_DEFAULT;
+	}
 
 	/* Map Page Table To Virtual Space So We Can Easily Manipulate It */
 	page_table = (u_int32_t *)(PT_BASE_ADDR + (PD_INDEX(PT_BASE_ADDR) * PAGE_SIZE));
 
 	if ((page_table[pd_i] & PAGE_PRESENT) == PAGE_PRESENT)
+	{
 		kpanic("How did this happen");
+	}
 
 	page_table[pd_i] = page_directory[pd_i];
 

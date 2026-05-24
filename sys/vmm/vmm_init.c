@@ -43,10 +43,14 @@ struct spinLock pdSpinLock = SPIN_LOCK_INITIALIZER;
 int vmm_init()
 {
 	if (vmm_memMapInit() != 0x0)
+	{
 		K_PANIC("Couldn't Initialize vmm_memMap");
+	}
 
 	if (vmm_pagingInit() != 0x0)
+	{
 		K_PANIC("Couldn't Initialize paging system");
+	}
 
 	return (0x0);
 }

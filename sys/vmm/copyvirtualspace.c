@@ -64,7 +64,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 	parent_page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Allocate A New Page For The New Page Directory */
-	if ((new_page_directory = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0) {
+	if ((new_page_directory = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+	{
 		kpanic("Error: new_page_directory == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 	}
 
@@ -78,7 +79,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 	new_page_directory[0] = parent_page_directory[0];
 	// XXX: We Dont Need This - new_page_directory[1] = parent_page_directory[1];
 
-	if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0) {
+	if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+	{
 		kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 	}
 
@@ -117,7 +119,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 				}
 			}
 		}
-		else {
+		else
+		{
 			new_page_table[x] = parent_page_table[x];
 		}
 	}
@@ -129,7 +132,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 	new_page_table = 0x0;
 
 	/* Map The Kernel Memory Region Entry 770 Address 0xC0800000 */
-	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
+	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
+	{
 		new_page_directory[x] = parent_page_directory[x];
 	}
 
@@ -142,7 +146,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 			parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
 
 			/* Allocate A New Page Table */
-			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0) {
+			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+			{
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 			}
 
@@ -154,7 +159,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 				{
 
 					/* Alloc A New Page For This Stack Page */
-					if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0) {
+					if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+					{
 						kpanic("Error: new_stack_page == NULL, File: %s, Line: %i\n",
 						       __FILE__,
 						       __LINE__);
@@ -168,8 +174,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 					memcpy(new_stack_page, parent_stack_page, PAGE_SIZE);
 
 					/* Insert New Stack Into Page Table */
-					new_page_table[i] =
-					    (vmm_getPhysicalAddr((u_int32_t)new_stack_page) | PAGE_DEFAULT | PAGE_STACK);
+					new_page_table[i] = (vmm_getPhysicalAddr((u_int32_t)new_stack_page) |
+					                     PAGE_DEFAULT | PAGE_STACK);
 
 					/* Unmap From Kernel Space */
 					vmm_unmapPage((u_int32_t)new_stack_page, 1);
@@ -201,7 +207,8 @@ void *vmm_copyVirtualSpace(pidType pid)
 			parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
 
 			/* Allocate A New Page Table */
-			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0) {
+			if ((new_page_table = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0)
+			{
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 			}
 
@@ -220,7 +227,9 @@ void *vmm_copyVirtualSpace(pidType pid)
 					{
 
 						/* Alloc A New Page For This Stack Page */
-						if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) == 0x0) {
+						if ((new_stack_page = (u_int32_t *)vmm_getFreeKernelPage(pid, 1)) ==
+						    0x0)
+						{
 							kpanic("Error: new_stack_page == NULL, File: %s, Line: %i\n",
 							       __FILE__,
 							       __LINE__);
@@ -329,11 +338,13 @@ void *vmm_copyVirtualSpace(pidType pid)
 	 * PT_BASE_ADDR (indices 768-769) are below VMM_KERN_START (770) so
 	 * they are NOT overwritten by this loop.
 	 */
-	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
+	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
+	{
 		new_page_directory[x] = parent_page_directory[x];
 	}
 
-	for (x = 0; x < PD_ENTRIES; x++) {
+	for (x = 0; x < PD_ENTRIES; x++)
+	{
 		new_page_table[x] = new_page_directory[x];
 	}
 

@@ -52,7 +52,9 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	kTask_t *dst;
 
 	if (vaddr == 0 || size == 0)
+	{
 		return 0;
+	}
 
 	n = (u_int32_t)((size + PAGE_SIZE - 1) / PAGE_SIZE);
 	if (n > 4096)
@@ -63,7 +65,9 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 
 	phys = kmalloc(n * sizeof(u_int32_t));
 	if (!phys)
+	{
 		return 0;
+	}
 
 	/* Collect physical addresses from current (src) address space */
 	for (i = 0; i < n; i++)
@@ -118,7 +122,9 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		}
 		dst_pd = (u_int32_t *)VMM_CHILD_PD_WINDOW;
 		for (x = kstart; x <= kend; x++)
+		{
 			dst_pd[x] = src_pd[x];
+		}
 		vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
 	}
 
@@ -139,7 +145,9 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 			kprintf("vmm_share_region: vmm_remapPage failed at page %u\n", i);
 			/* Unmap pages already installed before the failure */
 			for (u_int32_t j = 0; j < i; j++)
+			{
 				vmm_unmapPage(dst_vaddr + j * PAGE_SIZE, 1);
+			}
 			asm volatile("movl %0, %%cr3" ::"r"(old_cr3));
 			asm volatile("sti");
 			dst->oInfo.vmStart -= n * PAGE_SIZE;

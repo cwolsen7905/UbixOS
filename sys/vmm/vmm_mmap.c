@@ -85,7 +85,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 				return (EINVAL);
 			}
 			for (x = 0; x < (int)round_page(uap->len); x += 0x1000)
+			{
 				vmm_unmapPage(map_base + x, VMM_FREE);
+			}
 			vm_map_insert(&_current->vm_map, map_base, map_end, VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
 			td->td_retval[0] = (u_int32_t)uap->addr;
 			return (0x0);
@@ -130,7 +132,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 				                  PAGE_DEFAULT,
 				                  _current->id,
 				                  0) == 0x0)
+				{
 					K_PANIC("Remap Page Failed");
+				}
 			}
 			// kprintf("(tmp1: 0x%X)", tmp);
 			tmp = uap->addr;

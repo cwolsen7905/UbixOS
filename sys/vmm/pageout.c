@@ -68,16 +68,19 @@ void pageout_daemon(void)
 	for (;;)
 	{
 		/* Sleep until the next polling interval. */
-		while (systemVitals->sysTicks - last_tick < PAGEOUT_INTERVAL_TICKS) {
+		while (systemVitals->sysTicks - last_tick < PAGEOUT_INTERVAL_TICKS)
+		{
 			sched_yield();
 		}
 		last_tick = systemVitals->sysTicks;
 
-		if (!swap_enabled()) {
+		if (!swap_enabled())
+		{
 			continue;
 		}
 
-		if (systemVitals->freePages >= (u_int32_t)PAGEOUT_LOW_WATERMARK(numPages)) {
+		if (systemVitals->freePages >= (u_int32_t)PAGEOUT_LOW_WATERMARK(numPages))
+		{
 			continue;
 		}
 
@@ -92,17 +95,20 @@ void pageout_daemon(void)
 		 */
 		for (t = taskList; t != NULL; t = t->next)
 		{
-			if (systemVitals->freePages >= (u_int32_t)PAGEOUT_HIGH_WATERMARK(numPages)) {
+			if (systemVitals->freePages >= (u_int32_t)PAGEOUT_HIGH_WATERMARK(numPages))
+			{
 				break;
 			}
 
 			/* Skip kernel threads — they share kernelPageDirectory. */
-			if (t->md.md_tss.cr3 == kern_cr3) {
+			if (t->md.md_tss.cr3 == kern_cr3)
+			{
 				continue;
 			}
 
 			/* Skip tasks with no page directory yet. */
-			if (t->md.md_tss.cr3 == 0) {
+			if (t->md.md_tss.cr3 == 0)
+			{
 				continue;
 			}
 

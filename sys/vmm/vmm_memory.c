@@ -116,7 +116,9 @@ int vmm_memMapInit()
 	}
 
 	if (systemVitals)
+	{
 		systemVitals->freePages = g_free_pages;
+	}
 
 	/* Print Out Amount Of Memory */
 	kprintf("Real Memory:      %iKB\n", numPages * 4);
@@ -185,9 +187,13 @@ int countMemory()
 		mem_kb++;
 
 		if (mem_count == -1)
+		{
 			mem_count = 8388608;
+		}
 		else
+		{
 			mem_count += 1024 * 1024;
+		}
 
 		mem = (u_int32_t *)mem_count;
 
@@ -262,7 +268,9 @@ u_int32_t vmm_findFreePage(pidType pid)
 
 	/* Lets Look For A Free Page */
 	if (pid < sysID)
+	{
 		kpanic("Error: invalid PID %i\n", pid);
+	}
 
 retry:
 	spinLock(&g_vmm_spin_lock);
@@ -280,7 +288,9 @@ retry:
 			vmmMemoryMap[i].pid = pid;
 			g_free_pages--;
 			if (systemVitals)
+			{
 				systemVitals->freePages = g_free_pages;
+			}
 
 			spinUnlock(&g_vmm_spin_lock);
 			return (vmmMemoryMap[i].pageAddr);
@@ -293,13 +303,17 @@ retry:
 	kprintf("vmm: OOM (pid %i) — attempting page eviction\n", pid);
 	evicted = swap_evict_page();
 	if (evicted != 0x0)
+	{
 		goto retry;
+	}
 
 	/* Eviction failed or no swap device. */
 	kprintf("vmm: OOM — out of memory and swap (pid %i)\n", pid);
 
 	if (pid == sysID)
+	{
 		kpanic("Out Of Memory — kernel has no swap fallback");
+	}
 
 	sched_setStatus(pid, DEAD);
 	sched_yield();
@@ -393,7 +407,9 @@ int adjustCowCounter(u_int32_t base_addr, int adjustment)
 	{
 
 		if (vmmMemoryMap[vmm_memory_map_index].cowCounter < 0)
+		{
 			kprintf("ERROR: Why is COW less than 0");
+		}
 
 		vmmMemoryMap[vmm_memory_map_index].cowCounter = 0x0;
 		vmmMemoryMap[vmm_memory_map_index].pid = vmmID;

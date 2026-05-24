@@ -90,8 +90,8 @@ void *vmm_createVirtualSpace(pid_t pid)
 		{
 
 			/* Set Page To COW In Parent And Child Space */
-			new_page_table[x] =
-			    (((u_int32_t)parent_page_table[x] & 0xFFFFF000) | ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
+			new_page_table[x] = (((u_int32_t)parent_page_table[x] & 0xFFFFF000) |
+			                     ((PAGE_DEFAULT & ~PAGE_WRITE) | PAGE_COW));
 
 			/* Increment The COW Counter For This Page */
 			if (((u_int32_t)parent_page_table[x] & PAGE_COW) == PAGE_COW)
@@ -105,7 +105,8 @@ void *vmm_createVirtualSpace(pid_t pid)
 				parent_page_table[x] |= PAGE_COW; // new_page_table[i];
 			}
 		}
-		else {
+		else
+		{
 			new_page_table[x] = parent_page_table[x];
 		}
 	}
@@ -165,11 +166,12 @@ void *vmm_createVirtualSpace(pid_t pid)
 	 */
 	new_page_table = (u_int32_t *)vmm_getFreePage(pid);
 
-	new_page_directory[PD_INDEX(PD_BASE_ADDR)] = (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) |
-	                                                        KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
+	new_page_directory[PD_INDEX(PD_BASE_ADDR)] =
+	    (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) |
+	                KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
 
-	new_page_table[0] =
-	    (u_int32_t)((u_int32_t)(new_page_directory_address) | KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
+	new_page_table[0] = (u_int32_t)((u_int32_t)(new_page_directory_address) |
+	                                KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
 
 	vmm_unmapPage((u_int32_t)new_page_table, 1);
 
@@ -182,8 +184,9 @@ void *vmm_createVirtualSpace(pid_t pid)
 
 	new_page_table = (u_int32_t *)vmm_getFreePage(pid);
 
-	new_page_directory[PD_INDEX(PT_BASE_ADDR)] = (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) |
-	                                                        KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
+	new_page_directory[PD_INDEX(PT_BASE_ADDR)] =
+	    (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) |
+	                KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
 
 	/* Flush The Page From Garbage In Memory */
 	bzero(new_page_table, PAGE_SIZE);
