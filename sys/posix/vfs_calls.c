@@ -402,9 +402,9 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			if (c != 0x0)
 			{
 				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte) {
+				if (c == '\n' || c == '\r' || x >= (int)args->nbyte) {
 					break;
-}
+				}
 			}
 			else if (tty_foreground != NULL && tty_foreground->t_eof)
 			{

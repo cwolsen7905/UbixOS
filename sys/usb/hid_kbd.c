@@ -85,7 +85,7 @@ static uint32_t hid_to_key(uint8_t hid, int shifted)
 	case 0x27:
 		return (shifted ? ')' : '0');
 	case 0x28:
-		return ('\n');
+		return ('\r');
 	case 0x29:
 		return (KEY_ESC);
 	case 0x2A:

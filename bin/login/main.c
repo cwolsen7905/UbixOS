@@ -31,11 +31,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <sched.h>
+#include <sys/wait.h>
 #include <sys/mpi.h>
 #include <api/ubix.h>
 #include <authd.h>
-
-int pidStatus(int pid);
 
 #define MOTD_PATH   "/etc/motd"
 #define REPLY_MBOX_MAX 32
@@ -50,21 +49,23 @@ static char *envp_shell[12];
 static char *
 pgets(char *string, int maxlen)
 {
-	int count = 0, ch = 0;
+	int count = 0;
+	unsigned char ch;
 
 	tty_setraw(1);
 	while (1) {
-		ch = fgetc(stdin);
+		if (read(0, &ch, 1) != 1)
+			continue;
 		if (ch == '\n' || ch == '\r') {
 			printf("\n");
+			fflush(stdout);
 			break;
 		} else if ((ch == 8 || ch == 127) && count > 0) {
 			count--;
-		} else if (ch == 0 || ch == -1) {
+		} else if (ch == 0) {
 			if (count == 0) { tty_setraw(0); return (NULL); }
-			count--;
 		} else if (count < maxlen - 1) {
-			string[count++] = ch;
+			string[count++] = (char)ch;
 			printf("*");
 			fflush(stdout);
 		}
@@ -211,8 +212,7 @@ getUsername:
 		exit(-1);
 	}
 
-	while (pidStatus(shellPid) == shellPid)
-		sched_yield();
+	waitpid(shellPid, NULL, 0);
 
 	goto login;
 	return (0);

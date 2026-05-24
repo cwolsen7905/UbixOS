@@ -131,7 +131,7 @@ static unsigned int keyboardMap[255][8] = {
     /*     */ {0x70, 0x50, 0, 0, 0, 0, 0, 0},
     /*     */ {0x5B, 0x7B, 0, 0, 0, 0, 0, 0},
     /*     */ {0x5D, 0x7D, 0, 0, 0, 0, 0, 0},
-    /*     */ {0x0A, 0, 0, 0, 0, 0, 0, 0},
+    /*     */ {0x0D, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0, 0, 0, 0, 0, 0, 0, 0},
     /* a,A */ {0x61, 0x41, 0x01, 0, 0, 0, 0, 0},
     /*     */ {0x73, 0x53, 0, 0, 0, 0, 0, 0},
@@ -373,7 +373,9 @@ void keyboardHandler(struct trapframe *frame)
 	case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */
 		sys_shutdown(REBOOT);
 		break;
-	case 0x0D: /* Ctrl-M: 5-second countdown reboot */
+	case 0x0D: /* Ctrl-M: 5-second countdown reboot (only with Ctrl held) */
+		if (!(controlKeys & controlKey))
+			break; /* plain Enter — push to ring */
 		if (reboot_at_tick == 0) {
 			reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
 			kprintf("\nSystem rebooting in 5 seconds...\n");
