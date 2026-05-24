@@ -21,12 +21,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <sched.h>
+#include <sys/wait.h>
 #include <api/ubix.h>
 
 #define TTYS_PATH   "/etc/ttys"
 #define MAX_TTYS    8
 
-extern int pidStatus(int pid);
 
 static char *envp_login[] = {
     "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
@@ -75,7 +75,7 @@ getty_loop(int slot, const char *name, const char *program)
             printf("ttyd: fork failed (slot %d)\r\n", slot);
             exit(1);
         }
-        pidStatus(pid);
+        waitpid(pid, NULL, 0);
     }
 }
 

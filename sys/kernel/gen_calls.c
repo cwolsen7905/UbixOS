@@ -395,7 +395,14 @@ wait_find_child(int want_pid, int options, int *wstatus)
 			continue;
 		if (want_pid != -1 && (int)t->id != want_pid)
 			continue;
-		if (t->state == DEAD) {
+		/*
+		 * Accept both DEAD and ZOMBIE: with two-phase exit, sched()
+		 * transitions ZOMBIE→DEAD asynchronously.  If the parent calls
+		 * wait_find_child before that tick fires, the child is still
+		 * ZOMBIE.  Collecting it here is correct — the parent is the one
+		 * doing the reaping, not sched().
+		 */
+		if (t->state == DEAD || t->state == ZOMBIE) {
 			if (wstatus)
 				*wstatus = W_EXITED(0);
 			if (t->prev != NULL) t->prev->next = t->next;
@@ -403,6 +410,8 @@ wait_find_child(int want_pid, int options, int *wstatus)
 			if (t->next != NULL) t->next->prev  = t->prev;
 			pid_hash_remove(t);
 			sched_addDelTask(t);
+			if (_current->children > 0)
+				_current->children--;
 			return (t);
 		}
 		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0) {
@@ -417,26 +426,33 @@ wait_find_child(int want_pid, int options, int *wstatus)
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 {
+#define SIG_PENDING_UNBLOCKED_W(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 	kTask_t *child;
 	int      wstatus = 0;
-	int      retries;
 
-	if (args->pid == -1 && _current->children <= 0) {
-		td->td_retval[0] = -ECHILD;
-		return (-1);
-	}
-
-	if (args->pid != -1) {
-		child = NULL;
-		for (retries = 0; retries < 100; retries++) {
-			child = schedFindTask((uint32_t)args->pid);
-			if (child != NULL)
-				break;
-			sched_yield();
+	/*
+	 * ECHILD check.  For wait-any (pid == -1) we trust children counter
+	 * but also scan taskList for uncollected dead/zombie children whose
+	 * counter decrement may have raced.  For a specific pid we verify the
+	 * target exists and is our direct child.
+	 */
+	if (args->pid == -1) {
+		if (_current->children <= 0) {
+			kTask_t *t;
+			int found = 0;
+			for (t = taskList; t != NULL; t = t->next) {
+				if (t->parent == _current) { found = 1; break; }
+			}
+			if (!found) {
+				td->td_retval[0] = -ECHILD;
+				return (ECHILD);
+			}
 		}
-		if (child == NULL) {
-			td->td_retval[0] = -1;
-			return (-1);
+	} else {
+		kTask_t *t = schedFindTask((uint32_t)args->pid);
+		if (t == NULL || t->parent != _current) {
+			td->td_retval[0] = -ECHILD;
+			return (ECHILD);
 		}
 	}
 
@@ -454,21 +470,43 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 		return (0);
 	}
 
-	/* Blocking wait. */
-	sched_sleep(_current, WAIT);
+	/*
+	 * Blocking wait: check → sleep → re-check → yield.
+	 *
+	 * The re-check immediately after sched_sleep handles a lost-wakeup
+	 * race: if the child went ZOMBIE between our "not ready" check and
+	 * sched_sleep, the ZOMBIE handler in sched() tried to wake us while
+	 * we were still RUNNING (no-op), then sched_sleep dequeued us.  The
+	 * re-check sees the now-DEAD/ZOMBIE child and avoids sleeping forever.
+	 */
 	for (;;) {
-		sched_yield();
 		child = wait_find_child(args->pid, args->options, &wstatus);
 		if (child != NULL)
 			break;
+
+		if (SIG_PENDING_UNBLOCKED_W(td)) {
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
+
+		sched_sleep(_current, WAIT);
+
+		/* Re-check to catch lost-wakeup. */
+		child = wait_find_child(args->pid, args->options, &wstatus);
+		if (child != NULL) {
+			sched_wakeup(_current);
+			break;
+		}
+
+		sched_yield();
+		sched_wakeup(_current);
 	}
-	sched_wakeup(_current);
 
 	if (args->status)
 		*args->status = wstatus;
 	td->td_retval[0] = (int)child->id;
-	_current->last_exit = child->id;
 	return (0);
+#undef SIG_PENDING_UNBLOCKED_W
 }
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)

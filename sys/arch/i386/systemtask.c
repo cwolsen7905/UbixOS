@@ -31,6 +31,7 @@
 #include <ubixos/exec.h>
 #include <ubixos/tty.h>
 #include <ubixos/sched.h>
+#include <vmm/vm_map.h>
 #include <ubixos/vitals.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -166,8 +167,8 @@ void systemTask() {
         kprintf("system: display owner pid %d exited — restoring mode 0x%X\n",
             (int)disp_owner_pid, disp_saved_mode);
         if (disp_saved_mode == 0) {
+          kbd_gui_mode = 0;  /* unblock keyboard before the slow BIOS call */
           vesa_text_mode();
-          kbd_gui_mode = 0;
         } else if (disp_saved_mode != vesa_current_mode) {
           if (vesa_init(disp_saved_mode) == 0)
             vesa_map_fb();
@@ -186,6 +187,7 @@ void systemTask() {
 
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
+      vm_map_free(&tmpTask->vm_map);
       vmm_freeProcessPages(tmpTask->id);
       if (tmpTask->kernelStack != 0x0)
         kfree(tmpTask->kernelStack);
