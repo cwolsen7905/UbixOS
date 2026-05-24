@@ -71,7 +71,7 @@ void *vmm_createVirtualSpace(pid_t pid)
 	new_page_directory_address = (void *)vmm_getPhysicalAddr((u_int32_t)new_page_directory);
 
 	/* First Set Up A Flushed Page Directory */
-	bzero(new_page_directory, PAGE_SIZE);
+	memset(new_page_directory, 0, PAGE_SIZE);
 
 	/* Map The Lower 8MB Kernel Code Space */
 	/* Map First 4MB 1:1 */
@@ -80,7 +80,7 @@ void *vmm_createVirtualSpace(pid_t pid)
 
 	/* Map Second 4MB */
 	new_page_table = (u_int32_t *)vmm_getFreePage(pid);
-	bzero(new_page_table, PAGE_SIZE);
+	memset(new_page_table, 0, PAGE_SIZE);
 
 	parent_page_table = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1));
 
@@ -124,7 +124,7 @@ void *vmm_createVirtualSpace(pid_t pid)
 
 	/* Allocate Stack Pages */
 	new_page_table = (u_int32_t *)vmm_getFreePage(pid);
-	bzero(new_page_table, PAGE_SIZE);
+	memset(new_page_table, 0, PAGE_SIZE);
 
 	new_page_directory[1023] = (vmm_getPhysicalAddr((u_int32_t)new_page_table) | KERNEL_PAGE_DEFAULT);
 
@@ -143,7 +143,7 @@ void *vmm_createVirtualSpace(pid_t pid)
 
 	// new_page_table = (u_int32_t *) vmm_getFreePage(pid);
 	/* Flush The Page From Garbage In Memory */
-	// bzero(new_page_table, PAGE_SIZE);
+	// memset(new_page_table, 0, PAGE_SIZE);
 	/* Map This Into The Page Directory */
 	// new_page_directory[0] = (vmm_getPhysicalAddr((u_int32_t) new_page_table) | KERNEL_PAGE_DEFAULT); //MrOlsen
 	// 2018-01-14 PAGE_DEFAULT
@@ -189,7 +189,7 @@ void *vmm_createVirtualSpace(pid_t pid)
 	                KERNEL_PAGE_DEFAULT); // MrOlsen 2018-01-14 PAGE_DEFAULT
 
 	/* Flush The Page From Garbage In Memory */
-	bzero(new_page_table, PAGE_SIZE);
+	memset(new_page_table, 0, PAGE_SIZE);
 
 	for (x = 0; x < PD_ENTRIES; x++)
 	{

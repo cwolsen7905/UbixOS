@@ -72,7 +72,7 @@ int vmm_pagingInit()
 	} /* end if */
 
 	/* Clear The Memory To Ensure There Is No Garbage */
-	bzero(kernelPageDirectory, PAGE_SIZE);
+	memset(kernelPageDirectory, 0, PAGE_SIZE);
 
 	/* Allocate a page for the first 4MB of memory */
 	if ((page_table = (u_int32_t *)vmm_findFreePage(sysID)) == 0x0)
@@ -81,7 +81,7 @@ int vmm_pagingInit()
 	}
 
 	/* Make Sure The Page Table Is Clean */
-	bzero(page_table, PAGE_SIZE);
+	memset(page_table, 0, PAGE_SIZE);
 
 	kernelPageDirectory[0] = (u_int32_t)((u_int32_t)(page_table) | PAGE_DEFAULT);
 
@@ -102,7 +102,7 @@ int vmm_pagingInit()
 	}
 
 	/* Make Sure The Page Table Is Clean */
-	bzero(page_table, PAGE_SIZE);
+	memset(page_table, 0, PAGE_SIZE);
 
 	kernelPageDirectory[1] = (u_int32_t)((u_int32_t)(page_table) | PAGE_DEFAULT);
 
@@ -119,7 +119,7 @@ int vmm_pagingInit()
 		}
 
 		/* Make Sure The Page Table Is Clean */
-		bzero(page_table, PAGE_SIZE);
+		memset(page_table, 0, PAGE_SIZE);
 
 		/* Map In The Page Directory */
 		kernelPageDirectory[i] = (u_int32_t)((u_int32_t)(page_table) | KERNEL_PAGE_DEFAULT | PAGE_GLOBAL);
@@ -150,7 +150,7 @@ int vmm_pagingInit()
 			K_PANIC("Error: vmm_findFreePage Failed");
 		}
 
-		bzero(page_table, PAGE_SIZE);
+		memset(page_table, 0, PAGE_SIZE);
 
 		kernelPageDirectory[PD_INDEX(PT_BASE_ADDR)] =
 		    (u_int32_t)((u_int32_t)(page_table) | KERNEL_PAGE_DEFAULT);
@@ -174,7 +174,7 @@ int vmm_pagingInit()
 			K_PANIC("Error: vmm_findFreePage Failed");
 		}
 
-		bzero(page_table, PAGE_SIZE);
+		memset(page_table, 0, PAGE_SIZE);
 
 		kernelPageDirectory[PD_INDEX(PD_BASE_ADDR)] =
 		    (u_int32_t)((u_int32_t)(page_table) | KERNEL_PAGE_DEFAULT);

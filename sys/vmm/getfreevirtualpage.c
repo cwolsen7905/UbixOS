@@ -151,7 +151,7 @@ gotPages:
 			    "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
 		}
 
-		bzero((void *)(map_from + (counter * PAGE_SIZE)), PAGE_SIZE);
+		memset((void *)(map_from + (counter * PAGE_SIZE)), 0, PAGE_SIZE);
 	}
 
 doneMapping:

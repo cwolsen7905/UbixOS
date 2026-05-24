@@ -43,7 +43,7 @@ int vmm_allocPageTable(u_int32_t pd_i, pidType pid)
 
 	/* Clean The Page */
 	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
-	bzero(page_table, PAGE_SIZE);
+	memset(page_table, 0, PAGE_SIZE);
 
 	// spinUnlock(&pdSpinLock);
 

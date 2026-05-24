@@ -73,7 +73,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 	new_page_directory_address = (void *)vmm_getPhysicalAddr((u_int32_t)new_page_directory);
 
 	/* First Set Up A Flushed Page Directory */
-	bzero(new_page_directory, PAGE_SIZE);
+	memset(new_page_directory, 0, PAGE_SIZE);
 
 	/* Map Kernel Code Region Entries 0 & 1 */
 	new_page_directory[0] = parent_page_directory[0];
@@ -151,7 +151,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 			}
 
-			bzero(new_page_table, PAGE_SIZE);
+			memset(new_page_table, 0, PAGE_SIZE);
 
 			for (i = 0; i < PT_ENTRIES; i++)
 			{
@@ -212,7 +212,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 				kpanic("Error: new_page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 			}
 
-			bzero(new_page_table, PAGE_SIZE);
+			memset(new_page_table, 0, PAGE_SIZE);
 
 			/* Set Parent And New Pages To COW */
 			for (i = 0; i < PT_ENTRIES; i++)
@@ -328,7 +328,7 @@ void *vmm_copyVirtualSpace(pidType pid)
 	    (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)new_page_table) | PAGE_DEFAULT);
 
 	/* Flush The Page From Garbage In Memory */
-	bzero(new_page_table, PAGE_SIZE);
+	memset(new_page_table, 0, PAGE_SIZE);
 
 	/*
 	 * Re-sync kernel PD entries into new_page_directory now that all
