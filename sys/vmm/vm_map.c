@@ -33,8 +33,7 @@
 /* RB tree comparators                                                  */
 /* ------------------------------------------------------------------ */
 
-static int
-vma_cmp(const struct rb_node *a, const struct rb_node *b)
+static int vma_cmp(const struct rb_node *a, const struct rb_node *b)
 {
 	const vm_map_entry_t *ea = (const vm_map_entry_t *)a;
 	const vm_map_entry_t *eb = (const vm_map_entry_t *)b;
@@ -50,8 +49,7 @@ vma_cmp(const struct rb_node *a, const struct rb_node *b)
  * cmp_key: returns >0 if addr is left of node (go left),
  *          <0 if addr is right of node (go right), 0 if inside.
  */
-static int
-vma_cmp_key(const struct rb_node *n, uintptr_t addr)
+static int vma_cmp_key(const struct rb_node *n, uintptr_t addr)
 {
 	const vm_map_entry_t *e = (const vm_map_entry_t *)n;
 
@@ -66,20 +64,18 @@ vma_cmp_key(const struct rb_node *n, uintptr_t addr)
 /* Public API                                                           */
 /* ------------------------------------------------------------------ */
 
-int
-vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end,
-    uint32_t prot, uint32_t flags)
+int vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end, uint32_t prot, uint32_t flags)
 {
 	vm_map_entry_t *e = kmalloc(sizeof *e);
 
 	if (e == NULL)
 		return (-1);
 
-	e->vm_start  = start;
-	e->vm_end    = end;
-	e->vm_prot   = prot;
-	e->vm_flags  = flags;
-	e->vm_vnode  = NULL;
+	e->vm_start = start;
+	e->vm_end = end;
+	e->vm_prot = prot;
+	e->vm_flags = flags;
+	e->vm_vnode = NULL;
 	e->vm_offset = 0;
 
 	rb_insert(&map->vm_root, &e->rb, vma_cmp);
@@ -87,13 +83,13 @@ vm_map_insert(vm_map_t *map, uintptr_t start, uintptr_t end,
 	return (0);
 }
 
-void
-vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
+void vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 {
 	struct rb_node *n = rb_first(&map->vm_root);
 
-	while (n != NULL) {
-		vm_map_entry_t *e    = (vm_map_entry_t *)n;
+	while (n != NULL)
+	{
+		vm_map_entry_t *e = (vm_map_entry_t *)n;
 		struct rb_node *next = rb_next(n);
 
 		/* No overlap — entries are sorted; once we pass end we're done. */
@@ -101,13 +97,15 @@ vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 			break;
 
 		/* No overlap on the left. */
-		if (e->vm_end <= start) {
+		if (e->vm_end <= start)
+		{
 			n = next;
 			continue;
 		}
 
 		/* Full containment: remove and free. */
-		if (e->vm_start >= start && e->vm_end <= end) {
+		if (e->vm_start >= start && e->vm_end <= end)
+		{
 			rb_erase(&map->vm_root, n);
 			map->vm_nentries--;
 			kfree(e);
@@ -116,24 +114,28 @@ vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 		}
 
 		/* Partial overlap — left tail: trim vm_end. */
-		if (e->vm_start < start && e->vm_end > start && e->vm_end <= end) {
+		if (e->vm_start < start && e->vm_end > start && e->vm_end <= end)
+		{
 			e->vm_end = start;
 			n = next;
 			continue;
 		}
 
 		/* Partial overlap — right tail: trim vm_start. */
-		if (e->vm_start >= start && e->vm_start < end && e->vm_end > end) {
+		if (e->vm_start >= start && e->vm_start < end && e->vm_end > end)
+		{
 			e->vm_start = end;
 			n = next;
 			continue;
 		}
 
 		/* Entry fully contains [start, end): split into two. */
-		if (e->vm_start < start && e->vm_end > end) {
+		if (e->vm_start < start && e->vm_end > end)
+		{
 			vm_map_entry_t *tail = kmalloc(sizeof *tail);
-			if (tail != NULL) {
-				*tail         = *e;
+			if (tail != NULL)
+			{
+				*tail = *e;
 				tail->vm_start = end;
 				rb_insert(&map->vm_root, &tail->rb, vma_cmp);
 				map->vm_nentries++;
@@ -147,20 +149,19 @@ vm_map_remove(vm_map_t *map, uintptr_t start, uintptr_t end)
 	}
 }
 
-vm_map_entry_t *
-vm_map_lookup(vm_map_t *map, uintptr_t addr)
+vm_map_entry_t *vm_map_lookup(vm_map_t *map, uintptr_t addr)
 {
 	struct rb_node *n = rb_find(&map->vm_root, addr, vma_cmp_key);
 
 	return ((vm_map_entry_t *)n);
 }
 
-void
-vm_map_free(vm_map_t *map)
+void vm_map_free(vm_map_t *map)
 {
 	struct rb_node *n = rb_first(&map->vm_root);
 
-	while (n != NULL) {
+	while (n != NULL)
+	{
 		struct rb_node *next = rb_next(n);
 		rb_erase(&map->vm_root, n);
 		kfree((vm_map_entry_t *)n);
@@ -169,14 +170,14 @@ vm_map_free(vm_map_t *map)
 	map->vm_nentries = 0;
 }
 
-int
-vm_map_copy(vm_map_t *dst, const vm_map_t *src)
+int vm_map_copy(vm_map_t *dst, const vm_map_t *src)
 {
 	struct rb_node *n;
 
-	for (n = rb_first(&src->vm_root); n != NULL; n = rb_next(n)) {
+	for (n = rb_first(&src->vm_root); n != NULL; n = rb_next(n))
+	{
 		const vm_map_entry_t *se = (const vm_map_entry_t *)n;
-		vm_map_entry_t       *de = kmalloc(sizeof *de);
+		vm_map_entry_t *de = kmalloc(sizeof *de);
 
 		if (de == NULL)
 			return (-1);

@@ -32,30 +32,30 @@
 
 int vmm_freeVirtualPage(uint32_t addr)
 {
-	uint32_t *pageDir   = (uint32_t *)PD_BASE_ADDR;
-	uint32_t *pageTable = 0x0;
-	uint32_t  pdIndex   = PD_INDEX(addr);
-	uint32_t  ptIndex   = PT_INDEX(addr);
-	uint32_t  phys      = 0x0;
+	uint32_t *page_dir = (uint32_t *)PD_BASE_ADDR;
+	uint32_t *page_table = 0x0;
+	uint32_t pd_index = PD_INDEX(addr);
+	uint32_t pt_index = PT_INDEX(addr);
+	uint32_t phys = 0x0;
 
 	addr &= 0xFFFFF000;
 
-	if ((pageDir[pdIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_dir[pd_index] & PAGE_PRESENT) != PAGE_PRESENT)
 		return (-1);
 
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (pdIndex * PAGE_SIZE));
+	page_table = (uint32_t *)(PT_BASE_ADDR + (pd_index * PAGE_SIZE));
 
-	if ((pageTable[ptIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_table[pt_index] & PAGE_PRESENT) != PAGE_PRESENT)
 		return (-1);
 
-	phys = pageTable[ptIndex] & 0xFFFFF000;
+	phys = page_table[pt_index] & 0xFFFFF000;
 
-	if ((pageTable[ptIndex] & PAGE_COW) == PAGE_COW)
+	if ((page_table[pt_index] & PAGE_COW) == PAGE_COW)
 		adjustCowCounter(phys, -1);
 	else if ((phys >> 12) < (uint32_t)numPages)
 		freePage(phys);
 
-	pageTable[ptIndex] = 0x0;
+	page_table[pt_index] = 0x0;
 
 	asm volatile("invlpg (%0)" : : "r"(addr) : "memory");
 

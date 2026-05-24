@@ -49,24 +49,24 @@
  *
  * Runs at QOS_BACKGROUND so it yields to all interactive and normal work.
  */
-void
-pageout_daemon(void)
+void pageout_daemon(void)
 {
-	uint32_t  kern_cr3;
-	uint32_t  last_tick = 0;
-	kTask_t  *t;
+	uint32_t kern_cr3;
+	uint32_t last_tick = 0;
+	kTask_t *t;
 
 	/* Save the kernel page directory CR3 for restoration after each task walk. */
 	asm volatile("movl %%cr3, %0" : "=r"(kern_cr3));
 
 	/* Background priority — never compete with real work. */
 	_current->base_priority = QOS_BACKGROUND;
-	_current->priority      = QOS_BACKGROUND;
+	_current->priority = QOS_BACKGROUND;
 
-	kprintf("pageout: daemon started (low=%u%% high=%u%% interval=%u ticks)\n",
-	    100 / 10, 15, PAGEOUT_INTERVAL_TICKS);
+	kprintf(
+	    "pageout: daemon started (low=%u%% high=%u%% interval=%u ticks)\n", 100 / 10, 15, PAGEOUT_INTERVAL_TICKS);
 
-	for (;;) {
+	for (;;)
+	{
 		/* Sleep until the next polling interval. */
 		while (systemVitals->sysTicks - last_tick < PAGEOUT_INTERVAL_TICKS)
 			sched_yield();
@@ -79,17 +79,17 @@ pageout_daemon(void)
 			continue;
 
 		kprintf("pageout: low memory (%u free pages, target %u), reclaiming\n",
-		    systemVitals->freePages,
-		    (uint32_t)PAGEOUT_HIGH_WATERMARK(numPages));
+		        systemVitals->freePages,
+		        (uint32_t)PAGEOUT_HIGH_WATERMARK(numPages));
 
 		/*
 		 * Walk the task list.  For each user process, temporarily switch
 		 * to its address space and evict one page.  Restore the kernel
 		 * CR3 after each eviction so taskList traversal stays valid.
 		 */
-		for (t = taskList; t != NULL; t = t->next) {
-			if (systemVitals->freePages >=
-			    (uint32_t)PAGEOUT_HIGH_WATERMARK(numPages))
+		for (t = taskList; t != NULL; t = t->next)
+		{
+			if (systemVitals->freePages >= (uint32_t)PAGEOUT_HIGH_WATERMARK(numPages))
 				break;
 
 			/* Skip kernel threads — they share kernelPageDirectory. */

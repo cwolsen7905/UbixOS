@@ -68,7 +68,8 @@ void vmm_unmapPage(uint32_t pageAddr, unmapFlags_t flags)
 	pageTable = (uint32_t *)(PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
 
 	/* Free The Physical Page If Flags Is 0, guarding non-present and MMIO frames */
-	if (flags == 0 && (pageTable[pageTableIndex] & PAGE_PRESENT)) {
+	if (flags == 0 && (pageTable[pageTableIndex] & PAGE_PRESENT))
+	{
 		uint32_t phys = pageTable[pageTableIndex] & 0xFFFFF000;
 		if ((phys >> 12) < (uint32_t)numPages)
 			freePage(phys);

@@ -41,9 +41,9 @@
 
 uint32_t *kernelPageDirectory = 0x0; // Pointer To Kernel Page Directory
 
-static struct spinLock fkpSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock g_fkp_spin_lock = SPIN_LOCK_INITIALIZER;
 
-static struct spinLock rmpSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock g_rmp_spin_lock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
  Function: int vmm_pagingInit();
@@ -267,7 +267,8 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
 		kprintf("[vmm_remapPage] page already mapped at 0x%X (ptIdx 0x%X)\n", dest, destPageTableIndex);
 		klog(KLOG_WARNING, "vmm_remapPage: page already mapped at 0x%X (ptIdx 0x%X)", dest, destPageTableIndex);
 
-		if ((pageTable[destPageTableIndex] & PAGE_STACK) == PAGE_STACK) {
+		if ((pageTable[destPageTableIndex] & PAGE_STACK) == PAGE_STACK)
+		{
 			kprintf("[vmm_remapPage] stack page: [0x%X]\n", dest);
 			klog(KLOG_DEBUG, "vmm_remapPage: stack page at 0x%X", dest);
 		}
@@ -275,7 +276,10 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
 		if ((pageTable[destPageTableIndex] & PAGE_COW) != PAGE_COW)
 		{
 			kprintf("[vmm_remapPage] not COW: [0x%X][0x%X]\n", dest, pageTable[destPageTableIndex]);
-			klog(KLOG_ERR, "vmm_remapPage: non-COW page already present at 0x%X pte=0x%X", dest, pageTable[destPageTableIndex]);
+			klog(KLOG_ERR,
+			     "vmm_remapPage: non-COW page already present at 0x%X pte=0x%X",
+			     dest,
+			     pageTable[destPageTableIndex]);
 			source = 0x0;
 			goto rmDone;
 		}
@@ -400,7 +404,11 @@ void *vmm_getFreeKernelPage(pidType pid, uint16_t count)
 gotPages:
 	for (c = 0; c < count; c++)
 	{
-		if ((vmm_remapPage((uint32_t)vmm_findFreePage(pid), (startAddress + (PAGE_SIZE * c)), KERNEL_PAGE_DEFAULT, pid, 1)) == 0x0)
+		if ((vmm_remapPage((uint32_t)vmm_findFreePage(pid),
+		                   (startAddress + (PAGE_SIZE * c)),
+		                   KERNEL_PAGE_DEFAULT,
+		                   pid,
+		                   1)) == 0x0)
 			K_PANIC("vmmRemapPage failed: gfkp-1\n");
 
 		vmm_clearVirtualPage((uint32_t)(startAddress + (PAGE_SIZE * c)));
@@ -471,7 +479,8 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size)
 		if ((childPageDir[i] & PAGE_PRESENT) == PAGE_PRESENT)
 		{
 			// kprintf("mapping: 0x%X\n", i);
-			if (vmm_remapPage(childPageDir[i], 0x5A01000 + (i * 0x1000), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
+			if (vmm_remapPage(
+			        childPageDir[i], 0x5A01000 + (i * 0x1000), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
 				K_PANIC("Returned NULL");
 		}
 	}
@@ -519,11 +528,18 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size)
 							if ((childPageDir[dI] & PAGE_PRESENT) == PAGE_PRESENT)
 							{
 								// kprintf("dI: 0x%X\n", dI);
-								childPageTable = (uint32_t *)(0x5A01000 + (0x1000 * dI));
+								childPageTable =
+								    (uint32_t *)(0x5A01000 + (0x1000 * dI));
 
-								if ((childPageTable[tI + c] & PAGE_PRESENT) == PAGE_PRESENT)
+								if ((childPageTable[tI + c] & PAGE_PRESENT) ==
+								    PAGE_PRESENT)
 								{
-									if (vmm_remapPage(childPageTable[tI + c], ((x * (1024 * 4096)) + ((y + c) * 4096)), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
+									if (vmm_remapPage(childPageTable[tI + c],
+									                  ((x * (1024 * 4096)) +
+									                   ((y + c) * 4096)),
+									                  KERNEL_PAGE_DEFAULT,
+									                  _current->id,
+									                  0) == 0x0)
 										K_PANIC("remap == NULL");
 								}
 							}
@@ -549,7 +565,11 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size)
 						// kprintf("eDI: 0x%X", dI);
 						if ((childPageTable[tI] & PAGE_PRESENT) == PAGE_PRESENT)
 						{
-							if (vmm_remapPage(childPageTable[tI], ((x * (1024 * 4096)) + (y * 4096)), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
+							if (vmm_remapPage(childPageTable[tI],
+							                  ((x * (1024 * 4096)) + (y * 4096)),
+							                  KERNEL_PAGE_DEFAULT,
+							                  _current->id,
+							                  0) == 0x0)
 								K_PANIC("remap Failed");
 						}
 					}
@@ -580,12 +600,13 @@ void *vmm_getFreeMallocPage(uInt16 count)
 
 	pageDirectory = (uint32_t *)PD_BASE_ADDR;
 
-	spinLock(&fkpSpinLock);
+	spinLock(&g_fkp_spin_lock);
 
 	/* Lets Search For A Free Page */
 	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
 	{
-		if ((pageDirectory[x] & PAGE_PRESENT) != PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
+		if ((pageDirectory[x] & PAGE_PRESENT) !=
+		    PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
 			vmm_allocPageTable(x, sysID);
 
 		pageTableSrc = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * x));
@@ -617,32 +638,41 @@ void *vmm_getFreeMallocPage(uInt16 count)
 					{
 						for (c = 0; c < count; c++)
 						{
-							if (vmm_remapPage((uint32_t)vmm_findFreePage(sysID), ((x * 0x400000) + ((y + c) * 0x1000)), KERNEL_PAGE_DEFAULT, sysID, 0) == 0x0)
+							if (vmm_remapPage((uint32_t)vmm_findFreePage(sysID),
+							                  ((x * 0x400000) + ((y + c) * 0x1000)),
+							                  KERNEL_PAGE_DEFAULT,
+							                  sysID,
+							                  0) == 0x0)
 								K_PANIC("remap Failed");
 
-							vmm_clearVirtualPage((uint32_t)((x * 0x400000) + ((y + c) * 0x1000)));
+							vmm_clearVirtualPage(
+							    (uint32_t)((x * 0x400000) + ((y + c) * 0x1000)));
 						}
-						spinUnlock(&fkpSpinLock);
+						spinUnlock(&g_fkp_spin_lock);
 						return ((void *)((x * (PAGE_SIZE * PD_ENTRIES)) + (y * PAGE_SIZE)));
 					}
 				}
 				else
 				{
 					/* Map A Physical Page To The Virtual Page */
-					if (vmm_remapPage((uint32_t)vmm_findFreePage(sysID), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT, sysID, 0) == 0x0)
+					if (vmm_remapPage((uint32_t)vmm_findFreePage(sysID),
+					                  ((x * 0x400000) + (y * 0x1000)),
+					                  KERNEL_PAGE_DEFAULT,
+					                  sysID,
+					                  0) == 0x0)
 						K_PANIC("Failed");
 
 					/* Clear This Page So No Garbage Is There */
 					vmm_clearVirtualPage((uint32_t)((x * 0x400000) + (y * 0x1000)));
 					/* Return The Address Of The Newly Allocate Page */
-					spinUnlock(&fkpSpinLock);
+					spinUnlock(&g_fkp_spin_lock);
 					return ((void *)((x * (PAGE_SIZE * PD_ENTRIES)) + (y * PAGE_SIZE)));
 				}
 			}
 		}
 	}
 	/* If No Free Page Was Found Return NULL */
-	spinUnlock(&fkpSpinLock);
+	spinUnlock(&g_fkp_spin_lock);
 	return (0x0);
 }
 
@@ -659,7 +689,8 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	if (old < VMM_USER_START)
 	{
 		kprintf("obreak: vm_daddr=0x%X vm_dsize=%u — not initialized\n",
-		        (uint32_t)td->vm_daddr, (uint32_t)td->vm_dsize);
+		        (uint32_t)td->vm_daddr,
+		        (uint32_t)td->vm_dsize);
 		td->td_retval[0] = -1;
 		return (EINVAL);
 	}
@@ -695,7 +726,7 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	}
 	else if (new < old)
 	{
-		uint32_t *pageDir   = (uint32_t *)PD_BASE_ADDR;
+		uint32_t *pageDir = (uint32_t *)PD_BASE_ADDR;
 		uint32_t *pageTable = 0x0;
 
 		for (i = new; i < old; i += PAGE_SIZE)
@@ -725,7 +756,9 @@ int obreak(struct thread *td, struct obreak_args *uap)
 
 		asm volatile("movl %%cr3, %%eax\n\t"
 		             "movl %%eax, %%cr3\n\t"
-		             : : : "eax", "memory");
+		             :
+		             :
+		             : "eax", "memory");
 
 		td->td_retval[0] = new;
 	}

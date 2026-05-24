@@ -63,65 +63,68 @@ extern char _end[];
  02/20/2004 - Made It Report Real And Available Memory
 
  ************************************************************************/
-int vmm_memMapInit() {
-  int i = 0x0;
-  uint32_t kernel_start_page, bitmap_end_page;
-  uint32_t bitmap_size;
+int vmm_memMapInit()
+{
+	int i = 0x0;
+	uint32_t kernel_start_page, bitmap_end_page;
+	uint32_t bitmap_size;
 
-  /* Count System Memory */
-  numPages = countMemory();
+	/* Count System Memory */
+	numPages = countMemory();
 
-  /*
-   * Place the page bitmap immediately after the kernel image (page-aligned).
-   * This makes the layout RAM-size-independent: with N pages the bitmap is
-   * N*sizeof(mMap) bytes, and free pages begin right after it regardless of
-   * how much RAM is installed.
-   */
-  vmm_bitmap_phys = ((uint32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
-  vmmMemoryMap    = (mMap *)vmm_bitmap_phys;
+	/*
+	 * Place the page bitmap immediately after the kernel image (page-aligned).
+	 * This makes the layout RAM-size-independent: with N pages the bitmap is
+	 * N*sizeof(mMap) bytes, and free pages begin right after it regardless of
+	 * how much RAM is installed.
+	 */
+	vmm_bitmap_phys = ((uint32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
+	vmmMemoryMap = (mMap *)vmm_bitmap_phys;
 
-  bitmap_size     = (uint32_t)numPages * sizeof(mMap);
-  bitmap_end_page = (vmm_bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE;
+	bitmap_size = (uint32_t)numPages * sizeof(mMap);
+	bitmap_end_page = (vmm_bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE;
 
-  /* Initialize every entry — bitmap lives in raw RAM, not in BSS, so we
-   * must not assume it is zeroed. */
-  for (i = 0x0; i < numPages; i++) {
-    vmmMemoryMap[i].cowCounter = 0x0;
-    vmmMemoryMap[i].status     = memNotavail;
-    vmmMemoryMap[i].pid        = vmmID;
-    vmmMemoryMap[i].pageAddr   = i * PAGE_SIZE;
-  }
+	/* Initialize every entry — bitmap lives in raw RAM, not in BSS, so we
+	 * must not assume it is zeroed. */
+	for (i = 0x0; i < numPages; i++)
+	{
+		vmmMemoryMap[i].cowCounter = 0x0;
+		vmmMemoryMap[i].status = memNotavail;
+		vmmMemoryMap[i].pid = vmmID;
+		vmmMemoryMap[i].pageAddr = i * PAGE_SIZE;
+	}
 
-  /*
-   * Free page ranges:
-   *  [0x100000, kernel_start): RAM below the kernel (former bitmap staging area)
-   *  [bitmap_end, numPages*PAGE_SIZE): all RAM above the bitmap
-   *
-   * The first 1 MB (0x0–0xFFFFF) stays reserved: ISA devices, VGA, BIOS.
-   */
-  kernel_start_page = ((uint32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
+	/*
+	 * Free page ranges:
+	 *  [0x100000, kernel_start): RAM below the kernel (former bitmap staging area)
+	 *  [bitmap_end, numPages*PAGE_SIZE): all RAM above the bitmap
+	 *
+	 * The first 1 MB (0x0–0xFFFFF) stays reserved: ISA devices, VGA, BIOS.
+	 */
+	kernel_start_page = ((uint32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
 
-  for (i = 0x100; i < (int)kernel_start_page; i++) {
-    vmmMemoryMap[i].status = memAvail;
-    freePages++;
-  }
+	for (i = 0x100; i < (int)kernel_start_page; i++)
+	{
+		vmmMemoryMap[i].status = memAvail;
+		freePages++;
+	}
 
-  for (i = (int)bitmap_end_page; i < numPages; i++) {
-    vmmMemoryMap[i].status = memAvail;
-    freePages++;
-  }
+	for (i = (int)bitmap_end_page; i < numPages; i++)
+	{
+		vmmMemoryMap[i].status = memAvail;
+		freePages++;
+	}
 
-  if (systemVitals)
-    systemVitals->freePages = freePages;
+	if (systemVitals)
+		systemVitals->freePages = freePages;
 
-  /* Print Out Amount Of Memory */
-  kprintf("Real Memory:      %iKB\n", numPages * 4);
-  kprintf("Available Memory: %iKB\n", freePages * 4);
-  kprintf("vmm: bitmap phys=0x%X pages=%i end_page=%i\n",
-      vmm_bitmap_phys, numPages, bitmap_end_page);
+	/* Print Out Amount Of Memory */
+	kprintf("Real Memory:      %iKB\n", numPages * 4);
+	kprintf("Available Memory: %iKB\n", freePages * 4);
+	kprintf("vmm: bitmap phys=0x%X pages=%i end_page=%i\n", vmm_bitmap_phys, numPages, bitmap_end_page);
 
-  /* Return */
-  return (0);
+	/* Return */
+	return (0);
 }
 
 /************************************************************************
@@ -133,107 +136,112 @@ int vmm_memMapInit() {
  02/20/2004 - Inspect For Quality And Approved
 
  ************************************************************************/
-int countMemory() {
-  register uInt32 *mem = 0x0;
-  unsigned long memCount = -1, tempMemory = 0x0;
-  unsigned short memKb = 8;
-  unsigned char irq1State, irq2State;
-  unsigned long cr0 = 0x0;
+int countMemory()
+{
+	register uInt32 *mem = 0x0;
+	unsigned long memCount = -1, tempMemory = 0x0;
+	unsigned short memKb = 8;
+	unsigned char irq1State, irq2State;
+	unsigned long cr0 = 0x0;
 
-  /*
-   * Save The States Of Both IRQ 1 And 2 So We Can Turn Them Off And Restore
-   * Them Later
-   */
-  irq1State = inportByte(0x21);
-  irq2State = inportByte(0xA1);
+	/*
+	 * Save The States Of Both IRQ 1 And 2 So We Can Turn Them Off And Restore
+	 * Them Later
+	 */
+	irq1State = inportByte(0x21);
+	irq2State = inportByte(0xA1);
 
-  /* Turn Off IRQ 1 And 2 To Prevent Chances Of Faults While Examining Memory */
-  outportByte(0x21, 0xFF);
-  outportByte(0xA1, 0xFF);
+	/* Turn Off IRQ 1 And 2 To Prevent Chances Of Faults While Examining Memory */
+	outportByte(0x21, 0xFF);
+	outportByte(0xA1, 0xFF);
 
-  /* Save The State Of Register CR0 */
-  cr0 = rcr0();
+	/* Save The State Of Register CR0 */
+	cr0 = rcr0();
 
-  /*
-   asm volatile (
-   "movl %%cr0, %%ebx\n"
-   : "=a" (cr0)
-   :
-   : "ebx"
-   );
-   */
+	/*
+	 asm volatile (
+	 "movl %%cr0, %%ebx\n"
+	 : "=a" (cr0)
+	 :
+	 : "ebx"
+	 );
+	 */
 
-  asm volatile ("wbinvd");
+	asm volatile("wbinvd");
 
-  load_cr0(cr0 | 0x00000001 | 0x40000000 | 0x20000000);
+	load_cr0(cr0 | 0x00000001 | 0x40000000 | 0x20000000);
 
-  /*
-   asm volatile (
-   "movl %%ebx, %%cr0\n"
-   :
-   : "a" (cr0 | 0x00000001 | 0x40000000 | 0x20000000)
-   : "ebx"
-   );
-   */
+	/*
+	 asm volatile (
+	 "movl %%ebx, %%cr0\n"
+	 :
+	 : "a" (cr0 | 0x00000001 | 0x40000000 | 0x20000000)
+	 : "ebx"
+	 );
+	 */
 
-  while (memKb < 4096 && memCount != 0) {
-    memKb++;
+	while (memKb < 4096 && memCount != 0)
+	{
+		memKb++;
 
-    if (memCount == -1)
-      memCount = 8388608;
-    else
-      memCount += 1024 * 1024;
+		if (memCount == -1)
+			memCount = 8388608;
+		else
+			memCount += 1024 * 1024;
 
-    mem = (uInt32 *) memCount;
+		mem = (uInt32 *)memCount;
 
-    tempMemory = *mem;
+		tempMemory = *mem;
 
-    *mem = 0x55AA55AA;
+		*mem = 0x55AA55AA;
 
-    asm("": : :"memory");
+		asm("" : : : "memory");
 
-    if (*mem != 0x55AA55AA) {
-      memCount = 0;
-    }
-    else {
-      *mem = 0xAA55AA55;
-      asm("": : :"memory");
-      if (*mem != 0xAA55AA55) {
-        memCount = 0;
-      }
-    }
-    asm("": : :"memory");
-    *mem = tempMemory;
-  }
+		if (*mem != 0x55AA55AA)
+		{
+			memCount = 0;
+		}
+		else
+		{
+			*mem = 0xAA55AA55;
+			asm("" : : : "memory");
+			if (*mem != 0xAA55AA55)
+			{
+				memCount = 0;
+			}
+		}
+		asm("" : : : "memory");
+		*mem = tempMemory;
+	}
 
-  asm("nop");
+	asm("nop");
 
-  //MrOlsen (2016-01-10) NOTE: I don't like this but I start incrementing form the start.
-  memKb--;
+	// MrOlsen (2016-01-10) NOTE: I don't like this but I start incrementing form the start.
+	memKb--;
 
-  asm("nop");
+	asm("nop");
 
-  load_cr0(cr0);
+	load_cr0(cr0);
 
-  /*
-   asm volatile (
-   "movl %%ebx, %%cr0\n"
-   :
-   : "a" (cr0)
-   : "ebx"
-   );
-   */
+	/*
+	 asm volatile (
+	 "movl %%ebx, %%cr0\n"
+	 :
+	 : "a" (cr0)
+	 : "ebx"
+	 );
+	 */
 
-  asm("nop");
+	asm("nop");
 
-  /* Restore States For Both IRQ 1 And 2 */
-  outportByte(0x21, irq1State);
-  outportByte(0xA1, irq2State);
+	/* Restore States For Both IRQ 1 And 2 */
+	outportByte(0x21, irq1State);
+	outportByte(0xA1, irq2State);
 
-  asm("nop");
+	asm("nop");
 
-  /* Return Amount Of Memory In Pages */
-  return ((memKb * 1024 * 1024) / PAGE_SIZE);
+	/* Return Amount Of Memory In Pages */
+	return ((memKb * 1024 * 1024) / PAGE_SIZE);
 }
 
 /************************************************************************
@@ -246,53 +254,56 @@ int countMemory() {
  Notes:
 
  ************************************************************************/
-uint32_t vmm_findFreePage(pidType pid) {
+uint32_t vmm_findFreePage(pidType pid)
+{
 
-  int i = 0x0;
-  uint32_t evicted = 0x0;
+	int i = 0x0;
+	uint32_t evicted = 0x0;
 
-  /* Lets Look For A Free Page */
-  if (pid < sysID)
-    kpanic("Error: invalid PID %i\n", pid);
+	/* Lets Look For A Free Page */
+	if (pid < sysID)
+		kpanic("Error: invalid PID %i\n", pid);
 
 retry:
-  spinLock(&vmmSpinLock);
+	spinLock(&vmmSpinLock);
 
-  for (i = 0; i < numPages; i++) {
+	for (i = 0; i < numPages; i++)
+	{
 
-    /*
-     * If We Found A Free Page Set It To Not Available After That Set Its Own
-     * And Return The Address
-     */
-    if ((vmmMemoryMap[i].status == memAvail) && (vmmMemoryMap[i].cowCounter == 0)) {
-      vmmMemoryMap[i].status = memNotavail;
-      vmmMemoryMap[i].pid = pid;
-      freePages--;
-      if (systemVitals)
-        systemVitals->freePages = freePages;
+		/*
+		 * If We Found A Free Page Set It To Not Available After That Set Its Own
+		 * And Return The Address
+		 */
+		if ((vmmMemoryMap[i].status == memAvail) && (vmmMemoryMap[i].cowCounter == 0))
+		{
+			vmmMemoryMap[i].status = memNotavail;
+			vmmMemoryMap[i].pid = pid;
+			freePages--;
+			if (systemVitals)
+				systemVitals->freePages = freePages;
 
-      spinUnlock(&vmmSpinLock);
-      return (vmmMemoryMap[i].pageAddr);
-    }
-  }
+			spinUnlock(&vmmSpinLock);
+			return (vmmMemoryMap[i].pageAddr);
+		}
+	}
 
-  spinUnlock(&vmmSpinLock);
+	spinUnlock(&vmmSpinLock);
 
-  /* No free pages — attempt to evict a page to swap. */
-  kprintf("vmm: OOM (pid %i) — attempting page eviction\n", pid);
-  evicted = swap_evict_page();
-  if (evicted != 0x0)
-    goto retry;
+	/* No free pages — attempt to evict a page to swap. */
+	kprintf("vmm: OOM (pid %i) — attempting page eviction\n", pid);
+	evicted = swap_evict_page();
+	if (evicted != 0x0)
+		goto retry;
 
-  /* Eviction failed or no swap device. */
-  kprintf("vmm: OOM — out of memory and swap (pid %i)\n", pid);
+	/* Eviction failed or no swap device. */
+	kprintf("vmm: OOM — out of memory and swap (pid %i)\n", pid);
 
-  if (pid == sysID)
-    kpanic("Out Of Memory — kernel has no swap fallback");
+	if (pid == sysID)
+		kpanic("Out Of Memory — kernel has no swap fallback");
 
-  sched_setStatus(pid, DEAD);
-  sched_yield();
-  return (0x0);
+	sched_setStatus(pid, DEAD);
+	sched_yield();
+	return (0x0);
 }
 
 /************************************************************************
@@ -304,39 +315,46 @@ retry:
  Notes:
 
  ************************************************************************/
-int freePage(uint32_t pageAddr) {
+int freePage(uint32_t pageAddr)
+{
 
-  int pageIndex = 0x0;
-  assert((pageAddr & 0xFFF) == 0x0);
+	int pageIndex = 0x0;
+	assert((pageAddr & 0xFFF) == 0x0);
 
-  /* Find The Page Index To The Memory Map */
-  pageIndex = (pageAddr / 4096);
+	/* Find The Page Index To The Memory Map */
+	pageIndex = (pageAddr / 4096);
 
-  if (pageIndex < 0 || pageIndex >= numPages) {
-    kprintf("freePage: addr 0x%X out of bounds (index %i numPages %i mmap 0x%X)\n",
-        pageAddr, pageIndex, numPages, (uint32_t)vmmMemoryMap);
-    return (-1);
-  }
+	if (pageIndex < 0 || pageIndex >= numPages)
+	{
+		kprintf("freePage: addr 0x%X out of bounds (index %i numPages %i mmap 0x%X)\n",
+		        pageAddr,
+		        pageIndex,
+		        numPages,
+		        (uint32_t)vmmMemoryMap);
+		return (-1);
+	}
 
-  /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
-  spinLock(&vmmSpinLock);
-  if (vmmMemoryMap[pageIndex].cowCounter == 0) {
-    /* Set Page As Avail So It Can Be Used Again */
-    vmmMemoryMap[pageIndex].status = memAvail;
-    vmmMemoryMap[pageIndex].cowCounter = 0x0;
-    vmmMemoryMap[pageIndex].pid = -2;
-    freePages++;
-    systemVitals->freePages = freePages;
-    spinUnlock(&vmmSpinLock);
-  }
-  else {
-    spinUnlock(&vmmSpinLock);
-    /* Adjust The COW Counter */
-    adjustCowCounter(((uint32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
-  }
+	/* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
+	spinLock(&vmmSpinLock);
+	if (vmmMemoryMap[pageIndex].cowCounter == 0)
+	{
+		/* Set Page As Avail So It Can Be Used Again */
+		vmmMemoryMap[pageIndex].status = memAvail;
+		vmmMemoryMap[pageIndex].cowCounter = 0x0;
+		vmmMemoryMap[pageIndex].pid = -2;
+		freePages++;
+		systemVitals->freePages = freePages;
+		spinUnlock(&vmmSpinLock);
+	}
+	else
+	{
+		spinUnlock(&vmmSpinLock);
+		/* Adjust The COW Counter */
+		adjustCowCounter(((uint32_t)vmmMemoryMap[pageIndex].pageAddr), -1);
+	}
 
-  /* Return */
-  return (0);
+	/* Return */
+	return (0);
 }
 
 /************************************************************************
@@ -351,36 +369,42 @@ int freePage(uint32_t pageAddr) {
  08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
  ************************************************************************/
-int adjustCowCounter(uInt32 baseAddr, int adjustment) {
+int adjustCowCounter(uInt32 baseAddr, int adjustment)
+{
 
-  int vmmMemoryMapIndex = (baseAddr / PAGE_SIZE);
+	int vmmMemoryMapIndex = (baseAddr / PAGE_SIZE);
 
-  assert((baseAddr & 0xFFF) == 0x0);
+	assert((baseAddr & 0xFFF) == 0x0);
 
-  if (vmmMemoryMapIndex < 0 || vmmMemoryMapIndex >= numPages) {
-    kprintf("adjustCowCounter: addr 0x%X out of bounds (index %i, numPages %i)\n", baseAddr, vmmMemoryMapIndex, numPages);
-    return (-1);
-  }
+	if (vmmMemoryMapIndex < 0 || vmmMemoryMapIndex >= numPages)
+	{
+		kprintf("adjustCowCounter: addr 0x%X out of bounds (index %i, numPages %i)\n",
+		        baseAddr,
+		        vmmMemoryMapIndex,
+		        numPages);
+		return (-1);
+	}
 
-  spinLock(&vmmSpinLock);
-  /* Adjust COW Counter */
-  vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
+	spinLock(&vmmSpinLock);
+	/* Adjust COW Counter */
+	vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
 
-  if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter <= 0) {
+	if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter <= 0)
+	{
 
-    if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter < 0)
-      kprintf("ERROR: Why is COW less than 0");
+		if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter < 0)
+			kprintf("ERROR: Why is COW less than 0");
 
-    vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
-    vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
-    vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
-    freePages++;
-    systemVitals->freePages = freePages;
-  }
+		vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
+		vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
+		vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
+		freePages++;
+		systemVitals->freePages = freePages;
+	}
 
-  spinUnlock(&vmmSpinLock);
-  /* Return */
-  return (0);
+	spinUnlock(&vmmSpinLock);
+	/* Return */
+	return (0);
 }
 
 /************************************************************************
@@ -395,33 +419,36 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 
  ************************************************************************/
 
-void vmm_freeProcessPages(pidType pid) {
-  int i = 0;
+void vmm_freeProcessPages(pidType pid)
+{
+	int i = 0;
 
-  spinLock(&vmmSpinLock);
+	spinLock(&vmmSpinLock);
 
-  /*
-   * By the time we are called, endTask() has already run
-   * vmm_cleanVirtualSpace(0x400000) while the dying task was still _current.
-   * That walk decremented every COW reference in PD[1..767] and freed every
-   * private user page.  All that remains here is to reclaim the physical pages
-   * used for page tables and the page directory itself, which vmm_cleanVirtualSpace
-   * zeroes out but does not free.
-   *
-   * Pages with cowCounter > 0 are owned by this pid but still shared with
-   * live children — leave them alone and let each child's own cleanup path
-   * free the page when the last reference drops.
-   */
-  for (i = 0; i < numPages; i++) {
-    if (vmmMemoryMap[i].pid == pid && vmmMemoryMap[i].cowCounter == 0) {
-      vmmMemoryMap[i].status = memAvail;
-      vmmMemoryMap[i].pid = vmmID;
-      freePages++;
-      systemVitals->freePages = freePages;
-    }
-  }
+	/*
+	 * By the time we are called, endTask() has already run
+	 * vmm_cleanVirtualSpace(0x400000) while the dying task was still _current.
+	 * That walk decremented every COW reference in PD[1..767] and freed every
+	 * private user page.  All that remains here is to reclaim the physical pages
+	 * used for page tables and the page directory itself, which vmm_cleanVirtualSpace
+	 * zeroes out but does not free.
+	 *
+	 * Pages with cowCounter > 0 are owned by this pid but still shared with
+	 * live children — leave them alone and let each child's own cleanup path
+	 * free the page when the last reference drops.
+	 */
+	for (i = 0; i < numPages; i++)
+	{
+		if (vmmMemoryMap[i].pid == pid && vmmMemoryMap[i].cowCounter == 0)
+		{
+			vmmMemoryMap[i].status = memAvail;
+			vmmMemoryMap[i].pid = vmmID;
+			freePages++;
+			systemVitals->freePages = freePages;
+		}
+	}
 
-  /* Return */
-  spinUnlock(&vmmSpinLock);
-  return;
+	/* Return */
+	spinUnlock(&vmmSpinLock);
+	return;
 }

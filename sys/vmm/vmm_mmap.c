@@ -51,7 +51,8 @@ int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 
 	vm_map_remove(&_current->vm_map, base, end);
 
-	for (uint32_t va = base; va < end; va += PAGE_SIZE) {
+	for (uint32_t va = base; va < end; va += PAGE_SIZE)
+	{
 		vmm_unmapPage(va, VMM_FREE);
 	}
 
@@ -77,7 +78,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			/* MAP_FIXED anonymous: caller specifies address; unmap any existing
 			 * mapping there, record the VMA, and let page faults back pages lazily. */
 			uint32_t map_base = (uint32_t)uap->addr & 0xFFFFF000;
-			uint32_t map_end  = map_base + round_page(uap->len);
+			uint32_t map_end = map_base + round_page(uap->len);
 			if (map_base < VMM_USER_START || map_end > VMM_USER_END)
 			{
 				td->td_retval[0] = -1;
@@ -85,8 +86,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			}
 			for (x = 0; x < (int)round_page(uap->len); x += 0x1000)
 				vmm_unmapPage(map_base + x, VMM_FREE);
-			vm_map_insert(&_current->vm_map, map_base, map_end,
-			    VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
+			vm_map_insert(&_current->vm_map, map_base, map_end, VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
 			td->td_retval[0] = (uint32_t)uap->addr;
 			return (0x0);
 		}
@@ -94,13 +94,16 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		/* Anonymous, no fixed address: reserve a VA range without backing pages. */
 		int npages = (int)(round_page(uap->len) / PAGE_SIZE);
 		void *mmap_tmp = vmm_reserve_anon_range(_current->id, npages);
-		if (mmap_tmp == NULL) {
+		if (mmap_tmp == NULL)
+		{
 			td->td_retval[0] = -1;
 			return (ENOMEM);
 		}
-		vm_map_insert(&_current->vm_map, (uintptr_t)mmap_tmp,
-		    (uintptr_t)mmap_tmp + round_page(uap->len),
-		    VM_PROT_RW, VM_MAP_ANON);
+		vm_map_insert(&_current->vm_map,
+		              (uintptr_t)mmap_tmp,
+		              (uintptr_t)mmap_tmp + round_page(uap->len),
+		              VM_PROT_RW,
+		              VM_MAP_ANON);
 		td->td_retval[0] = (int)mmap_tmp;
 		return (0x0);
 	}
@@ -109,9 +112,11 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 
 		getfd(td, &fd, uap->fd);
 
-		if (uap->addr == 0x0) {
+		if (uap->addr == 0x0)
+		{
 			tmp = (char *)vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);
-		} else
+		}
+		else
 		{
 
 			for (x = 0x0; x < round_page(uap->len); x += 0x1000)
@@ -120,7 +125,11 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 				vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
 
 				/* Make readonly and read/write !!! */
-				if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
+				if (vmm_remapPage(vmm_findFreePage(_current->id),
+				                  (((uint32_t)uap->addr & 0xFFFFF000) + x),
+				                  PAGE_DEFAULT,
+				                  _current->id,
+				                  0) == 0x0)
 					K_PANIC("Remap Page Failed");
 			}
 			// kprintf("(tmp1: 0x%X)", tmp);
@@ -133,9 +142,10 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 
 		td->td_retval[0] = (uint32_t)tmp;
 
-		if (td->td_retval[0] == (caddr_t)-1) {
+		if (td->td_retval[0] == (caddr_t)-1)
+		{
 			kpanic("MMAP_FAILED");
-}
+		}
 	}
 	return (0x0);
 }

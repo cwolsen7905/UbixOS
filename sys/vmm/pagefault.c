@@ -39,11 +39,11 @@
 #include <sys/trap.h>
 #include <string.h>
 
-static struct spinLock pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock g_page_fault_spin_lock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
 
- Function:    void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp);
+ Function:    void vmm_pageFault(uInt32 mem_addr,uInt32 eip,uInt32 esp);
  Description: This is the page fault handler, it will handle COW and trap all other
  exceptions and segfault the thread.
 
@@ -56,19 +56,19 @@ static struct spinLock pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
  cpu is a waste of resources but for now it prevents errors.
 
  *****************************************************************************************/
-/* void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) { */
+/* void vmm_pageFault(uInt32 mem_addr,uInt32 eip,uInt32 esp) { */
 void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 {
-	uInt32 i = 0x0, pageTableIndex = 0x0, pageDirectoryIndex = 0x0;
-	uInt32 *pageDir = 0x0, *pageTable = 0x0;
+	uInt32 i = 0x0, page_table_index = 0x0, page_directory_index = 0x0;
+	uInt32 *page_dir = 0x0, *page_table = 0x0;
 	uInt32 *src = 0x0, *dst = 0x0;
 
 	uint32_t esp = frame->tf_esp;
 	uint32_t eip = frame->tf_eip;
-	uint32_t memAddr = cr2;
+	uint32_t mem_addr = cr2;
 
 	/* Try to aquire lock otherwise spin till we do */
-	spinLock(&pageFaultSpinLock);
+	spinLock(&g_page_fault_spin_lock);
 
 	/*
 	 * VM86 (BIOS) tasks may fault on MMIO or BDA addresses not in the kernel
@@ -76,85 +76,95 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	 */
 	if (_current->oInfo.v86Task)
 	{
-		uint32_t physPage = memAddr & 0xFFFFF000;
-		if (vmm_remapPage(physPage, physPage, KERNEL_PAGE_DEFAULT, _current->id, 1) == 0)
+		uint32_t phys_page = mem_addr & 0xFFFFF000;
+		if (vmm_remapPage(phys_page, phys_page, KERNEL_PAGE_DEFAULT, _current->id, 1) == 0)
 		{
-			kprintf("v86 pageFault: remap failed for 0x%X, killing task\n", memAddr);
-			spinUnlock(&pageFaultSpinLock);
+			kprintf("v86 pageFault: remap failed for 0x%X, killing task\n", mem_addr);
+			spinUnlock(&g_page_fault_spin_lock);
 			sched_dead(_current);
 			sched_yield();
 			return;
 		}
-		spinUnlock(&pageFaultSpinLock);
+		spinUnlock(&g_page_fault_spin_lock);
 		return;
 	}
 
 	/* Set page dir pointer to the address of the visable page directory */
-	pageDir = (uint32_t *)PD_BASE_ADDR;
+	page_dir = (uint32_t *)PD_BASE_ADDR;
 
 	/* NULL dereference: deliver SIGSEGV to user, kpanic in kernel. */
-	if (memAddr == 0x0)
+	if (mem_addr == 0x0)
 	{
-		kprintf("Segfault At Address: [0x%X], ESP: [0x%X], PID: [%i], EIP: [0x%X]\n", memAddr, esp, _current->id, eip);
-		if ((frame->tf_cs & 3) == 3) {
-			spinUnlock(&pageFaultSpinLock);
-			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+		kprintf("Segfault At Address: [0x%X], ESP: [0x%X], PID: [%i], EIP: [0x%X]\n",
+		        mem_addr,
+		        esp,
+		        _current->id,
+		        eip);
+		if ((frame->tf_cs & 3) == 3)
+		{
+			spinUnlock(&g_page_fault_spin_lock);
+			signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_MAPERR);
 			signal_check(frame);
 			return;
 		}
-		spinUnlock(&pageFaultSpinLock);
+		spinUnlock(&g_page_fault_spin_lock);
 		kpanic("Error We Wrote To 0x0\n");
 	}
 
 	/* Calculate The Page Directory Index */
-	pageDirectoryIndex = PD_INDEX(memAddr);
+	page_directory_index = PD_INDEX(mem_addr);
 
 	/* Calculate The Page Table Index     */
-	pageTableIndex = PT_INDEX(memAddr);
+	page_table_index = PT_INDEX(mem_addr);
 
 	/* UBU - This is a temporary routine for handling access to a page of a non existant page table */
-	if (pageDir[pageDirectoryIndex] == 0x0)
+	if (page_dir[page_directory_index] == 0x0)
 	{
 		/* Stack growth across a page-directory boundary: allocate a new PT. */
-		if ((frame->tf_cs & 3) == 3 &&
-		    memAddr < esp &&
-		    memAddr >= (esp - 0x800000) &&
-		    memAddr >= 0x10000000U)
+		if ((frame->tf_cs & 3) == 3 && mem_addr < esp && mem_addr >= (esp - 0x800000) && mem_addr >= 0x10000000U)
 		{
-			uint32_t newPage = vmm_findFreePage(_current->id);
-			if (newPage != 0x0 &&
-			    vmm_remapPage(newPage, memAddr & 0xFFFFF000, PAGE_DEFAULT, _current->id, 0) != 0x0)
+			uint32_t new_page = vmm_findFreePage(_current->id);
+			if (new_page != 0x0 &&
+			    vmm_remapPage(new_page, mem_addr & 0xFFFFF000, PAGE_DEFAULT, _current->id, 0) != 0x0)
 			{
-				memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+				memset((void *)(mem_addr & 0xFFFFF000), 0, PAGE_SIZE);
 				asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
-				spinUnlock(&pageFaultSpinLock);
+				spinUnlock(&g_page_fault_spin_lock);
 				return;
 			}
 		}
 
 		/* Lazy anonymous VMA: PT not yet allocated — vmm_remapPage will create it. */
-		if ((frame->tf_cs & 3) == 3) {
-			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, memAddr);
-			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON)) {
-				uInt32 newPage = vmm_findFreePage(_current->id);
-				if (newPage != 0x0 &&
-				    vmm_remapPage(newPage, memAddr & 0xFFFFF000, PAGE_DEFAULT, _current->id, 0) != 0x0) {
-					memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+		if ((frame->tf_cs & 3) == 3)
+		{
+			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, mem_addr);
+			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON))
+			{
+				uInt32 new_page = vmm_findFreePage(_current->id);
+				if (new_page != 0x0 &&
+				    vmm_remapPage(new_page, mem_addr & 0xFFFFF000, PAGE_DEFAULT, _current->id, 0) != 0x0)
+				{
+					memset((void *)(mem_addr & 0xFFFFF000), 0, PAGE_SIZE);
 					asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
-					spinUnlock(&pageFaultSpinLock);
+					spinUnlock(&g_page_fault_spin_lock);
 					return;
 				}
-				kprintf("pageFault: OOM (lazy anon PD) at 0x%X pid %i\n", memAddr, _current->id);
-				spinUnlock(&pageFaultSpinLock);
+				kprintf("pageFault: OOM (lazy anon PD) at 0x%X pid %i\n", mem_addr, _current->id);
+				spinUnlock(&g_page_fault_spin_lock);
 				endTask(_current->id);
 				return;
 			}
 		}
 
-		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
-		spinUnlock(&pageFaultSpinLock);
-		if ((frame->tf_cs & 3) == 3) {
-			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n",
+		        mem_addr,
+		        esp,
+		        _current->id,
+		        eip);
+		spinUnlock(&g_page_fault_spin_lock);
+		if ((frame->tf_cs & 3) == 3)
+		{
+			signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_MAPERR);
 			signal_check(frame);
 			return;
 		}
@@ -162,20 +172,20 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		return;
 	}
 
-	/* Set pageTable To Point To Virtual Address Of Page Table */
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * pageDirectoryIndex));
+	/* Set page_table To Point To Virtual Address Of Page Table */
+	page_table = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * page_directory_index));
 
 	/* Test if this is a COW on page */
-	if (((uint32_t)pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW)
+	if (((uint32_t)page_table[page_table_index] & PAGE_COW) == PAGE_COW)
 	{
 		/* Set Src To Base Address Of Page To Copy */
-		src = (uInt32 *)(memAddr & 0xFFFFF000);
+		src = (uInt32 *)(mem_addr & 0xFFFFF000);
 		/* Allocate A Free Page For Destination */
 		dst = (uInt32 *)vmm_getFreeVirtualPage(_current->id, 1, 0x1);
 		if (dst == 0x0)
 		{
-			kprintf("vmm_pageFault: out of virtual pages during COW at 0x%X\n", memAddr);
-			spinUnlock(&pageFaultSpinLock);
+			kprintf("vmm_pageFault: out of virtual pages during COW at 0x%X\n", mem_addr);
+			spinUnlock(&g_page_fault_spin_lock);
 			endTask(_current->id);
 			return;
 		}
@@ -185,51 +195,56 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 			dst[i] = src[i];
 		}
 		/* Adjust The COW Counter For Physical Page */
-		adjustCowCounter(((uInt32)pageTable[pageTableIndex] & 0xFFFFF000), -1);
+		adjustCowCounter(((uInt32)page_table[page_table_index] & 0xFFFFF000), -1);
 		/* Remap In New Page — use PAGE_DEFAULT, not the fault address offset */
-		pageTable[pageTableIndex] = (uInt32)(vmm_getPhysicalAddr((uInt32)dst) | PAGE_DEFAULT);
+		page_table[page_table_index] = (uInt32)(vmm_getPhysicalAddr((uInt32)dst) | PAGE_DEFAULT);
 		/* Unlink From Memory Map Allocated Page */
 		vmm_unmapPage((uInt32)dst, 1);
 	}
-	else if ((pageTable[pageTableIndex] & PAGE_SWAPPED) == PAGE_SWAPPED)
+	else if ((page_table[page_table_index] & PAGE_SWAPPED) == PAGE_SWAPPED)
 	{
 		/* Page was evicted to swap — bring it back in. */
-		uint32_t slot    = PTE_SWAP_SLOT(pageTable[pageTableIndex]);
-		uint32_t newPage = vmm_findFreePage(_current->id);
+		uint32_t slot = PTE_SWAP_SLOT(page_table[page_table_index]);
+		uint32_t new_page = vmm_findFreePage(_current->id);
 
-		if (newPage == 0x0) {
-			kprintf("pageFault: OOM during swap-in at 0x%X pid %i\n",
-			    memAddr, _current->id);
-			spinUnlock(&pageFaultSpinLock);
+		if (new_page == 0x0)
+		{
+			kprintf("pageFault: OOM during swap-in at 0x%X pid %i\n", mem_addr, _current->id);
+			spinUnlock(&g_page_fault_spin_lock);
 			endTask(_current->id);
 			return;
 		}
 
-		pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
-		asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
+		page_table[page_table_index] = new_page | PAGE_DEFAULT;
+		asm volatile("invlpg (%0)" : : "r"(mem_addr & 0xFFFFF000) : "memory");
 
-		if (swap_read_page(slot, (void *)(memAddr & 0xFFFFF000)) != 0) {
-			kprintf("pageFault: swap read error slot %u at 0x%X\n",
-			    slot, memAddr);
-			pageTable[pageTableIndex] = 0;
-			asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
-			freePage(newPage);
-			spinUnlock(&pageFaultSpinLock);
+		if (swap_read_page(slot, (void *)(mem_addr & 0xFFFFF000)) != 0)
+		{
+			kprintf("pageFault: swap read error slot %u at 0x%X\n", slot, mem_addr);
+			page_table[page_table_index] = 0;
+			asm volatile("invlpg (%0)" : : "r"(mem_addr & 0xFFFFF000) : "memory");
+			freePage(new_page);
+			spinUnlock(&g_page_fault_spin_lock);
 			endTask(_current->id);
 			return;
 		}
 
 		swap_free_slot(slot);
 	}
-	else if (pageTable[pageTableIndex] != 0x0)
+	else if (page_table[page_table_index] != 0x0)
 	{
 		kprintf("Security failed pagetable not user permission\n");
-		kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
-		kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
-		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
-		spinUnlock(&pageFaultSpinLock);
-		if ((frame->tf_cs & 3) == 3) {
-			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_ACCERR);
+		kprintf("page_dir: [0x%X]\n", page_dir[page_directory_index]);
+		kprintf("page_table: [0x%X:0x%X:0x%X:0x%X]\n",
+		        page_table[page_table_index],
+		        page_table_index,
+		        page_directory_index,
+		        eip);
+		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", mem_addr, esp, _current->id, eip);
+		spinUnlock(&g_page_fault_spin_lock);
+		if ((frame->tf_cs & 3) == 3)
+		{
+			signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_ACCERR);
 			signal_check(frame);
 			return;
 		}
@@ -237,39 +252,36 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		endTask(_current->id);
 		return;
 	}
-	else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr))
+	else if (mem_addr < (_current->td.vm_dsize + _current->td.vm_daddr))
 	{
-		uInt32 newPage = vmm_findFreePage(_current->id);
-		if (newPage == 0x0)
+		uInt32 new_page = vmm_findFreePage(_current->id);
+		if (new_page == 0x0)
 		{
-			kprintf("pageFault: OOM at 0x%X pid %i\n", memAddr, _current->id);
-			spinUnlock(&pageFaultSpinLock);
+			kprintf("pageFault: OOM at 0x%X pid %i\n", mem_addr, _current->id);
+			spinUnlock(&g_page_fault_spin_lock);
 			endTask(_current->id);
 			return;
 		}
-		pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
+		page_table[page_table_index] = new_page | PAGE_DEFAULT;
 		/* Flush TLB for this page so the zero-write goes to the new physical page */
-		asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
-		memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+		asm volatile("invlpg (%0)" : : "r"(mem_addr & 0xFFFFF000) : "memory");
+		memset((void *)(mem_addr & 0xFFFFF000), 0, PAGE_SIZE);
 	}
-	else if ((frame->tf_cs & 3) == 3 &&
-	    memAddr < esp &&
-	    memAddr >= (esp - 0x800000) &&
-	    memAddr >= 0x10000000U)
+	else if ((frame->tf_cs & 3) == 3 && mem_addr < esp && mem_addr >= (esp - 0x800000) && mem_addr >= 0x10000000U)
 	{
 		/* Stack growth: fault just below ESP — map a new zeroed page. */
-		uInt32 newPage = vmm_findFreePage(_current->id);
-		if (newPage == 0x0)
+		uInt32 new_page = vmm_findFreePage(_current->id);
+		if (new_page == 0x0)
 		{
-			kprintf("pageFault: OOM (stack) at 0x%X pid %i\n", memAddr, _current->id);
-			spinUnlock(&pageFaultSpinLock);
-			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+			kprintf("pageFault: OOM (stack) at 0x%X pid %i\n", mem_addr, _current->id);
+			spinUnlock(&g_page_fault_spin_lock);
+			signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_MAPERR);
 			signal_check(frame);
 			return;
 		}
-		pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
-		asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
-		memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+		page_table[page_table_index] = new_page | PAGE_DEFAULT;
+		asm volatile("invlpg (%0)" : : "r"(mem_addr & 0xFFFFF000) : "memory");
+		memset((void *)(mem_addr & 0xFFFFF000), 0, PAGE_SIZE);
 	}
 	else
 	{
@@ -278,37 +290,44 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 		 * a kernel syscall may access a lazy anon page before the user has
 		 * touched it, causing a ring-0 fault that also needs demand-zero. */
 		{
-			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, memAddr);
-			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON)) {
-				uInt32 newPage = vmm_findFreePage(_current->id);
-				if (newPage == 0x0) {
-					kprintf("pageFault: OOM (anon vma) at 0x%X pid %i\n",
-					    memAddr, _current->id);
-					spinUnlock(&pageFaultSpinLock);
-					if ((frame->tf_cs & 3) == 3) {
-						signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, mem_addr);
+			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON))
+			{
+				uInt32 new_page = vmm_findFreePage(_current->id);
+				if (new_page == 0x0)
+				{
+					kprintf("pageFault: OOM (anon vma) at 0x%X pid %i\n", mem_addr, _current->id);
+					spinUnlock(&g_page_fault_spin_lock);
+					if ((frame->tf_cs & 3) == 3)
+					{
+						signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_MAPERR);
 						signal_check(frame);
 						return;
 					}
 					endTask(_current->id);
 					return;
 				}
-				pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
-				asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
-				memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+				page_table[page_table_index] = new_page | PAGE_DEFAULT;
+				asm volatile("invlpg (%0)" : : "r"(mem_addr & 0xFFFFF000) : "memory");
+				memset((void *)(mem_addr & 0xFFFFF000), 0, PAGE_SIZE);
 				asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
-				spinUnlock(&pageFaultSpinLock);
+				spinUnlock(&g_page_fault_spin_lock);
 				return;
 			}
 		}
 
 		/* Access to non-mapped memory: SIGSEGV user, kpanic kernel. */
-		kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
-		kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
-		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", memAddr, esp, _current->id, eip);
-		spinUnlock(&pageFaultSpinLock);
-		if ((frame->tf_cs & 3) == 3) {
-			signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+		kprintf("page_dir: [0x%X]\n", page_dir[page_directory_index]);
+		kprintf("page_table: [0x%X:0x%X:0x%X:0x%X]\n",
+		        page_table[page_table_index],
+		        page_table_index,
+		        page_directory_index,
+		        eip);
+		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", mem_addr, esp, _current->id, eip);
+		spinUnlock(&g_page_fault_spin_lock);
+		if ((frame->tf_cs & 3) == 3)
+		{
+			signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_MAPERR);
 			signal_check(frame);
 			return;
 		}
@@ -321,6 +340,6 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	             "movl %eax,%cr3\n");
 
 	/* Release the spin lock */
-	spinUnlock(&pageFaultSpinLock);
+	spinUnlock(&g_page_fault_spin_lock);
 	return;
 }

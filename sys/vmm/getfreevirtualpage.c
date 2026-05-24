@@ -33,7 +33,7 @@
 #include <lib/kprintf.h>
 #include <string.h>
 
-static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock g_fvp_spin_lock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
@@ -48,17 +48,17 @@ static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
  ************************************************************************/
 void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
 {
-	int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
+	int y = 0, counter = 0, pd_i = 0x0, pt_i = 0x0;
 
-	uint32_t *pageDirectory = 0x0;
-	uint32_t *pageTable = 0x0;
+	uint32_t *page_directory = 0x0;
+	uint32_t *page_table = 0x0;
 
 	uint32_t start_page = 0x0;
 	uint32_t map_from = 0x0;
 
-	spinLock(&fvpSpinLock);
+	spinLock(&g_fvp_spin_lock);
 
-	pageDirectory = (uint32_t *)PD_BASE_ADDR;
+	page_directory = (uint32_t *)PD_BASE_ADDR;
 
 	/* Lets Search For A Free Page */
 	if (_current->oInfo.vmStart <= 0x100000)
@@ -78,31 +78,31 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
 
 /* Locate Initial Page Table */
 keepMapping:
-	pdI = PD_INDEX(start_page);
+	pd_i = PD_INDEX(start_page);
 
-	if (pdI > PD_INDEX(VMM_USER_END))
+	if (pd_i > PD_INDEX(VMM_USER_END))
 	{
 		map_from = 0x0;
 		goto doneMapping;
 	}
 
 	/* If Page Directory Is Not Yet Allocated Allocate It */
-	if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_directory[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
 	{
-		vmm_allocPageTable(pdI, pid);
+		vmm_allocPageTable(pd_i, pid);
 	}
 
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (pdI * PAGE_SIZE));
+	page_table = (uint32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
 
-	ptI = PT_INDEX(start_page);
+	pt_i = PT_INDEX(start_page);
 
-	for (y = ptI; y < PT_ENTRIES && counter < count; y++, counter++)
+	for (y = pt_i; y < PT_ENTRIES && counter < count; y++, counter++)
 	{
 
 		/* Loop Through The Page Table Find An UnAllocated Page */
-		if ((pageTable[y] & PAGE_PRESENT) == PAGE_PRESENT)
+		if ((page_table[y] & PAGE_PRESENT) == PAGE_PRESENT)
 		{
-			if ((pageTable[y] & PAGE_COW) == PAGE_COW)
+			if ((page_table[y] & PAGE_COW) == PAGE_COW)
 				kprintf("COW PAGE NOT CLEANED!");
 
 			start_page += PAGE_SIZE * (counter + 1);
@@ -131,14 +131,17 @@ gotPages:
 
 	for (counter = 0; counter < count; counter++)
 	{
-		if ((vmm_remapPage((uint32_t)vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) == 0x0)
-			kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
+		if ((vmm_remapPage(
+		        (uint32_t)vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) ==
+		    0x0)
+			kpanic(
+			    "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
 
 		bzero((void *)(map_from + (counter * PAGE_SIZE)), PAGE_SIZE);
 	}
 
 doneMapping:
-	spinUnlock(&fvpSpinLock);
+	spinUnlock(&g_fvp_spin_lock);
 	return (void *)map_from;
 }
 
@@ -150,18 +153,17 @@ doneMapping:
  *
  * Returns the start VA, or NULL if no suitable range exists.
  */
-void *
-vmm_reserve_anon_range(pidType pid, int count)
+void *vmm_reserve_anon_range(pidType pid, int count)
 {
-	int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
-	uint32_t *pageDirectory = 0x0;
-	uint32_t *pageTable = 0x0;
+	int y = 0, counter = 0, pd_i = 0x0, pt_i = 0x0;
+	uint32_t *page_directory = 0x0;
+	uint32_t *page_table = 0x0;
 	uint32_t start_page = 0x0;
 	uint32_t map_from = 0x0;
 
-	spinLock(&fvpSpinLock);
+	spinLock(&g_fvp_spin_lock);
 
-	pageDirectory = (uint32_t *)PD_BASE_ADDR;
+	page_directory = (uint32_t *)PD_BASE_ADDR;
 
 	if (_current->oInfo.vmStart <= 0x100000)
 		kpanic("Invalid vmStart\n");
@@ -169,29 +171,33 @@ vmm_reserve_anon_range(pidType pid, int count)
 	start_page = _current->oInfo.vmStart;
 
 keepMapping:
-	pdI = PD_INDEX(start_page);
+	pd_i = PD_INDEX(start_page);
 
-	if (pdI > PD_INDEX(VMM_USER_END)) {
+	if (pd_i > PD_INDEX(VMM_USER_END))
+	{
 		map_from = 0x0;
 		goto doneMapping;
 	}
 
 	/* If the PD entry doesn't exist yet, the range is free — no PT to check. */
-	if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) {
+	if ((page_directory[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
+	{
 		if (map_from == 0x0)
 			map_from = start_page;
 		counter += PT_ENTRIES - PT_INDEX(start_page);
 		if (counter >= count)
 			goto gotRange;
-		start_page = (pdI + 1) * (PT_ENTRIES * PAGE_SIZE);
+		start_page = (pd_i + 1) * (PT_ENTRIES * PAGE_SIZE);
 		goto keepMapping;
 	}
 
-	pageTable = (uint32_t *)(PT_BASE_ADDR + (pdI * PAGE_SIZE));
-	ptI = PT_INDEX(start_page);
+	page_table = (uint32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
+	pt_i = PT_INDEX(start_page);
 
-	for (y = ptI; y < PT_ENTRIES && counter < count; y++, counter++) {
-		if ((pageTable[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+	for (y = pt_i; y < PT_ENTRIES && counter < count; y++, counter++)
+	{
+		if ((page_table[y] & PAGE_PRESENT) == PAGE_PRESENT)
+		{
 			start_page += PAGE_SIZE * (counter + 1);
 			map_from = 0x0;
 			counter = 0;
@@ -201,7 +207,8 @@ keepMapping:
 			map_from = start_page;
 	}
 
-	if (counter < count) {
+	if (counter < count)
+	{
 		start_page += PAGE_SIZE * counter;
 		goto keepMapping;
 	}
@@ -210,6 +217,6 @@ gotRange:
 	_current->oInfo.vmStart = map_from + (count * PAGE_SIZE);
 
 doneMapping:
-	spinUnlock(&fvpSpinLock);
+	spinUnlock(&g_fvp_spin_lock);
 	return (void *)map_from;
 }
