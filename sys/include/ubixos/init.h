@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -39,7 +39,7 @@
 extern uint32_t _multiboot_info;
 
 #include <vmm/vmm.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <isa/8259.h>
 #include <sys/idt.h>
 #include <ubixos/sched.h>
@@ -48,24 +48,30 @@ extern uint32_t _multiboot_info;
 #include <ubixos/time.h>
 #include <net/net.h>
 #include <isa/ne2k.h>
-#include <devfs/devfs.h>
+#include <fs/devfs/devfs.h>
+#include <fs/procfs/procfs.h>
 #include <pci/pci.h>
-#include <ubixfs/ubixfs.h>
+#include <fs/ubixfs/ubixfs.h>
 #include <isa/fdc.h>
 #include <ubixos/tty.h>
-#include <ufs/ufs.h>
-#include <fat/fat.h>
+#include <fs/ufs/ufs.h>
+#include <fs/fat/fat.h>
 #include <ubixos/static.h>
 #include <pci/hd.h>
 #include <sys/kern_sysctl.h>
 #include <ubixos/vitals.h>
 #include <ubixos/syscalls.h>
-#include <pci/lnc.h>
+#include <pci/e1000.h>
 #include <isa/mouse.h>
+#include <isa/rs232.h>
+#include <sys/isa_bus.h>
 
 typedef int (*intFunctionPTR)(void);
 
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, mouseInit, time_init, pci_init, devfs_init, tty_init, ufs_init, fat_init, initHardDisk, initLNC, net_init };
+/* devfs_init must precede pci_init: ide_ubx_attach calls initHardDisk which calls devfs_makeNode */
+/* ufs_init/fat_init must precede pci_init: ums_bot_attach calls vfs_mount during USB enumeration */
+/* isa_bus_init replaces atkbd_init + mouseInit; runs after pit_init so ISRs find a valid IDT */
+intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, isa_bus_init, time_init, devfs_init, procfs_init, ufs_init, fat_init, pci_init, tty_init, rs232Init, net_init };
 
 //ne2k_init,
 //ubixfs_init,

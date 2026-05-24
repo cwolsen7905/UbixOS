@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -39,8 +39,9 @@
 #include <vmm/vmm.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 #include <assert.h>
+#include <sys/klog.h>
 #include <string.h>
 #include <sys/descrip.h>
 
@@ -96,9 +97,17 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 	int argc = argv_count(argv_in);
 
 	uint32_t *argv_tmp = (uint32_t *)kmalloc(
-	    sizeof(char *) * (argc + 2)); // + 1 For ARGC + 1 For NULL TERM
+	    sizeof(char *) * (argc + 2)); /* + 1 For ARGC + 1 For NULL TERM */
+
+	if (argv_tmp == 0x0)
+		return (-1);
 
 	char *args_tmp = (char *)kmalloc(ARGV_PAGE);
+
+	if (args_tmp == 0x0) {
+		kfree(argv_tmp);
+		return (-1);
+	}
 
 	argv_tmp[0] = argc;
 
@@ -108,9 +117,15 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 
 	for (i = 1; i <= argc; i++)
 	{
+		size_t alen = strlen(argv_in[i - 1]) + 1;
+		if (sp + alen > ARGV_PAGE) {
+			kfree(argv_tmp);
+			kfree(args_tmp);
+			return (-1);
+		}
 		argv_tmp[i] = (uint32_t)(args_tmp + sp);
 		strcpy((char *)argv_tmp[i], argv_in[i - 1]);
-		sp += strlen(argv_in[i - 1]) + 1;
+		sp += alen;
 	}
 
 	argv_tmp[i++] = 0x0;
@@ -137,9 +152,15 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 
 	for (i = 0; i < envc; i++)
 	{
+		size_t elen = strlen(envp_in[i]) + 1;
+		if (sp + elen > ENVP_PAGE) {
+			kfree(envp_tmp);
+			kfree(envs_tmp);
+			return (-1);
+		}
 		envp_tmp[i] = (uint32_t)(envs_tmp + sp);
 		strcpy((char *)envp_tmp[i], envp_in[i]);
-		sp += strlen(envp_in[i]) + 1;
+		sp += elen;
 	}
 	envp_tmp[i++] = 0x0;
 
@@ -162,7 +183,7 @@ static int elf_parse_dynamic(elf_file_t ef);
  kernel space so do not use out side of kernel space
 
  *****************************************************************************************/
-uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg)
+uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *name)
 {
 
 	kTask_t *newProcess = 0x0;
@@ -171,6 +192,9 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg)
 	/* Find A New Thread */
 	newProcess = schedNewTask();
 	assert(newProcess);
+
+	if (name != 0x0)
+		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
 	stackAddr =
 	    (uint32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
@@ -267,6 +291,11 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	uint32_t *tmp = 0x0;
 
+	uint32_t seg_data_addr   = 0x0;
+	uint32_t seg_data_npages = 0x0;
+	uint32_t ldAddr          = 0x0;
+	char    *interp          = 0x0;
+
 	Elf_Ehdr *binaryHeader = 0x0;
 
 	Elf_Phdr *programHeader = 0x0;
@@ -278,16 +307,44 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess = schedNewTask();
 	assert(newProcess);
 
-	newProcess->gid = 0x0;
-	newProcess->uid = 0x0;
-	newProcess->pgrp = newProcess->id;
+	newProcess->gid    = 0x0;
+	newProcess->uid    = 0x0;
+	newProcess->pgrp   = newProcess->id;
+	newProcess->sid    = newProcess->id;
+	newProcess->ct_tty = NULL;
+
+	{
+		const char *base = file, *p;
+		for (p = file; *p; p++)
+			if (*p == '/')
+				base = p + 1;
+		strncpy(newProcess->name, base, sizeof(newProcess->name) - 1);
+		size_t pos = 0;
+		int j;
+		for (j = 0; j < argc && pos < sizeof(newProcess->cmdline) - 1; j++) {
+			if (j > 0)
+				newProcess->cmdline[pos++] = ' ';
+			size_t alen = strlen(argv[j]);
+			if (pos + alen >= sizeof(newProcess->cmdline))
+				alen = sizeof(newProcess->cmdline) - pos - 1;
+			memcpy(newProcess->cmdline + pos, argv[j], alen);
+			pos += alen;
+		}
+		newProcess->cmdline[pos] = '\0';
+	}
+
 	newProcess->term = tty_find(console);
 
-	if (newProcess->term == 0x0)
-		kprintf("Error: invalid console\n");
+	if (newProcess->term == 0x0) {
+		kprintf("Error: invalid console %i for %s\n", console, file);
+		klog(KLOG_ERR, "execFile: invalid console %i for %s", console, file);
+		sched_setStatus(newProcess->id, DEAD);
+		return;
+	}
 
-	/* Set tty ownership */
+	/* Set tty ownership and foreground pgrp so tcgetpgrp() works. */
 	newProcess->term->owner = newProcess->id;
+	newProcess->term->t_pgrp = (int)newProcess->pgrp;
 
 	/* Now We Must Create A Virtual Space For This Proccess To Run In */
 	newProcess->md.md_tss.cr3 = (uint32_t)vmm_createVirtualSpace(newProcess->id);
@@ -307,20 +364,18 @@ void execFile(char *file, char **argv, char **envp, int console)
 	/* If We Dont Find the File Return */
 	if (newProcess->files[0] == 0x0)
 	{
-		/* Print error message and then print the attempted file in two
-		 * different kprintf */
 		kprintf("Exec Format Error: Binary File Not Executable1.\n");
-		// kprintf("Error: File not found: %s\n", file);
-		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 
 	if (newProcess->files[0]->perms == 0x0)
 	{
-		kprintf(
-		    "Exec Format Error: Binary File Not Executable2. (%s)\n",
-		    file);
+		kprintf("Exec Format Error: Binary File Not Executable2. (%s)\n", file);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 
@@ -337,6 +392,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kprintf("Exec Format Error: Binary File Not Executable3.\n");
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 	else if (binaryHeader->e_type != 2)
@@ -344,6 +401,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kprintf("Exec Format Error: Binary File Not Executable4.\n");
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 	else if (binaryHeader->e_entry == 0x300000)
@@ -351,10 +410,20 @@ void execFile(char *file, char **argv, char **envp, int console)
 		kprintf("Exec Format Error: Binary File Not Executable5.\n");
 		kfree(binaryHeader);
 		fclose(newProcess->files[0]);
+		asm volatile("movl %0,%%cr3" : : "r"(kernelPageDirectory) : "memory");
+		sched_setStatus(newProcess->id, DEAD);
 		return;
 	}
 
 	newProcess->td.abi = binaryHeader->e_ident[EI_OSABI];
+
+	if (binaryHeader->e_phnum > 256) {
+		kprintf("Exec Format Error: e_phnum too large (%u)\n", binaryHeader->e_phnum);
+		kfree(binaryHeader);
+		fclose(newProcess->files[0]);
+		sched_setStatus(newProcess->id, DEAD);
+		return;
+	}
 
 	/* Load The Program Header(s) */
 	programHeader =
@@ -367,14 +436,14 @@ void execFile(char *file, char **argv, char **envp, int console)
 	/* Loop Through The Header And Load Sections Which Need To Be Loaded */
 	for (i = 0; i < binaryHeader->e_phnum; i++)
 	{
-		if (programHeader[i].p_type == 1)
+		if (programHeader[i].p_type == PT_LOAD)
 		{
 			/*
 			 Allocate Memory Im Going To Have To Make This Load
 			 Memory With Correct Settings so it helps us in the
 			 future
 			 */
-			for (x = 0x0; x < (programHeader[i].p_memsz);
+			for (x = 0x0; x < (int)programHeader[i].p_memsz;
 			     x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
@@ -402,7 +471,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 			if ((programHeader[i].p_flags & 0x2) != 0x2)
 			{
-				for (x = 0x0; x < (programHeader[i].p_memsz);
+				for (x = 0x0; x < (int)programHeader[i].p_memsz;
 				     x += 0x1000)
 				{
 					if ((vmm_setPageAttributes(
@@ -418,13 +487,32 @@ void execFile(char *file, char **argv, char **envp, int console)
 						       __FILE__, __LINE__);
 				}
 			}
+			else
+			{
+				/* Writable segment — track as data for vm_daddr/vm_dsize */
+				seg_data_addr   = programHeader[i].p_vaddr & 0xFFFFF000;
+				seg_data_npages = (programHeader[i].p_memsz +
+				                   (programHeader[i].p_vaddr & 0xFFF) +
+				                   PAGE_SIZE - 1) >> PAGE_SHIFT;
+			}
+		}
+		else if (programHeader[i].p_type == PT_INTERP)
+		{
+			interp = (char *)kmalloc(programHeader[i].p_filesz);
+			if (interp == 0x0)
+				K_PANIC("execFile: kmalloc interp");
+			kern_fseek(newProcess->files[0], programHeader[i].p_offset, 0);
+			fread(interp, programHeader[i].p_filesz, 1, newProcess->files[0]);
+			ldAddr = ldEnable(interp, newProcess->id);
+			kfree(interp);
+			interp = 0x0;
 		}
 	}
 
 	/* Set Virtual Memory Start */
 	newProcess->oInfo.vmStart = 0x80000000;
-	newProcess->td.vm_daddr =
-	    (u_long)(programHeader[i].p_vaddr & 0xFFFFF000);
+	newProcess->td.vm_daddr  = (u_long)seg_data_addr;
+	newProcess->td.vm_dsize  = seg_data_npages;
 
 	/* Set Up Stack Space */
 	// MrOlsen (2016-01-14) FIX: is the stack start supposed to be
@@ -456,7 +544,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->md.md_tss.ss1 = 0x0;
 	newProcess->md.md_tss.esp2 = 0x0;
 	newProcess->md.md_tss.ss2 = 0x0;
-	newProcess->md.md_tss.eip = (long)binaryHeader->e_entry;
+	newProcess->md.md_tss.eip = ldAddr ? (long)ldAddr : (long)binaryHeader->e_entry;
 	newProcess->md.md_tss.eflags = 0x206;
 	newProcess->md.md_tss.esp = STACK_ADDR;
 	newProcess->md.md_tss.ebp = 0x0; // STACK_ADDR;
@@ -477,6 +565,11 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	// sched_setStatus(newProcess->id, READY);
 
+	uint32_t e_entry    = binaryHeader->e_entry;
+	uint32_t e_phoff    = binaryHeader->e_phoff;
+	uint32_t e_phnum    = binaryHeader->e_phnum;
+	uint32_t e_phentsize = binaryHeader->e_phentsize;
+
 	kfree(binaryHeader);
 	kfree(programHeader);
 	fclose(newProcess->files[0]);
@@ -484,7 +577,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	tmp = (uint32_t *)newProcess->md.md_tss.esp0 - 5;
 
-	tmp[0] = binaryHeader->e_entry;
+	tmp[0] = e_entry;
 	tmp[3] = STACK_ADDR - 12;
 
 	newProcess->md.md_tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
@@ -506,13 +599,25 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	sp = 0;
 
-	for (int x = 0; x < envc; x++)
+	for (int ex = 0; ex < envc; ex++)
 	{
-		tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-		strcpy((char *)tmp[x + i], envp[x]);
-		sp += strlen(envp[x]) + 1;
+		tmp[ex + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+		strcpy((char *)tmp[ex + i], envp[ex]);
+		sp += strlen(envp[ex]) + 1;
 	}
-	tmp[i + x] = 0x0;
+	tmp[i + envc] = 0x0;  /* envp null terminator */
+
+	/* auxv — required by musl's _dlstart to resolve the dynamic linker */
+	if (ldAddr) {
+		uint32_t *av = &tmp[i + envc + 1];
+		AUXARGS_ENTRY(av, AT_PHDR,   e_phoff + 0x08048000);
+		AUXARGS_ENTRY(av, AT_PHENT,  e_phentsize);
+		AUXARGS_ENTRY(av, AT_PHNUM,  e_phnum);
+		AUXARGS_ENTRY(av, AT_PAGESZ, PAGE_SIZE);
+		AUXARGS_ENTRY(av, AT_BASE,   LD_START);
+		AUXARGS_ENTRY(av, AT_ENTRY,  e_entry);
+		AUXARGS_ENTRY(av, AT_NULL,   0);
+	}
 
 	/* Build LDT For GS and FS */
 	vmm_unmapPage(VMM_USER_LDT, 1);
@@ -545,7 +650,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	             :
 	             : "d"((uint32_t *)(kernelPageDirectory)));
 
-	sprintf(newProcess->oInfo.cwd, "sys:/");
+	sprintf(newProcess->oInfo.cwd, "/");
 
 	// MrOlsen 2018 kprintf("execFile Return: 0x%X - %i\n",
 	// newProcess->md.md_tss.eip, newProcess->id);
@@ -597,6 +702,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	if (fd == 0x0)
 	{
+		kprintf("sys_exec: fopen failed for %s\n", file);
 		td->td_retval[0] = 2;
 		return (-1);
 	}
@@ -609,46 +715,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		return (-1);
 	}
 
-	/* Set Threads FD to open FD */
-	_current->files[0] = fd;
-
-	/* Copy In ARGS & ENVS Before Cleaning Virtual Space */
-	uint32_t *argv_out = 0x0;
-	char *args_out = 0x0;
-
-	args_copyin(argv, (char **)&argv_out, &args_out);
-
-	uint32_t *envp_out = 0x0;
-	char *envs_out = 0x0;
-
-	envs_copyin(envp, (char **)&envp_out, &envs_out);
-
-	//! Clean the virtual of COW pages left over from the fork
-	// vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr +
-	// (_current->td.vm_dsize << PAGE_SHIFT) ); MrOlsen 2017-12-15 - FIX! -
-	// This should be done before it was causing a lot of problems why did I
-	// free space after loading binary???? vmm_cleanVirtualSpace((uint32_t)
-	// 0x8048000);
-	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
-
-	/* Clear Stack */
-	// bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
-	for (x = 1; x <= 100; x++)
-	{
-		vmm_remapPage(vmm_findFreePage(_current->id),
-		              (STACK_ADDR + 1) - (x * 0x1000),
-		              PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
-		bzero((void *)((STACK_ADDR + 1) - (x * 0x1000)), 0x1000);
-	}
-
-	/* Load ELF Header */
+	/* Validate ELF header before destroying the current address space */
 	if ((binaryHeader = (Elf_Ehdr *)kmalloc(sizeof(Elf_Ehdr))) == 0x0)
 		K_PANIC("MALLOC FAILED");
 
 	fread(binaryHeader, sizeof(Elf_Ehdr), 1, fd);
-	/* Done Loading ELF Header */
 
-	/* Check If App Is A Real Application */
 	if ((binaryHeader->e_ident[1] != 'E') ||
 	    (binaryHeader->e_ident[2] != 'L') ||
 	    (binaryHeader->e_ident[3] != 'F'))
@@ -671,6 +743,59 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		kfree(binaryHeader);
 		fclose(fd);
 		return (-1);
+	}
+
+	/* Set Threads FD to open FD */
+	_current->files[0] = fd;
+
+	/* Copy In ARGS & ENVS Before Cleaning Virtual Space */
+	uint32_t *argv_out = 0x0;
+	char *args_out = 0x0;
+
+	args_copyin(argv, (char **)&argv_out, &args_out);
+
+	{
+		const char *base = file, *p;
+		for (p = file; *p; p++)
+			if (*p == '/')
+				base = p + 1;
+		strncpy(_current->name, base, sizeof(_current->name) - 1);
+		size_t pos = 0;
+		int j;
+		for (j = 1; j <= argc && pos < sizeof(_current->cmdline) - 1; j++) {
+			const char *arg = (const char *)argv_out[j];
+			if (j > 1)
+				_current->cmdline[pos++] = ' ';
+			size_t alen = strlen(arg);
+			if (pos + alen >= sizeof(_current->cmdline))
+				alen = sizeof(_current->cmdline) - pos - 1;
+			memcpy(_current->cmdline + pos, arg, alen);
+			pos += alen;
+		}
+		_current->cmdline[pos] = '\0';
+	}
+
+	uint32_t *envp_out = 0x0;
+	char *envs_out = 0x0;
+
+	envs_copyin(envp, (char **)&envp_out, &envs_out);
+
+	//! Clean the virtual of COW pages left over from the fork
+	// vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr +
+	// (_current->td.vm_dsize << PAGE_SHIFT) ); MrOlsen 2017-12-15 - FIX! -
+	// This should be done before it was causing a lot of problems why did I
+	// free space after loading binary???? vmm_cleanVirtualSpace((uint32_t)
+	// 0x8048000);
+	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
+
+	/* Clear Stack */
+	// bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
+	for (x = 1; x <= 100; x++)
+	{
+		vmm_remapPage(vmm_findFreePage(_current->id),
+		              (STACK_ADDR + 1) - (x * 0x1000),
+		              PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
+		bzero((void *)((STACK_ADDR + 1) - (x * 0x1000)), 0x1000);
 	}
 
 	/* Set Thread ABI */
@@ -827,12 +952,16 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 			        programHeader[i].p_filesz);
 #endif
 			interp = (char *)kmalloc(programHeader[i].p_filesz);
+			if (interp == 0x0)
+				K_PANIC("MALLOC FAILED");
 			kern_fseek(fd, programHeader[i].p_offset, 0);
 			fread((void *)interp, programHeader[i].p_filesz, 1, fd);
 #ifdef DEBUG_EXEC
 			kprintf("Interp: [%s]\n", interp);
 #endif
-			ldAddr = ldEnable(interp);
+			ldAddr = ldEnable(interp, _current->id);
+			kfree(interp);
+			interp = 0x0;
 			// ef->ld_addr = ldEnable();
 			break;
 		case PT_GNU_STACK:
@@ -861,10 +990,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	// iFrame->ebp = 0x0;
 
-	/* Always start at the binary's own entry point.
-	 * If ld.so was loaded, GOT[1]/GOT[2] will be patched below
-	 * so the PLT resolver trampoline calls _ld on first use. */
-	iFrame->eip = binaryHeader->e_entry;
+	/* For dynamically linked binaries, start at the interpreter entry so the
+	 * dynamic linker initialises relocations before handing off to the app. */
+	iFrame->eip = ldAddr ? (long)ldAddr : (long)binaryHeader->e_entry;
 
 	// iFrame->edx = 0x0;
 
@@ -944,10 +1072,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	tmp[i++] = 2;
 	tmp[i++] = tFD; /* AT_EXECFD: fd the binary can be re-read through */
-	_current->td.o_files[4] =
-	    tFP; // XXX - I had this -> _current->files[0]; not sure why changed
-	         // to tFP on 2018-11-09
-	// MrOlsen 2018kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
+	/* tFP is already in o_files[tFD] via falloc — no duplicate at slot 4 */
 
 	tmp[i++] = 3;
 	tmp[i++] = binaryHeader->e_phoff + 0x08048000;
@@ -992,8 +1117,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	tmp[i++] = 19; // NCPUS
 	tmp[i++] = 0x1;
 
-	tmp[i++] = 23; // STACKPROT
-	tmp[i++] = 0x3;
+	tmp[i++] = 23; // AT_SECURE (musl: 0 = not setuid, skip poll(fds,3,0) safety check)
+	tmp[i++] = 0x0;
 
 	tmp[i++] = 0;
 	tmp[i++] = 0;
@@ -1001,6 +1126,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	/* Now That We Relocated The Binary We Can Unmap And Free Header Info */
 	kfree(binaryHeader);
 	kfree(programHeader);
+	kfree(sectionHeader);
+	kfree(ef);
 	// irqEnable(0);
 	// asm("sti");
 
@@ -1057,7 +1184,22 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	taskLDT->baseHigh = data_addr >> 24;
 
 	_current->md.md_tss.gs = 0xF; // Select 0x8 + Ring 3 + LDT
-	_current->pgrp = _current->id;
+
+	/* Clear any temporary I/O boost — the new binary starts clean at its
+	 * QoS floor.  base_priority is preserved (QoS class survives exec). */
+	_current->boost_quanta = 0;
+	_current->priority     = _current->base_priority;
+
+	/*
+	 * POSIX: exec does not change the process group.  Keep _current->pgrp
+	 * as-is (inherits from fork / setpgid).  Only sync the tty's t_pgrp so
+	 * tcgetpgrp() reflects the current foreground group.
+	 */
+	{
+		tty_term *t = _current->ct_tty ? _current->ct_tty : _current->term;
+		if (t != NULL)
+			t->t_pgrp = (int)_current->pgrp;
+	}
 
 	return (0x0);
 }

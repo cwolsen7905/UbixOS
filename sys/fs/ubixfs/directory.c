@@ -27,103 +27,109 @@
 
 *****************************************************************************************/
 
-#include <ubixfs/ubixfs.h>
-#include <vfs/file.h>
-#include <vfs/mount.h>
+#include <fs/ubixfs/ubixfs.h>
+#include <sys/bus.h>
+#include <fs/vfs/file.h>
+#include <fs/vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
 
 static dirList_t dirList = 0x0;
 
-dirList_t 
-ubixFSLoadDir(char *data) {
-  dirList_t tmpDir = 0x0;
+dirList_t ubixFSLoadDir(char *data)
+{
+	dirList_t tmpDir = 0x0;
 
-  tmpDir = (dirList_t)kmalloc(sizeof(struct directoryList));
+	tmpDir = (dirList_t)kmalloc(sizeof(struct directoryList));
 
-  sprintf(tmpDir->dirName,"%s",data);
+	sprintf(tmpDir->dirName, "%s", data);
 
-  if (0x0 == dirList) {
-    dirList = tmpDir;
-    }
-  else {
-    tmpDir->next = dirList;
-    tmpDir->prev = 0x0;
-    dirList->prev = tmpDir;
-    dirList       = tmpDir;
-    }
+	if (0x0 == dirList)
+	{
+		dirList = tmpDir;
+	}
+	else
+	{
+		tmpDir->next = dirList;
+		tmpDir->prev = 0x0;
+		dirList->prev = tmpDir;
+		dirList = tmpDir;
+	}
 
-  if (!strcmp(":",data)) {
-    tmpDir->dirCache = (char *)kmalloc(0x4000);
-    }
+	if (!strcmp(":", data))
+	{
+		tmpDir->dirCache = (char *)kmalloc(0x4000);
+	}
 
-  return(tmpDir);
-  }
+	return (tmpDir);
+}
 
-int 
-addDirEntry(struct directoryEntry *dir,fileDescriptor_t *fd) {
-  uInt32 i = 0x0;
-  uInt32 entries = 0x0;
-  struct directoryEntry *tmp = 0x0;
+int addDirEntry(struct directoryEntry *dir, fileDescriptor_t *fd)
+{
+	uInt32 i = 0x0;
+	uInt32 entries = 0x0;
+	struct directoryEntry *tmp = 0x0;
 
-  tmp = (struct directoryEntry *)kmalloc(fd->size);
+	tmp = (struct directoryEntry *)kmalloc(fd->size);
 
-  readUbixFS(fd,(char *)tmp,fd->offset,fd->size);
-  entries = fd->size/sizeof(struct directoryEntry);
-  for (i=0;(tmp[i].attributes != 0x0) && (i < entries);i++);
+	readUbixFS(fd, (char *)tmp, fd->offset, fd->size);
+	entries = fd->size / sizeof(struct directoryEntry);
+	for (i = 0; (tmp[i].attributes != 0x0) && (i < entries); i++)
+		;
 
-  if (i == entries) {
-    tmp = (struct directoryEntry *)kmalloc(0x1000);
-    i = 0x0;
-    }
-  else {
-    fd->offset = 0x0;
-    }
-  memcpy(&tmp[i],dir,sizeof(struct directoryEntry));
-  
-  if (writeUbixFS(fd,(char *)tmp,fd->offset,fd->size) == 0x0) {
-    kprintf("Error Creating Directory\n");
-    }
-  
-  return(0x0);
-  }
+	if (i == entries)
+	{
+		tmp = (struct directoryEntry *)kmalloc(0x1000);
+		i = 0x0;
+	}
+	else
+	{
+		fd->offset = 0x0;
+	}
+	memcpy(&tmp[i], dir, sizeof(struct directoryEntry));
 
-int 
-ubixFSmkDir(char *directory,fileDescriptor_t *fd) {
-  int block = 0x0;
+	if (writeUbixFS(fd, (char *)tmp, fd->offset, fd->size) == 0x0)
+	{
+		kprintf("Error Creating Directory\n");
+	}
 
-  struct directoryEntry *dir   = 0x0;
-  struct directoryEntry *entry = 0x0;
-  struct ubixFSInfo *fsInfo    = fd->mp->fsInfo;
+	return (0x0);
+}
 
-  //kprintf("Creating Directory: %s",directory);
-  
-  block = getFreeBlocks(1,fd);
-  if (block != 0x0) {
-    dir   = (struct directoryEntry *)kmalloc(UBIXFS_BLOCKSIZE_BYTES);
-    entry = (struct directoryEntry *)kmalloc(sizeof(struct directoryEntry));
+int ubixFSmkDir(char *directory, fileDescriptor_t *fd)
+{
+	int block = 0x0;
 
-    entry->startCluster = block;
-    entry->size         = UBIXFS_BLOCKSIZE_BYTES;
-    entry->attributes   = typeDirectory;
-    entry->permissions  = 0xEAA;
-    sprintf(entry->fileName, directory);
+	struct directoryEntry *dir = 0x0;
+	struct directoryEntry *entry = 0x0;
+	struct ubixFSInfo *fsInfo = fd->mp->fsInfo;
 
-    //dir->attributes = typeDirectory;
-    //sprintf(dir->fileName,"Test Entry");
-    
-    fd->mp->device->devInfo->write(fd->mp->device->devInfo->info,
-                       dir,
-                       fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[block].realSector,
-                       blockSize);
-    addDirEntry(entry,fd);
-    kfree(dir);
-    kfree(entry);
-    }
+	// kprintf("Creating Directory: %s",directory);
 
-  return(0x0);
-  }
+	block = getFreeBlocks(1, fd);
+	if (block != 0x0)
+	{
+		dir = (struct directoryEntry *)kmalloc(UBIXFS_BLOCKSIZE_BYTES);
+		entry = (struct directoryEntry *)kmalloc(sizeof(struct directoryEntry));
+
+		entry->startCluster = block;
+		entry->size = UBIXFS_BLOCKSIZE_BYTES;
+		entry->attributes = typeDirectory;
+		entry->permissions = 0xEAA;
+		snprintf(entry->fileName, sizeof(entry->fileName), "%s", directory);
+
+		// dir->attributes = typeDirectory;
+		// sprintf(dir->fileName,"Test Entry");
+
+		fd->mp->device->dev_blk_ops->write(fd->mp->device, fd->mp->diskLabel->partitions[fd->mp->partition].pOffset + fsInfo->blockAllocationTable[block].realSector, blockSize, dir);
+		addDirEntry(entry, fd);
+		kfree(dir);
+		kfree(entry);
+	}
+
+	return (0x0);
+}
 
 /***
  $Log: directory.c,v $

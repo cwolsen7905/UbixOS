@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -60,16 +60,17 @@
  = 1   BCD counter
 
  *****************************************************************************************/
-int pit_init() {
-  outportByteP(0x43, 0x36);
-  outportByteP(0x40, ((1193180 / PIT_TIMER) & 0xFF));
-  outportByte(0x40, (((1193180 / PIT_TIMER) >> 8) & 0xFF));
+int pit_init()
+{
+	outportByteP(0x43, 0x36);
+	outportByteP(0x40, ((1193180 / PIT_TIMER) & 0xFF));
+	outportByte(0x40, (((1193180 / PIT_TIMER) >> 8) & 0xFF));
 
-  /* Print out information on the PIT */
-  kprintf("pit0 - Port [0x%X], Timer Hz: [%iHz]\n", 0x43, PIT_TIMER);
+	/* Print out information on the PIT */
+	kprintf("pit0: port=0x%X hz=%d\n", 0x43, PIT_TIMER);
 
-  /* Return so we know everything went well */
-  return (0x0);
+	/* Return so we know everything went well */
+	return (0x0);
 }
 
 /***
@@ -104,4 +105,3 @@ int pit_init() {
 
  END
  ***/
-

@@ -44,9 +44,15 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess = schedNewTask();
 
   /*
-   *
+   * Inherit QoS class from parent: fork propagates the base_priority floor
+   * (process-level QoS) but starts at that floor, not the parent's current
+   * (possibly temporarily boosted) priority.
+   */
+  newProcess->base_priority = _current->base_priority;
+  newProcess->priority      = _current->base_priority;
+
+  /*
    * Initalize New Task Information From Parrent
-   *
    */
 
   /* Set CWD */
@@ -55,22 +61,34 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   /* Set PPID */
   newProcess->ppid = _current->id;
 
-  /* Set PGRP */
-  newProcess->pgrp = _current->pgrp;
+  /* Set PGRP, SID, and controlling terminal (inherited from parent) */
+  newProcess->pgrp   = _current->pgrp;
+  newProcess->sid    = _current->sid;
+  newProcess->ct_tty = _current->ct_tty;
 
   /* Copy File Descriptor Table */
   //memcpy(newProcess->files, _current->files, sizeof(fileDescriptor_t *) * MAX_OFILES);
-  for (int i = 3; i < 64; i++)
+
+  /* Free the placeholder fds schedNewTask allocated for slots 0-2 */
+  for (int i = 0; i < 3; i++) {
+    if (newProcess->td.o_files[i]) {
+      kfree(newProcess->td.o_files[i]);
+      newProcess->td.o_files[i] = NULL;
+    }
+  }
+
+  /* Inherit all fds from parent (including stdin/stdout/stderr) */
+  for (int i = 0; i < O_FILES; i++)
     if (td->o_files[i]) {
       newProcess->td.o_files[i] = (struct file *)kmalloc(sizeof(struct file));
       memcpy(newProcess->td.o_files[i], td->o_files[i], sizeof(struct file));
       if (((struct file *)td->o_files[i])->fd) {
-      ((struct file *)newProcess->td.o_files[i])->fd = kmalloc(sizeof(fileDescriptor_t));
-      memcpy( ((struct file *)newProcess->td.o_files[i])->fd, ((struct file *)td->o_files[i])->fd, sizeof(fileDescriptor_t));
-      if (((struct file *)td->o_files[i])->fd->buffer) {
-        ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
-      memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, ((struct file *)td->o_files[i])->fd->buffer,  4096);
-      }
+        ((struct file *)newProcess->td.o_files[i])->fd = kmalloc(sizeof(fileDescriptor_t));
+        memcpy(((struct file *)newProcess->td.o_files[i])->fd, ((struct file *)td->o_files[i])->fd, sizeof(fileDescriptor_t));
+        if (((struct file *)td->o_files[i])->fd->buffer) {
+          ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
+          memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, ((struct file *)td->o_files[i])->fd->buffer, 4096);
+        }
       }
     }
 
@@ -111,18 +129,31 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  //kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->md.md_tss.esp0, newProcess->md.md_tss.esp, newProcess->md.md_tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
-
   newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
-  //kprintf( "Copied Mem Space! [0x%X]\n", newProcess->md.md_tss.cr3 );
+
+  /*
+   * Signal state must be cleared AFTER vmm_copyVirtualSpace.
+   * vmm_getFreeKernelPage and the parent's kernel heap share the same VA
+   * range (VMM_KERN_START..VMM_KERN_END).  A temporary double-mapping of
+   * the physical page backing sig_pending can occur during the COW walk,
+   * causing sig_pending to be overwritten with garbage.  Zeroing here
+   * guarantees a clean slate regardless of what vmm_copyVirtualSpace did.
+   */
+  /*
+   * Clear delivery state (pending signals, queued info) — POSIX requires
+   * the child start with no pending signals.  Signal dispositions (sigact)
+   * and the signal mask are inherited, not cleared.
+   */
+  newProcess->td.sig_pending = 0;
+  memset(newProcess->td.sig_code,  0, sizeof(newProcess->td.sig_code));
+  memset(newProcess->td.sig_extra, 0, sizeof(newProcess->td.sig_extra));
+  memcpy(newProcess->td.sigact, td->sigact, sizeof(newProcess->td.sigact));
+  memcpy(&newProcess->td.sigmask, &td->sigmask, sizeof(newProcess->td.sigmask));
 
   newProcess->parent = _current;
   _current->children++;
 
-  newProcess->state = FORK;
-  /* Fix gcc optimization problems */
-  while (((volatile kTask_t *)newProcess)->state == FORK)
-    sched_yield();
+  sched_ready(newProcess);
 
   /* Return Id of Proccess */
   td->td_retval[0] = newProcess->id;
@@ -143,7 +174,6 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
 
 /* Had to remove static though tihs function is only used in this file */
 int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi, long none, long ebx, long ecx, long edx, long eip, long cs, long eflags, long esp, long ss) {
-  volatile struct taskStruct * tmpProcPtr = newProcess;
   assert(newProcess);
   assert(_current);
 
@@ -153,7 +183,9 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
 
   newProcess->md.md_tss.eip = eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
-  newProcess->term = _current->term;
+  newProcess->term   = _current->term;
+  newProcess->sid    = _current->sid;
+  newProcess->ct_tty = _current->ct_tty;
   newProcess->uid = _current->uid;
   newProcess->gid = _current->gid;
   newProcess->md.md_tss.back_link = 0x0;
@@ -192,11 +224,8 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space!\n" );
 
-  newProcess->state = FORK;
+  sched_ready(newProcess);
 
-  /* Fix gcc optimization problems */
-  while (tmpProcPtr->state == FORK)
-    sched_yield();
   /* Return Id of Proccess */
   kprintf("Returning! [%i]", _current->id);
 

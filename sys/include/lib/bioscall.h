@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -45,21 +45,3 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
 void bios16Code();
 
 #endif
-
-/***
- $Log: bioscall.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:40  reddawg
- no message
-
- Revision 1.2  2004/05/21 15:00:27  reddawg
- Cleaned up
-
-
- END
- ***/

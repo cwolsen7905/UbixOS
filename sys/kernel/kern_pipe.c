@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -34,42 +34,51 @@
 #include <string.h>
 #include <lib/kmalloc.h>
 
-int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
-  int error = 0x0;
+int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args)
+{
+	int fd1 = 0x0;
+	int fd2 = 0x0;
 
-  int fd1 = 0x0;
-  int fd2 = 0x0;
+	struct file *nfp1 = 0x0;
+	struct file *nfp2 = 0x0;
 
-  struct file *nfp1 = 0x0;
-  struct file *nfp2 = 0x0;
+	struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
 
-  struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
+	if (pipeDesc == 0x0)
+	{
+		thr->td_retval[0] = -1;
+		return (-1);
+	}
 
-  if (pipeDesc == 0x0) {
-    thr->td_retval[0] = -1;
-    return (-1);
-  }
+	memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
 
-  memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
+	if (falloc(thr, &nfp1, &fd1) != 0 || nfp1 == 0x0) {
+		kfree(pipeDesc);
+		thr->td_retval[0] = -1;
+		return (-1);
+	}
+	if (falloc(thr, &nfp2, &fd2) != 0 || nfp2 == 0x0) {
+		fdestroy(thr, nfp1, fd1);
+		kfree(pipeDesc);
+		thr->td_retval[0] = -1;
+		return (-1);
+	}
 
-  error = falloc(thr, &nfp1, &fd1);
-  error = falloc(thr, &nfp2, &fd2);
+	nfp1->data = pipeDesc;
+	nfp2->data = pipeDesc;
 
-  nfp1->data = pipeDesc;
-  nfp2->data = pipeDesc;
+	nfp1->fd_type = 3;
+	nfp2->fd_type = 3;
 
-  nfp1->fd_type = 3;
-  nfp2->fd_type = 3;
+	pipeDesc->rFD = fd1;
+	pipeDesc->rfdCNT = 2;
+	pipeDesc->wFD = fd2;
+	pipeDesc->wfdCNT = 2;
 
-  pipeDesc->rFD = fd1;
-  pipeDesc->rfdCNT = 2;
-  pipeDesc->wFD = fd2;
-  pipeDesc->wfdCNT = 2;
+	args->fildes[0] = fd1;
+	args->fildes[1] = fd2;
 
-  args->fildes[0] = fd1;
-  args->fildes[1] = fd2;
+	thr->td_retval[0] = 0;
 
-  thr->td_retval[0] = 0;
-
-  return (0x0);
+	return (0x0);
 }

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -44,27 +44,3 @@ void keyboardHandler(struct trapframe *);
 void setLED();
 
 #endif
-
-/***
- $Log: atkbd.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:39  reddawg
- no message
-
- Revision 1.4  2004/07/29 21:32:16  reddawg
- My quick lunchs breaks worth of updates....
-
- Revision 1.3  2004/07/09 13:34:51  reddawg
- keyboard: keyboardInit to atkbd_init
- Adjusted initialization routines
-
- Revision 1.2  2004/05/21 14:57:16  reddawg
- Cleaned up
-
- END
- ***/

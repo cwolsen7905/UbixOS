@@ -37,11 +37,12 @@
 #include <vmm/paging.h>
 #include <string.h>
 
-uint32_t vesa_fb_paddr = 0;
-uint16_t vesa_pitch    = 0;
-uint16_t vesa_width    = 0;
-uint16_t vesa_height   = 0;
-uint8_t  vesa_bpp      = 0;
+uint32_t vesa_fb_paddr    = 0;
+uint16_t vesa_pitch       = 0;
+uint16_t vesa_width       = 0;
+uint16_t vesa_height      = 0;
+uint8_t  vesa_bpp         = 0;
+uint16_t vesa_current_mode = 0;
 
 int vesa_init(uint16_t mode) {
   struct biosRegs r;
@@ -105,15 +106,35 @@ int vesa_init(uint16_t mode) {
     return -1;
   }
 
-  vesa_fb_paddr = mi->PhysBasePtr;
-  vesa_pitch    = mi->BytesPerScanLine;
-  vesa_width    = mi->XResolution;
-  vesa_height   = mi->YResolution;
-  vesa_bpp      = mi->BitsPerPixel;
+  vesa_fb_paddr     = mi->PhysBasePtr;
+  vesa_pitch        = mi->BytesPerScanLine;
+  vesa_width        = mi->XResolution;
+  vesa_height       = mi->YResolution;
+  vesa_bpp          = mi->BitsPerPixel;
+  vesa_current_mode = mode;
 
   kprintf("vesa: mode 0x%X set OK — %dx%dx%d, LFB @ 0x%X, pitch=%d\n",
       mode, vesa_width, vesa_height, vesa_bpp, vesa_fb_paddr, vesa_pitch);
   return 0;
+}
+
+/*
+ * vesa_text_mode — switch the VGA adapter back to 80×25 text mode (mode 3).
+ * Uses INT 10h AX=0003h via the V86 bioscall trampoline.  Must only be called
+ * from normal task context (not from an ISR or the scheduler), because
+ * biosCall internally calls sched_yield() while the V86 task runs.
+ */
+void
+vesa_text_mode(void)
+{
+    biosCall(0x10, 0x0003, 0, 0, 0, 0, 0, 0, 0);
+    /* Clear the saved VESA dimensions so sys_mapfb knows VESA is gone */
+    vesa_fb_paddr = 0;
+    vesa_pitch    = 0;
+    vesa_width    = 0;
+    vesa_height   = 0;
+    vesa_bpp      = 0;
+    kprintf("vesa: switched to text mode\n");
 }
 
 void vesa_map_fb(void) {

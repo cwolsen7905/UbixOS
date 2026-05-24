@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -101,5 +101,33 @@ struct sigaction {
 
 #define sa_handler      __sigaction_u.__sa_handler
 #define sa_sigaction    __sigaction_u.__sa_sigaction
+
+/* sa_flags values (FreeBSD-compatible) */
+#define SA_ONSTACK      0x0001  /* deliver on alternate signal stack */
+#define SA_RESTART      0x0002  /* restart syscall on signal return */
+#define SA_RESETHAND    0x0004  /* reset to SIG_DFL after delivery */
+#define SA_NOCLDSTOP    0x0008  /* no SIGCHLD when child stops */
+#define SA_NODEFER      0x0010  /* don't mask signal during handler */
+#define SA_NOCLDWAIT    0x0020  /* no zombies on child death */
+#define SA_SIGINFO      0x0040  /* handler gets siginfo_t arg */
+
+/* si_code values — match musl/Linux so musl-compiled programs compare correctly */
+#define SI_USER         0       /* kill() or raise() */
+#define SI_KERNEL       128     /* kernel-generated (musl value; FreeBSD uses 0x10000) */
+#define SI_QUEUE        (-1)    /* sigqueue() */
+#define SI_TIMER        (-2)    /* timer expiry */
+#define SI_TKILL        (-6)    /* tkill / tgkill */
+
+/* si_code values for SIGSEGV */
+#define SEGV_MAPERR     1       /* address not mapped */
+#define SEGV_ACCERR     2       /* invalid permissions for mapped object */
+
+/* si_code values for SIGBUS */
+#define BUS_ADRALN      1       /* invalid address alignment */
+
+/* SIG_DFL / SIG_IGN — stored in sa_handler */
+#define SIG_DFL         ((void (*)(int))0)
+#define SIG_IGN         ((void (*)(int))1)
+#define SIG_ERR         ((void (*)(int))-1)
 
 #endif /* END _SYS_SIGNAL_H */

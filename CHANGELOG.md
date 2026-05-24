@@ -9,6 +9,85 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.0-BETA] - 2026-05-24
+
+### Added
+- `contrib/libcxxabi/` — self-contained minimal Itanium C++ ABI (`cxxabi.cc`): `new`/`delete`, construction guards, pure/deleted virtual, `__dso_handle`. Builds `build/lib/libcxxabi.a`. (Phase 5)
+- `contrib/libcxx/` — LLVM libc++ 18.1.8 subset: `<string>`, `<vector>`, `<map>`, `<memory>`, `<algorithm>`, `<any>`, `<optional>`, `<variant>`, charconv/ryu. Builds `build/lib/libcxx.a`. Hand-written `__config_site` + `__assertion_handler`; GCC-16 `__decay` built-in patch applied. (Phase 6)
+- `share/mk/ubix.musl.cxx.prog.mk` — BSD make snippet for C++ programs using STL: sets `-std=c++20 -nostdinc -nostdinc++ -fno-rtti -fno-exceptions`, wires libcxx/libcxxabi/musl include paths and link group.
+- `include/ubix/mailbox.hh` — C++ RAII wrapper for MPI mailboxes (`ubix::Mailbox`); `owned_` flag prevents destructor from destroying non-owning instances. `ubix::post_message` free functions.
+- `include/ubix/sched.hh` — `ubix::yield()` and `ubix::pid()` thin wrappers over `sched_yield`/`getpid`.
+- `include/ubix/process.hh` — `ubix::Shell` RAII class: encapsulates `fork`, `pipe`, `dup2`, `execve`, `kill`, `fcntl` for shell subprocess management. Defines `_POSIX_SOURCE` so musl exposes `kill()`.
+- `include/views/display.hh` — single include that gates all C display-protocol headers (`sys/mouse.h`, `sys/kbd.h`, `views/display_proto.h`) behind `extern "C"`.
+
+### Changed
+- `bin/views/views.cc` — migrated to STL: `std::vector<Window>`, `std::string` title, `std::aligned_alloc` for page-aligned shared buffers (replaces `malloc` + manual alignment + `void *raw` field). All C stdlib includes replaced with `<cstdio>`, `<cstdlib>`, `<cstring>` via wrapper headers. `ubix::Mailbox` replaces raw `mpi_createMbox`/`mpi_fetchMessage` calls; `ubix::yield()` replaces `sched_yield()`.
+- `bin/taskbar/taskbar.cc` — migrated to STL: `static ubix::Mailbox g_tb_mbox` replaces scattered `static char tb_mbox[]` locals; `ubix::post_message` replaces `mpi_postMessage`; `ubix::yield()`/`ubix::pid()` replace raw calls; `std::strncpy`/`std::strlen`/`std::printf` replace bare C names.
+- `bin/term/term.cc` — migrated to STL: ring-buffer globals replaced with `std::vector<std::string> g_lines`; `g_shell_in`/`g_shell_out`/`g_shell_pid` + `shell_spawn()` replaced with `static ubix::Shell g_shell`; `ubix::Mailbox g_mbox` replaces raw MPI calls; `msg = {}` replaces `memset`.
+- `include/sys/mpi.h` — all mailbox-name parameters changed from `char *` to `const char *` for const-correctness.
+
+### Removed
+- `lib/libcpp/` — minimal hand-rolled C++ ABI shim (`libcpp.cc`, `libcpp.h`, `Makefile`) retired; replaced by `contrib/libcxxabi/`.
+
+### Added
+- **O(1) scheduler — Phase 3 (QoS / priority aging)**:
+  - QoS classes: `SCHED_CLASS_RT`, `SCHED_CLASS_INTERACTIVE`, `SCHED_CLASS_NORMAL`, `SCHED_CLASS_BATCH`; each maps to a priority band in the run-queue bitmap.
+  - I/O completion boost: tasks unblocked from I/O wait receive a transient priority increase.
+  - CPU decay: long-running CPU-bound tasks accumulate a penalty that shifts them down one QoS band.
+  - Starvation aging: tasks not scheduled for `AGING_THRESHOLD` ticks are promoted one band to prevent starvation.
+  - `sched_io_wakeup` properly dequeues and re-enqueues the task when boosting from a READY state, preserving run-queue bitmap consistency.
+- **POSIX signals — Phases 1 + 2**:
+  - `sigaction`, `sigprocmask`, `sigpending`, `sigsuspend` syscalls.
+  - Signal disposition table per task; `SA_RESTART`, `SA_SIGINFO` flags honoured.
+  - `STOPPED` task state; `SIGSTOP` and `SIGCONT` default actions pause and resume tasks.
+  - `SIGTTIN` stops background processes that attempt terminal reads.
+  - ZOMBIE two-phase exit: dying task transitions to `ZOMBIE` state, notifies parent with `SIGCHLD`, parent reaps via `wait4`.
+- **procfs `/proc/mounts`** — global file at `/proc/mounts`; walks `systemVitals->mountPoints` linked list and emits one line per mount point in Linux `mountinfo` format: `device mountpoint fstype perms 0 0`. `procfs_fstype_name()` maps `VFS_TYPE_*` constants to human-readable names.
+- **`bin/mount` rewrite** — no-argument invocation reads `/proc/mounts` and displays mounted filesystems as `device on mountpoint type fstype (perms)`, matching BSD `mount(8)` output.
+- `FD_TYPE_*` constants (`FILE=1`, `SOCKET=2`, `PIPE=3`, `DIR=4`, `TTY=5`, `TTYV=6`) moved to canonical home `sys/include/sys/descrip.h`; all magic integers removed from `descrip.c`.
+- `VFS_TYPE_*` constants (`DEVFS=0x01`, `PROCFS=0x02`, `FAT=0xFA`, `UFS=0xAA`) added to `sys/include/fs/vfs/vfs.h`.
+
+### Fixed
+- `sys/arch/i386/fork.c` — `fork()` now propagates pipe file descriptors with the correct `fd_type` (`FD_TYPE_PIPE`); previously all inherited fds defaulted to `FD_TYPE_FILE`, causing pipe reads to go through the VFS path and block forever.
+- `bin/taskbar/taskbar.cc` — helper loop now retries on `EINTR` instead of treating a signal-interrupted MPI wait as an error.
+- Ring-0 kernel stack enlarged from 4096 to 8192 bytes; FAT `chdir` deep-path handling was overflowing a 4096-byte stack and corrupting `sig_pending`.
+
+### Changed
+- **sys/include/ audit** — copyright years updated to 2026; CVS `$Log` blocks stripped from 15 headers; duplicate `typedef` definitions removed (e.g. `suseconds_t` in `ubixos/time.h`, `mode_t` in `sys/descrip.h`); `timeMake` return type corrected to `uint32_t`; `AT_FDCWD` guarded in both `sys/fcntl.h` and `fs/vfs/stat.h`; `AT_*` auxv constants deduplicated in `i386/elf.h` (shared block after architecture `#endif`); `register_t`/`PAD_` macros in `sys/sysproto_posix.h` guarded against redefinition when included after `sys/sysproto.h`.
+- `sys/kernel/time.c` — `tz_minuteswest` set to `0` (UTC); no timezone database is present in the kernel.
+- `sys/kernel/descrip.c` — duplicate includes removed; `ioctl` default branch uses `VFS_TYPE_DEVFS` named constant.
+
+---
+
+## [2.1.0-BETA] - 2026-05-13
+
+### Added
+- Full composited window system (`bin/views/` C++ rewrite): `Framebuffer`, `Window`, `WindowManager` classes; server-side decorations with title bar, close button, drag; Z-order; focus-follows-click.
+- `bin/taskbar/taskbar.cc` — taskbar ported to C++ with `ogSurface`/`ogBitFont`; flyout launcher menu; clock.
+- `bin/term/term.cc` — windowed VT100 terminal emulator using `ogSurface` and `ogBitFont`.
+- `include/objgfx/` — canonical public location for objgfx headers (moved from `lib/objgfx/objgfx/`).
+- `include/views/display_proto.h` — MPI display protocol: `DISPLAY_CLOSE`, `DISPLAY_QUERY`/`DISPLAY_INFO`, `no_decor` flag, `DECOR_H` constant.
+- `tools/*.DPF` — all bitmap font files consolidated into `tools/` (were split between `tools/` and `lib/objgfx40/`).
+- `docs/architecture/display.md` — updated architecture document reflecting completed display stack.
+- `docs/design/display-plan.md` — Phase 10 (C++ refactor) fully documented and marked complete.
+
+### Removed
+- `bin/launcher/` — dead pre-2019 application, never integrated with MPI display stack.
+- `lib/objgfx40/` — older objgfx fork; superseded by `lib/objgfx/`.
+- `lib/views/sunlight/` — widget toolkit tied to objgfx40; unused since launcher removal.
+- `lib/libfb/` — removed from world build; no longer a public library. Pixel primitives absorbed into `bin/views` `Framebuffer` class.
+- `sys/sde/` — kernel-side Software Display Environment retired; replaced by userland compositor.
+- `sys/include/sde/` — SDE kernel headers removed.
+- `sys/lib/ogprintf.cc` — retired kernel graphics printf; use `kprintf` for serial/VGA debug output.
+
+### Changed
+- `bin/views/views.cc` replaces `views.c`: C++ compositor with native pixel ops, no libfb dependency.
+- `bin/muffin/main.cc` replaces `main.c`: ported to C++ with `ogSurface`.
+- `lib/objgfx/Makefile` — now includes from `../../include` (canonical path) instead of `./objgfx`.
+- `tools/mkimage.sh` — font copy path updated; `lib/objgfx40` reference removed.
+
+---
+
 ## [2.0.1-BETA] - 2026-05-13
 
 ### Added
@@ -322,7 +401,9 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...HEAD
+[2.2.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.1.0-BETA...v2.2.0-BETA
+[2.1.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...v2.1.0-BETA
 [2.0.1-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...v2.0.1-BETA
 [2.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/acb8ba9a...v2.0.0-BETA
 [1.1.0-CURRENT]: https://github.com/cwolsen7905/UbixOS/compare/30af09b3...acb8ba9a

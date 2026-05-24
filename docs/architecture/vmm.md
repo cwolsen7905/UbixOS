@@ -10,8 +10,8 @@ Each process has a private 4 GB virtual address space divided into three regions
 
 | Range | Description |
 |-------|-------------|
-| `0x00000000 – 0x000FFFFF` | Shared read-only (1:1 identity-mapped). Contains BIOS data, VGA frame buffer, and kernel boot code. |
-| `0x00100000 – 0xBFFFFFFF` | Per-process region. Private page tables; available for code, data, heap, and stack. |
+| `0x00000000 – 0x003FFFFF` | Shared identity-mapped (PD[0], all 1024 PT entries = 4 MB). Contains ISA/BIOS/VGA in the first 1 MB; kernel code+data+BSS starts at `0x300000`. |
+| `0x00400000 – 0xBFFFFFFF` | Per-process region. Private page tables; available for code, data, heap, and stack. |
 | `0xC0000000 – 0xFFFFFFFF` | Kernel-only region. Shared across all processes but only accessible at ring 0. User-space access triggers a GPF. |
 
 ### Page Directory Layout (PDE indices)
@@ -49,11 +49,11 @@ Builds the physical page-frame map — a linked list of all available physical p
 
 ### `vmmPagingInit()`
 
-Enables hardware paging. Sets up the kernel's initial page directory, identity-maps the lower 1 MB, and maps the physical frame list into the top 1 GB so the kernel can reach it from any process context.
+Enables hardware paging. Sets up the kernel's initial page directory, identity-maps the lower 4 MB (PD[0], all 1024 PT entries — covers the kernel at `0x300000`), and remaps the physical frame bitmap from its physical staging location into the top 1 GB kernel virtual space at `VMM_MMAP_ADDR_PMODE = 0xC0800000`.
 
 ### `vmmCreateVirtualSpace(pid)`
 
-Allocates and initializes a fresh page directory for `pid`. Returns the physical base address. The shared lower 1 MB and top 1 GB kernel mappings are pre-installed; everything between 1 MB and 3 GB starts unmapped.
+Allocates and initializes a fresh page directory for `pid`. Returns the physical base address. The shared lower 4 MB identity map and top 1 GB kernel mappings are pre-installed; everything between 4 MB and 3 GB starts unmapped.
 
 ### `vmmCopyVirtualSpace(pid)`
 
@@ -63,6 +63,27 @@ Forks the address space of `pid` using copy-on-write (COW):
 2. All pages in that range are marked read-only and COW-pending in both parent and child; no physical memory is copied.
 3. On the first write to any shared page, a page fault fires.
 4. The page-fault handler allocates a new physical frame, copies the content, clears the COW flag, and rewrites the faulting PTE to the new frame.
+
+---
+
+## Physical Memory Layout
+
+```
+0x00000000 – 0x0009FFFF   Conventional RAM (640 KB) — first 1 MB reserved (ISA)
+0x000A0000 – 0x000FFFFF   VGA/ROM/BIOS — not RAM, never allocated
+0x00100000 – 0x002FFFFF   RAM: old bitmap staging area; now free pages (former VMM_MMAP_ADDR_RMODE)
+0x00300000 – ~0x00392000  Kernel image (text + rodata + data + BSS)
+~0x00392000 – bitmap_end  Page bitmap: numPages × sizeof(mMap) bytes, placed at page_align(_end)
+bitmap_end  – top of RAM  Free pages, managed by vmm_findFreePage
+```
+
+The bitmap physical base is computed at runtime by `vmm_memMapInit` as
+`page_align_up(_end)` and stored in `vmm_bitmap_phys`. The remap loop in
+`vmm_pagingInit` uses this variable to map bitmap pages into kernel virtual
+space — no hardcoded physical address appears in either function.
+
+With QEMU's default `-m 256`: bitmap = 1 MB, free pages start at ~`0x492000`.
+With 4 GB RAM: bitmap = 16 MB, free pages start at ~`0x1492000`.
 
 ---
 

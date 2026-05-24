@@ -31,110 +31,121 @@
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/signal.h>
 #include <sys/trap.h>
 #include <sys/elf.h>
 #include <string.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/errno.h>
 
 struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
-void sys_call_posix(struct trapframe *frame) {
-  uint32_t code = 0x0;
-  caddr_t params;
+void sys_call_posix(struct trapframe *frame)
+{
+	uint32_t code = 0x0;
+	caddr_t params;
 
-    //kprintf("SYSCALL: 0x%X.", frame->tf_eip);
+	// kprintf("SYSCALL: 0x%X.", frame->tf_eip);
+
+	struct thread *td = &_current->td;
+
+	td->frame = frame;
+
+	int args[8];
+	int error = 0x0;
+
+	params = (caddr_t)frame->tf_esp + sizeof(int);
+
+	code = frame->tf_eax;
+
+	if (code == 198)
+	{
+		memcpy(&code, params, sizeof(int));
+		params += sizeof(quad_t);
+	}
+
+	if (code > totalCalls_posix)
+	{
+		kprintf("pCall [%i]\n", code);
+		die_if_kernel("Invalid System pCall", frame, frame->tf_eax);
+		kpanic("PID: %i", _current->id);
+	}
+	else if ((int)systemCalls_posix[code].sc_status == SYSCALL_INVALID)
+	{
+		kprintf("Invalid Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
+		frame->tf_eax = ENOSYS;
+		frame->tf_edx = 0x0;
+		frame->tf_eflags |= PSL_C;
+	}
+	else if ((int)systemCalls_posix[code].sc_status == SYSCALL_NOTIMP)
+	{
+		kprintf("Not Implemented Call: [%i][%s] EIP=0x%x PID=%i args=0x%x,0x%x,0x%x,0x%x\n", code, systemCalls_posix[code].sc_name, frame->tf_eip, _current->id, *((uint32_t *)frame->tf_esp + 1), *((uint32_t *)frame->tf_esp + 2),
+		        *((uint32_t *)frame->tf_esp + 3), *((uint32_t *)frame->tf_esp + 4));
+		frame->tf_eax = ENOSYS;
+		frame->tf_edx = 0x0;
+		frame->tf_eflags |= PSL_C;
+	}
+	else
+	{
+		td->td_retval[0] = 0;
+		td->td_retval[1] = frame->tf_edx;
+
+		/* Save syscall number in tf_err for SA_RESTART in signal_check. */
+		frame->tf_err = (uint32_t)code;
 
 
-  struct thread *td = &_current->td;
+		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
+			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
 
-  td->frame = frame;
+		/*
+		 if ( td->abi == ELFOSABI_UBIXOS )
+		 error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
+		 */
 
-  int args[8];
-  int error = 0x0;
+		if (td->abi == ELFOSABI_FREEBSD)
+			error = (int)systemCalls_posix[code].sc_entry(td, params);
+		else
+			error = (int)systemCalls_posix[code].sc_entry(td, params);
 
-  params = (caddr_t) frame->tf_esp + sizeof(int);
+		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
+		{
+			kprintf("RET(%i)1", code);
+			goto check_signals;
+		}
 
-  code = frame->tf_eax;
+		switch (error)
+		{
+		case 0:
+			frame->tf_eax = td->td_retval[0];
+			frame->tf_edx = td->td_retval[1];
+			frame->tf_eflags &= ~PSL_C;
+			if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
+				kprintf("RET3");
+			break;
+		default:
+			frame->tf_eax = td->td_retval[0];
+			frame->tf_edx = td->td_retval[1];
+			frame->tf_eflags |= PSL_C;
+			/* Pack errno into high 16 bits of tf_err for SA_RESTART check. */
+			frame->tf_err = ((uint32_t)error << 16) | (uint32_t)code;
+			if (systemCalls_posix[code].sc_status == SYSCALL_DEBUG)
+				kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
+			break;
+		}
+	}
 
-  if (code == 198) {
-    memcpy(&code, params, sizeof(int));
-    params += sizeof(quad_t);
-  }
-
-  if (code > totalCalls_posix) {
-    kprintf("pCall [%i]\n", code);
-    die_if_kernel("Invalid System pCall", frame, frame->tf_eax);
-    kpanic("PID: %i", _current->id);
-  }
-  else if ((int) systemCalls_posix[code].sc_status == SYSCALL_INVALID) {
-    kprintf("Invalid Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
-    frame->tf_eax = -1;
-    frame->tf_edx = 0x0;
-    frame->tf_eflags |= PSL_C;
-  }
-  else if ((int) systemCalls_posix[code].sc_status == SYSCALL_NOTIMP) {
-    kprintf("Not Implemented Call: [%i][%s] EIP=0x%x PID=%i args=0x%x,0x%x,0x%x,0x%x\n",
-        code, systemCalls_posix[code].sc_name,
-        frame->tf_eip, _current->id,
-        *((uint32_t *)frame->tf_esp + 1),
-        *((uint32_t *)frame->tf_esp + 2),
-        *((uint32_t *)frame->tf_esp + 3),
-        *((uint32_t *)frame->tf_esp + 4));
-    frame->tf_eax = 22;//-1;
-    frame->tf_edx = 0x0;
-    frame->tf_eflags |= PSL_C;
-  }
-  else {
-    td->td_retval[0] = 0;
-    td->td_retval[1] = frame->tf_edx;
-
-    if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
-      kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
-
-    /*
-     if ( td->abi == ELFOSABI_UBIXOS )
-     error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
-     */
-
-    if (td->abi == ELFOSABI_FREEBSD)
-      error = (int) systemCalls_posix[code].sc_entry(td, params);
-    else
-      error = (int) systemCalls_posix[code].sc_entry(td, params);
-
-    if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY) {
-      kprintf("RET(%i)1", code);
-      return;
-    }
-
-    switch (error) {
-      case 0:
-        frame->tf_eax = td->td_retval[0];
-        frame->tf_edx = td->td_retval[1];
-        frame->tf_eflags &= ~PSL_C;
-        if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
-          kprintf("RET3");
-      break;
-      default:
-        frame->tf_eax = td->td_retval[0];
-        frame->tf_edx = td->td_retval[1];
-        frame->tf_eflags |= PSL_C;
-                if (systemCalls_posix[code].sc_status == SYSCALL_DEBUG)
-                    kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
-      break;
-    }
-  }
+check_signals:
+	/* Deliver any pending unblocked signal before returning to user mode. */
+	signal_check(frame);
 }
 
-int invalidCall_posix() {
-  int sys_call;
+int invalidCall_posix()
+{
+	int sys_call;
 
-  asm(
-    "nop"
-    : "=a" (sys_call)
-    :
-  );
+	asm("nop" : "=a"(sys_call) :);
 
-  kprintf("Invalid System Call #[%i], PID: %i\n", sys_call, _current->id);
-  return (0);
+	kprintf("Invalid System Call #[%i], PID: %i\n", sys_call, _current->id);
+	return (0);
 }

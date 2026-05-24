@@ -3,9 +3,7 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY    = fdisk
-OBJS      = main.o
-LIBRARIES = ${OBJ_DIR}/obj/lib/*/*.o
-POST_LINK = strip ${BUILD_DIR}/bin/${BINARY}
+BINARY = fdisk
+OBJS   = main.o
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.prog.mk"

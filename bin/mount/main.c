@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -27,30 +27,74 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
-void usage();
+static void usage(void);
+static void show_mounts(void);
 
-int main(int argc,char * const argv[]) {
-  int ch = 0x0;
-  while ((ch = getopt(argc, argv, "adlF:fo:prwt:uv")) != -1) {
-    printf("[%i]\n",ch);
-    switch (ch) {
-      default:
-         usage();
-      }
-    argc -= optind;
-    argv += optind;
-    }
-  return(0x0);
-  }
+int
+main(int argc, char *const argv[])
+{
+	int ch;
 
-void usage() {
+	/* No arguments: show currently mounted filesystems */
+	if (argc == 1) {
+		show_mounts();
+		return 0;
+	}
 
-        (void)printf("%s\n%s\n%s\n",
-"usage: mount [-adflpruvw] [-F fstab] [-o options] [-t ufs | external_type]",
-"       mount [-dfpruvw] special | node",
-"       mount [-dfpruvw] [-o options] [-t ufs | external_type] special node");
-        exit(1);
+	while ((ch = getopt(argc, argv, "adlF:fo:prwt:uv")) != -1) {
+		switch (ch) {
+		default:
+			usage();
+		}
+	}
+
+	return 0;
 }
 
+static void
+show_mounts(void)
+{
+	int  fd;
+	char buf[2048];
+	int  n;
+
+	fd = open("/proc/mounts", O_RDONLY);
+	if (fd < 0) {
+		fprintf(stderr, "mount: cannot open /proc/mounts\n");
+		return;
+	}
+
+	while ((n = read(fd, buf, sizeof(buf) - 1)) > 0) {
+		char *line, *ctx;
+		buf[n] = '\0';
+		/* Parse "dev mountpoint fstype perms 0 0" and reformat */
+		for (line = strtok_r(buf, "\n", &ctx); line != NULL;
+		     line = strtok_r(NULL, "\n", &ctx)) {
+			char dev[256], mp[256], fstype[32], perms[32];
+			if (sscanf(line, "%255s %255s %31s %31s",
+			    dev, mp, fstype, perms) == 4) {
+				printf("%s on %s type %s (%s)\n",
+				    dev, mp, fstype, perms);
+			}
+		}
+	}
+
+	close(fd);
+}
+
+static void
+usage(void)
+{
+	fprintf(stderr,
+	    "usage: mount [-adflpruvw] [-F fstab] [-o options] "
+	    "[-t ufs | external_type]\n"
+	    "       mount [-dfpruvw] special | node\n"
+	    "       mount [-dfpruvw] [-o options] "
+	    "[-t ufs | external_type] special node\n");
+	exit(1);
+}

@@ -1,8 +1,8 @@
 extern "C" {
-  #include <stdio.h>
+#include <stdio.h>
 }
 
-#include "vWindow.h"
+#include <objgfx/vWindow.h>
 
 vWindow::vWindow(void) {
   realWindow = new ogSurface();

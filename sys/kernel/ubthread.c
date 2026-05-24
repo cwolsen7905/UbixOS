@@ -34,6 +34,7 @@
 #include <ubixos/time.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
+#include <ubixos/errno.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
@@ -42,129 +43,174 @@
 struct ubthread_cond_list *conds = 0x0;
 struct ubthread_mutex_list *mutex = 0x0;
 
-kTask_t* ubthread_self() {
-    return (_current);
+kTask_t *ubthread_self()
+{
+	return (_current);
 }
 
-int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr) {
-    ubthread_cond_t ubcond = kmalloc(sizeof(struct ubthread_cond));
-    memset(ubcond, 0x0, sizeof(struct ubthread_cond));
+int ubthread_cond_init(ubthread_cond_t *cond, const uint32_t attr)
+{
+	ubthread_cond_t ubcond = kmalloc(sizeof(struct ubthread_cond));
+	if (ubcond == NULL)
+		return (-1);
+	memset(ubcond, 0x0, sizeof(struct ubthread_cond));
 
-    ubcond->id = (int) cond;
-    ubcond->lock = 0;
+	ubcond->id = (int)cond;
+	ubcond->lock = 0;
 
-    *cond = ubcond;
-    return (0x0);
+	*cond = ubcond;
+	return (0x0);
 }
 
-int ubthread_mutex_init(ubthread_mutex_t *mutex, const uint32_t attr) {
-    ubthread_mutex_t ubmutex = kmalloc(sizeof(struct ubthread_mutex));
-    memset(ubmutex, 0x0, sizeof(struct ubthread_mutex));
+int ubthread_mutex_init(ubthread_mutex_t *mutex, const uint32_t attr)
+{
+	ubthread_mutex_t ubmutex = kmalloc(sizeof(struct ubthread_mutex));
+	if (ubmutex == NULL)
+		return (-1);
+	memset(ubmutex, 0x0, sizeof(struct ubthread_mutex));
 
-    ubmutex->id = (int) mutex;
-    ubmutex->lock = 0;
+	ubmutex->id        = (int)mutex;
+	ubmutex->lock      = 0;
+	ubmutex->owner     = NULL;
+	ubmutex->pi_active = 0;
 
-    *mutex = ubmutex;
-    return (0x0);
+	*mutex = ubmutex;
+	return (0x0);
 }
 
-int ubthread_cond_destroy(ubthread_cond_t *cond) {
-    kfree(*cond);
-    *cond = 0x0;
-    return (0x0);
+int ubthread_cond_destroy(ubthread_cond_t *cond)
+{
+	kfree(*cond);
+	*cond = 0x0;
+	return (0x0);
 }
 
-int ubthread_mutex_destroy(ubthread_mutex_t *mutex) {
-    kfree(*mutex);
-    *mutex = 0x0;
-    return (0x0);
+int ubthread_mutex_destroy(ubthread_mutex_t *mutex)
+{
+	kfree(*mutex);
+	*mutex = 0x0;
+	return (0x0);
 }
 
-int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg) {
-    *thread = (void*) execThread(tproc, 0x2000, arg);
-    return (0x0);
+int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg, const char *name)
+{
+	*thread = (void *)execThread(tproc, 0x2000, arg, name);
+	return (0x0);
 }
 
-int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
-    ubthread_mutex_t ubmutex = *mutex;
+int ubthread_mutex_lock(ubthread_mutex_t *mutex)
+{
+	ubthread_mutex_t ubmutex = *mutex;
 
-    if (ubmutex->lock == TRUE && ubmutex->pid == _current->id) {
-        kprintf("Mutex Already Locked By This Thread");
-        kpanic("WHY?");
-        return (0x0);
-    }
+	if (ubmutex->lock == TRUE && ubmutex->pid == _current->id)
+	{
+		kprintf("Mutex Already Locked By This Thread");
+		kpanic("WHY?");
+		return (0x0);
+	}
 
-    while (1) {
-        if (xchg_32(&ubmutex->lock, TRUE) == FALSE)
-            break;
+	while (1)
+	{
+		if (xchg_32(&ubmutex->lock, TRUE) == FALSE)
+			break;
 
-        while (ubmutex->lock == TRUE)
-            sched_yield();
-    }
+		/*
+		 * Priority inheritance: if the holder is lower-priority than us,
+		 * temporarily raise it to our priority so it can release the lock
+		 * sooner.  Multiple waiters naturally produce the correct max-
+		 * priority boost: each waiter independently compares and boosts
+		 * only if it is higher than the holder's current priority.
+		 */
+		kTask_t *holder = ubmutex->owner;
+		if (holder != NULL && _current->priority > holder->priority) {
+			ubmutex->pi_active = 1;
+			sched_pi_boost(holder, _current->priority);
+		}
 
-    ubmutex->pid = _current->id;
-    return (0x0);
+		while (ubmutex->lock == TRUE)
+			sched_yield();
+	}
+
+	ubmutex->pid    = _current->id;
+	ubmutex->owner  = _current;
+	return (0x0);
 }
 
-int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
-    ubthread_mutex_t ubmutex = *mutex;
+int ubthread_mutex_unlock(ubthread_mutex_t *mutex)
+{
+	ubthread_mutex_t ubmutex = *mutex;
+	uint8_t had_pi;
 
-    if (ubmutex->lock != TRUE)
-        kpanic("NOT LOCKED?");
+	if (ubmutex->lock != TRUE)
+		kpanic("NOT LOCKED?");
 
-    if (ubmutex->pid != _current->id)
-        kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id, *ubmutex);
+	if (ubmutex->pid != _current->id)
+		kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id, *ubmutex);
 
-    while (1) {
-        if (xchg_32(&ubmutex->lock, FALSE) == TRUE)
-            break;
-        while (ubmutex->lock == FALSE)
-            sched_yield();
-    }
+	had_pi            = ubmutex->pi_active;
+	ubmutex->owner    = NULL;
+	ubmutex->pid      = 0x0;
+	ubmutex->pi_active = 0;
 
-    ubmutex->pid = 0x0;
-    return (0x0);
+	if (xchg_32(&ubmutex->lock, FALSE) != TRUE)
+		kpanic("ubthread_mutex_unlock: lock was not held");
+
+	/*
+	 * Drop inherited priority after releasing the lock.  The lock is
+	 * already gone so the high-priority waiter can acquire immediately;
+	 * restoring here ensures we don't unfairly pre-empt it on the next
+	 * tick while still holding a boosted priority we no longer need.
+	 */
+	if (had_pi)
+		sched_pi_restore(_current);
+
+	return (0x0);
 }
 
-int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime) {
-    ubthread_cond_t ubcond = *cond;
-    ubthread_mutex_t ubmutex = *mutex;
+int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime)
+{
+	ubthread_cond_t ubcond = *cond;
+	uint32_t enterTime = systemVitals->sysUptime + 20;
 
-    uint32_t enterTime = systemVitals->sysUptime + 20;
+	ubthread_mutex_unlock(mutex);
 
-    ubthread_mutex_unlock(mutex);
+	while (enterTime > systemVitals->sysUptime)
+	{
+		if (ubcond->lock == FALSE)
+			break;
+		sched_yield();
+	}
 
-    while (enterTime > systemVitals->sysUptime) {
-        if (ubcond->lock == FALSE)
-            break;
-        sched_yield();
-    }
+	ubthread_mutex_lock(mutex);
 
-    ubthread_mutex_lock(mutex);
-
-    return (0x0);
+	if (ubcond->lock == TRUE)
+		return ETIMEDOUT;
+	return 0;
 }
 
-int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
-    ubthread_cond_t ubcond = *cond;
-    ubthread_mutex_unlock(mutex);
-    while (ubcond->lock == TRUE)
-        sched_yield();
-    ubthread_mutex_lock(mutex);
-    return (0x0);
+int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex)
+{
+	ubthread_cond_t ubcond = *cond;
+	ubcond->lock = TRUE;  /* arm before releasing mutex to prevent lost wakeup */
+	ubthread_mutex_unlock(mutex);
+	while (ubcond->lock == TRUE)
+		sched_yield();
+	ubthread_mutex_lock(mutex);
+	return (0x0);
 }
 
-int ubthread_cond_signal(ubthread_cond_t *cond) {
-    ubthread_cond_t ubcond = *cond;
-    while (xchg_32(&ubcond->lock, FALSE))
-        sched_yield();
-    return (0x0);
+int ubthread_cond_signal(ubthread_cond_t *cond)
+{
+	ubthread_cond_t ubcond = *cond;
+	while (xchg_32(&ubcond->lock, FALSE))
+		sched_yield();
+	return (0x0);
 }
 
-int ubthread_cond_broadcast(ubthread_cond_t *cond) {
-    ubthread_cond_t ubcond = *cond;
-    while (xchg_32(&ubcond->lock, FALSE))
-        sched_yield();
-    return (0x0);
+int ubthread_cond_broadcast(ubthread_cond_t *cond)
+{
+	ubthread_cond_t ubcond = *cond;
+	while (xchg_32(&ubcond->lock, FALSE))
+		sched_yield();
+	return (0x0);
 }
-

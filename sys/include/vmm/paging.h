@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -60,10 +60,16 @@
 #define PAGE_ACCESSED       0x00000020
 #define PAGE_DIRTY          0x00000040
 #define PAGE_GLOBAL         0x00000080
-#define PAGE_               0x00000100
+#define PAGE_SHARED         0x00000100   /* borrowed from another process; skip freePage on unmap */
 #define PAGE_COW            0x00000200
 #define PAGE_STACK          0x00000400
 #define PAGE_WIRED          0x00000800
+
+/* When PAGE_PRESENT=0, hardware ignores all other bits; bits[31:12] hold the
+ * swap slot number and PAGE_SWAPPED marks the PTE as a valid swap reference. */
+#define PAGE_SWAPPED        0x00000002
+#define PTE_SWAP_SLOT(pte)      ((uint32_t)(pte) >> 12)
+#define PTE_SWAP_ENCODE(slot)   (((uint32_t)(slot) << 12) | PAGE_SWAPPED)
 
 #define PAGE_DEFAULT        (PAGE_PRESENT|PAGE_WRITE|PAGE_USER)
 #define KERNEL_PAGE_DEFAULT (PAGE_PRESENT|PAGE_WRITE)

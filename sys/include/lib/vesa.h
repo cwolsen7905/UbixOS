@@ -93,6 +93,7 @@ typedef struct {
 } __attribute__((packed)) vbe_mode_info_t;
 
 int  vesa_init(uint16_t mode);
+void vesa_text_mode(void);
 void vesa_map_fb(void);
 void vesa_draw_test(void);
 void vesa_draw_circle(uint32_t cx, uint32_t cy, uint32_t r, uint32_t color);
@@ -103,5 +104,6 @@ extern uint16_t vesa_pitch;       /* bytes per scanline */
 extern uint16_t vesa_width;
 extern uint16_t vesa_height;
 extern uint8_t  vesa_bpp;
+extern uint16_t vesa_current_mode; /* mode number from last successful vesa_init() */
 
 #endif /* _LIB_VESA_H */

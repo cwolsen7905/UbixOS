@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,38 +29,7 @@
 #ifndef _SYS_DEVICE_H
 #define _SYS_DEVICE_H
 
-#include <sys/types.h>
-
-struct device_node {
-    struct device_node *prev;
-    struct device_node *next;
-    struct device_interface *devInfo;
-    struct device_resource *devRec;
-    char type;
-    int minor;
-};
-
-struct device_resource {
-    uInt8 irq;
-};
-
-struct device_interface {
-    uInt8 initialized;
-    uInt32 size;
-    int major;
-    void *info;
-    int (*read)(void *, void *, uInt32, uInt32);
-    int (*write)(void *, void *, uInt32, uInt32);
-    void (*reset)(void *);
-    int (*init)(void *);
-    void (*ioctl)(void *);
-    void (*stop)(void *);
-    void (*start)(void *);
-    void (*standby)(void *);
-};
-
-int device_add(int, char, struct device_interface *);
-struct device_node *device_find(int major, int minor);
-int device_remove(struct device_node *);
+/* Replaced by sys/bus.h — this header is retained only to avoid breaking old #includes. */
+#include <sys/bus.h>
 
 #endif /* END _SYS_DEVICE_H */

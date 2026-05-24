@@ -20,6 +20,8 @@ set -e
 
 IMG="${1:-ubixos.img}"
 IMG_SIZE_MB=512
+FAT_SIZE_MB=448     # FAT32 partition (type 0x0C)
+SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
 KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"
@@ -36,28 +38,40 @@ done
 echo "==> Creating disk image: $IMG (${IMG_SIZE_MB} MB)"
 qemu-img create -f raw "$IMG" "${IMG_SIZE_MB}M"
 
-# ── Partition table: one FAT32 partition at LBA 2048 ───────────────────────
-python3 - "$IMG" "$IMG_SIZE_MB" <<'PYEOF'
+# ── Partition table: FAT32 + raw swap ──────────────────────────────────────
+python3 - "$IMG" "$FAT_SIZE_MB" "$SWAP_SIZE_MB" <<'PYEOF'
 import sys, struct
-img_path = sys.argv[1]
-size_mb  = int(sys.argv[2])
+img_path    = sys.argv[1]
+fat_size_mb = int(sys.argv[2])
 SECTOR = 512; HEADS = 16; SECTS = 63
 def lba_to_chs(lba):
     c = lba // (HEADS * SECTS); h = (lba // SECTS) % HEADS; s = (lba % SECTS) + 1
     return (h, s | ((min(c,1023) & 0x300) >> 2), min(c,1023) & 0xFF)
-part_start = 2048
-part_end   = (size_mb * 1024 * 1024 // SECTOR) - 1
-entry = struct.pack('<BBBBBBBBII',
-    0x80, *lba_to_chs(part_start), 0x0C, *lba_to_chs(part_end),
-    part_start, part_end - part_start + 1)
+fat_start   = 2048
+fat_sectors = fat_size_mb * 1024 * 1024 // SECTOR
+fat_end     = fat_start + fat_sectors - 1
+swap_start  = fat_end + 1
+swap_end    = swap_start + int(sys.argv[3]) * 1024 * 1024 // SECTOR - 1
+fat_entry  = struct.pack('<BBBBBBBBII',
+    0x80, *lba_to_chs(fat_start),  0x0C, *lba_to_chs(fat_end),
+    fat_start,  fat_sectors)
+swap_entry = struct.pack('<BBBBBBBBII',
+    0x00, *lba_to_chs(swap_start), 0x82, *lba_to_chs(swap_end),
+    swap_start, swap_end - swap_start + 1)
 with open(img_path, 'r+b') as f:
-    f.seek(446); f.write(entry); f.write(b'\x00'*48); f.write(b'\x55\xAA')
-print(f"  Partition: LBA {part_start}-{part_end} (FAT32 type 0x0C)")
+    f.seek(446)
+    f.write(fat_entry)
+    f.write(swap_entry)
+    f.write(b'\x00' * 32)   # entries 2 and 3 unused
+    f.write(b'\x55\xAA')
+print(f"  FAT32: LBA {fat_start}-{fat_end} ({fat_size_mb} MB)")
+print(f"  Swap:  LBA {swap_start}-{swap_end} ({sys.argv[3]} MB, type 0x82)")
 PYEOF
 
-# ── Format FAT32 partition ──────────────────────────────────────────────────
-echo "==> Formatting FAT32 partition"
-mformat -i "$IMG"@@1M -F -v UBIXOS ::
+# ── Format FAT32 partition (size-limited to FAT_SIZE_MB) ───────────────────
+FAT_SECTORS=$(( FAT_SIZE_MB * 1024 * 1024 / 512 ))
+echo "==> Formatting FAT32 partition (${FAT_SIZE_MB} MB, ${FAT_SECTORS} sectors)"
+mformat -i "$IMG"@@1M -F -v SYS -T "$FAT_SECTORS" ::
 
 # ── Build GRUB core image embedding FAT + multiboot support ────────────────
 echo "==> Building GRUB core image"
@@ -131,6 +145,10 @@ mmd -i "$IMG"@@1M ::/libexec
 
 for f in "$BUILD/bin"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/bin/;    done
 for f in "$BUILD/lib"/*;    do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/lib/;    done
+# musl dynamic linker: FAT32 has no symlinks, so install libc.so a second time
+# under the LDSO_PATHNAME that the kernel ld.so and ELF binaries expect.
+[ -f "$BUILD/lib/libc.so" ] && \
+    mcopy -o -i "$IMG"@@1M "$BUILD/lib/libc.so" ::/lib/ld-musl-i386.so.1
 for f in "$BUILD/libexec"/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/libexec/; done
 
 echo "==> Installing TCC compiler (lib/tcc/ and usr/bin/)"
@@ -158,17 +176,68 @@ for f in tools/src/*; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/src/; done
 
 echo "==> Installing system files (etc/)"
 mmd -i "$IMG"@@1M ::/etc
-[ -f tools/userdb ] && mcopy -i "$IMG"@@1M tools/userdb ::/etc/userdb
-[ -f tools/fstab  ] && mcopy -i "$IMG"@@1M tools/fstab  ::/etc/fstab
-[ -f tools/motd   ] && mcopy -i "$IMG"@@1M tools/motd   ::/etc/motd
+for f in etc/*; do
+  [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/
+done
+mmd -i "$IMG"@@1M ::/etc/init.d
+for f in etc/init.d/*; do
+  [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/etc/init.d/
+done
+
+echo "==> Installing DOOM WAD (optional)"
+_doom_wad=""
+for _candidate in "tools/doom1.wad" "$HOME/Downloads/doom1.wad"; do
+    if [ -f "$_candidate" ]; then
+        _doom_wad="$_candidate"
+        break
+    fi
+done
+if [ -n "$_doom_wad" ]; then
+    mcopy -o -i "$IMG"@@1M "$_doom_wad" ::/bin/doom1.wad
+    echo "    Installed: $_doom_wad -> /bin/doom1.wad"
+else
+    echo "    WARNING: doom1.wad not found; copy it to tools/doom1.wad to include it"
+fi
+# Parse tools/userdb (binary struct array) to get username + home path per user.
+# struct userdb_entry: char[32] user, char[32] pass, int uid, int gid,
+#                      char[128] shell, char[256] realname, char[256] path
+# Total = 712 bytes per entry.
+USERDB_ENTRIES=$(python3 - tools/userdb <<'PYEOF'
+import sys, struct
+ENTRY = struct.Struct('<32s 32s i i 128s 256s 256s')
+with open(sys.argv[1], 'rb') as f:
+    data = f.read()
+for i in range(len(data) // ENTRY.size):
+    rec = ENTRY.unpack_from(data, i * ENTRY.size)
+    user = rec[0].split(b'\x00', 1)[0].decode()
+    home = rec[6].split(b'\x00', 1)[0].decode()
+    if user:
+        print(f"{user}:{home}")
+PYEOF
+)
+
+echo "==> Creating /home (user home directories from userdb)"
+mmd -i "$IMG"@@1M ::/home 2>/dev/null || true
+for entry in $USERDB_ENTRIES; do
+    _user="${entry%%:*}"; _home="${entry#*:}"
+    echo "    /home/$_user ($entry)"
+    mmd -i "$IMG"@@1M "::$_home" 2>/dev/null || true
+    for _f in tools/skel/.*; do
+        case "$_f" in */.|*/..) continue;; esac
+        [ -f "$_f" ] && mcopy -o -i "$IMG"@@1M "$_f" "::$_home/"
+    done
+done
+
+echo "==> Creating /mnt (automountd mount point root)"
+mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true
 
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
+mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
 [ -f sys/sde/assets/ubix.bmp ] && mcopy -i "$IMG"@@1M sys/sde/assets/ubix.bmp ::/var/background/ubix.bmp
 mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true
-for f in tools/*.DPF; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/var/fonts/; done
-[ -f lib/objgfx40/BOLD.DPF ] && mcopy -i "$IMG"@@1M lib/objgfx40/BOLD.DPF ::/var/fonts/
+for f in tools/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
 
 echo ""
 echo "Done: $IMG"

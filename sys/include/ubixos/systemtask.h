@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -34,27 +34,3 @@
 void systemTask();
 
 #endif
-
-/***
- $Log: systemtask.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:56  reddawg
- no message
-
- Revision 1.2  2004/06/04 17:49:32  reddawg
- Wont work with out the makefile updated
-
- Revision 1.1  2004/06/04 17:33:33  reddawg
- Changed idle task to system task
-
- Revision 1.2  2004/05/21 15:20:00  reddawg
- Cleaned up
-
-
- END
- ***/

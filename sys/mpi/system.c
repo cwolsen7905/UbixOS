@@ -33,7 +33,6 @@
 #include <ubixos/spinlock.h>
 #include <sys/sysproto.h>
 
-
 static mpi_mbox_t *mboxList = 0x0;
 static struct spinLock mpiSpinLock = SPIN_LOCK_INITIALIZER;
 
@@ -46,16 +45,19 @@ static struct spinLock mpiSpinLock = SPIN_LOCK_INITIALIZER;
  Notes: This function is not task-safe!  Lock must be done before call.
 
  *****************************************************************************************/
-static mpi_mbox_t * mpi_findMbox(char *name) {
-  mpi_mbox_t *mbox = 0x0;
+static mpi_mbox_t *mpi_findMbox(char *name)
+{
+	mpi_mbox_t *mbox = 0x0;
 
-  for (mbox = mboxList; mbox; mbox = mbox->next) {
-    if (!strcmp(mbox->name, name)) {
-      return (mbox);
-    }
-  }
+	for (mbox = mboxList; mbox; mbox = mbox->next)
+	{
+		if (!strcmp(mbox->name, name))
+		{
+			return (mbox);
+		}
+	}
 
-  return (0x0);
+	return (0x0);
 }
 
 /*****************************************************************************************
@@ -68,41 +70,46 @@ static mpi_mbox_t * mpi_findMbox(char *name) {
  Notes:
 
  *****************************************************************************************/
-int mpi_createMbox(char *name) {
-  mpi_mbox_t *mbox = 0x0;
+int mpi_createMbox(char *name)
+{
+	mpi_mbox_t *mbox = 0x0;
 
-  spinLock(&mpiSpinLock);
-  if (mpi_findMbox(name) != 0x0) {
-    spinUnlock(&mpiSpinLock);
-    return (-1);
-  }
+	spinLock(&mpiSpinLock);
+	if (mpi_findMbox(name) != 0x0)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (-1);
+	}
 
-  mbox = (mpi_mbox_t *) kmalloc(sizeof(mpi_mbox_t));
-  if (mbox == 0x0) {
-    spinUnlock(&mpiSpinLock);
-    return (-1);
-  }
+	mbox = (mpi_mbox_t *)kmalloc(sizeof(mpi_mbox_t));
+	if (mbox == 0x0)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (-1);
+	}
 
-  strncpy(mbox->name, name, sizeof(mbox->name) - 1);
-  mbox->name[sizeof(mbox->name) - 1] = '\0';
-  mbox->pid     = _current->id;
-  mbox->msg     = 0x0;
-  mbox->msgLast = 0x0;
+	strncpy(mbox->name, name, sizeof(mbox->name) - 1);
+	mbox->name[sizeof(mbox->name) - 1] = '\0';
+	mbox->pid = _current->id;
+	mbox->msg = 0x0;
+	mbox->msgLast = 0x0;
 
-  if (mboxList == 0x0) {
-    mbox->prev = 0x0;
-    mbox->next = 0x0;
-    mboxList = mbox;
-  }
-  else {
-    mbox->next = mboxList;
-    mbox->prev = 0x0;
-    mboxList->prev = mbox;
-    mboxList = mbox;
-  }
+	if (mboxList == 0x0)
+	{
+		mbox->prev = 0x0;
+		mbox->next = 0x0;
+		mboxList = mbox;
+	}
+	else
+	{
+		mbox->next = mboxList;
+		mbox->prev = 0x0;
+		mboxList->prev = mbox;
+		mboxList = mbox;
+	}
 
-  spinUnlock(&mpiSpinLock);
-  return (0x0);
+	spinUnlock(&mpiSpinLock);
+	return (0x0);
 }
 
 /*****************************************************************************************
@@ -114,33 +121,37 @@ int mpi_createMbox(char *name) {
  Notes:
 
  *****************************************************************************************/
-int mpi_spam(uInt32 type, void *data) {
-  mpi_mbox_t *mbox = 0x0;
-  mpi_message_t *message = 0x0;
+int mpi_spam(uInt32 type, void *data)
+{
+	mpi_mbox_t *mbox = 0x0;
+	mpi_message_t *message = 0x0;
 
-  spinLock(&mpiSpinLock);
+	spinLock(&mpiSpinLock);
 
-  for (mbox = mboxList; mbox; mbox = mbox->next) {
-    message = (mpi_message_t *) kmalloc(sizeof(mpi_message_t));
-    if (message == 0x0)
-      continue;
+	for (mbox = mboxList; mbox; mbox = mbox->next)
+	{
+		message = (mpi_message_t *)kmalloc(sizeof(mpi_message_t));
+		if (message == 0x0)
+			continue;
 
-    message->header = type;
-    memcpy(message->data, data, MESSAGE_LENGTH);
-    message->next = 0x0;
+		message->header = type;
+		memcpy(message->data, data, MESSAGE_LENGTH);
+		message->next = 0x0;
 
-    if (mbox->msg == 0x0) {
-      mbox->msg     = message;
-      mbox->msgLast = message;
-    }
-    else {
-      mbox->msgLast->next = message;
-      mbox->msgLast = message;
-    }
-  }
+		if (mbox->msg == 0x0)
+		{
+			mbox->msg = message;
+			mbox->msgLast = message;
+		}
+		else
+		{
+			mbox->msgLast->next = message;
+			mbox->msgLast = message;
+		}
+	}
 
-  spinUnlock(&mpiSpinLock);
-  return (0x0);
+	spinUnlock(&mpiSpinLock);
+	return (0x0);
 }
 
 /*****************************************************************************************
@@ -152,47 +163,64 @@ int mpi_spam(uInt32 type, void *data) {
  Notes:
 
  *****************************************************************************************/
-int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg) {
-  mpi_mbox_t *mbox = 0x0;
-  mpi_message_t *message = 0x0;
+int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg)
+{
+	mpi_mbox_t *mbox = 0x0;
+	mpi_message_t *message = 0x0;
 
-  spinLock(&mpiSpinLock);
+	spinLock(&mpiSpinLock);
 
-  mbox = mpi_findMbox(name);
+	mbox = mpi_findMbox(name);
 
-  if (mbox == 0x0) {
-    spinUnlock(&mpiSpinLock);
-    return (0x1);
-  }
+	if (mbox == 0x0)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (0x1);
+	}
 
-  message = (mpi_message_t *) kmalloc(sizeof(mpi_message_t));
-  if (message == 0x0) {
-    spinUnlock(&mpiSpinLock);
-    return (0x1);
-  }
+	message = (mpi_message_t *)kmalloc(sizeof(mpi_message_t));
+	if (message == 0x0)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (0x1);
+	}
 
-  message->header = msg->header;
-  memcpy(message->data, msg->data, MESSAGE_LENGTH);
-  message->pid  = _current->id;
-  message->next = 0x0;
+	message->header = msg->header;
+	memcpy(message->data, msg->data, MESSAGE_LENGTH);
+	message->pid = _current->id;
+	message->next = 0x0;
 
-  if (mbox->msg == 0x0) {
-    mbox->msg     = message;
-    mbox->msgLast = message;
-  }
-  else {
-    mbox->msgLast->next = message;
-    mbox->msgLast       = message;
-  }
+	if (mbox->msg == 0x0)
+	{
+		mbox->msg = message;
+		mbox->msgLast = message;
+	}
+	else
+	{
+		mbox->msgLast->next = message;
+		mbox->msgLast = message;
+	}
 
-  spinUnlock(&mpiSpinLock);
+	spinUnlock(&mpiSpinLock);
 
-  if (type == 0x2) {
-    while (mbox->msg != 0x0)
-      sched_yield();
-  }
+	if (type == 0x2)
+	{
+		/* Re-look up the mbox by name under the lock each iteration.
+		 * Using the stale 'mbox' pointer after the unlock is a UAF:
+		 * mpi_destroyMbox holds mpiSpinLock when it kfree()s the mbox,
+		 * so re-finding by name is safe and handles the destroy case. */
+		for (;;) {
+			sched_yield();
+			spinLock(&mpiSpinLock);
+			mpi_mbox_t *m = mpi_findMbox(name);
+			int done = (m == NULL || m->msg == NULL);
+			spinUnlock(&mpiSpinLock);
+			if (done)
+				break;
+		}
+	}
 
-  return (0x0);
+	return (0x0);
 }
 
 /*****************************************************************************************
@@ -204,42 +232,46 @@ int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg) {
  Notes:
 
  *****************************************************************************************/
-int mpi_fetchMessage(char *name, mpi_message_t *msg) {
-  mpi_mbox_t *mbox = 0x0;
-  mpi_message_t *tmpMsg = 0x0;
+int mpi_fetchMessage(char *name, mpi_message_t *msg)
+{
+	mpi_mbox_t *mbox = 0x0;
+	mpi_message_t *tmpMsg = 0x0;
 
-  spinLock(&mpiSpinLock);
+	spinLock(&mpiSpinLock);
 
-  mbox = mpi_findMbox(name);
+	mbox = mpi_findMbox(name);
 
-  if (mbox == 0x0) {
-    spinUnlock(&mpiSpinLock);
-    return (-1);
-  }
+	if (mbox == 0x0)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (-1);
+	}
 
-  if (mbox->msg == 0x0) {
-    spinUnlock(&mpiSpinLock);
-    return (-1);
-  }
+	if (mbox->msg == 0x0)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (-1);
+	}
 
-  if (mbox->pid != _current->id) {
-    spinUnlock(&mpiSpinLock);
-    return (-1);
-  }
+	if (mbox->pid != _current->id)
+	{
+		spinUnlock(&mpiSpinLock);
+		return (-1);
+	}
 
-  msg->header = mbox->msg->header;
-  memcpy(msg->data, mbox->msg->data, MESSAGE_LENGTH);
-  msg->pid = mbox->msg->pid;
+	msg->header = mbox->msg->header;
+	memcpy(msg->data, mbox->msg->data, MESSAGE_LENGTH);
+	msg->pid = mbox->msg->pid;
 
-  tmpMsg    = mbox->msg;
-  mbox->msg = mbox->msg->next;
-  if (mbox->msg == 0x0)
-    mbox->msgLast = 0x0;
+	tmpMsg = mbox->msg;
+	mbox->msg = mbox->msg->next;
+	if (mbox->msg == 0x0)
+		mbox->msgLast = 0x0;
 
-  kfree(tmpMsg);
+	kfree(tmpMsg);
 
-  spinUnlock(&mpiSpinLock);
-  return (0x0);
+	spinUnlock(&mpiSpinLock);
+	return (0x0);
 }
 
 /*****************************************************************************************
@@ -251,31 +283,43 @@ int mpi_fetchMessage(char *name, mpi_message_t *msg) {
  Notes:
 
  *****************************************************************************************/
-int mpi_destroyMbox(char *name) {
-  mpi_mbox_t *mbox = 0x0;
+int mpi_destroyMbox(char *name)
+{
+	mpi_mbox_t *mbox = 0x0;
 
-  spinLock(&mpiSpinLock);
+	spinLock(&mpiSpinLock);
 
-  for (mbox = mboxList; mbox; mbox = mbox->next) {
-    if (!strcmp(mbox->name, name)) {
-      if (mbox->pid != _current->id) {
-        spinUnlock(&mpiSpinLock);
-        return (-1);
-      }
-      if (mbox->prev != 0x0)
-        mbox->prev->next = mbox->next;
-      else
-        mboxList = mbox->next;
-      if (mbox->next != 0x0)
-        mbox->next->prev = mbox->prev;
-      kfree(mbox);
-      spinUnlock(&mpiSpinLock);
-      return (0x0);
-    }
-  }
+	for (mbox = mboxList; mbox; mbox = mbox->next)
+	{
+		if (!strcmp(mbox->name, name))
+		{
+			if (mbox->pid != _current->id)
+			{
+				spinUnlock(&mpiSpinLock);
+				return (-1);
+			}
+			if (mbox->prev != 0x0)
+				mbox->prev->next = mbox->next;
+			else
+				mboxList = mbox->next;
+			if (mbox->next != 0x0)
+				mbox->next->prev = mbox->prev;
+			{
+				mpi_message_t *msg = mbox->msg;
+				while (msg != 0x0) {
+					mpi_message_t *next = msg->next;
+					kfree(msg);
+					msg = next;
+				}
+			}
+			kfree(mbox);
+			spinUnlock(&mpiSpinLock);
+			return (0x0);
+		}
+	}
 
-  spinUnlock(&mpiSpinLock);
-  return (-1);
+	spinUnlock(&mpiSpinLock);
+	return (-1);
 }
 
 /***

@@ -28,7 +28,7 @@
 
 #include <sys/types.h>
 #include <ubixos/errno.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <ubixos/sched.h>
 
 struct inode;

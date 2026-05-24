@@ -3,7 +3,7 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY = ttytest
-OBJS   = ttytest.o
+BINARY    = ttytest
+OBJS      = ttytest.o
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.prog.mk"

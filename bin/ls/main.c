@@ -27,9 +27,18 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <string.h>
+
+static void ls_err(const char *path)
+{
+  const char *pre = "ls: ";
+  const char *suf = ": No such file or directory\n";
+  write(2, pre, strlen(pre));
+  write(2, path, strlen(path));
+  write(2, suf, strlen(suf));
+}
 
 int main(int argc, char **argv) {
   const char *path = 0x0;
@@ -46,7 +55,7 @@ int main(int argc, char **argv) {
 
   dir = opendir(path);
   if (dir == 0x0) {
-    printf("ls: cannot open '%s'\n", path);
+    ls_err(path);
     return (1);
   }
 

@@ -37,15 +37,6 @@
 #include <lib/kprintf.h>
 #include <isa/8259.h>
 
-/*
- * TODO (BUG-COW-03 proper): The full FreeBSD/Linux approach is for the dying
- * task to release its entire address space here (user + kernel low region),
- * leaving systemTask to only free the task struct and kernel stack.
- * vmm_cleanVirtualSpace already handles the user region; a matching cleaner
- * for the kernel-mapped low region (PD index 1, where COW is also used) and
- * the per-process kernel stack is still needed before systemTask's
- * vmm_freeProcessPages can be safely removed.
- */
 
 /************************************************************************
 
@@ -59,18 +50,34 @@
 void endTask(pidType pid)
 {
 
-	/* Release user address space while we are still _current so that
-	 * PT_BASE_ADDR reflects our own page tables.  This decrements COW
-	 * counters for shared pages and frees private pages before the
-	 * scheduler switches us away. */
-	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
+	/*
+	 * GS = 0xF is an LDT-based selector (LDT entry 1) and the LDT lives at
+	 * VMM_USER_LDT (0x7FF000, PD[1]).  vmm_cleanVirtualSpace frees that page
+	 * below, so we must clear GS now while the LDT is still mapped.  If the
+	 * scheduler later switches away and back while interrupts are disabled
+	 * (or races via a DEAD-child wakeup), the hardware task switch will try
+	 * to validate GS from GDT[3].base+8 = 0x7FF008 and fault on a
+	 * not-present page.  GS = 0 has no descriptor and requires no LDT read.
+	 */
+	asm volatile("xorl %%eax, %%eax\n\t"
+	             "movw %%ax, %%gs" : : : "eax", "memory");
+
+	/*
+	 * Release the full per-process address space while we are still _current
+	 * so PT_BASE_ADDR reflects our own page tables.  Start at PD[1]
+	 * (0x400000) rather than VMM_USER_START (0x800000): PD[1] holds COW'd
+	 * pages from fork and must have its reference counts decremented here.
+	 * PD[0] (0–4 MB identity map) is shared by all processes and must not
+	 * be touched.  systemTask's vmm_freeProcessPages only needs to reclaim
+	 * the private PT/PD physical pages after this runs.
+	 */
+	vmm_cleanVirtualSpace(0x400000U);
 
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
-	if (_current->term != NULL && _current->term->owner == _current->id &&
-	    _current->parent != NULL)
+	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
 		_current->term->owner = _current->parent->id;
 
-	sched_setStatus(pid, DEAD);
+	sched_zombie(_current);
 	sched_yield();
 	while (1)
 	{

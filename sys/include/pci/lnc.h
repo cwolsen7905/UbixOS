@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -30,6 +30,7 @@
 #define _PCI_LNC_H
 
 #include <sys/types.h>
+#include <sys/bus.h>
 
 // TEMP COMMENT FRESH
 #define RDP      0x10 // Register Data Port 16Bit
@@ -244,7 +245,7 @@ void lnc_txINT();
 
 extern struct lncInfo *lnc;
 
-int initLNC();
+int initLNC(uint32_t ioAddr);
 int probe(struct lncInfo *lnc);
 int lanceProbe(struct lncInfo *lnc);
 int lncAttach(struct lncInfo *lnc, int unit);
@@ -254,5 +255,8 @@ void lncInt();
 void _lncInt();
 
 int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest);
+
+/* newbus-lite PCI driver registration */
+extern struct ubx_driver lnc_ubx_driver;
 
 #endif

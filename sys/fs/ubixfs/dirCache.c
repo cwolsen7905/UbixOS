@@ -28,8 +28,8 @@
  *****************************************************************************************/
 
 #include <assert.h>
-#include <ubixfs/dirCache.h>
-#include <ubixfs/ubixfs.h>
+#include <fs/ubixfs/dirCache.h>
+#include <fs/ubixfs/ubixfs.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>

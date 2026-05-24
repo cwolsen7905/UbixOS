@@ -3,6 +3,6 @@
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-OBJS = fat.o fat_access.o fat_cache.o fat_filelib.o fat_format.o fat_fread.o fat_misc.o fat_string.o fat_table.o fat_write.o
+OBJS = fat_bpb.o fat_sector.o fat_clust.o fat_dir.o fat_file.o fat_vfs.o
 
 .include "${UBIX_MK}/ubix.kern.mk"

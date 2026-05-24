@@ -6,11 +6,11 @@ extern "C" {
 #include <limits.h>
 }
 
-#include "ogTypes.h"
-#include "ogEdgeTable.h"
-#include "ogPixCon.h"
-#include "ogPixelFmt.h"
-#include "objgfx.h"
+#include <objgfx/ogTypes.h>
+#include <objgfx/ogEdgeTable.h>
+#include <objgfx/ogPixCon.h>
+#include <objgfx/ogPixelFmt.h>
+#include <objgfx/objgfx.h>
 
 static uInt32 _gpNull(void *)            { return 0; }
 static void   _spNull(void *, uInt32)    {}
@@ -1168,7 +1168,57 @@ bool ogSurface::ogAlias(ogSurface& src, uint32_t x1, uInt32 y1, uInt32 x2, uInt3
 	return true;
 } // bool ogSurface::ogAlias()
 
-void ogSurface::ogArc(int32 xCenter, int32 yCenter, uint32_t radius, 
+bool ogSurface::ogAttach(void *buf, uInt32 w, uInt32 h, ogPixelFmt fmt)
+{
+	if (dataState == ogOwner) {
+		delete[] lineOfs;
+		free(buffer);
+	}
+
+	switch (fmt.BPP) {
+	case 32: getPixel = _gp32; setPixel = _sp32; break;
+	case 24: getPixel = _gp24; setPixel = _sp24; break;
+	case 16: getPixel = _gp16; setPixel = _sp16; break;
+	case  8: getPixel = _gp8;  setPixel = _sp8;  break;
+	default: return false;
+	}
+
+	buffer      = reinterpret_cast<uInt8 *>(buf);
+	xRes        = w;
+	yRes        = h;
+	maxX        = w - 1;
+	maxY        = h - 1;
+	BPP         = fmt.BPP;
+	bytesPerPix = (fmt.BPP + 7) >> 3;
+	pixFmtID    = fmt.BPP;
+
+	redFieldPosition   = fmt.redFieldPosition;
+	greenFieldPosition = fmt.greenFieldPosition;
+	blueFieldPosition  = fmt.blueFieldPosition;
+	alphaFieldPosition = fmt.alphaFieldPosition;
+	redShifter         = fmt.redMaskSize;
+	greenShifter       = fmt.greenMaskSize;
+	blueShifter        = fmt.blueMaskSize;
+	alphaShifter       = fmt.alphaMaskSize;
+	alphaMasker        = 0xFF;
+
+	lineOfs  = new ptrdiff_t[h];
+	lSize    = h * sizeof(ptrdiff_t);
+	for (uInt32 i = 0; i < h; i++)
+		lineOfs[i] = (ptrdiff_t)(i * w * bytesPerPix);
+
+	bSize     = w * h * bytesPerPix;
+	owner     = NULL;
+	dataState = ogAliasing;
+
+	if (!attributes)
+		attributes = new ogAttribute();
+
+	lastError = ogOK;
+	return true;
+}
+
+void ogSurface::ogArc(int32 xCenter, int32 yCenter, uint32_t radius,
 					  uint32_t sAngle, uInt32 eAngle, uInt32 colour) 
 {
 	int32 p;
@@ -1423,19 +1473,11 @@ void ogSurface::ogCopy(ogSurface& src)
 				* interface.  We let the source buffer fill a "temporary" buffer
 				* and then we copy it to where it needs to go.
 				*/
-#ifdef __UBIXOS_KERNEL__
-				srcPtr = kmalloc(xCount);  // allocate space
-#else
 				srcPtr = malloc(xCount);  // allocate space
-#endif
 				if (srcPtr != NULL) {
 					src.ogCopyLineFrom(0, count, srcPtr, xCount);
 					ogCopyLineTo(0, count, srcPtr, xCount);
-#ifdef __UBIXOS_KERNEL__
-					kfree(srcPtr);
-#else
 					free(srcPtr);
-#endif
 				} // if srcPtr!=NULL
 			} 
 			else 
@@ -1555,19 +1597,11 @@ void ogSurface::ogCopyBuf(int32 dX1, int32 dY1,
 				// interface.  We let the source buffer fill a "temporary" buffer
 				// and then we copy it to where it needs to go.
 
-#ifdef __UBIXOS_KERNEL__
-				srcPtr = kmalloc(xCount);  // allocate space
-#else
 				srcPtr = malloc(xCount);  // allocate space
-#endif
 				if (srcPtr != NULL) {
 					src.ogCopyLineFrom(sX1, sY1+count, srcPtr, xCount);
 					ogCopyLineTo(dX1, dY1+count, srcPtr, xCount);
-#ifdef __UBIXOS_KERNEL__
-					kfree(srcPtr);
-#else
 					free(srcPtr);
-#endif
 				} // if srcPtr!=NULL
 			} 
 			else 
@@ -1687,11 +1721,7 @@ bool ogSurface::ogCreate(uint32_t _xRes, uInt32 _yRes, ogPixelFmt _pixFormat)
 	newBSize = _xRes * _yRes * ((_pixFormat.BPP + 7) >> 3);
 	newLSize = _yRes * sizeof(uint32_t);  // number of scan lines * sizeof(uInt32)
 
-#ifdef __UBIXOS_KERNEL__
-	newBuffer = kmalloc(newBSize);
-#else
 	newBuffer = reinterpret_cast<uInt8 *>(malloc(newBSize));
-#endif
 	newLineOfs = new ptrdiff_t[_yRes];
 	newPal = new ogRGBA8[256];
 	newAttributes = new ogAttribute();
@@ -1710,11 +1740,7 @@ bool ogSurface::ogCreate(uint32_t _xRes, uInt32 _yRes, ogPixelFmt _pixFormat)
 		// check to see if we have already allocated memory .. if so, free it
 
 		if (dataState == ogOwner) {
-#ifdef __UBIXOS_KERNEL__
-			kfree(buffer);
-#else
 			free((void *)buffer);
-#endif
 			delete [] lineOfs;
 			delete [] pal;
 			delete attributes;
@@ -1790,11 +1816,7 @@ bool ogSurface::ogCreate(uint32_t _xRes, uInt32 _yRes, ogPixelFmt _pixFormat)
 		status = true;
 	} while(false);
 
-#ifdef __UBIXOS_KERNEL__
-	if (newBuffer) kfree(newBuffer);
-#else
 	if (newBuffer) free(newBuffer);
-#endif
 	if (newLineOfs) delete [] newLineOfs;
 	if (newPal) delete [] newPal;
 	if (newAttributes) delete newAttributes;
@@ -2082,13 +2104,8 @@ void ogSurface::ogHFlip(void)
 
 	xWidth = (maxX+1)*bytesPerPix;
 
-#ifdef __UBIXOS_KERNEL__
-	tmpBuf1 = kmalloc(xWidth);
-	tmpBuf2 = kmalloc(xWidth);
-#else
 	tmpBuf1 = malloc(xWidth);
 	tmpBuf2 = malloc(xWidth);
-#endif
 
 	if ((tmpBuf1 != NULL) && (tmpBuf2 != NULL))
 	{
@@ -2100,13 +2117,8 @@ void ogSurface::ogHFlip(void)
 			ogCopyLineTo(0, count, tmpBuf2, xWidth);
 		} // for count
 	}
-#ifdef __UBIXOS_KERNEL__
-	kfree(tmpBuf2);
-	kfree(tmpBuf1);
-#else
 	free(tmpBuf2);
 	free(tmpBuf1);
-#endif
 
 } // void ogSurface::ogHFlip()
 
@@ -2168,10 +2180,6 @@ void ogSurface::ogLine(int32 x1, int32 y1, int32 x2, int32 y2, uint32_t colour)
 bool ogSurface::ogLoadPalette(const char *palfile) 
 {
 	ogRGBA8 oldPalette[256];
-#ifdef __UBIXOS_KERNEL__
-	fileDescriptor *f;
-	This is possibly incompatible with the kernel. Will need a rewrite.
-#endif
 	bool result;
 
 	if (pal == NULL) 
@@ -2986,11 +2994,7 @@ ogSurface::~ogSurface(void) {
 		delete [] pal;
 		delete [] lineOfs;
 		delete attributes;
-#ifdef __UBIXOS_KERNEL__
-		kfree(buffer);
-#else
 		free(buffer);
-#endif
 	}  // if datastate == ogOwner
 
 	pal    = NULL;

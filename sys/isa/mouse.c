@@ -28,33 +28,34 @@
 
 #include <isa/mouse.h>
 #include <isa/8259.h>
+#include <sys/bus.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
+#include <fs/devfs/devfs.h>
 
 /* Ring buffer for decoded mouse events */
 #define MOUSE_BUF_SIZE 64
 static mouse_event_t mouse_buf[MOUSE_BUF_SIZE];
-static volatile int  mouse_head = 0;
-static volatile int  mouse_tail = 0;
+static volatile int mouse_head = 0;
+static volatile int mouse_tail = 0;
 
 /* PS/2 packet accumulator */
-static uint8_t  pkt[3];
-static int      pkt_idx = 0;
+static uint8_t pkt[3];
+static int pkt_idx = 0;
 
-static void
-mouse_push(mouse_event_t *ev)
+static void mouse_push(mouse_event_t *ev)
 {
 	int next = (mouse_head + 1) & (MOUSE_BUF_SIZE - 1);
-	if (next != mouse_tail) {
+	if (next != mouse_tail)
+	{
 		mouse_buf[mouse_head] = *ev;
 		mouse_head = next;
 	}
 }
 
-int
-mouse_getEvent(mouse_event_t *ev)
+int mouse_getEvent(mouse_event_t *ev)
 {
 	if (mouse_tail == mouse_head)
 		return -1;
@@ -63,15 +64,16 @@ mouse_getEvent(mouse_event_t *ev)
 	return 0;
 }
 
-static uInt8
-kbdRead(void)
+static uInt8 kbdRead(void)
 {
 	unsigned long timeout;
 	uInt8 stat, data;
 
-	for (timeout = 50000L; timeout != 0; timeout--) {
+	for (timeout = 50000L; timeout != 0; timeout--)
+	{
 		stat = inportByte(0x64);
-		if ((stat & 0x01) != 0) {
+		if ((stat & 0x01) != 0)
+		{
 			data = inportByte(0x60);
 			if ((stat & 0xC0) == 0)
 				return data;
@@ -80,13 +82,13 @@ kbdRead(void)
 	return (uInt8)-1;
 }
 
-static void
-kbdWrite(uInt16 port, uInt8 data)
+static void kbdWrite(uInt16 port, uInt8 data)
 {
 	uInt32 timeout;
 	uInt8 stat;
 
-	for (timeout = 500000L; timeout != 0; timeout--) {
+	for (timeout = 500000L; timeout != 0; timeout--)
+	{
 		stat = inportByte(0x64);
 		if ((stat & 0x02) == 0)
 			break;
@@ -95,13 +97,13 @@ kbdWrite(uInt16 port, uInt8 data)
 		outportByte(port, data);
 }
 
-static uInt8
-kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
+static uInt8 kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
 {
 	int retval;
 
 	kbdWrite(port, data);
-	for (; *expect; expect++) {
+	for (; *expect; expect++)
+	{
 		retval = kbdRead();
 		if ((uInt8)*expect != retval)
 			return retval;
@@ -109,8 +111,7 @@ kbdWriteRead(uInt16 port, uInt8 data, const char *expect)
 	return 0;
 }
 
-int
-mouseInit(void)
+int mouseInit(void)
 {
 	uInt8 ccb;
 
@@ -127,8 +128,8 @@ mouseInit(void)
 	 * and clear bit 4 (kbd clock disable) so the keyboard stays alive. */
 	kbdWrite(0x64, 0x20);
 	ccb = kbdRead();
-	ccb |=  0x03;  /* enable kbd interrupt (bit 0) + aux interrupt (bit 1) */
-	ccb &= ~0x30;  /* enable kbd clock (bit 4) + aux clock (bit 5) */
+	ccb |= 0x03;  /* enable kbd interrupt (bit 0) + aux interrupt (bit 1) */
+	ccb &= ~0x30; /* enable kbd clock (bit 4) + aux clock (bit 5) */
 	kbdWrite(0x64, 0x60);
 	kbdWrite(0x60, ccb);
 
@@ -146,36 +147,38 @@ mouseInit(void)
 	outportByte(mPic, eoi);
 	irqEnable(12);
 
-	kprintf("psm0 - Address: [0x%X], CCB: 0x%X\n", &mouseISR, ccb);
+	kprintf("psm0: isr=0x%X ccb=0x%X\n", &mouseISR, ccb);
 	return 0;
 }
 
-asm(
-  ".globl mouseISR   \n"
-  "mouseISR:         \n"
-  "  pusha           \n"
-  "  push %ds        \n"
-  "  push %es        \n"
-  "  push %fs        \n"
-  "  push %gs        \n"
-  "  call mouseHandler\n"
-  "  pop  %gs        \n"
-  "  pop  %fs        \n"
-  "  pop  %es        \n"
-  "  pop  %ds        \n"
-  "  popa            \n"
-  "  iret            \n"
-);
+asm(".globl mouseISR   \n"
+    "mouseISR:         \n"
+    "  pusha           \n"
+    "  push %ds        \n"
+    "  push %es        \n"
+    "  push %fs        \n"
+    "  push %gs        \n"
+    "  call mouseHandler\n"
+    "  pop  %gs        \n"
+    "  pop  %fs        \n"
+    "  pop  %es        \n"
+    "  pop  %ds        \n"
+    "  popa            \n"
+    "  iret            \n");
 
-void
-mouseHandler(void)
+void mouseHandler(void)
 {
 	static int first = 1;
 	uint8_t byte = inportByte(0x60);
-	if (first) { kprintf("psm0: IRQ12 firing, byte=0x%X\n", byte); first = 0; }
+	if (first)
+	{
+		kprintf("psm0: IRQ12 firing, byte=0x%X\n", byte);
+		first = 0;
+	}
 
 	/* Sync on start byte: bit 3 must be set in status byte */
-	if (pkt_idx == 0 && !(byte & 0x08)) {
+	if (pkt_idx == 0 && !(byte & 0x08))
+	{
 		outportByte(sPic, eoi);
 		outportByte(mPic, eoi);
 		return;
@@ -183,11 +186,13 @@ mouseHandler(void)
 
 	pkt[pkt_idx++] = byte;
 
-	if (pkt_idx == 3) {
+	if (pkt_idx == 3)
+	{
 		pkt_idx = 0;
 
 		/* Discard overflow packets */
-		if (pkt[0] & 0xC0) {
+		if (pkt[0] & 0xC0)
+		{
 			outportByte(sPic, eoi);
 			outportByte(mPic, eoi);
 			return;
@@ -209,3 +214,25 @@ mouseHandler(void)
 	outportByte(sPic, eoi);
 	outportByte(mPic, eoi);
 }
+
+static int mouse_ubx_probe(struct ubx_device *dev)
+{
+	(void)dev;
+	return (0); /* PS/2 mouse presence verified during mouseInit() */
+}
+
+static int mouse_ubx_attach(struct ubx_device *dev)
+{
+	int ret = mouseInit();
+	if (ret == 0)
+		devfs_makeNode("mouse0", 'c', 13, 0);
+	(void)dev;
+	return (ret);
+}
+
+struct ubx_driver mouse_ubx_driver = {
+    .drv_name = "psm",
+    .drv_probe = mouse_ubx_probe,
+    .drv_attach = mouse_ubx_attach,
+    .drv_detach = NULL,
+};

@@ -21,6 +21,12 @@ RANLIB=${CROSS_PREFIX}ranlib
 
 LDFLAGS = -Bshareable
 
-INCLUDES = -I${SRCTOP}/include
+MUSL_SRC = ${SRCTOP}/contrib/musl
+MUSL_OBJ = ${OBJ_DIR}/obj/musl
+INCLUDES = -I${MUSL_SRC}/include \
+           -I${MUSL_OBJ}/obj/include \
+           -I${MUSL_SRC}/arch/i386 \
+           -I${MUSL_SRC}/arch/generic \
+           -I${SRCTOP}/include
 CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti -O \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -fPIC -MMD -MP

@@ -27,415 +27,997 @@
  */
 
 #include <ubixos/sched.h>
+#include <ubixos/tty.h>
+#include <ubixos/signal.h>
+#include <i386/signal.h>
+#include <isa/rs232.h>
+#include <isa/kbd.h>
+#include <isa/atkbd.h>
+#include <lib/vesa.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <sys/pipe.h>
 #include <sys/errno.h>
+#include <sys/fcntl.h>
 #include <string.h>
-#include <ufs/ufs.h>
+#include <fs/ufs/ufs.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include "../fs/fat/fat_filelib.h"
+#include <sys/klog.h>
+#include <fs/vfs/file.h>
+#include <fs/vfs/mount.h>
+/* fat_filelib.h removed — use VFS unlink() for file removal */
 
-int sys_open(struct thread *td, struct sys_open_args *args) {
-  return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
+/* Forward-declare lwIP read/write so we can call them for socket fds. */
+int lwip_send(int s, const void *dataptr, size_t size, int flags);
+int lwip_recv(int s, void *mem, size_t len, int flags);
+
+/* True when an unblocked signal is pending — used to make blocking I/O
+ * loops interruptible.  td must be struct thread *. */
+#define SIG_PENDING_UNBLOCKED(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
+
+#define FD_TYPE_DIR 4
+
+int sys_open(struct thread *td, struct sys_open_args *args)
+{
+	return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
 }
 
-int sys_openat(struct thread *td, struct sys_openat_args *args) {
-
-  int error = 0x0;
-  int fd = 0x0;
-  struct file *nfp = 0x0;
-
-  error = falloc(td, &nfp, &fd);
-
-  if (error)
-    return (error);
-
-  if ((args->flag & O_WRONLY) == O_WRONLY)
-    nfp->fd = fopen(args->path, "w");
-  else if ((args->flag & O_RDWR) == O_RDWR)
-    nfp->fd = fopen(args->path, "a");
-  else
-    nfp->fd = fopen(args->path, "r");
-
-  if (nfp->fd == 0x0) {
-    if (fdestroy(td, nfp, fd) != 0x0)
-      kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
-
-    td->td_retval[0] = -1;
-    error = -1;
-    /*
-
-     kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
-
-     if ((args->flag & O_RDONLY) == O_RDONLY)
-     kprintf("O_RDONLY");
-
-     if ((args->flag & O_WRONLY) == O_WRONLY)
-     kprintf("O_WRONLY");
-
-     if ((args->flag & O_RDWR) == O_RDWR)
-     kprintf("O_RDWR");
-
-     if ((args->flag & O_ACCMODE) == O_ACCMODE)
-     kprintf("O_ACCMODE");
-     */
-
-  }
-  else {
-        //   kprintf("[%s:%i] o(%s)%i", __FILE__, __LINE__, args->path, fd);
-    td->td_retval[0] = fd;
-  }
-
-  return (error);
+int sys_openat(struct thread *td, struct sys_openat_args *args)
+{
+	return (kern_openat(td, args->fd, args->path, args->flag, (int)args->mode));
 }
 
-int sys_close(struct thread *td, struct sys_close_args *args) {
-  struct file *fd = 0x0;
-  struct pipeInfo *pFD = 0x0;
+int sys_close(struct thread *td, struct sys_close_args *args)
+{
+	struct file *fd = 0x0;
+	struct pipeInfo *p_fd = 0x0;
 
-  getfd(td, &fd, args->fd);
+	getfd(td, &fd, args->fd);
 
-  //kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
+	// kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
 
 #ifdef DEBUG_VFS_CALLS
-  kprintf("[sC::0x%X:0x%X]", args->fd, fd, fd->fd);
+	kprintf("[sC::0x%X:0x%X]", args->fd, fd, fd->fd);
 #endif
 
-  if (fd == 0x0) {
-    kprintf("COULDN'T FIND FD: ", args->fd);
-    td->td_retval[0] = -1;
-  }
-  else {
-    switch (fd->fd_type) {
-      case 3:
-        pFD = fd->data;
-        if (args->fd == pFD->rFD) {
-          if (pFD->rfdCNT < 2)
-            if (fdestroy(td, fd, args->fd) != 0x0)
-              kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
-          pFD->rfdCNT--;
-        }
+	if (fd == 0x0)
+	{
+		kprintf("COULDN'T FIND FD: ", args->fd);
+		td->td_retval[0] = -1;
+	}
+	else
+	{
+		switch (fd->fd_type)
+		{
+		case FD_TYPE_DIR:
+			if (fd->data != NULL)
+			{
+				vfs_closedir((kDIR_t *)fd->data);
+				fd->data = NULL;
+			}
+			fdestroy(td, fd, args->fd);
+			td->td_retval[0] = 0;
+			break;
+		case 3:
+			p_fd = fd->data;
+			if (args->fd == p_fd->rFD)
+			{
+				if (p_fd->rfdCNT < 2 && td->o_files[args->fd] != NULL) {
+					if (fdestroy(td, fd, args->fd) != 0) {
+						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe rFD %d", args->fd);
+}
+}
+				p_fd->rfdCNT--;
+			}
 
-        if (args->fd == pFD->wFD) {
-          if (pFD->wfdCNT < 2)
-            if (fdestroy(td, fd, args->fd) != 0x0)
-              kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
-          pFD->wfdCNT--;
-        }
+			if (args->fd == p_fd->wFD)
+			{
+				if (p_fd->wfdCNT < 2 && td->o_files[args->fd] != NULL) {
+					if (fdestroy(td, fd, args->fd) != 0) {
+						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe wFD %d", args->fd);
+}
+}
+				p_fd->wfdCNT--;
+			}
 
-        break;
-      default:
-        if (args->fd < 3)
-          td->td_retval[0] = 0;
-        else {
-          if (fclose(fd->fd) != 0)
-            td->td_retval[0] = -1;
+			if (p_fd->rfdCNT <= 0 && p_fd->wfdCNT <= 0)
+			{
+				struct pipeBuf *pbuf = p_fd->headPB;
+				while (pbuf != NULL)
+				{
+					struct pipeBuf *next = pbuf->next;
+					kfree(pbuf->buffer);
+					kfree(pbuf);
+					pbuf = next;
+				}
+				kfree(p_fd);
+			}
 
-          //kprintf("DESTROY: %i!", args->fd);
-          if (fdestroy(td, fd, args->fd) != 0x0)
-            kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
-
-          td->td_retval[0] = 0;
-
-        }
-    }
-  }
-  return (0);
+			td->td_retval[0] = 0;
+			break;
+		case FD_TYPE_TTY:
+		case FD_TYPE_TTYV:
+			/* tty fds have no underlying fileDescriptor_t to close */
+			if (args->fd >= 3) {
+				fdestroy(td, fd, args->fd);
+}
+			td->td_retval[0] = 0;
+			break;
+		default:
+			if (args->fd < 3) {
+				td->td_retval[0] = 0;
+			} else
+			{
+				if (fd->fd != NULL && fclose(fd->fd) != 0) {
+					td->td_retval[0] = -1;
 }
 
-int sys_read(struct thread *td, struct sys_read_args *args) {
-  int x = 0;
-  char c = 0x0;
-  char bf[2];
-  volatile char *buf = args->buf;
-
-  struct file *fd = 0x0;
-
-  struct pipeInfo *pFD = 0x0;
-  struct pipeBuf *rpFD = 0x0;
-
-  size_t nbytes;
-
-  int rpCNT = 0;
-
-  getfd(td, &fd, args->fd);
-
-  if (args->fd > 3) {
-    switch (fd->fd_type) {
-      case 3: /* XXX - Pipe2 Handling */
-        pFD = fd->data;
-        while (pFD->bCNT == 0 && rpCNT < 100) {
-          sched_yield();
-          rpCNT++;
-        }
-
-        if (rpCNT >= 100 && pFD->bCNT == 0) {
-          td->td_retval[0] = 0;
-        }
-        else {
-          nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
-          //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
-          //kprintf("PR: []", nbytes);
-          memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
-          pFD->headPB->offset += nbytes;
-
-          if (pFD->headPB->offset >= pFD->headPB->nbytes) {
-            rpFD = pFD->headPB;
-            pFD->headPB = pFD->headPB->next;
-            kfree(rpFD);
-            pFD->bCNT--;
-          }
-
-          td->td_retval[0] = nbytes;
-        }
-        break;
-      default:
-        //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
-        //kprintf("[%s:%i]", __FILE__, __LINE__);
-        td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
-    }
-  }
-  else {
-    /* stdin: echo and line buffering handled by keyboard ISR; drain stdin[] */
-    while (_current->term == tty_foreground) {
-      c = getchar();
-      if (c != 0x0) {
-        buf[x++] = c;
-        if (c == '\n' || x >= (int)args->nbyte)
-          break;
-      }
-      else {
-        sched_yield();
-      }
-    }
-    td->td_retval[0] = x;
-  }
-  return (0);
+				if (fdestroy(td, fd, args->fd) != 0x0) {
+					kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
 }
 
-int sys_pread(struct thread *td, struct sys_pread_args *args) {
-  int offset = 0;
-  int x = 0;
-  char c = 0x0;
-  char bf[2];
-  volatile char *buf = args->buf;
-
-  struct file *fd = 0x0;
-
-  getfd(td, &fd, args->fd);
-
-  if (args->fd > 3) {
-    offset = fd->fd->offset;
-    fd->fd->offset = args->offset;
-    td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
-    fd->fd->offset = offset;
-  }
-  else {
-    bf[1] = '\0';
-    if (_current->term == tty_foreground)
-      c = getchar();
-
-    for (x = 0; x < args->nbyte && c != '\n';) {
-      if (_current->term == tty_foreground) {
-
-        if (c != 0x0) {
-          buf[x++] = c;
-          bf[0] = c;
-          kprintf(bf);
-        }
-
-        if (c == '\n') {
-          buf[x++] = c;
-          break;
-        }
-
-        sched_yield();
-        c = getchar();
-      }
-      else {
-        sched_yield();
-      }
-    }
-    if (c == '\n')
-      buf[x++] = '\n';
-
-    bf[0] = '\n';
-    kprintf(bf);
-
-    td->td_retval[0] = x;
-  }
-  return (0);
+				td->td_retval[0] = 0;
+			}
+		}
+	}
+	return (0);
 }
 
-int sys_write(struct thread *td, struct sys_write_args *uap) {
-  char *buffer = 0x0;
-  struct file *fd = 0x0;
+int sys_read(struct thread *td, struct sys_read_args *args)
+{
+	int x = 0;
+	char c = 0x0;
+	char bf[2];
+	volatile char *buf = args->buf;
 
-  struct pipeInfo *pFD = 0x0;
-  struct pipeBuf *pBuf = 0x0;
+	struct file *fd = 0x0;
 
-  size_t nbytes;
+	struct pipeInfo *p_fd = 0x0;
+	struct pipeBuf *rp_fd = 0x0;
 
-  if (uap->fd == 2) {
-    buffer = kmalloc(1024);
-        //kprintf("nbyte: %i", uap->nbyte);
+	size_t nbytes;
 
-    memcpy(buffer, uap->buf, uap->nbyte);
-    printColor += 1;
-    kprintf(buffer);
-    printColor = defaultColor;
-    kfree(buffer);
-    td->td_retval[0] = uap->nbyte;
-  }
-  else if (uap->fd == 1) {
-    buffer = kmalloc(uap->nbyte + 1);
-    memset(buffer, '\0', uap->nbyte + 1);
-    memcpy(buffer, uap->buf, uap->nbyte);
-    kprintf("%s", buffer);
-    kfree(buffer);
-    td->td_retval[0] = uap->nbyte;
-  }
-  else {
-    getfd(td, &fd, uap->fd);
+	int rp_cnt = 0;
 
-    //kprintf("[fd: %i:0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
+	getfd(td, &fd, args->fd);
 
-    switch (fd->fd_type) {
-      case 3: /* XXX - Temp Pipe Stuff */
+	/* Socket fd: route through lwIP */
+	if (fd != NULL && fd->fd_type == 2)
+	{
+		void *kbuf = kmalloc(args->nbyte);
+		if (!kbuf)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		int r = lwip_recv(fd->socket, kbuf, args->nbyte, 0);
+		if (r > 0) {
+			memcpy((void *)args->buf, kbuf, (size_t)r);
+}
+		kfree(kbuf);
+		td->td_retval[0] = r;
+		return (0);
+	}
 
-        pFD = fd->data;
-        pBuf = (struct pipeBuf*) kmalloc(sizeof(struct pipeBuf));
-        pBuf->buffer = kmalloc(uap->nbyte);
+	/* Check fd_type first so dup2'd pipe fds work on stdin slot (0-3) */
+	if (fd != 0x0 && fd->fd_type == 3)
+	{
+		p_fd = fd->data;
+		if (fd->f_flag & O_NONBLOCK)
+		{
+			/* Non-blocking: return 0 immediately if no data */
+			if (p_fd->bCNT == 0)
+			{
+				td->td_retval[0] = 0;
+				return (0);
+			}
+		}
+		else
+		{
+			/* Blocking: wait until data arrives or a signal fires.
+			 * Register ourselves as the reader so the writer can
+			 * boost our priority when it adds data (Phase 3.2). */
+			p_fd->reader_pid = (int)_current->id;
+			while (p_fd->bCNT == 0)
+			{
+				if (SIG_PENDING_UNBLOCKED(td))
+				{
+					p_fd->reader_pid = 0;
+					td->td_retval[0] = -EINTR;
+					return (EINTR);
+				}
+				sched_yield();
+			}
+			p_fd->reader_pid = 0;
+		}
+		{
+			nbytes = (args->nbyte - (p_fd->headPB->nbytes - p_fd->headPB->offset) <= 0) ? args->nbyte : (p_fd->headPB->nbytes - p_fd->headPB->offset);
+			memcpy(args->buf, p_fd->headPB->buffer + p_fd->headPB->offset, nbytes);
+			p_fd->headPB->offset += nbytes;
 
-        memcpy(pBuf->buffer, uap->buf, uap->nbyte);
+			if (p_fd->headPB->offset >= p_fd->headPB->nbytes)
+			{
+				rp_fd = p_fd->headPB;
+				p_fd->headPB = p_fd->headPB->next;
+				if (p_fd->headPB == NULL) {
+					p_fd->tailPB = NULL;
+}
+				kfree(rp_fd->buffer);
+				kfree(rp_fd);
+				p_fd->bCNT--;
+			}
 
-        pBuf->nbytes = uap->nbyte;
-
-        if (pFD->tailPB)
-          pFD->tailPB->next = pBuf;
-
-        pFD->tailPB = pBuf;
-
-        if (!pFD->headPB)
-          pFD->headPB = pBuf;
-
-        pFD->bCNT++;
-
-        td->td_retval[0] = nbytes;
-
-        break;
-      default:
-        if (fd->fd) {
-          td->td_retval[0] = fwrite(uap->buf, 1, uap->nbyte, fd->fd);
-        }
-        else {
-          kprintf("[%i]", uap->nbyte);
-          buffer = kmalloc(uap->nbyte);
-          memcpy(buffer, uap->buf, uap->nbyte);
-          kprintf("(%i) %s", uap->fd, uap->buf);
-          kfree(buffer);
-          td->td_retval[0] = uap->nbyte;
-        }
-    }
-
-  }
-  return (0x0);
+			td->td_retval[0] = nbytes;
+		}
+	}
+	else if (fd == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	else if (fd->fd_type == FD_TYPE_TTYV)
+	{
+		/* Specific virtual terminal fd: read from the bound tty_term. */
+		tty_term *t = (tty_term *)fd->data;
+		/* Phase 12: background process reading from its controlling tty */
+		if (t != NULL && t->t_pgrp != 0 &&
+		    (pid_t)_current->pgrp != t->t_pgrp) {
+			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
+		for (;;)
+		{
+			if (SIG_PENDING_UNBLOCKED(td))
+			{
+				td->td_retval[0] = -EINTR;
+				return (EINTR);
+			}
+			if (t->stdinSize > 0)
+			{
+				int i;
+				c = t->stdin[0];
+				t->stdinSize--;
+				for (i = 0; i < t->stdinSize; i++) {
+					t->stdin[i] = t->stdin[i + 1];
+}
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)args->nbyte) {
+					break;
+}
+			}
+			else if (t->t_eof)
+			{
+				t->t_eof = 0;
+				break; /* return x bytes (0 if line was empty = EOF) */
+			}
+			else
+			{
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
+	}
+	else if (fd->fd != NULL)
+	{
+		/* Regular file with a fileDescriptor_t: read via VFS */
+		td->td_retval[0] = fread(args->buf, 1, args->nbyte, fd->fd);
+	}
+	/* else: fd->fd == NULL = TTY placeholder (original fds 0-3 or dup2'd copy) */
+	else if (_current->term != NULL && _current->term->t_type == TTY_TYPE_SERIAL)
+	{
+		/* Serial TTY (ttyd session): drain rx ring through line discipline,
+		 * then read completed characters from the term's stdin buffer.
+		 * Mirrors the VGA path: kbd_ring → tty_inject → stdin[]. */
+		while (x < (int)args->nbyte)
+		{
+			int raw;
+			while ((raw = serial_rx_getbyte()) >= 0) {
+				tty_inject(_current->term, (char)raw);
 }
 
-int sys_access(struct thread *td, struct sys_access_args *args) {
-  /* XXX - This is a temporary as it always returns true */
-
-  td->td_retval[0] = 0;
-  return (0);
+			if (_current->term->stdinSize > 0)
+			{
+				int i;
+				c = _current->term->stdin[0];
+				_current->term->stdinSize--;
+				for (i = 0; i < _current->term->stdinSize; i++) {
+					_current->term->stdin[i] = _current->term->stdin[i + 1];
+}
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)args->nbyte) {
+					break;
+}
+			}
+			else if (_current->term->t_eof)
+			{
+				_current->term->t_eof = 0;
+				break; /* return x bytes (0 if line was empty = EOF) */
+			}
+			else
+			{
+				if (SIG_PENDING_UNBLOCKED(td))
+				{
+					td->td_retval[0] = -EINTR;
+					return (EINTR);
+				}
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
+	}
+	else
+	{
+		/* Phase 12: background process reading from its controlling tty */
+		{
+			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
+			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
+			    (pid_t)_current->pgrp != t_bg->t_pgrp) {
+				signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
+				td->td_retval[0] = -EINTR;
+				return (EINTR);
+			}
+		}
+		/* VGA TTY: block until this terminal is the active foreground,
+		 * then drain keyboard ring → line discipline → stdin[].
+		 *
+		 * When another VTY is switched in (Alt+Fx) or the GUI compositor
+		 * has mapped the framebuffer (kbd_gui_mode=1), yield here rather
+		 * than returning 0 bytes — returning 0 causes login to spin and
+		 * spam "Login:" at full CPU speed.
+		 *
+		 * vesa_text_slot: deferred Ctrl+Alt+Fn from the keyboard ISR.
+		 * The ISR cannot call biosCall (spawns a V86 task, needs sched_yield),
+		 * so it sets the flag and we perform the switch here in task context. */
+		for (;;)
+		{
+			if (SIG_PENDING_UNBLOCKED(td))
+			{
+				td->td_retval[0] = -EINTR;
+				return (EINTR);
+			}
+			if (vesa_text_slot >= 0)
+			{
+				int slot = vesa_text_slot;
+				vesa_text_slot = -1;
+				tty_change((uInt16)slot);
+				vesa_text_mode();
+				kbd_gui_mode = 0;
+			}
+			if (tty_switch_slot >= 0)
+			{
+				int slot = tty_switch_slot;
+				tty_switch_slot = -1;
+				tty_change((uInt16)slot);
+			}
+			if (kbd_gui_mode || _current->term != tty_foreground)
+			{
+				sched_yield();
+				continue;
+			}
+			c = getchar();
+			if (c != 0x0)
+			{
+				buf[x++] = c;
+				if (c == '\n' || x >= (int)args->nbyte) {
+					break;
+}
+			}
+			else if (tty_foreground != NULL && tty_foreground->t_eof)
+			{
+				tty_foreground->t_eof = 0;
+				break; /* return x bytes (0 if line was empty = EOF) */
+			}
+			else
+			{
+				sched_yield();
+			}
+		}
+		td->td_retval[0] = x;
+	}
+	return (0);
 }
 
-int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
+int sys_pread(struct thread *td, struct sys_pread_args *args)
+{
+	int offset = 0;
+	int x = 0;
+	char c = 0x0;
+	char bf[2];
+	volatile char *buf = args->buf;
 
-  struct file *fd = 0x0;
+	struct file *fd = 0x0;
 
-  getfd(td, &fd, args->fd);
+	getfd(td, &fd, args->fd);
 
-  char buf[DEV_BSIZE];
-  struct dirent *d;
-  char *s;
-  ssize_t n;
+	if (fd == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  td->td_retval[0] = fread(args->buf, args->count, 1, fd->fd);
-
-  return (0);
+	if (args->fd > 3)
+	{
+		offset = fd->fd->offset;
+		fd->fd->offset = args->offset;
+		td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
+		fd->fd->offset = offset;
+	}
+	else
+	{
+		bf[1] = '\0';
+		if (_current->term == tty_foreground) {
+			c = getchar();
 }
 
-int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
-  /* XXX - Need to implement readlink */
+		for (x = 0; x < args->nbyte && c != '\n';)
+		{
+			if (_current->term == tty_foreground)
+			{
 
-  kprintf("RL: %s:\n", args->path, args->count);
+				if (c != 0x0)
+				{
+					buf[x++] = c;
+					bf[0] = c;
+					kprintf(bf);
+				}
 
-  //Return Error
-  thr->td_retval[0] = 2;
-  return (-1);
+				if (c == '\n')
+				{
+					buf[x++] = c;
+					break;
+				}
+
+				sched_yield();
+				c = getchar();
+			}
+			else
+			{
+				sched_yield();
+			}
+		}
+		if (c == '\n') {
+			buf[x++] = '\n';
 }
 
-int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
-  int error = 0x0;
-  int fd = 0x0;
-  struct file *nfp = 0x0;
-  int oflags = flags;
+		bf[0] = '\n';
+		kprintf(bf);
 
-  /*
-   * Only one of the O_EXEC, O_RDONLY, O_WRONLY and O_RDWR flags
-   * may be specified.
-   */
-  if (flags & O_EXEC) {
-    if (flags & O_ACCMODE)
-      return (EINVAL);
-  }
-  else if ((flags & O_ACCMODE) == O_ACCMODE) {
-    return (EINVAL);
-  }
-  else {
-    flags = FFLAGS(flags);
-  }
-
-  error = falloc(thr, &nfp, &fd);
-
-  if (error) {
-    thr->td_retval[0] = -1;
-    return (error);
-  }
-
-  nfp->f_flag = flags & FMASK;
-
-  if ((oflags & O_WRONLY) && (oflags & O_APPEND))
-    nfp->fd = fopen(path, "a");
-  else if (oflags & O_WRONLY)
-    nfp->fd = fopen(path, "w");
-  else if (oflags & O_RDWR)
-    nfp->fd = fopen(path, "rwb");
-  else
-    nfp->fd = fopen(path, "r");
-
-  if (nfp->fd == 0x0) {
-    if (fdestroy(thr, nfp, fd) != 0x0)
-      kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
-
-    thr->td_retval[0] = -1;
-    error = -1;
-  }
-  else {
-    thr->td_retval[0] = fd;
-  }
-
-  return (error);
+		td->td_retval[0] = x;
+	}
+	return (0);
 }
 
-int sys_unlink(struct thread *td, struct sys_unlink_args *uap) {
-  int error = 0x0;
-  td->td_retval[0] = fl_remove(uap->path);
-  if (td->td_retval[0] != 0x0)
-    kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
-  return (error);
+int sys_write(struct thread *td, struct sys_write_args *uap)
+{
+	char *buffer = 0x0;
+	struct file *fd = 0x0;
+
+	struct pipeInfo *p_fd = 0x0;
+	struct pipeBuf *p_buf = 0x0;
+
+	size_t nbytes;
+
+	getfd(td, &fd, uap->fd);
+
+	/* Socket fd: route through lwIP */
+	if (fd != NULL && fd->fd_type == 2)
+	{
+		void *kbuf = kmalloc(uap->nbyte);
+		if (!kbuf)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		memcpy(kbuf, uap->buf, uap->nbyte);
+		int r = lwip_send(fd->socket, kbuf, uap->nbyte, 0);
+		kfree(kbuf);
+		td->td_retval[0] = (r >= 0) ? r : -1;
+		return (0);
+	}
+
+	/* Check fd_type first so dup2'd pipe fds work on stdout/stderr slots */
+	if (fd != 0x0 && fd->fd_type == 3)
+	{
+		p_fd = fd->data;
+		p_buf = (struct pipeBuf *)kmalloc(sizeof(struct pipeBuf));
+		if (!p_buf)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		p_buf->buffer = kmalloc(uap->nbyte);
+		if (!p_buf->buffer)
+		{
+			kfree(p_buf);
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		p_buf->next = 0x0;
+		p_buf->offset = 0;
+
+		memcpy(p_buf->buffer, uap->buf, uap->nbyte);
+
+		p_buf->nbytes = uap->nbyte;
+
+		if (p_fd->tailPB) {
+			p_fd->tailPB->next = p_buf;
+}
+
+		p_fd->tailPB = p_buf;
+
+		if (!p_fd->headPB) {
+			p_fd->headPB = p_buf;
+}
+
+		p_fd->bCNT++;
+
+		/* Phase 3.2: boost the blocked reader so it runs before CPU-bound tasks. */
+		if (p_fd->reader_pid != 0) {
+			kTask_t *reader = schedFindTask((uint32_t)p_fd->reader_pid);
+			if (reader != NULL)
+				sched_io_wakeup(reader);
+		}
+
+		td->td_retval[0] = uap->nbyte;
+	}
+	else if (fd != NULL && fd->fd_type == FD_TYPE_TTYV)
+	{
+		/* Specific virtual terminal fd: write to the bound tty_term. */
+		tty_term *t = (tty_term *)fd->data;
+		/* Phase 12: background process writing to its controlling tty */
+		if (t != NULL && t->t_pgrp != 0 &&
+		    (pid_t)_current->pgrp != t->t_pgrp &&
+		    (t->t_termios.c_lflag & TOSTOP)) {
+			signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
+			td->td_retval[0] = -EINTR;
+			return (EINTR);
+		}
+		buffer = kmalloc(uap->nbyte + 1);
+		if (!buffer)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		memset(buffer, '\0', uap->nbyte + 1);
+		memcpy(buffer, uap->buf, uap->nbyte);
+		if (t != NULL && t->t_type == TTY_TYPE_SERIAL)
+		{
+			size_t i;
+			for (i = 0; i < uap->nbyte; i++) {
+				rs232_putc(buffer[i]);
+}
+		}
+		else if (t != NULL)
+		{
+			tty_print(buffer, t);
+		}
+		kfree(buffer);
+		td->td_retval[0] = uap->nbyte;
+	}
+	else if (fd != NULL && fd->fd == NULL)
+	{
+		/* TTY placeholder: original fds 1/2 or any dup2'd copy thereof */
+		/* Phase 12: background process writing to its controlling tty */
+		{
+			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
+			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
+			    (pid_t)_current->pgrp != t_bg->t_pgrp &&
+			    (t_bg->t_termios.c_lflag & TOSTOP)) {
+				signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
+				td->td_retval[0] = -EINTR;
+				return (EINTR);
+			}
+		}
+		buffer = kmalloc(uap->nbyte + 1);
+		if (!buffer)
+		{
+			td->td_retval[0] = -1;
+			return (-1);
+		}
+		memset(buffer, '\0', uap->nbyte + 1);
+		memcpy(buffer, uap->buf, uap->nbyte);
+		{
+			tty_term *t_out = _current->ct_tty ? _current->ct_tty : _current->term;
+			if (t_out != NULL && t_out->t_type == TTY_TYPE_SERIAL)
+			{
+				size_t i;
+				for (i = 0; i < uap->nbyte; i++)
+					rs232_putc(buffer[i]);
+			}
+			else if (t_out != NULL)
+			{
+				tty_print(buffer, t_out);
+			}
+			else
+			{
+				kprintf("%s", buffer);
+			}
+		}
+		kfree(buffer);
+		td->td_retval[0] = uap->nbyte;
+	}
+	else
+	{
+		if (fd && fd->fd)
+		{
+			td->td_retval[0] = fwrite(uap->buf, 1, uap->nbyte, fd->fd);
+		}
+		else
+		{
+			td->td_retval[0] = -1;
+		}
+	}
+	return (0x0);
+}
+
+int sys_access(struct thread *td, struct sys_access_args *args)
+{
+	/* XXX - This is a temporary as it always returns true */
+
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
+{
+	struct file *fd = NULL;
+	struct kdirent kent;
+	uint8_t *buf;
+	uint32_t remaining, total, namelen, reclen;
+
+	getfd(td, &fd, args->fd);
+
+	if (fd == NULL || fd->fd_type != FD_TYPE_DIR)
+	{
+		td->td_retval[0] = EBADF;
+		return (EBADF);
+	}
+
+	buf = (uint8_t *)args->buf;
+	remaining = args->count;
+	total = 0;
+
+	while (remaining > 0)
+	{
+		if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0) {
+			break;
+}
+
+		namelen = strlen(kent.d_name);
+		if (namelen == 0) {
+			continue;
+}
+		/*
+		 * linux_dirent64 layout (musl/Linux i386 ABI):
+		 *   d_ino    uint64_t  offset 0  (8 bytes)
+		 *   d_off    int64_t   offset 8  (8 bytes)
+		 *   d_reclen uint16_t  offset 16 (2 bytes)
+		 *   d_type   uint8_t   offset 18 (1 byte)
+		 *   d_name   char[]    offset 19 (variable, NUL-terminated)
+		 * Total header = 19 bytes; reclen aligned to 8.
+		 */
+		reclen = (19 + namelen + 1 + 7) & ~7u;
+
+		if (reclen > remaining) {
+			break;
+}
+
+		uint8_t *p = buf + total;
+		memset(p, 0, reclen);
+		*(uint64_t *)(p + 0) = (uint64_t)kent.d_ino;       /* d_ino */
+		*(uint64_t *)(p + 8) = (uint64_t)(total + reclen); /* d_off */
+		*(uint16_t *)(p + 16) = (uint16_t)reclen;
+		*(uint8_t *)(p + 18) = kent.d_type;
+		memcpy(p + 19, kent.d_name, namelen + 1);
+
+		total += reclen;
+		remaining -= reclen;
+	}
+
+	td->td_retval[0] = (int)total;
+	return (0);
+}
+
+int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
+{
+	const char *path = args->path;
+
+	/* /proc/self/fd/N → synthesize a path from the open fd. */
+	if (strncmp(path, "/proc/self/fd/", 14) == 0) {
+		int fdno = 0;
+		const char *p = path + 14;
+		while (*p >= '0' && *p <= '9')
+			fdno = fdno * 10 + (*p++ - '0');
+		struct file *fp = NULL;
+		char target[32];
+		if (fdno >= 0 && fdno < O_FILES)
+			fp = (struct file *)thr->o_files[fdno];
+		if (fp == NULL) {
+			thr->td_retval[0] = EBADF;
+			return (EBADF);
+		}
+		/* Synthesize a stable name: fd objects don't have a stored path,
+		 * so return the VFS cwd as a stand-in for terminal fds. */
+		if (fp->fd == NULL) {
+			/* TTY or pipe fd — return "terminal" so callers know. */
+			snprintf(target, sizeof(target), "/dev/tty");
+		} else {
+			snprintf(target, sizeof(target), "/proc/self/fd/%d", fdno);
+		}
+		size_t n = strlen(target);
+		if ((size_t)args->count < n)
+			n = (size_t)args->count;
+		memcpy(args->buf, target, n);
+		thr->td_retval[0] = (int)n;
+		return (0);
+	}
+
+	thr->td_retval[0] = ENOENT;
+	return (ENOENT);
+}
+
+int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
+{
+	int error = 0x0;
+	int fd = 0x0;
+	struct file *nfp = 0x0;
+	int oflags = flags;
+
+	/*
+	 * Only one of the O_EXEC, O_RDONLY, O_WRONLY and O_RDWR flags
+	 * may be specified.
+	 */
+	if (flags & O_EXEC)
+	{
+		if (flags & O_ACCMODE) {
+			return (EINVAL);
+}
+	}
+	else if ((flags & O_ACCMODE) == O_ACCMODE)
+	{
+		return (EINVAL);
+	}
+	else
+	{
+		flags = FFLAGS(flags);
+	}
+
+	error = falloc(thr, &nfp, &fd);
+
+	if (error)
+	{
+		thr->td_retval[0] = error;
+		return (error);
+	}
+
+	nfp->f_flag = flags & FMASK;
+
+	/* Special case: /dev/tty opens the calling process's controlling terminal.
+	 * Fall back to _current->term when ct_tty is NULL (e.g. right after
+	 * setsid()) — UbixOS has no /dev/ttyN device for the app to open and
+	 * then call TIOCSCTTY on, so we treat the inherited term as good enough. */
+	if (strcmp(path, "/dev/tty") == 0)
+	{
+		if (_current->ct_tty == NULL && _current->term == NULL)
+		{
+			fdestroy(thr, nfp, fd);
+			thr->td_retval[0] = ENXIO;
+			return (ENXIO);
+		}
+		/* If no explicit ct_tty yet, promote the inherited term. */
+		if (_current->ct_tty == NULL)
+			_current->ct_tty = _current->term;
+		/* Claim foreground pgrp so tcgetpgrp() matches the opener's pgrp. */
+		if (_current->ct_tty->t_pgrp == 0)
+			_current->ct_tty->t_pgrp = (int)_current->pgrp;
+		nfp->fd = NULL;
+		nfp->fd_type = FD_TYPE_TTY;
+		thr->td_retval[0] = fd;
+		return (0);
+	}
+
+	/* /dev/console — always the system console (ttyv0). */
+	if (strcmp(path, "/dev/console") == 0)
+	{
+		tty_term *t = tty_find(0);
+		if (t == NULL)
+		{
+			fdestroy(thr, nfp, fd);
+			thr->td_retval[0] = ENODEV;
+			return (ENODEV);
+		}
+		nfp->fd = NULL;
+		nfp->fd_type = FD_TYPE_TTYV;
+		nfp->data = t;
+		thr->td_retval[0] = fd;
+		return (0);
+	}
+
+	/* /dev/stdin, /dev/stdout, /dev/stderr — dup the process's fd 0/1/2. */
+	{
+		int src_fd = -1;
+		if (strcmp(path, "/dev/stdin") == 0)
+			src_fd = 0;
+		else if (strcmp(path, "/dev/stdout") == 0)
+			src_fd = 1;
+		else if (strcmp(path, "/dev/stderr") == 0)
+			src_fd = 2;
+		if (src_fd >= 0)
+		{
+			struct file *src = (struct file *)thr->o_files[src_fd];
+			if (src == NULL)
+			{
+				fdestroy(thr, nfp, fd);
+				thr->td_retval[0] = EBADF;
+				return (EBADF);
+			}
+			memcpy(nfp, src, sizeof(struct file));
+			if (src->fd != NULL)
+				src->fd->dup++;
+			thr->td_retval[0] = fd;
+			return (0);
+		}
+	}
+
+	/* /dev/ttyv0.../dev/ttyv3 — open a specific virtual terminal. */
+	{
+		const char *tvp = NULL;
+		if (strncmp(path, "/dev/ttyv", 9) == 0)
+			tvp = path + 9;
+		if (tvp != NULL && *tvp >= '0' && *tvp <= '3' && *(tvp + 1) == '\0')
+		{
+			int idx = *tvp - '0';
+			tty_term *t = tty_find((uInt16)idx);
+			if (t == NULL)
+			{
+				fdestroy(thr, nfp, fd);
+				thr->td_retval[0] = ENODEV;
+				return (ENODEV);
+			}
+			nfp->fd = NULL;
+			nfp->fd_type = FD_TYPE_TTYV;
+			nfp->data = t;
+			/* POSIX: session leader opening a terminal without O_NOCTTY
+			 * implicitly acquires it as controlling terminal. */
+			if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL) {
+				_current->ct_tty = t;
+				if (t->t_pgrp == 0)
+					t->t_pgrp = (int)_current->pgrp;
+			}
+			thr->td_retval[0] = fd;
+			return (0);
+		}
+	}
+
+	/* Directory open: use VFS dir layer instead of fopen */
+	if (oflags & O_DIRECTORY)
+	{
+		kDIR_t *kdir = vfs_opendir(path);
+		if (kdir == NULL)
+		{
+			fdestroy(thr, nfp, fd);
+			thr->td_retval[0] = ENOENT;
+			return (ENOENT);
+		}
+		nfp->fd_type = FD_TYPE_DIR;
+		nfp->data = kdir;
+		nfp->fd = NULL;
+		thr->td_retval[0] = fd;
+		return (0);
+	}
+
+	if ((oflags & O_WRONLY) && (oflags & O_APPEND)) {
+		nfp->fd = fopen(path, "a");
+	} else if (oflags & O_WRONLY) {
+		nfp->fd = fopen(path, "w");
+	} else if (oflags & O_RDWR) {
+		nfp->fd = fopen(path, "rwb");
+	} else {
+		nfp->fd = fopen(path, "r");
+}
+
+	if (nfp->fd == 0x0)
+	{
+		if (fdestroy(thr, nfp, fd) != 0x0) {
+			kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
+}
+
+		thr->td_retval[0] = ENOENT;
+		return (ENOENT);
+	}
+
+	thr->td_retval[0] = fd;
+	return (0);
+}
+
+int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
+{
+	int error = 0x0;
+	td->td_retval[0] = unlink(uap->path);
+	if (td->td_retval[0] != 0x0) {
+		kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
+}
+	return (error);
+}
+
+/*
+ * sys_mount — POSIX mount(2), FreeBSD ABI syscall 21.
+ *
+ * type: filesystem type string ("devfs", "procfs", "fat")
+ * path: POSIX mount point path (must already exist as a directory)
+ * flags/data: ignored for now (pseudo-FSes need no device)
+ *
+ * Maps type string to the internal vfsType integer used by vfsRegisterFS,
+ * then delegates to vfs_mount(). Block-device FSes (fat) are not yet
+ * supported via this path — those come through the automountd Phase 6 flow.
+ */
+int sys_mount(struct thread *td, struct sys_mount_args *uap)
+{
+	static const struct { const char *name; int type; } fs_map[] = {
+		{ "devfs",  1    },
+		{ "procfs", 0x02 },
+		{ "fat",    0xFA },
+		{ "msdos",  0xFA },
+		{ NULL, 0 }
+	};
+	int i, vfs_type = -1;
+	char mpath[1024];
+
+	if (uap->type == NULL || uap->path == NULL) {
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	for (i = 0; fs_map[i].name != NULL; i++) {
+		if (strcmp(uap->type, fs_map[i].name) == 0) {
+			vfs_type = fs_map[i].type;
+			break;
+		}
+	}
+	if (vfs_type < 0) {
+		kprintf("sys_mount: unknown fstype \"%s\"\n", uap->type);
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	strncpy(mpath, uap->path, sizeof(mpath) - 1);
+	mpath[sizeof(mpath) - 1] = '\0';
+
+	if (vfs_mount(0, 0, 0, vfs_type, mpath, "r") != 0) {
+		kprintf("sys_mount: vfs_mount(%s, %s) failed\n", uap->type, mpath);
+		td->td_retval[0] = -EIO;
+		return (EIO);
+	}
+
+	kprintf("sys_mount: mounted %s at %s\n", uap->type, mpath);
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * sys_umount — POSIX unmount(2), FreeBSD ABI syscall 22.
+ *
+ * Finds the mount point by exact path match and removes it from the table.
+ * Does not call a per-FS cleanup hook (none registered yet).
+ */
+int sys_umount(struct thread *td, struct sys_umount_args *uap)
+{
+	if (uap->path == NULL) {
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	if (vfs_umount(uap->path) != 0) {
+		kprintf("sys_umount: no mount at \"%s\"\n", uap->path);
+		td->td_retval[0] = -EINVAL;
+		return (EINVAL);
+	}
+
+	kprintf("sys_umount: unmounted %s\n", uap->path);
+	td->td_retval[0] = 0;
+	return (0);
 }

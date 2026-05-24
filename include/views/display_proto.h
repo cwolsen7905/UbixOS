@@ -48,6 +48,7 @@
 #define DISPLAY_FLIP    2   /* buffer updated, please composite */
 #define DISPLAY_RELEASE 3   /* window closing */
 #define DISPLAY_QUERY   8   /* request screen geometry */
+#define DISPLAY_RAISE   11  /* ask compositor to raise/focus a window */
 
 /* display → client */
 #define DISPLAY_ACK     4   /* region granted; carries window_id + shm token */
@@ -55,6 +56,11 @@
 #define DISPLAY_KEY     6   /* keyboard event forwarded to focused window */
 #define DISPLAY_MOUSE   7   /* mouse event forwarded to focused window */
 #define DISPLAY_INFO    9   /* response to DISPLAY_QUERY */
+#define DISPLAY_CLOSE   10  /* compositor closed the window (close button) */
+#define DISPLAY_NOTIFY  12  /* window added or removed (sent to taskbar) */
+
+/* Height of the server-drawn title bar (0 for no_decor windows) */
+#define DECOR_H         18
 
 /*
  * DISPLAY_CLAIM payload (client → display).
@@ -67,6 +73,7 @@ struct display_claim_req {
     int32_t  sender_pid;    /* client's PID — needed for vmm_share_region */
     char     title[64];
     char     reply[64];     /* client mailbox name */
+    uint8_t  no_decor;      /* 1 = skip server-side title bar (panels, flyouts) */
 };
 
 /*
@@ -98,6 +105,16 @@ struct display_flip {
  * DISPLAY_RELEASE payload (client → display).
  */
 struct display_release {
+    uint32_t window_id;
+};
+
+/*
+ * DISPLAY_CLOSE payload (display → client).
+ * Sent when the user clicks the close button on the server-drawn title bar.
+ * The client should clean up and exit; the compositor has already removed
+ * the window from its table.
+ */
+struct display_close {
     uint32_t window_id;
 };
 
@@ -135,6 +152,25 @@ struct display_info {
     uint32_t screen_w;
     uint32_t screen_h;
     uint8_t  bpp;
+};
+
+/*
+ * DISPLAY_RAISE payload (client → display).
+ * Ask the compositor to raise and focus the given window.
+ */
+struct display_raise {
+    uint32_t window_id;
+};
+
+/*
+ * DISPLAY_NOTIFY payload (display → taskbar).
+ * Sent whenever a decorated window is added or removed.
+ * added=1: window opened; added=0: window closed.
+ */
+struct display_notify {
+    uint32_t window_id;
+    uint8_t  added;
+    char     title[64];
 };
 
 #endif /* _DISPLAY_PROTO_H */

@@ -31,10 +31,10 @@ ldLibrary *ldAddLibrary(const char *lib) {
       free(tmpLib);
       return(0x0);
       }
-    //if ((tmpLib->output = (char *)malloc((linkerFd->size+0x4000))) == 0x0) {
-    //if ((tmpLib->output = (char *)malloc(0x111000)) == 0x0) {
-    //if ((tmpLib->output = (char *)getPage((0x111000/0x1000),2)) == 0x0) {
-    if ((tmpLib->output = (char *)getPage(((linkerFd->size+0x4000)/0x1000),2)) == 0x0) {
+    fseek(linkerFd, 0x0, SEEK_END);
+    long linkerFd_size = ftell(linkerFd);
+    fseek(linkerFd, 0x0, SEEK_SET);
+    if ((tmpLib->output = (char *)getPage(((linkerFd_size+0x4000)/0x1000),2)) == 0x0) {
       printf("malloc failed: tmpLib->output\n");
       exit(0x1);
       }

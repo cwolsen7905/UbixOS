@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -48,4 +48,4 @@ struct Trie *search_trieNode(struct Trie *, char *);
 
 int delete_trieNode(struct Trie **, char *);
 
-#endif _LIB_LKERN_TRIE_H_
+#endif /* _LIB_KERN_TRIE_H_ */

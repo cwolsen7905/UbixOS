@@ -3,7 +3,6 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY = ed
-OBJS   = ed.o
-
-.include "${UBIX_MK}/ubix.prog.mk"
+BINARY    = ed
+OBJS      = ed.o
+.include "${UBIX_MK}/ubix.musl.prog.mk"

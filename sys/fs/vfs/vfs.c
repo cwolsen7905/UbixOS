@@ -26,7 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
+#include <fs/vfs/bcache.h>
 #include <ubixos/vitals.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -48,8 +49,10 @@ int vfs_init() {
   /* Set up default fileSystems list */
   systemVitals->fileSystems = 0x0;
 
+  bcache_init();
+
   /* Print information */
-  kprintf("vfs0: loaded at address: [0x%X]\n",systemVitals->fileSystems);
+  kprintf("vfs0: addr=0x%X\n", systemVitals->fileSystems);
 
   /* Return so we know things went well */
   return(0x0);

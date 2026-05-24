@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -45,6 +45,7 @@ mov %eax, %ds
 mov %eax, %es
 mov %eax, %fs
 cld
+sti                  /* re-enable interrupts so ISRs (AC97, PIT) can fire */
 push %esp
 call sys_call_posix
 add $0x4,%esp /* Remove Stack Pointer From Stack */

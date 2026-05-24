@@ -30,25 +30,56 @@
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <lib/kprintf.h>
-#include <assert.h>
 #include <sys/descrip.h>
+#include <lib/kmalloc.h>
+#include <string.h>
 
-/**
- HACK
- */
-int pipe(struct thread *td, struct pipe_args *uap) {
-  struct file *rf, *wf;
-  int fd = 0x0;
-  falloc(td, &rf, &fd);
-  rf->f_flag = FREAD | FWRITE;
-  td->td_retval[0] = fd;
-  falloc(td, &wf, &fd);
-  wf->f_flag = FREAD | FWRITE;
-  td->td_retval[1] = fd;
-  return (0x0);
+int pipe(struct thread *td, struct pipe_args *uap)
+{
+	int fd1 = 0, fd2 = 0;
+	struct file *nfp1 = 0, *nfp2 = 0;
+	struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
+
+	if (pipeDesc == 0)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	memset(pipeDesc, 0, sizeof(struct pipeInfo));
+
+	if (falloc(td, &nfp1, &fd1) != 0 || nfp1 == NULL) {
+		kfree(pipeDesc);
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+	if (falloc(td, &nfp2, &fd2) != 0 || nfp2 == NULL) {
+		fdestroy(td, nfp1, fd1);
+		kfree(pipeDesc);
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	nfp1->data = pipeDesc;
+	nfp2->data = pipeDesc;
+	nfp1->fd_type = 3;
+	nfp2->fd_type = 3;
+
+	pipeDesc->rFD = fd1;
+	pipeDesc->rfdCNT = 2;
+	pipeDesc->wFD = fd2;
+	pipeDesc->wfdCNT = 2;
+
+	/* Write to the caller's fd array (musl/modern FreeBSD ABI) */
+	if (uap->fildes != 0)
+	{
+		uap->fildes[0] = fd1;
+		uap->fildes[1] = fd2;
+	}
+
+	/* Also return in registers for old-style callers */
+	td->td_retval[0] = 0;
+	td->td_retval[1] = 0;
+
+	return (0);
 }
-
-/***
- END
- ***/
-

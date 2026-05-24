@@ -24,14 +24,12 @@
  * SUCH DAMAGE.
  */
 
-//#include <sys/cdefs.h>
-//#include <sys/param.h>
+// #include <sys/cdefs.h>
+// #include <sys/param.h>
 #include <fs/common/gpt.h>
 #include <fs/common/crc32.h>
-#include <sys/device.h>
 #include <lib/kprintf.h>
 #include <pci/hd.h>
-
 
 /*
  #ifndef LITTLE_ENDIAN
@@ -46,7 +44,7 @@
  #include "gpt.h"
  */
 
-#define	 MAXTBLENTS	 128
+#define MAXTBLENTS 128
 
 #ifndef BOOTPROG
 #define BOOTPROG "Unknown"
@@ -64,306 +62,346 @@ static int curent, bootonce;
  */
 static char *secbuf;
 
-static void gptupdate( const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, struct gpt_ent *table ) {
-  int entries_per_sec, firstent;
-  daddr_t slba;
+static void gptupdate(const char *which, struct ubx_device *dev, struct gpt_hdr *hdr, struct gpt_ent *table)
+{
+	int entries_per_sec, firstent;
+	daddr_t slba;
 
-  /*
-   * We need to update the following for both primary and backup GPT:
-   * 1. Sector on disk that contains current partition.
-   * 2. Partition table checksum.
-   * 3. Header checksum.
-   * 4. Header on disk.
-   */
+	/*
+	 * We need to update the following for both primary and backup GPT:
+	 * 1. Sector on disk that contains current partition.
+	 * 2. Partition table checksum.
+	 * 3. Header checksum.
+	 * 4. Header on disk.
+	 */
 
-  entries_per_sec = DEV_BSIZE / hdr->hdr_entsz;
-  slba = curent / entries_per_sec;
-  firstent = slba * entries_per_sec;
-  bcopy( &table[firstent], secbuf, DEV_BSIZE );
-  slba += hdr->hdr_lba_table;
-  if ( devInfo->write( devInfo->info, secbuf, slba, 1 ) ) {
-    kprintf( "%s: unable to update %s GPT partition table\n", BOOTPROG, which );
-    return;
-  }
-  hdr->hdr_crc_table = crc32( table, hdr->hdr_entries * hdr->hdr_entsz );
-  hdr->hdr_crc_self = 0;
-  hdr->hdr_crc_self = crc32( hdr, hdr->hdr_size );
-  bzero( secbuf, DEV_BSIZE );
-  bcopy( hdr, secbuf, hdr->hdr_size );
-  if ( devInfo->write( devInfo->info, secbuf, hdr->hdr_lba_self, 1 ) ) {
-    kprintf( "%s: unable to update %s GPT header\n", BOOTPROG, which );
-    return;
-  }
+	entries_per_sec = DEV_BSIZE / hdr->hdr_entsz;
+	slba = curent / entries_per_sec;
+	firstent = slba * entries_per_sec;
+	bcopy(&table[firstent], secbuf, DEV_BSIZE);
+	slba += hdr->hdr_lba_table;
+	if (dev->dev_blk_ops->write(dev, slba, 1, secbuf))
+	{
+		kprintf("%s: unable to update %s GPT partition table\n", BOOTPROG, which);
+		return;
+	}
+	hdr->hdr_crc_table = crc32(table, hdr->hdr_entries * hdr->hdr_entsz);
+	hdr->hdr_crc_self = 0;
+	hdr->hdr_crc_self = crc32(hdr, hdr->hdr_size);
+	bzero(secbuf, DEV_BSIZE);
+	bcopy(hdr, secbuf, hdr->hdr_size);
+	if (dev->dev_blk_ops->write(dev, hdr->hdr_lba_self, 1, secbuf))
+	{
+		kprintf("%s: unable to update %s GPT header\n", BOOTPROG, which);
+		return;
+	}
 }
 
-int gptfind( const uuid_t *uuid, struct device_interface *devInfo, int part ) {
-  struct gpt_ent *ent;
-  struct driveInfo *drvInfo = devInfo->info;
-  int firsttry;
+int gptfind(const uuid_t *uuid, struct ubx_device *dev, int part)
+{
+	struct gpt_ent *ent;
+	struct driveInfo *drvInfo = dev->dev_softc;
+	int firsttry;
 
-  if ( part >= 0 ) {
-    if ( part == 0 || part > gpthdr->hdr_entries ) {
-      kprintf( "%s: invalid partition index\n", BOOTPROG );
-      return (-1);
-    }
-    ent = &gpttable[part - 1];
-    if ( bcmp( &ent->ent_type, uuid, sizeof(uuid_t) ) != 0 ) {
-      kprintf( "%s: specified partition is not UFS\n", BOOTPROG );
-      return (-1);
-    }
-    curent = part - 1;
-    goto found;
-  }
+	if (part >= 0)
+	{
+		if (part == 0 || part > gpthdr->hdr_entries)
+		{
+			kprintf("%s: invalid partition index\n", BOOTPROG);
+			return (-1);
+		}
+		ent = &gpttable[part - 1];
+		if (bcmp(&ent->ent_type, uuid, sizeof(uuid_t)) != 0)
+		{
+			kprintf("%s: specified partition is not UFS\n", BOOTPROG);
+			return (-1);
+		}
+		curent = part - 1;
+		goto found;
+	}
 
-  firsttry = (curent == -1);
-  curent++;
-  if ( curent >= gpthdr->hdr_entries ) {
-    curent = gpthdr->hdr_entries;
-    return (-1);
-  }
-  if ( bootonce ) {
-    /*
-     * First look for partition with both GPT_ENT_ATTR_BOOTME and
-     * GPT_ENT_ATTR_BOOTONCE flags.
-     */
-    for (; curent < gpthdr->hdr_entries; curent++ ) {
-      ent = &gpttable[curent];
-      if ( bcmp( &ent->ent_type, uuid, sizeof(uuid_t) ) != 0 )
-      continue;
-      if ( !(ent->ent_attr & GPT_ENT_ATTR_BOOTME) )
-      continue;
-      if ( !(ent->ent_attr & GPT_ENT_ATTR_BOOTONCE) )
-      continue;
-      /* Ok, found one. */
-      goto found;
-    }
-    bootonce = 0;
-    curent = 0;
-  }
-  for (; curent < gpthdr->hdr_entries; curent++ ) {
-    ent = &gpttable[curent];
-    if ( bcmp( &ent->ent_type, uuid, sizeof(uuid_t) ) != 0 )
-    continue;
-    if ( !(ent->ent_attr & GPT_ENT_ATTR_BOOTME) )
-    continue;
-    if ( ent->ent_attr & GPT_ENT_ATTR_BOOTONCE )
-    continue;
-    /* Ok, found one. */
-    goto found;
-  }
-  if ( firsttry ) {
-    /*
-     * No partition with BOOTME flag was found, try to boot from
-     * first UFS partition.
-     */
-    for ( curent = 0; curent < gpthdr->hdr_entries; curent++ ) {
-      ent = &gpttable[curent];
-      if ( bcmp( &ent->ent_type, uuid, sizeof(uuid_t) ) != 0 )
-      continue;
-      /* Ok, found one. */
-      goto found;
-    }
-  }
-  return (-1);
-  found: drvInfo->part = curent + 1;
-  ent = &gpttable[curent];
-  drvInfo->parOffset = ent->ent_lba_start * drvInfo->sector_size;
-  drvInfo->lba_start = ent->ent_lba_start;
-  drvInfo->lba_end = ent->ent_lba_end;
-  if ( ent->ent_attr & GPT_ENT_ATTR_BOOTONCE ) {
-    /*
-     * Clear BOOTME, but leave BOOTONCE set before trying to
-     * boot from this partition.
-     */
-    if ( hdr_primary_lba > 0 ) {
-      table_primary[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTME;
-      gptupdate( "primary", devInfo, &hdr_primary, table_primary );
-    }
-    if ( hdr_backup_lba > 0 ) {
-      table_backup[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTME;
-      gptupdate( "backup", devInfo, &hdr_backup, table_backup );
-    }
-  }
-  return (0);
+	firsttry = (curent == -1);
+	curent++;
+	if (curent >= gpthdr->hdr_entries)
+	{
+		curent = gpthdr->hdr_entries;
+		return (-1);
+	}
+	if (bootonce)
+	{
+		/*
+		 * First look for partition with both GPT_ENT_ATTR_BOOTME and
+		 * GPT_ENT_ATTR_BOOTONCE flags.
+		 */
+		for (; curent < gpthdr->hdr_entries; curent++)
+		{
+			ent = &gpttable[curent];
+			if (bcmp(&ent->ent_type, uuid, sizeof(uuid_t)) != 0)
+				continue;
+			if (!(ent->ent_attr & GPT_ENT_ATTR_BOOTME))
+				continue;
+			if (!(ent->ent_attr & GPT_ENT_ATTR_BOOTONCE))
+				continue;
+			/* Ok, found one. */
+			goto found;
+		}
+		bootonce = 0;
+		curent = 0;
+	}
+	for (; curent < gpthdr->hdr_entries; curent++)
+	{
+		ent = &gpttable[curent];
+		if (bcmp(&ent->ent_type, uuid, sizeof(uuid_t)) != 0)
+			continue;
+		if (!(ent->ent_attr & GPT_ENT_ATTR_BOOTME))
+			continue;
+		if (ent->ent_attr & GPT_ENT_ATTR_BOOTONCE)
+			continue;
+		/* Ok, found one. */
+		goto found;
+	}
+	if (firsttry)
+	{
+		/*
+		 * No partition with BOOTME flag was found, try to boot from
+		 * first UFS partition.
+		 */
+		for (curent = 0; curent < gpthdr->hdr_entries; curent++)
+		{
+			ent = &gpttable[curent];
+			if (bcmp(&ent->ent_type, uuid, sizeof(uuid_t)) != 0)
+				continue;
+			/* Ok, found one. */
+			goto found;
+		}
+	}
+	return (-1);
+found:
+	drvInfo->part = curent + 1;
+	ent = &gpttable[curent];
+	drvInfo->parOffset = ent->ent_lba_start * drvInfo->sector_size;
+	drvInfo->lba_start = ent->ent_lba_start;
+	drvInfo->lba_end = ent->ent_lba_end;
+	if (ent->ent_attr & GPT_ENT_ATTR_BOOTONCE)
+	{
+		/*
+		 * Clear BOOTME, but leave BOOTONCE set before trying to
+		 * boot from this partition.
+		 */
+		if (hdr_primary_lba > 0)
+		{
+			table_primary[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTME;
+			gptupdate("primary", dev, &hdr_primary, table_primary);
+		}
+		if (hdr_backup_lba > 0)
+		{
+			table_backup[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTME;
+			gptupdate("backup", dev, &hdr_backup, table_backup);
+		}
+	}
+	return (0);
 }
 
-static int gptread_hdr( const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, u_int64_t hdrlba ) {
-  uint32_t crc;
+static int gptread_hdr(const char *which, struct ubx_device *dev, struct gpt_hdr *hdr, u_int64_t hdrlba)
+{
+	uint32_t crc;
 
-  if ( devInfo->read( devInfo->info, secbuf, hdrlba, 1 ) ) {
-    kprintf( "%s: unable to read %s GPT header\n", BOOTPROG, which );
-    return (-1);
-  }
+	if (dev->dev_blk_ops->read(dev, hdrlba, 1, secbuf))
+	{
+		kprintf("%s: unable to read %s GPT header\n", BOOTPROG, which);
+		return (-1);
+	}
 
-  bcopy( secbuf, hdr, sizeof(*hdr) );
+	bcopy(secbuf, hdr, sizeof(*hdr));
 
-  if ( bcmp( hdr->hdr_sig, GPT_HDR_SIG, sizeof(hdr->hdr_sig) ) != 0 || hdr->hdr_lba_self != hdrlba || hdr->hdr_revision < 0x00010000 || hdr->hdr_entsz < sizeof(struct gpt_ent) || hdr->hdr_entries > MAXTBLENTS || DEV_BSIZE % hdr->hdr_entsz != 0 ) {
-    kprintf( "%s: invalid %s GPT header\n", BOOTPROG, which );
-    return (-1);
-  }
+	if (bcmp(hdr->hdr_sig, GPT_HDR_SIG, sizeof(hdr->hdr_sig)) != 0 || hdr->hdr_lba_self != hdrlba || hdr->hdr_revision < 0x00010000 || hdr->hdr_entsz < sizeof(struct gpt_ent) || hdr->hdr_entries > MAXTBLENTS || DEV_BSIZE % hdr->hdr_entsz != 0)
+	{
+		kprintf("%s: invalid %s GPT header\n", BOOTPROG, which);
+		return (-1);
+	}
 
-  crc = hdr->hdr_crc_self;
-  hdr->hdr_crc_self = 0;
+	crc = hdr->hdr_crc_self;
+	hdr->hdr_crc_self = 0;
 
-  if ( crc32( hdr, hdr->hdr_size ) != crc ) {
-    kprintf( "%s: %s GPT header checksum mismatch\n", BOOTPROG, which );
-    return (-1);
-  }
-  hdr->hdr_crc_self = crc;
-  return (0);
+	if (crc32(hdr, hdr->hdr_size) != crc)
+	{
+		kprintf("%s: %s GPT header checksum mismatch\n", BOOTPROG, which);
+		return (-1);
+	}
+	hdr->hdr_crc_self = crc;
+	return (0);
 }
 
-void gptbootfailed( struct device_interface *devInfo ) {
+void gptbootfailed(struct ubx_device *dev)
+{
 
-  if ( !(gpttable[curent].ent_attr & GPT_ENT_ATTR_BOOTONCE) )
-  return;
+	if (!(gpttable[curent].ent_attr & GPT_ENT_ATTR_BOOTONCE))
+		return;
 
-  if ( hdr_primary_lba > 0 ) {
-    table_primary[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTONCE;
-    table_primary[curent].ent_attr |= GPT_ENT_ATTR_BOOTFAILED;
-    gptupdate( "primary", devInfo, &hdr_primary, table_primary );
-  }
-  if ( hdr_backup_lba > 0 ) {
-    table_backup[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTONCE;
-    table_backup[curent].ent_attr |= GPT_ENT_ATTR_BOOTFAILED;
-    gptupdate( "backup", devInfo, &hdr_backup, table_backup );
-  }
+	if (hdr_primary_lba > 0)
+	{
+		table_primary[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTONCE;
+		table_primary[curent].ent_attr |= GPT_ENT_ATTR_BOOTFAILED;
+		gptupdate("primary", dev, &hdr_primary, table_primary);
+	}
+	if (hdr_backup_lba > 0)
+	{
+		table_backup[curent].ent_attr &= ~GPT_ENT_ATTR_BOOTONCE;
+		table_backup[curent].ent_attr |= GPT_ENT_ATTR_BOOTFAILED;
+		gptupdate("backup", dev, &hdr_backup, table_backup);
+	}
 }
 
-static void gptbootconv( const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, struct gpt_ent *table ) {
-  struct gpt_ent *ent;
-  daddr_t slba;
-  int table_updated, sector_updated;
-  int entries_per_sec, nent, part;
+static void gptbootconv(const char *which, struct ubx_device *dev, struct gpt_hdr *hdr, struct gpt_ent *table)
+{
+	struct gpt_ent *ent;
+	daddr_t slba;
+	int table_updated, sector_updated;
+	int entries_per_sec, nent, part;
 
-  table_updated = 0;
-  entries_per_sec = DEV_BSIZE / hdr->hdr_entsz;
-  for ( nent = 0, slba = hdr->hdr_lba_table; slba < hdr->hdr_lba_table + hdr->hdr_entries / entries_per_sec; slba++, nent += entries_per_sec ) {
-    sector_updated = 0;
-    for ( part = 0; part < entries_per_sec; part++ ) {
-      ent = &table[nent + part];
-      if ( (ent->ent_attr & (GPT_ENT_ATTR_BOOTME | GPT_ENT_ATTR_BOOTONCE | GPT_ENT_ATTR_BOOTFAILED)) != GPT_ENT_ATTR_BOOTONCE ) {
-        continue;
-      }
-      ent->ent_attr &= ~GPT_ENT_ATTR_BOOTONCE;
-      ent->ent_attr |= GPT_ENT_ATTR_BOOTFAILED;
-      table_updated = 1;
-      sector_updated = 1;
-    }
-    if ( !sector_updated )
-    continue;
-    bcopy( &table[nent], secbuf, DEV_BSIZE );
-    if ( devInfo->write( devInfo->info, secbuf, slba, 1 ) ) {
-      kprintf( "%s: unable to update %s GPT partition table\n", BOOTPROG, which );
-    }
-  }
-  if ( !table_updated )
-  return;
-  hdr->hdr_crc_table = crc32( table, hdr->hdr_entries * hdr->hdr_entsz );
-  hdr->hdr_crc_self = 0;
-  hdr->hdr_crc_self = crc32( hdr, hdr->hdr_size );
-  bzero( secbuf, DEV_BSIZE );
-  bcopy( hdr, secbuf, hdr->hdr_size );
-  if ( devInfo->write( devInfo->info, secbuf, hdr->hdr_lba_self, 1 ) )
-  kprintf( "%s: unable to update %s GPT header\n", BOOTPROG, which );
+	table_updated = 0;
+	entries_per_sec = DEV_BSIZE / hdr->hdr_entsz;
+	for (nent = 0, slba = hdr->hdr_lba_table; slba < hdr->hdr_lba_table + hdr->hdr_entries / entries_per_sec; slba++, nent += entries_per_sec)
+	{
+		sector_updated = 0;
+		for (part = 0; part < entries_per_sec; part++)
+		{
+			ent = &table[nent + part];
+			if ((ent->ent_attr & (GPT_ENT_ATTR_BOOTME | GPT_ENT_ATTR_BOOTONCE | GPT_ENT_ATTR_BOOTFAILED)) != GPT_ENT_ATTR_BOOTONCE)
+			{
+				continue;
+			}
+			ent->ent_attr &= ~GPT_ENT_ATTR_BOOTONCE;
+			ent->ent_attr |= GPT_ENT_ATTR_BOOTFAILED;
+			table_updated = 1;
+			sector_updated = 1;
+		}
+		if (!sector_updated)
+			continue;
+		bcopy(&table[nent], secbuf, DEV_BSIZE);
+		if (dev->dev_blk_ops->write(dev, slba, 1, secbuf))
+		{
+			kprintf("%s: unable to update %s GPT partition table\n", BOOTPROG, which);
+		}
+	}
+	if (!table_updated)
+		return;
+	hdr->hdr_crc_table = crc32(table, hdr->hdr_entries * hdr->hdr_entsz);
+	hdr->hdr_crc_self = 0;
+	hdr->hdr_crc_self = crc32(hdr, hdr->hdr_size);
+	bzero(secbuf, DEV_BSIZE);
+	bcopy(hdr, secbuf, hdr->hdr_size);
+	if (dev->dev_blk_ops->write(dev, hdr->hdr_lba_self, 1, secbuf))
+		kprintf("%s: unable to update %s GPT header\n", BOOTPROG, which);
 }
 
-static int gptread_table( const char *which, const uuid_t *uuid, struct device_interface *devInfo, struct gpt_hdr *hdr, struct gpt_ent *table ) {
-  struct gpt_ent *ent;
-  int entries_per_sec;
-  int part, nent;
-  daddr_t slba;
+static int gptread_table(const char *which, const uuid_t *uuid, struct ubx_device *dev, struct gpt_hdr *hdr, struct gpt_ent *table)
+{
+	struct gpt_ent *ent;
+	int entries_per_sec;
+	int part, nent;
+	daddr_t slba;
 
-  if ( hdr->hdr_entries == 0 )
-  return (0);
+	if (hdr->hdr_entries == 0)
+		return (0);
 
-  entries_per_sec = DEV_BSIZE / hdr->hdr_entsz;
-  slba = hdr->hdr_lba_table;
-  nent = 0;
-  for (;; ) {
-    if ( devInfo->read(devInfo->info, secbuf, slba, 1 ) ) {
-      kprintf( "%s: unable to read %s GPT partition table\n", BOOTPROG, which );
-      return (-1);
-    }
-    ent = (struct gpt_ent *) secbuf;
-    for ( part = 0; part < entries_per_sec; part++, ent++ ) {
-      bcopy( ent, &table[nent], sizeof(table[nent]) );
-      if ( ++nent >= hdr->hdr_entries )
-      break;
-    }
-    if ( nent >= hdr->hdr_entries )
-    break;
-    slba++;
-  }
-  if ( crc32( table, nent * hdr->hdr_entsz ) != hdr->hdr_crc_table ) {
-    kprintf( "%s: %s GPT table checksum mismatch\n", BOOTPROG, which );
-    return (-1);
-  }
-  return (0);
+	entries_per_sec = DEV_BSIZE / hdr->hdr_entsz;
+	slba = hdr->hdr_lba_table;
+	nent = 0;
+	for (;;)
+	{
+		if (dev->dev_blk_ops->read(dev, slba, 1, secbuf))
+		{
+			kprintf("%s: unable to read %s GPT partition table\n", BOOTPROG, which);
+			return (-1);
+		}
+		ent = (struct gpt_ent *)secbuf;
+		for (part = 0; part < entries_per_sec; part++, ent++)
+		{
+			bcopy(ent, &table[nent], sizeof(table[nent]));
+			if (++nent >= hdr->hdr_entries)
+				break;
+		}
+		if (nent >= hdr->hdr_entries)
+			break;
+		slba++;
+	}
+	if (crc32(table, nent * hdr->hdr_entsz) != hdr->hdr_crc_table)
+	{
+		kprintf("%s: %s GPT table checksum mismatch\n", BOOTPROG, which);
+		return (-1);
+	}
+	return (0);
 }
 
-int gptread( const uuid_t *uuid, struct device_interface *devInfo, char *buf ) {
-  u_int64_t altlba;
+int gptread(const uuid_t *uuid, struct ubx_device *dev, char *buf)
+{
+	u_int64_t altlba;
 
-  /*
-   * Read and verify both GPT headers: primary and backup.
-   */
+	/*
+	 * Read and verify both GPT headers: primary and backup.
+	 */
 
-  secbuf = buf;
-  hdr_primary_lba = hdr_backup_lba = 0;
-  curent = -1;
-  bootonce = 1;
+	secbuf = buf;
+	hdr_primary_lba = hdr_backup_lba = 0;
+	curent = -1;
+	bootonce = 1;
 
-  /* MrOlsen (2016-01-11) NOTE: What Was This For?
-  dskp->start = 0;
-  */
+	/* MrOlsen (2016-01-11) NOTE: What Was This For?
+	dskp->start = 0;
+	*/
 
-  if ( gptread_hdr( "primary", devInfo, &hdr_primary, 1 ) == 0 && gptread_table( "primary", uuid, devInfo, &hdr_primary, table_primary ) == 0 ) {
-    hdr_primary_lba = hdr_primary.hdr_lba_self;
-    gpthdr = &hdr_primary;
-    gpttable = table_primary;
-  }
+	if (gptread_hdr("primary", dev, &hdr_primary, 1) == 0 && gptread_table("primary", uuid, dev, &hdr_primary, table_primary) == 0)
+	{
+		hdr_primary_lba = hdr_primary.hdr_lba_self;
+		gpthdr = &hdr_primary;
+		gpttable = table_primary;
+	}
 
-  if ( hdr_primary_lba > 0 ) {
-    /*
-     * If primary header is valid, we can get backup
-     * header location from there.
-     */
-    altlba = hdr_primary.hdr_lba_alt;
-  }
-  else {
-    //MrOlsen (2016-01-11) FIX: What Is This???
-    kprintf("FIX!\n");
-    //altlba = drvsize( dskp );
-    if ( altlba > 0 )
-    altlba--;
-  }
-  if ( altlba == 0 )
-  kprintf( "%s: unable to locate backup GPT header\n", BOOTPROG );
-  else if ( gptread_hdr( "backup", devInfo, &hdr_backup, altlba ) == 0 && gptread_table( "backup", uuid, devInfo, &hdr_backup, table_backup ) == 0 ) {
-    hdr_backup_lba = hdr_backup.hdr_lba_self;
-    if ( hdr_primary_lba == 0 ) {
-      gpthdr = &hdr_backup;
-      gpttable = table_backup;
-      kprintf( "%s: using backup GPT\n", BOOTPROG );
-    }
-  }
+	if (hdr_primary_lba > 0)
+	{
+		/*
+		 * If primary header is valid, we can get backup
+		 * header location from there.
+		 */
+		altlba = hdr_primary.hdr_lba_alt;
+	}
+	else
+	{
+		// MrOlsen (2016-01-11) FIX: What Is This???
+		kprintf("FIX!\n");
+		// altlba = drvsize( dskp );
+		if (altlba > 0)
+			altlba--;
+	}
+	if (altlba == 0)
+		kprintf("%s: unable to locate backup GPT header\n", BOOTPROG);
+	else if (gptread_hdr("backup", dev, &hdr_backup, altlba) == 0 && gptread_table("backup", uuid, dev, &hdr_backup, table_backup) == 0)
+	{
+		hdr_backup_lba = hdr_backup.hdr_lba_self;
+		if (hdr_primary_lba == 0)
+		{
+			gpthdr = &hdr_backup;
+			gpttable = table_backup;
+			kprintf("%s: using backup GPT\n", BOOTPROG);
+		}
+	}
 
-  /*
-   * Convert all BOOTONCE without BOOTME flags into BOOTFAILED.
-   * BOOTONCE without BOOTME means that we tried to boot from it,
-   * but failed after leaving gptboot and machine was rebooted.
-   * We don't want to leave partitions marked as BOOTONCE only,
-   * because when we boot successfully start-up scripts should
-   * find at most one partition with only BOOTONCE flag and this
-   * will mean that we booted from that partition.
-   */
-  if ( hdr_primary_lba != 0 )
-  gptbootconv( "primary", devInfo, &hdr_primary, table_primary );
-  if ( hdr_backup_lba != 0 )
-  gptbootconv( "backup", devInfo, &hdr_backup, table_backup );
+	/*
+	 * Convert all BOOTONCE without BOOTME flags into BOOTFAILED.
+	 * BOOTONCE without BOOTME means that we tried to boot from it,
+	 * but failed after leaving gptboot and machine was rebooted.
+	 * We don't want to leave partitions marked as BOOTONCE only,
+	 * because when we boot successfully start-up scripts should
+	 * find at most one partition with only BOOTONCE flag and this
+	 * will mean that we booted from that partition.
+	 */
+	if (hdr_primary_lba != 0)
+		gptbootconv("primary", dev, &hdr_primary, table_primary);
+	if (hdr_backup_lba != 0)
+		gptbootconv("backup", dev, &hdr_backup, table_backup);
 
-  if ( hdr_primary_lba == 0 && hdr_backup_lba == 0 )
-  return (-1);
-  return (0);
+	if (hdr_primary_lba == 0 && hdr_backup_lba == 0)
+		return (-1);
+	return (0);
 }

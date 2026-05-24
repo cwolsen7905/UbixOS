@@ -27,6 +27,7 @@
  */
 
 #include <sys/types.h>
+#include <stdint.h>
 
 #define	DOSPTYP_UBX	 0x2A	/* UbixFS partition type */
 #define UBIXDISKMAGIC    ((uint32_t)0x45) /* The disk magic number */

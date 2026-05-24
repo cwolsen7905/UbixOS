@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -34,69 +34,83 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 
-int sem_close(semID_t id) {
-  return(0);
+int sem_close(semID_t id)
+{
+	return (0);
 }
 
-int sem_post(semID_t id) {
-  return(0);
+int sem_post(semID_t id)
+{
+	return (0);
 }
 
-int sem_wait(semID_t id) {
-  return(0);
+int sem_wait(semID_t id)
+{
+	return (0);
 }
 
-int sem_trywait(semID_t id) {
-  return(0);
+int sem_trywait(semID_t id)
+{
+	return (0);
 }
 
-int sem_timedwait(semID_t id, const struct timespec *ts) {
-  return(0);
+int sem_timedwait(semID_t id, const struct timespec *ts)
+{
+	return (0);
 }
 
-err_t sem_init(sys_sem_t **sem, uint8_t count) {
-  sys_sem_t *newSem = 0x0;
+err_t sem_init(sys_sem_t **sem, uint8_t count)
+{
+	sys_sem_t *newSem = 0x0;
 
-  if (*sem != 0) {
-    //kpanic("UH OH!");
-    kprintf("UH OH!");
-  }
+	newSem = kmalloc(sizeof(struct sys_sem));
+	if (newSem == NULL)
+		return (ENOMEM);
 
-  newSem = kmalloc(sizeof(struct sys_sem));
-  newSem->signaled = count;
+	newSem->signaled = count;
 
-  ubthread_cond_init(&(newSem->cond), NULL);
-  ubthread_mutex_init(&(newSem->mutex), NULL);
+	if (ubthread_cond_init(&(newSem->cond), NULL) != 0) {
+		kfree(newSem);
+		return (ENOMEM);
+	}
+	if (ubthread_mutex_init(&(newSem->mutex), NULL) != 0) {
+		ubthread_cond_destroy(&(newSem->cond));
+		kfree(newSem);
+		return (ENOMEM);
+	}
 
-  *sem = newSem;
+	*sem = newSem;
 
-  return (ENOERR);
+	return (ENOERR);
 }
 
-int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value) {
-  return(0);
+int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value)
+{
+	return (0);
 }
 
-int sem_unlink(const char *name) {
-  return(0);
+int sem_unlink(const char *name)
+{
+	return (0);
 }
 
-int sem_getvalue(semID_t id, int *val) {
-  return(0);
+int sem_getvalue(semID_t id, int *val)
+{
+	return (0);
 }
 
-err_t sem_destroy(sys_sem_t **sem) {
-  if (*sem == NULL)
-    return (EINVAL);
+err_t sem_destroy(sys_sem_t **sem)
+{
+	if (*sem == NULL)
+		return (EINVAL);
 
-  sys_sem_t *d_sem = *sem;
+	sys_sem_t *d_sem = *sem;
 
-  ubthread_cond_destroy(&(d_sem->cond));
-  ubthread_mutex_destroy(&(d_sem->mutex));
+	ubthread_cond_destroy(&(d_sem->cond));
+	ubthread_mutex_destroy(&(d_sem->mutex));
 
-  kfree(sem);
-  *sem = 0x0;
+	kfree(d_sem);
+	*sem = 0x0;
 
-  return (ENOERR);
+	return (ENOERR);
 }
-

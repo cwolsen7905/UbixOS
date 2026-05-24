@@ -1,0 +1,5 @@
+# /etc/fstab - UbixOS static mount table
+#
+# device       mountpoint   fstype    options
+none           /dev         devfs     defaults
+none           /proc        procfs    defaults

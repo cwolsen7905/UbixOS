@@ -45,15 +45,15 @@
 
 /* Core locking and MPU */
 #define LWIP_MPU_COMPATIBLE           0
-#define LWIP_TCPIP_CORE_LOCKING       1
-#define LWIP_TCPIP_CORE_LOCKING_INPUT 1
+#define LWIP_TCPIP_CORE_LOCKING       0
+#define LWIP_TCPIP_CORE_LOCKING_INPUT 0
 #define SYS_LIGHTWEIGHT_PROT          0
 
 
 #define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT 0
 #define MEM_ALIGNMENT                          1
 #define MEM_LIBC_MALLOC                        0
-#define MEM_SIZE                               1600
+#define MEM_SIZE                               32768
 #define MEM_USE_POOLS                          0
 #define MEM_USE_POOLS_TRY_BIGGER_POOL          0
 
@@ -78,11 +78,11 @@
 #define MEMP_NUM_SOCKET_SETGETSOCKOPT_DATA   MEMP_NUM_TCPIP_MSG_API
 #define MEMP_NUM_TCP_PCB   5
 #define MEMP_NUM_TCP_PCB_LISTEN   8
-#define MEMP_NUM_TCP_SEG   16
+#define MEMP_NUM_TCP_SEG   64
 #define MEMP_NUM_TCPIP_MSG_API   8
 #define MEMP_NUM_TCPIP_MSG_INPKT   8
 #define MEMP_NUM_UDP_PCB   4
-#define PBUF_POOL_SIZE   16
+#define PBUF_POOL_SIZE   64
 
 #define MEMP_NUM_SYS_TIMEOUT   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + (PPP_SUPPORT*6*MEMP_NUM_PPP_PCB) + (LWIP_IPV6 ? (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD) : 0))
 
@@ -142,7 +142,7 @@
 
 #define RAW_TTL   (IP_DEFAULT_TTL)
 
-#define LWIP_DHCP   0
+#define LWIP_DHCP   1
 #define DHCP_DOES_ARP_CHECK   ((LWIP_DHCP) && (LWIP_ARP))
 #define LWIP_DHCP_BOOTP_FILE   0
 #define LWIP_DHCP_GET_NTP_SRV   0
@@ -154,12 +154,13 @@
 #define LWIP_MIB2_CALLBACKS   0
 #define LWIP_IGMP   0
 #define LWIP_MULTICAST_TX_OPTIONS   (LWIP_IGMP && LWIP_UDP)
-#define LWIP_DNS   0
+#define LWIP_DNS   1
 #define DNS_TABLE_SIZE   4
 #define DNS_MAX_NAME_LENGTH   256
 #define DNS_MAX_SERVERS   2
 #define DNS_DOES_NAME_CHECK   1
-#define LWIP_DNS_SECURE   (LWIP_DNS_SECURE_RAND_XID | LWIP_DNS_SECURE_NO_MULTIPLE_OUTSTANDING | LWIP_DNS_SECURE_RAND_SRC_PORT)
+#define LWIP_DNS_SECURE   0
+#define LWIP_RAND()       ((uint32_t)0xdeadbeef)
 #define DNS_LOCAL_HOSTLIST   0
 #define DNS_LOCAL_HOSTLIST_IS_DYNAMIC   0
 #define LWIP_DNS_SUPPORT_MDNS_QUERIES   0
@@ -169,7 +170,7 @@
 #define LWIP_NETBUF_RECVINFO   0
 #define LWIP_TCP   1
 #define TCP_TTL   (IP_DEFAULT_TTL)
-#define TCP_WND   (4 * TCP_MSS)
+#define TCP_WND   (8 * TCP_MSS)
 
 #define TCP_MAXRTX   12
 
@@ -177,11 +178,11 @@
 
 #define TCP_QUEUE_OOSEQ   (LWIP_TCP)
 
-#define TCP_MSS   536
+#define TCP_MSS   1460
 
 #define TCP_CALCULATE_EFF_SEND_MSS   1
 
-#define TCP_SND_BUF   (2 * TCP_MSS)
+#define TCP_SND_BUF   (8 * TCP_MSS)
 
 #define TCP_SND_QUEUELEN   ((4 * (TCP_SND_BUF) + (TCP_MSS - 1))/(TCP_MSS))
 
@@ -216,7 +217,7 @@
 
 #define LWIP_NETIF_API 0
 
-#define LWIP_NETIF_STATUS_CALLBACK 0
+#define LWIP_NETIF_STATUS_CALLBACK 1
 
 #define LWIP_NETIF_LINK_CALLBACK 0
 

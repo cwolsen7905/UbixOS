@@ -26,14 +26,14 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vfs/mount.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/mount.h>
+#include <fs/vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
-#include <sys/device.h>
+#include <sys/bus.h>
 
 /************************************************************************
 
@@ -46,7 +46,18 @@
  ************************************************************************/
 int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoint, char *perms ) {
   struct vfs_mountPoint *mp = 0x0;
-  struct device_node *device = 0x0;
+  struct ubx_device *device = 0x0;
+
+  /* If an exact mount already exists at this path, treat as success (no-op).
+   * Matches FreeBSD behaviour: fstab entries for kernel-pre-mounted FSes
+   * (devfs, procfs) succeed silently rather than double-mounting. */
+  {
+    struct vfs_mountPoint *existing = vfs_findMount(mountPoint);
+    if (existing != NULL && strcmp(existing->mountPoint, mountPoint) == 0) {
+      kprintf("vfs_mount: %s already mounted, skipping\n", mountPoint);
+      return (0x0);
+    }
+  }
 
   /* Allocate Memory For Mount Point */
   if ( (mp = (struct vfs_mountPoint *) kmalloc( sizeof(struct vfs_mountPoint) )) == NULL ) {
@@ -63,10 +74,10 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   }
 
   /* Copy Mount Point Into Buffer */
-  sprintf( mp->mountPoint, mountPoint );
+  snprintf( mp->mountPoint, sizeof(mp->mountPoint), "%s", mountPoint );
 
   /* Set Pointer To Physical Drive */
-  device = device_find( major, minor );
+  device = ubx_device_find( major, minor );
 
   /* Set Up Mp Defaults */
   mp->device = device;
@@ -130,16 +141,70 @@ int vfs_addMount( struct vfs_mountPoint *mp ) {
  Notes:
 
  ************************************************************************/
-struct vfs_mountPoint *vfs_findMount( char *mountPoint ) {
+/*
+ * vfs_findMount — longest-prefix mount lookup.
+ *
+ * Given a POSIX path like "/dev/tty" or "/bin/ls", walk the mount table and
+ * return the entry whose mountPoint is the longest prefix of path.  The root
+ * mount "/" always matches as a fallback.  A non-root mount must be followed
+ * by '/' or end-of-string to avoid false matches (e.g. "/developer" must not
+ * match a "/dev" mount).
+ */
+struct vfs_mountPoint *vfs_findMount( const char *path ) {
   struct vfs_mountPoint *tmpMp = 0x0;
+  struct vfs_mountPoint *best  = NULL;
+  size_t best_len = 0;
+  size_t path_len;
+
+  if (path == NULL)
+    return NULL;
+
+  path_len = strlen(path);
 
   for ( tmpMp = systemVitals->mountPoints; tmpMp; tmpMp = tmpMp->next ) {
-    if ( strcmp( tmpMp->mountPoint, mountPoint ) == 0x0 ) {
-      return (tmpMp);
+    size_t mlen = strlen(tmpMp->mountPoint);
+    if (mlen > path_len)
+      continue;
+    if (strncmp(path, tmpMp->mountPoint, mlen) != 0)
+      continue;
+    /* Boundary check: root "/" matches everything; otherwise the next
+     * character must be '/' or '\0'. */
+    if (mlen > 1 && path[mlen] != '/' && path[mlen] != '\0')
+      continue;
+    if (mlen > best_len) {
+      best     = tmpMp;
+      best_len = mlen;
     }
   }
-  /* Return NULL If Mount Point Not Found */
-  return NULL;
+  return best;
+}
+
+/*
+ * vfs_umount — remove a mount point by exact path.
+ *
+ * Returns 0 on success, -1 if no mount with that path exists.
+ * Does not call a per-FS cleanup hook (none registered yet).
+ */
+int vfs_umount(const char *path)
+{
+	struct vfs_mountPoint *mp;
+
+	if (path == NULL)
+		return (-1);
+
+	mp = vfs_findMount(path);
+	if (mp == NULL || strcmp(mp->mountPoint, path) != 0)
+		return (-1);
+
+	if (mp->prev)
+		mp->prev->next = mp->next;
+	else
+		systemVitals->mountPoints = mp->next;
+	if (mp->next)
+		mp->next->prev = mp->prev;
+
+	kfree(mp);
+	return (0);
 }
 
 /***

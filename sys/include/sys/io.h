@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -39,24 +39,3 @@ void outportWord(unsigned int, unsigned short);
 void outportDWord(unsigned int port, unsigned long value);
 
 #endif
-
-/***
- $Log: io.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:15  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:52  reddawg
- no message
-
- Revision 1.3  2004/07/22 20:14:34  reddawg
- still working here
-
- Revision 1.2  2004/05/21 15:12:17  reddawg
- Cleaned up
-
-
- END
- ***/

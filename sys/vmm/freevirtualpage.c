@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -26,9 +26,38 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/types.h>
+#include <vmm/vmm.h>
+#include <vmm/paging.h>
+#include <lib/kprintf.h>
 
-int vmm_freeVirtualPage(uint32_t addr) {
-  //TODO: Implement this
-  return (0);
+int vmm_freeVirtualPage(uint32_t addr)
+{
+	uint32_t *pageDir   = (uint32_t *)PD_BASE_ADDR;
+	uint32_t *pageTable = 0x0;
+	uint32_t  pdIndex   = PD_INDEX(addr);
+	uint32_t  ptIndex   = PT_INDEX(addr);
+	uint32_t  phys      = 0x0;
+
+	addr &= 0xFFFFF000;
+
+	if ((pageDir[pdIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+		return (-1);
+
+	pageTable = (uint32_t *)(PT_BASE_ADDR + (pdIndex * PAGE_SIZE));
+
+	if ((pageTable[ptIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+		return (-1);
+
+	phys = pageTable[ptIndex] & 0xFFFFF000;
+
+	if ((pageTable[ptIndex] & PAGE_COW) == PAGE_COW)
+		adjustCowCounter(phys, -1);
+	else if ((phys >> 12) < (uint32_t)numPages)
+		freePage(phys);
+
+	pageTable[ptIndex] = 0x0;
+
+	asm volatile("invlpg (%0)" : : "r"(addr) : "memory");
+
+	return (0);
 }

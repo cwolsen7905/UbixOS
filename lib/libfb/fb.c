@@ -27,6 +27,7 @@
 #include <fb/fb.h>
 #include <stdint.h>
 #include <sys/mouse.h>
+#include <sys/kbd.h>
 
 extern const uint8_t fb_font8x8[96][8];
 
@@ -225,6 +226,28 @@ int
 fb_share_buffer(int dst_pid, void *buf, uint32_t size, uint32_t *client_vaddr)
 {
 	return _sys_shareregion(dst_pid, buf, size, client_vaddr);
+}
+
+/*
+ * _sys_getkbd — UbixOS native syscall 46 (int $0x81).
+ * Returns 0 and fills *ev if an event is available, -1 if queue empty.
+ */
+asm(
+  ".text                              \n"
+  ".globl _sys_getkbd                 \n"
+  ".type  _sys_getkbd, @function      \n"
+  "_sys_getkbd:                       \n"
+  "  movl $46, %eax                   \n"
+  "  int  $0x81                       \n"
+  "  ret                              \n"
+);
+
+static int _sys_getkbd(kbd_event_t *ev);
+
+int
+fb_poll_kbd(kbd_event_t *ev)
+{
+	return _sys_getkbd(ev);
 }
 
 /*

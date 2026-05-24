@@ -29,29 +29,30 @@
 #include <sys/shutdown.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
-#include "../fs/fat/fat_filelib.h"
+/* fat_filelib.h removed — native FAT driver flushes on every write */
 
+int sys_shutdown(shutdownCMD_t cmd)
+{
+	kprintf("System Shutting Down: %i", cmd);
+	switch (cmd)
+	{
+	case REBOOT:
+		kprintf("REBOOTING");
+		/* native FAT driver is always flushed */
+		while (inportByte(0x64) & 0x02)
+			;
+		outportByte(0x64, 0xFE);
+		break;
+	case HALT:
+		kprintf("HALTING -> right now same as reboot.");
 
-int sys_shutdown(shutdownCMD_t cmd) {
-    kprintf("System Shutting Down: %i", cmd);
-    switch (cmd) {
-        case REBOOT:
-            kprintf("REBOOTING");
-            fl_shutdown();
-            while (inportByte(0x64) & 0x02)
-                ;
-            outportByte(0x64, 0xFE);
-            break;
-        case HALT:
-            kprintf("HALTING -> right now same as reboot.");
-
-            fl_shutdown();
-            while (inportByte(0x64) & 0x02)
-                ;
-            outportByte(0x64, 0xFE);
-            break;
-        default:
-            kprintf("Invalid Command: %i", cmd);
-    }
-    return (-1);
+		/* native FAT driver is always flushed */
+		while (inportByte(0x64) & 0x02)
+			;
+		outportByte(0x64, 0xFE);
+		break;
+	default:
+		kprintf("Invalid Command: %i", cmd);
+	}
+	return (-1);
 }

@@ -27,6 +27,7 @@
  */
 
 #include <sys/types.h>
+#include <stdint.h>
 
 extern char *cwd;
 

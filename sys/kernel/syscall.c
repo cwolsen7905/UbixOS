@@ -33,6 +33,7 @@
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
+#include <isa/pit.h>
 #include <sys/trap.h>
 #include <sys/elf.h>
 #include <string.h>
@@ -40,6 +41,7 @@
 #include <ubixos/kpanic.h>
 /* #include <sde/sde.h> */
 #include <vmm/vmm.h>
+#include <ubixos/errno.h>
 
 void sys_call(struct trapframe *frame) {
   uint32_t code = 0x0;
@@ -213,27 +215,63 @@ int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args) {
 }
 
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
-  char *buf = (char *) args->buf;
-  char *cwd = _current->oInfo.cwd; 
-
-  while (cwd[0] != '/')
-    cwd++;
+  const char *cwd = _current->oInfo.cwd;
+  size_t len = strlen(cwd) + 1;
 
   if (args->buf) {
-    sprintf(buf, "%s", cwd);
-    buf[strlen(cwd)] = '\0';
- 
-    //sprintf(buf, "%s", _current->oInfo.cwd);
-    //buf[strlen(_current->oInfo.cwd)] = '\0';
-    //MrOlsen (2018-01-01) - Why is sprintf not null terminating
+    if (len > args->size) {
+      td->td_retval[0] = -1;
+      return (ERANGE);
+    }
+    memcpy((char *)args->buf, cwd, len);
   }
- // kprintf("GETCWD: [%s][0x%X]\n", _current->oInfo.cwd, args->buf);
- // kprintf("[%s]", args->buf);
+
+  td->td_retval[0] = (int)len;
   return (0);
 }
 
 int sys_sched_yield(struct thread *td, void *args) {
   sched_yield();
+  return (0);
+}
+
+/* nanosleep(const struct timespec *rqtp, struct timespec *rmtp)
+ * FreeBSD POSIX slot 240.  rqtp/rmtp are user pointers — layout:
+ *   long tv_sec  (offset 0)
+ *   long tv_nsec (offset 4)
+ * PIT_TIMER ticks/sec = 200; each tick = 5 ms.
+ */
+int sys_nanosleep(struct thread *td, void *args) {
+  uint32_t *params = (uint32_t *)args;
+  const long *rqtp  = (const long *)params[0]; /* struct timespec * */
+  long *rmtp         = (long *)params[1];
+
+  if (!rqtp) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  long tv_sec  = rqtp[0];
+  long tv_nsec = rqtp[1];
+  if (tv_sec < 0 || tv_nsec < 0 || tv_nsec >= 1000000000L) {
+    td->td_retval[0] = -1;
+    return (-1);
+  }
+
+  /* Convert requested time to PIT ticks (round up). */
+  uint32_t ticks = (uint32_t)(tv_sec * PIT_TIMER) +
+                   (uint32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) /
+                              (1000000000L / PIT_TIMER));
+
+  uint32_t deadline = systemVitals->sysTicks + ticks;
+  while (!TICKS_AFTER(systemVitals->sysTicks, deadline))
+    sched_yield();
+
+  if (rmtp) {
+    rmtp[0] = 0;
+    rmtp[1] = 0;
+  }
+  td->td_retval[0] = 0;
   return (0);
 }
 

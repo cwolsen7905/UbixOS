@@ -28,8 +28,9 @@
 
 #include <ubixos/errno.h>
 #include <sys/sysproto.h>
-#include <vfs/stat.h>
-#include <vfs/file.h>
+#include <sys/sysproto_posix.h>
+#include <fs/vfs/stat.h>
+#include <fs/vfs/file.h>
 #include <lib/kprintf.h>
 #include <sys/descrip.h>
 #include <string.h>
@@ -82,7 +83,7 @@ int _sys_stat(char *path, struct stat *sb, int flags) {
     sb->st_atime = fd->inode.u.ufs2_i.di_atime;
     sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
     sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-    //MrOlsen kprintf("LSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X", error, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size);
+
     fclose(fd);
   }
 
@@ -97,20 +98,20 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
 
   getfd(td, &fdd, args->fd);
 
+  if (fdd == 0x0 || fdd->fd == 0x0) {
+    td->td_retval[0] = EBADF;
+    return (EBADF);
+  }
+
   fd = fdd->fd;
 
-  if (fdd == 0 || fdd->fd == 0x0) {
-    error = -1;
-  }
-  else if (fd->res != 0x0) {
+  if (fd->res != 0x0) {
     args->sb->st_dev = 0xDEADBEEF;
     args->sb->st_ino = fd->ino;
     args->sb->st_rdev = 0xBEEFDEAD;
     args->sb->st_size = fd->size;
     args->sb->st_uid = 0;
     args->sb->st_gid = 0;
-
-    //kprintf("FSTAT DOS");
   }
   else {
     args->sb->st_dev = 0xDEADBEEF;
@@ -124,7 +125,6 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
     args->sb->st_atime = fd->inode.u.ufs2_i.di_atime;
     args->sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
     args->sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-    //kprintf("FSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->sb->st_ino, args->sb->st_mode, args->sb->st_uid, args->sb->st_gid, args->sb->st_size, fd->size);
   }
 
   td->td_retval[0] = error;
@@ -171,7 +171,14 @@ int sys_fstatat(struct thread *td, struct sys_fstatat_args *args) {
     sb->st_atime = fd->inode.u.ufs2_i.di_atime;
     sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
     sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-    //kprintf("FSTAT(%i:%s:%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->path, args->flag, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size, fd->size);
+
+    if (sb->st_mode == 0)
+      sb->st_mode = 0x81ED; /* S_IFREG | 0755 */
+    if (sb->st_nlink == 0)
+      sb->st_nlink = 1;
+    if (sb->st_size == 0 && fd->size != 0)
+      sb->st_size = (off_t)fd->size;
+
     if (uP == 1)
       fclose(fd);
   }
@@ -303,4 +310,129 @@ int sys_lstat(struct thread *td, struct sys_lstat_args *args) {
 int sys_stat(struct thread *td, struct sys_stat_args *args) {
   td->td_retval[0] = _sys_stat(args->path, args->ub, STAT_LSTAT);
   return (0x0);
+}
+
+/*
+ * sys_statx — Linux statx(2) compatibility (slot 383).
+ *
+ * musl uses statx as the backing for fstat/stat.  We handle the two
+ * common call patterns:
+ *   AT_EMPTY_PATH set, path==""  → fstat(dirfd)
+ *   AT_FDCWD or path given       → stat(path)
+ *
+ * The struct statx is zeroed first so musl's conversion to struct stat
+ * sees consistent values for fields we don't populate.
+ */
+int sys_statx(struct thread *td, struct sys_statx_args *args)
+{
+  struct statx *stx = args->stx;
+  int error = 0;
+
+  if (stx == 0x0) {
+    td->td_retval[0] = EFAULT;
+    return (EFAULT);
+  }
+
+  memset(stx, 0, sizeof(*stx));
+
+  if ((args->flags & AT_EMPTY_PATH) &&
+      (args->path == 0x0 || args->path[0] == '\0')) {
+    /* fstat(dirfd) path */
+    struct file *fdd = 0x0;
+    fileDescriptor_t *fd = 0x0;
+
+    getfd(td, &fdd, args->dirfd);
+    if (fdd == 0x0) {
+      td->td_retval[0] = EBADF;
+      return (EBADF);
+    }
+
+    /* TTY placeholder fds have fd==NULL; return character-device stats so
+     * isatty() works correctly. */
+    if (fdd->fd == 0x0) {
+      stx->stx_mask      = args->mask & STATX_BASIC_STATS;
+      stx->stx_blksize   = 512;
+      stx->stx_nlink     = 1;
+      stx->stx_uid       = 0;
+      stx->stx_gid       = 0;
+      stx->stx_mode      = 0020620; /* S_IFCHR | 0620 */
+      stx->stx_ino       = (uint64_t)(uintptr_t)args->dirfd + 1;
+      stx->stx_size      = 0;
+      stx->stx_blocks    = 0;
+      stx->stx_dev_major = 5;
+      stx->stx_dev_minor = 0;
+      stx->stx_rdev_major = 5;
+      stx->stx_rdev_minor = 0;
+      td->td_retval[0] = 0;
+      return (0);
+    }
+    fd = fdd->fd;
+
+    stx->stx_mask       = args->mask & STATX_BASIC_STATS;
+    stx->stx_blksize    = 512;
+    stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
+    stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
+    stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
+    stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
+    if ((stx->stx_mode & 0170000) == 0)
+      stx->stx_mode |= 0100644; /* FAT: no type bits → regular file 644 */
+    stx->stx_ino        = fd->ino;
+    stx->stx_size       = fd->size;
+    stx->stx_blocks     = (fd->size + 511) / 512;
+    stx->stx_dev_major  = 1;
+    stx->stx_dev_minor  = 1;
+  } else {
+    /* stat(path) path */
+    const char *path = args->path;
+    fileDescriptor_t *fd = 0x0;
+    kDIR_t *dir = 0x0;
+
+    if (path == 0x0 || path[0] == '\0') {
+      td->td_retval[0] = ENOENT;
+      return (ENOENT);
+    }
+
+    fd = fopen(path, "rb");
+    if (fd == 0x0) {
+      /* fopen rejects directories; try vfs_opendir to detect them. */
+      dir = vfs_opendir(path);
+      if (dir == 0x0) {
+        kprintf("statx: ENOENT path=%s\n", path ? path : "(null)");
+        td->td_retval[0] = ENOENT;
+        return (ENOENT);
+      }
+      vfs_closedir(dir);
+
+      stx->stx_mask      = args->mask & STATX_BASIC_STATS;
+      stx->stx_blksize   = 512;
+      stx->stx_nlink     = 2;
+      stx->stx_uid       = 0;
+      stx->stx_gid       = 0;
+      stx->stx_mode      = 0040755; /* S_IFDIR | 0755 */
+      stx->stx_ino       = 1;
+      stx->stx_size      = 0;
+      stx->stx_blocks    = 0;
+      stx->stx_dev_major = 1;
+      stx->stx_dev_minor = 1;
+    } else {
+      stx->stx_mask       = args->mask & STATX_BASIC_STATS;
+      stx->stx_blksize    = 512;
+      stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
+      stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
+      stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
+      stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
+      if ((stx->stx_mode & 0170000) == 0)
+        stx->stx_mode |= 0100755; /* FAT: no type bits → regular file 755 */
+      kprintf("statx: OK path=%s mode=0%o\n", path, stx->stx_mode);
+      stx->stx_ino        = fd->ino ? fd->ino : (uint64_t)(uintptr_t)fd;
+      stx->stx_size       = fd->size;
+      stx->stx_blocks     = (fd->size + 511) / 512;
+      stx->stx_dev_major  = 1;
+      stx->stx_dev_minor  = 1;
+      fclose(fd);
+    }
+  }
+
+  td->td_retval[0] = error;
+  return (error);
 }

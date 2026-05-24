@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -31,6 +31,7 @@
 
 #include <sys/thread.h>
 #include <sys/fb.h>
+#include <sys/klog.h>
 
 typedef int register_t;
 
@@ -78,14 +79,6 @@ struct sys_mpiPostMessage_args {
     char msg_r_[PADR_(const void *)];
 };
 
-struct sys_sde_args {
-  char cmd_l_[PADL_(uint32_t)];
-  uint32_t cmd;
-  char cmd_r_[PADR_(uint32_t)];
-  char ptr_l_[PADL_(uint32_t)];
-  uint32_t ptr;
-  char ptr_r_[PADR_(uint32_t)];
-};
 
 struct sys_getvfscwd_args {
   char buf_l_[PADL_(char *)];
@@ -120,6 +113,9 @@ int sys_mapfb(struct thread *, struct sys_mapfb_args *);
 struct sys_getmouse_args { struct mouse_event *ev; };
 int sys_getmouse(struct thread *, struct sys_getmouse_args *);
 
+struct sys_getkbd_args { struct kbd_event *ev; };
+int sys_getkbd(struct thread *, struct sys_getkbd_args *);
+
 struct sys_shareregion_args {
     pid_t     dst_pid;
     void     *vaddr;
@@ -127,5 +123,28 @@ struct sys_shareregion_args {
     uint32_t *out_vaddr;
 };
 int sys_shareregion(struct thread *, struct sys_shareregion_args *);
+
+struct sys_klog_read_args {
+    struct klog_entry *buf;        /* userspace array to fill */
+    int                max_entries;
+    uint32_t           start_seq;  /* read entries with seq >= start_seq */
+};
+int sys_klog_read(struct thread *, struct sys_klog_read_args *);
+
+struct sys_klog_write_args {
+    uint8_t     level;   /* KLOG_* severity */
+    const char *msg;     /* NUL-terminated message string */
+};
+int sys_klog_write(struct thread *, struct sys_klog_write_args *);
+
+/* sys_settty (slot 48) — claim the serial TTY and set it as the process's terminal.
+ * Analogous to FreeBSD getty opening /dev/ttyu0 and calling login_tty().
+ * slot: index into the kernel tty_term[] table (1 = serial TTY). */
+struct sys_settty_args {
+    char slot_l_[PADL_(int)];
+    int  slot;
+    char slot_r_[PADR_(int)];
+};
+int sys_settty(struct thread *, struct sys_settty_args *);
 
 #endif

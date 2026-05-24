@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -30,6 +30,7 @@
 #define _ISA_ATKBD_H
 
 #include <sys/types.h>
+#include <sys/bus.h>
 
 #define shiftKey      1
 #define controlKey    2
@@ -41,7 +42,11 @@
 int  atkbd_init();
 void atkbd_isr();
 
+extern struct ubx_driver atkbd_ubx_driver;
+
 extern volatile uint32_t reboot_at_tick; /* non-zero when countdown active */
+extern volatile int      vesa_text_slot;  /* >=0: deferred GUI→text VTY switch */
+extern volatile int      tty_switch_slot; /* >=0: deferred text VTY switch (Alt+Fn) */
 
 struct trapframe;
 void keyboardHandler(struct trapframe *);

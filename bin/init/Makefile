@@ -5,6 +5,4 @@ include ../Makefile.incl
 
 BINARY        = init
 OBJS          = main.o
-EXTRA_LDFLAGS = -static
-
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.ubix.prog.mk"

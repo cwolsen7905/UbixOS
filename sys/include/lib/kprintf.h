@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -36,28 +36,11 @@
 
 int kprintf(const char *, ...);
 int sprintf(char *buf, const char *fmt, ...);
-int kvprintf(char const *fmt, void (*func)(int, void*), void *arg, int radix, va_list ap);
+int snprintf(char *buf, size_t size, const char *fmt, ...);
+int kvprintf(char const *fmt, void (*func)(int, void *), void *arg, int radix, va_list ap, size_t lim);
 int ogPrintf(char *);
 
 extern int printOff;
 extern int ogprintOff;
 
 #endif
-
-/***
- $Log: kprintf.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:40  reddawg
- no message
-
- Revision 1.2  2004/05/21 15:00:27  reddawg
- Cleaned up
-
-
- END
- ***/

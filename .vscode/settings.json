@@ -19,5 +19,6 @@
   },
   "[cpp]": {
     "editor.formatOnSave": true
-  }
+},
+"idf.currentSetup": "/Users/cwolsen/.espressif/v6.0.1/esp-idf"
 }

@@ -30,6 +30,7 @@
 #define _ISA_MOUSE_H
 
 #include <sys/types.h>
+#include <sys/bus.h>
 
 struct mouse_event {
 	int16_t  dx;
@@ -42,6 +43,8 @@ int   mouseInit(void);
 void  mouseISR(void);
 void  mouseHandler(void);
 int   mouse_getEvent(mouse_event_t *ev);
+
+extern struct ubx_driver mouse_ubx_driver;
 
 #define MOUSE_BTN_LEFT   0x01
 #define MOUSE_BTN_RIGHT  0x02

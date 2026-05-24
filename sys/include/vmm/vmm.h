@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -74,35 +74,6 @@ extern "C" {
 
     extern struct spinLock pdSpinLock;
 
-    struct freebsd6_mmap_args {
-            char addr_l_[PADL_(caddr_t)];
-            caddr_t addr;
-            char addr_r_[PADR_(caddr_t)];
-
-            char len_l_[PADL_(size_t)];
-            size_t len;
-            char len_r_[PADR_(size_t)];
-
-            char prot_l_[PADL_(int)];
-            int prot;
-            char prot_r_[PADR_(int)];
-            char flags_l_[PADL_(int)];
-
-            int flags;
-            char flags_r_[PADR_(int)];
-            char fd_l_[PADL_(int)];
-            int fd;
-            char fd_r_[PADR_(int)];
-
-            char pad_l_[PADL_(int)];
-            int pad;
-            char pad_r_[PADR_(int)];
-
-            char pos_l_[PADL_(off_t)];
-            off_t pos;
-            char pos_r_[PADR_(off_t)];
-    };
-
     typedef struct {
             uint32_t pageAddr;
             u_int16_t status;
@@ -118,6 +89,7 @@ extern "C" {
 
     extern int numPages;
     extern mMap *vmmMemoryMap;
+    extern uint32_t vmm_bitmap_phys;
 
     int vmm_init();
     int vmm_memMapInit();

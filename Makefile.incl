@@ -15,10 +15,13 @@ UNAME_S != uname -s
 .if ${UNAME_S} == "Darwin"
 CROSS_PREFIX?=x86_64-elf-
 CROSS_M32?=-m32
+LIBGCC != ${CROSS_PREFIX}gcc ${CROSS_M32} -print-libgcc-file-name 2>/dev/null
 .else
 CROSS_PREFIX?=
 CROSS_M32?=
+LIBGCC != gcc ${CROSS_M32} -print-libgcc-file-name 2>/dev/null
 .endif
+.export LIBGCC
 
 # Compute the repo root once via git; derive UBIX_MK and OBJ_DIR from it.
 # The .if !defined guard means child makes (which inherit these variables

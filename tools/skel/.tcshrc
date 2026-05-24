@@ -1,0 +1,7 @@
+# ~/.tcshrc - interactive shell settings
+
+set prompt = "%n@%m:%~%# "
+set history = 100
+set savehist = 100
+set autolist
+set color

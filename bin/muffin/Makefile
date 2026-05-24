@@ -1,13 +1,13 @@
-# (C) 2002-2026 The UbixOS Project
+# Copyright (c) 2002-2026 The UbixOS Project.
 
 include ../../Makefile.incl
 include ../Makefile.incl
 
 BINARY = muffin
+OBJS   = main.o
+SRCS   = main.cc
 
-OBJS = main.o
-
-INCLUDES += -I../../lib/objgfx
+INCLUDES += -I../../include
 
 LIBRARIES += ${OBJ_DIR}/obj/gfx/objgfx/*.o \
              ../../lib/libcpp/libcpp.o

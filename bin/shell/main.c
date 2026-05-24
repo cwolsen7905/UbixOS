@@ -54,8 +54,12 @@ int main(int argc, char **argv, char **env) {
   while (1) {
     aGain:
 
+    ubix_getcwd(cwd, 1024);
     printf("%s@%s# ", machine, cwd);
-    gets((char *) buffer);
+    fflush(stdout);
+    fgets((char *) buffer, 512, stdin);
+    /* strip trailing newline */
+    { int _n = strlen(buffer); if (_n > 0 && buffer[_n-1] == '\n') buffer[_n-1] = '\0'; }
 
     if (buffer[0] == 0x0)
       goto aGain;

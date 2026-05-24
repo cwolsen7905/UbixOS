@@ -16,7 +16,7 @@ IndentWidth: 8
 ContinuationIndentWidth: 4
 
 # 80-column limit (style(9) §1)
-ColumnLimit: 80
+ColumnLimit: 256
 
 # Allman / BSD brace style — opening brace on its own line for functions,
 # same line for control flow (if/for/while/do)

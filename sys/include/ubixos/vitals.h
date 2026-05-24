@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -31,7 +31,7 @@
 
 #include <sys/types.h>
 #include <ubixos/spinlock.h>
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 
 typedef struct vitalsStruct {
     uint32_t sysTicks;  // 0 - Do Not Change Order
@@ -52,6 +52,9 @@ typedef struct vitalsStruct {
 
 extern vitalsNode *systemVitals;
 extern spinLock_t vitals_lock;
+
+/* Wrap-safe tick comparison: true if tick a is at or after b. */
+#define TICKS_AFTER(a, b)  ((int32_t)((a) - (b)) >= 0)
 
 int vitals_init();
 

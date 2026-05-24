@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2026 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -30,8 +30,8 @@
 #ifndef _BUF_H
 #define _BUF_H
 
-#include <vfs/vfs.h>
-#include <sys/device.h>
+#include <fs/vfs/vfs.h>
+#include <sys/bus.h>
 
 struct buf {
   };

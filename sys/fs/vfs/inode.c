@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vfs/vfs.h>
+#include <fs/vfs/vfs.h>
 #include <ubixos/wait.h>
 #include <ubixos/sched.h>
 #include <vmm/vmm.h>
@@ -101,17 +101,16 @@ static void __wait_on_inode(struct inode * inode) {
 
   repeat:
 
-  _current->state = UNINTERRUPTIBLE;
+  sched_sleep(_current, UNINTERRUPTIBLE);
 
   if (inode->i_lock) {
     sched_yield();
-    //schedule();
     goto repeat;
   }
 
   remove_wait_queue(&inode->i_wait, &wait);
 
-  _current->state = RUNNING;
+  sched_wakeup(_current);
 
 }
 

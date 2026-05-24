@@ -30,6 +30,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
+#include <lib/kmalloc.h>
 
 /*
  * vmm_share_region — map pages from the calling process into dst_pid's space.
@@ -48,17 +49,21 @@ uintptr_t
 vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 {
 	uint32_t  n, i, old_cr3, dst_vaddr;
-	uint32_t  phys[256];
+	uint32_t *phys;
 	kTask_t  *dst;
 
 	if (vaddr == 0 || size == 0)
 		return 0;
 
 	n = (uint32_t)((size + PAGE_SIZE - 1) / PAGE_SIZE);
-	if (n > 256) {
+	if (n > 4096) {
 		kprintf("vmm_share_region: region too large (%u pages)\n", n);
 		return 0;
 	}
+
+	phys = kmalloc(n * sizeof(uint32_t));
+	if (!phys)
+		return 0;
 
 	/* Collect physical addresses from current (src) address space */
 	for (i = 0; i < n; i++) {
@@ -66,6 +71,7 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		if (phys[i] == 0) {
 			kprintf("vmm_share_region: page %u at 0x%X not mapped\n",
 			    i, vaddr + i * PAGE_SIZE);
+			kfree(phys);
 			return 0;
 		}
 	}
@@ -73,6 +79,7 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	dst = schedFindTask(dst_pid);
 	if (dst == 0) {
 		kprintf("vmm_share_region: dst pid %d not found\n", dst_pid);
+		kfree(phys);
 		return 0;
 	}
 
@@ -85,9 +92,39 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	dst->oInfo.vmStart += n * PAGE_SIZE;
 
 	/*
+	 * Sync kernel PD entries into dst's page directory before switching
+	 * CR3.  Kernel PD entries (VMM_KERN_START..VMM_KERN_END) may differ
+	 * between tasks when new kernel page tables are allocated after a
+	 * task's PD was created.  Without the sync, kernel code and data are
+	 * unreachable after the CR3 switch, causing a page fault with IF=0
+	 * ("INT OFF! KERN").  Map dst's physical PD at VMM_CHILD_PD_WINDOW,
+	 * copy the stale-prone entries, then unmap before switching CR3.
+	 */
+	{
+		uint32_t *src_pd  = (uint32_t *)PD_BASE_ADDR;
+		uint32_t *dst_pd;
+		uint32_t  kstart  = PD_INDEX(VMM_KERN_START);
+		uint32_t  kend    = PD_INDEX(VMM_KERN_END);
+		uint32_t  x;
+
+		if (vmm_remapPage(dst->md.md_tss.cr3, VMM_CHILD_PD_WINDOW,
+		    KERNEL_PAGE_DEFAULT, _current->id, 0) == 0) {
+			kprintf("vmm_share_region: failed to map dst PD\n");
+			dst->oInfo.vmStart -= n * PAGE_SIZE;
+			kfree(phys);
+			return 0;
+		}
+		dst_pd = (uint32_t *)VMM_CHILD_PD_WINDOW;
+		for (x = kstart; x <= kend; x++)
+			dst_pd[x] = src_pd[x];
+		vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
+	}
+
+	/*
 	 * Switch to dst's page directory and map the physical pages.
 	 * Interrupts disabled to prevent the scheduler from running with
-	 * the wrong CR3 loaded.
+	 * the wrong CR3 loaded.  Kernel entries are now current so all
+	 * kernel code and globals are reachable under dst's CR3.
 	 */
 	asm volatile("cli");
 	asm volatile("movl %%cr3, %0" : "=r"(old_cr3));
@@ -95,11 +132,15 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 
 	for (i = 0; i < n; i++) {
 		if (vmm_remapPage(phys[i], dst_vaddr + i * PAGE_SIZE,
-		    PAGE_DEFAULT, dst_pid, 0) == 0) {
+		    PAGE_DEFAULT | PAGE_SHARED, dst_pid, 0) == 0) {
 			kprintf("vmm_share_region: vmm_remapPage failed at page %u\n", i);
-			/* Restore CR3 before any further action */
+			/* Unmap pages already installed before the failure */
+			for (uint32_t j = 0; j < i; j++)
+				vmm_unmapPage(dst_vaddr + j * PAGE_SIZE, 1);
 			asm volatile("movl %0, %%cr3" :: "r"(old_cr3));
 			asm volatile("sti");
+			dst->oInfo.vmStart -= n * PAGE_SIZE;
+			kfree(phys);
 			return 0;
 		}
 	}
@@ -107,8 +148,9 @@ vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	asm volatile("movl %0, %%cr3" :: "r"(old_cr3));
 	asm volatile("sti");
 
-	kprintf("vmm_share_region: src vaddr 0x%X -> pid %d vaddr 0x%X (%u pages)\n",
-	    vaddr, dst_pid, dst_vaddr, n);
+	kprintf("vmm_share_region: src vaddr 0x%X -> pid %d vaddr 0x%X (%u pages) phys[0]=0x%X\n",
+	    vaddr, dst_pid, dst_vaddr, n, phys[0]);
 
+	kfree(phys);
 	return (uintptr_t)dst_vaddr;
 }

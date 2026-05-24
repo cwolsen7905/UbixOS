@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -30,7 +30,7 @@
 #define _SYSCALLS_H
 
 #include <ubixos/sched.h>
-#include <vfs/file.h>
+#include <fs/vfs/file.h>
 #include <ubixos/syscall.h>
 
 #define SYSCALLS_MAX 1024

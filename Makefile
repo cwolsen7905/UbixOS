@@ -4,6 +4,11 @@
 
 CURDIR=${.CURDIR}
 
+# UbixOS manages its own object directories via OBJ_DIR/OBJDIR variables.
+# Disable bmake's auto-objdir feature so targets like 'musl' don't get
+# redirected to build/obj/musl/ where a GNU Makefile symlink confuses bmake.
+MKOBJDIRS=no
+
 include Makefile.incl
 
 OBJ_DIR?= ${CURDIR}/build
@@ -13,7 +18,7 @@ CLEANDIR=clean
 WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
-WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
+WORLD_INC="-I${CURDIR}/include -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/contrib/libcxxabi/include"
 .if defined(CROSS_PREFIX) && !empty(CROSS_PREFIX)
 WORLD_FLAGS=_ARCH=${_ARCH} CC="${CROSS_PREFIX}gcc" CXX="${CROSS_PREFIX}g++" AS="${CROSS_PREFIX}as" AR="${CROSS_PREFIX}ar" LD="${CROSS_PREFIX}ld" NM="${CROSS_PREFIX}nm" OBJDUMP= OBJCOPY="${CROSS_PREFIX}objcopy" RANLIB="${CROSS_PREFIX}ranlib"
 .else
@@ -24,13 +29,30 @@ WMAKE=${MAKE} ${WORLD_FLAGS} CROSS_M32="${CROSS_M32}" INCLUDE=${WORLD_INC} BUILD
 
 DISK_IMAGE?=ubixos.img
 
+# USB mass-storage test image (64 MB FAT32, populated by bmake usb-image).
+# bmake run attaches it automatically if the file exists.
+USB_IMAGE?=usb.img
+USB_IMAGE_MB?=512
+
+# Demo MP3 bundled in the USB image for mp3play testing.
+# "Investigations" by Kevin MacLeod — CC BY 3.0 (incompetech.com)
+DEMO_MP3_URL?=https://incompetech.com/music/royalty-free/mp3-royaltyfree/Investigations.mp3
+DEMO_MP3_LOCAL?=/tmp/ubixos_demo.mp3
+
 # Mount point where the FAT32 partition appears after bmake mount-image.
 # macOS auto-names it from the FAT volume label; override on the command line
 # if needed (e.g. bmake mount-image MOUNT_POINT=/mnt/ubixos).
-MOUNT_POINT?=/Volumes/UBIXOS
+MOUNT_POINT?=/Volumes/SYS
 
 # Temp file used to pass the hdiutil disk device between mount/unmount.
 _DEV_FILE=/tmp/.ubixos_dev
+
+# Optional USB disk flags injected into QEMU run targets when usb.img exists.
+# port=2 pins the storage device to root port 2 so QEMU does not insert a
+# virtual hub (which we have no driver for).  usb-kbd is pinned to port=1.
+_USB_FLAGS!= test -f ${USB_IMAGE} && \
+	echo "-drive file=${USB_IMAGE},format=raw,if=none,id=usbdisk -device usb-storage,bus=uhci-bus.0,port=2,drive=usbdisk" || \
+	echo ""
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
@@ -39,6 +61,19 @@ kernel:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
 	@cd sys;${MAKE}
 
+musl-libc:
+	@if [ ! -f ${OBJ_DIR}/obj/musl/GNUmakefile ] && [ ! -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
+		echo "musl not configured — run: cd build/obj/musl && contrib/musl/configure ... (see docs)"; \
+		exit 1; \
+	fi
+	${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+	    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
+	    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o
+	${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o
+	/usr/bin/make -C ${OBJ_DIR}/obj/musl LIBCC=${OBJ_DIR}/lib/libgcc32.a
+	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
+	cp ${OBJ_DIR}/obj/musl/lib/libc.so ${OBJ_DIR}/lib/libc.so
+
 world:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \
 	           ${OBJ_DIR}/obj/bin ${OBJ_DIR}/obj/lib ${OBJ_DIR}/obj/libexec ${OBJ_DIR}/obj/sys
@@ -46,6 +81,21 @@ world:
 	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Started On `LC_ALL=C date`"
 	@echo "***************************************************************"
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 0: Build musl libc"
+	@echo "***************************************************************"
+	${MAKE} musl-libc
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 1a: Build libcxxabi (C++ ABI)"
+	@echo "***************************************************************"
+	cd ${CURDIR}/contrib/libcxxabi; ${MAKE} all
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 1b: Build libcxx (LLVM libc++)"
+	@echo "***************************************************************"
+	cd ${CURDIR}/contrib/libcxx; ${MAKE} all
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 1: Build World Libraries"
@@ -70,8 +120,32 @@ world:
 
 # Build a fresh bootable FAT32 disk image from scratch (GRUB + kernel + world).
 # Always authoritative — use this for releases or a clean initial image.
-image:
+makeuser:
+	@echo "==> Compiling and running tools/makeuser.c"
+	cc -o tools/makeuser tools/makeuser.c
+	cd tools && ./makeuser
+	cp tools/userdb etc/userdb
+	@echo "==> etc/userdb updated"
+
+image: makeuser
 	@sh tools/mkimage.sh ${DISK_IMAGE}
+
+# Build a small FAT32 USB test image with a README.  Attach to QEMU via
+# bmake run (auto-detected when usb.img exists) or mount manually with hdiutil.
+usb-image:
+	@echo "==> Creating USB test image: ${USB_IMAGE} (${USB_IMAGE_MB} MB)"
+	@qemu-img create -f raw ${USB_IMAGE} ${USB_IMAGE_MB}M
+	@mformat -i ${USB_IMAGE} -F -v UBIX ::
+	@printf 'UbixOS USB Test Drive\r\n\r\nDemo track: Investigations by Kevin MacLeod\r\nLicense: CC BY 3.0 -- https://incompetech.com\r\n\r\nTo play: mp3play ubix:/INVESTIGATIONS.MP3\r\n' \
+	    > /tmp/ubixos_usb_readme.txt
+	@mcopy -i ${USB_IMAGE} /tmp/ubixos_usb_readme.txt ::README.TXT
+	@rm -f /tmp/ubixos_usb_readme.txt
+	@echo "==> Fetching demo MP3 (Investigations - Kevin MacLeod, CC BY 3.0)..."
+	@if [ ! -f ${DEMO_MP3_LOCAL} ]; then \
+	    curl -fsSL "${DEMO_MP3_URL}" -o ${DEMO_MP3_LOCAL}; \
+	fi
+	@mcopy -i ${USB_IMAGE} ${DEMO_MP3_LOCAL} ::INVESTIGATIONS.MP3
+	@echo "==> ${USB_IMAGE} ready — run 'bmake run' then: mp3play ubix:/INVESTIGATIONS.MP3"
 
 # ── Mount / unmount ──────────────────────────────────────────────────────────
 
@@ -156,14 +230,48 @@ install: install-world install-kernel
 
 # Boot the disk image in QEMU (primary IDE master, boot from HD).
 # Serial output is captured to serial.log for post-mortem inspection.
+# If usb.img exists it is attached as a USB mass-storage device.
 run:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -serial file:serial.log -vga std -device pcnet -net user
+	  -machine pc \
+	  -device piix3-usb-uhci,id=uhci-bus \
+	  -device usb-kbd,bus=uhci-bus.0,port=1 \
+	  ${_USB_FLAGS} \
+	  -serial file:serial.log -vga std \
+	  -device e1000,netdev=net0 -netdev user,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap \
+	  -audiodev coreaudio,id=snd0 -device AC97,audiodev=snd0 \
+	  -d guest_errors,unimp -D /tmp/qemu_debug.log \
+	  --trace "e1000_*"
 
 # Headless run: no display, serial to stdout.  Ctrl-C to stop.
+# If usb.img exists it is attached as a USB mass-storage device.
 run-debug:
 	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
-	  -nographic -serial stdio -device pcnet -net user
+	  -machine pc \
+	  -device piix3-usb-uhci,id=uhci-bus \
+	  -device usb-kbd,bus=uhci-bus.0,port=1 \
+	  ${_USB_FLAGS} \
+	  -nographic \
+	  -device e1000,netdev=net0 -netdev user,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
+
+# Bridge NIC to en0 (requires sudo on macOS — vmnet-bridged needs entitlements).
+# The VM appears on your LAN and gets a real IP from your router's DHCP server.
+# Use this to bypass QEMU SLIRP and verify the e1000 driver against a real DHCP.
+run-en0:
+	sudo qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -serial file:serial.log -vga std \
+	  -device e1000,netdev=net0 -netdev vmnet-bridged,id=net0,ifname=en0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
+
+# vmnet-shared: macOS NAT + its own DHCP server, also requires sudo.
+# Useful when en0 is Wi-Fi and bridged mode is unreliable.
+run-shared:
+	sudo qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -serial file:serial.log -vga std \
+	  -device e1000,netdev=net0 -netdev vmnet-shared,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
 # ── Maintenance ───────────────────────────────────────────────────────────────
 
@@ -179,3 +287,9 @@ clean:
 	(cd bin;${WMAKE} clean)
 	(cd lib;${WMAKE} clean)
 	(cd libexec;${WMAKE} clean)
+	(cd contrib/libcxxabi;${MAKE} clean)
+	(cd contrib/libcxx;${MAKE} clean)
+	@if [ -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
+		/usr/bin/make -C ${OBJ_DIR}/obj/musl clean; \
+	fi
+	rm -rf ${OBJ_DIR}/obj/lib

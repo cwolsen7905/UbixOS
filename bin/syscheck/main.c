@@ -29,6 +29,7 @@
  * Run this binary on the live UbixOS image.  Each test prints PASS or FAIL.
  */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -131,8 +132,8 @@ static void test_setenv(void) {
 static void test_mkdir_rmdir(void) {
   printf("\n[mkdir / rmdir]\n");
 
-  /* Use a path under sys: which is our mounted FAT volume */
-  const char *dir = "sys:/tmp_syscheck";
+  /* Use a path under / which is our mounted FAT volume */
+  const char *dir = "/tmp_syscheck";
 
   if (mkdir(dir, 0755) == 0)
     PASS("mkdir creates directory");

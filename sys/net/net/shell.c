@@ -67,16 +67,21 @@ static void shell_main(struct netconn *conn) {
   struct netbuf *buf = 0x0;
   uInt32 len;
   uInt32 err = 0;
-  // UBU int i;
-  // UBU char bufr[1500];
-  buf = kmalloc(1500);
   prompt(conn);
   while (1) {
+    buf = 0x0;
     err = netconn_recv(conn, &buf);
-    if (buf != 0x0)
-      netbuf_copy(buf, buffer, 1024);
+    if (buf == 0x0)
+      break;
+    if (buffer == 0x0) {
+      netbuf_delete(buf);
+      break;
+    }
+    netbuf_copy(buf, buffer, 1024);
     len = netbuf_len(buf);
     netbuf_delete(buf);
+    if (len < 2)
+      continue;
     buffer[len - 2] = '\0';
     if (!strcmp(buffer, "quit")) {
       netconn_close(conn);

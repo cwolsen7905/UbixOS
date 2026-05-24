@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,71 +29,97 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/sys.h>
 #include <string.h>
 
 #include "ubixfs.h"
 
-int main(int argc, char **argv) {
-  FILE *fd;
-  struct ubixDiskLabel *d = (struct ubixDiskLabel *) malloc(512);
-  int i = 0x0;
-  char buf[256];
+int main(int argc, char **argv)
+{
+	FILE *fd;
+	struct ubixDiskLabel *d = (struct ubixDiskLabel *)malloc(512);
+	int i = 0x0;
+	char buf[256];
 
-  printf("Ubix Disk Label Editor Version 1.0\n");
-  printf("(c) 2004 Ubix Corp              \n\n");
+	printf("Ubix Disk Label Editor Version 1.0\n");
+	printf("(c) 2004 Ubix Corp              \n\n");
 
-  if (argc >= 2) {
-    printf("Drive Info (%s):\n", argv[1]);
-    fd = fopen(argv[1], "rb");
-  }
-  else {
-    printf("Drive Info (hd0):\n");
-    fd = fopen("hd0@devfs", "rb");
-  }
-  fseek(fd, 512, 0);
-  fread(d, 512, 1, fd);
+	if (argc >= 2)
+	{
+		printf("Drive Info (%s):\n", argv[1]);
+		fd = fopen(argv[1], "rb");
+	}
+	else
+	{
+		printf("Drive Info (hd0):\n");
+		fd = fopen("hd0@devfs", "rb");
+	}
+	fseek(fd, 512, 0);
+	fread(d, 512, 1, fd);
 
-  if (argc >= 3) {
-    i = atoi(argv[2]);
-    printf("d->partitions[%i].p_size   = %i, ", i, d->partitions[i].p_size);
-    printf("New Value: ");
-    gets((char *) &buf);
-    d->partitions[i].p_size = atoi(buf);
-    printf("d->partitions[%i].p_offset = %i, ", i, d->partitions[i].p_offset);
-    printf("New Value: ");
-    gets((char *) &buf);
-    d->partitions[i].p_offset = atoi(buf);
-    printf("d->partitions[%i].p_fstype = %i, ", i, d->partitions[i].p_fstype);
-    printf("New Value: ");
-    gets((char *) &buf);
-    d->partitions[i].p_fstype = atoi(buf);
-    printf("d->partitions[%i].p_bsize  = %i, ", i, d->partitions[i].p_bsize);
-    printf("New Value: ");
-    gets((char *) &buf);
-    d->partitions[i].p_bsize = atoi(buf);
-    printf("\n");
-    printf("d->partitions[%i].p_size   = %i\n", i, d->partitions[i].p_size);
-    printf("d->partitions[%i].p_offset = %i\n", i, d->partitions[i].p_offset);
-    printf("d->partitions[%i].p_fstype = %i\n", i, d->partitions[i].p_fstype);
-    printf("d->partitions[%i].p_bsize  = %i\n", i, d->partitions[i].p_bsize);
-    fseek(fd, 512, 0);
-    fwrite(d, 512, 1, fd);
-  }
-  else {
-    for (i = 0; i < 4; i++) {
-      if (d->partitions[i].p_fstype != 0x0) {
-        printf("d->partitions[%i].p_size   = %i\n", i, d->partitions[i].p_size);
-        printf("d->partitions[%i].p_offset = %i\n", i, d->partitions[i].p_offset);
-        printf("d->partitions[%i].p_fstype = 0x%X\n", i, d->partitions[i].p_fstype);
-        printf("d->partitions[%i].p_bsize  = 0x%X\n", i, d->partitions[i].p_bsize);
-      }
-    }
-  }
+	if (argc >= 3)
+	{
+		i = atoi(argv[2]);
+		printf("d->partitions[%i].p_size   = %i, ", i, d->partitions[i].p_size);
+		printf("New Value: ");
+		fgets((char *)&buf, sizeof(buf), stdin);
+		{
+			int _n = strlen(buf);
+			if (_n > 0 && buf[_n - 1] == '\n')
+				buf[_n - 1] = '\0';
+		}
+		d->partitions[i].p_size = atoi(buf);
+		printf("d->partitions[%i].p_offset = %i, ", i, d->partitions[i].p_offset);
+		printf("New Value: ");
+		fgets((char *)&buf, sizeof(buf), stdin);
+		{
+			int _n = strlen(buf);
+			if (_n > 0 && buf[_n - 1] == '\n')
+				buf[_n - 1] = '\0';
+		}
+		d->partitions[i].p_offset = atoi(buf);
+		printf("d->partitions[%i].p_fstype = %i, ", i, d->partitions[i].p_fstype);
+		printf("New Value: ");
+		fgets((char *)&buf, sizeof(buf), stdin);
+		{
+			int _n = strlen(buf);
+			if (_n > 0 && buf[_n - 1] == '\n')
+				buf[_n - 1] = '\0';
+		}
+		d->partitions[i].p_fstype = atoi(buf);
+		printf("d->partitions[%i].p_bsize  = %i, ", i, d->partitions[i].p_bsize);
+		printf("New Value: ");
+		fgets((char *)&buf, sizeof(buf), stdin);
+		{
+			int _n = strlen(buf);
+			if (_n > 0 && buf[_n - 1] == '\n')
+				buf[_n - 1] = '\0';
+		}
+		d->partitions[i].p_bsize = atoi(buf);
+		printf("\n");
+		printf("d->partitions[%i].p_size   = %i\n", i, d->partitions[i].p_size);
+		printf("d->partitions[%i].p_offset = %i\n", i, d->partitions[i].p_offset);
+		printf("d->partitions[%i].p_fstype = %i\n", i, d->partitions[i].p_fstype);
+		printf("d->partitions[%i].p_bsize  = %i\n", i, d->partitions[i].p_bsize);
+		fseek(fd, 512, 0);
+		fwrite(d, 512, 1, fd);
+	}
+	else
+	{
+		for (i = 0; i < 4; i++)
+		{
+			if (d->partitions[i].p_fstype != 0x0)
+			{
+				printf("d->partitions[%i].p_size   = %i\n", i, d->partitions[i].p_size);
+				printf("d->partitions[%i].p_offset = %i\n", i, d->partitions[i].p_offset);
+				printf("d->partitions[%i].p_fstype = 0x%X\n", i, d->partitions[i].p_fstype);
+				printf("d->partitions[%i].p_bsize  = 0x%X\n", i, d->partitions[i].p_bsize);
+			}
+		}
+	}
 
-  fclose(fd);
+	fclose(fd);
 
-  return (0);
+	return (0);
 }
 
 /***

@@ -41,50 +41,58 @@
 
 
  ************************************************************************/
-int sys_setUID(struct thread *td, struct sys_setUID_args *args) {
-  if (_current->uid == 0x0) {
-    _current->uid = args->uid;
-    return (0);
-  }
-  return (-1);
+int sys_setUID(struct thread *td, struct sys_setUID_args *args)
+{
+	if (_current->uid == 0x0)
+	{
+		_current->uid = args->uid;
+		return (0);
+	}
+	return (-1);
 }
 
-int sys_getUID(struct thread *td, void *uap) {
-  return (_current->uid);
+int sys_getUID(struct thread *td, void *uap)
+{
+	return (_current->uid);
 }
 
-int sys_getEUID(struct thread *td, void *uap) {
-  return (_current->uid);
+int sys_getEUID(struct thread *td, void *uap)
+{
+	return (_current->uid);
 }
 
-int sys_getGID(struct thread *td, void *uap) {
-  return (_current->gid);
+int sys_getGID(struct thread *td, void *uap)
+{
+	return (_current->gid);
 }
 
-int sys_setGID(struct thread *td, struct sys_setGID_args *uap) {
+int sys_setGID(struct thread *td, struct sys_setGID_args *uap)
+{
 
-  if (_current->gid == 0x0) {
+	if (_current->gid == 0x0)
+	{
 
-    _current->gid = uap->gid;
+		_current->gid = uap->gid;
 
-    return (0);
+		return (0);
+	}
 
-  }
-
-  return (-1);
+	return (-1);
 }
 
-int in_group_p(gid_t grp) {
-  int i;
+int in_group_p(gid_t grp)
+{
+	int i;
 
-  if (grp == _current->egid)
-    return 1;
+	if (grp == _current->egid)
+		return 1;
 
-  for (i = 0; i < NR_GROUPS; i++) {
-    if (_current->groups[i] == NO_GROUP)
-      break;
-    if (_current->groups[i] == grp)
-      return 1;
-  }
-  return 0;
+	for (i = 0; i < NR_GROUPS; i++)
+	{
+		if (_current->groups[i] == NO_GROUP)
+			break;
+		if (_current->groups[i] == grp)
+			return 1;
+	}
+	return 0;
 }

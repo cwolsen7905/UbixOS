@@ -37,31 +37,30 @@
  Notes:
 
  ************************************************************************/
-int vmm_setPageAttributes(uint32_t memAddr, uint16_t attributes) {
-  uint16_t directoryIndex = 0x0, tableIndex = 0x0;
-  uint32_t *pageTable = 0x0;
+int vmm_setPageAttributes(uint32_t memAddr, uint16_t attributes)
+{
+	uint16_t directoryIndex = 0x0, tableIndex = 0x0;
+	uint32_t *pageTable = 0x0;
 
-  /* Calculate The Page Directory Index */
-  directoryIndex = (memAddr >> 22);
+	/* Calculate The Page Directory Index */
+	directoryIndex = (memAddr >> 22);
 
-  /* Calculate The Page Table Index */
-  tableIndex = ((memAddr >> 12) & 0x3FF);
+	/* Calculate The Page Table Index */
+	tableIndex = ((memAddr >> 12) & 0x3FF);
 
-  /* Set Table Pointer */
-  if ((pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
-    kpanic("Error: pageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+	/* Set Table Pointer */
+	if ((pageTable = (uint32_t *)(PT_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
+		kpanic("Error: pageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
-  /* Set Attribute If Page Is Mapped */
-  if (pageTable[tableIndex] != 0x0)
-    pageTable[tableIndex] = ((pageTable[tableIndex] & 0xFFFFF000) | attributes);
+	/* Set Attribute If Page Is Mapped */
+	if (pageTable[tableIndex] != 0x0)
+		pageTable[tableIndex] = ((pageTable[tableIndex] & 0xFFFFF000) | attributes);
 
-  /* Reload The Page Table; */
-  asm volatile(
-    "push %eax     \n"
-    "movl %cr3,%eax\n"
-    "movl %eax,%cr3\n"
-    "pop  %eax     \n"
-  );
-  /* Return */
-  return (0x0);
+	/* Reload The Page Table; */
+	asm volatile("push %eax     \n"
+	             "movl %cr3,%eax\n"
+	             "movl %eax,%cr3\n"
+	             "pop  %eax     \n");
+	/* Return */
+	return (0x0);
 }

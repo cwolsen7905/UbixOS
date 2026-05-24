@@ -27,23 +27,32 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/swap.h>
 #include <sys/io.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/vitals.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/sched.h>
 #include <assert.h>
 
 #include <machine/cpu.h>
 
 static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
-//static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
 
-mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
+/* Physical address where the page bitmap is staged (set in vmm_memMapInit,
+ * read by paging.c to remap the bitmap into kernel virtual space). */
+uint32_t vmm_bitmap_phys = 0;
+
+mMap *vmmMemoryMap = NULL;
+
+/* Linker symbols bracketing the kernel image. */
+extern char _start[];
+extern char _end[];
 
 /************************************************************************
 
@@ -56,33 +65,48 @@ mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
  ************************************************************************/
 int vmm_memMapInit() {
   int i = 0x0;
-  int memStart = 0x0;
+  uint32_t kernel_start_page, bitmap_end_page;
+  uint32_t bitmap_size;
 
   /* Count System Memory */
   numPages = countMemory();
 
-  /* Set Memory Map To Point To First Physical Page That We Will Use */
-  vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
+  /*
+   * Place the page bitmap immediately after the kernel image (page-aligned).
+   * This makes the layout RAM-size-independent: with N pages the bitmap is
+   * N*sizeof(mMap) bytes, and free pages begin right after it regardless of
+   * how much RAM is installed.
+   */
+  vmm_bitmap_phys = ((uint32_t)_end + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
+  vmmMemoryMap    = (mMap *)vmm_bitmap_phys;
 
-  /* Initialize Map Make All Pages Not Available */
+  bitmap_size     = (uint32_t)numPages * sizeof(mMap);
+  bitmap_end_page = (vmm_bitmap_phys + bitmap_size + PAGE_SIZE - 1) / PAGE_SIZE;
+
+  /* Initialize every entry — bitmap lives in raw RAM, not in BSS, so we
+   * must not assume it is zeroed. */
   for (i = 0x0; i < numPages; i++) {
     vmmMemoryMap[i].cowCounter = 0x0;
-    vmmMemoryMap[i].status = memNotavail;
-    vmmMemoryMap[i].pid = vmmID;
-    vmmMemoryMap[i].pageAddr = i * PAGE_SIZE;
+    vmmMemoryMap[i].status     = memNotavail;
+    vmmMemoryMap[i].pid        = vmmID;
+    vmmMemoryMap[i].pageAddr   = i * PAGE_SIZE;
   }
 
-  /* Calculate Start Of Free Memory */
-  memStart = (0x101000 / 0x1000);
+  /*
+   * Free page ranges:
+   *  [0x100000, kernel_start): RAM below the kernel (former bitmap staging area)
+   *  [bitmap_end, numPages*PAGE_SIZE): all RAM above the bitmap
+   *
+   * The first 1 MB (0x0–0xFFFFF) stays reserved: ISA devices, VGA, BIOS.
+   */
+  kernel_start_page = ((uint32_t)_start & ~(PAGE_SIZE - 1)) / PAGE_SIZE;
 
-  memStart += (((sizeof(mMap) * numPages) + (sizeof(mMap) - 1)) / 0x1000);
+  for (i = 0x100; i < (int)kernel_start_page; i++) {
+    vmmMemoryMap[i].status = memAvail;
+    freePages++;
+  }
 
-  /* Initialize All Free Pages To Available */
-  vmmMemoryMap[(0x100000 / 0x1000)].status = memAvail;
-
-  freePages++;
-
-  for (i = memStart; i < numPages; i++) {
+  for (i = (int)bitmap_end_page; i < numPages; i++) {
     vmmMemoryMap[i].status = memAvail;
     freePages++;
   }
@@ -93,6 +117,8 @@ int vmm_memMapInit() {
   /* Print Out Amount Of Memory */
   kprintf("Real Memory:      %iKB\n", numPages * 4);
   kprintf("Available Memory: %iKB\n", freePages * 4);
+  kprintf("vmm: bitmap phys=0x%X pages=%i end_page=%i\n",
+      vmm_bitmap_phys, numPages, bitmap_end_page);
 
   /* Return */
   return (0);
@@ -223,11 +249,13 @@ int countMemory() {
 uint32_t vmm_findFreePage(pidType pid) {
 
   int i = 0x0;
+  uint32_t evicted = 0x0;
 
   /* Lets Look For A Free Page */
   if (pid < sysID)
     kpanic("Error: invalid PID %i\n", pid);
 
+retry:
   spinLock(&vmmSpinLock);
 
   for (i = 0; i < numPages; i++) {
@@ -248,8 +276,22 @@ uint32_t vmm_findFreePage(pidType pid) {
     }
   }
 
-  /* If No Free Memory Is Found Return NULL */
-  kpanic("Out Of Memory!!!!");
+  spinUnlock(&vmmSpinLock);
+
+  /* No free pages — attempt to evict a page to swap. */
+  kprintf("vmm: OOM (pid %i) — attempting page eviction\n", pid);
+  evicted = swap_evict_page();
+  if (evicted != 0x0)
+    goto retry;
+
+  /* Eviction failed or no swap device. */
+  kprintf("vmm: OOM — out of memory and swap (pid %i)\n", pid);
+
+  if (pid == sysID)
+    kpanic("Out Of Memory — kernel has no swap fallback");
+
+  sched_setStatus(pid, DEAD);
+  sched_yield();
   return (0x0);
 }
 
@@ -277,19 +319,18 @@ int freePage(uint32_t pageAddr) {
   }
 
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
+  spinLock(&vmmSpinLock);
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
-
     /* Set Page As Avail So It Can Be Used Again */
-    spinLock(&vmmSpinLock);
     vmmMemoryMap[pageIndex].status = memAvail;
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
     vmmMemoryMap[pageIndex].pid = -2;
     freePages++;
     systemVitals->freePages = freePages;
     spinUnlock(&vmmSpinLock);
-
   }
   else {
+    spinUnlock(&vmmSpinLock);
     /* Adjust The COW Counter */
     adjustCowCounter(((uint32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
   }
@@ -354,39 +395,29 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 
  ************************************************************************/
 
-/* TODO: This can be greatly improved for performance but it gets the job done */
 void vmm_freeProcessPages(pidType pid) {
-  int i = 0, x = 0;
-  uint32_t *tmpPageTable = 0x0;
-  uint32_t *tmpPageDir = (uInt32 *) PD_BASE_ADDR;
+  int i = 0;
 
   spinLock(&vmmSpinLock);
 
-  /* NOTE (BUG-COW-03): COW-shared pages owned by another PID (e.g. parent)
-   * are invisible to the pid scan below and their counters are never
-   * decremented here.  The correct fix requires walking the DEAD task's own
-   * page tables, but vmm_freeProcessPages is called from systemTask after the
-   * task has been context-switched away — PT_BASE_ADDR reflects _current (the
-   * system task), not the dying task.  Until that is addressed, leave the
-   * page-walk disabled to avoid corrupting live processes' COW counters. */
-
-  /* Loop Through Pages To Find Pages Owned By Process */
+  /*
+   * By the time we are called, endTask() has already run
+   * vmm_cleanVirtualSpace(0x400000) while the dying task was still _current.
+   * That walk decremented every COW reference in PD[1..767] and freed every
+   * private user page.  All that remains here is to reclaim the physical pages
+   * used for page tables and the page directory itself, which vmm_cleanVirtualSpace
+   * zeroes out but does not free.
+   *
+   * Pages with cowCounter > 0 are owned by this pid but still shared with
+   * live children — leave them alone and let each child's own cleanup path
+   * free the page when the last reference drops.
+   */
   for (i = 0; i < numPages; i++) {
-    if (vmmMemoryMap[i].pid == pid) {
-      if (vmmMemoryMap[i].cowCounter == 0) {
-        /* Private page (kernel page tables, stack structures, etc.) not
-         * covered by vmm_cleanVirtualSpace — free it directly. */
-        vmmMemoryMap[i].status = memAvail;
-        vmmMemoryMap[i].cowCounter = 0x0;
-        vmmMemoryMap[i].pid = vmmID;
-        freePages++;
-        systemVitals->freePages = freePages;
-      }
-      /* cowCounter > 0: vmm_cleanVirtualSpace already decremented this page's
-       * reference count while the dying task was still _current.  Decrementing
-       * again here causes a double-free that corrupts the remaining mapper's
-       * address space (BUG-COW-07).  Skip and let the surviving task's own
-       * cleanup path free the physical page when its count reaches zero. */
+    if (vmmMemoryMap[i].pid == pid && vmmMemoryMap[i].cowCounter == 0) {
+      vmmMemoryMap[i].status = memAvail;
+      vmmMemoryMap[i].pid = vmmID;
+      freePages++;
+      systemVitals->freePages = freePages;
     }
   }
 

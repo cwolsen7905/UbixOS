@@ -3,7 +3,7 @@
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY = stat
-OBJS   = main.o
+BINARY    = stat
+OBJS      = main.o
 
-.include "${UBIX_MK}/ubix.prog.mk"
+.include "${UBIX_MK}/ubix.musl.ubix.prog.mk"

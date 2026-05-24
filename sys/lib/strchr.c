@@ -26,10 +26,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-char *strchr(const char *s, int c) {
-  for (; *s != '\0'; s++) {
-    if ((unsigned char)*s == (unsigned char)c)
-      return ((char *)s);
-  }
-  return (c == '\0' ? (char *)s : (char *)0x0);
+char *strchr(const char *s, int c)
+{
+	for (; *s != '\0'; s++)
+	{
+		if ((unsigned char)*s == (unsigned char)c)
+			return ((char *)s);
+	}
+	return (c == '\0' ? (char *)s : (char *)0x0);
 }

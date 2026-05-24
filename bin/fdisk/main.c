@@ -29,7 +29,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/sys.h>
 #include <string.h>
 
 #include "ubixfs.h"
@@ -68,7 +67,7 @@ int main(int argc, char **argv) {
     printf("Drive Info (ad0):\n");
     fd = fopen("devfs:ad0", "rb");
   }
-  if (fd->size == 0x0) {
+  if (fd == NULL) {
     printf("Invalid Device\n");
     exit(0x1);
   }
@@ -79,7 +78,7 @@ int main(int argc, char **argv) {
   if (argc >= 3) {
     i = atoi(argv[2]);
     if (i == 0) {
-      mbr = fopen("sys:mrb", "rb");
+      mbr = fopen("/mrb", "rb");
       fseek(mbr, 0, 0);
       fread(data, 512, 1, mbr);
       printf("Installing Ubix MBR\n");
@@ -88,15 +87,15 @@ int main(int argc, char **argv) {
       i--;
       printf("d[%i].dp_type   = %i, ", i, d[i].dp_type);
       printf("New Value: ");
-      gets((char *) &buf);
+      fgets((char *) &buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
       d[i].dp_type = atoi(buf);
       printf("d[%i].dp_start: %i, ", i, d[i].dp_start);
       printf("New Value: ");
-      gets((char *) &buf);
+      fgets((char *) &buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
       d[i].dp_start = atoi(buf);
       printf("d[%i].dp_size: %i, ", i, d[i].dp_size);
       printf("New Value: ");
-      gets((char *) &buf);
+      fgets((char *) &buf, sizeof(buf), stdin); { int _n = strlen(buf); if (_n > 0 && buf[_n-1] == '\n') buf[_n-1] = '\0'; }
       d[i].dp_size = atoi(buf);
       printf("d[%i].dp_type:  0x%X\n", i, d[i].dp_type);
       printf("d[%i].dp_start: %i\n", i, d[i].dp_start);

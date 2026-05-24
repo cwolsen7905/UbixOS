@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -32,7 +32,7 @@
 #include <sys/types.h>
 #include <ubixos/sched.h>
 
-uint32_t execThread(void (*tproc)(void), uint32_t, char *);
+uint32_t execThread(void (*tproc)(void), uint32_t, char *, const char *name);
 void execFile(char *file, char **argv, char **envp, int console);
 
 int sys_exec(struct thread *, char *, char **, char **);

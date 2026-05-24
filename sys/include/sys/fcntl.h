@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,7 +29,9 @@
 #ifndef _SYS_FCNTL_H_
 #define _SYS_FCNTL_H_
 
+#ifndef AT_FDCWD
 #define AT_FDCWD                -100
+#endif
 
 /* command values */
 #define F_DUPFD         0               /* duplicate file descriptor */
@@ -57,7 +59,8 @@
 #define O_CREAT         0x0200          /* create if nonexistent */
 #define O_TRUNC         0x0400          /* truncate to zero length */
 #define O_EXCL          0x0800          /* error if already exists */
-#define O_DIRECT        0x00010000
+#define O_NOCTTY        0x8000          /* don't assign controlling terminal */
+#define O_DIRECT        0x00004000
 #define O_RDONLY        0x0000          /* open for reading only */
 #define O_WRONLY        0x0001          /* open for writing only */
 #define O_RDWR          0x0002          /* open for reading and writing */
@@ -74,7 +77,8 @@
 #define O_NDELAY        O_NONBLOCK      /* compat */
 #define FPOSIXSHM       O_NOFOLLOW
 
-#define O_DIRECTORY     0x00020000      /* Fail if not directory */
+#define O_LARGEFILE     0x00008000      /* allow open of large files (musl compat) */
+#define O_DIRECTORY     0x00010000      /* Fail if not directory (musl/Linux i386 value) */
 #define O_EXEC          0x00040000      /* Open for execute only */
 
 #define FCNTLFLAGS      (FAPPEND|FASYNC|FFSYNC|FNONBLOCK|FPOSIXSHM|O_DIRECT)

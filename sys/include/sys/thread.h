@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -49,6 +49,14 @@ struct thread {
     sigset_t sigmask;
     struct  sigaction sigact[128];
     struct rlimit rlim[RLIM_NLIMITS];
+    volatile uint32_t sig_pending; /* bitmask of pending signals (bit N-1 = signal N) */
+
+    /* Per-signal metadata for siginfo_t population (indexed by signal N-1). */
+    uint8_t sig_code[32];          /* SI_USER, SI_KERNEL, SEGV_MAPERR, etc. */
+    union {
+        int   si_pid;              /* kill: sender pid (SI_USER) */
+        void *si_addr;             /* fault: fault address (SIGSEGV/SIGBUS) */
+    } sig_extra[32];
 };
 
 #endif /* END _SYS_THREAD_H */

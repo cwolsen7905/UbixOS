@@ -36,13 +36,29 @@
 #include <lib/kprintf.h>
 #include <lib/bioscall.h>
 #include <lib/vesa.h>
-#include <sde/sde.h>
+#include <isa/kbd.h>
 #include <sys/shutdown.h>
 #include <vmm/vmm.h>
 #include <mpi/mpi.h>
 #include <string.h>
 
+/* display_proto.h lives in include/ (userland tree), not sys/include/.
+ * Duplicate only the constant we need rather than pulling in the full header. */
+#ifndef DISPLAY_FLIP
+#define DISPLAY_FLIP 2
+#endif
+
 static unsigned char *videoBuffer = (unsigned char*) 0xB8000;
+
+/*
+ * Display ownership tracking.
+ * When a process sends MPI 0x82 to claim the display (switch VESA mode),
+ * we record its PID and the mode that was active before the switch.
+ * The reaper loop restores the saved mode when the owning process exits
+ * and notifies views to repaint.
+ */
+static pidType disp_owner_pid  = 0;
+static uint16_t disp_saved_mode = 0;
 
 void systemTask() {
 
@@ -65,7 +81,11 @@ void systemTask() {
         case 0x69:
           x = (int*) &myMsg.data;
           kprintf("Switching to term: [%i][%i]\n", *x, myMsg.pid);
-          schedFindTask(myMsg.pid)->term = tty_find(*x);
+          {
+            kTask_t *_st = schedFindTask(myMsg.pid);
+            if (_st != NULL)
+              _st->term = tty_find(*x);
+          }
           break;
         case 1000:
           kprintf("Restarting the system in 5 seconds\n");
@@ -86,13 +106,27 @@ void systemTask() {
           }
           break;
         case 0x82: {
-          /* display server: init VESA 800x600x32, reply when ready */
+          /* Display mode claim: init VESA 1024x768x24, reply when ready.
+           * Save the current mode so the reaper can restore it when the
+           * requesting process exits.  views sends this at startup and runs
+           * forever, so disp_owner_pid stays 0 for the compositor itself —
+           * we only track transient fullscreen apps that will eventually die. */
           mpi_message_t reply;
           int vesa_ok = 0;
+          uint16_t prev_mode = vesa_current_mode;
+
           if (vesa_init(0x118) == 0) {
             vesa_map_fb();
             vesa_ok = 1;
           }
+
+          if (vesa_ok) {
+            disp_saved_mode = prev_mode;
+            disp_owner_pid  = myMsg.pid;
+            kprintf("system: display claimed by pid %d (prev mode 0x%X)\n",
+                (int)myMsg.pid, prev_mode);
+          }
+
           reply.header = 0x82;
           reply.data[0] = vesa_ok ? 1 : 0;
           reply.data[1] = '\0';
@@ -101,11 +135,7 @@ void systemTask() {
           break;
         }
         case 0x80:
-          if (!strcmp(myMsg.data, "sdeStart")) {
-            kprintf("Starting SDE\n");
-            execThread(sdeThread, 0x2000, 0x0);
-          }
-          else if (!strcmp(myMsg.data, "freePage")) {
+          if (!strcmp(myMsg.data, "freePage")) {
             kprintf("kkk Free Pages");
           }
           else if (!strcmp(myMsg.data, "sdeStop")) {
@@ -129,6 +159,31 @@ void systemTask() {
     tmpTask = sched_getDelTask();
 
     if (tmpTask != 0x0) {
+      /* If this task owned the display, restore the previous VESA mode
+       * and tell views to repaint.  Do this before freeing pages so
+       * vesa_init()'s BIOS call can still execute cleanly. */
+      if (disp_owner_pid != 0 && tmpTask->id == (int)disp_owner_pid) {
+        kprintf("system: display owner pid %d exited — restoring mode 0x%X\n",
+            (int)disp_owner_pid, disp_saved_mode);
+        if (disp_saved_mode == 0) {
+          vesa_text_mode();
+          kbd_gui_mode = 0;
+        } else if (disp_saved_mode != vesa_current_mode) {
+          if (vesa_init(disp_saved_mode) == 0)
+            vesa_map_fb();
+        }
+        disp_owner_pid  = 0;
+        disp_saved_mode = 0;
+
+        /* Signal views to repaint the full compositor surface */
+        {
+          mpi_message_t note;
+          memset(&note, 0, sizeof(note));
+          note.header = DISPLAY_FLIP;
+          mpi_postMessage("views", DISPLAY_FLIP, &note);
+        }
+      }
+
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
       vmm_freeProcessPages(tmpTask->id);

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -50,6 +50,7 @@ struct pipeInfo {
     int bCNT;
     struct pipeBuf *headPB;
     struct pipeBuf *tailPB;
+    int reader_pid;  /* PID of task blocked in pipe read (0 = none) */
 };
 
 #endif /* END _SYS_PIPE_H */

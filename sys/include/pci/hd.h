@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -30,7 +30,8 @@
 #define _PCI_HD_H_
 
 #include <sys/types.h>
-#include <ubixfs/ubixfs.h>
+#include <sys/bus.h>
+#include <fs/ubixfs/ubixfs.h>
 
 #define hdData     0x0
 #define hdError    0x1
@@ -190,7 +191,7 @@ int hdIoctl();
 int hdStart();
 int hdStop();
 int hdStandby();
-int hdInit(struct device_node *dev);
+int hdInit(struct driveInfo *hdd);
 
 struct dos_partition {
     unsigned char dp_flag; /* bootstrap flags */
@@ -483,5 +484,7 @@ static const char * const part_types[256] = {
   [0xFB] = "VMware VMFS",
   [0xFE] = "SpeedStor >1024 cyl. or LANstep",
   [0xFF] = "Xenix bad blocks table", };
+
+extern struct ubx_driver ide_ubx_driver;
 
 #endif
