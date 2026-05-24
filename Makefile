@@ -68,12 +68,12 @@ musl-libc:
 		cd ${OBJ_DIR}/obj/musl && ${CURDIR}/contrib/musl/configure \
 			--srcdir=${CURDIR}/contrib/musl \
 			--target=i386-ubixos \
-			--disable-shared \
+			--enable-shared \
 			--enable-static \
-			CC="${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-pie -fno-pic -fno-stack-protector" \
+			CC="${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector" \
 			CROSS_COMPILE=${CROSS_PREFIX} \
 			LIBCC="" \
-			CFLAGS="${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-pie -fno-pic -fno-stack-protector"; \
+			CFLAGS="${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-stack-protector"; \
 	fi
 	${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
 	    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
@@ -81,9 +81,11 @@ musl-libc:
 	${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o
 	/usr/bin/make -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
 	    srcdir=${CURDIR}/contrib/musl ARCH=i386 \
+	    LD=${CROSS_PREFIX}ld \
 	    LIBCC=${OBJ_DIR}/lib/libgcc32.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/libc.a
+	cp ${OBJ_DIR}/obj/musl/lib/libc.so ${OBJ_DIR}/lib/libc.so
 
 world:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \
