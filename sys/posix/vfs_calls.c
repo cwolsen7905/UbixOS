@@ -957,14 +957,15 @@ int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
  */
 int sys_mount(struct thread *td, struct sys_mount_args *uap)
 {
-	static const struct { const char *name; int type; } fs_map[] = {
-		{ "devfs",  1    },
-		{ "procfs", 0x02 },
-		{ "fat",    0xFA },
-		{ "msdos",  0xFA },
-		{ NULL, 0 }
+	static const struct { const char *name; int type; const char *perms; } fs_map[] = {
+		{ "devfs",  1,    "rw" },
+		{ "procfs", 0x02, "r"  },
+		{ "fat",    0xFA, "rw" },
+		{ "msdos",  0xFA, "rw" },
+		{ NULL, 0, NULL }
 	};
 	int i, vfs_type = -1;
+	const char *fs_perms = "r";
 	char mpath[1024];
 
 	if (uap->type == NULL || uap->path == NULL) {
@@ -975,6 +976,7 @@ int sys_mount(struct thread *td, struct sys_mount_args *uap)
 	for (i = 0; fs_map[i].name != NULL; i++) {
 		if (strcmp(uap->type, fs_map[i].name) == 0) {
 			vfs_type = fs_map[i].type;
+			fs_perms = fs_map[i].perms;
 			break;
 		}
 	}
@@ -987,7 +989,7 @@ int sys_mount(struct thread *td, struct sys_mount_args *uap)
 	strncpy(mpath, uap->path, sizeof(mpath) - 1);
 	mpath[sizeof(mpath) - 1] = '\0';
 
-	if (vfs_mount(0, 0, 0, vfs_type, mpath, "r") != 0) {
+	if (vfs_mount(0, 0, 0, vfs_type, mpath, fs_perms) != 0) {
 		kprintf("sys_mount: vfs_mount(%s, %s) failed\n", uap->type, mpath);
 		td->td_retval[0] = -EIO;
 		return (EIO);

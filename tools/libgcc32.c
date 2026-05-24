@@ -95,14 +95,10 @@ __moddi3(s64 n, s64 d)
 }
 
 /* Complex long double multiply — needed by cpow* but not the rtld path. */
-typedef long double ldbl;
-typedef struct { ldbl re; ldbl im; } xlcx;
-
-xlcx
-__mulxc3(ldbl ar, ldbl ai, ldbl br, ldbl bi)
+_Complex long double
+__mulxc3(long double ar, long double ai, long double br, long double bi)
 {
-	xlcx z;
-	z.re = ar * br - ai * bi;
-	z.im = ar * bi + ai * br;
-	return z;
+	long double re = ar * br - ai * bi;
+	long double im = ar * bi + ai * br;
+	return __builtin_complex(re, im);
 }

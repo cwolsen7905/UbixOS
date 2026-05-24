@@ -9,8 +9,9 @@ int vmm_allocPageTable(u_int32_t pd_i, pidType pid)
 	u_int32_t *page_directory = (u_int32_t *)PD_BASE_ADDR;
 	u_int32_t *page_table = 0x0;
 
-	if ((pd_i >= PD_ENTRIES) || ((page_directory[pd_i] & PAGE_PRESENT) == PAGE_PRESENT))
+	if ((pd_i >= PD_ENTRIES) || ((page_directory[pd_i] & PAGE_PRESENT) == PAGE_PRESENT)) {
 		return (-1);
+	}
 
 	/* Lock The Page Directory So We Dont Collide With Another Thread */
 	// spinLock(&pdSpinLock);

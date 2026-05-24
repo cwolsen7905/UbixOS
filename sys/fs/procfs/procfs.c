@@ -44,6 +44,7 @@
 #include <fs/procfs/procfs.h>
 #include <fs/vfs/vfs.h>
 #include <fs/vfs/mount.h>
+#include <sys/bus.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/sched.h>
@@ -277,12 +278,22 @@ procfs_build_mounts(char *buf, int bufsz)
 		return 0;
 
 	for (mp = systemVitals->mountPoints; mp != NULL; mp = mp->next) {
-		const char *fsname = "none";
-		const char *dev    = "none";
+		const char *fsname = "unknown";
 		const char *perms  = (mp->perms == 'r') ? "ro" : "rw";
+		char        dev[48];
+		int         vfstype = mp->fs ? mp->fs->vfsType : -1;
 
 		if (mp->fs)
-			fsname = procfs_fstype_name(mp->fs->vfsType);
+			fsname = procfs_fstype_name(vfstype);
+
+		if (mp->device && mp->device->dev_nameunit[0])
+			snprintf(dev, sizeof(dev), "/dev/%s", mp->device->dev_nameunit);
+		else if (vfstype == VFS_TYPE_PROCFS)
+			snprintf(dev, sizeof(dev), "proc");
+		else if (vfstype == VFS_TYPE_DEVFS)
+			snprintf(dev, sizeof(dev), "devfs");
+		else
+			snprintf(dev, sizeof(dev), "none");
 
 		len += snprintf(buf + len, bufsz - len,
 		    "%s %s %s %s 0 0\n",

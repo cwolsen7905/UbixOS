@@ -40,20 +40,24 @@ int vmm_freeVirtualPage(u_int32_t addr)
 
 	addr &= 0xFFFFF000;
 
-	if ((page_dir[pd_index] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_dir[pd_index] & PAGE_PRESENT) != PAGE_PRESENT) {
 		return (-1);
+	}
 
 	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_index * PAGE_SIZE));
 
-	if ((page_table[pt_index] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_table[pt_index] & PAGE_PRESENT) != PAGE_PRESENT) {
 		return (-1);
+	}
 
 	phys = page_table[pt_index] & 0xFFFFF000;
 
-	if ((page_table[pt_index] & PAGE_COW) == PAGE_COW)
+	if ((page_table[pt_index] & PAGE_COW) == PAGE_COW) {
 		adjustCowCounter(phys, -1);
-	else if ((phys >> 12) < (u_int32_t)numPages)
+	}
+	else if ((phys >> 12) < (u_int32_t)numPages) {
 		freePage(phys);
+	}
 
 	page_table[pt_index] = 0x0;
 

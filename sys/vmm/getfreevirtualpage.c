@@ -61,8 +61,9 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
 	page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Lets Search For A Free Page */
-	if (_current->oInfo.vmStart <= 0x100000)
+	if (_current->oInfo.vmStart <= 0x100000) {
 		kpanic("Invalid vmStart\n");
+	}
 
 	/* Get Our Starting Address */
 	if (type == VM_THRD)
@@ -73,8 +74,9 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
 	{
 		start_page = _current->oInfo.vmStart;
 	}
-	else
+	else {
 		K_PANIC("Invalid Type");
+	}
 
 /* Locate Initial Page Table */
 keepMapping:
@@ -102,8 +104,9 @@ keepMapping:
 		/* Loop Through The Page Table Find An UnAllocated Page */
 		if ((page_table[y] & PAGE_PRESENT) == PAGE_PRESENT)
 		{
-			if ((page_table[y] & PAGE_COW) == PAGE_COW)
+			if ((page_table[y] & PAGE_COW) == PAGE_COW) {
 				kprintf("COW PAGE NOT CLEANED!");
+			}
 
 			start_page += PAGE_SIZE * (counter + 1);
 			map_from = 0x0;
@@ -111,8 +114,9 @@ keepMapping:
 			goto keepMapping;
 		}
 
-		if (map_from == 0x0)
+		if (map_from == 0x0) {
 			map_from = start_page;
+		}
 	}
 
 	if (counter < count)
@@ -122,10 +126,12 @@ keepMapping:
 	}
 
 gotPages:
-	if (type == VM_THRD)
+	if (type == VM_THRD) {
 		_current->td.vm_dsize += btoc(count * PAGE_SIZE);
-	else if (type == VM_TASK)
+	}
+	else if (type == VM_TASK) {
 		_current->oInfo.vmStart = map_from + (count * PAGE_SIZE);
+	}
 
 	//_current->oInfo.vmStart += (count * PAGE_SIZE);
 
@@ -133,9 +139,10 @@ gotPages:
 	{
 		if ((vmm_remapPage(
 		        (u_int32_t)vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) ==
-		    0x0)
+		    0x0) {
 			kpanic(
 			    "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
+		}
 
 		bzero((void *)(map_from + (counter * PAGE_SIZE)), PAGE_SIZE);
 	}
@@ -165,8 +172,9 @@ void *vmm_reserve_anon_range(pidType pid, int count)
 
 	page_directory = (u_int32_t *)PD_BASE_ADDR;
 
-	if (_current->oInfo.vmStart <= 0x100000)
+	if (_current->oInfo.vmStart <= 0x100000) {
 		kpanic("Invalid vmStart\n");
+	}
 
 	start_page = _current->oInfo.vmStart;
 
@@ -182,11 +190,13 @@ keepMapping:
 	/* If the PD entry doesn't exist yet, the range is free — no PT to check. */
 	if ((page_directory[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
 	{
-		if (map_from == 0x0)
+		if (map_from == 0x0) {
 			map_from = start_page;
+		}
 		counter += PT_ENTRIES - PT_INDEX(start_page);
-		if (counter >= count)
+		if (counter >= count) {
 			goto gotRange;
+		}
 		start_page = (pd_i + 1) * (PT_ENTRIES * PAGE_SIZE);
 		goto keepMapping;
 	}
@@ -203,8 +213,9 @@ keepMapping:
 			counter = 0;
 			goto keepMapping;
 		}
-		if (map_from == 0x0)
+		if (map_from == 0x0) {
 			map_from = start_page;
+		}
 	}
 
 	if (counter < count)

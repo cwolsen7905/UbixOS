@@ -69,8 +69,9 @@ void *vmm_getFreePage(pidType pid)
 				                   ((x * 0x400000) + (y * 0x1000)),
 				                   KERNEL_PAGE_DEFAULT,
 				                   pid,
-				                   0)) == 0x0)
+				                   0)) == 0x0) {
 					kpanic("vmmRemapPage: vmm_getFreePage\n");
+				}
 
 				/* Clear This Page So No Garbage Is There */
 				vmm_clearVirtualPage((u_int32_t)((x * 0x400000) + (y * 0x1000)));

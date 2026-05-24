@@ -105,8 +105,9 @@ void *vmm_createVirtualSpace(pid_t pid)
 				parent_page_table[x] |= PAGE_COW; // new_page_table[i];
 			}
 		}
-		else
+		else {
 			new_page_table[x] = parent_page_table[x];
+		}
 	}
 
 	new_page_directory[1] = (vmm_getPhysicalAddr((u_int32_t)new_page_table) | KERNEL_PAGE_DEFAULT);

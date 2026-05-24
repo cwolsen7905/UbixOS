@@ -97,8 +97,6 @@ struct winsize {
 #define TIOCOUTQ        _IOR('t', 115, int)            /* output queue size */
 #define TIOCSTI         _IOW('t', 114, char)           /* simulate terminal input */
 #define TIOCCONS        _IO('t',  98)                  /* redirect console output */
-#define FREAD  1
-#define FWRITE 2
 
 /* c_cc indices — FreeBSD order, must match contrib/musl/arch/i386/bits/termios.h */
 #define VEOF      0

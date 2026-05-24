@@ -58,8 +58,9 @@ void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
 	/* Get The Index To The Page Directory */
 	page_directory_index = (page_addr >> 22);
 
-	if ((page_directory[page_directory_index] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_directory[page_directory_index] & PAGE_PRESENT) != PAGE_PRESENT) {
 		return;
+	}
 
 	// Calculate The Page Table Index
 	page_table_index = ((page_addr >> 12) & 0x3FF);
@@ -71,8 +72,9 @@ void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
 	if (flags == 0 && (page_table[page_table_index] & PAGE_PRESENT))
 	{
 		u_int32_t phys = page_table[page_table_index] & 0xFFFFF000;
-		if ((phys >> 12) < (u_int32_t)numPages)
+		if ((phys >> 12) < (u_int32_t)numPages) {
 			freePage(phys);
+		}
 	}
 
 	/* Unmap The Page */

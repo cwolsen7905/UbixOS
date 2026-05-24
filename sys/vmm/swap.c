@@ -51,8 +51,9 @@ u_int32_t swap_alloc_slot(void)
 
 	for (i = 0; i < g_swap_total / 32; i++)
 	{
-		if (g_swap_bitmap[i] == 0xFFFFFFFFU)
+		if (g_swap_bitmap[i] == 0xFFFFFFFFU) {
 			continue;
+		}
 		for (bit = 0; bit < 32; bit++)
 		{
 			if ((g_swap_bitmap[i] & (1u << bit)) == 0)
@@ -67,8 +68,9 @@ u_int32_t swap_alloc_slot(void)
 
 void swap_free_slot(u_int32_t slot)
 {
-	if (slot < g_swap_total)
+	if (slot < g_swap_total) {
 		g_swap_bitmap[slot / 32] &= ~(1u << (slot % 32));
+	}
 }
 
 int swap_write_page(u_int32_t slot, void *virt_addr)
@@ -98,8 +100,9 @@ u_int32_t swap_evict_page(void)
 	u_int32_t *page_table = 0;
 	u_int32_t pd_i, pt_i, pte, phys, vaddr, slot;
 
-	if (!g_swap_ready)
+	if (!g_swap_ready) {
 		return (0);
+	}
 
 	/* Two-pass: first pass gives second chances, second pass evicts. */
 	int pass;
@@ -108,8 +111,9 @@ u_int32_t swap_evict_page(void)
 		for (pd_i = PD_INDEX(VMM_USER_START); pd_i <= PD_INDEX(VMM_USER_END); pd_i++)
 		{
 
-			if ((page_dir[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
+			if ((page_dir[pd_i] & PAGE_PRESENT) != PAGE_PRESENT) {
 				continue;
+			}
 
 			page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
 
@@ -117,14 +121,17 @@ u_int32_t swap_evict_page(void)
 			{
 				pte = page_table[pt_i];
 
-				if ((pte & PAGE_PRESENT) != PAGE_PRESENT)
+				if ((pte & PAGE_PRESENT) != PAGE_PRESENT) {
 					continue;
-				if ((pte & PAGE_COW) == PAGE_COW)
+				}
+				if ((pte & PAGE_COW) == PAGE_COW) {
 					continue;
+				}
 
 				phys = pte & 0xFFFFF000;
-				if ((phys >> 12) >= (u_int32_t)numPages)
+				if ((phys >> 12) >= (u_int32_t)numPages) {
 					continue; /* MMIO — never evict */
+				}
 
 				if (pte & PAGE_ACCESSED)
 				{
