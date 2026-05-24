@@ -118,16 +118,18 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp)
 	uint32_t ticks = systemVitals->sysTicks;
 
 	/*
-	 * Return boot-relative time so tv_sec stays small.
-	 * timeStart is a large Unix timestamp (~1.77e9) that would overflow
-	 * the uint32_t arithmetic in userland gettimeofday consumers.
-	 * Elapsed-since-boot is sufficient for all current callers.
+	 * Return elapsed-since-boot time.  timeStart holds the wall-clock
+	 * second at boot but does not advance with sysTicks, so adding it
+	 * here without the elapsed offset would give a frozen timestamp.
+	 * Elapsed time is sufficient for all current callers (select timeouts,
+	 * profiling, etc.).  Full wall-clock requires adding timeStart once
+	 * the PIT tick accounting is verified against the RTC.
 	 */
 	tp->tv_sec  = ticks / 200u;
 	tp->tv_usec = (ticks % 200u) * 5000u;   /* 0..995000 µs in 5 ms steps */
 
 	if (tzp != NULL) {
-		tzp->tz_minuteswest = (-5 * 60);
+		tzp->tz_minuteswest = 0;   /* UTC; no timezone database available */
 		tzp->tz_dsttime = 0;
 	}
 

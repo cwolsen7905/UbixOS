@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -66,30 +66,6 @@ struct timezone {
 int gettimeofday(struct timeval *tp, struct timezone *tzp);
 
 int time_init();
-uInt32 timeMake(struct timeStruct *time);
+uint32_t timeMake(struct timeStruct *time);
 
 #endif
-
-/***
- $Log: time.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:56  reddawg
- no message
-
- Revision 1.4  2004/07/09 13:37:30  reddawg
- time: timeInit to time_init
- Adjusted initialization routines
-
- Revision 1.3  2004/06/29 11:41:44  reddawg
- Fixed some global variables
-
- Revision 1.2  2004/05/21 15:20:00  reddawg
- Cleaned up
-
- END
- ***/
