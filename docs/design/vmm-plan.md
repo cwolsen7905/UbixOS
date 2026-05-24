@@ -11,7 +11,7 @@
 | 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | ⬜ Not started — current mmap(fd) reads file into pre-allocated pages, no VMA backing |
 | 2.3 | `msync` — flush dirty file-backed pages | 2 | ⬜ Not started |
 | 3.1 | Swap device integration — page out to swap partition | 3 | ✅ Done — `sys/vmm/swap.c`: slot bitmap, `swap_write/read_page`, `swap_evict_page` (clock); page fault handler handles `PAGE_SWAPPED` PTEs |
-| 3.2 | Pageout daemon — proactive page reclaim | 3 | 🔄 Partial — `swap_evict_page` clock algorithm exists but no background task calls it; eviction only triggered reactively on OOM in `vmm_findFreePage` |
+| 3.2 | Pageout daemon — proactive page reclaim | 3 | ✅ Done — `sys/vmm/pageout.c`; polls every 100 ticks, iterates task list with CR3 switching, calls `swap_evict_page` per task until high watermark; launched from `kmain` at `QOS_BACKGROUND` |
 | 3.3 | `madvise` hints (MADV_SEQUENTIAL, MADV_DONTNEED) | 3 | ⬜ Not started |
 
 **Legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked

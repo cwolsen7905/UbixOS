@@ -36,6 +36,7 @@
 #include <sys/tss.h>
 #include <sys/bootinfo.h>
 #include <ubixos/exec.h>
+#include <vmm/pageout.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/systemtask.h>
 #include <fs/vfs/mount.h>
@@ -198,6 +199,7 @@ int kmain(uint32_t rootdev)
 	kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
 	execThread(systemTask, 0x2000, 0x0, "systemTask");
+	execThread(pageout_daemon, 0x2000, 0x0, "pageout");
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 
