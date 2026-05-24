@@ -33,7 +33,7 @@
 #include <fs/vfs/vfs.h>
 #include <sys/bus.h>
 #include <mpi/mpi.h>
-#include <fs/ubixfs/dirCache.h>
+#include <fs/ubixfs/dir_cache.h>
 
 #define UBIXFS_BLOCKSIZE_BYTES     blockSize*512
 #define UBIXFS_ALIGN(size) (size + ((((size) % (UBIXFS_BLOCKSIZE_BYTES)) == 0)? 0 : ((UBIXFS_BLOCKSIZE_BYTES) - ((size) % (UBIXFS_BLOCKSIZE_BYTES)))))

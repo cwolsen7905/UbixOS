@@ -3,6 +3,6 @@
 include ../../../Makefile.incl
 include ../../Makefile.incl
 
-OBJS = thread.o ubixfs.o directory.o block.o dirCache.o
+OBJS = thread.o ubixfs.o directory.o block.o dir_cache.o
 
 .include "${UBIX_MK}/ubix.kern.mk"

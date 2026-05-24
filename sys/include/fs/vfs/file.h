@@ -31,7 +31,7 @@
 
 #include <sys/types.h>
 
-#include <fs/ubixfs/dirCache.h>
+#include <fs/ubixfs/dir_cache.h>
 #include <sys/thread.h>
 #include <fs/vfs/inode.h>
 #include <fs/vfs/mount.h>

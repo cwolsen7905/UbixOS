@@ -30,7 +30,7 @@
 #include <fs/ubixfs/ubixfs.h>
 #include <sys/types.h>
 #include <sys/bus.h>
-#include <fs/ubixfs/dirCache.h>
+#include <fs/ubixfs/dir_cache.h>
 #include <fs/vfs/vfs.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
