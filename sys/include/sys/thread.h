@@ -50,6 +50,9 @@ struct thread {
     struct  sigaction sigact[128];
     struct rlimit rlim[RLIM_NLIMITS];
     volatile uint32_t sig_pending; /* bitmask of pending signals (bit N-1 = signal N) */
+    sigset_t  td_oldsigmask;       /* mask saved by sigsuspend; restored via sigreturn */
+    uint32_t  td_pflags;           /* TDP_* flags */
+#define TDP_OLDMASK  0x00000001u   /* td_oldsigmask is valid; use it in save_sigcontext */
 
     /* Per-signal metadata for siginfo_t population (indexed by signal N-1). */
     uint8_t sig_code[32];          /* SI_USER, SI_KERNEL, SEGV_MAPERR, etc. */

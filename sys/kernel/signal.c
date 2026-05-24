@@ -45,397 +45,467 @@
  * Signals with SIG_DFL action = terminate the process.
  * Bit N-1 represents signal N (same encoding as sig_pending).
  * --------------------------------------------------------------------- */
-#define SIGTERM_MASK \
-    ((1u <<  0) |   /* SIGHUP  1  */ \
-     (1u <<  1) |   /* SIGINT  2  */ \
-     (1u <<  2) |   /* SIGQUIT 3  */ \
-     (1u <<  3) |   /* SIGILL  4  */ \
-     (1u <<  4) |   /* SIGTRAP 5  */ \
-     (1u <<  5) |   /* SIGABRT 6  */ \
-     (1u <<  6) |   /* SIGBUS  7  */ \
-     (1u <<  7) |   /* SIGFPE  8  */ \
-     (1u <<  8) |   /* SIGKILL 9  */ \
-     (1u << 10) |   /* SIGSEGV 11 */ \
-     (1u << 12) |   /* SIGPIPE 13 */ \
-     (1u << 14))    /* SIGTERM 15 */
+#define SIGTERM_MASK                                                                                                                                                                                                                                           \
+	((1u << 0) |  /* SIGHUP  1  */                                                                                                                                                                                                                         \
+	 (1u << 1) |  /* SIGINT  2  */                                                                                                                                                                                                                         \
+	 (1u << 2) |  /* SIGQUIT 3  */                                                                                                                                                                                                                         \
+	 (1u << 3) |  /* SIGILL  4  */                                                                                                                                                                                                                         \
+	 (1u << 4) |  /* SIGTRAP 5  */                                                                                                                                                                                                                         \
+	 (1u << 5) |  /* SIGABRT 6  */                                                                                                                                                                                                                         \
+	 (1u << 6) |  /* SIGBUS  7  */                                                                                                                                                                                                                         \
+	 (1u << 7) |  /* SIGFPE  8  */                                                                                                                                                                                                                         \
+	 (1u << 8) |  /* SIGKILL 9  */                                                                                                                                                                                                                         \
+	 (1u << 10) | /* SIGSEGV 11 */                                                                                                                                                                                                                         \
+	 (1u << 12) | /* SIGPIPE 13 */                                                                                                                                                                                                                         \
+	 (1u << 14))  /* SIGTERM 15 */
 
 /* Signals whose SIG_DFL action is to stop the process.
  * SIGTTIN/SIGTTOU are intentionally excluded: they are already handled
  * as EINTR in the TTY read/write paths.  Adding them here would stop
  * boot-time daemons permanently when no job-control shell exists to
  * send SIGCONT.  Re-add once a full job-control shell is wired up. */
-#define SIGSTOP_MASK \
-    ((1u << (SIGTSTP - 1)) |    /* 20 — Ctrl+Z */ \
-     (1u << (SIGSTOP - 1)))     /* 19 — unconditional stop */
+#define SIGSTOP_MASK                                                                                                                                                                                                                                           \
+	((1u << (SIGTSTP - 1)) | /* 20 — Ctrl+Z */                                                                                                                                                                                                             \
+	 (1u << (SIGSTOP - 1)))  /* 19 — unconditional stop */
 
 /* Pending stop signals cleared by SIGCONT. */
-#define SIGPENDSTOP_MASK \
-    ((1u << (SIGTSTP - 1)) | \
-     (1u << (SIGSTOP - 1)) | \
-     (1u << (SIGTTIN - 1)) | \
-     (1u << (SIGTTOU - 1)))
+#define SIGPENDSTOP_MASK ((1u << (SIGTSTP - 1)) | (1u << (SIGSTOP - 1)) | (1u << (SIGTTIN - 1)) | (1u << (SIGTTOU - 1)))
 
-/*
- * signal_post — post signal `sig` to the task identified by `pid`.
+/**
+ * signal_post - enqueue a kernel signal for a task
+ * @pid: target task ID
+ * @sig: signal number to deliver (1-31)
  *
- * Safe to call from interrupt context: only performs an atomic OR on
- * sig_pending (volatile uint32_t).  No scheduler calls, no locks.
+ * This helper posts a signal to the task identified by @pid. It only
+ * updates `sig_pending`, `sig_code`, and control bits, so it is safe
+ * to call from interrupt context without taking locks or invoking the
+ * scheduler.
  */
-void
-signal_post(int pid, int sig)
+void signal_post(int pid, int sig)
 {
-    kTask_t *t;
+	kTask_t *t;
 
-    if (sig < 1 || sig > 31)
-        return;
+	if (sig < 1 || sig > 31)
+		return;
 
-    t = schedFindTask((uint32_t)pid);
-    if (t == NULL)
-        return;
+	t = schedFindTask((uint32_t)pid);
+	if (t == NULL)
+		return;
 
-    if (sig == SIGCONT) {
-        t->td.sig_pending &= ~SIGPENDSTOP_MASK;
-        if (t->state == STOPPED) {
-            t->t_stopped_sig = 0;
-            sched_ready(t);
-        }
-    }
-    t->td.sig_code[sig - 1] = SI_KERNEL;
-    t->td.sig_pending |= (1u << (sig - 1));
+	if (sig == SIGCONT)
+	{
+		t->td.sig_pending &= ~SIGPENDSTOP_MASK;
+		if (t->state == STOPPED)
+		{
+			t->t_stopped_sig = 0;
+			sched_ready(t);
+		}
+	}
+	t->td.sig_code[sig - 1] = SI_KERNEL;
+	t->td.sig_pending |= (1u << (sig - 1));
 }
 
-/*
- * signal_post_kill — post signal `sig` from sender to target, with SI_USER
- * metadata (si_pid = sender).  Used by sys_kill / sys_tkill.
- */
-void
-signal_post_kill(int sender_pid, int target_pid, int sig)
-{
-    kTask_t *t;
-
-    if (sig < 1 || sig > 31)
-        return;
-
-    t = schedFindTask((uint32_t)target_pid);
-    if (t == NULL)
-        return;
-
-    t->td.sig_code[sig - 1]        = SI_USER;
-    t->td.sig_extra[sig - 1].si_pid = sender_pid;
-    t->td.sig_pending |= (1u << (sig - 1));
-}
-
-/*
- * signal_post_fault — post a synchronous fault signal (SIGSEGV/SIGBUS) to
- * _current, recording the fault address and si_code.  The caller must call
- * signal_check(frame) after releasing any held spinlocks.
- */
-void
-signal_post_fault(int sig, void *fault_addr, int fault_code)
-{
-    struct thread *td;
-
-    if (_current == NULL || sig < 1 || sig > 31)
-        return;
-
-    td = &_current->td;
-    td->sig_code[sig - 1]        = (uint8_t)fault_code;
-    td->sig_extra[sig - 1].si_addr = fault_addr;
-    td->sig_pending |= (1u << (sig - 1));
-}
-
-/*
- * signal_post_tty — post signal `sig` to the terminal's foreground process
- * group (term->t_pgrp).  Falls back to the most recently created live task on
- * the terminal when t_pgrp is 0 or no matching task exists.
- */
-void
-signal_post_tty(tty_term *term, int sig)
-{
-    kTask_t *t, *target = NULL;
-    int      sent = 0;
-
-    if (sig < 1 || sig > 31 || term == NULL)
-        return;
-
-    /* Primary: signal every task in the foreground process group. */
-    if (term->t_pgrp != 0) {
-        for (t = taskList; t != NULL; t = t->next) {
-            if (t->state == DEAD || (pid_t)t->pgrp != term->t_pgrp)
-                continue;
-            t->td.sig_code[sig - 1] = SI_KERNEL;
-            t->td.sig_pending |= (1u << (sig - 1));
-            sent = 1;
-        }
-        if (sent)
-            return;
-    }
-
-    /* Fallback: signal the most recently created live task on this terminal. */
-    for (t = taskList; t != NULL; t = t->next) {
-        if (t->term != term || t->state == DEAD)
-            continue;
-        if (target == NULL || t->id > target->id)
-            target = t;
-    }
-    if (target != NULL) {
-        target->td.sig_code[sig - 1] = SI_KERNEL;
-        target->td.sig_pending |= (1u << (sig - 1));
-    }
-}
-
-/*
- * signal_post_pgrp — post signal `sig` to every task in process group `pgrp`.
+/**
+ * signal_post_kill - enqueue a user-generated signal for a task
+ * @sender_pid: sending process ID
+ * @target_pid: receiving process ID
+ * @sig: signal number to deliver (1-31)
  *
- * Special handling for SIGCONT: wake any STOPPED tasks immediately so they
- * can resume (they won't reach signal_check otherwise), and discard pending
- * stop signals per POSIX.
+ * Posts a signal to @target_pid and marks the source as a user signal
+ * with `SI_USER`. Used by `sys_kill` and `sys_tkill` to preserve the
+ * sending PID in `sig_extra[].si_pid`.
  */
-void
-signal_post_pgrp(pid_t pgrp, int sig)
+void signal_post_kill(int sender_pid, int target_pid, int sig)
 {
-    kTask_t *t;
+	kTask_t *t;
 
-    if (sig < 1 || sig > 31 || pgrp == 0)
-        return;
-    for (t = taskList; t != NULL; t = t->next) {
-        if (t->state == DEAD || (pid_t)t->pgrp != pgrp)
-            continue;
-        if (sig == SIGCONT) {
-            /* Discard pending stop signals. */
-            t->td.sig_pending &= ~SIGPENDSTOP_MASK;
-            /* Wake stopped task so it can run again. */
-            if (t->state == STOPPED) {
-                t->t_stopped_sig = 0;
-                sched_ready(t);
-            }
-        }
-        t->td.sig_code[sig - 1] = SI_KERNEL;
-        t->td.sig_pending |= (1u << (sig - 1));
-    }
+	if (sig < 1 || sig > 31)
+		return;
+
+	t = schedFindTask((uint32_t)target_pid);
+	if (t == NULL)
+		return;
+
+	t->td.sig_code[sig - 1] = SI_USER;
+	t->td.sig_extra[sig - 1].si_pid = sender_pid;
+	t->td.sig_pending |= (1u << (sig - 1));
 }
 
-/*
- * signal_check — deliver the highest-priority pending unblocked signal.
+/**
+ * signal_post_fault - record a synchronous fault signal for the current task
+ * @sig: fault signal number (SIGSEGV or SIGBUS)
+ * @fault_addr: address that caused the fault
+ * @fault_code: architecture-specific fault code to store in `si_code`
  *
- * Called on every POSIX syscall exit, before iret returns to user mode.
- * Only handles Phase 1 actions:
- *   SIG_DFL on a terminating signal → endTask + yield
- *   SIG_IGN                         → discard
- *   Custom handler                  → Phase 2 (not yet implemented; log + discard)
+ * Marks the current task as having a pending synchronous fault signal.
+ * This is used for page faults and other CPU traps that should be raised
+ * as a process signal. The caller must release any held locks before
+ * calling `signal_check()` so signal delivery can proceed safely.
  */
-void
-signal_check(struct trapframe *frame)
+void signal_post_fault(int sig, void *fault_addr, int fault_code)
 {
-    struct thread    *td = &_current->td;
-    uint32_t          pending, unblocked;
-    int               sig;
-    struct sigaction *sa;
+	struct thread *td;
 
-    (void)frame;
+	if (_current == NULL || sig < 1 || sig > 31)
+		return;
 
-    pending   = td->sig_pending;
-    unblocked = pending & ~td->sigmask.__bits[0];
-
-    if (unblocked == 0)
-        return;
-
-    /* Pick the lowest-numbered pending unblocked signal. */
-    for (sig = 1; sig <= 31; sig++) {
-        if (!(unblocked & (1u << (sig - 1))))
-            continue;
-
-        /* Clear the pending bit before delivery so we don't re-deliver. */
-        td->sig_pending &= ~(1u << (sig - 1));
-
-        sa = &td->sigact[sig];
-
-        if ((void *)sa->sa_handler == (void *)0x1 /* SIG_IGN */) {
-            /* ignored — discard */
-            return;
-        }
-
-        if ((void *)sa->sa_handler == (void *)0x0 /* SIG_DFL */ ||
-            sa->sa_handler == NULL) {
-            /* Default action: stop for SIGSTOP_MASK, terminate for
-             * SIGTERM_MASK, ignore for the rest (SIGCHLD etc.). */
-            if ((1u << (sig - 1)) & SIGSTOP_MASK) {
-                sched_stop(_current, sig);
-                sched_yield();
-                /* Resumes here after SIGCONT wakes us via sched_ready. */
-                return;
-            }
-            if ((1u << (sig - 1)) & SIGTERM_MASK) {
-                kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n",
-                    sig, _current->id, _current->name);
-                endTask(_current->id);
-                sched_yield();
-                /* not reached */
-            }
-            return;
-        }
-
-        /* Custom handler — deliver via signal frame. */
-        signal_deliver_frame(sig, sa, frame, td);
-
-        /* SA_RESETHAND: reset to SIG_DFL after first delivery. */
-        if (sa->sa_flags & SA_RESETHAND)
-            memset(&td->sigact[sig], 0, sizeof(struct sigaction));
-        return;
-    }
+	td = &_current->td;
+	td->sig_code[sig - 1] = (uint8_t)fault_code;
+	td->sig_extra[sig - 1].si_addr = fault_addr;
+	td->sig_pending |= (1u << (sig - 1));
 }
 
-/* Write the sigreturn trampoline into buf[14].
- * The trampoline: push $sc_addr; push $0; mov $417,%eax; int $0x80 */
-static void
-write_trampoline(uint8_t *buf, uint32_t sc_addr)
-{
-    buf[0]  = 0x68;
-    buf[1]  = (uint8_t)(sc_addr >>  0);
-    buf[2]  = (uint8_t)(sc_addr >>  8);
-    buf[3]  = (uint8_t)(sc_addr >> 16);
-    buf[4]  = (uint8_t)(sc_addr >> 24);
-    buf[5]  = 0x6A; buf[6]  = 0x00;
-    buf[7]  = 0xB8;
-    buf[8]  = 0xA1; buf[9]  = 0x01; buf[10] = 0x00; buf[11] = 0x00;
-    buf[12] = 0xCD; buf[13] = 0x80;
-}
-
-/* Save the interrupted CPU state into *sc and update td's sigmask. */
-static void
-save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame,
-    struct thread *td, struct sigaction *sa, int sig)
-{
-    uint32_t sc_num = frame->tf_err & 0xFFFF;
-    uint32_t sc_err = (frame->tf_err >> 16) & 0xFFFF;
-
-    sc->sc_eax    = (uint32_t)frame->tf_eax;
-    sc->sc_ecx    = (uint32_t)frame->tf_ecx;
-    sc->sc_edx    = (uint32_t)frame->tf_edx;
-    sc->sc_ebx    = (uint32_t)frame->tf_ebx;
-    sc->sc_esp    = (uint32_t)frame->tf_esp;
-    sc->sc_ebp    = (uint32_t)frame->tf_ebp;
-    sc->sc_esi    = (uint32_t)frame->tf_esi;
-    sc->sc_edi    = (uint32_t)frame->tf_edi;
-    sc->sc_eip    = (uint32_t)frame->tf_eip;
-    sc->sc_eflags = (uint32_t)frame->tf_eflags;
-    memcpy(&sc->sc_mask, &td->sigmask, sizeof(sigset_t));
-
-    /* SA_RESTART: re-execute the interrupted syscall after the handler. */
-    if ((sa->sa_flags & SA_RESTART) && sc_err == EINTR && sc_num != 0) {
-        sc->sc_eip = (uint32_t)frame->tf_eip - 2; /* point back to int $0x80 */
-        sc->sc_eax = sc_num;                       /* restore original syscall# */
-    }
-
-    td->sigmask.__bits[0] |= sa->sa_mask.__bits[0];
-    if (!(sa->sa_flags & SA_NODEFER))
-        td->sigmask.__bits[0] |= (1u << (sig - 1));
-}
-
-/*
- * signal_deliver_frame — build a signal frame on the user stack and redirect
- * the trapframe so that iret enters the user-space handler.
+/**
+ * signal_post_tty - deliver a terminal-generated signal to the fg process group
+ * @term: terminal state structure
+ * @sig: signal number to deliver
  *
- * Non-SA_SIGINFO: handler(int sig)
- *   [+0]  retaddr → trampoline; [+4] signum; [+8] trampoline[14]; [+24] sc
+ * Sends `sig` to every task in the terminal's foreground process group.
+ * If no foreground process group exists, it falls back to the most recently
+ * created live task attached to the terminal.
+ */
+void signal_post_tty(tty_term *term, int sig)
+{
+	kTask_t *t, *target = NULL;
+	int sent = 0;
+
+	if (sig < 1 || sig > 31 || term == NULL)
+		return;
+
+	/* Primary: signal every task in the foreground process group. */
+	if (term->t_pgrp != 0)
+	{
+		for (t = taskList; t != NULL; t = t->next)
+		{
+			if (t->state == DEAD || (pid_t)t->pgrp != term->t_pgrp)
+				continue;
+			t->td.sig_code[sig - 1] = SI_KERNEL;
+			t->td.sig_pending |= (1u << (sig - 1));
+			sent = 1;
+		}
+		if (sent)
+			return;
+	}
+
+	/* Fallback: signal the most recently created live task on this terminal. */
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->term != term || t->state == DEAD)
+			continue;
+		if (target == NULL || t->id > target->id)
+			target = t;
+	}
+	if (target != NULL)
+	{
+		target->td.sig_code[sig - 1] = SI_KERNEL;
+		target->td.sig_pending |= (1u << (sig - 1));
+	}
+}
+
+/**
+ * signal_post_pgrp - post a signal to all tasks in a process group
+ * @pgrp: process group ID
+ * @sig: signal number to deliver
  *
- * SA_SIGINFO: handler(int sig, siginfo_t *info, void *uctx)
- *   [+0]  retaddr → trampoline; [+4] signum; [+8] &info; [+12] NULL
- *   [+16] siginfo_t (128 bytes, musl layout); [+144] trampoline[14]; [+160] sc
+ * Sends @sig to every live task whose process group matches @pgrp. If the
+ * signal is `SIGCONT`, any stopped tasks are also resumed immediately and
+ * pending stop signals are cleared in accordance with POSIX semantics.
  */
-void
-signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame,
-    struct thread *td)
+void signal_post_pgrp(pid_t pgrp, int sig)
 {
-    uint32_t new_esp, sc_addr;
+	kTask_t *t;
 
-    if (sa->sa_flags & SA_SIGINFO) {
-        struct ubx_sigframe_info *fp;
-        uint32_t info_addr;
-
-        new_esp   = ((uint32_t)frame->tf_esp -
-            (uint32_t)sizeof(struct ubx_sigframe_info)) & ~3u;
-        fp        = (struct ubx_sigframe_info *)new_esp;
-        sc_addr   = new_esp +
-            (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_sc);
-        info_addr = new_esp +
-            (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_info);
-
-        write_trampoline(fp->sf_trampoline, sc_addr);
-        fp->sf_retaddr  = new_esp +
-            (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_trampoline);
-        fp->sf_signo    = (uint32_t)sig;
-        fp->sf_info_ptr = info_addr;
-        fp->sf_uctx_ptr = 0;
-
-        memset(&fp->sf_info, 0, sizeof(fp->sf_info));
-        fp->sf_info.si_signo = sig;
-        fp->sf_info.si_errno = 0;
-        fp->sf_info.si_code  = (int)(uint8_t)td->sig_code[sig - 1];
-        if (fp->sf_info.si_code == SI_USER) {
-            fp->sf_info.u.__kill.si_pid = td->sig_extra[sig - 1].si_pid;
-        } else {
-            fp->sf_info.u.si_addr = td->sig_extra[sig - 1].si_addr;
-        }
-
-        save_sigcontext(&fp->sf_sc, frame, td, sa, sig);
-        frame->tf_esp = (int)new_esp;
-        frame->tf_eip = (int)(uintptr_t)sa->sa_sigaction;
-    } else {
-        struct ubx_sigframe *fp;
-
-        new_esp = ((uint32_t)frame->tf_esp -
-            (uint32_t)sizeof(struct ubx_sigframe)) & ~3u;
-        fp      = (struct ubx_sigframe *)new_esp;
-        sc_addr = new_esp +
-            (uint32_t)__builtin_offsetof(struct ubx_sigframe, sf_sc);
-
-        write_trampoline(fp->sf_trampoline, sc_addr);
-        fp->sf_retaddr = new_esp +
-            (uint32_t)__builtin_offsetof(struct ubx_sigframe, sf_trampoline);
-        fp->sf_signum  = (uint32_t)sig;
-
-        save_sigcontext(&fp->sf_sc, frame, td, sa, sig);
-        frame->tf_esp = (int)new_esp;
-        frame->tf_eip = (int)(uintptr_t)sa->sa_handler;
-    }
+	if (sig < 1 || sig > 31 || pgrp == 0)
+		return;
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->state == DEAD || (pid_t)t->pgrp != pgrp)
+			continue;
+		if (sig == SIGCONT)
+		{
+			/* Discard pending stop signals. */
+			t->td.sig_pending &= ~SIGPENDSTOP_MASK;
+			/* Wake stopped task so it can run again. */
+			if (t->state == STOPPED)
+			{
+				t->t_stopped_sig = 0;
+				sched_ready(t);
+			}
+		}
+		t->td.sig_code[sig - 1] = SI_KERNEL;
+		t->td.sig_pending |= (1u << (sig - 1));
+	}
 }
 
-/*
- * sys_sigreturn — restore saved CPU state after a signal handler returns.
- * Called by the trampoline on the user stack via int $0x80 (slot 417).
+/**
+ * signal_check - check pending signals and deliver the highest-priority one
+ * @frame: trapframe from the interrupted user context
+ *
+ * Called before returning to user mode from a syscall. This routine finds
+ * the lowest-numbered pending signal that is not masked and delivers it.
+ * Default actions for `SIG_DFL`, ignored signals, and custom handlers are
+ * handled here; custom handler delivery is deferred to `signal_deliver_frame`.
  */
-int
-sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
+void signal_check(struct trapframe *frame)
 {
-    struct ubx_sigcontext *scp = args->scp;
-    struct trapframe      *frame = td->frame;
+	struct thread *td = &_current->td;
+	uint32_t pending, unblocked;
+	int sig;
+	struct sigaction *sa;
 
-    if (scp == NULL) {
-        td->td_retval[0] = -1;
-        return (-1);
-    }
+	(void)frame;
 
-    /* Restore saved registers. */
-    frame->tf_eax    = (int)scp->sc_eax;
-    frame->tf_ecx    = (int)scp->sc_ecx;
-    frame->tf_edx    = (int)scp->sc_edx;
-    frame->tf_ebx    = (int)scp->sc_ebx;
-    frame->tf_esp    = (int)scp->sc_esp;
-    frame->tf_ebp    = (int)scp->sc_ebp;
-    frame->tf_esi    = (int)scp->sc_esi;
-    frame->tf_edi    = (int)scp->sc_edi;
-    frame->tf_eip    = (int)scp->sc_eip;
-    frame->tf_eflags = (int)(scp->sc_eflags & ~0x200u); /* keep IF clear in kernel */
+	pending = td->sig_pending;
+	unblocked = pending & ~td->sigmask.__bits[0];
 
-    /* Restore sigmask. */
-    memcpy(&td->sigmask, &scp->sc_mask, sizeof(sigset_t));
+	if (unblocked == 0)
+		return;
 
-    td->td_retval[0] = (int)scp->sc_eax;
-    td->td_retval[1] = (int)scp->sc_edx;
-    return (0);
+	kprintf("signal_check: pid=%d name=%s pending=0x%X mask=0x%X unblocked=0x%X\n", _current->id, _current->name, pending, td->sigmask.__bits[0], unblocked);
+
+	/* Pick the lowest-numbered pending unblocked signal. */
+	for (sig = 1; sig <= 31; sig++)
+	{
+		if (!(unblocked & (1u << (sig - 1))))
+			continue;
+
+		/* Clear the pending bit before delivery so we don't re-deliver. */
+		td->sig_pending &= ~(1u << (sig - 1));
+
+		sa = &td->sigact[sig];
+
+		if ((void *)sa->sa_handler == (void *)0x1 /* SIG_IGN */)
+		{
+			/* ignored — discard */
+			return;
+		}
+
+		kprintf("signal_check: sig=%d handler=0x%X\n", sig, (uint32_t)sa->sa_handler);
+
+		if ((void *)sa->sa_handler == (void *)0x0 /* SIG_DFL */ || sa->sa_handler == NULL)
+		{
+			/* Default action: stop for SIGSTOP_MASK, terminate for
+			 * SIGTERM_MASK, ignore for the rest (SIGCHLD etc.). */
+			if ((1u << (sig - 1)) & SIGSTOP_MASK)
+			{
+				sched_stop(_current, sig);
+				sched_yield();
+				/* Resumes here after SIGCONT wakes us via sched_ready. */
+				return;
+			}
+			if ((1u << (sig - 1)) & SIGTERM_MASK)
+			{
+				kprintf("signal: SIG_DFL terminate sig=%d pid=%d name=%s\n", sig, _current->id, _current->name);
+				endTask(_current->id);
+				sched_yield();
+				/* not reached */
+			}
+			return;
+		}
+
+		/* Custom handler — deliver via signal frame. */
+		signal_deliver_frame(sig, sa, frame, td);
+
+		/* SA_RESETHAND: reset to SIG_DFL after first delivery. */
+		if (sa->sa_flags & SA_RESETHAND)
+			memset(&td->sigact[sig], 0, sizeof(struct sigaction));
+		return;
+	}
 }
 
+/**
+ * write_trampoline - emit the sigreturn trampoline into a stack frame
+ * @buf: buffer to write the trampoline bytes into
+ * @sc_addr: address of the saved sigcontext structure
+ *
+ * The trampoline code pushes the sigcontext address and a zero return
+ * value, then executes syscall 417 via `int $0x80` to invoke `sys_sigreturn`.
+ */
+static void write_trampoline(uint8_t *buf, uint32_t sc_addr)
+{
+	buf[0] = 0x68;
+	buf[1] = (uint8_t)(sc_addr >> 0);
+	buf[2] = (uint8_t)(sc_addr >> 8);
+	buf[3] = (uint8_t)(sc_addr >> 16);
+	buf[4] = (uint8_t)(sc_addr >> 24);
+	buf[5] = 0x6A;
+	buf[6] = 0x00;
+	buf[7] = 0xB8;
+	buf[8] = 0xA1;
+	buf[9] = 0x01;
+	buf[10] = 0x00;
+	buf[11] = 0x00;
+	buf[12] = 0xCD;
+	buf[13] = 0x80;
+}
+
+/**
+ * save_sigcontext - capture the interrupted user CPU state for signal return
+ * @sc: saved context structure to populate
+ * @frame: trapframe from the interrupted user context
+ * @td: thread state for the current task
+ * @sa: signal action being delivered
+ * @sig: signal number being delivered
+ *
+ * Saves registers, flags, and the current signal mask so the signal
+ * handler can return to the interrupted syscall or user code correctly.
+ * It also applies the handler's mask and deferred signal semantics.
+ */
+static void save_sigcontext(struct ubx_sigcontext *sc, struct trapframe *frame, struct thread *td, struct sigaction *sa, int sig)
+{
+	uint32_t sc_num = frame->tf_err & 0xFFFF;
+	uint32_t sc_err = (frame->tf_err >> 16) & 0xFFFF;
+
+	sc->sc_eax = (uint32_t)frame->tf_eax;
+	sc->sc_ecx = (uint32_t)frame->tf_ecx;
+	sc->sc_edx = (uint32_t)frame->tf_edx;
+	sc->sc_ebx = (uint32_t)frame->tf_ebx;
+	sc->sc_esp = (uint32_t)frame->tf_esp;
+	sc->sc_ebp = (uint32_t)frame->tf_ebp;
+	sc->sc_esi = (uint32_t)frame->tf_esi;
+	sc->sc_edi = (uint32_t)frame->tf_edi;
+	sc->sc_eip = (uint32_t)frame->tf_eip;
+	sc->sc_eflags = (uint32_t)frame->tf_eflags;
+	/* When interrupted from sigsuspend, restore the pre-sigsuspend mask. */
+	if (td->td_pflags & TDP_OLDMASK)
+	{
+		memcpy(&sc->sc_mask, &td->td_oldsigmask, sizeof(sigset_t));
+		td->td_pflags &= ~TDP_OLDMASK;
+	}
+	else
+	{
+		memcpy(&sc->sc_mask, &td->sigmask, sizeof(sigset_t));
+	}
+
+	/* SA_RESTART: re-execute the interrupted syscall after the handler. */
+	if ((sa->sa_flags & SA_RESTART) && sc_err == EINTR && sc_num != 0)
+	{
+		sc->sc_eip = (uint32_t)frame->tf_eip - 2; /* point back to int $0x80 */
+		sc->sc_eax = sc_num;                      /* restore original syscall# */
+	}
+
+	td->sigmask.__bits[0] |= sa->sa_mask.__bits[0];
+	if (!(sa->sa_flags & SA_NODEFER))
+		td->sigmask.__bits[0] |= (1u << (sig - 1));
+}
+
+/**
+ * signal_deliver_frame - construct a user stack frame for a signal handler
+ * @sig: signal number being delivered
+ * @sa: action describing the handler and flags
+ * @frame: trapframe for the interrupted user context
+ * @td: task/thread state for the current task
+ *
+ * Builds either an SA_SIGINFO or standard signal frame on the user stack,
+ * writes the sigreturn trampoline, and adjusts `frame->tf_esp` and
+ * `frame->tf_eip` so execution enters the signal handler on return.
+ */
+void signal_deliver_frame(int sig, struct sigaction *sa, struct trapframe *frame, struct thread *td)
+{
+	uint32_t new_esp, sc_addr;
+
+	if (sa->sa_flags & SA_SIGINFO)
+	{
+		struct ubx_sigframe_info *fp;
+		uint32_t info_addr;
+
+		new_esp = ((uint32_t)frame->tf_esp - (uint32_t)sizeof(struct ubx_sigframe_info)) & ~3u;
+		fp = (struct ubx_sigframe_info *)new_esp;
+		sc_addr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_sc);
+		info_addr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_info);
+
+		write_trampoline(fp->sf_trampoline, sc_addr);
+		fp->sf_retaddr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe_info, sf_trampoline);
+		fp->sf_signo = (uint32_t)sig;
+		fp->sf_info_ptr = info_addr;
+		fp->sf_uctx_ptr = 0;
+
+		memset(&fp->sf_info, 0, sizeof(fp->sf_info));
+		fp->sf_info.si_signo = sig;
+		fp->sf_info.si_errno = 0;
+		fp->sf_info.si_code = (int)(uint8_t)td->sig_code[sig - 1];
+		if (fp->sf_info.si_code == SI_USER)
+		{
+			fp->sf_info.u.__kill.si_pid = td->sig_extra[sig - 1].si_pid;
+		}
+		else
+		{
+			fp->sf_info.u.si_addr = td->sig_extra[sig - 1].si_addr;
+		}
+
+		save_sigcontext(&fp->sf_sc, frame, td, sa, sig);
+		frame->tf_esp = (int)new_esp;
+		frame->tf_eip = (int)(uintptr_t)sa->sa_sigaction;
+	}
+	else
+	{
+		struct ubx_sigframe *fp;
+
+		new_esp = ((uint32_t)frame->tf_esp - (uint32_t)sizeof(struct ubx_sigframe)) & ~3u;
+		fp = (struct ubx_sigframe *)new_esp;
+		sc_addr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe, sf_sc);
+
+		write_trampoline(fp->sf_trampoline, sc_addr);
+		fp->sf_retaddr = new_esp + (uint32_t)__builtin_offsetof(struct ubx_sigframe, sf_trampoline);
+		fp->sf_signum = (uint32_t)sig;
+
+		save_sigcontext(&fp->sf_sc, frame, td, sa, sig);
+		frame->tf_esp = (int)new_esp;
+		frame->tf_eip = (int)(uintptr_t)sa->sa_handler;
+	}
+}
+
+/**
+ * sys_sigreturn - restore user CPU state after a signal handler finishes
+ * @td: thread state for the calling task
+ * @args: syscall arguments containing the saved sigcontext pointer
+ *
+ * This syscall is invoked by the signal trampoline generated by
+ * `write_trampoline`. It restores saved registers and signal mask, then
+ * returns control to the interrupted user context.
+ */
+int sys_sigreturn(struct thread *td, struct sys_sigreturn_args *args)
+{
+	struct ubx_sigcontext *scp = args->scp;
+	struct trapframe *frame = td->frame;
+
+	kprintf("sys_sigreturn: pid=%d scp=%p eip=0x%X esp=0x%X\n", _current->id, scp, scp ? scp->sc_eip : 0, scp ? scp->sc_esp : 0);
+
+	if (scp == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	/* Restore saved registers. */
+	frame->tf_eax = (int)scp->sc_eax;
+	frame->tf_ecx = (int)scp->sc_ecx;
+	frame->tf_edx = (int)scp->sc_edx;
+	frame->tf_ebx = (int)scp->sc_ebx;
+	frame->tf_esp = (int)scp->sc_esp;
+	frame->tf_ebp = (int)scp->sc_ebp;
+	frame->tf_esi = (int)scp->sc_esi;
+	frame->tf_edi = (int)scp->sc_edi;
+	frame->tf_eip = (int)scp->sc_eip;
+	frame->tf_eflags = (int)(scp->sc_eflags | 0x200u); /* IF must be set for user mode */
+
+	/* Restore sigmask. */
+	memcpy(&td->sigmask, &scp->sc_mask, sizeof(sigset_t));
+
+	td->td_retval[0] = (int)scp->sc_eax;
+	td->td_retval[1] = (int)scp->sc_edx;
+	return (0);
+}
+
+/**
+ * sys_sigprocmask - manipulate the calling thread's signal mask
+ * @td: thread state for the calling task
+ * @args: syscall arguments containing the old/new masks and operation
+ *
+ * Implements the `sigprocmask` syscall. It can return the current mask,
+ * replace it, block additional signals, or unblock signals depending on
+ * `args->how`.
+ */
 int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
 {
 	td->td_retval[0] = -1;
@@ -510,90 +580,119 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args)
  * signal_check().  (Full register state for custom-handler frame delivery
  * from AST context requires additional assembly scaffolding.)
  */
-void
-signal_ast_check(void)
+void signal_ast_check(void)
 {
-    struct thread    *td;
-    uint32_t          pending, unblocked;
-    int               sig;
-    struct sigaction *sa;
+	struct thread *td;
+	uint32_t pending, unblocked;
+	int sig;
+	struct sigaction *sa;
 
-    if (_current == NULL)
-        return;
+	if (_current == NULL)
+		return;
 
-    td        = &_current->td;
-    pending   = td->sig_pending;
-    unblocked = pending & ~td->sigmask.__bits[0];
-    if (unblocked == 0)
-        return;
+	td = &_current->td;
+	pending = td->sig_pending;
+	unblocked = pending & ~td->sigmask.__bits[0];
+	if (unblocked == 0)
+		return;
 
-    for (sig = 1; sig <= 31; sig++) {
-        if (!(unblocked & (1u << (sig - 1))))
-            continue;
+	for (sig = 1; sig <= 31; sig++)
+	{
+		if (!(unblocked & (1u << (sig - 1))))
+			continue;
 
-        sa = &td->sigact[sig];
+		sa = &td->sigact[sig];
 
-        if ((void *)sa->sa_handler == (void *)0x1) { /* SIG_IGN */
-            td->sig_pending &= ~(1u << (sig - 1));
-            return;
-        }
+		if ((void *)sa->sa_handler == (void *)0x1)
+		{ /* SIG_IGN */
+			td->sig_pending &= ~(1u << (sig - 1));
+			return;
+		}
 
-        if ((void *)sa->sa_handler == (void *)0x0 || sa->sa_handler == NULL) {
-            if ((1u << (sig - 1)) & SIGSTOP_MASK) {
-                td->sig_pending &= ~(1u << (sig - 1));
-                /* sched_stop + yield — returns when SIGCONT wakes us. */
-                sched_stop(_current, sig);
-                sched_yield();
-                return;
-            }
-            if ((1u << (sig - 1)) & SIGTERM_MASK) {
-                td->sig_pending &= ~(1u << (sig - 1));
-                kprintf("signal: AST SIG_DFL terminate sig=%d pid=%d name=%s\n",
-                    sig, _current->id, _current->name);
-                endTask(_current->id);
-                sched_yield();
-                /* not reached */
-            }
-            /* SIG_DFL ignore (e.g. SIGCHLD) */
-            td->sig_pending &= ~(1u << (sig - 1));
-            return;
-        }
+		if ((void *)sa->sa_handler == (void *)0x0 || sa->sa_handler == NULL)
+		{
+			if ((1u << (sig - 1)) & SIGSTOP_MASK)
+			{
+				td->sig_pending &= ~(1u << (sig - 1));
+				/* sched_stop + yield — returns when SIGCONT wakes us. */
+				sched_stop(_current, sig);
+				sched_yield();
+				return;
+			}
+			if ((1u << (sig - 1)) & SIGTERM_MASK)
+			{
+				td->sig_pending &= ~(1u << (sig - 1));
+				kprintf("signal: AST SIG_DFL terminate sig=%d pid=%d name=%s\n", sig, _current->id, _current->name);
+				endTask(_current->id);
+				sched_yield();
+				/* not reached */
+			}
+			/* SIG_DFL ignore (e.g. SIGCHLD) */
+			td->sig_pending &= ~(1u << (sig - 1));
+			return;
+		}
 
-        /* Custom handler: leave pending for syscall delivery. */
-        return;
-    }
+		/* Custom handler: leave pending for syscall delivery. */
+		return;
+	}
 }
 
-/*
- * sys_sigsuspend — atomically replace sigmask and sleep until an unblocked
- * signal arrives.  Always returns EINTR; restores the original mask on wakeup.
+/**
+ * sys_sigsuspend - atomically replace the current signal mask and wait
+ * @td: thread state for the calling task
+ * @args: syscall arguments containing the new signal mask
  *
- * FreeBSD slot 179; musl rt_sigsuspend also uses 179 — no musl patch needed.
+ * Replaces the caller's signal mask with `args->sigmask` and suspends the
+ * task until an unblocked signal becomes pending. The original mask is
+ * preserved in `td->td_oldsigmask` and restored by `sys_sigreturn`.
+ * This syscall always returns `-1` with `EINTR`.
+ *
+ * FreeBSD slot 179; musl rt_sigsuspend also uses 179.
  */
-int
-sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
+int sys_sigsuspend(struct thread *td, struct sys_sigsuspend_args *args)
 {
-    sigset_t saved;
+	if (args->sigmask == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (EINVAL);
+	}
 
-    if (args->sigmask == NULL) {
-        td->td_retval[0] = -1;
-        return (EINVAL);
-    }
+	/*
+	 * Save the pre-sigsuspend mask so save_sigcontext can embed it in the
+	 * signal frame.  sigreturn will restore it, giving the correct POSIX
+	 * atomicity: the original mask is restored after the handler runs, not
+	 * before (which would miss signals that arrive between restore and iret).
+	 */
+	memcpy(&td->td_oldsigmask, &td->sigmask, sizeof(sigset_t));
+	td->td_pflags |= TDP_OLDMASK;
 
-    memcpy(&saved, &td->sigmask, sizeof(sigset_t));
-    memcpy(&td->sigmask, args->sigmask, sizeof(sigset_t));
-    /* SIGKILL is never maskable. */
-    td->sigmask.__bits[0] &= ~(1u << (SIGKILL - 1));
+	memcpy(&td->sigmask, args->sigmask, sizeof(sigset_t));
+	td->sigmask.__bits[0] &= ~(1u << (SIGKILL - 1));
 
-    /* Yield until an unblocked signal arrives. */
-    while ((td->sig_pending & ~td->sigmask.__bits[0]) == 0)
-        sched_yield();
+	/* Spin (yielding) until an unblocked signal arrives. */
+	while ((td->sig_pending & ~td->sigmask.__bits[0]) == 0)
+		sched_yield();
 
-    memcpy(&td->sigmask, &saved, sizeof(sigset_t));
-    td->td_retval[0] = -1;  /* always returns -1/EINTR */
-    return (EINTR);
+	/*
+	 * Do NOT restore td->sigmask here.  We leave the pause mask installed so
+	 * that signal_check (called at syscall exit) sees the pending signal as
+	 * unblocked and calls signal_deliver_frame.  save_sigcontext will embed
+	 * td_oldsigmask in the signal frame; sigreturn restores it, so the
+	 * original mask is back in place after the handler returns.
+	 */
+	td->td_retval[0] = -1; /* sigsuspend always returns -1/EINTR */
+	return (EINTR);
 }
 
+/**
+ * sys_sigaction - examine or change signal action for the calling task
+ * @td: thread state for the calling task
+ * @args: syscall arguments containing signal number, new action, and old action
+ *
+ * If `args->oact` is non-null, stores the current handler for `args->sig`
+ * into that structure. If `args->act` is non-null, installs the new
+ * handler from that structure. Returns 0 on success or -1 on invalid input.
+ */
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *args)
 {
 	td->td_retval[0] = -1;

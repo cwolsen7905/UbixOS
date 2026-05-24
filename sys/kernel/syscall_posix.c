@@ -94,6 +94,15 @@ void sys_call_posix(struct trapframe *frame)
 		/* Save syscall number in tf_err for SA_RESTART in signal_check. */
 		frame->tf_err = (uint32_t)code;
 
+		if (_current->name[0] == 't' && _current->name[1] == 'c' &&
+		    _current->name[2] == 's' && _current->name[3] == 'h')
+			kprintf("tcsh>>: [%d] %s args=0x%X,0x%X,0x%X\n", code,
+			    (code < 512 && systemCalls_posix[code].sc_name) ?
+			    systemCalls_posix[code].sc_name : "?",
+			    *((uint32_t *)frame->tf_esp + 1),
+			    *((uint32_t *)frame->tf_esp + 2),
+			    *((uint32_t *)frame->tf_esp + 3));
+
 
 		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
 			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
@@ -126,7 +135,13 @@ void sys_call_posix(struct trapframe *frame)
 		default:
 			frame->tf_eax = td->td_retval[0];
 			frame->tf_edx = td->td_retval[1];
-			frame->tf_eflags |= PSL_C;
+			/*
+			 * musl convention: CF=0, EAX = -errno (negative).
+			 * The shim does jnc-skip-negl, so -errno passes straight through.
+			 * Do NOT set PSL_C — that would trigger negl in the shim, turning
+			 * -errno into +errno which musl treats as a success value.
+			 */
+			frame->tf_eflags &= ~PSL_C;
 			/* Pack errno into high 16 bits of tf_err for SA_RESTART check. */
 			frame->tf_err = ((uint32_t)error << 16) | (uint32_t)code;
 			if (systemCalls_posix[code].sc_status == SYSCALL_DEBUG)

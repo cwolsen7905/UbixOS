@@ -43,134 +43,145 @@
 #include <vmm/vmm.h>
 #include <ubixos/errno.h>
 
-void sys_call(struct trapframe *frame) {
-  uint32_t code = 0x0;
-  caddr_t params;
+void sys_call(struct trapframe *frame)
+{
+	uint32_t code = 0x0;
+	caddr_t params;
 
-  struct thread *td = &_current->td;
+	struct thread *td = &_current->td;
 
-  td->frame = frame;
+	td->frame = frame;
 
-  int error = 0x0;
+	int error = 0x0;
 
-  params = (caddr_t) frame->tf_esp + sizeof(int);
+	params = (caddr_t)frame->tf_esp + sizeof(int);
 
-  code = frame->tf_eax;
+	code = frame->tf_eax;
 
-  if (code > totalCalls) {
-    die_if_kernel("Invalid System uCall", frame, frame->tf_eax);
-    kpanic("PID: %i", _current->id);
-  }
-  else if ((uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID) {
-    kprintf("Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name);
-    frame->tf_eax = -1;
-    frame->tf_edx = 0x0;
-  }
-  else {
-    td->td_retval[0] = 0;
-    td->td_retval[1] = frame->tf_edx;
+	if (code > totalCalls)
+	{
+		die_if_kernel("Invalid System uCall", frame, frame->tf_eax);
+		kpanic("PID: %i", _current->id);
+	}
+	else if ((uint32_t)systemCalls[code].sc_status == SYSCALL_INVALID)
+	{
+		kprintf("Invalid Call: [%i][0x%X]\n", code, (uint32_t)systemCalls[code].sc_name);
+		frame->tf_eax = -1;
+		frame->tf_edx = 0x0;
+	}
+	else
+	{
+		td->td_retval[0] = 0;
+		td->td_retval[1] = frame->tf_edx;
 
-    if (systemCalls[code].sc_status == SYSCALL_DUMMY)
-      kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
-/*
-    if (td->abi == ELFOSABI_UBIXOS)
-     error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
-    else */if (td->abi == ELFOSABI_FREEBSD)
-      error = (int) systemCalls[code].sc_entry(td, params);
-    else
-      error = (int) systemCalls[code].sc_entry(td, params);
+		if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
+		/*
+		    if (td->abi == ELFOSABI_UBIXOS)
+		     error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
+		    else */
+		if (td->abi == ELFOSABI_FREEBSD)
+			error = (int)systemCalls[code].sc_entry(td, params);
+		else
+			error = (int)systemCalls[code].sc_entry(td, params);
 
-    if (systemCalls[code].sc_status == SYSCALL_DUMMY) {
-      kprintf("DUMMY CALL: (%i)\n", code);
-      return;
-    }
+		if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+		{
+			kprintf("DUMMY CALL: (%i)\n", code);
+			return;
+		}
 
-//kprintf("ERROR: 0x%X",error);
-    switch (error) {
-      case 0:
-        frame->tf_eax = td->td_retval[0];
-        frame->tf_edx = td->td_retval[1];
-        frame->tf_eflags &= ~PSL_C;
-      break;
-      default:
-        frame->tf_eax = td->td_retval[0];
-        frame->tf_edx = td->td_retval[1];
-        frame->tf_eflags |= PSL_C;
-      break;
-    }
-  }
+		// kprintf("ERROR: 0x%X",error);
+		switch (error)
+		{
+		case 0:
+			frame->tf_eax = td->td_retval[0];
+			frame->tf_edx = td->td_retval[1];
+			frame->tf_eflags &= ~PSL_C;
+			break;
+		default:
+			frame->tf_eax = td->td_retval[0];
+			frame->tf_edx = td->td_retval[1];
+			frame->tf_eflags |= PSL_C;
+			break;
+		}
+	}
 }
 
-int invalidCall() {
-  int sys_call;
+int invalidCall()
+{
+	int sys_call;
 
-  asm(
-    "nop"
-    : "=a" (sys_call)
-    :
-  );
+	asm("nop" : "=a"(sys_call) :);
 
-  kprintf("Invalid System Call #[%i], PID: %i\n", sys_call, _current->id);
-  return (0);
+	kprintf("Invalid System Call #[%i], PID: %i\n", sys_call, _current->id);
+	return (0);
 }
-
 
 typedef struct _UbixUser UbixUser;
-struct _UbixUser {
-  char *username;
-  char *password;
-  int uid;
-  int gid;
-  char *home;
-  char *shell;
+struct _UbixUser
+{
+	char *username;
+	char *password;
+	int uid;
+	int gid;
+	char *home;
+	char *shell;
 };
 
-int sysAuth(UbixUser *uu) {
-  kprintf("authenticating user %s\n", uu->username);
+int sysAuth(UbixUser *uu)
+{
+	kprintf("authenticating user %s\n", uu->username);
 
-  /* MrOlsen 2016-01-01 uh?
-   if(uu->username == "root" && uu->password == "user")
-   {
-   uu->uid = 0;
-   uu->gid = 0;
-   }
-   */
-  uu->uid = -1;
-  uu->gid = -1;
-  return (0);
+	/* MrOlsen 2016-01-01 uh?
+	 if(uu->username == "root" && uu->password == "user")
+	 {
+	 uu->uid = 0;
+	 uu->gid = 0;
+	 }
+	 */
+	uu->uid = -1;
+	uu->gid = -1;
+	return (0);
 }
 
-int sysPasswd(char *passwd) {
-  kprintf("changing user password for user %d\n", _current->uid);
-  return (0);
+int sysPasswd(char *passwd)
+{
+	kprintf("changing user password for user %d\n", _current->uid);
+	return (0);
 }
 
-int sysAddModule() {
-  return (0);
+int sysAddModule()
+{
+	return (0);
 }
 
-int sysRmModule() {
-  return (0);
+int sysRmModule()
+{
+	return (0);
 }
 
-int sysGetpid(int *pid) {
-  if (pid)
-    *pid = _current->id;
-  return (0);
+int sysGetpid(int *pid)
+{
+	if (pid)
+		*pid = _current->id;
+	return (0);
 }
 
-int sysExit(int status) {
-  endTask(_current->id);
-  return (0x0);
+int sysExit(int status)
+{
+	endTask(_current->id);
+	return (0x0);
 }
 
-int sysCheckPid(int pid, int *ptr) {
-  kTask_t *tmpTask = schedFindTask(pid);
-  if ((tmpTask != 0x0) && (ptr != 0x0))
-    *ptr = tmpTask->state;
-  else
-    *ptr = 0x0;
-  return (0);
+int sysCheckPid(int pid, int *ptr)
+{
+	kTask_t *tmpTask = schedFindTask(pid);
+	if ((tmpTask != 0x0) && (ptr != 0x0))
+		*ptr = tmpTask->state;
+	else
+		*ptr = 0x0;
+	return (0);
 }
 
 /************************************************************************
@@ -180,59 +191,69 @@ int sysCheckPid(int pid, int *ptr) {
  Notes:
 
  ************************************************************************/
-int sysGetFreePage(struct thread *td, uint32_t *count) {
+int sysGetFreePage(struct thread *td, uint32_t *count)
+{
 
-  td->td_retval[0] = (int)vmm_getFreeVirtualPage(_current->id, *count, VM_THRD);
-  return(0);
-  //return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
+	td->td_retval[0] = (int)vmm_getFreeVirtualPage(_current->id, *count, VM_THRD);
+	return (0);
+	// return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
 }
 
-int sysGetDrives(uInt32 *ptr) {
-  if (ptr)
-    *ptr = 0x0; //(uInt32)devices;
-  return (0);
+int sysGetDrives(uInt32 *ptr)
+{
+	if (ptr)
+		*ptr = 0x0; //(uInt32)devices;
+	return (0);
 }
 
-int sysGetUptime(uInt32 *ptr) {
-  if (ptr)
-    *ptr = systemVitals->sysTicks;
-  return (0);
+int sysGetUptime(uInt32 *ptr)
+{
+	if (ptr)
+		*ptr = systemVitals->sysTicks;
+	return (0);
 }
 
-int sysGetTime(uInt32 *ptr) {
-  if (ptr)
-    *ptr = systemVitals->sysUptime + systemVitals->timeStart;
-  return (0);
+int sysGetTime(uInt32 *ptr)
+{
+	if (ptr)
+		*ptr = systemVitals->sysUptime + systemVitals->timeStart;
+	return (0);
 }
 
-int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args) {
-  if (args->buf && args->size > 0) {
-    strncpy(args->buf, _current->oInfo.cwd, args->size - 1);
-    args->buf[args->size - 1] = '\0';
-  }
-  td->td_retval[0] = 0;
-  return (0);
+int sys_getvfscwd(struct thread *td, struct sys_getvfscwd_args *args)
+{
+	if (args->buf && args->size > 0)
+	{
+		strncpy(args->buf, _current->oInfo.cwd, args->size - 1);
+		args->buf[args->size - 1] = '\0';
+	}
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
-  const char *cwd = _current->oInfo.cwd;
-  size_t len = strlen(cwd) + 1;
+int sys_getcwd(struct thread *td, struct sys_getcwd_args *args)
+{
+	const char *cwd = _current->oInfo.cwd;
+	size_t len = strlen(cwd) + 1;
 
-  if (args->buf) {
-    if (len > args->size) {
-      td->td_retval[0] = -1;
-      return (ERANGE);
-    }
-    memcpy((char *)args->buf, cwd, len);
-  }
+	if (args->buf)
+	{
+		if (len > args->size)
+		{
+			td->td_retval[0] = -1;
+			return (ERANGE);
+		}
+		memcpy((char *)args->buf, cwd, len);
+	}
 
-  td->td_retval[0] = (int)len;
-  return (0);
+	td->td_retval[0] = (int)len;
+	return (0);
 }
 
-int sys_sched_yield(struct thread *td, void *args) {
-  sched_yield();
-  return (0);
+int sys_sched_yield(struct thread *td, void *args)
+{
+	sched_yield();
+	return (0);
 }
 
 /* nanosleep(const struct timespec *rqtp, struct timespec *rmtp)
@@ -241,48 +262,53 @@ int sys_sched_yield(struct thread *td, void *args) {
  *   long tv_nsec (offset 4)
  * PIT_TIMER ticks/sec = 200; each tick = 5 ms.
  */
-int sys_nanosleep(struct thread *td, void *args) {
-  uint32_t *params = (uint32_t *)args;
-  const long *rqtp  = (const long *)params[0]; /* struct timespec * */
-  long *rmtp         = (long *)params[1];
+int sys_nanosleep(struct thread *td, void *args)
+{
+	uint32_t *params = (uint32_t *)args;
+	const long *rqtp = (const long *)params[0]; /* struct timespec * */
+	long *rmtp = (long *)params[1];
 
-  if (!rqtp) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	if (!rqtp)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  long tv_sec  = rqtp[0];
-  long tv_nsec = rqtp[1];
-  if (tv_sec < 0 || tv_nsec < 0 || tv_nsec >= 1000000000L) {
-    td->td_retval[0] = -1;
-    return (-1);
-  }
+	long tv_sec = rqtp[0];
+	long tv_nsec = rqtp[1];
+	if (tv_sec < 0 || tv_nsec < 0 || tv_nsec >= 1000000000L)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
 
-  /* Convert requested time to PIT ticks (round up). */
-  uint32_t ticks = (uint32_t)(tv_sec * PIT_TIMER) +
-                   (uint32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) /
-                              (1000000000L / PIT_TIMER));
+	/* Convert requested time to PIT ticks (round up). */
+	uint32_t ticks = (uint32_t)(tv_sec * PIT_TIMER) + (uint32_t)((tv_nsec + (1000000000L / PIT_TIMER) - 1) / (1000000000L / PIT_TIMER));
 
-  uint32_t deadline = systemVitals->sysTicks + ticks;
-  while (!TICKS_AFTER(systemVitals->sysTicks, deadline))
-    sched_yield();
+	uint32_t deadline = systemVitals->sysTicks + ticks;
+	while (!TICKS_AFTER(systemVitals->sysTicks, deadline))
+		sched_yield();
 
-  if (rmtp) {
-    rmtp[0] = 0;
-    rmtp[1] = 0;
-  }
-  td->td_retval[0] = 0;
-  return (0);
+	if (rmtp)
+	{
+		rmtp[0] = 0;
+		rmtp[1] = 0;
+	}
+	td->td_retval[0] = 0;
+	return (0);
 }
 
-int sysStartSDE() {
-  int i = 0x0;
-  for (i = 0; i < 1400; i++) {
-    asm("hlt");
-  }
-  //execThread(sdeThread,0x2000),0x0);
-  for (i = 0; i < 1400; i++) {
-    asm("hlt");
-  }
-  return (0);
+int sysStartSDE()
+{
+	int i = 0x0;
+	for (i = 0; i < 1400; i++)
+	{
+		asm("hlt");
+	}
+	// execThread(sdeThread,0x2000),0x0);
+	for (i = 0; i < 1400; i++)
+	{
+		asm("hlt");
+	}
+	return (0);
 }

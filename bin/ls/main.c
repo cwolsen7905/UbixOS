@@ -46,9 +46,12 @@ int main(int argc, char **argv) {
   DIR *dir = 0x0;
   struct dirent *ent = 0x0;
 
-  if (argc > 1 && argv[1] != 0x0)
-    path = argv[1];
-  else {
+  int i;
+  for (i = 1; i < argc; i++) {
+    if (argv[i][0] != '-')
+      path = argv[i];
+  }
+  if (path == 0x0) {
     getcwd(cwd, sizeof(cwd));
     path = cwd;
   }

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -30,20 +30,22 @@
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
 
-/*!
- * \brief The underlying assertion call which is wrapped by assert()
+/**
+ * __assert - underlying assertion failure handler
+ * @func: name of the function containing the failed assertion, or NULL
+ * @file: source file containing the failed assertion
+ * @line: line number where the assertion failed
+ * @failedexpr: the text of the failed assertion expression
  *
+ * Print an assertion failure message and panic the kernel. This function
+ * never returns.
  */
-void __assert(const char *func,const char *file,int line,const char *failedexpr) {
-  if (func == NULL)
-    kprintf("Assertion failed: (%s), file %s, line %d.\n", failedexpr, file, line);
-  else
-    kprintf("Assertion failed: (%s), function %s, file %s, line %d.\n", failedexpr, func, file, line);
+void __assert(const char *func, const char *file, int line, const char *failedexpr)
+{
+	if (func == NULL)
+		kprintf("Assertion failed: (%s), file %s, line %d.\n", failedexpr, file, line);
+	else
+		kprintf("Assertion failed: (%s), function %s, file %s, line %d.\n", failedexpr, func, file, line);
 
-  K_PANIC("Asserted\n");
-  }
-
-/***
- END
- ***/
-
+	K_PANIC("Asserted\n");
+}

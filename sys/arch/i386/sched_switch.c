@@ -125,7 +125,9 @@ void sched() {
       t = t->next;
 
       if (delTask->parent != 0x0) {
-        delTask->parent->children -= 1;
+        /* children is decremented by wait_find_child when collected, not here.
+         * Decrementing here races with WNOHANG's early-exit check in sys_wait4
+         * and causes ECHILD before the parent can collect the dead task. */
         delTask->parent->last_exit = delTask->id;
         if (delTask->parent->state != DEAD && delTask->parent->state != ZOMBIE) {
           delTask->parent->td.sig_pending |= (1u << (SIGCHLD - 1));
