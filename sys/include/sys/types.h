@@ -29,12 +29,9 @@
 #ifndef _SYS_TYPES_H_
 #define _SYS_TYPES_H_
 
+#include <sys/_null.h>
 #include <sys/_types.h>
 #include <sys/select.h>
-
-#ifndef NULL
-#define NULL 0
-#endif
 
 typedef __uintfptr_t uintfptr_t;
 
@@ -124,7 +121,6 @@ typedef __int64_t int64_t;
 #endif
 
 typedef __ssize_t ssize_t;
-typedef char *caddr_t;
 typedef __int64_t off_t;
 typedef __uint32_t vm_offset_t;
 

@@ -31,35 +31,64 @@
 
 #include <machine/ansi.h>
 
+/* Fixed-width primitive types — everything else in sys/types.h builds on these. */
+typedef char                __int8_t;
+typedef unsigned char       __uint8_t;
+typedef short               __int16_t;
+typedef unsigned short      __uint16_t;
+typedef int                 __int32_t;
+typedef unsigned int        __uint32_t;
+typedef long long           __int64_t;
+typedef unsigned long long  __uint64_t;
 
-typedef char __int8_t;
-typedef unsigned char __uint8_t;
-typedef short __int16_t;
-typedef unsigned short __uint16_t;
-typedef int __int32_t;
-typedef unsigned int __uint32_t;
-typedef long long __int64_t;
-typedef unsigned long long __uint64_t;
+/* Resource limit — signed intentionally; legacy code uses -1 for RLIM_INFINITY. */
+typedef __int64_t           __rlim_t;
 
-typedef __int64_t       __rlim_t;       /* resource limit - intentionally */
-                                        /* signed, because of legacy code */
-                                        /* that uses -1 for RLIM_INFINITY */
+typedef unsigned long       __clock_t;
 
-typedef unsigned long __clock_t;
-typedef __uint32_t            __ino_t; typedef __int32_t             __ssize_t;/* stat types */
-typedef __uint32_t            __dev_t;/* device number */
-typedef __uint16_t            __mode_t; typedef __uint16_t            __nlink_t;/* link count */
-typedef __uint32_t            __uid_t; typedef __uint32_t            __gid_t; typedef __int32_t             __time_t; typedef __int64_t             __blkcnt_t;/* file block count */
-typedef __uint32_t            __blksize_t;/* file block size */
-typedef __uint32_t            __fflags_t;/* file flags */
-typedef __int8_t         __int_fast8_t; typedef __uint8_t        __uint_fast8_t; typedef __int16_t         __int_fast16_t; typedef __uint16_t        __uint_fast16_t; typedef __int32_t         __int_fast32_t; typedef __uint32_t        __uint_fast32_t; typedef __int64_t         __int_fast64_t; typedef __uint64_t        __uint_fast64_t; typedef __int64_t         __intmax_t; typedef __uint64_t         __uintmax_t; typedef __uint8_t         __uint_least8_t; typedef __uint16_t        __uint_least16_t; typedef __uint32_t        __uint_least32_t; typedef __uint64_t        __uint_least64_t; typedef __int8_t         __int_least8_t; typedef __int16_t        __int_least16_t; typedef __int32_t        __int_least32_t; typedef __int64_t        __int_least64_t; typedef
-int ___wchar_t;
+/* stat / filesystem types */
+typedef __uint32_t          __ino_t;      /* inode number */
+typedef __int32_t           __ssize_t;
+typedef __uint32_t          __dev_t;      /* device number */
+typedef __uint16_t          __mode_t;     /* file permissions */
+typedef __uint16_t          __nlink_t;    /* link count */
+typedef __uint32_t          __uid_t;
+typedef __uint32_t          __gid_t;
+typedef __int32_t           __time_t;
+typedef __int64_t           __blkcnt_t;   /* file block count */
+typedef __uint32_t          __blksize_t;  /* file block size */
+typedef __uint32_t          __fflags_t;   /* file flags */
 
-typedef long __suseconds_t; /* microseconds (signed) */
-typedef __int32_t	 __pid_t;/* process [group] */
+/* Fast / least-width variants */
+typedef __int8_t            __int_fast8_t;
+typedef __uint8_t           __uint_fast8_t;
+typedef __int16_t           __int_fast16_t;
+typedef __uint16_t          __uint_fast16_t;
+typedef __int32_t           __int_fast32_t;
+typedef __uint32_t          __uint_fast32_t;
+typedef __int64_t           __int_fast64_t;
+typedef __uint64_t          __uint_fast64_t;
+
+typedef __int64_t           __intmax_t;
+typedef __uint64_t          __uintmax_t;
+
+typedef __uint8_t           __uint_least8_t;
+typedef __uint16_t          __uint_least16_t;
+typedef __uint32_t          __uint_least32_t;
+typedef __uint64_t          __uint_least64_t;
+typedef __int8_t            __int_least8_t;
+typedef __int16_t           __int_least16_t;
+typedef __int32_t           __int_least32_t;
+typedef __int64_t           __int_least64_t;
+
+typedef int                 ___wchar_t;
+
+typedef long                __suseconds_t; /* microseconds (signed) */
+typedef __int32_t           __pid_t;       /* process [group] id */
 
 #if !defined(__clang__) || !defined(__cplusplus)
-typedef __uint_least16_t   __char16_t; typedef __uint_least32_t   __char32_t;
+typedef __uint_least16_t    __char16_t;
+typedef __uint_least32_t    __char32_t;
 #endif
 
-#endif
+#endif /* _SYS__TYPES_H_ */

@@ -34,7 +34,7 @@ CXX_CFLAGS = ${CROSS_M32} -std=c++20 \
              -nostdlib -nostdinc -nostdinc++ -fno-builtin \
              -fno-rtti -fno-exceptions \
              -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -fPIC -MMD -MP \
-             -Wall -O \
+             -Wa,--noexecstack -Wall -O \
              -D_LIBCPP_HAS_NO_EXCEPTIONS
 
 OBJDIR ?= ${OBJ_DIR}/obj/bin/${.CURDIR:T}
@@ -71,6 +71,7 @@ $(BINARY): $(OBJS)
 	$(CC) ${CROSS_M32} -nostdlib -Wl,-m,elf_i386 \
 		-Wl,-dynamic-linker,/lib/ld-musl-i386.so.1 \
 		-Wl,-rpath,/lib \
+		-Wl,-z,noexecstack \
 		${EXTRA_LDFLAGS} \
 		${MUSL_LIB}/crt1.o \
 		${MUSL_LIB}/crti.o \

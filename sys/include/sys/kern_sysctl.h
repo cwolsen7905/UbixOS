@@ -29,6 +29,7 @@
 #ifndef _SYS_KERN_SYSCTL_H
 #define _SYS_KERN_SYSCTL_H
 
+#include <sys/errno.h>
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 
@@ -50,8 +51,6 @@
 #define CTL_UBIX           10           /* ubixos */
 
 #define CTL_KERN_OPENFILES  1           /* kernel openfiles */
-
-#define EINVAL         -1               /* */
 
 struct sysctl_entry {
   struct sysctl_entry *prev;

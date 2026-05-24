@@ -39,7 +39,7 @@ MODDI3   = ${OBJ_OUT}/shim_moddi3.o
 
 ${BINARY}: ${OBJS} ${MODDI3}
 	@mkdir -p ${BUILD_DIR}/lib/tcc
-	${CC} -m32 -nostdlib -Wl,-m,elf_i386 \
+	${CC} -m32 -nostdlib -Wl,-m,elf_i386 -Wl,-z,noexecstack \
 	  ${MUSL_OBJ}/lib/crt1.o \
 	  ${MUSL_OBJ}/lib/crti.o \
 	  ${OBJS} ${MODDI3} \
@@ -49,18 +49,18 @@ ${BINARY}: ${OBJS} ${MODDI3}
 	  -o ${BUILD_DIR}/bin/${BINARY}
 	${CC} ${TCC_CFLAGS} -c ${TCC_SRC}/lib/libtcc1.c -o ${OBJ_OUT}/libtcc1.o
 	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
-	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -Wa,--noexecstack -w \
 	  -c ${TCC_SRC}/lib/alloca86.S -o ${OBJ_OUT}/alloca86.o
 	${AR} rcs ${BUILD_DIR}/lib/tcc/libtcc1.a \
 	  ${OBJ_OUT}/libtcc1.o ${OBJ_OUT}/alloca86.o ${MODDI3}
 	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
-	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -Wa,--noexecstack -w \
 	  -c ${TCC_SRC}/ubixos_shim/crt1.S -o ${BUILD_DIR}/lib/tcc/crt1.o
 	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
-	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -Wa,--noexecstack -w \
 	  -c ${TCC_SRC}/ubixos_shim/crti.S -o ${BUILD_DIR}/lib/tcc/crti.o
 	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
-	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -w \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -Wa,--noexecstack -w \
 	  -c ${TCC_SRC}/ubixos_shim/crtn.S -o ${BUILD_DIR}/lib/tcc/crtn.o
 	mkdir -p ${BUILD_DIR}/lib/tcc/include
 	cp ${TCC_SRC}/include/*.h ${BUILD_DIR}/lib/tcc/include/
@@ -72,7 +72,7 @@ ${OBJ_OUT}/tcc_main.o:
 ${OBJ_OUT}/shim_moddi3.o: ${TCC_SRC}/ubixos_shim/moddi3.c
 	@mkdir -p ${OBJ_OUT}
 	${CC} -m32 -nostdlib -nostdinc -fno-builtin \
-	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
+	  -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -Wa,--noexecstack \
 	  ${MUSL_INC} -w -O2 \
 	  -c ${TCC_SRC}/ubixos_shim/moddi3.c -o ${OBJ_OUT}/shim_moddi3.o
 
