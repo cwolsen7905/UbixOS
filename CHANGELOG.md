@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [2.2.0-BETA] - 2026-05-24
+
 ### Added
 - `contrib/libcxxabi/` — self-contained minimal Itanium C++ ABI (`cxxabi.cc`): `new`/`delete`, construction guards, pure/deleted virtual, `__dso_handle`. Builds `build/lib/libcxxabi.a`. (Phase 5)
 - `contrib/libcxx/` — LLVM libc++ 18.1.8 subset: `<string>`, `<vector>`, `<map>`, `<memory>`, `<algorithm>`, `<any>`, `<optional>`, `<variant>`, charconv/ryu. Builds `build/lib/libcxx.a`. Hand-written `__config_site` + `__assertion_handler`; GCC-16 `__decay` built-in patch applied. (Phase 6)
@@ -24,6 +28,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - `lib/libcpp/` — minimal hand-rolled C++ ABI shim (`libcpp.cc`, `libcpp.h`, `Makefile`) retired; replaced by `contrib/libcxxabi/`.
+
+### Added
+- **O(1) scheduler — Phase 3 (QoS / priority aging)**:
+  - QoS classes: `SCHED_CLASS_RT`, `SCHED_CLASS_INTERACTIVE`, `SCHED_CLASS_NORMAL`, `SCHED_CLASS_BATCH`; each maps to a priority band in the run-queue bitmap.
+  - I/O completion boost: tasks unblocked from I/O wait receive a transient priority increase.
+  - CPU decay: long-running CPU-bound tasks accumulate a penalty that shifts them down one QoS band.
+  - Starvation aging: tasks not scheduled for `AGING_THRESHOLD` ticks are promoted one band to prevent starvation.
+  - `sched_io_wakeup` properly dequeues and re-enqueues the task when boosting from a READY state, preserving run-queue bitmap consistency.
+- **POSIX signals — Phases 1 + 2**:
+  - `sigaction`, `sigprocmask`, `sigpending`, `sigsuspend` syscalls.
+  - Signal disposition table per task; `SA_RESTART`, `SA_SIGINFO` flags honoured.
+  - `STOPPED` task state; `SIGSTOP` and `SIGCONT` default actions pause and resume tasks.
+  - `SIGTTIN` stops background processes that attempt terminal reads.
+  - ZOMBIE two-phase exit: dying task transitions to `ZOMBIE` state, notifies parent with `SIGCHLD`, parent reaps via `wait4`.
+- **procfs `/proc/mounts`** — global file at `/proc/mounts`; walks `systemVitals->mountPoints` linked list and emits one line per mount point in Linux `mountinfo` format: `device mountpoint fstype perms 0 0`. `procfs_fstype_name()` maps `VFS_TYPE_*` constants to human-readable names.
+- **`bin/mount` rewrite** — no-argument invocation reads `/proc/mounts` and displays mounted filesystems as `device on mountpoint type fstype (perms)`, matching BSD `mount(8)` output.
+- `FD_TYPE_*` constants (`FILE=1`, `SOCKET=2`, `PIPE=3`, `DIR=4`, `TTY=5`, `TTYV=6`) moved to canonical home `sys/include/sys/descrip.h`; all magic integers removed from `descrip.c`.
+- `VFS_TYPE_*` constants (`DEVFS=0x01`, `PROCFS=0x02`, `FAT=0xFA`, `UFS=0xAA`) added to `sys/include/fs/vfs/vfs.h`.
+
+### Fixed
+- `sys/arch/i386/fork.c` — `fork()` now propagates pipe file descriptors with the correct `fd_type` (`FD_TYPE_PIPE`); previously all inherited fds defaulted to `FD_TYPE_FILE`, causing pipe reads to go through the VFS path and block forever.
+- `bin/taskbar/taskbar.cc` — helper loop now retries on `EINTR` instead of treating a signal-interrupted MPI wait as an error.
+- Ring-0 kernel stack enlarged from 4096 to 8192 bytes; FAT `chdir` deep-path handling was overflowing a 4096-byte stack and corrupting `sig_pending`.
+
+### Changed
+- **sys/include/ audit** — copyright years updated to 2026; CVS `$Log` blocks stripped from 15 headers; duplicate `typedef` definitions removed (e.g. `suseconds_t` in `ubixos/time.h`, `mode_t` in `sys/descrip.h`); `timeMake` return type corrected to `uint32_t`; `AT_FDCWD` guarded in both `sys/fcntl.h` and `fs/vfs/stat.h`; `AT_*` auxv constants deduplicated in `i386/elf.h` (shared block after architecture `#endif`); `register_t`/`PAD_` macros in `sys/sysproto_posix.h` guarded against redefinition when included after `sys/sysproto.h`.
+- `sys/kernel/time.c` — `tz_minuteswest` set to `0` (UTC); no timezone database is present in the kernel.
+- `sys/kernel/descrip.c` — duplicate includes removed; `ioctl` default branch uses `VFS_TYPE_DEVFS` named constant.
 
 ---
 
@@ -369,7 +401,9 @@ Initial git import from prior CVS/SVN history. Kernel booted, basic VFS and VMM 
 - `lseek` syscall (`SEEK_END` not yet implemented).
 - TCC added to base system.
 
-[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...HEAD
+[Unreleased]: https://github.com/cwolsen7905/UbixOS/compare/v2.2.0-BETA...HEAD
+[2.2.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.1.0-BETA...v2.2.0-BETA
+[2.1.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.1-BETA...v2.1.0-BETA
 [2.0.1-BETA]: https://github.com/cwolsen7905/UbixOS/compare/v2.0.0-BETA...v2.0.1-BETA
 [2.0.0-BETA]: https://github.com/cwolsen7905/UbixOS/compare/acb8ba9a...v2.0.0-BETA
 [1.1.0-CURRENT]: https://github.com/cwolsen7905/UbixOS/compare/30af09b3...acb8ba9a

@@ -1,6 +1,6 @@
 # UbixOS
 
-**Version:** 2.0.0-BETA &nbsp;|&nbsp; **Architecture:** i386 (x86 32-bit) &nbsp;|&nbsp; **License:** BSD 3-Clause
+**Version:** 2.2.0-BETA &nbsp;|&nbsp; **Architecture:** i386 (x86 32-bit) &nbsp;|&nbsp; **License:** BSD 3-Clause
 
 UbixOS is a hobby/research operating system for the x86 platform, developed from scratch since 2002. It implements a monolithic kernel with a modular subsystem layout, a FreeBSD-derived POSIX userland, and its own native filesystem (UbixFS).
 
@@ -8,15 +8,16 @@ UbixOS is a hobby/research operating system for the x86 platform, developed from
 
 ## Features
 
-- **Kernel:** Preemptive multitasking, SMP support, x86 protected mode (ring 0/3)
+- **Kernel:** Preemptive multitasking with O(1) scheduler (QoS classes, I/O boost, starvation aging); SMP support; x86 protected mode (ring 0/3)
 - **Memory:** Paged virtual memory with copy-on-write forking
-- **Filesystems:** UbixFS v1/v2, UFS, FAT16/32, DevFS — all via a VFS abstraction layer
-- **Networking:** lwIP 2.0.3 TCP/IP stack; NE2000 and Lance NIC drivers
+- **Filesystems:** UbixFS v1/v2, UFS, FAT16/32, DevFS, procfs — all via a VFS abstraction layer
+- **Networking:** lwIP 2.0.3 TCP/IP stack; NE2000, Lance (PCNET), and Intel e1000 NIC drivers
 - **IPC:** Custom MPI message passing, POSIX pipes, semaphores
-- **Drivers:** AT keyboard, PIT, PIC (8259), floppy, serial (RS-232), PCI hard disk, mouse
+- **Signals:** POSIX `sigaction`/`sigprocmask`/`sigsuspend`; `SIGSTOP`/`SIGCONT`; ZOMBIE/wait4 lifecycle
+- **Drivers:** AT keyboard, PIT, PIC (8259), floppy, serial (RS-232), PCI hard disk, PS/2 mouse, USB mass storage
 - **GUI:** Composited window system (`views`), taskbar, VT100 terminal — all via shared-memory MPI protocol
-- **Userland:** 24+ utilities, FreeBSD-derived libc, C++ runtime, objgfx rendering library
-- **ELF loader:** Loads and executes standard i386 ELF binaries
+- **Userland:** 30+ utilities including tcsh 6.24.16, ed, uname, mount, ps; FreeBSD-derived libc; C++ runtime (libc++ 18 subset); objgfx rendering library
+- **ELF loader:** Loads and executes standard i386 ELF binaries; runtime dynamic linker (`ld.so`)
 
 ---
 
