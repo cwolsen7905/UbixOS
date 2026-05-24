@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,7 +29,9 @@
 #ifndef _SYS_FCNTL_H_
 #define _SYS_FCNTL_H_
 
+#ifndef AT_FDCWD
 #define AT_FDCWD                -100
+#endif
 
 /* command values */
 #define F_DUPFD         0               /* duplicate file descriptor */

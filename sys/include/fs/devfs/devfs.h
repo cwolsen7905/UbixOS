@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -55,37 +55,3 @@ int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor);
  */
 
 #endif
-
-/***
- $Log: devfs.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:38  reddawg
- no message
-
- Revision 1.5  2004/07/21 10:02:09  reddawg
- devfs: renamed functions
- device system: renamed functions
- fdc: fixed a few potential bugs and cleaned up some unused variables
- strol: fixed definition
- endtask: made it print out freepage debug info
- kmalloc: fixed a huge memory leak we had some unhandled descriptor insertion so some descriptors were lost
- ld: fixed a pointer conversion
- file: cleaned up a few unused variables
- sched: broke task deletion
- kprintf: fixed ogPrintf definition
-
- Revision 1.4  2004/07/14 12:17:52  reddawg
- devfs: devFSEnable to devfs_init
- Changed Startup Routines
-
- Revision 1.3  2004/05/21 14:54:41  reddawg
- Cleaned up
-
-
- END
- ***/

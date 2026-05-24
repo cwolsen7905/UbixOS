@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2026 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -82,27 +82,3 @@ void fdcWrite(void *info,void *,uInt32 startSector,uInt32 sectorCount);
 void fdcRead(void *info,void *,uInt32 startSector,uInt32 sectorCount);
 
 #endif
-
-/***
- $Log: fdc.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:39  reddawg
- no message
-
- Revision 1.6  2004/07/17 02:38:31  reddawg
- Fixed a few problems
-
- Revision 1.5  2004/07/14 12:42:46  reddawg
- fdc: fdcInit to fdc_init
- Changed Startup Routines
-
- Revision 1.4  2004/05/21 14:57:16  reddawg
- Cleaned up
-
- END
- ***/

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -42,6 +42,7 @@ struct msghdr;
 #include <fs/vfs/file.h>
 #include <fs/vfs/stat.h>
 
+#ifndef _SYS_SYSPROTO_H   /* avoid redefinition if sysproto.h was included first */
 typedef int register_t;
 
 #define PAD_(t) (sizeof(register_t) <= sizeof(t) ? 0 : sizeof(register_t) - sizeof(t))
@@ -53,6 +54,7 @@ typedef int register_t;
 #define PADL_(t) PAD_(t)
 #define PADR_(t) 0
 #endif
+#endif /* _SYS_SYSPROTO_H */
 
 struct sys_exit_args
 {

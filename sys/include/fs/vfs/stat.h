@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -69,7 +69,9 @@ struct stat {
 
 /* Linux statx structure — used by sys_statx (slot 383) */
 #define AT_EMPTY_PATH   0x1000
+#ifndef AT_FDCWD
 #define AT_FDCWD        (-100)
+#endif
 
 #define STATX_TYPE      0x00000001U
 #define STATX_MODE      0x00000002U

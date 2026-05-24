@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -166,25 +166,3 @@ struct nicBuffer *ne2kGetBuffer();
 void ne2kFreeBuffer(struct nicBuffer *);
 
 #endif
-
-/***
- $Log: ne2k.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:39  reddawg
- no message
-
- Revision 1.6  2004/07/14 12:03:49  reddawg
- ne2k: ne2kInit to ne2k_init
- Changed Startup Routines
-
- Revision 1.5  2004/05/21 14:57:16  reddawg
- Cleaned up
-
-
- END
- ***/

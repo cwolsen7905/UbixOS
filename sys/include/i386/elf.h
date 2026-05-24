@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -75,34 +75,6 @@ typedef struct {
 
 __ElfType(Auxinfo);
 
-/* Values for a_type. */
-#define AT_NULL         0       /* Terminates the vector. */
-#define AT_IGNORE       1       /* Ignored entry. */
-#define AT_EXECFD       2       /* File descriptor of program to load. */
-#define AT_PHDR         3       /* Program header of program already loaded. */
-#define AT_PHENT        4       /* Size of each program header entry. */
-#define AT_PHNUM        5       /* Number of program header entries. */
-#define AT_PAGESZ       6       /* Page size in bytes. */
-#define AT_BASE         7       /* Interpreter's base address. */
-#define AT_FLAGS        8       /* Flags (unused for i386). */
-#define AT_ENTRY        9       /* Where interpreter should transfer control. */
-#define AT_NOTELF       10      /* Program is not ELF ?? */
-#define AT_UID          11      /* Real uid. */
-#define AT_EUID         12      /* Effective uid. */
-#define AT_GID          13      /* Real gid. */
-#define AT_EGID         14      /* Effective gid. */
-#define AT_EXECPATH     15      /* Path to the executable. */
-#define AT_CANARY       16      /* Canary for SSP. */
-#define AT_CANARYLEN    17      /* Length of the canary. */
-#define AT_OSRELDATE    18      /* OSRELDATE. */
-#define AT_NCPUS        19      /* Number of CPUs. */
-#define AT_PAGESIZES    20      /* Pagesizes. */
-#define AT_PAGESIZESLEN 21      /* Number of pagesizes. */
-#define AT_TIMEKEEP     22      /* Pointer to timehands. */
-#define AT_STACKPROT    23      /* Initial stack protection. */
-
-#define AT_COUNT        24      /* Count of defined aux entry types. */
-
 /*
  * Relocation types.
  */
@@ -159,34 +131,6 @@ typedef struct { /* Auxiliary vector entry on initial stack */
 
 __ElfType(Auxinfo);
 
-/* Values for a_type. */
-#define AT_NULL         0       /* Terminates the vector. */
-#define AT_IGNORE       1       /* Ignored entry. */
-#define AT_EXECFD       2       /* File descriptor of program to load. */
-#define AT_PHDR         3       /* Program header of program already loaded. */
-#define AT_PHENT        4       /* Size of each program header entry. */
-#define AT_PHNUM        5       /* Number of program header entries. */
-#define AT_PAGESZ       6       /* Page size in bytes. */
-#define AT_BASE         7       /* Interpreter's base address. */
-#define AT_FLAGS        8       /* Flags (unused for i386). */
-#define AT_ENTRY        9       /* Where interpreter should transfer control. */
-#define AT_NOTELF       10      /* Program is not ELF ?? */
-#define AT_UID          11      /* Real uid. */
-#define AT_EUID         12      /* Effective uid. */
-#define AT_GID          13      /* Real gid. */
-#define AT_EGID         14      /* Effective gid. */
-#define AT_EXECPATH     15      /* Path to the executable. */
-#define AT_CANARY       16      /* Canary for SSP */
-#define AT_CANARYLEN    17      /* Length of the canary. */
-#define AT_OSRELDATE    18      /* OSRELDATE. */
-#define AT_NCPUS        19      /* Number of CPUs. */
-#define AT_PAGESIZES    20      /* Pagesizes. */
-#define AT_PAGESIZESLEN 21      /* Number of pagesizes. */
-#define AT_TIMEKEEP     22      /* Pointer to timehands. */
-#define AT_STACKPROT    23      /* Initial stack protection. */
-
-#define AT_COUNT        24      /* Count of defined aux entry types. */
-
 /*
  * Relocation types.
  */
@@ -210,5 +154,32 @@ __ElfType(Auxinfo);
 #endif
 
 #endif /* __i386__, __amd64__ */
+
+/* Auxiliary vector a_type values — identical for i386 and amd64. */
+#define AT_NULL         0       /* Terminates the vector. */
+#define AT_IGNORE       1       /* Ignored entry. */
+#define AT_EXECFD       2       /* File descriptor of program to load. */
+#define AT_PHDR         3       /* Program header of program already loaded. */
+#define AT_PHENT        4       /* Size of each program header entry. */
+#define AT_PHNUM        5       /* Number of program header entries. */
+#define AT_PAGESZ       6       /* Page size in bytes. */
+#define AT_BASE         7       /* Interpreter's base address. */
+#define AT_FLAGS        8       /* Flags (unused for i386). */
+#define AT_ENTRY        9       /* Where interpreter should transfer control. */
+#define AT_NOTELF       10      /* Program is not ELF ?? */
+#define AT_UID          11      /* Real uid. */
+#define AT_EUID         12      /* Effective uid. */
+#define AT_GID          13      /* Real gid. */
+#define AT_EGID         14      /* Effective gid. */
+#define AT_EXECPATH     15      /* Path to the executable. */
+#define AT_CANARY       16      /* Canary for SSP. */
+#define AT_CANARYLEN    17      /* Length of the canary. */
+#define AT_OSRELDATE    18      /* OSRELDATE. */
+#define AT_NCPUS        19      /* Number of CPUs. */
+#define AT_PAGESIZES    20      /* Pagesizes. */
+#define AT_PAGESIZESLEN 21      /* Number of pagesizes. */
+#define AT_TIMEKEEP     22      /* Pointer to timehands. */
+#define AT_STACKPROT    23      /* Initial stack protection. */
+#define AT_COUNT        24      /* Count of defined aux entry types. */
 
 #endif

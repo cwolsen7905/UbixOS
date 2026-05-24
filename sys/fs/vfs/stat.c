@@ -342,9 +342,29 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
     fileDescriptor_t *fd = 0x0;
 
     getfd(td, &fdd, args->dirfd);
-    if (fdd == 0x0 || fdd->fd == 0x0) {
+    if (fdd == 0x0) {
       td->td_retval[0] = EBADF;
       return (EBADF);
+    }
+
+    /* TTY placeholder fds have fd==NULL; return character-device stats so
+     * isatty() works correctly. */
+    if (fdd->fd == 0x0) {
+      stx->stx_mask      = args->mask & STATX_BASIC_STATS;
+      stx->stx_blksize   = 512;
+      stx->stx_nlink     = 1;
+      stx->stx_uid       = 0;
+      stx->stx_gid       = 0;
+      stx->stx_mode      = 0020620; /* S_IFCHR | 0620 */
+      stx->stx_ino       = (uint64_t)(uintptr_t)args->dirfd + 1;
+      stx->stx_size      = 0;
+      stx->stx_blocks    = 0;
+      stx->stx_dev_major = 5;
+      stx->stx_dev_minor = 0;
+      stx->stx_rdev_major = 5;
+      stx->stx_rdev_minor = 0;
+      td->td_retval[0] = 0;
+      return (0);
     }
     fd = fdd->fd;
 
@@ -354,6 +374,8 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
     stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
     stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
     stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
+    if ((stx->stx_mode & 0170000) == 0)
+      stx->stx_mode |= 0100644; /* FAT: no type bits → regular file 644 */
     stx->stx_ino        = fd->ino;
     stx->stx_size       = fd->size;
     stx->stx_blocks     = (fd->size + 511) / 512;
@@ -375,6 +397,7 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
       /* fopen rejects directories; try vfs_opendir to detect them. */
       dir = vfs_opendir(path);
       if (dir == 0x0) {
+        kprintf("statx: ENOENT path=%s\n", path ? path : "(null)");
         td->td_retval[0] = ENOENT;
         return (ENOENT);
       }
@@ -397,8 +420,11 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
       stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
       stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
       stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
-      stx->stx_mode       = fd->inode.u.ufs2_i.di_mode;
-      stx->stx_ino        = fd->ino;
+      stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
+      if ((stx->stx_mode & 0170000) == 0)
+        stx->stx_mode |= 0100755; /* FAT: no type bits → regular file 755 */
+      kprintf("statx: OK path=%s mode=0%o\n", path, stx->stx_mode);
+      stx->stx_ino        = fd->ino ? fd->ino : (uint64_t)(uintptr_t)fd;
       stx->stx_size       = fd->size;
       stx->stx_blocks     = (fd->size + 511) / 512;
       stx->stx_dev_major  = 1;

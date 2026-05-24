@@ -39,8 +39,6 @@ struct itimerval {
 	struct timeval it_value;
 };
 
-typedef long suseconds_t;
-
 #define BCD_TO_BIN(val) ((val)=((val)&15) + ((val)>>4)*10)
 
 #define MINUTE 60

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -53,21 +53,3 @@ typedef char *va_list;
 int vsprintf(char *buf, const char *fmt, va_list args);
 
 #endif
-
-/***
- $Log: stdarg.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:38  reddawg
- no message
-
- Revision 1.2  2004/05/21 15:22:35  reddawg
- Cleaned up
-
-
- END
- ***/

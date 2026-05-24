@@ -41,7 +41,6 @@
 //#define MAX_FILES 256
 #define MAX_FILES 256
 
-typedef __mode_t mode_t;
 typedef __nlink_t nlink_t;
 
 struct fileOps;
