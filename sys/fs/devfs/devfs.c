@@ -299,7 +299,7 @@ static int devfs_readdir(kDIR_t *dir, struct kdirent *ent) {
     return (-1);
 
   ent->d_ino  = (uint32_t)(uintptr_t)dev;
-  ent->d_type = KDT_REG;
+  ent->d_type = 2; /* DT_CHR — character device */
   strncpy(ent->d_name, dev->devName, sizeof(ent->d_name) - 1);
   ent->d_name[sizeof(ent->d_name) - 1] = '\0';
 

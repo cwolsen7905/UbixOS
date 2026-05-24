@@ -95,17 +95,25 @@ sfn_checksum(const uint8_t *sfn)
 /*
  * Convert an 11-byte SFN (no dot, space-padded) to a NUL-terminated string.
  * e.g. "FILE    TXT" -> "FILE.TXT", "DIR        " -> "DIR"
+ *
+ * sfn points to the full 32-byte raw directory entry so we can read the
+ * NT_RES byte at sfn[12]: bit 3 = basename lowercase, bit 4 = ext lowercase.
+ * mtools sets these flags when creating files with lowercase names; without
+ * them, tcsh would hash "LS" but look up "ls" and always say "not found".
  */
 static void
 sfn_to_name(const uint8_t *sfn, char *out)
 {
 	int	 i, len = 0;
+	uint8_t	 nt = sfn[12]; /* NT_RES: 0x08 = lc base, 0x10 = lc ext */
 
 	/* Base name: strip trailing spaces */
 	for (i = 7; i >= 0 && sfn[i] == ' '; i--)
 		;
-	for (int j = 0; j <= i; j++)
-		out[len++] = (char)sfn[j];
+	for (int j = 0; j <= i; j++) {
+		char c = (char)sfn[j];
+		out[len++] = (nt & 0x08) ? (char)tolower((unsigned char)c) : c;
+	}
 
 	/* Extension: strip trailing spaces */
 	int ext_end;
@@ -113,8 +121,10 @@ sfn_to_name(const uint8_t *sfn, char *out)
 		;
 	if (ext_end >= 8) {
 		out[len++] = '.';
-		for (int j = 8; j <= ext_end; j++)
-			out[len++] = (char)sfn[j];
+		for (int j = 8; j <= ext_end; j++) {
+			char c = (char)sfn[j];
+			out[len++] = (nt & 0x10) ? (char)tolower((unsigned char)c) : c;
+		}
 	}
 	out[len] = '\0';
 }

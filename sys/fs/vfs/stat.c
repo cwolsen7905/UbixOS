@@ -31,6 +31,7 @@
 #include <sys/sysproto_posix.h>
 #include <fs/vfs/stat.h>
 #include <fs/vfs/file.h>
+#include <fs/vfs/vfs.h>
 #include <lib/kprintf.h>
 #include <sys/descrip.h>
 #include <string.h>
@@ -373,9 +374,10 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
     stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
     stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
     stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
-    stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
+    /* FAT driver sets di_mode = S_IFREG|0755 in open_fat(); use it directly. */
+    stx->stx_mode       = fd->inode.u.ufs2_i.di_mode;
     if ((stx->stx_mode & 0170000) == 0)
-      stx->stx_mode |= 0100644; /* FAT: no type bits → regular file 644 */
+      stx->stx_mode |= 0100755; /* fallback for FSes that don't set di_mode */
     stx->stx_ino        = fd->ino;
     stx->stx_size       = fd->size;
     stx->stx_blocks     = (fd->size + 511) / 512;
@@ -397,7 +399,6 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
       /* fopen rejects directories; try vfs_opendir to detect them. */
       dir = vfs_opendir(path);
       if (dir == 0x0) {
-        kprintf("statx: ENOENT path=%s\n", path ? path : "(null)");
         td->td_retval[0] = ENOENT;
         return (ENOENT);
       }
@@ -420,10 +421,24 @@ int sys_statx(struct thread *td, struct sys_statx_args *args)
       stx->stx_nlink      = fd->inode.u.ufs2_i.di_nlink ? fd->inode.u.ufs2_i.di_nlink : 1;
       stx->stx_uid        = fd->inode.u.ufs2_i.di_uid;
       stx->stx_gid        = fd->inode.u.ufs2_i.di_gid;
-      stx->stx_mode       = fd->res != 0x0 ? 0100644 : fd->inode.u.ufs2_i.di_mode;
-      if ((stx->stx_mode & 0170000) == 0)
-        stx->stx_mode |= 0100755; /* FAT: no type bits → regular file 755 */
-      kprintf("statx: OK path=%s mode=0%o\n", path, stx->stx_mode);
+      /* /dev files: detect device type from the devfs mount. */
+      if (fd->mp != NULL && fd->mp->fs != NULL &&
+          fd->mp->fs->vfsType == VFS_TYPE_DEVFS) {
+        if (fd->start == (uint32_t)(uintptr_t)-1) {
+          /* devfs root (the /dev directory itself) */
+          stx->stx_mode  = 0040755; /* S_IFDIR | 0755 */
+          stx->stx_nlink = 2;
+        } else {
+          stx->stx_mode    = 0020620; /* S_IFCHR | 0620 */
+          stx->stx_rdev_major = 5;
+          stx->stx_rdev_minor = 0;
+        }
+      } else {
+        /* FAT driver sets di_mode = S_IFREG|0755 in open_fat(); use it. */
+        stx->stx_mode = fd->inode.u.ufs2_i.di_mode;
+        if ((stx->stx_mode & 0170000) == 0)
+          stx->stx_mode |= 0100755;
+      }
       stx->stx_ino        = fd->ino ? fd->ino : (uint64_t)(uintptr_t)fd;
       stx->stx_size       = fd->size;
       stx->stx_blocks     = (fd->size + 511) / 512;
