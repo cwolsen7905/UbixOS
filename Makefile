@@ -62,17 +62,28 @@ kernel:
 	@cd sys;${MAKE}
 
 musl-libc:
-	@if [ ! -f ${OBJ_DIR}/obj/musl/GNUmakefile ] && [ ! -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
-		echo "musl not configured — run: cd build/obj/musl && contrib/musl/configure ... (see docs)"; \
-		exit 1; \
+	@mkdir -p ${OBJ_DIR}/obj/musl ${OBJ_DIR}/lib
+	@if [ ! -f ${OBJ_DIR}/obj/musl/config.mak ]; then \
+		echo "Configuring musl libc..."; \
+		cd ${OBJ_DIR}/obj/musl && ${CURDIR}/contrib/musl/configure \
+			--srcdir=${CURDIR}/contrib/musl \
+			--target=i386-ubixos \
+			--disable-shared \
+			--enable-static \
+			CC="${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-pie -fno-pic -fno-stack-protector" \
+			CROSS_COMPILE=${CROSS_PREFIX} \
+			LIBCC="" \
+			CFLAGS="${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -ffreestanding -fno-pie -fno-pic -fno-stack-protector"; \
 	fi
 	${CROSS_PREFIX}gcc ${CROSS_M32} -mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
 	    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
 	    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o
 	${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o
-	/usr/bin/make -C ${OBJ_DIR}/obj/musl LIBCC=${OBJ_DIR}/lib/libgcc32.a
+	/usr/bin/make -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
+	    srcdir=${CURDIR}/contrib/musl ARCH=i386 \
+	    LIBCC=${OBJ_DIR}/lib/libgcc32.a
 	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/musl.a
-	cp ${OBJ_DIR}/obj/musl/lib/libc.so ${OBJ_DIR}/lib/libc.so
+	cp ${OBJ_DIR}/obj/musl/lib/libc.a ${OBJ_DIR}/lib/libc.a
 
 world:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/bin ${OBJ_DIR}/lib ${OBJ_DIR}/libexec \

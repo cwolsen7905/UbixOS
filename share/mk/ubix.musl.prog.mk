@@ -55,8 +55,11 @@ $(BINARY): $(OBJS)
 		${MUSL_LIB}/crti.o \
 		${_OBJS_FULL} \
 		${EXTRA_LIBS} \
+		-Wl,--start-group \
 		-L${OBJ_DIR}/lib -lc \
+		${OBJ_DIR}/lib/libgcc32.a \
 		${LIBGCC} \
+		-Wl,--end-group \
 		${MUSL_LIB}/crtn.o \
 		-o ${OBJ_DIR}/bin/${BINARY}
 
