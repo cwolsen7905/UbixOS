@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -60,6 +60,16 @@
 		__res;                                                                                                                                                                                                                                         \
 	})
 
+/**
+ * die_if_kernel - report a fatal trap and terminate the current task
+ * @str: human-readable trap description
+ * @regs: pointer to the trapframe containing saved CPU state
+ * @err: trap error code or reason
+ *
+ * This handler is called for unrecoverable faults. If the current task
+ * is a VM86 task, it is terminated cleanly. For normal tasks the function
+ * prints register state, the stack contents, and then ends the task.
+ */
 void die_if_kernel(char *str, struct trapframe *regs, long err)
 {
 	int i;
@@ -113,10 +123,19 @@ void die_if_kernel(char *str, struct trapframe *regs, long err)
 		kprintf("%08lx ", get_seg_long(ss, stack++));
 	}
 
+	kprintf("\n ");
+
 	endTask(_current->id);
 }
 
-/* NOTE This trap is really just for page fault */
+/**
+ * trap - top-level i386 exception handler
+ * @frame: pointer to the current trapframe
+ *
+ * Dispatches page faults to the virtual memory manager, handles VM86
+ * task exceptions, checks interrupt-enable state, and faults out
+ * on unsupported traps.
+ */
 void trap(struct trapframe *frame)
 {
 	u_int trap_code;
@@ -153,18 +172,20 @@ void trap(struct trapframe *frame)
 		}
 		else
 		{
-			kprintf("INT OFF! KERN: EIP=0x%X CR2=0x%X ERR=0x%X\n",
-			    frame->tf_eip, cr2, frame->tf_err);
+			kprintf("INT OFF! KERN: EIP=0x%X CR2=0x%X ERR=0x%X\n", frame->tf_eip, cr2, frame->tf_err);
 			kpanic("INT OFF! KERN[0x%X]", trap_code);
 			die_if_kernel("TEST", frame, 0x200);
 		}
 	}
 
-	/* Suppress expected COW write faults — user (ERR=0x7: present+write+user)
-	 * and supervisor (ERR=0x3: present+write+kernel).  Print everything else. */
+#if 0
+	/* Diagnostic: print non-COW traps. Re-enable to debug unexpected faults.
+	 * COW faults: err=0x7 (user write present) or 0x3 (kernel write present).
+	 * Demand-zero faults: err=0x6 — now expected and noisy with lazy alloc. */
 	if (!(frame->tf_trapno == 0xc && (frame->tf_err == 0x7 || frame->tf_err == 0x3)))
 		kprintf("trap _code: %i, EIP: 0x%X, CS: 0x%X, ERR: 0x%X, EFL: 0x%X, CR2: 0x%X\n",
 		    frame->tf_trapno, frame->tf_eip, frame->tf_cs, frame->tf_err, frame->tf_eflags, cr2);
+#endif
 
 	if (frame->tf_trapno == 0xc)
 	{

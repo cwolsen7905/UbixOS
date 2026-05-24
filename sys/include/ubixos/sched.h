@@ -39,6 +39,7 @@ extern "C" {
 
 #include <machine/proc.h>
 #include <sys/thread.h>
+#include <vmm/vm_map.h>
 
 #define NO_GROUP -1
 #define NR_GROUPS 32
@@ -104,6 +105,7 @@ typedef struct taskStruct {
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
     uint32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
+    vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
 } kTask_t;
 
 /*

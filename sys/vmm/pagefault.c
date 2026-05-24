@@ -28,6 +28,7 @@
 
 #include <vmm/vmm.h>
 #include <vmm/swap.h>
+#include <vmm/vm_map.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
@@ -130,6 +131,26 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 				return;
 			}
 		}
+
+		/* Lazy anonymous VMA: PT not yet allocated — vmm_remapPage will create it. */
+		if ((frame->tf_cs & 3) == 3) {
+			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, memAddr);
+			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON)) {
+				uInt32 newPage = vmm_findFreePage(_current->id);
+				if (newPage != 0x0 &&
+				    vmm_remapPage(newPage, memAddr & 0xFFFFF000, PAGE_DEFAULT, _current->id, 0) != 0x0) {
+					memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+					asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+					spinUnlock(&pageFaultSpinLock);
+					return;
+				}
+				kprintf("pageFault: OOM (lazy anon PD) at 0x%X pid %i\n", memAddr, _current->id);
+				spinUnlock(&pageFaultSpinLock);
+				endTask(_current->id);
+				return;
+			}
+		}
+
 		kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
 		spinUnlock(&pageFaultSpinLock);
 		if ((frame->tf_cs & 3) == 3) {
@@ -252,6 +273,35 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2)
 	}
 	else
 	{
+		/* Check if fault address is in a registered anonymous VMA (demand-zero).
+		 * Handles both user-mode faults and kernel-mode copy-from/to-user faults:
+		 * a kernel syscall may access a lazy anon page before the user has
+		 * touched it, causing a ring-0 fault that also needs demand-zero. */
+		{
+			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, memAddr);
+			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON)) {
+				uInt32 newPage = vmm_findFreePage(_current->id);
+				if (newPage == 0x0) {
+					kprintf("pageFault: OOM (anon vma) at 0x%X pid %i\n",
+					    memAddr, _current->id);
+					spinUnlock(&pageFaultSpinLock);
+					if ((frame->tf_cs & 3) == 3) {
+						signal_post_fault(SIGSEGV, (void *)memAddr, SEGV_MAPERR);
+						signal_check(frame);
+						return;
+					}
+					endTask(_current->id);
+					return;
+				}
+				pageTable[pageTableIndex] = newPage | PAGE_DEFAULT;
+				asm volatile("invlpg (%0)" : : "r"(memAddr & 0xFFFFF000) : "memory");
+				memset((void *)(memAddr & 0xFFFFF000), 0, PAGE_SIZE);
+				asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+				spinUnlock(&pageFaultSpinLock);
+				return;
+			}
+		}
+
 		/* Access to non-mapped memory: SIGSEGV user, kpanic kernel. */
 		kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
 		kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);

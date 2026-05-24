@@ -45,8 +45,8 @@
 #include <string.h>
 #include <sys/descrip.h>
 
-#define ENVP_PAGE 0x100
-#define ARGV_PAGE 0x100
+#define ENVP_PAGE 0x4000
+#define ARGV_PAGE 0x4000
 #define ELF_AUX 0x100
 #define STACK_PAD 0x1000
 
@@ -347,6 +347,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->term->t_pgrp = (int)newProcess->pgrp;
 
 	/* Now We Must Create A Virtual Space For This Proccess To Run In */
+	memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
 	newProcess->md.md_tss.cr3 = (uint32_t)vmm_createVirtualSpace(newProcess->id);
 
 	/* To Better Load This Application We Will Switch Over To Its VM Space
@@ -752,7 +753,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	uint32_t *argv_out = 0x0;
 	char *args_out = 0x0;
 
-	args_copyin(argv, (char **)&argv_out, &args_out);
+	if (args_copyin(argv, (char **)&argv_out, &args_out) != 0) {
+		kprintf("sys_exec: args_copyin failed for %s\n", file);
+		fclose(fd);
+		td->td_retval[0] = -7; /* E2BIG */
+		return (-1);
+	}
 
 	{
 		const char *base = file, *p;
@@ -778,7 +784,14 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	uint32_t *envp_out = 0x0;
 	char *envs_out = 0x0;
 
-	envs_copyin(envp, (char **)&envp_out, &envs_out);
+	if (envs_copyin(envp, (char **)&envp_out, &envs_out) != 0) {
+		kprintf("sys_exec: envs_copyin failed for %s\n", file);
+		kfree(argv_out);
+		kfree(args_out);
+		fclose(fd);
+		td->td_retval[0] = -7; /* E2BIG */
+		return (-1);
+	}
 
 	//! Clean the virtual of COW pages left over from the fork
 	// vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr +
@@ -786,6 +799,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	// This should be done before it was causing a lot of problems why did I
 	// free space after loading binary???? vmm_cleanVirtualSpace((uint32_t)
 	// 0x8048000);
+	vm_map_free(&_current->vm_map);
 	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
 
 	/* Clear Stack */

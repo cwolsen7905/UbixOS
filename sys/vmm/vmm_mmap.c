@@ -28,6 +28,7 @@
 
 #include <vmm/vmm.h>
 #include <vmm/mmap.h>
+#include <vmm/vm_map.h>
 #include <sys/types.h>
 #include <sys/errno.h>
 #include <lib/kprintf.h>
@@ -48,9 +49,11 @@ int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 	uint32_t base = (uint32_t)uap->addr & ~0xFFFU;
 	uint32_t end = base + round_page(uap->len);
 
+	vm_map_remove(&_current->vm_map, base, end);
+
 	for (uint32_t va = base; va < end; va += PAGE_SIZE) {
 		vmm_unmapPage(va, VMM_FREE);
-}
+	}
 
 	td->td_retval[0] = 0;
 	return (0);
@@ -71,29 +74,35 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 	{
 		if (uap->addr != 0x0)
 		{
+			/* MAP_FIXED anonymous: caller specifies address; unmap any existing
+			 * mapping there, record the VMA, and let page faults back pages lazily. */
 			uint32_t map_base = (uint32_t)uap->addr & 0xFFFFF000;
-			if (map_base < VMM_USER_START || map_base + round_page(uap->len) > VMM_USER_END)
+			uint32_t map_end  = map_base + round_page(uap->len);
+			if (map_base < VMM_USER_START || map_end > VMM_USER_END)
 			{
 				td->td_retval[0] = -1;
 				return (EINVAL);
 			}
-			for (x = 0x0; x < round_page(uap->len); x += 0x1000)
-			{
+			for (x = 0; x < (int)round_page(uap->len); x += 0x1000)
 				vmm_unmapPage(map_base + x, VMM_FREE);
-				if (vmm_remapPage(vmm_findFreePage(_current->id), map_base + x, PAGE_DEFAULT, _current->id, 0) == 0x0)
-					K_PANIC("Remap Page Failed");
-			}
-			tmp = uap->addr;
-			bzero(tmp, uap->len);
-			td->td_retval[0] = (uint32_t)tmp;
+			vm_map_insert(&_current->vm_map, map_base, map_end,
+			    VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
+			td->td_retval[0] = (uint32_t)uap->addr;
 			return (0x0);
 		}
 
-		void *mmap_tmp = vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);
+		/* Anonymous, no fixed address: reserve a VA range without backing pages. */
+		int npages = (int)(round_page(uap->len) / PAGE_SIZE);
+		void *mmap_tmp = vmm_reserve_anon_range(_current->id, npages);
+		if (mmap_tmp == NULL) {
+			td->td_retval[0] = -1;
+			return (ENOMEM);
+		}
+		vm_map_insert(&_current->vm_map, (uintptr_t)mmap_tmp,
+		    (uintptr_t)mmap_tmp + round_page(uap->len),
+		    VM_PROT_RW, VM_MAP_ANON);
 		td->td_retval[0] = (int)mmap_tmp;
-		// kprintf("(tmp5: 0x%X)", td->td_retval[0]);
-		bzero(mmap_tmp, uap->len);
-		return (0x0); // vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
+		return (0x0);
 	}
 	else
 	{

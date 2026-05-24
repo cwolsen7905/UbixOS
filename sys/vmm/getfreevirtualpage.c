@@ -141,3 +141,75 @@ doneMapping:
 	spinUnlock(&fvpSpinLock);
 	return (void *)map_from;
 }
+
+/*
+ * vmm_reserve_anon_range — find a free virtual address range of @count pages
+ * and advance oInfo.vmStart to reserve it, but do NOT map any physical pages.
+ * The caller records a vm_map VMA; the page fault handler backs pages on first
+ * access (true lazy / demand-zero allocation).
+ *
+ * Returns the start VA, or NULL if no suitable range exists.
+ */
+void *
+vmm_reserve_anon_range(pidType pid, int count)
+{
+	int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
+	uint32_t *pageDirectory = 0x0;
+	uint32_t *pageTable = 0x0;
+	uint32_t start_page = 0x0;
+	uint32_t map_from = 0x0;
+
+	spinLock(&fvpSpinLock);
+
+	pageDirectory = (uint32_t *)PD_BASE_ADDR;
+
+	if (_current->oInfo.vmStart <= 0x100000)
+		kpanic("Invalid vmStart\n");
+
+	start_page = _current->oInfo.vmStart;
+
+keepMapping:
+	pdI = PD_INDEX(start_page);
+
+	if (pdI > PD_INDEX(VMM_USER_END)) {
+		map_from = 0x0;
+		goto doneMapping;
+	}
+
+	/* If the PD entry doesn't exist yet, the range is free — no PT to check. */
+	if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) {
+		if (map_from == 0x0)
+			map_from = start_page;
+		counter += PT_ENTRIES - PT_INDEX(start_page);
+		if (counter >= count)
+			goto gotRange;
+		start_page = (pdI + 1) * (PT_ENTRIES * PAGE_SIZE);
+		goto keepMapping;
+	}
+
+	pageTable = (uint32_t *)(PT_BASE_ADDR + (pdI * PAGE_SIZE));
+	ptI = PT_INDEX(start_page);
+
+	for (y = ptI; y < PT_ENTRIES && counter < count; y++, counter++) {
+		if ((pageTable[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+			start_page += PAGE_SIZE * (counter + 1);
+			map_from = 0x0;
+			counter = 0;
+			goto keepMapping;
+		}
+		if (map_from == 0x0)
+			map_from = start_page;
+	}
+
+	if (counter < count) {
+		start_page += PAGE_SIZE * counter;
+		goto keepMapping;
+	}
+
+gotRange:
+	_current->oInfo.vmStart = map_from + (count * PAGE_SIZE);
+
+doneMapping:
+	spinUnlock(&fvpSpinLock);
+	return (void *)map_from;
+}

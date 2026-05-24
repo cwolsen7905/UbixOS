@@ -88,6 +88,7 @@ void *vmm_getFreePage(pidType);
 void *vmm_getFreeKernelPage(pidType pid, uint16_t count);
 void *vmm_createVirtualSpace(pidType);
 void *vmm_getFreeVirtualPage(pidType, int, int);
+void *vmm_reserve_anon_range(pidType pid, int count);
 
 uint32_t vmm_getPhysicalAddr(uint32_t);
 uint32_t vmm_getRealAddr(uint32_t);
