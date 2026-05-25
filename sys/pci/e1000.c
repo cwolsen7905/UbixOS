@@ -64,7 +64,7 @@ u_int8_t      e1000_mac[6];
 static volatile u_int8_t *e1000_mmio = NULL;
 
 /* Descriptor rings — identity-mapped pages (virtual == physical).
- * vmm_findFreePage + vmm_remapIOPage guarantees this so TDBAL/RDBAL
+ * vmm_find_free_page + vmm_remap_io_page guarantees this so TDBAL/RDBAL
  * can be set directly to the pointer value with no vmm_getRealAddr call. */
 static struct e1000_rx_desc *rx_descs;
 static struct e1000_tx_desc *tx_descs;
@@ -102,9 +102,9 @@ static inline void e1000_write(u_int32_t reg, u_int32_t val) {
 
 /*
  * Identity-map the 128 KB MMIO BAR into kernel virtual space.
- * vmm_remapIOPage maps phys->phys and silently overwrites existing PTEs,
- * avoiding the panic that vmm_remapPage emits when a page is already present
- * (vmm_getFreeKernelPage pre-populates its range with real RAM pages).
+ * vmm_remap_io_page maps phys->phys and silently overwrites existing PTEs,
+ * avoiding the panic that vmm_remap_page emits when a page is already present
+ * (vmm_get_free_kernel_page pre-populates its range with real RAM pages).
  * PAGE_CACHE_DISABLED is required — MMIO must never be cached.
  */
 static int e1000_map_mmio(u_int32_t phys) {
@@ -112,7 +112,7 @@ static int e1000_map_mmio(u_int32_t phys) {
 	u_int32_t i;
 
 	for (i = 0; i < pages; i++)
-		vmm_remapIOPage(phys + i * 0x1000,
+		vmm_remap_io_page(phys + i * 0x1000,
 		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
 	e1000_mmio = (volatile u_int8_t *)phys;
 	return 0;
@@ -126,22 +126,22 @@ static int e1000_init_rx(void) {
 	u_int32_t i, phys;
 
 	/* Identity-map descriptor ring: virtual == physical, so RDBAL == pointer. */
-	phys = vmm_findFreePage(sysID);
+	phys = vmm_find_free_page(sysID);
 	if (!phys) {
 		klog(KLOG_ERR, "e1000: cannot allocate RX descriptor ring");
 		return -1;
 	}
-	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT, sysID);
+	vmm_remap_io_page(phys, KERNEL_PAGE_DEFAULT, sysID);
 	rx_descs = (struct e1000_rx_desc *)phys;
 	memset(rx_descs, 0, E1000_NUM_RX_DESC * sizeof(struct e1000_rx_desc));
 
 	for (i = 0; i < E1000_NUM_RX_DESC; i++) {
-		u_int32_t buf_phys = vmm_findFreePage(sysID);
+		u_int32_t buf_phys = vmm_find_free_page(sysID);
 		if (!buf_phys) {
 			klog(KLOG_ERR, "e1000: cannot allocate RX buffer %u", i);
 			return -1;
 		}
-		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
+		vmm_remap_io_page(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
 		rx_bufs[i] = (u_int8_t *)buf_phys;
 		rx_descs[i].addr   = (u_int64_t)buf_phys; /* physical == virtual */
 		rx_descs[i].status = 0;
@@ -169,22 +169,22 @@ static int e1000_init_tx(void) {
 	u_int32_t i, phys;
 
 	/* Identity-map descriptor ring: virtual == physical, so TDBAL == pointer. */
-	phys = vmm_findFreePage(sysID);
+	phys = vmm_find_free_page(sysID);
 	if (!phys) {
 		klog(KLOG_ERR, "e1000: cannot allocate TX descriptor ring");
 		return -1;
 	}
-	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT, sysID);
+	vmm_remap_io_page(phys, KERNEL_PAGE_DEFAULT, sysID);
 	tx_descs = (struct e1000_tx_desc *)phys;
 	memset(tx_descs, 0, E1000_NUM_TX_DESC * sizeof(struct e1000_tx_desc));
 
 	for (i = 0; i < E1000_NUM_TX_DESC; i++) {
-		u_int32_t buf_phys = vmm_findFreePage(sysID);
+		u_int32_t buf_phys = vmm_find_free_page(sysID);
 		if (!buf_phys) {
 			klog(KLOG_ERR, "e1000: cannot allocate TX buffer %u", i);
 			return -1;
 		}
-		vmm_remapIOPage(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
+		vmm_remap_io_page(buf_phys, KERNEL_PAGE_DEFAULT, sysID);
 		tx_bufs[i] = (u_int8_t *)buf_phys;
 		tx_descs[i].addr   = (u_int64_t)buf_phys; /* physical == virtual */
 		tx_descs[i].status = E1000_TXD_STAT_DD;

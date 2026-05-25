@@ -179,17 +179,17 @@ int initLNC(u_int32_t ioAddr)
 	lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
 	lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
 
-	lnc->init.rdra = (u_int32_t)vmm_getRealAddr((u_int32_t)lnc->rxRing);
+	lnc->init.rdra = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->rxRing);
 	lnc->init.rlen = 3 << 4;
-	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr((u_int32_t)lnc->rxRing));
+	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_get_real_addr((u_int32_t)lnc->rxRing));
 
-	lnc->init.tdra = (u_int32_t)vmm_getRealAddr((u_int32_t)lnc->txRing);
+	lnc->init.tdra = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->txRing);
 	lnc->init.tlen = 3 << 4;
-	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr((u_int32_t)lnc->txRing));
+	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_get_real_addr((u_int32_t)lnc->txRing));
 
-	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr((u_int32_t)&lnc->init));
+	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_get_real_addr((u_int32_t)&lnc->init));
 
-	iW = vmm_getRealAddr((u_int32_t)&lnc->init);
+	iW = vmm_get_real_addr((u_int32_t)&lnc->init);
 
 	lnc_writeCSR32(lnc, CSR1, iW & 0xFFFF);
 	lnc_writeCSR32(lnc, CSR2, (iW >> 16) & 0xFFFF);
@@ -472,7 +472,7 @@ int lncAttach(struct lncInfo *lnc, int unit)
 	/* Setup the RX Ring */
 	for (i = 0; i < NDESC(lnc->nrdre); i++)
 	{
-		lnc->rxRing[i].addr = (u_int32_t)vmm_getRealAddr((u_int32_t)lnc->rxBuffer + (i * lnc->bufferSize));
+		lnc->rxRing[i].addr = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->rxBuffer + (i * lnc->bufferSize));
 		bcnt = (u_int16_t)(-lnc->bufferSize);
 		bcnt &= 0x0FFF;
 		bcnt |= 0xF000;
@@ -508,7 +508,7 @@ int lncAttach(struct lncInfo *lnc, int unit)
 	/* Setup the TX Ring */
 	for (i = 0; i < NDESC(lnc->ntdre); i++)
 	{
-		lnc->txRing[i].addr = (u_int32_t)vmm_getRealAddr((u_int32_t)lnc->txBuffer + (i * lnc->bufferSize));
+		lnc->txRing[i].addr = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->txBuffer + (i * lnc->bufferSize));
 		bcnt = (u_int16_t)(-lnc->bufferSize);
 		bcnt &= 0x0FFF;
 		bcnt |= 0xF000;

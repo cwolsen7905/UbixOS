@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -37,7 +37,7 @@ static struct spinLock g_fvp_spin_lock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
- Function: void *vmm_getFreeVirtualPage(pidType pid,int count);
+ Function: void *vmm_get_free_virtual_page(pidType pid,int count);
  Description: Returns A Free Page Mapped To The VM Space
  Notes:
 
@@ -46,15 +46,16 @@ static struct spinLock g_fvp_spin_lock = SPIN_LOCK_INITIALIZER;
  08/11/02 - This Will Return Next Avilable Free Page Of Tasks VM Space
 
  ************************************************************************/
-void *vmm_getFreeVirtualPage(pidType pid, int count, int type)
+void *vmm_get_free_virtual_page(pidType pid, int count, int type)
 {
-	int y = 0, counter = 0, pd_i = 0x0, pt_i = 0x0;
+	int y = 0, counter = 0;
+	u_int32_t pd_i = 0, pt_i = 0;
 
-	u_int32_t *page_directory = 0x0;
-	u_int32_t *page_table = 0x0;
+	u_int32_t *page_directory = NULL;
+	u_int32_t *page_table = NULL;
 
-	u_int32_t start_page = 0x0;
-	u_int32_t map_from = 0x0;
+	u_int32_t start_page = 0;
+	u_int32_t map_from = 0;
 
 	spinLock(&g_fvp_spin_lock);
 
@@ -86,14 +87,15 @@ keepMapping:
 
 	if (pd_i > PD_INDEX(VMM_USER_END))
 	{
-		map_from = 0x0;
+		map_from = 0;
 		goto doneMapping;
 	}
 
 	/* If Page Directory Is Not Yet Allocated Allocate It */
-	if ((page_directory[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_directory[pd_i] & PAGE_PRESENT) !=
+	    PAGE_PRESENT) // NOLINT(clang-analyzer-core.FixedAddressDereference)
 	{
-		vmm_allocPageTable(pd_i, pid);
+		vmm_alloc_page_table(pd_i, pid);
 	}
 
 	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
@@ -112,12 +114,12 @@ keepMapping:
 			}
 
 			start_page += PAGE_SIZE * (counter + 1);
-			map_from = 0x0;
+			map_from = 0;
 			counter = 0;
 			goto keepMapping;
 		}
 
-		if (map_from == 0x0)
+		if (map_from == 0)
 		{
 			map_from = start_page;
 		}
@@ -143,9 +145,9 @@ gotPages:
 
 	for (counter = 0; counter < count; counter++)
 	{
-		if ((vmm_remapPage(
-		        (u_int32_t)vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) ==
-		    0x0)
+		if ((vmm_remap_page(
+		        vmm_find_free_page(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) ==
+		    0)
 		{
 			kpanic(
 			    "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
@@ -169,11 +171,12 @@ doneMapping:
  */
 void *vmm_reserve_anon_range(pidType pid, int count)
 {
-	int y = 0, counter = 0, pd_i = 0x0, pt_i = 0x0;
-	u_int32_t *page_directory = 0x0;
-	u_int32_t *page_table = 0x0;
-	u_int32_t start_page = 0x0;
-	u_int32_t map_from = 0x0;
+	int y = 0, counter = 0;
+	u_int32_t pd_i = 0, pt_i = 0;
+	u_int32_t *page_directory = NULL;
+	u_int32_t *page_table = NULL;
+	u_int32_t start_page = 0;
+	u_int32_t map_from = 0;
 
 	spinLock(&g_fvp_spin_lock);
 
@@ -191,14 +194,15 @@ keepMapping:
 
 	if (pd_i > PD_INDEX(VMM_USER_END))
 	{
-		map_from = 0x0;
+		map_from = 0;
 		goto doneMapping;
 	}
 
 	/* If the PD entry doesn't exist yet, the range is free — no PT to check. */
-	if ((page_directory[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_directory[pd_i] & PAGE_PRESENT) !=
+	    PAGE_PRESENT) // NOLINT(clang-analyzer-core.FixedAddressDereference)
 	{
-		if (map_from == 0x0)
+		if (map_from == 0)
 		{
 			map_from = start_page;
 		}
@@ -219,11 +223,11 @@ keepMapping:
 		if ((page_table[y] & PAGE_PRESENT) == PAGE_PRESENT)
 		{
 			start_page += PAGE_SIZE * (counter + 1);
-			map_from = 0x0;
+			map_from = 0;
 			counter = 0;
 			goto keepMapping;
 		}
-		if (map_from == 0x0)
+		if (map_from == 0)
 		{
 			map_from = start_page;
 		}

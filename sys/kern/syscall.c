@@ -194,9 +194,9 @@ int sysCheckPid(int pid, int *ptr)
 int sysGetFreePage(struct thread *td, u_int32_t *count)
 {
 
-	td->td_retval[0] = (int)vmm_getFreeVirtualPage(_current->id, *count, VM_THRD);
+	td->td_retval[0] = (int)vmm_get_free_virtual_page(_current->id, *count, VM_THRD);
 	return (0);
-	// return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
+	// return(vmm_get_free_virtual_page(_current->id, *count, VM_TASK));
 }
 
 int sysGetDrives(u_int32_t *ptr)

@@ -36,7 +36,7 @@
  * Allocate one page of physically contiguous, cache-disabled memory.
  * size  — bytes needed; must be > 0 and <= 4096.
  * align — required physical alignment (power of two, 1–4096); ignored on
- *         UbixOS because vmm_findFreePage always returns a page-aligned frame.
+ *         UbixOS because vmm_find_free_page always returns a page-aligned frame.
  * buf   — filled in on success.
  * Returns 0 on success, -1 on failure.
  */
@@ -50,11 +50,11 @@ dma_alloc(u_int32_t size, u_int32_t align, struct dma_buf *buf)
 	if (buf == NULL || size == 0 || size > 0x1000)
 		return (-1);
 
-	phys = vmm_findFreePage(sysID);
+	phys = vmm_find_free_page(sysID);
 	if (phys == 0)
 		return (-1);
 
-	vmm_remapIOPage(phys, KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
+	vmm_remap_io_page(phys, KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
 
 	memset((void *)phys, 0, 0x1000);
 
@@ -74,8 +74,8 @@ dma_free(struct dma_buf *buf)
 	if (buf == NULL || buf->db_vaddr == NULL)
 		return;
 
-	freePage(buf->db_paddr);
-	vmm_unmapPage((u_int32_t)buf->db_vaddr, VMM_KEEP);
+	free_page(buf->db_paddr);
+	vmm_unmap_page((u_int32_t)buf->db_vaddr, VMM_KEEP);
 
 	buf->db_vaddr = NULL;
 	buf->db_paddr = 0;

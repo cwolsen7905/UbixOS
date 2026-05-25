@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -27,45 +27,46 @@
  */
 
 #include <vmm/vmm.h>
-#include <ubixos/kpanic.h>
 
-/************************************************************************
-
- Function: void vmm_setPageAttributes(u_int32_t pageAddr,int attributes;
- Description: This Function Will Set The Page Attributes Such As
- A Read Only Page, Stack Page, COW Page, ETC.
+/*!
+ Function: void *vmm_get_physical_addr();
+ Description: Returns The Physical Address Of The Virtual Page
  Notes:
+ */
 
- ************************************************************************/
-int vmm_setPageAttributes(u_int32_t mem_addr, u_int16_t attributes)
+/* returns the real address of page is page aligned */
+u_int32_t vmm_get_physical_addr(u_int32_t page_addr)
 {
-	u_int16_t directory_index = 0x0, table_index = 0x0;
-	u_int32_t *page_table = 0x0;
+	u_int32_t page_directory_index = 0, page_table_index = 0;
+	u_int32_t *page_table = NULL;
 
-	/* Calculate The Page Directory Index */
-	directory_index = (mem_addr >> 22);
+	// Calculate The Page Directory Index
+	page_directory_index = (page_addr >> 22);
 
-	/* Calculate The Page Table Index */
-	table_index = ((mem_addr >> 12) & 0x3FF);
+	// Calculate The Page Table Index
+	page_table_index = ((page_addr >> 12) & 0x3FF);
 
-	/* Set Table Pointer */
-	page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * directory_index));
-	if (page_table == 0x0)
-	{
-		kpanic("Error: page_table == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
-	}
+	/* Set page_table To The Virtual Address Of Table */
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * page_directory_index));
 
-	/* Set Attribute If Page Is Mapped */
-	if (page_table[table_index] != 0x0)
-	{
-		page_table[table_index] = ((page_table[table_index] & 0xFFFFF000) | attributes);
-	}
+	/* Return The Physical Address Of The Page */
+	return (page_table[page_table_index] & 0xFFFFF000);
+}
 
-	/* Reload The Page Table; */
-	asm volatile("push %eax     \n"
-	             "movl %cr3,%eax\n"
-	             "movl %eax,%cr3\n"
-	             "pop  %eax     \n");
-	/* Return */
-	return (0x0);
+/* Returns the real address not page aligned */
+u_int32_t vmm_get_real_addr(u_int32_t addr)
+{
+	u_int32_t page_directory_index = 0, page_table_index = 0;
+	u_int32_t *page_table = NULL;
+
+	// Calculate The Page Directory Index
+	page_directory_index = (addr >> 22);
+
+	// Calculate The Page Table Index
+	page_table_index = ((addr >> 12) & 0x3FF);
+
+	/* Set page_table To The Virtual Address Of Table */
+	page_table = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * page_directory_index));
+	/* Return The Physical Address Of The Page */
+	return (page_table[page_table_index] & 0xFFFFF000) + (addr & 0xFFF);
 }

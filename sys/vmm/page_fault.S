@@ -30,10 +30,10 @@
  Page fault wrapper this will aquire some values we need for later use
  */
 
-.globl _vmm_pageFault2
+.globl _vmm_page_fault2
 .text
 .code32
-_vmm_pageFault2:
+_vmm_page_fault2:
 xchgl %eax,(%esp) /* Save EAX                                         */
 movl 4(%esp),%eax /* Move EIP into EAX to use later                   */
 pushl %ebx /* Save EBX                                         */
@@ -45,7 +45,7 @@ push %eax /* Push EIP                                         */
 movl %cr2,%eax /* Push the faulted address                         */
 pushl %eax
 sti /* Turn interrupts back on we are now entrant safe  */
-call vmm_pageFault /* Call our page fault handler                      */
+call vmm_page_fault /* Call our page fault handler                      */
 addl $0xC,%esp /* Adjust the stack to compensate for pushed values */
 popl %edx /* Restore EAX,EBX,ECX,EDX                          */
 popl %ecx
@@ -53,7 +53,7 @@ popl %ebx
 popl %eax
 iret /* Return from the interrupt                        */
 
-.globl _vmm_pageFault
+.globl _vmm_page_fault
 .text
 .code32
 
@@ -65,7 +65,7 @@ _ast:
 
 _astRet:
 
-_vmm_pageFault:
+_vmm_page_fault:
 pushl $0xC
 pushal
 push %ds
@@ -84,7 +84,7 @@ jmp _popFS      /* jmp (not call) so _popFS sees the clean register save area */
 notyet:
 pushl %eax
 sti
-call vmm_pageFault
+call vmm_page_fault
 /* call syscall */
 add $0x4,%esp
 cmpb $0x13,0x38(%esp)

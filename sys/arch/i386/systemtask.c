@@ -136,7 +136,7 @@ void systemTask() {
           break;
         }
         case 0x80:
-          if (!strcmp(myMsg.data, "freePage")) {
+          if (!strcmp(myMsg.data, "free_page")) {
             kprintf("kkk Free Pages");
           }
           else if (!strcmp(myMsg.data, "sdeStop")) {
@@ -188,7 +188,7 @@ void systemTask() {
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
       vm_map_free(&tmpTask->vm_map);
-      vmm_freeProcessPages(tmpTask->id);
+      vmm_free_process_pages(tmpTask->id);
       if (tmpTask->kernelStack != 0x0)
         kfree(tmpTask->kernelStack);
       else

@@ -70,7 +70,7 @@ u_int32_t ldEnable(const char *interp, u_int32_t pid)
 		newLoc = (char *)(programHeader[i].p_vaddr + LD_START);
 		for (x = 0; x < (int)programHeader[i].p_memsz; x += 0x1000) {
 			u_int32_t va = (programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START;
-			if (vmm_remapPage(vmm_findFreePage(pid), va, PAGE_DEFAULT, pid, 0) == 0x0)
+			if (vmm_remap_page(vmm_find_free_page(pid), va, PAGE_DEFAULT, pid, 0) == 0x0)
 				K_PANIC("vmmRemapPage: ld");
 			memset((void *)va, 0x0, 0x1000);
 		}

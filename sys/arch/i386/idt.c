@@ -143,7 +143,7 @@ int idt_init() {
   setVector(_int12, 12, dPresent + dInt + dDpl0);
   //setVector(_gpf, 13, dPresent + dInt + dDpl0);
   setTaskVector(13, dPresent + dTask + dDpl0, 0x38);
-  setVector(_vmm_pageFault, 14, dPresent + dInt + dDpl0);
+  setVector(_vmm_page_fault, 14, dPresent + dInt + dDpl0);
   setVector(_floatingPoint, 16, dPresent + dInt + dDpl0);
   setVector(_alignmentCheck, 17, dPresent + dInt + dDpl0);
   setVector(_machineCheck, 18, dPresent + dInt + dDpl0);
@@ -156,7 +156,7 @@ int idt_init() {
 
   memset(gpfTSS, 0x0, sizeof(struct tssStruct));
 
-  gpfStack = 0x1D000;//(u_int32_t)vmm_getFreeKernelPage(sysID, 1) + (PAGE_SIZE - 0x4);
+  gpfStack = 0x1D000;//(u_int32_t)vmm_get_free_kernel_page(sysID, 1) + (PAGE_SIZE - 0x4);
 
   gpfTSS->back_link = 0x0;
   gpfTSS->esp0 = 0x0;

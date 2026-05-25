@@ -42,7 +42,7 @@
  *
  * Strategy: collect physical addresses from the current CR3, then temporarily
  * switch CR3 to dst's page directory (with interrupts disabled) and call
- * vmm_remapPage for each page.  Kernel space is shared across all address
+ * vmm_remap_page for each page.  Kernel space is shared across all address
  * spaces so kernel code remains reachable during the switch.
  */
 uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
@@ -72,7 +72,7 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	/* Collect physical addresses from current (src) address space */
 	for (i = 0; i < n; i++)
 	{
-		phys[i] = vmm_getPhysicalAddr(vaddr + i * PAGE_SIZE);
+		phys[i] = vmm_get_physical_addr(vaddr + i * PAGE_SIZE);
 		if (phys[i] == 0)
 		{
 			kprintf("vmm_share_region: page %u at 0x%X not mapped\n", i, vaddr + i * PAGE_SIZE);
@@ -82,7 +82,7 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 	}
 
 	dst = schedFindTask(dst_pid);
-	if (dst == 0)
+	if (dst == NULL)
 	{
 		kprintf("vmm_share_region: dst pid %d not found\n", dst_pid);
 		kfree(phys);
@@ -113,7 +113,7 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		u_int32_t kend = PD_INDEX(VMM_KERN_END);
 		u_int32_t x;
 
-		if (vmm_remapPage(dst->md.md_tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0)
+		if (vmm_remap_page(dst->md.md_tss.cr3, VMM_CHILD_PD_WINDOW, KERNEL_PAGE_DEFAULT, _current->id, 0) == 0)
 		{
 			kprintf("vmm_share_region: failed to map dst PD\n");
 			dst->oInfo.vmStart -= n * PAGE_SIZE;
@@ -123,9 +123,9 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		dst_pd = (u_int32_t *)VMM_CHILD_PD_WINDOW;
 		for (x = kstart; x <= kend; x++)
 		{
-			dst_pd[x] = src_pd[x];
+			dst_pd[x] = src_pd[x]; // NOLINT(clang-analyzer-core.FixedAddressDereference)
 		}
-		vmm_unmapPage(VMM_CHILD_PD_WINDOW, 1);
+		vmm_unmap_page(VMM_CHILD_PD_WINDOW, VMM_KEEP);
 	}
 
 	/*
@@ -140,13 +140,13 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 
 	for (i = 0; i < n; i++)
 	{
-		if (vmm_remapPage(phys[i], dst_vaddr + i * PAGE_SIZE, PAGE_DEFAULT | PAGE_SHARED, dst_pid, 0) == 0)
+		if (vmm_remap_page(phys[i], dst_vaddr + i * PAGE_SIZE, PAGE_DEFAULT | PAGE_SHARED, dst_pid, 0) == 0)
 		{
-			kprintf("vmm_share_region: vmm_remapPage failed at page %u\n", i);
+			kprintf("vmm_share_region: vmm_remap_page failed at page %u\n", i);
 			/* Unmap pages already installed before the failure */
 			for (u_int32_t j = 0; j < i; j++)
 			{
-				vmm_unmapPage(dst_vaddr + j * PAGE_SIZE, 1);
+				vmm_unmap_page(dst_vaddr + j * PAGE_SIZE, VMM_KEEP);
 			}
 			asm volatile("movl %0, %%cr3" ::"r"(old_cr3));
 			asm volatile("sti");

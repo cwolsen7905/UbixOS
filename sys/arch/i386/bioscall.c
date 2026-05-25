@@ -72,7 +72,7 @@ void biosCallEx(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int ed
   assert(newProcess);
 
   newProcess->md.md_tss.back_link = 0x0;
-  newProcess->md.md_tss.esp0 = (u_int32_t) vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4);
+  newProcess->md.md_tss.esp0 = (u_int32_t) vmm_get_free_kernel_page(newProcess->id, 2) + (0x2000 - 0x4);
   newProcess->md.md_tss.ss0 = 0x10;
   newProcess->md.md_tss.esp1 = 0x0;
   newProcess->md.md_tss.ss1 = 0x0;

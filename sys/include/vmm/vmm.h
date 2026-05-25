@@ -68,7 +68,7 @@ extern "C" {
 #define VMM_KERN_STACK_START 0xFE000000
 #define VMM_KERN_STACK_END   0xFFFFFFFF
 
-/* Temporary virtual window used by vmm_mapFromTask to inspect another
+/* Temporary virtual window used by vmm_map_from_task to inspect another
  * process's page directory. Must not overlap any permanent kernel mapping. */
 #define VMM_CHILD_PD_WINDOW  0x5A00000
 
@@ -80,29 +80,29 @@ extern "C" {
             u_int16_t reserved;
             pid_t pid;
             int cowCounter;
-    } mMap;
+    } vmm_page_info_t;
 
     typedef enum {
         VMM_FREE = 0,
         VMM_KEEP = 1
     } unmapFlags_t;
 
-    extern int numPages;
-    extern mMap *vmmMemoryMap;
+    extern u_int32_t numPages;
+    extern vmm_page_info_t *vmmMemoryMap;
     extern u_int32_t vmm_bitmap_phys;
 
     int vmm_init();
-    int vmm_memMapInit();
-    int countMemory();
-    u_int32_t vmm_findFreePage(pidType pid);
-    int freePage(u_int32_t pageAddr);
-    int adjustCowCounter(u_int32_t baseAddr, int adjustment);
-    void vmm_freeProcessPages(pidType pid);
+    int vmm_mem_map_init();
+    u_int32_t count_memory();
+    u_int32_t vmm_find_free_page(pidType pid);
+    int free_page(u_int32_t pageAddr);
+    int adjust_cow_counter(u_int32_t baseAddr, int adjustment);
+    void vmm_free_process_pages(pidType pid);
 
-    int vmm_allocPageTable(u_int32_t, pidType);
-    void vmm_unmapPage(u_int32_t, unmapFlags_t);
-    void vmm_unmapPages(void*, u_int32_t, unmapFlags_t);
-    int vmm_freeVirtualPage(u_int32_t addr);
+    int vmm_alloc_page_table(u_int32_t, pidType);
+    void vmm_unmap_page(u_int32_t, unmapFlags_t);
+    void vmm_unmap_pages(void*, u_int32_t, unmapFlags_t);
+    int vmm_free_virtual_page(u_int32_t addr);
     uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid);
 
 #ifdef __cplusplus

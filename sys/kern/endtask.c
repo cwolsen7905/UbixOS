@@ -52,7 +52,7 @@ void endTask(pidType pid)
 
 	/*
 	 * GS = 0xF is an LDT-based selector (LDT entry 1) and the LDT lives at
-	 * VMM_USER_LDT (0x7FF000, PD[1]).  vmm_cleanVirtualSpace frees that page
+	 * VMM_USER_LDT (0x7FF000, PD[1]).  vmm_clean_virtual_space frees that page
 	 * below, so we must clear GS now while the LDT is still mapped.  If the
 	 * scheduler later switches away and back while interrupts are disabled
 	 * (or races via a DEAD-child wakeup), the hardware task switch will try
@@ -68,10 +68,10 @@ void endTask(pidType pid)
 	 * (0x400000) rather than VMM_USER_START (0x800000): PD[1] holds COW'd
 	 * pages from fork and must have its reference counts decremented here.
 	 * PD[0] (0–4 MB identity map) is shared by all processes and must not
-	 * be touched.  systemTask's vmm_freeProcessPages only needs to reclaim
+	 * be touched.  systemTask's vmm_free_process_pages only needs to reclaim
 	 * the private PT/PD physical pages after this runs.
 	 */
-	vmm_cleanVirtualSpace(0x400000U);
+	vmm_clean_virtual_space(0x400000U);
 
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)

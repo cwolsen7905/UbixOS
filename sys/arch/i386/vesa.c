@@ -147,7 +147,7 @@ void vesa_map_fb(void) {
   end  = vesa_fb_paddr + (u_int32_t)vesa_pitch * vesa_height;
 
   for (addr = base; addr < end; addr += PAGE_SIZE)
-    vmm_remapIOPage(addr, KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
+    vmm_remap_io_page(addr, KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID);
 
   kprintf("vesa: LFB mapped 0x%X–0x%X (%u pages)\n",
       base, end, (end - base + PAGE_SIZE - 1) / PAGE_SIZE);

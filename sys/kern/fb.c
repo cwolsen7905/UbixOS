@@ -64,7 +64,7 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 	vaddr = 0x10000000U;
 
 	for (addr = paddr; addr < end; addr += 0x1000, vaddr += 0x1000)
-		vmm_remapPage(addr, vaddr, PAGE_DEFAULT | PAGE_CACHE_DISABLED, pid, 0);
+		vmm_remap_page(addr, vaddr, PAGE_DEFAULT | PAGE_CACHE_DISABLED, pid, 0);
 
 	out->base = (void *)0x10000000U;
 	out->width = vesa_width;

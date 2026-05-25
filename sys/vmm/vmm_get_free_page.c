@@ -27,45 +27,66 @@
  */
 
 #include <vmm/vmm.h>
-#include <vmm/paging.h>
-#include <lib/kprintf.h>
+#include <ubixos/kpanic.h>
+#include <ubixos/spinlock.h>
 
-int vmm_freeVirtualPage(u_int32_t addr)
+static struct spinLock g_vmm_gfp_lock = SPIN_LOCK_INITIALIZER;
+
+/************************************************************************
+
+ Function: void *vmm_get_free_page(pidType pid);
+
+ Description: Returns A Free Page Mapped To The VM Space
+
+ Notes:
+
+ 07/30/02 - This Returns A Free Page In The Top 1GB For The Kernel
+
+ ************************************************************************/
+void *vmm_get_free_page(pidType pid)
 {
-	u_int32_t *page_dir = (u_int32_t *)PD_BASE_ADDR;
-	u_int32_t *page_table = 0x0;
-	u_int32_t pd_index = PD_INDEX(addr);
-	u_int32_t pt_index = PT_INDEX(addr);
-	u_int32_t phys = 0x0;
+	u_int32_t x = 0, y = 0;
+	u_int32_t *page_table_src = NULL;
 
-	addr &= 0xFFFFF000;
+	spinLock(&g_vmm_gfp_lock);
 
-	if ((page_dir[pd_index] & PAGE_PRESENT) != PAGE_PRESENT)
+	/* Lets Search For A Free Page */
+	for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
 	{
-		return (-1);
+
+		/* Set Page Table Address */
+		page_table_src = (u_int32_t *)(PT_BASE_ADDR + (0x1000 * x));
+
+		for (y = 0; y < 1024; y++)
+		{
+
+			/* Loop Through The Page Table Find An UnAllocated Page */
+			if (page_table_src[y] ==
+			    0) // NOLINT(clang-analyzer-core.FixedAddressDereference)
+			{
+
+				/* Map A Physical Page To The Virtual Page */
+				if ((vmm_remap_page(vmm_find_free_page(pid),
+				                   ((x * 0x400000) + (y * 0x1000)),
+				                   KERNEL_PAGE_DEFAULT,
+				                   pid,
+				                   0)) == 0)
+				{
+					kpanic("vmmRemapPage: vmm_get_free_page\n");
+				}
+
+				/* Clear This Page So No Garbage Is There */
+				vmm_clear_virtual_page((x * 0x400000) + (y * 0x1000));
+
+				/* Return The Address Of The Newly Allocate Page */
+				spinUnlock(&g_vmm_gfp_lock);
+				return ((void *)((x * 0x400000) + (y * 0x1000)));
+			}
+		}
 	}
 
-	page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_index * PAGE_SIZE));
+	/* If No Free Page Was Found Return NULL */
+	spinUnlock(&g_vmm_gfp_lock);
 
-	if ((page_table[pt_index] & PAGE_PRESENT) != PAGE_PRESENT)
-	{
-		return (-1);
-	}
-
-	phys = page_table[pt_index] & 0xFFFFF000;
-
-	if ((page_table[pt_index] & PAGE_COW) == PAGE_COW)
-	{
-		adjustCowCounter(phys, -1);
-	}
-	else if ((phys >> 12) < (u_int32_t)numPages)
-	{
-		freePage(phys);
-	}
-
-	page_table[pt_index] = 0x0;
-
-	asm volatile("invlpg (%0)" : : "r"(addr) : "memory");
-
-	return (0);
+	return NULL;
 }

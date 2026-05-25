@@ -25,7 +25,7 @@
 #include <lib/kprintf.h>
 #include <ubixos/sched.h>
 
-static struct driveInfo *g_swap_dev = 0;
+static struct driveInfo *g_swap_dev = NULL;
 static u_int32_t g_swap_total = 0; /* pages actually available */
 static int g_swap_ready = 0;
 
@@ -91,7 +91,7 @@ int swap_read_page(u_int32_t slot, void *virt_addr)
  * Clock-like second-chance: pages with PAGE_ACCESSED set get one reprieve
  * (the bit is cleared) and the scan continues.  The first unaccessed,
  * non-COW, non-MMIO present page is evicted: written to swap, its PTE
- * replaced with a swap encoding, TLB invalidated, and freePage() called
+ * replaced with a swap encoding, TLB invalidated, and free_page() called
  * to return the physical frame to the free pool.
  *
  * Returns the physical address of the reclaimed page, or 0 on failure.
@@ -99,7 +99,7 @@ int swap_read_page(u_int32_t slot, void *virt_addr)
 u_int32_t swap_evict_page(void)
 {
 	u_int32_t *page_dir = (u_int32_t *)PD_BASE_ADDR;
-	u_int32_t *page_table = 0;
+	u_int32_t *page_table = NULL;
 	u_int32_t pd_i, pt_i, pte, phys, vaddr, slot;
 
 	if (!g_swap_ready)
@@ -114,14 +114,15 @@ u_int32_t swap_evict_page(void)
 		for (pd_i = PD_INDEX(VMM_USER_START); pd_i <= PD_INDEX(VMM_USER_END); pd_i++)
 		{
 
-			if ((page_dir[pd_i] & PAGE_PRESENT) != PAGE_PRESENT)
+			if ((page_dir[pd_i] & PAGE_PRESENT) !=
+			    PAGE_PRESENT) // NOLINT(clang-analyzer-core.FixedAddressDereference)
 			{
 				continue;
 			}
 
 			page_table = (u_int32_t *)(PT_BASE_ADDR + (pd_i * PAGE_SIZE));
 
-			for (pt_i = 0; pt_i < (u_int32_t)PT_ENTRIES; pt_i++)
+			for (pt_i = 0; pt_i < PT_ENTRIES; pt_i++)
 			{
 				pte = page_table[pt_i];
 
@@ -135,7 +136,7 @@ u_int32_t swap_evict_page(void)
 				}
 
 				phys = pte & 0xFFFFF000;
-				if ((phys >> 12) >= (u_int32_t)numPages)
+				if ((phys >> 12) >= numPages)
 				{
 					continue; /* MMIO — never evict */
 				}
@@ -168,12 +169,12 @@ u_int32_t swap_evict_page(void)
 				asm volatile("invlpg (%0)" : : "r"(vaddr) : "memory");
 
 				/*
-				 * freePage handles vmmMemoryMap accounting and
-				 * freePages increment; it acquires vmmSpinLock
+				 * free_page handles vmmMemoryMap accounting and
+				 * free_pages increment; it acquires vmmSpinLock
 				 * internally, which is safe here because the
 				 * caller released it before calling us.
 				 */
-				freePage(phys);
+				free_page(phys);
 				return (phys);
 			}
 		}

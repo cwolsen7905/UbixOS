@@ -82,7 +82,7 @@ void systemTask() {
              kprintf("Starting SDE\n");
              //execThread(sdeThread,(u_int32_t)(kmalloc(0x2000)+0x2000),0x0);
              }
-           else if (!strcmp(myMsg.data,"freePage")) {
+           else if (!strcmp(myMsg.data,"free_page")) {
             kprintf("kkk Free Pages");
              }
            else if (!strcmp(myMsg.data,"sdeStop")) {

@@ -163,7 +163,7 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 }
 
 	for (u_int32_t va = base; va < end; va += PAGE_SIZE) {
-		vmm_setPageAttributes(va, flags);
+		vmm_set_page_attributes(va, flags);
 }
 
 	td->td_retval[0] = 0;

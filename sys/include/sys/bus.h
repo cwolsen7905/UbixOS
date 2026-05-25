@@ -135,7 +135,7 @@ void			 ubx_device_free(struct ubx_device *dev);
 /*
  * Claim an MMIO region for dev.
  * Maps [phys_base, phys_base+size) into kernel virtual space using
- * vmm_remapPage with PAGE_CACHE_DISABLED, records in dev->dev_res[].
+ * vmm_remap_page with PAGE_CACHE_DISABLED, records in dev->dev_res[].
  * Returns the kernel virtual base address, or NULL on failure.
  */
 volatile void		*ubx_alloc_memory(struct ubx_device *dev,

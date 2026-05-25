@@ -135,7 +135,7 @@ u_int32_t kmod_load(const char *kmod_file)
 			for (x = 0; x < ((programHeader[i].phMemsz) + 4095); x += 0x1000)
 			{
 				/* make r/w or ro */
-				if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT)) == 0x0)
+				if ((vmm_remap_page(vmm_find_free_page(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT)) == 0x0)
 					kpanic("vmmRemapPage: ld\n");
 				memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
 			}

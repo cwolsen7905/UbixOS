@@ -42,7 +42,7 @@ int      swap_read_page(u_int32_t slot, void *virt_addr);
 
 /*
  * Try to evict one user page from _current's address space.
- * On success, writes the page to swap, updates the PTE, calls freePage,
+ * On success, writes the page to swap, updates the PTE, calls free_page,
  * and returns the physical address of the reclaimed page.
  * Returns 0 if no page could be evicted.
  */

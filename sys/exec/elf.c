@@ -171,8 +171,8 @@ int elf_load_file(kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entr
 			case PT_LOAD:
 				for (x = 0x0; x < (program_header[i].p_memsz + 0xFFF); x += 0x1000)
 				{
-					if (vmm_remapPage(
-					        vmm_findFreePage(_current->id),
+					if (vmm_remap_page(
+					        vmm_find_free_page(_current->id),
 					        ((program_header[i].p_vaddr & 0xFFFFF000) + x + real_base_addr),
 					        PAGE_DEFAULT,
 					        _current->id,
@@ -196,11 +196,11 @@ int elf_load_file(kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entr
 				{
 					for (x = 0x0; x < (program_header[i].p_memsz); x += 0x1000)
 					{
-						if ((vmm_setPageAttributes((program_header[i].p_vaddr & 0xFFFFF000) +
+						if ((vmm_set_page_attributes((program_header[i].p_vaddr & 0xFFFFF000) +
 						                               x + real_base_addr,
 						                           PAGE_PRESENT | PAGE_USER)) != 0x0)
 						{
-							K_PANIC("vmm_setPageAttributes failed");
+							K_PANIC("vmm_set_page_attributes failed");
 						}
 					}
 				}

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,11 +28,9 @@
 
 #include <vmm/vmm.h>
 
-extern int numPages;
-
 /************************************************************************
 
- Function: void vmm_unmapPage(u_int32_t page_addr,int flags);
+ Function: void vmm_unmap_page(u_int32_t page_addr,int flags);
  Description: This Function Will Unmap A Page From The Kernel VM Space
  The Flags Variable Decides If Its To Free The Page Or Not
  A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -47,18 +45,19 @@ extern int numPages;
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
+void vmm_unmap_page(u_int32_t page_addr, unmapFlags_t flags)
 {
 	u_int32_t page_directory_index = 0, page_table_index = 0;
-	u_int32_t *page_table = 0x0;
-	u_int32_t *page_directory = 0x0;
+	u_int32_t *page_table = NULL;
+	u_int32_t *page_directory = NULL;
 
 	page_directory = (u_int32_t *)PD_BASE_ADDR;
 
 	/* Get The Index To The Page Directory */
 	page_directory_index = (page_addr >> 22);
 
-	if ((page_directory[page_directory_index] & PAGE_PRESENT) != PAGE_PRESENT)
+	if ((page_directory[page_directory_index] & PAGE_PRESENT) !=
+	    PAGE_PRESENT) // NOLINT(clang-analyzer-core.FixedAddressDereference)
 	{
 		return;
 	}
@@ -73,14 +72,14 @@ void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
 	if (flags == 0 && (page_table[page_table_index] & PAGE_PRESENT))
 	{
 		u_int32_t phys = page_table[page_table_index] & 0xFFFFF000;
-		if ((phys >> 12) < (u_int32_t)numPages)
+		if ((phys >> 12) < numPages)
 		{
-			freePage(phys);
+			free_page(phys);
 		}
 	}
 
 	/* Unmap The Page */
-	page_table[page_table_index] = 0x0;
+	page_table[page_table_index] = 0;
 
 	/* Rehash The Page Directory */
 	asm volatile("movl %cr3,%eax\n"
@@ -92,7 +91,7 @@ void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
 
 /************************************************************************
 
- Function: void vmm_unmapPages(u_int32_t page_addr,int flags);
+ Function: void vmm_unmap_pages(u_int32_t page_addr,int flags);
  Description: This Function Will Unmap A Page From The Kernel VM Space
  The Flags Variable Decides If Its To Free The Page Or Not
  A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -107,14 +106,14 @@ void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPages(void *ptr, u_int32_t size, unmapFlags_t flags)
+void vmm_unmap_pages(void *ptr, u_int32_t size, unmapFlags_t flags)
 {
 	u_int32_t addr = (u_int32_t)ptr & 0xFFFFF000;
 	u_int32_t end = addr + (((size + 4095) / 4096) * 4096);
 
 	while (addr < end)
 	{
-		vmm_unmapPage(addr, flags);
+		vmm_unmap_page(addr, flags);
 		addr += 4096;
 	}
 	return;

@@ -197,7 +197,7 @@ u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg, const char
 		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
 	stackAddr =
-	    (u_int32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
+	    (u_int32_t)vmm_get_free_kernel_page(newProcess->id, stack / PAGE_SIZE);
 
 	/* Set All The Correct Thread Attributes */
 	newProcess->md.md_tss.back_link = 0x0;
@@ -348,7 +348,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	/* Now We Must Create A Virtual Space For This Proccess To Run In */
 	memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
-	newProcess->md.md_tss.cr3 = (u_int32_t)vmm_createVirtualSpace(newProcess->id);
+	newProcess->md.md_tss.cr3 = (u_int32_t)vmm_create_virtual_space(newProcess->id);
 
 	/* To Better Load This Application We Will Switch Over To Its VM Space
 	 */
@@ -448,8 +448,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 			     x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
-				if (vmm_remapPage(
-				        vmm_findFreePage(newProcess->id),
+				if (vmm_remap_page(
+				        vmm_find_free_page(newProcess->id),
 				        ((programHeader[i].p_vaddr &
 				          0xFFFFF000) +
 				         x),
@@ -475,14 +475,14 @@ void execFile(char *file, char **argv, char **envp, int console)
 				for (x = 0x0; x < (int)programHeader[i].p_memsz;
 				     x += 0x1000)
 				{
-					if ((vmm_setPageAttributes(
+					if ((vmm_set_page_attributes(
 					        (programHeader[i].p_vaddr &
 					         0xFFFFF000) +
 					            x,
 					        PAGE_PRESENT | PAGE_USER)) !=
 					    0x0)
 						kpanic("Error: "
-						       "vmm_setPageAttributes "
+						       "vmm_set_page_attributes "
 						       "failed, File: %s, "
 						       "Line: %i\n",
 						       __FILE__, __LINE__);
@@ -521,7 +521,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	// address -1 fix!
 	for (x = 1; x <= 100; x++)
 	{
-		vmm_remapPage(vmm_findFreePage(newProcess->id),
+		vmm_remap_page(vmm_find_free_page(newProcess->id),
 		              (STACK_ADDR + 1) - (x * PAGE_SIZE),
 		              PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
 		bzero((void *)((STACK_ADDR + 1) - (x * PAGE_SIZE)), PAGE_SIZE);
@@ -529,13 +529,13 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	/* Kernel Stack 0x2000 bytes long */
 
-	// vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000,
+	// vmm_remap_page(vmm_find_free_page(newProcess->id), 0x5BC000,
 	// KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
-	// vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000,
+	// vmm_remap_page(vmm_find_free_page(newProcess->id), 0x5BB000,
 	// KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
 	/*
 	for (x = 0; x < 2; x++)
-	  vmm_remapPage(vmm_findFreePage(newProcess->id), 0xFFFFF000 -
+	  vmm_remap_page(vmm_find_free_page(newProcess->id), 0xFFFFF000 -
 	(PAGE_SIZE * x), KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
 	*/
 
@@ -621,9 +621,9 @@ void execFile(char *file, char **argv, char **envp, int console)
 	}
 
 	/* Build LDT For GS and FS */
-	vmm_unmapPage(VMM_USER_LDT, 1);
+	vmm_unmap_page(VMM_USER_LDT, VMM_KEEP);
 
-	if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_LDT,
+	if (vmm_remap_page(vmm_find_free_page(newProcess->id), VMM_USER_LDT,
 	                  PAGE_DEFAULT, newProcess->id, 0) == 0x0)
 	{
 		K_PANIC("Error: Remap Page Failed");
@@ -794,19 +794,19 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	}
 
 	//! Clean the virtual of COW pages left over from the fork
-	// vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr +
+	// vmm_clean_virtual_space( (u_int32_t) _current->td.vm_daddr +
 	// (_current->td.vm_dsize << PAGE_SHIFT) ); MrOlsen 2017-12-15 - FIX! -
 	// This should be done before it was causing a lot of problems why did I
-	// free space after loading binary???? vmm_cleanVirtualSpace((u_int32_t)
+	// free space after loading binary???? vmm_clean_virtual_space((u_int32_t)
 	// 0x8048000);
 	vm_map_free(&_current->vm_map);
-	vmm_cleanVirtualSpace((u_int32_t)VMM_USER_START);
+	vmm_clean_virtual_space((u_int32_t)VMM_USER_START);
 
 	/* Clear Stack */
 	// bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
 	for (x = 1; x <= 100; x++)
 	{
-		vmm_remapPage(vmm_findFreePage(_current->id),
+		vmm_remap_page(vmm_find_free_page(_current->id),
 		              (STACK_ADDR + 1) - (x * 0x1000),
 		              PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
 		bzero((void *)((STACK_ADDR + 1) - (x * 0x1000)), 0x1000);
@@ -863,8 +863,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 			     x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
-				if (vmm_remapPage(
-				        vmm_findFreePage(_current->id),
+				if (vmm_remap_page(
+				        vmm_find_free_page(_current->id),
 				        ((programHeader[i].p_vaddr &
 				          0xFFFFF000) +
 				         x),
@@ -899,14 +899,14 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 				     x < (round_page(programHeader[i].p_memsz));
 				     x += 0x1000)
 				{
-					if ((vmm_setPageAttributes(
+					if ((vmm_set_page_attributes(
 					        (programHeader[i].p_vaddr &
 					         0xFFFFF000) +
 					            x,
 					        PAGE_PRESENT | PAGE_USER)) !=
 					    0x0)
 						kpanic("Error: "
-						       "vmm_setPageAttributes "
+						       "vmm_set_page_attributes "
 						       "failed, File: %s,Line: "
 						       "%i\n",
 						       __FILE__, __LINE__);
@@ -1174,8 +1174,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	 */
 
 	/* Build LDT For GS and FS */
-	vmm_unmapPage(VMM_USER_LDT, 1); // Can I Free This?
-	if (vmm_remapPage(vmm_findFreePage(_current->id), VMM_USER_LDT,
+	vmm_unmap_page(VMM_USER_LDT, VMM_KEEP); // Can I Free This?
+	if (vmm_remap_page(vmm_find_free_page(_current->id), VMM_USER_LDT,
 	                  PAGE_DEFAULT, _current->id, 0) == 0x0)
 	{
 		K_PANIC("Error: Remap Page Failed");

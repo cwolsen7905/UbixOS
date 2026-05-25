@@ -157,7 +157,7 @@ void trap(struct trapframe *frame)
 	if (frame->tf_eflags & PSL_VM)
 	{
 		if (frame->tf_trapno == 0xc)
-			vmm_pageFault(frame, cr2);
+			vmm_page_fault(frame, cr2);
 		else
 			endTask(_current->id);
 		return;
@@ -189,7 +189,7 @@ void trap(struct trapframe *frame)
 
 	if (frame->tf_trapno == 0xc)
 	{
-		vmm_pageFault(frame, cr2);
+		vmm_page_fault(frame, cr2);
 	}
 	else
 	{

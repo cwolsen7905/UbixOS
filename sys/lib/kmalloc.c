@@ -67,9 +67,9 @@ static struct memDescriptor *getEmptyDesc(void)
 		return (tmpDesc);
 	}
 
-	emptyKernDesc = (struct memDescriptor *)vmm_getFreeMallocPage(4);
+	emptyKernDesc = (struct memDescriptor *)vmm_get_free_malloc_page(4);
 	if (emptyKernDesc == 0x0)
-		kpanic("kmalloc: vmm_getFreeMallocPage returned NULL\n");
+		kpanic("kmalloc: vmm_get_free_malloc_page returned NULL\n");
 
 	memset(emptyKernDesc, 0x0, 0x4000);
 
@@ -246,7 +246,7 @@ void *kmalloc(u_int32_t len)
 	}
 
 	pages = (len + 4095) / 4096;
-	tmpDesc1->baseAddr = (struct memDescriptor *)vmm_getFreeMallocPage(pages);
+	tmpDesc1->baseAddr = (struct memDescriptor *)vmm_get_free_malloc_page(pages);
 	if (tmpDesc1->baseAddr == 0x0)
 	{
 		returnEmptyDesc(tmpDesc1);
