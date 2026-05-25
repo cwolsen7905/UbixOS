@@ -1,14 +1,7 @@
-# $Id: Makefile.inc 103 2016-01-12 05:32:24Z reddawg $
+# (C) 2002-2026 The UbixOS Project
 # 'lib' options
 
-UNAME_S != uname -s
-.if ${UNAME_S} == "Darwin"
-CROSS_PREFIX?=x86_64-elf-
-CROSS_M32?=-m32
-.else
-CROSS_PREFIX?=
-CROSS_M32?=
-.endif
+.include "${UBIX_MK}/ubix.platform.mk"
 
 CC=${CROSS_PREFIX}gcc
 CXX=${CROSS_PREFIX}g++
@@ -28,5 +21,5 @@ INCLUDES = -I${MUSL_SRC}/include \
            -I${MUSL_SRC}/arch/i386 \
            -I${MUSL_SRC}/arch/generic \
            -I${SRCTOP}/include
-CFLAGS = -m32 ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti -O \
+CFLAGS = ${CROSS_M32} ${WFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti -O \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -fPIC -MMD -MP

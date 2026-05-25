@@ -25,7 +25,15 @@ SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
 KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"
-GRUB_LIB="/opt/homebrew/Cellar/i686-elf-grub/2.12/lib/i686-elf/grub/i386-pc"
+# Detect GRUB library directory dynamically.
+# On macOS use brew --prefix; on Linux fall back to the system grub path.
+if command -v brew >/dev/null 2>&1 && brew --prefix i686-elf-grub >/dev/null 2>&1; then
+    GRUB_LIB="$(brew --prefix i686-elf-grub)/lib/i686-elf/grub/i386-pc"
+elif [ -d /usr/lib/grub/i386-pc ]; then
+    GRUB_LIB="/usr/lib/grub/i386-pc"
+else
+    GRUB_LIB="/opt/homebrew/lib/i686-elf/grub/i386-pc"
+fi
 
 # ── Preflight checks ────────────────────────────────────────────────────────
 for cmd in qemu-img mformat mmd mcopy i686-elf-grub-mkimage python3; do

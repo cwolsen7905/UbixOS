@@ -12,23 +12,16 @@
 #
 # Optional:
 #   EXTRA_LDFLAGS — appended to the link command
+#   EXTRA_LIBS    — extra archives/objects inserted inside --start-group
 #   EXTRA_CFLAGS  — appended to per-file compilation
 
+.include "${UBIX_MK}/ubix.musl.vars.mk"
+
 EXTRA_LDFLAGS ?=
+EXTRA_LIBS    ?=
 EXTRA_CFLAGS  ?=
 
-MUSL_SRC   = ${SRCTOP}/contrib/musl
-MUSL_OBJ   = ${OBJ_DIR}/obj/musl
-MUSL_LIB   = ${MUSL_OBJ}/lib
-LIBCXX_SRC = ${SRCTOP}/contrib/libcxx
-
-MUSL_INC = -I${MUSL_SRC}/include \
-           -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 \
-           -I${MUSL_SRC}/arch/generic
-
-LIBCXX_INC = -I${LIBCXX_SRC}/include \
-             -I${SRCTOP}/contrib/libcxxabi/include
+MUSL_INC = ${MUSL_BASE_INC}
 
 CXX_CFLAGS = ${CROSS_M32} -std=c++20 \
              -nostdlib -nostdinc -nostdinc++ -fno-builtin \
@@ -78,6 +71,7 @@ $(BINARY): $(OBJS)
 		${_OBJS_FULL} \
 		${OBJ_DIR}/lib/ubix_api.a \
 		-Wl,--start-group \
+		${EXTRA_LIBS} \
 		-L${OBJ_DIR}/lib -lc -lobjgfx \
 		${OBJ_DIR}/lib/libcxx.a \
 		${OBJ_DIR}/lib/libcxxabi.a \

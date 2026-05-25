@@ -56,6 +56,12 @@ _USB_FLAGS!= test -f ${USB_IMAGE} && \
 
 # ── Primary targets ──────────────────────────────────────────────────────────
 
+.PHONY: all kernel musl-libc world makeuser image usb-image \
+        mount-image unmount-image \
+        install-kernel install-world install \
+        run run-debug run-en0 run-shared \
+        kernel-to-image clean-kernel clean
+
 all: kernel world image
 kernel:
 	@mkdir -p ${OBJ_DIR}/boot ${OBJ_DIR}/obj/sys
@@ -79,7 +85,7 @@ musl-libc:
 	    -ffreestanding -fno-pie -fno-pic -nostdinc -std=c99 -O2 \
 	    -c ${CURDIR}/tools/libgcc32.c -o ${OBJ_DIR}/obj/musl/libgcc32.o
 	${CROSS_PREFIX}ar rcs ${OBJ_DIR}/lib/libgcc32.a ${OBJ_DIR}/obj/musl/libgcc32.o
-	/usr/bin/make -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
+	${GNU_MAKE} -C ${OBJ_DIR}/obj/musl -f ${CURDIR}/contrib/musl/Makefile \
 	    srcdir=${CURDIR}/contrib/musl ARCH=i386 \
 	    LD=${CROSS_PREFIX}ld \
 	    LIBCC=${OBJ_DIR}/lib/libgcc32.a
@@ -303,6 +309,6 @@ clean:
 	(cd contrib/libcxxabi;${MAKE} clean)
 	(cd contrib/libcxx;${MAKE} clean)
 	@if [ -f ${OBJ_DIR}/obj/musl/Makefile ]; then \
-		/usr/bin/make -C ${OBJ_DIR}/obj/musl clean; \
+		${GNU_MAKE} -C ${OBJ_DIR}/obj/musl clean; \
 	fi
 	rm -rf ${OBJ_DIR}/obj/lib
