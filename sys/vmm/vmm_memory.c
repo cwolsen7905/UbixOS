@@ -332,15 +332,15 @@ retry:
 int freePage(u_int32_t page_addr)
 {
 
-	int page_index = 0x0;
+	u_int32_t page_index = 0x0;
 	assert((page_addr & 0xFFF) == 0x0);
 
 	/* Find The Page Index To The Memory Map */
-	page_index = (page_addr / 4096);
+	page_index = page_addr / 4096;
 
-	if (page_index < 0 || page_index >= numPages)
+	if (page_index >= (u_int32_t)numPages)
 	{
-		kprintf("freePage: addr 0x%X out of bounds (index %i numPages %i mmap 0x%X)\n",
+		kprintf("freePage: addr 0x%X out of bounds (index %u numPages %i mmap 0x%X)\n",
 		        page_addr,
 		        page_index,
 		        numPages,
@@ -386,13 +386,13 @@ int freePage(u_int32_t page_addr)
 int adjustCowCounter(u_int32_t base_addr, int adjustment)
 {
 
-	int vmm_memory_map_index = (base_addr / PAGE_SIZE);
+	u_int32_t vmm_memory_map_index = base_addr / PAGE_SIZE;
 
 	assert((base_addr & 0xFFF) == 0x0);
 
-	if (vmm_memory_map_index < 0 || vmm_memory_map_index >= numPages)
+	if (vmm_memory_map_index >= (u_int32_t)numPages)
 	{
-		kprintf("adjustCowCounter: addr 0x%X out of bounds (index %i, numPages %i)\n",
+		kprintf("adjustCowCounter: addr 0x%X out of bounds (index %u, numPages %i)\n",
 		        base_addr,
 		        vmm_memory_map_index,
 		        numPages);

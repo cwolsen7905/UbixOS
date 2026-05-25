@@ -202,7 +202,7 @@ keepMapping:
 		{
 			map_from = start_page;
 		}
-		counter += PT_ENTRIES - PT_INDEX(start_page);
+		counter += (int)(PT_ENTRIES - PT_INDEX(start_page));
 		if (counter >= count)
 		{
 			goto gotRange;

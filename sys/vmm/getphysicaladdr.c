@@ -37,7 +37,7 @@
 /* returns the real address of page is page aligned */
 u_int32_t vmm_getPhysicalAddr(u_int32_t page_addr)
 {
-	int page_directory_index = 0x0, page_table_index = 0x0;
+	u_int32_t page_directory_index = 0x0, page_table_index = 0x0;
 	u_int32_t *page_table = 0x0;
 
 	// Calculate The Page Directory Index
@@ -56,7 +56,7 @@ u_int32_t vmm_getPhysicalAddr(u_int32_t page_addr)
 /* Returns the real address not page aligned */
 u_int32_t vmm_getRealAddr(u_int32_t addr)
 {
-	int page_directory_index = 0x0, page_table_index = 0x0;
+	u_int32_t page_directory_index = 0x0, page_table_index = 0x0;
 	u_int32_t *page_table = 0x0;
 
 	// Calculate The Page Directory Index

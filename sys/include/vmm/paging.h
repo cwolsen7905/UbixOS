@@ -93,7 +93,7 @@ void *vmm_reserve_anon_range(pidType pid, int count);
 u_int32_t vmm_getPhysicalAddr(u_int32_t);
 u_int32_t vmm_getRealAddr(u_int32_t);
 int vmm_setPageAttributes(u_int32_t, u_int16_t);
-int vmm_remapPage(u_int32_t, u_int32_t, u_int16_t, pidType, int haveLock);
+u_int32_t vmm_remapPage(u_int32_t, u_int32_t, u_int16_t, pidType, int haveLock);
 int vmm_remapIOPage(u_int32_t phys, u_int16_t perms, pidType pid);
 int vmm_pagingInit();
 void *vmm_getFreeMallocPage(u_int16_t count);

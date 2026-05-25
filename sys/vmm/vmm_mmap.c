@@ -89,7 +89,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 				vmm_unmapPage(map_base + x, VMM_FREE);
 			}
 			vm_map_insert(&_current->vm_map, map_base, map_end, VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
-			td->td_retval[0] = (u_int32_t)uap->addr;
+			td->td_retval[0] = (int)(u_int32_t)uap->addr;
 			return (0x0);
 		}
 
@@ -106,7 +106,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		              (uintptr_t)mmap_tmp + round_page(uap->len),
 		              VM_PROT_RW,
 		              VM_MAP_ANON);
-		td->td_retval[0] = (int)mmap_tmp;
+		td->td_retval[0] = (int)(uintptr_t)mmap_tmp;
 		return (0x0);
 	}
 	else
@@ -144,9 +144,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		kern_fseek(fd->fd, uap->pos, 0x0);
 		fread(tmp, uap->len, 0x1, fd->fd);
 
-		td->td_retval[0] = (u_int32_t)tmp;
+		td->td_retval[0] = (int)(uintptr_t)tmp;
 
-		if (td->td_retval[0] == (caddr_t)-1)
+		if (tmp == (caddr_t)-1)
 		{
 			kpanic("MMAP_FAILED");
 		}

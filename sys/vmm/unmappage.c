@@ -49,7 +49,7 @@ extern int numPages;
  ************************************************************************/
 void vmm_unmapPage(u_int32_t page_addr, unmapFlags_t flags)
 {
-	int page_directory_index = 0, page_table_index = 0;
+	u_int32_t page_directory_index = 0, page_table_index = 0;
 	u_int32_t *page_table = 0x0;
 	u_int32_t *page_directory = 0x0;
 

@@ -240,7 +240,7 @@ int vmm_pagingInit()
  07/28/04 - If perms == 0x0 set to PAGE_DEFAULT
 
  *****************************************************************************************/
-int vmm_remapPage(u_int32_t source, u_int32_t dest, u_int16_t perms, pidType pid, int have_lock)
+u_int32_t vmm_remapPage(u_int32_t source, u_int32_t dest, u_int16_t perms, pidType pid, int have_lock)
 {
 
 	u_int16_t dest_page_directory_index = 0x0, dest_page_table_index = 0x0;
@@ -351,7 +351,7 @@ rmDone:
 		}
 	}
 
-	return (source);
+	return source;
 }
 
 /* Map a physical MMIO page (e.g. framebuffer) to the same virtual address.
@@ -388,7 +388,7 @@ int vmm_remapIOPage(u_int32_t phys, u_int16_t perms, pidType pid)
 	             "pop  %eax     \n");
 
 	spinUnlock(&pdSpinLock);
-	return phys;
+	return 0;
 }
 
 /************************************************************************
@@ -771,7 +771,7 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	/* brk(0): return current break (Linux ABI compatible) */
 	if (uap->nsize == 0)
 	{
-		td->td_retval[0] = old;
+		td->td_retval[0] = (int)old;
 		return (0x0);
 	}
 
@@ -780,7 +780,7 @@ int obreak(struct thread *td, struct obreak_args *uap)
 	/* Invalid address below data segment — return old break to signal failure */
 	if (new < base)
 	{
-		td->td_retval[0] = old;
+		td->td_retval[0] = (int)old;
 		return (0x0);
 	}
 
@@ -790,12 +790,12 @@ int obreak(struct thread *td, struct obreak_args *uap)
 		{
 			if (vmm_remapPage(vmm_findFreePage(_current->id), i, PAGE_DEFAULT, _current->id, 0) == 0x0)
 			{
-				td->td_retval[0] = old;
+				td->td_retval[0] = (int)old;
 				return (0x0);
 			}
 		}
 		td->vm_dsize += btoc(new - old);
-		td->td_retval[0] = new;
+		td->td_retval[0] = (int)new;
 	}
 	else if (new < old)
 	{
@@ -841,11 +841,11 @@ int obreak(struct thread *td, struct obreak_args *uap)
 		             :
 		             : "eax", "memory");
 
-		td->td_retval[0] = new;
+		td->td_retval[0] = (int)new;
 	}
 	else
 	{
-		td->td_retval[0] = old;
+		td->td_retval[0] = (int)old;
 	}
 
 	return (0x0);
