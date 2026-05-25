@@ -29,6 +29,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  * ioctl commands for /dev/audio.
  * arg points to a uint32_t for GET/SET rate.
@@ -61,5 +65,9 @@ int  audio_write(int fd, const void *buf, int n);
  * Close the audio device.
  */
 void audio_close(int fd);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* _AUDIO_AUDIO_H */

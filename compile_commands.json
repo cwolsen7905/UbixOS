@@ -675,6 +675,33 @@
     ]
   },
   {
+    "file": "/Users/cwolsen/git/UbixOS/sys/arch/i386/smp.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/arch/i386",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/arch/i386/smp.c"
+    ]
+  },
+  {
     "file": "/Users/cwolsen/git/UbixOS/sys/arch/i386/spinlock.c",
     "directory": "/Users/cwolsen/git/UbixOS/sys/arch/i386",
     "arguments": [
@@ -1026,6 +1053,114 @@
     ]
   },
   {
+    "file": "/Users/cwolsen/git/UbixOS/sys/exec/elf.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/exec",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/exec/elf.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/exec/execve.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/exec",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/exec/execve.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/exec/kern_execve.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/exec",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/exec/kern_execve.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/exec/ld.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/exec",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/exec/ld.c"
+    ]
+  },
+  {
     "file": "/Users/cwolsen/git/UbixOS/sys/fs/common/crc32.c",
     "directory": "/Users/cwolsen/git/UbixOS/sys/fs/common",
     "arguments": [
@@ -1323,7 +1458,7 @@
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/fs/ubixfs/dirCache.c",
+    "file": "/Users/cwolsen/git/UbixOS/sys/fs/ubixfs/dir_cache.c",
     "directory": "/Users/cwolsen/git/UbixOS/sys/fs/ubixfs",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
@@ -1346,7 +1481,7 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/fs/ubixfs/dirCache.c"
+      "/Users/cwolsen/git/UbixOS/sys/fs/ubixfs/dir_cache.c"
     ]
   },
   {
@@ -2143,8 +2278,8 @@
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/access.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/access.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2166,12 +2301,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/access.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/access.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/descrip.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/descrip.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2193,12 +2328,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/descrip.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/descrip.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/elf.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/endtask.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2220,12 +2355,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/elf.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/endtask.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/endtask.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/fb.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2247,12 +2382,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/endtask.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/fb.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/execve.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/kern_sysctl.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2274,12 +2409,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/execve.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/kern_sysctl.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/fb.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/klog.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2301,12 +2436,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/fb.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/klog.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/gen_calls.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/sched_core.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2328,12 +2463,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/gen_calls.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/sched_core.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/kern_execve.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/shutdown.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2355,12 +2490,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/kern_execve.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/shutdown.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/kern_pipe.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/syscall.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2382,12 +2517,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/kern_pipe.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/syscall.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/kern_sig.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/syscalls.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2409,12 +2544,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/kern_sig.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/syscalls.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/kern_sysctl.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/ubthread.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2436,12 +2571,12 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/kern_sysctl.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/ubthread.c"
     ]
   },
   {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/klog.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
+    "file": "/Users/cwolsen/git/UbixOS/sys/kern/vitals.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/kern",
     "arguments": [
       "/opt/homebrew/bin/x86_64-elf-gcc",
       "-m32",
@@ -2463,439 +2598,7 @@
       "-mno-3dnow",
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/klog.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/ld.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/ld.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/pipe.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/pipe.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/sched_core.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/sched_core.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/sem.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/sem.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/shutdown.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/shutdown.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/signal.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/signal.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/smp.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/smp.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/syscall.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/syscall.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/syscall_posix.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/syscall_posix.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/syscalls.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/syscalls.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/syscalls_posix.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/syscalls_posix.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/time.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/time.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/tty.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/tty.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/ubthread.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/ubthread.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/vfs_calls.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/vfs_calls.c"
-    ]
-  },
-  {
-    "file": "/Users/cwolsen/git/UbixOS/sys/kernel/vitals.c",
-    "directory": "/Users/cwolsen/git/UbixOS/sys/kernel",
-    "arguments": [
-      "/opt/homebrew/bin/x86_64-elf-gcc",
-      "-m32",
-      "-DDEBUG_SYSCTL",
-      "-O",
-      "-Wall",
-      "-Wno-incompatible-pointer-types",
-      "-nostdlib",
-      "-nostdinc",
-      "-fno-builtin",
-      "-fno-exceptions",
-      "-ffreestanding",
-      "-fno-pie",
-      "-fno-pic",
-      "-fno-stack-protector",
-      "-mno-sse",
-      "-mno-sse2",
-      "-mno-mmx",
-      "-mno-3dnow",
-      "-I/Users/cwolsen/git/UbixOS/sys/include",
-      "-c",
-      "/Users/cwolsen/git/UbixOS/sys/kernel/vitals.c"
+      "/Users/cwolsen/git/UbixOS/sys/kern/vitals.c"
     ]
   },
   {
@@ -3141,6 +2844,33 @@
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
       "/Users/cwolsen/git/UbixOS/sys/lib/net.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/lib/rbtree.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/lib",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/lib/rbtree.c"
     ]
   },
   {
@@ -5070,6 +4800,303 @@
     ]
   },
   {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/gen_calls.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/gen_calls.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/kern_pipe.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/kern_pipe.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/kern_sig.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/kern_sig.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/pipe.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/pipe.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/sem.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/sem.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/signal.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/signal.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/syscall_posix.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/syscall_posix.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/syscalls_posix.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/syscalls_posix.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/time.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/time.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/tty.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/tty.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/posix/vfs_calls.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/posix",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/posix/vfs_calls.c"
+    ]
+  },
+  {
     "file": "/Users/cwolsen/git/UbixOS/sys/sys/bus.c",
     "directory": "/Users/cwolsen/git/UbixOS/sys/sys",
     "arguments": [
@@ -5583,6 +5610,33 @@
     ]
   },
   {
+    "file": "/Users/cwolsen/git/UbixOS/sys/vmm/pageout.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/vmm",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/vmm/pageout.c"
+    ]
+  },
+  {
     "file": "/Users/cwolsen/git/UbixOS/sys/vmm/paging.c",
     "directory": "/Users/cwolsen/git/UbixOS/sys/vmm",
     "arguments": [
@@ -5688,6 +5742,33 @@
       "-I/Users/cwolsen/git/UbixOS/sys/include",
       "-c",
       "/Users/cwolsen/git/UbixOS/sys/vmm/unmappage.c"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/sys/vmm/vm_map.c",
+    "directory": "/Users/cwolsen/git/UbixOS/sys/vmm",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-gcc",
+      "-m32",
+      "-DDEBUG_SYSCTL",
+      "-O",
+      "-Wall",
+      "-Wno-incompatible-pointer-types",
+      "-nostdlib",
+      "-nostdinc",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-fno-stack-protector",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/sys/include",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/sys/vmm/vm_map.c"
     ]
   },
   {
@@ -6766,6 +6847,37 @@
       "-D_LIBCPP_HAS_NO_EXCEPTIONS",
       "-c",
       "/Users/cwolsen/git/UbixOS/bin/term/term.cc"
+    ]
+  },
+  {
+    "file": "/Users/cwolsen/git/UbixOS/bin/tessera/main.cc",
+    "directory": "/Users/cwolsen/git/UbixOS/bin/tessera",
+    "arguments": [
+      "/opt/homebrew/bin/x86_64-elf-g++",
+      "-m32",
+      "-nostdinc",
+      "-nostdinc++",
+      "-fno-builtin",
+      "-ffreestanding",
+      "-fno-pie",
+      "-fno-pic",
+      "-mno-sse",
+      "-mno-sse2",
+      "-mno-mmx",
+      "-mno-3dnow",
+      "-I/Users/cwolsen/git/UbixOS/include",
+      "-I/Users/cwolsen/git/UbixOS/contrib/musl/include",
+      "-I/Users/cwolsen/git/UbixOS/build/obj/musl/obj/include",
+      "-I/Users/cwolsen/git/UbixOS/contrib/musl/arch/i386",
+      "-I/Users/cwolsen/git/UbixOS/contrib/musl/arch/generic",
+      "-I/Users/cwolsen/git/UbixOS/contrib/libcxx/include",
+      "-I/Users/cwolsen/git/UbixOS/contrib/libcxxabi/include",
+      "-std=c++20",
+      "-fno-rtti",
+      "-fno-exceptions",
+      "-D_LIBCPP_HAS_NO_EXCEPTIONS",
+      "-c",
+      "/Users/cwolsen/git/UbixOS/bin/tessera/main.cc"
     ]
   },
   {
