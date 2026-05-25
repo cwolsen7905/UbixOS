@@ -1,0 +1,45 @@
+name: Build UbixOS
+
+on:
+  push:
+    branches: [ master, 'feature/**' ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc-multilib \
+            bmake \
+            qemu-utils \
+            mtools \
+            grub-pc-bin \
+            grub-common \
+            python3
+
+      - name: Build kernel
+        run: bmake kernel
+
+      - name: Build world
+        run: bmake world
+
+      - name: Create disk image
+        run: bmake image
+
+      - name: Zip disk image
+        run: zip ubixos.img.zip ubixos.img
+
+      - name: Upload disk image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubixos-img-${{ github.sha }}
+          path: ubixos.img.zip
+          retention-days: 7
