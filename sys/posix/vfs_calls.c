@@ -805,7 +805,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		if (_current->ct_tty == NULL && _current->term == NULL)
 		{
 			fdestroy(thr, nfp, fd);
-			thr->td_retval[0] = ENXIO;
+			thr->td_retval[0] = -ENXIO;
 			return (ENXIO);
 		}
 		/* If no explicit ct_tty yet, promote the inherited term. */
@@ -827,7 +827,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		if (t == NULL)
 		{
 			fdestroy(thr, nfp, fd);
-			thr->td_retval[0] = ENODEV;
+			thr->td_retval[0] = -ENODEV;
 			return (ENODEV);
 		}
 		nfp->fd = NULL;
@@ -852,7 +852,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 			if (src == NULL)
 			{
 				fdestroy(thr, nfp, fd);
-				thr->td_retval[0] = EBADF;
+				thr->td_retval[0] = -EBADF;
 				return (EBADF);
 			}
 			memcpy(nfp, src, sizeof(struct file));
@@ -900,7 +900,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		if (kdir == NULL)
 		{
 			fdestroy(thr, nfp, fd);
-			thr->td_retval[0] = ENOENT;
+			thr->td_retval[0] = -ENOENT;
 			return (ENOENT);
 		}
 		nfp->fd_type = FD_TYPE_DIR;
@@ -926,7 +926,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 			kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 }
 
-		thr->td_retval[0] = ENOENT;
+		thr->td_retval[0] = -ENOENT;
 		return (ENOENT);
 	}
 
