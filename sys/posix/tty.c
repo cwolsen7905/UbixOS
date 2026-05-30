@@ -323,6 +323,70 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 			break;
 		}
 		break;
+	case 'L':
+	{ /* insert lines — shift rows at cursor and below down by p0 */
+		unsigned int j;
+		if (p0 == 0)
+			p0 = 1;
+		if (p0 > 25u - row)
+			p0 = 25u - row;
+		for (i = 25u; i > row + p0; i--)
+		{
+			unsigned int dst = (i - 1) * 160u;
+			unsigned int src = (i - 1 - p0) * 160u;
+			for (j = 0; j < 160u; j++)
+				term->tty_pointer[dst + j] = term->tty_pointer[src + j];
+		}
+		for (i = row; i < row + p0; i++)
+		{
+			for (j = 0; j < 80u; j++)
+			{
+				term->tty_pointer[i * 160u + j * 2u] = ' ';
+				term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
+			}
+		}
+		break;
+	}
+	case 'M':
+	{ /* delete lines — shift rows below cursor up by p0 */
+		unsigned int j;
+		if (p0 == 0)
+			p0 = 1;
+		if (p0 > 25u - row)
+			p0 = 25u - row;
+		for (i = row; i + p0 < 25u; i++)
+		{
+			unsigned int dst = i * 160u;
+			unsigned int src = (i + p0) * 160u;
+			for (j = 0; j < 160u; j++)
+				term->tty_pointer[dst + j] = term->tty_pointer[src + j];
+		}
+		for (i = 25u - p0; i < 25u; i++)
+		{
+			for (j = 0; j < 80u; j++)
+			{
+				term->tty_pointer[i * 160u + j * 2u] = ' ';
+				term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
+			}
+		}
+		break;
+	}
+	case '@': /* insert characters — shift chars at cursor right by p0 */
+		if (p0 == 0)
+			p0 = 1;
+		if (p0 > 80u - col)
+			p0 = 80u - col;
+		for (i = 80u; i > col + p0; i--)
+		{
+			term->tty_pointer[row * 160u + (i - 1) * 2u] = term->tty_pointer[row * 160u + (i - 1 - p0) * 2u];
+			term->tty_pointer[row * 160u + (i - 1) * 2u + 1] = term->tty_pointer[row * 160u + (i - 1 - p0) * 2u + 1];
+		}
+		for (i = col; i < col + p0; i++)
+		{
+			term->tty_pointer[row * 160u + i * 2u] = ' ';
+			term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+		}
+		break;
 	case 'P': /* delete characters (shift left) */
 		if (p0 == 0)
 			p0 = 1;
