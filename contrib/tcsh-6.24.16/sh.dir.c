@@ -101,37 +101,28 @@ dinit(Char *hp)
     struct directory *dp;
 
     /* Don't believe the login shell home, because it may be a symlink */
-    TCSH_DBG("dinit: calling agetcwd");
     tcp = agetcwd();
-    TCSH_DBG("dinit: agetcwd returned");
     if (tcp == NULL) {
-	TCSH_DBG("dinit: cwd is NULL");
 	xprintf("%s: %s\n", progname, strerror(errno));
 	if (hp && *hp) {
 	    char *xcp = short2str(hp);
 	    dstart(xcp);
-	    TCSH_DBG("dinit: chdir hp");
 	    if (chdir(xcp) == -1)
 		cp = NULL;
 	    else
 		cp = Strsave(hp);
-	    TCSH_DBG("dinit: chdir hp done");
 	}
 	else
 	    cp = NULL;
 	if (cp == NULL) {
 	    dstart("/");
-	    TCSH_DBG("dinit: chdir /");
 	    if (chdir("/") == -1) {
-		TCSH_DBG("dinit: chdir / failed, xexit");
 		xexit(1);
 	    }
-	    TCSH_DBG("dinit: chdir / ok");
 	    cp = SAVE("/");
 	}
     }
     else {
-	TCSH_DBG("dinit: cwd ok, doing stat");
 #ifdef S_IFLNK
 	struct stat swd, shp;
 	int swd_ok;

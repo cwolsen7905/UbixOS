@@ -52,8 +52,6 @@
 
 /* UbixOS target identification */
 #define UBIXOS                  1
-#define TCSH_DBG(s) write(2, "[tcsh] " s "\n", sizeof("[tcsh] " s "\n") - 1)
-#define DEBUG_TTY               1
 
 #define _PATH_DEVNULL           "/dev/null"
 

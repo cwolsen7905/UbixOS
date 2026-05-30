@@ -94,16 +94,6 @@ void sys_call_posix(struct trapframe *frame)
 		/* Save syscall number in tf_err for SA_RESTART in signal_check. */
 		frame->tf_err = (u_int32_t)code;
 
-		if (_current->name[0] == 't' && _current->name[1] == 'c' &&
-		    _current->name[2] == 's' && _current->name[3] == 'h')
-			kprintf("tcsh>>: [%d] %s args=0x%X,0x%X,0x%X\n", code,
-			    (code < 512 && systemCalls_posix[code].sc_name) ?
-			    systemCalls_posix[code].sc_name : "?",
-			    *((u_int32_t *)frame->tf_esp + 1),
-			    *((u_int32_t *)frame->tf_esp + 2),
-			    *((u_int32_t *)frame->tf_esp + 3));
-
-
 		if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
 			kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
 
