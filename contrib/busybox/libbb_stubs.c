@@ -5,11 +5,19 @@
  * gets revisited only if vi grows a dependency on it.
  */
 #include "libbb.h"
+#include "xregex.h"
+#include <dirent.h>
+
+int xfunc_error_retval = 1;
+unsigned option_mask32;
 
 /* The active applet sets applet_name in its own main() wrapper. */
 const char *applet_name = "busybox";
 const char bb_msg_standard_input[] = "standard input";
 const char bb_msg_read_error[]     = "read error";
+const char bb_msg_invalid_arg_to[] = "invalid argument '%s' to '%s'";
+const char bb_msg_requires_arg[]   = "%s requires an argument";
+long bb_arg_max                    = 131072;
 
 char bb_common_bufsiz1[COMMON_BUFSIZE];
 
@@ -67,6 +75,42 @@ unsigned xatou_sfx(const char *numstr, const struct suffix_mult *suffixes)
 	return (unsigned)v;
 }
 
+int xatoi(const char *numstr)
+{
+	char *end;
+	long v;
+	errno = 0;
+	v = strtol(numstr, &end, 10);
+	if (errno || end == numstr || *end != '\0' || v < INT_MIN || v > INT_MAX)
+		bb_error_msg_and_die("invalid integer: %s", numstr);
+	return (int)v;
+}
+
+int xatoi_positive(const char *numstr)
+{
+	int v = xatoi(numstr);
+	if (v < 0)
+		bb_error_msg_and_die("invalid positive integer: %s", numstr);
+	return v;
+}
+
+unsigned long xatoul(const char *numstr)
+{
+	char *end;
+	unsigned long v;
+	errno = 0;
+	v = strtoul(numstr, &end, 10);
+	if (errno || end == numstr || *end != '\0')
+		bb_error_msg_and_die("invalid number: %s", numstr);
+	return v;
+}
+
+void xstat(const char *fileName, struct stat *statbuf)
+{
+	if (stat(fileName, statbuf) < 0)
+		bb_perror_msg_and_die("can't stat '%s'", fileName);
+}
+
 int fdprintf(int fd, const char *fmt, ...)
 {
 	va_list ap;
@@ -105,6 +149,301 @@ void xwrite(int fd, const void *buf, size_t count)
 {
 	if ((size_t)full_write(fd, buf, count) != count)
 		bb_perror_msg("write"), exit(1);
+}
+
+/* ---------------------- grep / find / less helpers --------------------- */
+
+FILE *fopen_for_read(const char *filename)
+{
+	return fopen(filename, "r");
+}
+
+FILE *fopen_for_write(const char *filename)
+{
+	return fopen(filename, "w");
+}
+
+FILE *xfopen_stdin(const char *filename)
+{
+	FILE *fp = fopen_or_warn_stdin(filename);
+	if (!fp)
+		exit(xfunc_error_retval);
+	return fp;
+}
+
+/* Read a line into a freshly malloc'd buffer; strip trailing \n.
+ * Returns NULL on EOF (no bytes read).  Differs from xmalloc_fgets in
+ * that it always strips the newline. */
+char *xmalloc_fgetline(FILE *fp)
+{
+	return xmalloc_fgets(fp);
+}
+
+void bb_error_msg_and_die(const char *fmt, ...)
+{
+	va_list ap;
+	fprintf(stderr, "%s: ", applet_name);
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+	fputc('\n', stderr);
+	exit(xfunc_error_retval);
+}
+
+/* llist_add_to: push data onto the head of an llist_t pointed to by *old_head. */
+void llist_add_to(llist_t **old_head, void *data)
+{
+	llist_t *node = xmalloc(sizeof(*node));
+	node->data = data;
+	node->link = *old_head;
+	*old_head = node;
+}
+
+void llist_free(llist_t *elm, void (*freeit)(void *data))
+{
+	while (elm) {
+		llist_t *next = elm->link;
+		if (freeit)
+			freeit(elm->data);
+		free(elm);
+		elm = next;
+	}
+}
+
+/* xregcomp: regcomp() that dies with a helpful message on failure. */
+char *regcomp_or_errmsg(regex_t *preg, const char *regex, int cflags)
+{
+	int err = regcomp(preg, regex, cflags);
+	if (err == 0)
+		return NULL;
+	{
+		size_t need = regerror(err, preg, NULL, 0);
+		char *buf = xmalloc(need);
+		regerror(err, preg, buf, need);
+		return buf;
+	}
+}
+
+void xregcomp(regex_t *preg, const char *regex, int cflags)
+{
+	char *msg = regcomp_or_errmsg(preg, regex, cflags);
+	if (msg)
+		bb_error_msg_and_die("bad regex '%s': %s", regex, msg);
+}
+
+/* ----------------------------- recursive_action -----------------------
+ * Lightweight directory walker matching busybox's signature.  Calls
+ * fileAction on every regular file/symlink and dirAction (if supplied)
+ * on every directory entered.  Honours ACTION_RECURSE / ACTION_DEPTHFIRST.
+ *
+ * Returns 1 if every callback returned non-zero (success / "kept going"),
+ * 0 if anything failed — matching upstream's contract closely enough for
+ * grep -r, find's recursion, etc.
+ */
+static int recursive_walk(const char *path, unsigned flags, int depth,
+                          recursive_action_fp fileAction,
+                          recursive_action_fp dirAction,
+                          void *userData)
+{
+	struct stat sb;
+	int (*stat_fn)(const char *, struct stat *) = lstat;
+	if (flags & ACTION_FOLLOWLINKS)
+		stat_fn = stat;
+	if (depth == 0 && (flags & ACTION_FOLLOWLINKS_L0))
+		stat_fn = stat;
+
+	if (stat_fn(path, &sb) < 0) {
+		if (!(flags & ACTION_QUIET))
+			bb_simple_perror_msg(path);
+		return 0;
+	}
+
+	struct recursive_state state = { depth, (int)flags, userData };
+
+	if (!S_ISDIR(sb.st_mode)) {
+		if (fileAction)
+			return fileAction(&state, path, &sb);
+		return 1;
+	}
+
+	/* Directory */
+	int ok = 1;
+	if (!(flags & ACTION_DEPTHFIRST) && dirAction) {
+		ok = dirAction(&state, path, &sb);
+		if (!ok)
+			return 0;
+	}
+
+	if (!(flags & ACTION_RECURSE) && depth > 0) {
+		if ((flags & ACTION_DEPTHFIRST) && dirAction) {
+			state.depth = depth;
+			ok = dirAction(&state, path, &sb);
+		}
+		return ok;
+	}
+
+	DIR *d = opendir(path);
+	if (!d) {
+		if (!(flags & ACTION_QUIET))
+			bb_simple_perror_msg(path);
+		return 0;
+	}
+	struct dirent *ent;
+	while ((ent = readdir(d)) != NULL) {
+		if (ent->d_name[0] == '.' &&
+		    (ent->d_name[1] == '\0' ||
+		     (ent->d_name[1] == '.' && ent->d_name[2] == '\0')))
+			continue;
+		char *child = concat_path_file(path, ent->d_name);
+		if (!recursive_walk(child, flags, depth + 1,
+		                    fileAction, dirAction, userData))
+			ok = 0;
+		free(child);
+	}
+	closedir(d);
+
+	if ((flags & ACTION_DEPTHFIRST) && dirAction) {
+		struct recursive_state s = { depth, (int)flags, userData };
+		if (!dirAction(&s, path, &sb))
+			ok = 0;
+	}
+	return ok;
+}
+
+int recursive_action(const char *fileName, unsigned flags,
+                     recursive_action_fp fileAction,
+                     recursive_action_fp dirAction,
+                     void *userData)
+{
+	return recursive_walk(fileName, flags, 0, fileAction, dirAction, userData);
+}
+
+/* ----------------------------- pager helpers --------------------------- */
+
+int xopen(const char *pathname, int flags)
+{
+	int fd = open(pathname, flags);
+	if (fd < 0) {
+		bb_perror_msg("can't open '%s'", pathname);
+		exit(xfunc_error_retval);
+	}
+	return fd;
+}
+
+char *xmalloc_ttyname(int fd)
+{
+	char buf[64];
+	if (ttyname_r(fd, buf, sizeof(buf)) != 0)
+		return NULL;
+	return xstrdup(buf);
+}
+
+/* Ensure the vector has room for index `idx`.  Grows in chunks of
+ * (1 << shift) entries when crossing a chunk boundary; busybox callers
+ * assume each entry is sizeof(void*). */
+void *xrealloc_vector(void *vector, unsigned shift, int idx)
+{
+	unsigned mask = (1U << shift) - 1;
+	if ((unsigned)idx & mask)
+		return vector;
+	return xrealloc(vector, (size_t)(idx + (1 << shift)) * sizeof(void *));
+}
+
+/* Cat each argv entry (or stdin if none / "-") to stdout. */
+int bb_cat(char **argv)
+{
+	int status = 0;
+	if (!argv[0] || (argv[0][0] == '-' && argv[0][1] == '\0' && !argv[1])) {
+		bb_copyfd_size(STDIN_FILENO, STDOUT_FILENO, -1);
+		return 0;
+	}
+	for (; *argv; argv++) {
+		int fd;
+		if (argv[0][0] == '-' && argv[0][1] == '\0') {
+			bb_copyfd_size(STDIN_FILENO, STDOUT_FILENO, -1);
+			continue;
+		}
+		fd = open(*argv, O_RDONLY);
+		if (fd < 0) {
+			bb_simple_perror_msg(*argv);
+			status = 1;
+			continue;
+		}
+		bb_copyfd_size(fd, STDOUT_FILENO, -1);
+		close(fd);
+	}
+	return status;
+}
+
+/* Install `handler` for each signal whose bit is set in `sigs`.  Iterate
+ * a small fixed range — covers everything in BB_FATAL_SIGS. */
+void bb_signals(unsigned sigs, void (*handler)(int))
+{
+	int s;
+	for (s = 1; s < 32; s++) {
+		if (sigs & (1U << s))
+			signal(s, handler);
+	}
+}
+
+int ndelay_on(int fd)
+{
+	int fl = fcntl(fd, F_GETFL);
+	if (fl >= 0 && !(fl & O_NONBLOCK))
+		fcntl(fd, F_SETFL, fl | O_NONBLOCK);
+	return fl;
+}
+
+int ndelay_off(int fd)
+{
+	int fl = fcntl(fd, F_GETFL);
+	if (fl >= 0 && (fl & O_NONBLOCK))
+		fcntl(fd, F_SETFL, fl & ~O_NONBLOCK);
+	return fl;
+}
+
+const char *bb_basename(const char *name)
+{
+	const char *cp = strrchr(name, '/');
+	return cp ? cp + 1 : name;
+}
+
+void bb_perror_msg_and_die(const char *fmt, ...)
+{
+	va_list ap;
+	int saved = errno;
+	fprintf(stderr, "%s: ", applet_name);
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+	fprintf(stderr, ": %s\n", strerror(saved));
+	exit(xfunc_error_retval);
+}
+
+int get_termios_and_make_raw(int fd, struct termios *newterm,
+                             struct termios *oldterm, int flags)
+{
+	if (tcgetattr(fd, oldterm) < 0)
+		return -1;
+	*newterm = *oldterm;
+	newterm->c_iflag &= (tcflag_t)~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | IXON);
+	if (flags & TERMIOS_RAW_CRNL)
+		newterm->c_iflag |= ICRNL;
+	else
+		newterm->c_iflag &= (tcflag_t)~ICRNL;
+	newterm->c_lflag &= (tcflag_t)~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	newterm->c_cflag &= (tcflag_t)~(CSIZE | PARENB);
+	newterm->c_cflag |= CS8;
+	newterm->c_cc[VMIN] = 1;
+	newterm->c_cc[VTIME] = 0;
+	return tcsetattr(fd, TCSANOW, newterm);
+}
+
+void kill_myself_with_sig(int sig)
+{
+	signal(sig, SIG_DFL);
+	raise(sig);
+	_exit(128 + sig);
 }
 
 /* vi.c uses `#define G (*ptr_to_globals)`; the storage lives here. */
@@ -649,9 +988,8 @@ int safe_read_key(int fd, char *buffer, int timeout_ms)
  * declares.  Returns the OR of bits for options seen.  Unknown options
  * call bb_show_usage().
  */
-unsigned getopt32(char **argv, const char *applet_opts, ...)
+static unsigned vgetopt32(char **argv, const char *applet_opts, va_list ap)
 {
-	va_list ap;
 	struct {
 		char  letter;
 		char  takes_arg;
@@ -661,12 +999,18 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 	int nopts = 0;
 	const char *p = applet_opts;
 
+	/* busybox optstring modifiers we just need to skip:
+	 *   leading '^' / '!' / '+' / '-' — assorted hints we don't implement
+	 *   embedded '\0' — modifier section ("-H-h:..." etc.) starts here */
+	while (*p == '^' || *p == '!' || *p == '+' || *p == '-')
+		p++;
+
 	while (*p && nopts < 16) {
 		opts[nopts].letter    = *p++;
 		opts[nopts].takes_arg = 0;
 		opts[nopts].is_star   = 0;
 		opts[nopts].target    = NULL;
-		while (*p == ':' || *p == '*') {
+		while (*p == ':' || *p == '*' || *p == '+') {
 			if (*p == ':') opts[nopts].takes_arg = 1;
 			if (*p == '*') opts[nopts].is_star   = 1;
 			p++;
@@ -674,12 +1018,10 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 		nopts++;
 	}
 
-	va_start(ap, applet_opts);
 	for (int i = 0; i < nopts; i++) {
 		if (opts[i].takes_arg)
 			opts[i].target = va_arg(ap, void *);
 	}
-	va_end(ap);
 
 	unsigned mask = 0;
 	int n = 1;
@@ -699,7 +1041,7 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 				if (opts[i].letter == *q) { found = i; break; }
 			}
 			if (found < 0) {
-				fprintf(stderr, "unknown option -%c\n", *q);
+				fprintf(stderr, "%s: unknown option -%c\n", applet_name, *q);
 				bb_show_usage();
 			}
 			mask |= (1u << found);
@@ -711,7 +1053,7 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 				} else if (argv[n + 1]) {
 					val = argv[++n];
 				} else {
-					fprintf(stderr, "option -%c needs an argument\n", *q);
+					fprintf(stderr, "%s: option -%c needs an argument\n", applet_name, *q);
 					bb_show_usage();
 				}
 				if (opts[found].is_star) {
@@ -731,7 +1073,7 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 		n++;
 	}
 
-	/* Compact argv: shift remaining args so vi.c sees them starting at argv[1]. */
+	/* Compact argv: shift remaining args so applets see them starting at argv[1]. */
 	if (n > 1) {
 		int dst = 1;
 		while (argv[n])
@@ -739,7 +1081,33 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 		argv[dst] = NULL;
 	}
 
+	option_mask32 = mask;
 	return mask;
+}
+
+unsigned getopt32(char **argv, const char *applet_opts, ...)
+{
+	va_list ap;
+	unsigned r;
+	va_start(ap, applet_opts);
+	r = vgetopt32(argv, applet_opts, ap);
+	va_end(ap);
+	return r;
+}
+
+/* getopt32long — same as getopt32 plus a longopts descriptor string we
+ * currently ignore (we don't support `--long-opt` form yet).  va_args
+ * after `longopts` line up identically with getopt32's. */
+unsigned getopt32long(char **argv, const char *applet_opts,
+                      const char *longopts, ...)
+{
+	va_list ap;
+	unsigned r;
+	(void)longopts;
+	va_start(ap, longopts);
+	r = vgetopt32(argv, applet_opts, ap);
+	va_end(ap);
+	return r;
 }
 
 /* Each applet's bin/<applet>/main.c supplies the actual main() that calls
