@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct passwd
 {
@@ -46,11 +47,12 @@ int main(int argc, char **argv)
 	struct passwd *password = 0x0;
 	FILE *out;
 	password = (struct passwd *)malloc(4096);
+	memset(password, 0, 4096); /* zero field padding — avoid leaking heap garbage into userdb */
 	out = fopen("./userdb", "wbb");
 
 	sprintf(password[0].username, "root");
 	sprintf(password[0].passwd, "user");
-	sprintf(password[0].shell, "/bin/shell");
+	sprintf(password[0].shell, "/bin/tcsh");
 	sprintf(password[0].realname, "Root User");
 	sprintf(password[0].path, "/home/root");
 	password[0].uid = 0;
@@ -58,7 +60,7 @@ int main(int argc, char **argv)
 
 	sprintf(password[1].username, "guest");
 	sprintf(password[1].passwd, "user");
-	sprintf(password[1].shell, "/bin/shell");
+	sprintf(password[1].shell, "/bin/tcsh");
 	sprintf(password[1].realname, "Guest User");
 	sprintf(password[1].path, "/home/guest");
 	password[1].uid = 1;
