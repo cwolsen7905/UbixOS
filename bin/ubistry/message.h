@@ -26,61 +26,13 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * ubistry — the UbixOS registry daemon.  Owns the hierarchical settings tree in
- * RAM, loads/persists it to /var/db/ubistry.db, and serves GET/SET/ENUM/DEL
- * requests over the "ubistry" MPI mailbox.  Started early at boot by init via
- * /etc/init.d/15-ubistry.
- */
+#ifndef _UBISTRY_MESSAGE_H
+#define _UBISTRY_MESSAGE_H
 
-#include <stdlib.h>
-#include <sched.h>
-#include <api/ubix.h>
-#include <ubistry/ubistry.h>
-#include "db.h"
-#include "persist.h"
-#include "message.h"
+/* Create the registry mailbox.  @return 0 on success, -1 on failure. */
+int ubistry_init_mbox(const char *name);
 
-/* Loop iterations a pending change waits before being flushed to disk — long
- * enough to coalesce bursts of SETs, short enough to persist promptly. */
-#define FLUSH_TICKS 256
+/* Drain and handle all pending GET/SET/ENUM/DEL requests. */
+void ubistry_process_messages(void);
 
-int main(int argc, char **argv)
-{
-	int tick = 0;
-
-	(void)argc;
-	(void)argv;
-
-	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
-		exit(1);
-
-	ub_root(); /* materialise the root container */
-
-	if (persist_load(UBISTRY_DB) != 0)
-		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
-
-	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
-
-	for (;;)
-	{
-		ubistry_process_messages();
-
-		if (persist_dirty())
-		{
-			if (++tick >= FLUSH_TICKS)
-			{
-				persist_save(UBISTRY_DB);
-				tick = 0;
-			}
-		}
-		else
-		{
-			tick = 0;
-		}
-
-		sched_yield();
-	}
-
-	return (0);
-}
+#endif /* _UBISTRY_MESSAGE_H */

@@ -27,60 +27,25 @@
  */
 
 /*
- * ubistry — the UbixOS registry daemon.  Owns the hierarchical settings tree in
- * RAM, loads/persists it to /var/db/ubistry.db, and serves GET/SET/ENUM/DEL
- * requests over the "ubistry" MPI mailbox.  Started early at boot by init via
- * /etc/init.d/15-ubistry.
+ * Text persistence for the ubistry tree.  The on-disk format is one line per
+ * leaf value, "path = value", with strings quoted and containers implicit from
+ * the path (see /var/db/ubistry.db).  A dirty flag lets the daemon coalesce
+ * writes instead of rewriting the file on every mutation.
  */
 
-#include <stdlib.h>
-#include <sched.h>
-#include <api/ubix.h>
-#include <ubistry/ubistry.h>
-#include "db.h"
-#include "persist.h"
-#include "message.h"
+#ifndef _UBISTRY_PERSIST_H
+#define _UBISTRY_PERSIST_H
 
-/* Loop iterations a pending change waits before being flushed to disk — long
- * enough to coalesce bursts of SETs, short enough to persist promptly. */
-#define FLUSH_TICKS 256
+/* Load a registry file into the tree.  @return 0 on success, -1 if unreadable. */
+int persist_load(const char *path);
 
-int main(int argc, char **argv)
-{
-	int tick = 0;
+/* Write the whole tree out and clear the dirty flag.  @return 0 / -1. */
+int persist_save(const char *path);
 
-	(void)argc;
-	(void)argv;
+/* Mark the tree changed (call after any SET/DEL). */
+void persist_mark_dirty(void);
 
-	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
-		exit(1);
+/* @return 1 if there are unsaved changes. */
+int persist_dirty(void);
 
-	ub_root(); /* materialise the root container */
-
-	if (persist_load(UBISTRY_DB) != 0)
-		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
-
-	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
-
-	for (;;)
-	{
-		ubistry_process_messages();
-
-		if (persist_dirty())
-		{
-			if (++tick >= FLUSH_TICKS)
-			{
-				persist_save(UBISTRY_DB);
-				tick = 0;
-			}
-		}
-		else
-		{
-			tick = 0;
-		}
-
-		sched_yield();
-	}
-
-	return (0);
-}
+#endif /* _UBISTRY_PERSIST_H */

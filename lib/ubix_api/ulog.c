@@ -24,63 +24,42 @@
  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * ulog.c — userland system-log writer (part of ubix_api).  Emits a message to
+ * the kernel log ring via klog_write (native syscall 49); logd drains the ring
+ * to /var/log/messages.  Background services use this for diagnostics because
+ * their stdout is not connected to any terminal.
  */
 
-/*
- * ubistry — the UbixOS registry daemon.  Owns the hierarchical settings tree in
- * RAM, loads/persists it to /var/db/ubistry.db, and serves GET/SET/ENUM/DEL
- * requests over the "ubistry" MPI mailbox.  Started early at boot by init via
- * /etc/init.d/15-ubistry.
- */
-
-#include <stdlib.h>
-#include <sched.h>
+#include <stdarg.h>
+#include <stdio.h>
 #include <api/ubix.h>
-#include <ubistry/ubistry.h>
-#include "db.h"
-#include "persist.h"
-#include "message.h"
 
-/* Loop iterations a pending change waits before being flushed to disk — long
- * enough to coalesce bursts of SETs, short enough to persist promptly. */
-#define FLUSH_TICKS 256
+/* Matches the kernel klog message cap (see bin/logd). */
+#define ULOG_MSG_MAX 188
 
-int main(int argc, char **argv)
+/* Bare syscall thunk: args stay at [esp+4..] when int $0x81 fires. */
+asm(".text                              \n"
+    ".globl _do_klog_write              \n"
+    ".type  _do_klog_write, @function   \n"
+    "_do_klog_write:                    \n"
+    "  movl $49, %eax                   \n"
+    "  int  $0x81                       \n"
+    "  ret                              \n");
+extern void _do_klog_write(int level, const char *msg);
+
+void ulog(int level, const char *msg)
 {
-	int tick = 0;
+	_do_klog_write(level, msg ? msg : "");
+}
 
-	(void)argc;
-	(void)argv;
+void ulogf(int level, const char *fmt, ...)
+{
+	char buf[ULOG_MSG_MAX];
+	va_list ap;
 
-	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
-		exit(1);
-
-	ub_root(); /* materialise the root container */
-
-	if (persist_load(UBISTRY_DB) != 0)
-		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
-
-	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
-
-	for (;;)
-	{
-		ubistry_process_messages();
-
-		if (persist_dirty())
-		{
-			if (++tick >= FLUSH_TICKS)
-			{
-				persist_save(UBISTRY_DB);
-				tick = 0;
-			}
-		}
-		else
-		{
-			tick = 0;
-		}
-
-		sched_yield();
-	}
-
-	return (0);
+	va_start(ap, fmt);
+	vsnprintf(buf, sizeof(buf), fmt, ap);
+	va_end(ap);
+	_do_klog_write(level, buf);
 }

@@ -32,6 +32,24 @@ extern "C"
 	int pty_inject(int slot, const char *buf, int n);
 	int pty_snapshot(int slot, void *dst, unsigned short *x, unsigned short *y);
 
+	/* System log levels (mirror the kernel klog severities). */
+#define ULOG_EMERG 0
+#define ULOG_ALERT 1
+#define ULOG_CRIT 2
+#define ULOG_ERR 3
+#define ULOG_WARNING 4
+#define ULOG_NOTICE 5
+#define ULOG_INFO 6
+#define ULOG_DEBUG 7
+
+	/* Write a message to the system log.  logd drains it to /var/log/messages,
+	 * so background services (whose stdout goes nowhere) use this for
+	 * diagnostics instead of printf. */
+	void ulog(int level, const char *msg);
+
+	/* printf-style convenience wrapper around ulog(). */
+	void ulogf(int level, const char *fmt, ...);
+
 #ifdef __cplusplus
 }
 #endif

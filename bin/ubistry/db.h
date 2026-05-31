@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -26,18 +26,47 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/types.h>
+/*
+ * ubistry daemon-internal store: an n-ary tree of typed nodes addressed by
+ * path.  Children are kept in insertion order via the child/sibling links so
+ * that ordered records (e.g. start-menu items 0,1,2) enumerate predictably.
+ */
 
-#define MBOX_NAME "ubistry"
+#ifndef _UBISTRY_DB_H
+#define _UBISTRY_DB_H
 
-struct ubistryKey {
-  struct ubistryKey *prev;
-  struct ubistryKey *next;
-  char               name[128];
-  char               value[512];
-  };
+#include <ubistry/ubistry.h>
 
-struct ubistryKey * ubistryFindKey(char *);
-int ubistryAddKey(char *,char *);
-int ubistryInitMbox(char *);
-void ubistryProcessMessages();
+struct ub_node
+{
+	char name[UB_NAME_MAX];
+	ub_type_t type;
+	char sval[192]; /* UB_STR text */
+	int ival;       /* UB_INT / UB_BOOL */
+	struct ub_node *parent;
+	struct ub_node *child;   /* first child */
+	struct ub_node *sibling; /* next sibling (insertion order) */
+};
+
+/* Tree operations.  Paths are absolute ("/a/b/c"); "/" is the root. */
+struct ub_node *ub_root(void);
+struct ub_node *ub_find(const char *path);
+struct ub_node *ub_find_or_create(const char *path);
+
+/* Create/update a leaf value (value given as text, parsed per type). */
+int ub_set(const char *path, ub_type_t type, const char *value);
+
+/* Read a leaf value back as text.  @return 0 on success, -1 if missing. */
+int ub_get(const char *path, ub_type_t *type, char *out, int len);
+
+/*
+ * List child node names of a container into names ('\n'-separated).
+ * @return child count, or -1 if the path is missing.  *truncated is set when
+ * not every name fit.
+ */
+int ub_enum(const char *path, char *names, int len, int *truncated);
+
+/* Delete a node and its subtree.  @return 0 on success, -1 if missing. */
+int ub_delete(const char *path);
+
+#endif /* _UBISTRY_DB_H */
