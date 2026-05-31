@@ -51,6 +51,7 @@
 #define DISPLAY_RAISE 11           /* ask compositor to raise/focus a window */
 #define DISPLAY_SETTITLE 13        /* update an existing window's title bar text */
 #define DISPLAY_REFRESH_DESKTOP 14 /* re-read desktop settings and repaint desktop */
+#define DISPLAY_SET_USER 15        /* set the active session user (per-user desktop) */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
@@ -183,6 +184,16 @@ struct display_settitle
 {
 	uint32_t window_id;
 	char title[64];
+};
+
+/*
+ * DISPLAY_SET_USER payload (client → display).
+ * vlogin sets the active session user so the compositor renders that user's
+ * desktop (per-user settings); an empty name resets to the system default.
+ */
+struct display_set_user
+{
+	char user[64];
 };
 
 /*

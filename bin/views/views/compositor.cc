@@ -195,15 +195,18 @@ void Compositor::load_wallpaper(const char *path)
 	}
 	wp_w_ = w;
 	wp_h_ = h;
+	ulogf(ULOG_INFO, "views: wallpaper %s loaded %dx%d", path, w, h);
 }
 
 void Compositor::set_desktop_from_registry()
 {
+	/* Resolve user-first (per-user override) then the bare system default. */
+	const char *u = active_user_.empty() ? nullptr : active_user_.c_str();
 	char mode[32];
 	int ival;
 
 	desk_mode_ = DESK_BARS;
-	if (ubistry_get_str("/views/desktop/mode", mode, sizeof(mode)) == 0)
+	if (ubistry_get_for(u, "views/desktop/mode", mode, sizeof(mode)) == 0)
 	{
 		if (strcmp(mode, "image") == 0)
 			desk_mode_ = DESK_IMAGE;
@@ -211,9 +214,9 @@ void Compositor::set_desktop_from_registry()
 			desk_mode_ = DESK_SOLID;
 	}
 
-	if (ubistry_get_int("/views/desktop/color", &ival) == 0)
+	if (ubistry_get_for_int(u, "views/desktop/color", &ival) == 0)
 		solid_color_ = (uint32_t)ival & 0x00FFFFFFu;
-	if (ubistry_get_int("/views/desktop/barcolor", &ival) == 0)
+	if (ubistry_get_for_int(u, "views/desktop/barcolor", &ival) == 0)
 		bar_base_ = (uint32_t)ival & 0x00FFFFFFu;
 
 	wp_.clear();
@@ -221,9 +224,15 @@ void Compositor::set_desktop_from_registry()
 	if (desk_mode_ == DESK_IMAGE)
 	{
 		char path[256];
-		if (ubistry_get_str("/views/desktop/image", path, sizeof(path)) == 0)
+		if (ubistry_get_for(u, "views/desktop/image", path, sizeof(path)) == 0)
 			load_wallpaper(path);
 	}
+}
+
+void Compositor::set_active_user(const char *user)
+{
+	active_user_ = (user != nullptr) ? user : "";
+	set_desktop_from_registry();
 }
 
 bool Compositor::rect_covered(int rx, int ry, int rw, int rh)

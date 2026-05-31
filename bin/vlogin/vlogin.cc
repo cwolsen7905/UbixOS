@@ -195,6 +195,21 @@ static struct auth_response do_auth(const std::string &reply_mbox,
 /* Session: fork taskbar, wait for it to exit                          */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Tell the views compositor which user owns the session so it renders that
+ * user's desktop (per-user settings).  An empty name reverts to the system
+ * default at logout.  Best-effort: ignored if views is unreachable.
+ */
+static void set_display_user(const std::string &username)
+{
+	mpi_message_t msg = {};
+	struct display_set_user *su = (struct display_set_user *)msg.data;
+
+	::snprintf(su->user, sizeof(su->user), "%s", username.c_str());
+	msg.header = DISPLAY_SET_USER;
+	mpi_postMessage(VIEWS_MBOX, DISPLAY_SET_USER, &msg);
+}
+
 static void run_session(const struct auth_response &resp, const std::string &username)
 {
 	static const char *taskbar_argv[] = {"taskbar", nullptr};
@@ -226,9 +241,15 @@ static void run_session(const struct auth_response &resp, const std::string &use
 	if (pid < 0)
 		return;
 
+	/* Apply this user's desktop for the lifetime of the session. */
+	set_display_user(username);
+
 	/* Wait for the session to end */
 	while (pidStatus(pid) == pid)
 		ubix::yield();
+
+	/* Revert to the system-default desktop at logout. */
+	set_display_user("");
 }
 
 /* ------------------------------------------------------------------ */

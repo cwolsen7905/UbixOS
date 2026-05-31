@@ -135,6 +135,19 @@ extern "C"
 	/* Delete a node and its subtree.  @return 0 on success, -1 on error. */
 	int ubistry_del(const char *path);
 
+	/*
+	 * Layered (system/user) access.  Settings live at a bare "key" path
+	 * (e.g. "views/desktop/mode") as the machine-wide default; a user's
+	 * override is stored at "/users/<name>/<key>".  The get_for() calls
+	 * resolve user-first then fall back to the system default; set_user()
+	 * writes the per-user override.  Pass a NULL/empty user to use the system
+	 * layer only.  key has NO leading slash.
+	 */
+	int ubistry_get_for(const char *user, const char *key, char *buf, int len);
+	int ubistry_get_for_int(const char *user, const char *key, int *out);
+	int ubistry_set_user(const char *user, const char *key, const char *val);
+	int ubistry_set_user_int(const char *user, const char *key, int val);
+
 #ifdef __cplusplus
 }
 #endif

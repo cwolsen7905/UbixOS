@@ -37,18 +37,19 @@
 /* WindowManager — facade: coordinates registry, compositor, router   */
 /* ------------------------------------------------------------------ */
 
-class WindowManager {
+class WindowManager
+{
 	WindowRegistry reg_;
-	Compositor     comp_;
-	InputRouter    input_;
+	Compositor comp_;
+	InputRouter input_;
 
 	void notify_taskbar(Window *w, uint8_t added);
 	void close_window(Window *w);
 
-public:
+      public:
 	WindowManager();
 
-	int  init();
+	int init();
 	void startup();
 	void composite_all();
 
@@ -65,6 +66,7 @@ public:
 	void handle_raise(struct display_raise *dr);
 	void handle_settitle(struct display_settitle *st);
 	void handle_refresh_desktop();
+	void handle_set_user(struct display_set_user *su);
 	void handle_mouse(mouse_event_t &ev);
 	void handle_kbd(kbd_event_t &ev);
 };

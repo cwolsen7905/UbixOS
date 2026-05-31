@@ -37,6 +37,7 @@
 #include <string>
 #include <vector>
 #include <cstring>
+#include <cstdlib>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <views/display.hh>
@@ -44,9 +45,10 @@
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
+#include <sys/kbd.h>
 
 #define WIN_W 520
-#define WIN_H 320
+#define WIN_H 360
 #define BG 0x00202830u
 #define SIDEBAR_BG 0x00181E26u
 #define ROW_SEL 0x00405890u
@@ -66,6 +68,10 @@
 #define PICK_W 200
 #define PICK_ROW 28
 #define PREVIEW_X (PICK_X + PICK_W + 14)
+
+/* Image dropdown: a combo box at SUB_TOP; the option list opens below it. */
+#define DD_X (CONTENT_X - 4)
+#define DD_W (WIN_W - 9 - DD_X)
 
 /* Sidebar categories (index == pane id); Settings opens on General. */
 static const char *g_pane_labels[] = {"General", "Desktop"};
@@ -89,6 +95,7 @@ struct ImgOption
 static std::vector<ImgOption> g_images;
 static int g_mode = DM_BARS;
 static int g_img_sel = 0;
+static bool g_img_open = false; /* image dropdown expanded? */
 static int g_solid[3] = {0x2C, 0x60, 0xA8};
 static int g_bar[3] = {0x1A, 0x1A, 0x2E};
 
@@ -110,10 +117,22 @@ static uint32_t packed(const int *rgb)
 }
 
 /**
+ * The user whose desktop this Settings instance edits.  Changes are written as
+ * per-user overrides under /users/<name>; reads resolve user-first then fall
+ * back to the system default.  NULL (no $USER) edits the system layer.
+ */
+static const char *current_user()
+{
+	const char *u = getenv("USER");
+	return (u != NULL && u[0] != '\0') ? u : NULL;
+}
+
+/**
  * Read the Desktop pane state (image list, mode, colours) from the registry.
  */
 static void load_desktop()
 {
+	const char *u = current_user();
 	char names[UB_NAMES_MAX];
 
 	g_images.clear();
@@ -136,7 +155,7 @@ static void load_desktop()
 
 	char mode[32];
 	g_mode = DM_BARS;
-	if (ubistry_get_str("/views/desktop/mode", mode, sizeof(mode)) == 0)
+	if (ubistry_get_for(u, "views/desktop/mode", mode, sizeof(mode)) == 0)
 	{
 		if (strcmp(mode, "image") == 0)
 			g_mode = DM_IMAGE;
@@ -146,7 +165,7 @@ static void load_desktop()
 
 	char img[128];
 	g_img_sel = 0;
-	if (ubistry_get_str("/views/desktop/image", img, sizeof(img)) == 0)
+	if (ubistry_get_for(u, "views/desktop/image", img, sizeof(img)) == 0)
 		for (int i = 0; i < (int)g_images.size(); i++)
 			if (g_images[i].path == img)
 			{
@@ -155,13 +174,13 @@ static void load_desktop()
 			}
 
 	int v;
-	if (ubistry_get_int("/views/desktop/color", &v) == 0)
+	if (ubistry_get_for_int(u, "views/desktop/color", &v) == 0)
 	{
 		g_solid[0] = (v >> 16) & 0xFF;
 		g_solid[1] = (v >> 8) & 0xFF;
 		g_solid[2] = v & 0xFF;
 	}
-	if (ubistry_get_int("/views/desktop/barcolor", &v) == 0)
+	if (ubistry_get_for_int(u, "views/desktop/barcolor", &v) == 0)
 	{
 		g_bar[0] = (v >> 16) & 0xFF;
 		g_bar[1] = (v >> 8) & 0xFF;
@@ -176,16 +195,18 @@ static void refresh_desktop()
 	ubix::post_message("views", DISPLAY_REFRESH_DESKTOP, r);
 }
 
-/* Write the current mode + its parameter to the registry and apply it. */
+/* Write the current mode + its parameter as the user's override and apply it. */
 static void apply()
 {
-	ubistry_set_str("/views/desktop/mode", g_mode_keys[g_mode]);
+	const char *u = current_user();
+
+	ubistry_set_user(u, "views/desktop/mode", g_mode_keys[g_mode]);
 	if (g_mode == DM_IMAGE && !g_images.empty())
-		ubistry_set_str("/views/desktop/image", g_images[g_img_sel].path.c_str());
+		ubistry_set_user(u, "views/desktop/image", g_images[g_img_sel].path.c_str());
 	else if (g_mode == DM_SOLID)
-		ubistry_set_int("/views/desktop/color", (int)packed(g_solid));
+		ubistry_set_user_int(u, "views/desktop/color", (int)packed(g_solid));
 	else if (g_mode == DM_BARS)
-		ubistry_set_int("/views/desktop/barcolor", (int)packed(g_bar));
+		ubistry_set_user_int(u, "views/desktop/barcolor", (int)packed(g_bar));
 	refresh_desktop();
 }
 
@@ -218,6 +239,35 @@ static void draw_picker(ogSurface &surf, ogBitFont &font, const int *rgb)
 	surf.ogRect(PREVIEW_X, SUB_TOP, PREVIEW_X + 28, SUB_TOP + 3 * PICK_ROW - 14, 0x00808080u);
 }
 
+/**
+ * Draw the wallpaper picker as a dropdown: a combo box showing the current
+ * selection, plus (when expanded) the full option list below it.  This keeps the
+ * pane compact no matter how many wallpapers ship.
+ */
+static void draw_dropdown(ogSurface &surf, ogBitFont &font)
+{
+	const char *cur = g_images.empty() ? "(none)" : g_images[g_img_sel].label.c_str();
+
+	surf.ogFillRect(DD_X, SUB_TOP, DD_X + DD_W, SUB_TOP + ROW_H - 2, 0x00303A46u);
+	surf.ogRect(DD_X, SUB_TOP, DD_X + DD_W, SUB_TOP + ROW_H - 2, 0x00586470u);
+	set_color(font, 0x00F0F0F0, 0x00303A46u);
+	font.PutString(surf, DD_X + 6, SUB_TOP + 6, cur);
+	font.PutString(surf, DD_X + DD_W - 14, SUB_TOP + 6, g_img_open ? "^" : "v");
+
+	if (!g_img_open)
+		return;
+
+	for (int i = 0; i < (int)g_images.size(); i++)
+	{
+		int y = SUB_TOP + ROW_H + i * ROW_H;
+		uint32_t bg = (i == g_img_sel) ? ROW_SEL : 0x00283038u;
+		surf.ogFillRect(DD_X, y, DD_X + DD_W, y + ROW_H - 1, bg);
+		surf.ogRect(DD_X, y, DD_X + DD_W, y + ROW_H - 1, 0x00404A56u);
+		set_color(font, 0x00F0F0F0, bg);
+		font.PutString(surf, DD_X + 6, y + 6, g_images[i].label.c_str());
+	}
+}
+
 static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, WIN_H - 1, BG);
@@ -244,20 +294,9 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 	}
 
 	if (g_mode == DM_IMAGE)
-	{
-		for (int i = 0; i < (int)g_images.size(); i++)
-		{
-			int y = SUB_TOP + i * ROW_H;
-			uint32_t bg = (i == g_img_sel) ? ROW_SEL : BG;
-			surf.ogFillRect(CONTENT_X - 4, y, WIN_W - 9, y + ROW_H - 2, bg);
-			set_color(font, 0x00F0F0F0, bg);
-			font.PutString(surf, CONTENT_X + 4, y + 6, g_images[i].label.c_str());
-		}
-	}
+		draw_dropdown(surf, font);
 	else
-	{
 		draw_picker(surf, font, g_mode == DM_SOLID ? g_solid : g_bar);
-	}
 }
 
 /* Handle a click in the Desktop pane content; returns true if it changed state. */
@@ -272,6 +311,7 @@ static bool desktop_click(int x, int y)
 			if (x >= tx && x < tx + TAB_W)
 			{
 				g_mode = m;
+				g_img_open = false;
 				apply();
 				return true;
 			}
@@ -281,17 +321,34 @@ static bool desktop_click(int x, int y)
 
 	if (g_mode == DM_IMAGE)
 	{
-		if (y >= SUB_TOP)
+		bool in_box = (x >= DD_X && x <= DD_X + DD_W && y >= SUB_TOP && y < SUB_TOP + ROW_H);
+
+		if (!g_img_open)
 		{
-			int i = (y - SUB_TOP) / ROW_H;
-			if (i >= 0 && i < (int)g_images.size())
+			if (in_box)
 			{
-				g_img_sel = i;
-				apply();
+				g_img_open = true;
 				return true;
 			}
+			return false;
 		}
-		return false;
+
+		/* Open: clicking the header closes; clicking a row selects; else dismiss. */
+		if (in_box)
+		{
+			g_img_open = false;
+			return true;
+		}
+		int i = (y - (SUB_TOP + ROW_H)) / ROW_H;
+		if (y >= SUB_TOP + ROW_H && x >= DD_X && x <= DD_X + DD_W && i >= 0 && i < (int)g_images.size())
+		{
+			g_img_sel = i;
+			g_img_open = false;
+			apply();
+			return true;
+		}
+		g_img_open = false;
+		return true;
 	}
 
 	/* RGB picker: a click on a channel bar sets that channel. */
@@ -310,6 +367,53 @@ static bool desktop_click(int x, int y)
 			apply();
 			return true;
 		}
+	}
+	return false;
+}
+
+/*
+ * Keyboard navigation for the image dropdown.  Up/Down move the selection (and
+ * apply it live so the desktop previews as you scroll); Enter/Space toggle the
+ * list open/closed; Esc closes it.  Returns true if anything changed.
+ */
+static bool desktop_key(uint32_t kc)
+{
+	if (g_mode != DM_IMAGE || g_images.empty())
+		return false;
+
+	int n = (int)g_images.size();
+	switch (kc)
+	{
+		case KEY_UP:
+			if (g_img_sel > 0)
+			{
+				g_img_sel--;
+				apply();
+				return true;
+			}
+			return false;
+		case KEY_DOWN:
+			if (g_img_sel < n - 1)
+			{
+				g_img_sel++;
+				apply();
+				return true;
+			}
+			return false;
+		case '\r':
+		case '\n':
+		case ' ':
+			g_img_open = !g_img_open;
+			return true;
+		case KEY_ESC:
+			if (g_img_open)
+			{
+				g_img_open = false;
+				return true;
+			}
+			return false;
+		default:
+			break;
 	}
 	return false;
 }
@@ -411,6 +515,13 @@ int main(int argc, char **argv)
 				ubix::post_message("views", DISPLAY_RELEASE, rel);
 				mbox.destroy();
 				return 0;
+			}
+			if (reply.header == DISPLAY_KEY)
+			{
+				struct display_key *dk = (struct display_key *)reply.data;
+				if (dk->pressed && active == PANE_DESKTOP && desktop_key(dk->keycode))
+					render();
+				continue;
 			}
 			if (reply.header != DISPLAY_MOUSE)
 				continue;

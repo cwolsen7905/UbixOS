@@ -276,6 +276,13 @@ void WindowManager::handle_refresh_desktop()
 	comp_.invalidate_all();
 }
 
+void WindowManager::handle_set_user(struct display_set_user *su)
+{
+	su->user[sizeof(su->user) - 1] = '\0';
+	comp_.set_active_user(su->user);
+	comp_.invalidate_all();
+}
+
 void WindowManager::flush()
 {
 	comp_.flush();
@@ -311,6 +318,7 @@ void WindowManager::dispatch(uint32_t id, void *data)
 		     (void)d;
 		     wm.handle_refresh_desktop();
 	     }},
+	    {DISPLAY_SET_USER, [](WindowManager &wm, void *d) { wm.handle_set_user((struct display_set_user *)d); }},
 	};
 	for (const auto &e : table)
 		if (e.id == id)

@@ -28,6 +28,7 @@
 
 #pragma once
 
+#include <string>
 #include <vector>
 #include "framebuffer.hh"
 #include "window_registry.hh"
@@ -39,31 +40,42 @@
 /* Compositor — framebuffer ownership, desktop, cursor, blitting       */
 /* ------------------------------------------------------------------ */
 
-class Compositor {
+class Compositor
+{
 	/* Axis-aligned bounding box of all pending damage this tick.
 	 * Events call invalidate*(); flush() renders once at tick end. */
-	struct DamageRect {
-		int  x, y, w, h;
+	struct DamageRect
+	{
+		int x, y, w, h;
 		bool valid;
 	};
 
-	Framebuffer     fb_;
+	Framebuffer fb_;
 	WindowRegistry &reg_;
 
-	uint32_t   cur_saved_[CUR_H * CUR_W];
-	int        cur_x_;
-	int        cur_y_;
-	bool       cur_drawn_;
+	uint32_t cur_saved_[CUR_H * CUR_W];
+	int cur_x_;
+	int cur_y_;
+	bool cur_drawn_;
 	DamageRect damage_;
 
 	/* Desktop background, resolved from the registry on each refresh. */
-	enum { DESK_IMAGE = 0, DESK_SOLID = 1, DESK_BARS = 2 };
+	enum
+	{
+		DESK_IMAGE = 0,
+		DESK_SOLID = 1,
+		DESK_BARS = 2
+	};
 	std::vector<uint32_t> wp_; /* decoded image, 32bpp (DESK_IMAGE) */
-	int                   wp_w_ = 0;
-	int                   wp_h_ = 0;
-	int                   desk_mode_ = DESK_BARS;
-	uint32_t              solid_color_ = 0;  /* DESK_SOLID fill */
-	uint32_t              bar_base_ = 0;     /* DESK_BARS base shade */
+	int wp_w_ = 0;
+	int wp_h_ = 0;
+	int desk_mode_ = DESK_BARS;
+	uint32_t solid_color_ = 0; /* DESK_SOLID fill */
+	uint32_t bar_base_ = 0;    /* DESK_BARS base shade */
+
+	/* Active session user; desktop settings resolve user-first then system
+	 * default.  Empty = no user logged in (system layer only). */
+	std::string active_user_;
 
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
@@ -74,14 +86,18 @@ class Compositor {
 	void cursor_erase(int x, int y);
 	void cursor_draw(int x, int y);
 
-public:
+      public:
 	explicit Compositor(WindowRegistry &reg);
 
-	int  init();
+	int init();
 	void startup();
 
 	/* Re-read /views/desktop/* and apply the background (image/solid/bars). */
 	void set_desktop_from_registry();
+
+	/* Set the active session user (per-user desktop) and re-resolve the
+	 * background.  Pass nullptr/empty to revert to the system default. */
+	void set_active_user(const char *user);
 
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);
@@ -93,8 +109,20 @@ public:
 	void partial_composite(int sx, int sy, int sw, int sh);
 	void cursor_move(int dx, int dy);
 
-	uint32_t screen_w() const { return fb_.width; }
-	uint32_t screen_h() const { return fb_.height; }
-	int      cur_x()    const { return cur_x_; }
-	int      cur_y()    const { return cur_y_; }
+	uint32_t screen_w() const
+	{
+		return fb_.width;
+	}
+	uint32_t screen_h() const
+	{
+		return fb_.height;
+	}
+	int cur_x() const
+	{
+		return cur_x_;
+	}
+	int cur_y() const
+	{
+		return cur_y_;
+	}
 };

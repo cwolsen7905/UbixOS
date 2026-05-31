@@ -192,3 +192,55 @@ int ubistry_del(const char *path)
 	mpi_postMessage(UBISTRY_MBOX, UB_MSG_DEL, &msg);
 	return (0);
 }
+
+int ubistry_get_for(const char *user, const char *key, char *buf, int len)
+{
+	char path[UB_PATH_MAX];
+
+	if (key == NULL)
+		return (-1);
+	if (user != NULL && user[0] != '\0')
+	{
+		snprintf(path, sizeof(path), "/users/%s/%s", user, key);
+		if (ubistry_get_str(path, buf, len) == 0)
+			return (0);
+	}
+	snprintf(path, sizeof(path), "/%s", key);
+	return (ubistry_get_str(path, buf, len));
+}
+
+int ubistry_get_for_int(const char *user, const char *key, int *out)
+{
+	char buf[UB_VAL_MAX];
+
+	if (ubistry_get_for(user, key, buf, (int)sizeof(buf)) != 0)
+		return (-1);
+	if (out != NULL)
+	{
+		if (strcmp(buf, "true") == 0)
+			*out = 1;
+		else if (strcmp(buf, "false") == 0)
+			*out = 0;
+		else
+			*out = atoi(buf);
+	}
+	return (0);
+}
+
+int ubistry_set_user(const char *user, const char *key, const char *val)
+{
+	char path[UB_PATH_MAX];
+
+	if (user == NULL || user[0] == '\0' || key == NULL)
+		return (-1);
+	snprintf(path, sizeof(path), "/users/%s/%s", user, key);
+	return (ubistry_set_str(path, val));
+}
+
+int ubistry_set_user_int(const char *user, const char *key, int val)
+{
+	char b[24];
+
+	snprintf(b, sizeof(b), "%d", val);
+	return (ubistry_set_user(user, key, b));
+}

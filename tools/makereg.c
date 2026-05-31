@@ -75,9 +75,14 @@ static const struct reg_entry g_defaults[] = {
 
     /* Image choices offered by the Settings Desktop pane. */
     {"/settings/wallpapers/0", "\"/var/background/ubix.bmp\""},
-    {"/settings/wallpapers/1", "\"/var/background/aqua.bmp\""},
-    {"/settings/wallpapers/2", "\"/var/background/graphite.bmp\""},
-    {"/settings/wallpapers/3", "\"/var/background/dusk.bmp\""},
+    {"/settings/wallpapers/1", "\"/var/background/tropical-sunset.png\""},
+    {"/settings/wallpapers/2", "\"/var/background/tropical-palms.png\""},
+    {"/settings/wallpapers/3", "\"/var/background/tropical-miami.png\""},
+    {"/settings/wallpapers/4", "\"/var/background/synthwave-classic.png\""},
+    {"/settings/wallpapers/5", "\"/var/background/synthwave-outrun.png\""},
+    {"/settings/wallpapers/6", "\"/var/background/synthwave-mountains.png\""},
+    {"/settings/wallpapers/7", "\"/var/background/synthwave-road.png\""},
+    {"/settings/wallpapers/8", "\"/var/background/synthwave-vapor.png\""},
 
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
