@@ -125,6 +125,22 @@
 #define ENABLE_FEATURE_CUT_REGEX          1
 #define ENABLE_FEATURE_TR_CLASSES         1
 #define ENABLE_FEATURE_TR_EQUIV           1
+
+/* file-ops batch (cp, mkdir, rm, mv, touch) */
+#define ENABLE_FEATURE_VERBOSE                1
+#define ENABLE_FEATURE_CP_LONG_OPTIONS        1
+#define ENABLE_FEATURE_CP_REFLINK             0
+#define ENABLE_FEATURE_NON_POSIX_CP           1
+#define ENABLE_FEATURE_PRESERVE_HARDLINKS     0
+#define ENABLE_FEATURE_VERBOSE_CP_MESSAGE     1
+#define ENABLE_FEATURE_RM_INTERACTIVE         1
+#define ENABLE_FEATURE_MV_LONG_OPTIONS        0
+#define ENABLE_FEATURE_MKDIR_LONG_OPTIONS     0
+#define ENABLE_FEATURE_TOUCH_NODEREF          0
+#define ENABLE_FEATURE_TOUCH_SUSV3            0
+#define ENABLE_FEATURE_DATE_ISOFMT            0
+#define ENABLE_INSTALL                        0
+#define ENABLE_FEATURE_INSTALL_LONG_OPTIONS   0
 #define ENABLE_FTPD                       0
 #define ENABLE_SELINUX                    0
 #define CONFIG_UNAME_OSNAME               "UbixOS"
@@ -403,6 +419,58 @@
 #else
 # define IF_FEATURE_TR_EQUIV(...)
 #endif
+#if ENABLE_FEATURE_VERBOSE
+# define IF_FEATURE_VERBOSE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_VERBOSE(...)
+#endif
+#if ENABLE_FEATURE_CP_LONG_OPTIONS
+# define IF_FEATURE_CP_LONG_OPTIONS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_CP_LONG_OPTIONS(...)
+#endif
+#if ENABLE_FEATURE_CP_REFLINK
+# define IF_FEATURE_CP_REFLINK(...) __VA_ARGS__
+#else
+# define IF_FEATURE_CP_REFLINK(...)
+#endif
+#if ENABLE_FEATURE_PRESERVE_HARDLINKS
+# define IF_FEATURE_PRESERVE_HARDLINKS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_PRESERVE_HARDLINKS(...)
+#endif
+#if ENABLE_FEATURE_VERBOSE_CP_MESSAGE
+# define IF_FEATURE_VERBOSE_CP_MESSAGE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_VERBOSE_CP_MESSAGE(...)
+#endif
+#if ENABLE_FEATURE_MV_LONG_OPTIONS
+# define IF_FEATURE_MV_LONG_OPTIONS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_MV_LONG_OPTIONS(...)
+#endif
+#if ENABLE_FEATURE_MKDIR_LONG_OPTIONS
+# define IF_FEATURE_MKDIR_LONG_OPTIONS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_MKDIR_LONG_OPTIONS(...)
+#endif
+#if ENABLE_FEATURE_TOUCH_NODEREF
+# define IF_FEATURE_TOUCH_NODEREF(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOUCH_NODEREF(...)
+#endif
+#if ENABLE_FEATURE_TOUCH_SUSV3
+# define IF_FEATURE_TOUCH_SUSV3(...) __VA_ARGS__
+# define IF_NOT_FEATURE_TOUCH_SUSV3(...)
+#else
+# define IF_FEATURE_TOUCH_SUSV3(...)
+# define IF_NOT_FEATURE_TOUCH_SUSV3(...) __VA_ARGS__
+#endif
+#if ENABLE_FEATURE_NON_POSIX_CP
+# define IF_FEATURE_NON_POSIX_CP(...) __VA_ARGS__
+#else
+# define IF_FEATURE_NON_POSIX_CP(...)
+#endif
 
 /* IF_FEATURE_FIND_*(t): variadic so wrappers like
  *     IF_FEATURE_FIND_PATH(ACTS(path, ...))
@@ -474,6 +542,10 @@
 #define UNUSED_PARAM      __attribute__((unused))
 #define MAIN_EXTERNALLY_VISIBLE
 #define NOINLINE          __attribute__((noinline))
+#define ALIGN2            __attribute__((aligned(2)))
+#define ALIGN4            __attribute__((aligned(4)))
+#define PUSH_AND_SET_FUNCTION_VISIBILITY_TO_HIDDEN
+#define POP_SAVED_FUNCTION_VISIBILITY
 
 /* busybox uses these tiny ints to save space; on UbixOS just alias them */
 typedef signed char        smallint;
@@ -702,6 +774,57 @@ extern char bb_common_bufsiz1[COMMON_BUFSIZE];
 
 extern const char bb_msg_standard_input[];
 extern const char bb_msg_read_error[];
+
+/* FILEUTILS_* flags — cp / mv / install / rm / make_directory share this
+ * bitmask via the option-parser; bit values must stay stable across the
+ * suite (matches upstream busybox include/libbb.h). */
+enum {
+	FILEUTILS_PRESERVE_STATUS = 1 << 0,
+	FILEUTILS_DEREFERENCE     = 1 << 1,
+	FILEUTILS_RECUR           = 1 << 2,
+	FILEUTILS_FORCE           = 1 << 3,
+	FILEUTILS_INTERACTIVE     = 1 << 4,
+	FILEUTILS_NO_OVERWRITE    = 1 << 5,
+	FILEUTILS_MAKE_HARDLINK   = 1 << 6,
+	FILEUTILS_MAKE_SOFTLINK   = 1 << 7,
+	FILEUTILS_DEREF_SOFTLINK  = 1 << 8,
+	FILEUTILS_DEREFERENCE_L0  = 1 << 9,
+	FILEUTILS_VERBOSE         = (1 << 13) * ENABLE_FEATURE_VERBOSE,
+	FILEUTILS_UPDATE          = 1 << 14,
+	FILEUTILS_NO_TARGET_DIR   = 1 << 15,
+	FILEUTILS_TARGET_DIR      = 1 << 16,
+	FILEUTILS_CP_OPTBITS      = 18,
+	FILEUTILS_RMDEST          = 1 << 19,
+	FILEUTILS_REFLINK         = 1 << 20,
+	FILEUTILS_REFLINK_ALWAYS  = 1 << 21,
+	FILEUTILS_IGNORE_CHMOD_ERR = 1 << 31,
+};
+#define FILEUTILS_CP_OPTSTR "pdRfinlsLHarPvuTt:"
+
+/* file-ops helpers */
+int   is_directory(const char *name, int followLinks);
+int   copy_file(const char *source, const char *dest, int flags);
+int   remove_file(const char *path, int flags);
+int   bb_make_directory(char *path, long mode, int flags);
+char *bb_get_last_path_component_strip(char *path);
+char *bb_get_last_path_component_nostrip(const char *path);
+int    bb_parse_mode(const char *s, unsigned current_mode);
+int   bb_ask_y_confirmation(void);
+void  bb_simple_error_msg(const char *s);
+char *dirname(char *path);
+char *last_char_is(const char *s, int c);
+int   open_or_warn(const char *pathname, int flags);
+int   open3_or_warn(const char *pathname, int flags, int mode);
+/* inode/dev hashtable for hardlink preservation — we don't support
+ * hardlinks (ENABLE_FEATURE_PRESERVE_HARDLINKS = 0), so these stubs
+ * always say "not in table" and the call to add becomes a no-op. */
+const char *is_in_ino_dev_hashtable(const struct stat *statbuf);
+void  add_to_ino_dev_hashtable(const struct stat *statbuf, const char *name);
+void  reset_ino_dev_hashtable(void);
+off_t bb_copyfd_eof(int fd1, int fd2);
+char *safe_strncpy(char *dst, const char *src, size_t size);
+void  xclose(int fd);
+char *concat_subpath_file(const char *path, const char *filename);
 void   bb_putchar(int c);
 void   bb_show_usage(void) NORETURN;
 void   bb_simple_error_msg_and_die(const char *s) NORETURN;

@@ -1,16 +1,16 @@
-# bin/ls/Makefile — build busybox ls (1.36.1) for UbixOS/i386.
+# bin/touch/Makefile — build busybox touch (1.36.1) for UbixOS/i386.
 
 include ../../Makefile.incl
 include ../Makefile.incl
 
 BB_SRC = ${SRCTOP}/contrib/busybox
 
-BINARY = ls
+BINARY = touch
 
 .PATH.c: ${.CURDIR} ${BB_SRC} ${BB_SRC}/coreutils ${BB_SRC}/libbb
 
-EXTRA_CFLAGS = -I${BB_SRC} -w
+EXTRA_CFLAGS = -I${BB_SRC} -I${BB_SRC}/coreutils -w
 
-OBJS = main.o ls.o libbb_stubs.o get_last_path_component.o
+OBJS = main.o touch.o libbb_stubs.o 
 
 .include "${UBIX_MK}/ubix.musl.prog.mk"

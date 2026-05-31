@@ -158,6 +158,57 @@ void xwrite(int fd, const void *buf, size_t count)
 		bb_perror_msg("write"), exit(1);
 }
 
+void xclose(int fd)
+{
+	if (close(fd) < 0)
+		bb_perror_msg_and_die("close");
+}
+
+/* safe_strncpy: provided by contrib/busybox/libbb/safe_strncpy.c for tools
+ * that pull it in.  Define a weak fallback here so other tools that don't
+ * include the upstream object still link. */
+__attribute__((weak))
+char *safe_strncpy(char *dst, const char *src, size_t size)
+{
+	if (size == 0)
+		return dst;
+	strncpy(dst, src, size - 1);
+	dst[size - 1] = '\0';
+	return dst;
+}
+
+off_t bb_copyfd_eof(int fd1, int fd2)
+{
+	return bb_copyfd_size(fd1, fd2, -1);
+}
+
+/* Yes/No prompt to stderr — read one char from stdin, accept "y" / "Y". */
+int bb_ask_y_confirmation(void)
+{
+	char c = 0;
+	if (read(STDIN_FILENO, &c, 1) <= 0)
+		return 0;
+	/* Drain to end of line. */
+	while (c != '\n' && c != '\0') {
+		char tmp;
+		if (read(STDIN_FILENO, &tmp, 1) <= 0)
+			break;
+		if (tmp == '\n')
+			break;
+	}
+	return (c == 'y' || c == 'Y');
+}
+
+/* concat path/filename allowing a leading slash inside filename. */
+char *concat_subpath_file(const char *path, const char *filename)
+{
+	if (filename && filename[0] == '.' &&
+	    (filename[1] == '\0' ||
+	     (filename[1] == '.' && filename[2] == '\0')))
+		return NULL;
+	return concat_path_file(path, filename);
+}
+
 /* ---------------------- grep / find / less helpers --------------------- */
 
 FILE *fopen_for_read(const char *filename)
@@ -409,11 +460,8 @@ int ndelay_off(int fd)
 	return fl;
 }
 
-const char *bb_basename(const char *name)
-{
-	const char *cp = strrchr(name, '/');
-	return cp ? cp + 1 : name;
-}
+/* bb_basename: provided by contrib/busybox/libbb/get_last_path_component.c
+ * (included in each applet that needs it).  Don't define a duplicate here. */
 
 DIR *warn_opendir(const char *path)
 {
@@ -840,6 +888,71 @@ void bb_simple_error_msg_and_die(const char *s)
 void bb_simple_perror_msg(const char *s)
 {
 	fprintf(stderr, "%s: %s: %s\n", applet_name, s, strerror(errno));
+}
+
+void bb_simple_error_msg(const char *s)
+{
+	fprintf(stderr, "%s: %s\n", applet_name, s);
+}
+
+/* Returns pointer to the last char if it equals c, else NULL. */
+char *last_char_is(const char *s, int c)
+{
+	if (!s || !*s)
+		return NULL;
+	{
+		size_t n = strlen(s);
+		return (s[n - 1] == (char)c) ? (char *)(s + n - 1) : NULL;
+	}
+}
+
+int open_or_warn(const char *pathname, int flags)
+{
+	int fd = open(pathname, flags);
+	if (fd < 0)
+		bb_simple_perror_msg(pathname);
+	return fd;
+}
+
+int open3_or_warn(const char *pathname, int flags, int mode)
+{
+	int fd = open(pathname, flags, mode);
+	if (fd < 0)
+		bb_simple_perror_msg(pathname);
+	return fd;
+}
+
+/* Hardlink-preservation table stubs.  ENABLE_FEATURE_PRESERVE_HARDLINKS=0
+ * in our config, so copy_file never asks; the stubs exist only so the
+ * compile unit links. */
+const char *is_in_ino_dev_hashtable(const struct stat *statbuf)
+{
+	(void)statbuf;
+	return NULL;
+}
+void add_to_ino_dev_hashtable(const struct stat *statbuf, const char *name)
+{
+	(void)statbuf; (void)name;
+}
+void reset_ino_dev_hashtable(void)
+{
+}
+
+/* Minimal POSIX dirname() — modifies path in place, returns ptr into it. */
+char *dirname(char *path)
+{
+	char *slash;
+	if (!path || !*path)
+		return (char *)".";
+	slash = strrchr(path, '/');
+	if (!slash)
+		return (char *)".";
+	if (slash == path) {
+		path[1] = '\0';
+		return path;
+	}
+	*slash = '\0';
+	return path;
 }
 
 FILE *fopen_or_warn_stdin(const char *filename)
