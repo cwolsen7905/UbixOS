@@ -65,6 +65,10 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/3/label", "\"About\""},
     {"/views/startmenu/3/exec", "\"@about\""},
 
+    /* Selectable desktop backgrounds offered by the Settings Desktop pane
+     * (which also offers "None").  Settings panes themselves are built-in. */
+    {"/settings/wallpapers/0", "\"/var/background/ubix.bmp\""},
+
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
     {"/views/desktop/wallpaper", "\"/var/background/ubix.bmp\""},

@@ -4,7 +4,7 @@
 # GUI client app that draws into a vmm_share_region buffer.  Add a new
 # directory name to SUBDIRS to include it in the build and clean targets.
 
-SUBDIRS = views taskbar term
+SUBDIRS = views taskbar term settings
 
 # bin/Makefile recurses into this group with a bare ${MAKE} (no target), so the
 # default target must build every SUBDIR — not just the first .for-generated one.

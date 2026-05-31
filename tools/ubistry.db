@@ -13,5 +13,6 @@
 /views/startmenu/2/exec = "/bin/settings"
 /views/startmenu/3/label = "About"
 /views/startmenu/3/exec = "@about"
+/settings/wallpapers/0 = "/var/background/ubix.bmp"
 /views/taskbar/height = 32
 /views/desktop/wallpaper = "/var/background/ubix.bmp"
