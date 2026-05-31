@@ -85,7 +85,9 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 
 	if (fd == 0x0)
 	{
-		kprintf("COULDN'T FIND FD: ", args->fd);
+		/* close() of an already-closed fd is a benign EBADF in POSIX —
+		 * logging it floods serial output once close()-of-fd-0-1-2
+		 * actually starts working. */
 		td->td_retval[0] = -1;
 	}
 	else
@@ -132,36 +134,31 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 				break;
 			case FD_TYPE_TTY:
 			case FD_TYPE_TTYV:
-				/* tty fds have no underlying fileDescriptor_t to close */
-				if (args->fd >= 3)
-				{
-					fdestroy(td, fd, args->fd);
-				}
+				/* tty fds have no underlying fileDescriptor_t to close.
+				 * Destroy the per-process fd slot regardless of whether
+				 * it's 0/1/2 — busybox tools use
+				 *   close(STDIN_FILENO); open(file)
+				 * to redirect, and that pattern needs slot 0 actually
+				 * freed so the open() picks it up. */
+				fdestroy(td, fd, args->fd);
 				td->td_retval[0] = 0;
 				break;
 			default:
-				if (args->fd < 3)
+				if (fd->fd != NULL && fclose(fd->fd) != 0)
 				{
-					td->td_retval[0] = 0;
+					td->td_retval[0] = -1;
 				}
-				else
+
+				if (fdestroy(td, fd, args->fd) != 0x0)
 				{
-					if (fd->fd != NULL && fclose(fd->fd) != 0)
-					{
-						td->td_retval[0] = -1;
-					}
-
-					if (fdestroy(td, fd, args->fd) != 0x0)
-					{
-						kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n",
-						        __FILE__,
-						        __LINE__,
-						        fd,
-						        td->o_files[args->fd]);
-					}
-
-					td->td_retval[0] = 0;
+					kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n",
+					        __FILE__,
+					        __LINE__,
+					        fd,
+					        td->o_files[args->fd]);
 				}
+
+				td->td_retval[0] = 0;
 		}
 	}
 	return (0);

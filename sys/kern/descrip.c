@@ -130,8 +130,10 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd)
 	}
 	memset(fp, 0, sizeof(struct file));
 
-	/* First 5 Descriptors Are Reserved */
-	for (i = 5; i < O_FILES; i++)
+	/* Allocate the lowest free slot.  Userland tools rely on the POSIX
+	 * "open returns the lowest free fd" rule for the close(N); open(file)
+	 * redirect idiom; starting the search at 5 broke that. */
+	for (i = 0; i < O_FILES; i++)
 	{
 		if (td->o_files[i] == 0x0)
 		{
