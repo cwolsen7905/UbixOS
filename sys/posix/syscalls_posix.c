@@ -97,7 +97,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "symlink", sys_invalid, SYSCALL_NOTIMP},                                                                /* 57 */
     {0, "readlink", sys_readlink, SYSCALL_VALID},                                                               /* 58 */
     {ARG_COUNT(sys_execve_args), "execve", (sys_call_t *)sys_execve, SYSCALL_VALID},                            // 59 - execv
-    {0, "umask", sys_invalid, SYSCALL_NOTIMP},                                                                  //  60 - umask
+    {ARG_COUNT(sys_umask_args), "umask", (sys_call_t *)sys_umask, SYSCALL_VALID},                              //  60 - umask
     {0, "chroot", sys_invalid, SYSCALL_NOTIMP},                                                                 //  61 - chroot
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  62
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  63

@@ -299,6 +299,13 @@ struct sys_ftruncate_args
 	char length_r_[PADR_(off_t)];
 };
 
+struct sys_umask_args
+{
+	char newmask_l_[PADL_(int)];
+	int newmask;
+	char newmask_r_[PADR_(int)];
+};
+
 struct sys_sysctl_args
 {
 	char name_l_[PADL_(int *)];
@@ -1188,6 +1195,7 @@ int sys_fgetc(struct thread *td, struct sys_fgetc_args *);
 int sys_fseek(struct thread *td, struct sys_fseek_args *);
 int sys_lseek(struct thread *td, struct sys_lseek_args *);
 int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *);
+int sys_umask(struct thread *td, struct sys_umask_args *);
 
 int sys_sched_yield(struct thread *td, void *);
 int sys_nanosleep(struct thread *td, void *);

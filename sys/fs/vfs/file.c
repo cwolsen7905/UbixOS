@@ -48,7 +48,7 @@
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
 
-void sysMkDir(const char *path);
+int sysMkDir(const char *path);
 
 fileDescriptor_t *fdTable = 0x0;
 
@@ -156,10 +156,17 @@ void sysRmDir(const char *path) {
 
 int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {
   if (args->path == 0x0) {
-    td->td_retval[0] = -1;
-    return (-1);
+    td->td_retval[0] = -EFAULT;
+    return (EFAULT);
   }
-  sysMkDir(args->path);
+  /* sysMkDir returns 0 on success, -1 on filesystem failure.  Propagate
+   * that as -EIO so mkdir -p can tell us "already exists" vs "couldn't
+   * create" and not blindly try to mkdir the next level into a directory
+   * that doesn't exist. */
+  if (sysMkDir(args->path) != 0) {
+    td->td_retval[0] = -EIO;
+    return (EIO);
+  }
   td->td_retval[0] = 0;
   return (0);
 }
@@ -290,6 +297,24 @@ int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args) {
         fd->offset = args->length;
 
     td->td_retval[0] = 0;
+    return (0);
+}
+
+/**
+ * sys_umask — POSIX umask(2), FreeBSD ABI syscall 60.
+ *
+ * Returns the old umask and sets the new one.  The per-process umask
+ * isn't yet applied at file-create time (kern_openat doesn't consult
+ * it), but tools that pass through "save and restore umask" — mkdir,
+ * touch, tar — call it during init and would fail outright if the
+ * syscall returned -ENOSYS.  Stubbing to 022 / accept-anything keeps
+ * those callers happy until per-process umask tracking lands.
+ *
+ * @return previous umask (0022 fixed for now).
+ */
+int sys_umask(struct thread *td, struct sys_umask_args *args) {
+    (void)args;
+    td->td_retval[0] = 0022;
     return (0);
 }
 
@@ -727,11 +752,23 @@ int fclose(fileDescriptor_t *fd) {
  Notes:
 
  ************************************************************************/
-void sysMkDir(const char *path) {
-    fileDescriptor_t *tmpFD = 0x0;
+/**
+ * sysMkDir — Create a directory at `path`.
+ *
+ * The previous version split the path into parent + basename and tried to
+ * fopen() the parent — but the parent is a directory, not a regular file,
+ * so fopen() always failed and the error path fired ("invalid mount point
+ * for ...") for every interior component on a "mkdir -p /a/b/c" call.
+ *
+ * The right shape: resolve the mount via vfs_findMount, build a stack-
+ * allocated fileDescriptor_t with just the mount pointer set, and hand
+ * the full path off to the filesystem's vfsMakeDir.  FAT's mkdir_fat
+ * already splits the path and walks parent_cluster internally, so
+ * passing the whole path is what it actually expects.
+ */
+int sysMkDir(const char *path) {
     char fullpath[1024];
-    char parentpath[1024];
-    const char *basename = 0x0;
+    fileDescriptor_t mkdir_fd;
 
     /* Resolve relative paths against CWD. */
     if (path[0] != '/')
@@ -740,37 +777,28 @@ void sysMkDir(const char *path) {
         strncpy(fullpath, path, sizeof(fullpath) - 1);
     fullpath[sizeof(fullpath) - 1] = '\0';
 
-    /* Split fullpath into parent dir and last component. */
-    char *last_slash = NULL;
+    /* busybox mkdir -p passes paths with trailing slashes; fat_dir_mkdir's
+     * basename extraction sees "" and the call fails.  Strip them here,
+     * but leave a bare "/" alone. */
     {
-        char *p = fullpath;
-        while (*p) { if (*p == '/') last_slash = p; p++; }
-    }
-    if (last_slash == NULL)
-        return;
-    basename = last_slash + 1;
-    if (last_slash == fullpath) {
-        strncpy(parentpath, "/", sizeof(parentpath) - 1);
-    } else {
-        size_t n = (size_t)(last_slash - fullpath);
-        strncpy(parentpath, fullpath, n);
-        parentpath[n] = '\0';
+        size_t n = strlen(fullpath);
+        while (n > 1 && fullpath[n - 1] == '/')
+            fullpath[--n] = '\0';
     }
 
-    tmpFD = fopen(parentpath, "rb");
-    if (tmpFD == NULL || tmpFD->mp == NULL) {
-        kprintf("sysMkDir: invalid mount point for %s\n", parentpath);
-        klog(KLOG_ERR, "sysMkDir: invalid mount point for %s", parentpath);
-        return;
+    struct vfs_mountPoint *mp = vfs_findMount(fullpath);
+    if (mp == NULL || mp->fs == NULL) {
+        klog(KLOG_ERR, "sysMkDir: no mount for %s", fullpath);
+        return (-1);
     }
-    if (tmpFD->mp->fs->vfsMakeDir == NULL) {
-        kprintf("sysMkDir: filesystem does not support mkdir\n");
-        klog(KLOG_ERR, "sysMkDir: filesystem does not support mkdir");
-        fclose(tmpFD);
-        return;
+    if (mp->fs->vfsMakeDir == NULL) {
+        klog(KLOG_ERR, "sysMkDir: %s: filesystem does not support mkdir", fullpath);
+        return (-1);
     }
-    tmpFD->mp->fs->vfsMakeDir(basename, tmpFD);
-    fclose(tmpFD);
+
+    memset(&mkdir_fd, 0, sizeof(mkdir_fd));
+    mkdir_fd.mp = mp;
+    return (mp->fs->vfsMakeDir(fullpath, &mkdir_fd));
 }
 
 /************************************************************************
