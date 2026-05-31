@@ -63,6 +63,7 @@ public:
 	void handle_flip(struct display_flip *fl);
 	void handle_release(struct display_release *rel);
 	void handle_raise(struct display_raise *dr);
+	void handle_settitle(struct display_settitle *st);
 	void handle_mouse(mouse_event_t &ev);
 	void handle_kbd(kbd_event_t &ev);
 };

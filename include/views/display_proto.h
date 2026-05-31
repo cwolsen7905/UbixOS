@@ -44,23 +44,24 @@
  */
 
 /* Client → display */
-#define DISPLAY_CLAIM   1   /* request a window region */
-#define DISPLAY_FLIP    2   /* buffer updated, please composite */
+#define DISPLAY_CLAIM 1     /* request a window region */
+#define DISPLAY_FLIP 2      /* buffer updated, please composite */
 #define DISPLAY_RELEASE 3   /* window closing */
-#define DISPLAY_QUERY   8   /* request screen geometry */
-#define DISPLAY_RAISE   11  /* ask compositor to raise/focus a window */
+#define DISPLAY_QUERY 8     /* request screen geometry */
+#define DISPLAY_RAISE 11    /* ask compositor to raise/focus a window */
+#define DISPLAY_SETTITLE 13 /* update an existing window's title bar text */
 
 /* display → client */
-#define DISPLAY_ACK     4   /* region granted; carries window_id + shm token */
-#define DISPLAY_DENIED  5   /* request refused */
-#define DISPLAY_KEY     6   /* keyboard event forwarded to focused window */
-#define DISPLAY_MOUSE   7   /* mouse event forwarded to focused window */
-#define DISPLAY_INFO    9   /* response to DISPLAY_QUERY */
-#define DISPLAY_CLOSE   10  /* compositor closed the window (close button) */
-#define DISPLAY_NOTIFY  12  /* window added or removed (sent to taskbar) */
+#define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
+#define DISPLAY_DENIED 5  /* request refused */
+#define DISPLAY_KEY 6     /* keyboard event forwarded to focused window */
+#define DISPLAY_MOUSE 7   /* mouse event forwarded to focused window */
+#define DISPLAY_INFO 9    /* response to DISPLAY_QUERY */
+#define DISPLAY_CLOSE 10  /* compositor closed the window (close button) */
+#define DISPLAY_NOTIFY 12 /* window added or removed (sent to taskbar) */
 
 /* Height of the server-drawn title bar (0 for no_decor windows) */
-#define DECOR_H         18
+#define DECOR_H 18
 
 /*
  * DISPLAY_CLAIM payload (client → display).
@@ -68,12 +69,13 @@
  * title:   window title string.
  * reply:   name of the client's MPI mailbox for the ACK/DENIED response.
  */
-struct display_claim_req {
-    int32_t  x, y, w, h;
-    int32_t  sender_pid;    /* client's PID — needed for vmm_share_region */
-    char     title[64];
-    char     reply[64];     /* client mailbox name */
-    uint8_t  no_decor;      /* 1 = skip server-side title bar (panels, flyouts) */
+struct display_claim_req
+{
+	int32_t x, y, w, h;
+	int32_t sender_pid; /* client's PID — needed for vmm_share_region */
+	char title[64];
+	char reply[64];   /* client mailbox name */
+	uint8_t no_decor; /* 1 = skip server-side title bar (panels, flyouts) */
 };
 
 /*
@@ -84,11 +86,12 @@ struct display_claim_req {
  * pitch:     bytes per scanline of the shared buffer.
  * x,y,w,h:  actual region granted (may differ from request).
  */
-struct display_ack {
-    uint32_t window_id;
-    void    *shm_base;
-    uint16_t pitch;
-    int32_t  x, y, w, h;
+struct display_ack
+{
+	uint32_t window_id;
+	void *shm_base;
+	uint16_t pitch;
+	int32_t x, y, w, h;
 };
 
 /*
@@ -96,16 +99,18 @@ struct display_ack {
  * window_id: handle from DISPLAY_ACK.
  * dirty_x/y/w/h: damaged rectangle within the buffer (0,0,w,h = full redraw).
  */
-struct display_flip {
-    uint32_t window_id;
-    int32_t  dirty_x, dirty_y, dirty_w, dirty_h;
+struct display_flip
+{
+	uint32_t window_id;
+	int32_t dirty_x, dirty_y, dirty_w, dirty_h;
 };
 
 /*
  * DISPLAY_RELEASE payload (client → display).
  */
-struct display_release {
-    uint32_t window_id;
+struct display_release
+{
+	uint32_t window_id;
 };
 
 /*
@@ -114,52 +119,69 @@ struct display_release {
  * The client should clean up and exit; the compositor has already removed
  * the window from its table.
  */
-struct display_close {
-    uint32_t window_id;
+struct display_close
+{
+	uint32_t window_id;
 };
 
 /*
  * DISPLAY_KEY payload (display → client).
  */
-struct display_key {
-    uint32_t window_id;
-    uint32_t keycode;
-    uint8_t  pressed;   /* 1 = down, 0 = up */
+struct display_key
+{
+	uint32_t window_id;
+	uint32_t keycode;
+	uint8_t pressed; /* 1 = down, 0 = up */
 };
 
 /*
  * DISPLAY_MOUSE payload (display → client).
  */
-struct display_mouse_ev {
-    uint32_t window_id;
-    int16_t  x, y;         /* position relative to window origin */
-    int16_t  dx, dy;
-    uint8_t  buttons;
+struct display_mouse_ev
+{
+	uint32_t window_id;
+	int16_t x, y; /* position relative to window origin */
+	int16_t dx, dy;
+	uint8_t buttons;
 };
 
 /*
  * DISPLAY_QUERY payload (client → display).
  * reply: client's MPI mailbox for DISPLAY_INFO response.
  */
-struct display_query {
-    char reply[64];
+struct display_query
+{
+	char reply[64];
 };
 
 /*
  * DISPLAY_INFO payload (display → client).
  */
-struct display_info {
-    uint32_t screen_w;
-    uint32_t screen_h;
-    uint8_t  bpp;
+struct display_info
+{
+	uint32_t screen_w;
+	uint32_t screen_h;
+	uint8_t bpp;
 };
 
 /*
  * DISPLAY_RAISE payload (client → display).
  * Ask the compositor to raise and focus the given window.
  */
-struct display_raise {
-    uint32_t window_id;
+struct display_raise
+{
+	uint32_t window_id;
+};
+
+/*
+ * DISPLAY_SETTITLE payload (client → display).
+ * Replace the title-bar text of an existing window (e.g. a terminal marking
+ * its shell as exited).  Ignored for no_decor windows.
+ */
+struct display_settitle
+{
+	uint32_t window_id;
+	char title[64];
 };
 
 /*
@@ -167,10 +189,11 @@ struct display_raise {
  * Sent whenever a decorated window is added or removed.
  * added=1: window opened; added=0: window closed.
  */
-struct display_notify {
-    uint32_t window_id;
-    uint8_t  added;
-    char     title[64];
+struct display_notify
+{
+	uint32_t window_id;
+	uint8_t added;
+	char title[64];
 };
 
 #endif /* _DISPLAY_PROTO_H */

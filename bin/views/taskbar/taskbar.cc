@@ -39,6 +39,8 @@
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
 
+extern char **environ; /* inherited session env, forwarded to launched apps */
+
 #define FONT_PATH "/var/fonts/ROM8X8.DPF"
 
 /* Taskbar geometry */
@@ -206,9 +208,11 @@ class Launcher
 				len = 0;
 				if (::fork() == 0)
 				{
+					/* Pass our inherited session environment (SHELL,
+					 * HOME, USER … set by vlogin) through to the app so
+					 * e.g. term can launch the user's shell. */
 					char *argv[] = {path, nullptr};
-					char *envp[] = {nullptr};
-					::execve(path, argv, envp);
+					::execve(path, argv, environ);
 					::_exit(1);
 				}
 			}
@@ -473,7 +477,13 @@ class Taskbar
 			return false;
 		}
 
-		std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n", win_id_, (uint32_t)(uintptr_t)shm, da->w, da->h, da->x, da->y);
+		std::printf("taskbar: window %u at 0x%X, %dx%d+%d+%d\n",
+		            win_id_,
+		            (uint32_t)(uintptr_t)shm,
+		            da->w,
+		            da->h,
+		            da->x,
+		            da->y);
 
 		return true;
 	}
@@ -495,7 +505,8 @@ class Taskbar
 
 	void win_remove(uint32_t id)
 	{
-		auto it = std::find_if(tracked_.begin(), tracked_.end(), [id](const TrackedWin &w) { return w.id == id; });
+		auto it =
+		    std::find_if(tracked_.begin(), tracked_.end(), [id](const TrackedWin &w) { return w.id == id; });
 		if (it != tracked_.end())
 			tracked_.erase(it);
 	}
