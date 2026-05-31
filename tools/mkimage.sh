@@ -243,6 +243,9 @@ done
 echo "==> Creating /mnt (automountd mount point root)"
 mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true
 
+echo "==> Creating /tmp (scratch space for editors, builds, etc.)"
+mmd -i "$IMG"@@1M ::/tmp 2>/dev/null || true
+
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true

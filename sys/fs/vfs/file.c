@@ -39,6 +39,7 @@
 #include <lib/kprintf.h>
 #include <assert.h>
 #include <sys/klog.h>
+#include <sys/errno.h>
 #include <sys/descrip.h>
 #include <sys/pipe.h>
 /* fat_filelib.h removed — FAT now uses native driver via vfsClose */
@@ -236,6 +237,46 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
     newpos = fd->offset;
     td->td_retval[0] = (int32_t)(newpos & 0xFFFFFFFF);
     td->td_retval[1] = (int32_t)(newpos >> 32);
+    return (0);
+}
+
+/**
+ * sys_ftruncate — POSIX ftruncate(2), FreeBSD ABI syscall 480.
+ *
+ * Updates the file's tracked size so subsequent stat/fstat report the
+ * truncated length and so callers like vi accept the save as successful.
+ * For files just written with O_TRUNC followed by writes that fully
+ * cover the new length (vi's save flow), this is sufficient — the bytes
+ * already on disk match what the caller intends to keep.
+ *
+ * NOTE: this does not yet shrink the on-disk allocation, so editing an
+ * existing file and shortening it will leave stale tail bytes on disk
+ * (visible only via raw block reads).  A per-FS truncate hook would be
+ * the proper fix and is tracked separately.
+ *
+ * @return 0 on success, -EBADF if fd does not refer to an open file.
+ */
+int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args) {
+    struct file *fdd = 0x0;
+    fileDescriptor_t *fd = 0x0;
+
+    getfd(td, &fdd, args->fd);
+    if (fdd == 0x0 || fdd->fd == 0x0) {
+        td->td_retval[0] = -EBADF;
+        return (EBADF);
+    }
+    fd = fdd->fd;
+
+    if (args->length < 0) {
+        td->td_retval[0] = -EINVAL;
+        return (EINVAL);
+    }
+
+    fd->size = (u_int32_t)args->length;
+    if (fd->offset > args->length)
+        fd->offset = args->length;
+
+    td->td_retval[0] = 0;
     return (0);
 }
 

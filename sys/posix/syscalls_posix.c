@@ -517,7 +517,7 @@ struct syscall_entry systemCalls_posix[] = {
     {ARG_COUNT(sys_mmap_args), "mmap2", (sys_call_t *)sys_mmap2, SYSCALL_VALID},                                /* 477 - sys_mmap2 (offset in pages, musl i386) */
     {ARG_COUNT(sys_lseek_args), "lseek", (sys_call_t *)sys_lseek, SYSCALL_VALID},                               /* 478 - sys_lseek */
     {0, "truncate", sys_invalid, SYSCALL_NOTIMP},                                                               /* 479 - Invalid */
-    {0, "ftruncate", sys_invalid, SYSCALL_NOTIMP},                                                              /* 480 - Invalid */
+    {ARG_COUNT(sys_ftruncate_args), "ftruncate", (sys_call_t *)sys_ftruncate, SYSCALL_VALID},                   /* 480 - sys_ftruncate */
     {0, "thr_kill2", sys_invalid, SYSCALL_NOTIMP},                                                              /* 481 - Invalid */
     {0, "shm_open", sys_invalid, SYSCALL_NOTIMP},                                                               /* 482 - Invalid */
     {0, "shm_unlink", sys_invalid, SYSCALL_NOTIMP},                                                             /* 483 - Invalid */

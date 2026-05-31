@@ -288,6 +288,17 @@ struct sys_lseek_args
 	char whence_r_[PADR_(int)];
 };
 
+struct sys_ftruncate_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char length_l_[PADL_(off_t)];
+	off_t length;
+	char length_r_[PADR_(off_t)];
+};
+
 struct sys_sysctl_args
 {
 	char name_l_[PADL_(int *)];
@@ -1176,6 +1187,7 @@ int sys_closedir(struct thread *td, struct sys_closedir_args *);
 int sys_fgetc(struct thread *td, struct sys_fgetc_args *);
 int sys_fseek(struct thread *td, struct sys_fseek_args *);
 int sys_lseek(struct thread *td, struct sys_lseek_args *);
+int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *);
 
 int sys_sched_yield(struct thread *td, void *);
 int sys_nanosleep(struct thread *td, void *);
