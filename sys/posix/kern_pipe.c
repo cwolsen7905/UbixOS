@@ -70,10 +70,15 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args)
 	nfp1->fd_type = 3;
 	nfp2->fd_type = 3;
 
+	/* Tag each struct file with the pipe end it represents so that
+	 * dup2/fork copies stay distinguishable after the fd numbers change. */
+	nfp1->pipe_end = PIPE_END_READ;
+	nfp2->pipe_end = PIPE_END_WRITE;
+
 	pipeDesc->rFD = fd1;
-	pipeDesc->rfdCNT = 2;
+	pipeDesc->rfdCNT = 1;
 	pipeDesc->wFD = fd2;
-	pipeDesc->wfdCNT = 2;
+	pipeDesc->wfdCNT = 1;
 
 	args->fildes[0] = fd1;
 	args->fildes[1] = fd2;

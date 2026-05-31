@@ -216,9 +216,12 @@ static int close_fdslot(struct thread *td, int fd)
 		if (f->data != NULL)
 		{
 			struct pipeInfo *pi = (struct pipeInfo *)f->data;
-			if (fd == pi->rFD)
+			/* Use the struct file's pipe_end tag rather than comparing fd
+			 * numbers — dup2/fork copies keep the same tag but get new
+			 * fd slots, so the original rFD/wFD numbers stop matching. */
+			if (f->pipe_end == PIPE_END_READ)
 				pi->rfdCNT--;
-			else if (fd == pi->wFD)
+			else if (f->pipe_end == PIPE_END_WRITE)
 				pi->wfdCNT--;
 			if (pi->rfdCNT <= 0 && pi->wfdCNT <= 0)
 			{
@@ -231,6 +234,7 @@ static int close_fdslot(struct thread *td, int fd)
 					pbuf = next;
 				}
 				kfree(pi);
+				f->data = NULL;
 			}
 		}
 		return fdestroy(td, f, fd);
@@ -268,6 +272,17 @@ static int duplicate_descriptor(struct thread *td, int from, int to)
 
 	if (fp->fd != NULL)
 		fp->fd->dup++;
+
+	/* Pipes: bump the refcount on the shared pipeInfo so a later close
+	 * of either fd doesn't drop it to zero with copies still live. */
+	if (fp->fd_type == FD_TYPE_PIPE && fp->data != NULL)
+	{
+		struct pipeInfo *pi = (struct pipeInfo *)fp->data;
+		if (fp->pipe_end == PIPE_END_READ)
+			pi->rfdCNT++;
+		else if (fp->pipe_end == PIPE_END_WRITE)
+			pi->wfdCNT++;
+	}
 
 	td->o_files[to] = (void *)dup_fp;
 	return (0);

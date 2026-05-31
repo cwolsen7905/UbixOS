@@ -64,11 +64,13 @@ int pipe(struct thread *td, struct pipe_args *uap)
 	nfp2->data = pipeDesc;
 	nfp1->fd_type = 3;
 	nfp2->fd_type = 3;
+	nfp1->pipe_end = PIPE_END_READ;
+	nfp2->pipe_end = PIPE_END_WRITE;
 
 	pipeDesc->rFD = fd1;
-	pipeDesc->rfdCNT = 2;
+	pipeDesc->rfdCNT = 1;
 	pipeDesc->wFD = fd2;
-	pipeDesc->wfdCNT = 2;
+	pipeDesc->wfdCNT = 1;
 
 	/* Write to the caller's fd array (musl/modern FreeBSD ABI) */
 	if (uap->fildes != 0)

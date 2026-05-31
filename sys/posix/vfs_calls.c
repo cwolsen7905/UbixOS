@@ -103,32 +103,16 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 				break;
 			case 3:
 				p_fd = fd->data;
-				if (args->fd == p_fd->rFD)
-				{
-					if (p_fd->rfdCNT < 2 && td->o_files[args->fd] != NULL)
-					{
-						if (fdestroy(td, fd, args->fd) != 0)
-						{
-							klog(KLOG_ERR,
-							     "sys_close: fdestroy failed for pipe rFD %d",
-							     args->fd);
-						}
-					}
+				/* Use the pipe_end tag — fd numbers diverge from
+				 * pi->rFD/wFD after dup2/fork. */
+				if (fd->pipe_end == PIPE_END_READ)
 					p_fd->rfdCNT--;
-				}
-
-				if (args->fd == p_fd->wFD)
-				{
-					if (p_fd->wfdCNT < 2 && td->o_files[args->fd] != NULL)
-					{
-						if (fdestroy(td, fd, args->fd) != 0)
-						{
-							klog(KLOG_ERR,
-							     "sys_close: fdestroy failed for pipe wFD %d",
-							     args->fd);
-						}
-					}
+				else if (fd->pipe_end == PIPE_END_WRITE)
 					p_fd->wfdCNT--;
+
+				if (fdestroy(td, fd, args->fd) != 0)
+				{
+					klog(KLOG_ERR, "sys_close: fdestroy failed for pipe fd %d", args->fd);
 				}
 
 				if (p_fd->rfdCNT <= 0 && p_fd->wfdCNT <= 0)
@@ -235,12 +219,18 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		}
 		else
 		{
-			/* Blocking: wait until data arrives or a signal fires.
-			 * Register ourselves as the reader so the writer can
-			 * boost our priority when it adds data (Phase 3.2). */
+			/* Blocking: wait until data arrives, the writer side closes,
+			 * or a signal fires. */
 			p_fd->reader_pid = (int)_current->id;
 			while (p_fd->bCNT == 0)
 			{
+				/* Writers all gone and nothing left to drain → EOF. */
+				if (p_fd->wfdCNT <= 0)
+				{
+					p_fd->reader_pid = 0;
+					td->td_retval[0] = 0;
+					return (0);
+				}
 				if (SIG_PENDING_UNBLOCKED(td))
 				{
 					p_fd->reader_pid = 0;
@@ -252,9 +242,11 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			p_fd->reader_pid = 0;
 		}
 		{
-			nbytes = (args->nbyte - (p_fd->headPB->nbytes - p_fd->headPB->offset) <= 0)
-			             ? args->nbyte
-			             : (p_fd->headPB->nbytes - p_fd->headPB->offset);
+			/* Min of requested and what's available in the head buffer.
+			 * (size_t subtraction wraps when requested < available, so
+			 * a "diff <= 0" test would always pick the wrong branch.) */
+			size_t avail = p_fd->headPB->nbytes - p_fd->headPB->offset;
+			nbytes = (args->nbyte < avail) ? args->nbyte : avail;
 			memcpy(args->buf, p_fd->headPB->buffer + p_fd->headPB->offset, nbytes);
 			p_fd->headPB->offset += nbytes;
 

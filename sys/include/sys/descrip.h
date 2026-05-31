@@ -71,6 +71,14 @@ struct uio {
 #define FD_TYPE_TTY    5   /* opened via /dev/tty — uses process ct_tty */
 #define FD_TYPE_TTYV   6   /* opened via /dev/ttyX — specific tty_term in fd->data */
 
+/* Pipe direction for FD_TYPE_PIPE struct files.  Stored per-file rather
+ * than per-pipeInfo because dup2/fork/dup may give a single pipeInfo
+ * multiple struct file aliases — each alias still represents exactly one
+ * read end or write end and needs to decrement the matching refcount on
+ * close.  Zero means "not a pipe". */
+#define PIPE_END_READ   1
+#define PIPE_END_WRITE  2
+
 struct file {
     u_int32_t f_flag;
     u_int16_t f_type;
@@ -79,6 +87,7 @@ struct file {
     int fd_type;
     int socket;
     void *data;
+    int pipe_end;
 };
 
 struct fileOps {
