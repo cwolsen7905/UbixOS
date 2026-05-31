@@ -38,6 +38,7 @@
 #include <vector>
 #include <cstring>
 #include <cstdlib>
+#include <unistd.h>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <views/display.hh>
@@ -46,7 +47,10 @@
 #include <objgfx/ogImage.h>
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
+#include <api/netcfg.h>
 #include <sys/kbd.h>
+
+extern char **environ; /* session env, forwarded to launched helpers */
 
 #define WIN_W 520
 #define WIN_H 360
@@ -87,11 +91,20 @@
 #define APPLY_H 24
 
 /* Sidebar categories (index == pane id); Settings opens on General. */
-static const char *g_pane_labels[] = {"General", "Desktop", "Appearance"};
+static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
 #define PANE_APPEARANCE 2
+#define PANE_NETWORK 3
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
+
+/* Network pane geometry + state (system-wide; written to bare /net keys). */
+#define NM_DHCP 0
+#define NM_STATIC 1
+#define NET_FX (CONTENT_X + 86)
+#define NET_FW 150
+#define NET_RH (ROW_H + 8)
+#define NET_APPLY_Y (SUB_TOP + 4 * NET_RH + 8)
 
 /* Desktop background modes (== /views/desktop/mode). */
 #define DM_IMAGE 0
@@ -119,6 +132,13 @@ static int g_solid[3] = {0x2C, 0x60, 0xA8};
 static int g_bar[3] = {0x1A, 0x1A, 0x2E};
 static int g_accent[3] = {0x28, 0x48, 0x70}; /* window title-bar accent */
 
+/* Network pane state: dotted-quad strings, editable in static mode. */
+static int g_net_mode = NM_DHCP;
+static char g_net_field[4][24]; /* ip, netmask, gateway, dns */
+static int g_net_focus = -1;    /* index of the field being edited, or -1 */
+static const char *g_net_flabels[4] = {"IP Address", "Netmask", "Gateway", "DNS"};
+static const char *g_net_fkeys[4] = {"/net/ip", "/net/netmask", "/net/gateway", "/net/dns"};
+
 static std::string basename_of(const std::string &p)
 {
 	size_t s = p.find_last_of('/');
@@ -135,6 +155,68 @@ static uint32_t packed(const int *rgb)
 {
 	return ((uint32_t)rgb[0] << 16) | ((uint32_t)rgb[1] << 8) | (uint32_t)rgb[2];
 }
+
+/*
+ * Launcher — spawns helper programs (e.g. /bin/netcfg) without the parent ever
+ * fork()ing after its window's shared memory exists.  A helper child is forked
+ * once at startup (before the window is claimed); later launches just pipe the
+ * path to that helper, which does the fork()+execve().  Mirrors the taskbar.
+ */
+class Launcher
+{
+	int fd_ = -1;
+
+      public:
+	void init()
+	{
+		int pfd[2];
+		if (pipe(pfd) != 0)
+			return;
+		if (fork() == 0)
+		{
+			close(pfd[1]);
+			char path[256];
+			int len = 0;
+			char ch;
+			for (;;)
+			{
+				int r;
+				do
+				{
+					r = (int)read(pfd[0], &ch, 1);
+				} while (r < 0);
+				if (r == 0)
+					_exit(0);
+				if (ch != '\0')
+				{
+					if (len < (int)sizeof(path) - 1)
+						path[len++] = ch;
+					continue;
+				}
+				if (len == 0)
+					continue;
+				path[len] = '\0';
+				len = 0;
+				if (fork() == 0)
+				{
+					char *argv[] = {path, nullptr};
+					execve(path, argv, environ);
+					_exit(1);
+				}
+			}
+		}
+		close(pfd[0]);
+		fd_ = pfd[1];
+	}
+
+	void launch(const char *path)
+	{
+		if (fd_ >= 0)
+			(void)write(fd_, path, std::strlen(path) + 1);
+	}
+};
+
+static Launcher g_launcher;
 
 /**
  * The user whose desktop this Settings instance edits.  Changes are written as
@@ -365,6 +447,154 @@ static void draw_dropdown(ogSurface &surf, ogBitFont &font)
 	}
 }
 
+/* ---------------------------- Network pane ---------------------------- */
+
+/* Read the /net keys into the pane state (system-wide config; bare paths). */
+static void load_network()
+{
+	char buf[32];
+
+	g_net_mode = NM_DHCP;
+	if (ubistry_get_str("/net/mode", buf, sizeof(buf)) == 0 && strcmp(buf, "static") == 0)
+		g_net_mode = NM_STATIC;
+	for (int i = 0; i < 4; i++)
+	{
+		g_net_field[i][0] = '\0';
+		if (ubistry_get_str(g_net_fkeys[i], buf, sizeof(buf)) == 0)
+			snprintf(g_net_field[i], sizeof(g_net_field[i]), "%s", buf);
+	}
+}
+
+/* Write the /net keys and run netcfg to push the config into the kernel. */
+static void apply_network()
+{
+	ubistry_set_str("/net/mode", g_net_mode == NM_STATIC ? "static" : "dhcp");
+	if (g_net_mode == NM_STATIC)
+		for (int i = 0; i < 4; i++)
+			if (g_net_field[i][0] != '\0')
+				ubistry_set_str(g_net_fkeys[i], g_net_field[i]);
+	g_launcher.launch("/bin/netcfg");
+}
+
+static void draw_network(ogSurface &surf, ogBitFont &font)
+{
+	static const char *modes[2] = {"DHCP", "Static"};
+
+	for (int m = 0; m < 2; m++)
+	{
+		int tx = CONTENT_X + m * (TAB_W + 4);
+		uint32_t bg = (m == g_net_mode) ? ROW_SEL : 0x00303A46u;
+		surf.ogFillRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, bg);
+		surf.ogRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, 0x00586470u);
+		set_color(font, 0x00F0F0F0, bg);
+		font.PutString(surf, tx + 12, TAB_Y + 7, modes[m]);
+	}
+
+	if (g_net_mode == NM_STATIC)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			int y = SUB_TOP + i * NET_RH;
+			bool focus = (i == g_net_focus);
+			set_color(font, 0x00C0C8D0, BG);
+			font.PutString(surf, CONTENT_X, y + 6, g_net_flabels[i]);
+			uint32_t box = focus ? 0x00304060u : 0x00181E26u;
+			surf.ogFillRect(NET_FX, y, NET_FX + NET_FW - 1, y + ROW_H - 2, box);
+			surf.ogRect(NET_FX, y, NET_FX + NET_FW - 1, y + ROW_H - 2, focus ? 0x0090B0E0u : 0x00586470u);
+			set_color(font, 0x00FFFFFF, box);
+			char shown[28];
+			snprintf(shown, sizeof(shown), focus ? "%s_" : "%s", g_net_field[i]);
+			font.PutString(surf, NET_FX + 5, y + 6, shown);
+		}
+	}
+	else
+	{
+		set_color(font, 0x00A0B0C0, BG);
+		font.PutString(surf, CONTENT_X, SUB_TOP + 6, "Address obtained automatically via DHCP.");
+	}
+
+	surf.ogFillRect(CONTENT_X, NET_APPLY_Y, CONTENT_X + 89, NET_APPLY_Y + ROW_H - 1, ROW_SEL);
+	surf.ogRect(CONTENT_X, NET_APPLY_Y, CONTENT_X + 89, NET_APPLY_Y + ROW_H - 1, 0x00586470u);
+	set_color(font, 0x00FFFFFF, ROW_SEL);
+	font.PutString(surf, CONTENT_X + 26, NET_APPLY_Y + 8, "Apply");
+}
+
+/* Handle a click in the Network pane; returns true if anything changed. */
+static bool network_click(int x, int y)
+{
+	if (y >= TAB_Y && y < TAB_Y + TAB_H)
+	{
+		for (int m = 0; m < 2; m++)
+		{
+			int tx = CONTENT_X + m * (TAB_W + 4);
+			if (x >= tx && x < tx + TAB_W)
+			{
+				g_net_mode = m;
+				g_net_focus = -1;
+				return true;
+			}
+		}
+		return false;
+	}
+	if (g_net_mode == NM_STATIC)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			int fy = SUB_TOP + i * NET_RH;
+			if (x >= NET_FX && x < NET_FX + NET_FW && y >= fy && y < fy + ROW_H)
+			{
+				g_net_focus = i;
+				return true;
+			}
+		}
+	}
+	if (x >= CONTENT_X && x < CONTENT_X + 90 && y >= NET_APPLY_Y && y < NET_APPLY_Y + ROW_H)
+	{
+		g_net_focus = -1;
+		apply_network();
+		return true;
+	}
+	return false;
+}
+
+/* Edit the focused Network field: digits/dot type, backspace deletes, Tab
+ * moves to the next field, Enter/Esc finish editing. */
+static bool network_key(uint32_t kc)
+{
+	if (g_net_mode != NM_STATIC || g_net_focus < 0)
+		return false;
+
+	char *f = g_net_field[g_net_focus];
+	int len = (int)strlen(f);
+
+	if ((kc >= '0' && kc <= '9') || kc == '.')
+	{
+		if (len < (int)sizeof(g_net_field[0]) - 1)
+		{
+			f[len] = (char)kc;
+			f[len + 1] = '\0';
+		}
+		return true;
+	}
+	if (kc == 0x08 || kc == 0x7F)
+	{
+		if (len > 0)
+			f[len - 1] = '\0';
+		return true;
+	}
+	if (kc == '\t')
+	{
+		g_net_focus = (g_net_focus + 1) % 4;
+		return true;
+	}
+	if (kc == '\r' || kc == '\n' || kc == KEY_ESC)
+	{
+		g_net_focus = -1;
+		return true;
+	}
+	return false;
+}
+
 static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, WIN_H - 1, BG);
@@ -376,6 +606,12 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 		set_color(font, 0x00A0B0C0, BG);
 		font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Accent colour (window title bars)");
 		draw_picker(surf, font, g_accent);
+		return;
+	}
+
+	if (pane == PANE_NETWORK)
+	{
+		draw_network(surf, font);
 		return;
 	}
 
@@ -584,6 +820,11 @@ int main(int argc, char **argv)
 		return 1;
 
 	load_desktop();
+	load_network();
+
+	/* Fork the launcher helper now, BEFORE the window's shared memory exists,
+	 * so a later fork() (to run netcfg) can't COW-break the shared region. */
+	g_launcher.init();
 
 	mpi_message_t msg = {};
 	struct display_claim_req *creq = (struct display_claim_req *)msg.data;
@@ -668,8 +909,16 @@ int main(int argc, char **argv)
 			if (reply.header == DISPLAY_KEY)
 			{
 				struct display_key *dk = (struct display_key *)reply.data;
-				if (dk->pressed && active == PANE_DESKTOP && desktop_key(dk->keycode))
-					render();
+				if (dk->pressed)
+				{
+					bool changed = false;
+					if (active == PANE_DESKTOP)
+						changed = desktop_key(dk->keycode);
+					else if (active == PANE_NETWORK)
+						changed = network_key(dk->keycode);
+					if (changed)
+						render();
+				}
 				continue;
 			}
 			if (reply.header != DISPLAY_MOUSE)
@@ -699,6 +948,11 @@ int main(int argc, char **argv)
 			else if (active == PANE_APPEARANCE)
 			{
 				if (appearance_click(me->x, me->y))
+					render();
+			}
+			else if (active == PANE_NETWORK)
+			{
+				if (network_click(me->x, me->y))
 					render();
 			}
 		}

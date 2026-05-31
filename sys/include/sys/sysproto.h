@@ -214,4 +214,12 @@ struct sys_ptysnap_args
 };
 int sys_ptysnap(struct thread *, struct sys_ptysnap_args *);
 
+struct sys_net_configure_args
+{
+	char cfg_l_[PADL_(const void *)];
+	const void *cfg; /* user pointer to struct net_config */
+	char cfg_r_[PADR_(const void *)];
+};
+int sys_net_configure(struct thread *, struct sys_net_configure_args *);
+
 #endif

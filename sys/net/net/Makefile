@@ -5,7 +5,7 @@ include ../../Makefile.incl
 
 INCLUDES += -I../../include
 
-OBJS = sys_arch.o init.o shell.o
+OBJS = sys_arch.o init.o shell.o netcfg.o
 # shell.o udpecho.o init.o sys_arch.o bot.o
 
 .include "${UBIX_MK}/ubix.kern.mk"

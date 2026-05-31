@@ -28,3 +28,8 @@
 /settings/wallpapers/7 = "/var/background/synthwave-road.png"
 /settings/wallpapers/8 = "/var/background/synthwave-vapor.png"
 /views/taskbar/height = 32
+/net/mode = "dhcp"
+/net/ip = "10.0.2.50"
+/net/netmask = "255.255.255.0"
+/net/gateway = "10.0.2.2"
+/net/dns = "10.0.2.3"

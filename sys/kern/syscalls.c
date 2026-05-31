@@ -102,6 +102,10 @@ struct syscall_entry systemCalls[] = {
     {ARG_COUNT(sys_ptyfree_args), "ptyfree", (sys_call_t *)sys_ptyfree, SYSCALL_VALID},       // 56 - ptyfree
     {ARG_COUNT(sys_ptyinject_args), "ptyinject", (sys_call_t *)sys_ptyinject, SYSCALL_VALID}, // 57 - ptyinject
     {ARG_COUNT(sys_ptysnap_args), "ptysnap", (sys_call_t *)sys_ptysnap, SYSCALL_VALID},       // 58 - ptysnap
+    {ARG_COUNT(sys_net_configure_args),
+     "net_configure",
+     (sys_call_t *)sys_net_configure,
+     SYSCALL_VALID}, // 59 - net_configure
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

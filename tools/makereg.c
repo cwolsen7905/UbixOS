@@ -90,6 +90,15 @@ static const struct reg_entry g_defaults[] = {
 
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
+
+    /* Network: mode = dhcp | static.  The static ip/netmask/gateway/dns are
+     * defaults shown by the Settings Network pane and applied only in static
+     * mode.  bin/netcfg reads these at boot and pushes them to the kernel. */
+    {"/net/mode", "\"dhcp\""},
+    {"/net/ip", "\"10.0.2.50\""},
+    {"/net/netmask", "\"255.255.255.0\""},
+    {"/net/gateway", "\"10.0.2.2\""},
+    {"/net/dns", "\"10.0.2.3\""},
 };
 
 int main(void)
