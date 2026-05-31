@@ -31,6 +31,7 @@
 #include <vector>
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <ubix/process.hh>
@@ -38,6 +39,7 @@
 #include <objgfx/objgfx.h>
 #include <objgfx/ogFont.h>
 #include <objgfx/ogPixelFmt.h>
+#include <ubistry/ubistry.h>
 
 extern char **environ; /* inherited session env, forwarded to launched apps */
 
@@ -49,10 +51,10 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 #define CLOCK_W 80
 #define WIN_BTN_W 96
 
-/* Flyout geometry */
-#define FLY_W 120
-#define FLY_H 120
-#define FLY_ITEM_H (FLY_H / 3)
+/* Start-menu geometry (a Menu sizes its height to its item count). */
+#define MENU_W 140
+#define MENU_ITEM_H 20
+#define MENU_MAX_ITEMS 16
 
 /* Colours: (r<<16)|(g<<8)|b */
 static const uint32_t TB_BG = 0x003C8Cu;
@@ -231,38 +233,47 @@ class Launcher
 };
 
 /* ------------------------------------------------------------------ */
-/* Flyout — owns the pop-up menu surface and its window lifecycle      */
+/* Menu — a pop-up loaded from the registry.  An entry is a leaf (an    */
+/*        exec action) or a submenu (has an items/ container).          */
 /* ------------------------------------------------------------------ */
 
-class Flyout
+struct MenuItem
+{
+	std::string label;
+	std::string exec; /* leaf action: a program path, or "@builtin" */
+	std::string path; /* registry path of this entry (for submenus) */
+	bool submenu = false;
+};
+
+class Menu
 {
 	ogSurface surf_;
 	uint32_t win_id_ = 0;
 	bool open_ = false;
+	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
+	std::vector<MenuItem> items_;
 
 	void draw(ogBitFont &font)
 	{
+		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, FLY_BG_C);
+		for (int i = 0; i < (int)items_.size(); i++)
+		{
+			int top = i * MENU_ITEM_H;
+			surf_.ogFillRect(2, top + 2, w_ - 3, top + MENU_ITEM_H - 3, FLY_ITEM_C);
+			font_fg(font, COL_WHITE);
+			font_bg(font, FLY_ITEM_C);
+			font.PutString(surf_, 8, top + 6, items_[i].label.c_str());
+			if (items_[i].submenu)
+				font.PutString(surf_, w_ - 12, top + 6, ">");
+		}
+	}
 
-		/* Flyout Menu */
-		surf_.ogFillRect(0, 0, FLY_W - 1, FLY_H - 1, FLY_BG_C);
-
-		/* Terminal Items */
-		surf_.ogFillRect(2, 2, FLY_W - 3, FLY_ITEM_H - 3, FLY_ITEM_C);
-		font_fg(font, COL_WHITE);
-		font_bg(font, FLY_ITEM_C);
-		font.PutString(surf_, 8, 10, "Terminal");
-
-		/* About Item */
-		surf_.ogFillRect(2, FLY_ITEM_H + 2, FLY_W - 3, 2 * FLY_ITEM_H - 3, FLY_ITEM_C);
-		font_fg(font, COL_WHITE);
-		font_bg(font, FLY_ITEM_C);
-		font.PutString(surf_, 8, FLY_ITEM_H + 10, "About");
-
-		/* Log Out Item */
-		surf_.ogFillRect(2, 2 * FLY_ITEM_H + 2, FLY_W - 3, FLY_H - 3, FLY_ITEM_C);
-		font_fg(font, COL_WHITE);
-		font_bg(font, FLY_ITEM_C);
-		font.PutString(surf_, 8, 2 * FLY_ITEM_H + 10, "Log Out");
+	void load_fallback()
+	{
+		items_.clear();
+		items_.push_back({"Terminal", "/bin/term", "", false});
+		items_.push_back({"About", "@about", "", false});
+		items_.push_back({"Log Out", "@logout", "", false});
 	}
 
       public:
@@ -274,26 +285,99 @@ class Flyout
 	{
 		return win_id_;
 	}
-	int hit_item(int y) const
+	int count() const
 	{
-		return open_ ? (y / FLY_ITEM_H) : -1;
+		return (int)items_.size();
+	}
+	int x() const
+	{
+		return x_;
+	}
+	int y() const
+	{
+		return y_;
+	}
+	int w() const
+	{
+		return w_;
+	}
+	const MenuItem *item(int i) const
+	{
+		return (i >= 0 && i < (int)items_.size()) ? &items_[i] : nullptr;
 	}
 
-	void show(uint32_t sh, ubix::Mailbox &mbox, ogBitFont &font)
+	int hit_item(int y) const
 	{
-		if (open_)
+		if (!open_)
+			return -1;
+		int i = y / MENU_ITEM_H;
+		return (i >= 0 && i < (int)items_.size()) ? i : -1;
+	}
+
+	/* Populate from a registry container; fall back to a built-in menu if the
+	 * registry is unavailable or empty so the desktop is never broken. */
+	void load(const char *regpath)
+	{
+		char names[UB_NAMES_MAX];
+		int n = ubistry_enum(regpath, names, sizeof(names));
+
+		items_.clear();
+		if (n <= 0)
+		{
+			load_fallback();
 			return;
+		}
+
+		std::string ns(names);
+		size_t start = 0;
+		while (start < ns.size() && (int)items_.size() < MENU_MAX_ITEMS)
+		{
+			size_t nl = ns.find('\n', start);
+			std::string child = ns.substr(start, nl == std::string::npos ? std::string::npos : nl - start);
+			start = (nl == std::string::npos) ? ns.size() : nl + 1;
+			if (child.empty())
+				continue;
+
+			MenuItem it;
+			it.path = std::string(regpath) + "/" + child;
+
+			char buf[128];
+			if (ubistry_get_str((it.path + "/label").c_str(), buf, sizeof(buf)) == 0)
+				it.label = buf;
+			else
+				it.label = child;
+
+			char scratch[UB_NAMES_MAX];
+			it.submenu = (ubistry_enum((it.path + "/items").c_str(), scratch, sizeof(scratch)) >= 0);
+			if (!it.submenu && ubistry_get_str((it.path + "/exec").c_str(), buf, sizeof(buf)) == 0)
+				it.exec = buf;
+
+			items_.push_back(it);
+		}
+		if (items_.empty())
+			load_fallback();
+	}
+
+	void show(int x, int y, ubix::Mailbox &mbox, ogBitFont &font)
+	{
+		if (open_ || items_.empty())
+			return;
+
+		w_ = MENU_W;
+		h_ = (int)items_.size() * MENU_ITEM_H;
+		x_ = x < 0 ? 0 : x;
+		y_ = y < 0 ? 0 : y;
 
 		mpi_message_t claim = {};
 		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
 		claim.header = DISPLAY_CLAIM;
-		creq->x = 2;
-		creq->y = (int32_t)(sh - TB_H - FLY_H);
-		creq->w = FLY_W;
-		creq->h = FLY_H;
+		creq->x = x_;
+		creq->y = y_;
+		creq->w = w_;
+		creq->h = h_;
 		creq->sender_pid = ubix::pid();
 		creq->no_decor = 1;
-		std::strncpy(creq->title, "flyout", sizeof(creq->title) - 1);
+		std::strncpy(creq->title, "menu", sizeof(creq->title) - 1);
 		creq->title[sizeof(creq->title) - 1] = '\0';
 		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
 		creq->reply[sizeof(creq->reply) - 1] = '\0';
@@ -307,7 +391,7 @@ class Flyout
 
 		struct display_ack *da = (struct display_ack *)reply.data;
 		win_id_ = da->window_id;
-		surf_.ogAttach(da->shm_base, FLY_W, FLY_H, OG_PIXFMT_32BPP);
+		surf_.ogAttach(da->shm_base, (uint32_t)w_, (uint32_t)h_, OG_PIXFMT_32BPP);
 		open_ = true;
 		draw(font);
 		send_flip_msg(win_id_);
@@ -331,7 +415,7 @@ class Flyout
 
 /* ------------------------------------------------------------------ */
 /* Taskbar — owns the strip surface, font, window list, and event      */
-/*           routing; delegates to Flyout and Launcher                 */
+/*           routing; delegates to Menu and Launcher                   */
 /* ------------------------------------------------------------------ */
 
 class Taskbar
@@ -342,7 +426,8 @@ class Taskbar
 	uint32_t sw_ = 0;
 	uint32_t sh_ = 0;
 	std::vector<TrackedWin> tracked_;
-	Flyout fly_;
+	Menu start_menu_;
+	Menu submenu_;
 	Launcher launcher_;
 	bool btn_pressed_ = false;
 
@@ -511,17 +596,77 @@ class Taskbar
 			tracked_.erase(it);
 	}
 
+	void close_menus()
+	{
+		submenu_.hide();
+		start_menu_.hide();
+	}
+
+	/* Run a leaf entry: a built-in "@action" or a program to launch. */
+	void dispatch(const MenuItem &it)
+	{
+		if (it.exec.empty())
+			return;
+		if (it.exec[0] == '@')
+		{
+			if (it.exec == "@logout")
+				::exit(0); /* taskbar exit ends the session; vlogin resumes */
+			/* @about and other built-ins: not yet implemented */
+			return;
+		}
+		launcher_.launch(it.exec.c_str());
+	}
+
+	/* Open the submenu for a top-level entry beside its row, on-screen. */
+	void open_submenu(const MenuItem &parent, int row, ubix::Mailbox &mbox)
+	{
+		submenu_.hide();
+		submenu_.load((parent.path + "/items").c_str());
+
+		int sx = start_menu_.x() + start_menu_.w();
+		int sy = start_menu_.y() + row * MENU_ITEM_H;
+		int sh_px = submenu_.count() * MENU_ITEM_H;
+		if (sx + MENU_W > (int)sw_)
+			sx = start_menu_.x() - MENU_W; /* flip to the left edge */
+		if (sy + sh_px > (int)sh_ - TB_H)
+			sy = (int)sh_ - TB_H - sh_px;
+		submenu_.show(sx, sy, mbox, font_);
+	}
+
 	void on_mouse(const display_mouse_ev *me, ubix::Mailbox &mbox)
 	{
-		/* Flyout-targeted event */
-		if (me->window_id == fly_.win_id())
+		/* Submenu click: dispatch the chosen leaf. */
+		if (me->window_id == submenu_.win_id() && submenu_.is_open())
 		{
-			if (!(me->buttons & 1) && fly_.is_open())
+			if (!(me->buttons & 1))
 			{
-				int item = fly_.hit_item(me->y);
-				fly_.hide();
-				if (item == 0)
-					launcher_.launch("/bin/term");
+				const MenuItem *it = submenu_.item(submenu_.hit_item(me->y));
+				MenuItem sel = it ? *it : MenuItem();
+				close_menus();
+				if (it)
+					dispatch(sel);
+			}
+			return;
+		}
+
+		/* Top-level menu click: cascade a submenu or dispatch a leaf. */
+		if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
+		{
+			if (!(me->buttons & 1))
+			{
+				int row = start_menu_.hit_item(me->y);
+				const MenuItem *it = start_menu_.item(row);
+				if (it && it->submenu)
+				{
+					open_submenu(*it, row, mbox);
+				}
+				else
+				{
+					MenuItem sel = it ? *it : MenuItem();
+					close_menus();
+					if (it)
+						dispatch(sel);
+				}
 			}
 			return;
 		}
@@ -538,16 +683,27 @@ class Taskbar
 			int wi = winbtn_hit(me->x);
 			if (wi >= 0)
 			{
+				close_menus();
 				raise_window(tracked_[wi].id);
 				return;
 			}
 			bool in_btn = (me->x >= 2 && me->x < 2 + BTN_W);
 			if (in_btn)
 			{
-				if (fly_.is_open())
-					fly_.hide();
+				if (start_menu_.is_open())
+				{
+					close_menus();
+				}
 				else
-					fly_.show(sh_, mbox, font_);
+				{
+					start_menu_.load("/views/startmenu");
+					int mh = start_menu_.count() * MENU_ITEM_H;
+					start_menu_.show(2, (int)sh_ - TB_H - mh, mbox, font_);
+				}
+			}
+			else
+			{
+				close_menus(); /* click elsewhere dismisses the menu */
 			}
 		}
 	}
