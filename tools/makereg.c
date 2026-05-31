@@ -65,13 +65,22 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/3/label", "\"About\""},
     {"/views/startmenu/3/exec", "\"@about\""},
 
-    /* Selectable desktop backgrounds offered by the Settings Desktop pane
-     * (which also offers "None").  Settings panes themselves are built-in. */
+    /* Desktop background: mode = image | solid | jailbars; each mode uses its
+     * own params.  Colours are packed 0xRRGGBB stored as integers.  The system
+     * default is jailbars; a user's choice persists and overrides it. */
+    {"/views/desktop/mode", "\"jailbars\""},
+    {"/views/desktop/image", "\"/var/background/ubix.bmp\""},
+    {"/views/desktop/color", "2900136"},    /* 0x2C60A8 solid blue        */
+    {"/views/desktop/barcolor", "1710638"}, /* 0x1A1A2E jailbar base shade */
+
+    /* Image choices offered by the Settings Desktop pane. */
     {"/settings/wallpapers/0", "\"/var/background/ubix.bmp\""},
+    {"/settings/wallpapers/1", "\"/var/background/aqua.bmp\""},
+    {"/settings/wallpapers/2", "\"/var/background/graphite.bmp\""},
+    {"/settings/wallpapers/3", "\"/var/background/dusk.bmp\""},
 
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
-    {"/views/desktop/wallpaper", "\"/var/background/ubix.bmp\""},
 };
 
 int main(void)

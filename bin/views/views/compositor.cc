@@ -26,9 +26,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <cstring>
 #include <objgfx/objgfx.h>
 #include <objgfx/ogImage.h>
 #include <ubistry/ubistry.h>
+#include <api/ubix.h>
 #include "compositor.hh"
 
 static const uint8_t g_cursor_mask[CUR_H][CUR_W] = {
@@ -68,7 +70,7 @@ int Compositor::init()
 
 void Compositor::startup()
 {
-	set_wallpaper_from_registry();
+	set_desktop_from_registry();
 	draw_desktop();
 	cur_x_ = (int)fb_.width / 2;
 	cur_y_ = (int)fb_.height / 2;
@@ -76,6 +78,24 @@ void Compositor::startup()
 	cursor_draw(cur_x_, cur_y_);
 	cur_drawn_ = true;
 	fb_.flush_to_lf(0, 0, (int)fb_.width, (int)fb_.height);
+}
+
+/**
+ * Scale a packed colour's brightness by num/den (clamped); used to derive the
+ * four jailbar shades from a single base colour.
+ */
+static uint32_t scale_color(uint32_t c, int num, int den)
+{
+	int r = (int)((c >> 16) & 0xFF) * num / den;
+	int g = (int)((c >> 8) & 0xFF) * num / den;
+	int b = (int)(c & 0xFF) * num / den;
+	if (r > 255)
+		r = 255;
+	if (g > 255)
+		g = 255;
+	if (b > 255)
+		b = 255;
+	return FB_RGB(r, g, b);
 }
 
 void Compositor::desktop_fill_rect(int x, int y, int w, int h)
@@ -90,30 +110,43 @@ void Compositor::desktop_fill_rect(int x, int y, int w, int h)
 	if (y2 > (int)fb_.height)
 		y2 = (int)fb_.height;
 
-	/* With a wallpaper loaded, sample it (centered) and fill any margin with a
-	 * flat colour; otherwise fall back to the default jailbar pattern. */
-	if (wp_w_ > 0 && wp_h_ > 0)
+	/* Image: stretch the decoded bitmap to fill the screen (nearest-neighbour). */
+	if (desk_mode_ == DESK_IMAGE && wp_w_ > 0 && wp_h_ > 0)
 	{
-		int ox = ((int)fb_.width - wp_w_) / 2;
-		int oy = ((int)fb_.height - wp_h_) / 2;
 		for (int py = y; py < y2; py++)
 		{
-			int sy = py - oy;
+			int sy = py * wp_h_ / (int)fb_.height;
+			if (sy >= wp_h_)
+				sy = wp_h_ - 1;
 			for (int px = x; px < x2; px++)
 			{
-				int sx = px - ox;
-				if (sx >= 0 && sx < wp_w_ && sy >= 0 && sy < wp_h_)
-					fb_.pixel(px, py, wp_[(size_t)sy * wp_w_ + sx]);
-				else
-					fb_.pixel(px, py, FB_RGB(0x10, 0x10, 0x18));
+				int sx = px * wp_w_ / (int)fb_.width;
+				if (sx >= wp_w_)
+					sx = wp_w_ - 1;
+				fb_.pixel(px, py, wp_[(size_t)sy * wp_w_ + sx]);
 			}
 		}
 		return;
 	}
 
+	/* Solid: flat fill. */
+	if (desk_mode_ == DESK_SOLID)
+	{
+		for (int py = y; py < y2; py++)
+			for (int px = x; px < x2; px++)
+				fb_.pixel(px, py, solid_color_);
+		return;
+	}
+
+	/* Jailbars (also the fallback if an image fails to load): four brightness
+	 * shades of the base colour as vertical stripes. */
+	static const int num[4] = {10, 7, 13, 5};
+	uint32_t bar[4];
+	for (int i = 0; i < 4; i++)
+		bar[i] = bar_base_ ? scale_color(bar_base_, num[i], 10) : g_jailbar_colors[i];
 	for (int py = y; py < y2; py++)
 		for (int px = x; px < x2; px++)
-			fb_.pixel(px, py, g_jailbar_colors[px & 3]);
+			fb_.pixel(px, py, bar[px & 3]);
 }
 
 void Compositor::draw_desktop()
@@ -135,7 +168,10 @@ void Compositor::load_wallpaper(const char *path)
 	ogImage img;
 	ogSurface s;
 	if (!img.Load(path, s))
+	{
+		ulogf(ULOG_ERR, "views: wallpaper load FAILED: %s", path);
 		return;
+	}
 
 	int w = (int)s.ogGetMaxX() + 1;
 	int h = (int)s.ogGetMaxY() + 1;
@@ -161,13 +197,33 @@ void Compositor::load_wallpaper(const char *path)
 	wp_h_ = h;
 }
 
-void Compositor::set_wallpaper_from_registry()
+void Compositor::set_desktop_from_registry()
 {
-	char path[256];
-	if (ubistry_get_str("/views/desktop/wallpaper", path, sizeof(path)) == 0)
-		load_wallpaper(path);
-	else
-		load_wallpaper(nullptr);
+	char mode[32];
+	int ival;
+
+	desk_mode_ = DESK_BARS;
+	if (ubistry_get_str("/views/desktop/mode", mode, sizeof(mode)) == 0)
+	{
+		if (strcmp(mode, "image") == 0)
+			desk_mode_ = DESK_IMAGE;
+		else if (strcmp(mode, "solid") == 0)
+			desk_mode_ = DESK_SOLID;
+	}
+
+	if (ubistry_get_int("/views/desktop/color", &ival) == 0)
+		solid_color_ = (uint32_t)ival & 0x00FFFFFFu;
+	if (ubistry_get_int("/views/desktop/barcolor", &ival) == 0)
+		bar_base_ = (uint32_t)ival & 0x00FFFFFFu;
+
+	wp_.clear();
+	wp_w_ = wp_h_ = 0;
+	if (desk_mode_ == DESK_IMAGE)
+	{
+		char path[256];
+		if (ubistry_get_str("/views/desktop/image", path, sizeof(path)) == 0)
+			load_wallpaper(path);
+	}
 }
 
 bool Compositor::rect_covered(int rx, int ry, int rw, int rh)

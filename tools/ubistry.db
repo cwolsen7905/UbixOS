@@ -13,6 +13,12 @@
 /views/startmenu/2/exec = "/bin/settings"
 /views/startmenu/3/label = "About"
 /views/startmenu/3/exec = "@about"
+/views/desktop/mode = "jailbars"
+/views/desktop/image = "/var/background/ubix.bmp"
+/views/desktop/color = 2900136
+/views/desktop/barcolor = 1710638
 /settings/wallpapers/0 = "/var/background/ubix.bmp"
+/settings/wallpapers/1 = "/var/background/aqua.bmp"
+/settings/wallpapers/2 = "/var/background/graphite.bmp"
+/settings/wallpapers/3 = "/var/background/dusk.bmp"
 /views/taskbar/height = 32
-/views/desktop/wallpaper = "/var/background/ubix.bmp"

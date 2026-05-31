@@ -27,10 +27,11 @@
  */
 
 /*
- * settings — the UbixOS Settings window, modelled on macOS System Settings:
- * a category sidebar on the left, the selected category's content on the right.
- * It opens on General.  Panes are built-in modules; the Desktop pane sets the
- * wallpaper, stored in ubistry and applied live by the compositor.
+ * settings — the UbixOS Settings window, modelled on macOS System Settings: a
+ * category sidebar on the left, the selected category's content on the right.
+ * Opens on General.  The Desktop pane sets the desktop background (an image,
+ * a solid colour, or coloured jailbars) via ubistry; the compositor applies it
+ * live.  Colours are chosen with a simple click-to-set RGB picker.
  */
 
 #include <string>
@@ -46,9 +47,9 @@
 
 #define WIN_W 520
 #define WIN_H 320
-#define BG 0x00202830u         /* content background */
-#define SIDEBAR_BG 0x00181E26u /* sidebar background */
-#define ROW_SEL 0x00405890u    /* selected row highlight */
+#define BG 0x00202830u
+#define SIDEBAR_BG 0x00181E26u
+#define ROW_SEL 0x00405890u
 #define SIDEBAR_W 128
 #define ROW_H 24
 #define SIDE_TOP 8
@@ -56,20 +57,40 @@
 #define CONTENT_TOP 12
 #define FONT_PATH "/var/fonts/ROM8X8.DPF"
 
+/* Desktop pane geometry. */
+#define TAB_Y 40
+#define TAB_W 78
+#define TAB_H 22
+#define SUB_TOP (TAB_Y + TAB_H + 14)
+#define PICK_X (CONTENT_X + 16)
+#define PICK_W 200
+#define PICK_ROW 28
+#define PREVIEW_X (PICK_X + PICK_W + 14)
+
 /* Sidebar categories (index == pane id); Settings opens on General. */
 static const char *g_pane_labels[] = {"General", "Desktop"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
 
-/* Desktop-pane state: selectable wallpapers ("None" + registry entries). */
-struct WpOption
+/* Desktop background modes (== /views/desktop/mode). */
+#define DM_IMAGE 0
+#define DM_SOLID 1
+#define DM_BARS 2
+static const char *g_mode_labels[] = {"Image", "Solid", "Jailbars"};
+static const char *g_mode_keys[] = {"image", "solid", "jailbars"};
+
+struct ImgOption
 {
 	std::string label;
-	std::string path; /* empty = None (solid desktop) */
+	std::string path;
 };
-static std::vector<WpOption> g_wallpapers;
-static int g_wp_current = 0;
+
+static std::vector<ImgOption> g_images;
+static int g_mode = DM_BARS;
+static int g_img_sel = 0;
+static int g_solid[3] = {0x2C, 0x60, 0xA8};
+static int g_bar[3] = {0x1A, 0x1A, 0x2E};
 
 static std::string basename_of(const std::string &p)
 {
@@ -83,15 +104,19 @@ static void set_color(ogBitFont &f, uint32_t fg, uint32_t bg)
 	f.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
 }
 
+static uint32_t packed(const int *rgb)
+{
+	return ((uint32_t)rgb[0] << 16) | ((uint32_t)rgb[1] << 8) | (uint32_t)rgb[2];
+}
+
 /**
- * Load the Desktop pane's wallpaper choices and the current selection.
+ * Read the Desktop pane state (image list, mode, colours) from the registry.
  */
-static void load_wallpapers()
+static void load_desktop()
 {
 	char names[UB_NAMES_MAX];
 
-	g_wallpapers.clear();
-	g_wallpapers.push_back({"None (solid)", ""});
+	g_images.clear();
 	if (ubistry_enum("/settings/wallpapers", names, sizeof(names)) > 0)
 	{
 		std::string ns(names);
@@ -105,64 +130,188 @@ static void load_wallpapers()
 				continue;
 			char path[128];
 			if (ubistry_get_str(("/settings/wallpapers/" + child).c_str(), path, sizeof(path)) == 0)
-				g_wallpapers.push_back({basename_of(path), path});
+				g_images.push_back({basename_of(path), path});
 		}
 	}
 
-	g_wp_current = 0;
-	char cur[128];
-	if (ubistry_get_str("/views/desktop/wallpaper", cur, sizeof(cur)) == 0)
-		for (int i = 0; i < (int)g_wallpapers.size(); i++)
-			if (g_wallpapers[i].path == cur)
+	char mode[32];
+	g_mode = DM_BARS;
+	if (ubistry_get_str("/views/desktop/mode", mode, sizeof(mode)) == 0)
+	{
+		if (strcmp(mode, "image") == 0)
+			g_mode = DM_IMAGE;
+		else if (strcmp(mode, "solid") == 0)
+			g_mode = DM_SOLID;
+	}
+
+	char img[128];
+	g_img_sel = 0;
+	if (ubistry_get_str("/views/desktop/image", img, sizeof(img)) == 0)
+		for (int i = 0; i < (int)g_images.size(); i++)
+			if (g_images[i].path == img)
 			{
-				g_wp_current = i;
+				g_img_sel = i;
 				break;
 			}
-}
 
-/* y of the first wallpaper row within the Desktop pane content. */
-static int desktop_rows_top()
-{
-	return CONTENT_TOP + 20;
-}
-
-static void draw_sidebar(ogSurface &surf, ogBitFont &font, int active)
-{
-	surf.ogFillRect(0, 0, SIDEBAR_W - 1, WIN_H - 1, SIDEBAR_BG);
-	for (int i = 0; i < NUM_PANES; i++)
+	int v;
+	if (ubistry_get_int("/views/desktop/color", &v) == 0)
 	{
-		int y = SIDE_TOP + i * ROW_H;
-		uint32_t bg = (i == active) ? ROW_SEL : SIDEBAR_BG;
-		surf.ogFillRect(4, y, SIDEBAR_W - 5, y + ROW_H - 2, bg);
-		set_color(font, 0x00F0F0F0, bg);
-		font.PutString(surf, 14, y + 6, g_pane_labels[i]);
+		g_solid[0] = (v >> 16) & 0xFF;
+		g_solid[1] = (v >> 8) & 0xFF;
+		g_solid[2] = v & 0xFF;
+	}
+	if (ubistry_get_int("/views/desktop/barcolor", &v) == 0)
+	{
+		g_bar[0] = (v >> 16) & 0xFF;
+		g_bar[1] = (v >> 8) & 0xFF;
+		g_bar[2] = v & 0xFF;
 	}
 }
 
-static void draw_content(ogSurface &surf, ogBitFont &font, int active)
+static void refresh_desktop()
+{
+	mpi_message_t r = {};
+	r.header = DISPLAY_REFRESH_DESKTOP;
+	ubix::post_message("views", DISPLAY_REFRESH_DESKTOP, r);
+}
+
+/* Write the current mode + its parameter to the registry and apply it. */
+static void apply()
+{
+	ubistry_set_str("/views/desktop/mode", g_mode_keys[g_mode]);
+	if (g_mode == DM_IMAGE && !g_images.empty())
+		ubistry_set_str("/views/desktop/image", g_images[g_img_sel].path.c_str());
+	else if (g_mode == DM_SOLID)
+		ubistry_set_int("/views/desktop/color", (int)packed(g_solid));
+	else if (g_mode == DM_BARS)
+		ubistry_set_int("/views/desktop/barcolor", (int)packed(g_bar));
+	refresh_desktop();
+}
+
+/**
+ * Draw a click-to-set RGB picker editing rgb[3], with a colour preview.
+ */
+static void draw_picker(ogSurface &surf, ogBitFont &font, const int *rgb)
+{
+	static const char *chan = "RGB";
+	for (int k = 0; k < 3; k++)
+	{
+		int by = SUB_TOP + k * PICK_ROW;
+		set_color(font, 0x00C0C0C0, BG);
+		char lbl[2] = {chan[k], '\0'};
+		font.PutString(surf, CONTENT_X, by + 3, lbl);
+
+		/* Gradient bar (0..255 of this channel), then the value marker. */
+		for (int dx = 0; dx < PICK_W; dx++)
+		{
+			int v = dx * 255 / (PICK_W - 1);
+			uint32_t c = (k == 0) ? ((uint32_t)v << 16) : (k == 1) ? ((uint32_t)v << 8) : (uint32_t)v;
+			surf.ogFillRect(PICK_X + dx, by, PICK_X + dx, by + 13, c);
+		}
+		int mx = PICK_X + rgb[k] * (PICK_W - 1) / 255;
+		surf.ogFillRect(mx - 1, by - 2, mx + 1, by + 15, 0x00FFFFFFu);
+	}
+
+	uint32_t col = packed(rgb);
+	surf.ogFillRect(PREVIEW_X, SUB_TOP, PREVIEW_X + 28, SUB_TOP + 3 * PICK_ROW - 14, col);
+	surf.ogRect(PREVIEW_X, SUB_TOP, PREVIEW_X + 28, SUB_TOP + 3 * PICK_ROW - 14, 0x00808080u);
+}
+
+static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, WIN_H - 1, BG);
-
 	set_color(font, 0x00FFFFFF, BG);
-	font.PutString(surf, CONTENT_X, CONTENT_TOP, g_pane_labels[active]);
+	font.PutString(surf, CONTENT_X, CONTENT_TOP, g_pane_labels[pane]);
 
-	if (active == PANE_DESKTOP)
-	{
-		for (int i = 0; i < (int)g_wallpapers.size(); i++)
-		{
-			int y = desktop_rows_top() + i * ROW_H;
-			uint32_t bg = (i == g_wp_current) ? ROW_SEL : BG;
-			surf.ogFillRect(CONTENT_X - 4, y, WIN_W - 9, y + ROW_H - 2, bg);
-			set_color(font, 0x00F0F0F0, bg);
-			font.PutString(surf, CONTENT_X + 4, y + 6, g_wallpapers[i].label.c_str());
-		}
-	}
-	else /* General — placeholder for now */
+	if (pane != PANE_DESKTOP)
 	{
 		set_color(font, 0x00A0B0C0, BG);
 		font.PutString(surf, CONTENT_X, CONTENT_TOP + 28, "UbixOS desktop settings.");
 		font.PutString(surf, CONTENT_X, CONTENT_TOP + 44, "Choose a category on the left.");
+		return;
 	}
+
+	/* Mode tabs. */
+	for (int m = 0; m < 3; m++)
+	{
+		int tx = CONTENT_X + m * (TAB_W + 4);
+		uint32_t bg = (m == g_mode) ? ROW_SEL : 0x00303A46u;
+		surf.ogFillRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, bg);
+		surf.ogRect(tx, TAB_Y, tx + TAB_W - 1, TAB_Y + TAB_H - 1, 0x00586470u);
+		set_color(font, 0x00F0F0F0, bg);
+		font.PutString(surf, tx + 8, TAB_Y + 7, g_mode_labels[m]);
+	}
+
+	if (g_mode == DM_IMAGE)
+	{
+		for (int i = 0; i < (int)g_images.size(); i++)
+		{
+			int y = SUB_TOP + i * ROW_H;
+			uint32_t bg = (i == g_img_sel) ? ROW_SEL : BG;
+			surf.ogFillRect(CONTENT_X - 4, y, WIN_W - 9, y + ROW_H - 2, bg);
+			set_color(font, 0x00F0F0F0, bg);
+			font.PutString(surf, CONTENT_X + 4, y + 6, g_images[i].label.c_str());
+		}
+	}
+	else
+	{
+		draw_picker(surf, font, g_mode == DM_SOLID ? g_solid : g_bar);
+	}
+}
+
+/* Handle a click in the Desktop pane content; returns true if it changed state. */
+static bool desktop_click(int x, int y)
+{
+	/* Mode tabs. */
+	if (y >= TAB_Y && y < TAB_Y + TAB_H)
+	{
+		for (int m = 0; m < 3; m++)
+		{
+			int tx = CONTENT_X + m * (TAB_W + 4);
+			if (x >= tx && x < tx + TAB_W)
+			{
+				g_mode = m;
+				apply();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	if (g_mode == DM_IMAGE)
+	{
+		if (y >= SUB_TOP)
+		{
+			int i = (y - SUB_TOP) / ROW_H;
+			if (i >= 0 && i < (int)g_images.size())
+			{
+				g_img_sel = i;
+				apply();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/* RGB picker: a click on a channel bar sets that channel. */
+	int *rgb = (g_mode == DM_SOLID) ? g_solid : g_bar;
+	for (int k = 0; k < 3; k++)
+	{
+		int by = SUB_TOP + k * PICK_ROW;
+		if (y >= by - 2 && y <= by + 15 && x >= PICK_X && x < PICK_X + PICK_W)
+		{
+			int v = (x - PICK_X) * 255 / (PICK_W - 1);
+			if (v < 0)
+				v = 0;
+			if (v > 255)
+				v = 255;
+			rgb[k] = v;
+			apply();
+			return true;
+		}
+	}
+	return false;
 }
 
 int main(int argc, char **argv)
@@ -181,7 +330,7 @@ int main(int argc, char **argv)
 	if (!mbox.create())
 		return 1;
 
-	load_wallpapers();
+	load_desktop();
 
 	mpi_message_t msg = {};
 	struct display_claim_req *creq = (struct display_claim_req *)msg.data;
@@ -225,11 +374,24 @@ int main(int argc, char **argv)
 		ubix::post_message("views", DISPLAY_FLIP, m);
 	};
 
-	int active = PANE_GENERAL; /* open on General */
+	int active = PANE_GENERAL;
+
+	auto draw_sidebar = [&]()
+	{
+		surf.ogFillRect(0, 0, SIDEBAR_W - 1, WIN_H - 1, SIDEBAR_BG);
+		for (int i = 0; i < NUM_PANES; i++)
+		{
+			int y = SIDE_TOP + i * ROW_H;
+			uint32_t bg = (i == active) ? ROW_SEL : SIDEBAR_BG;
+			surf.ogFillRect(4, y, SIDEBAR_W - 5, y + ROW_H - 2, bg);
+			set_color(font, 0x00F0F0F0, bg);
+			font.PutString(surf, 14, y + 6, g_pane_labels[i]);
+		}
+	};
 
 	auto render = [&]()
 	{
-		draw_sidebar(surf, font, active);
+		draw_sidebar();
 		draw_content(surf, font, active);
 		flip();
 	};
@@ -257,7 +419,6 @@ int main(int argc, char **argv)
 			if (me->buttons & 1)
 				continue; /* act on release */
 
-			/* Sidebar: switch category. */
 			if (me->x < SIDEBAR_W)
 			{
 				if (me->y >= SIDE_TOP)
@@ -269,22 +430,11 @@ int main(int argc, char **argv)
 						render();
 					}
 				}
-				continue;
 			}
-
-			/* Content: dispatch to the active pane. */
-			if (active == PANE_DESKTOP && me->y >= desktop_rows_top())
+			else if (active == PANE_DESKTOP)
 			{
-				int i = (me->y - desktop_rows_top()) / ROW_H;
-				if (i >= 0 && i < (int)g_wallpapers.size())
-				{
-					g_wp_current = i;
-					ubistry_set_str("/views/desktop/wallpaper", g_wallpapers[i].path.c_str());
-					mpi_message_t r = {};
-					r.header = DISPLAY_REFRESH_DESKTOP;
-					ubix::post_message("views", DISPLAY_REFRESH_DESKTOP, r);
+				if (desktop_click(me->x, me->y))
 					render();
-				}
 			}
 		}
 		ubix::yield();

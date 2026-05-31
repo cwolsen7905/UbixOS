@@ -272,7 +272,7 @@ void WindowManager::handle_settitle(struct display_settitle *st)
 
 void WindowManager::handle_refresh_desktop()
 {
-	comp_.set_wallpaper_from_registry();
+	comp_.set_desktop_from_registry();
 	comp_.invalidate_all();
 }
 

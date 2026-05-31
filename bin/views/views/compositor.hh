@@ -56,10 +56,14 @@ class Compositor {
 	bool       cur_drawn_;
 	DamageRect damage_;
 
-	/* Optional desktop wallpaper, decoded to 32bpp (empty = solid fill). */
-	std::vector<uint32_t> wp_;
+	/* Desktop background, resolved from the registry on each refresh. */
+	enum { DESK_IMAGE = 0, DESK_SOLID = 1, DESK_BARS = 2 };
+	std::vector<uint32_t> wp_; /* decoded image, 32bpp (DESK_IMAGE) */
 	int                   wp_w_ = 0;
 	int                   wp_h_ = 0;
+	int                   desk_mode_ = DESK_BARS;
+	uint32_t              solid_color_ = 0;  /* DESK_SOLID fill */
+	uint32_t              bar_base_ = 0;     /* DESK_BARS base shade */
 
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
@@ -76,8 +80,8 @@ public:
 	int  init();
 	void startup();
 
-	/* Re-read /views/desktop/wallpaper from the registry and reload it. */
-	void set_wallpaper_from_registry();
+	/* Re-read /views/desktop/* and apply the background (image/solid/bars). */
+	void set_desktop_from_registry();
 
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);
