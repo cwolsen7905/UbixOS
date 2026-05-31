@@ -56,14 +56,53 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 #define MENU_ITEM_H 20
 #define MENU_MAX_ITEMS 16
 
-/* Colours: (r<<16)|(g<<8)|b */
-static const uint32_t TB_BG = 0x003C8Cu;
-static const uint32_t TB_BTN_N = 0x0050B0u;
-static const uint32_t TB_BTN_P = 0x0070D0u;
-static const uint32_t TB_SEP = 0x002868u;
-static const uint32_t FLY_BG_C = 0x002860u;
-static const uint32_t FLY_ITEM_C = 0x004080u;
+/* Colours: (r<<16)|(g<<8)|b.  All but white are derived from the per-user accent
+ * colour (views/theme/accent) by apply_theme(); defaults match the old blue. */
+static uint32_t TB_BG = 0x003C8Cu;
+static uint32_t TB_BTN_N = 0x0050B0u;
+static uint32_t TB_BTN_P = 0x0070D0u;
+static uint32_t TB_SEP = 0x002868u;
+static uint32_t FLY_BG_C = 0x002860u;
+static uint32_t FLY_ITEM_C = 0x004080u;
 static const uint32_t COL_WHITE = 0x00FFFFFFu;
+
+/**
+ * Scale a packed 0xRRGGBB colour's brightness by num/den (clamped to 0xFF).
+ */
+static uint32_t scale_color(uint32_t c, int num, int den)
+{
+	int r = (int)((c >> 16) & 0xFF) * num / den;
+	int g = (int)((c >> 8) & 0xFF) * num / den;
+	int b = (int)(c & 0xFF) * num / den;
+	if (r > 255)
+		r = 255;
+	if (g > 255)
+		g = 255;
+	if (b > 255)
+		b = 255;
+	return ((uint32_t)r << 16) | ((uint32_t)g << 8) | (uint32_t)b;
+}
+
+/**
+ * Re-derive the taskbar palette from the session user's accent colour.  Called
+ * at startup and whenever a DISPLAY_THEME message arrives.
+ */
+static void apply_theme(void)
+{
+	const char *user = getenv("USER");
+	int accent;
+
+	if (ubistry_get_for_int((user && user[0]) ? user : nullptr, "views/theme/accent", &accent) != 0)
+		return; /* keep current palette if the key is missing */
+
+	uint32_t a = (uint32_t)accent & 0x00FFFFFFu;
+	TB_BG = scale_color(a, 5, 10);
+	TB_SEP = scale_color(a, 3, 10);
+	TB_BTN_N = scale_color(a, 8, 10);
+	TB_BTN_P = scale_color(a, 12, 10);
+	FLY_BG_C = scale_color(a, 4, 10);
+	FLY_ITEM_C = scale_color(a, 7, 10);
+}
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                              */
@@ -726,6 +765,8 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	apply_theme(); /* derive the palette from the user's accent before first paint */
+
 	Taskbar tb;
 	if (!tb.init(mbox, FONT_PATH))
 		return 1;
@@ -749,6 +790,14 @@ int main(int argc, char **argv)
 		{
 			if (reply.header == DISPLAY_KEY)
 				continue;
+
+			if (reply.header == DISPLAY_THEME)
+			{
+				apply_theme();
+				tb.draw();
+				tb.send_flip();
+				continue;
+			}
 
 			if (reply.header == DISPLAY_NOTIFY)
 			{

@@ -68,10 +68,14 @@ static const struct reg_entry g_defaults[] = {
     /* Desktop background: mode = image | solid | jailbars; each mode uses its
      * own params.  Colours are packed 0xRRGGBB stored as integers.  The system
      * default is jailbars; a user's choice persists and overrides it. */
-    {"/views/desktop/mode", "\"jailbars\""},
-    {"/views/desktop/image", "\"/var/background/ubix.bmp\""},
+    {"/views/desktop/mode", "\"image\""},
+    {"/views/desktop/image", "\"/var/background/tropical-miami.png\""},
     {"/views/desktop/color", "2900136"},    /* 0x2C60A8 solid blue        */
     {"/views/desktop/barcolor", "1710638"}, /* 0x1A1A2E jailbar base shade */
+
+    /* Theme: accent colour for focused window title bars (0xRRGGBB as int).
+     * Retro magenta/purple to match the default synthwave (miami) wallpaper. */
+    {"/views/theme/accent", "12595340"}, /* 0xC0308C magenta-purple */
 
     /* Image choices offered by the Settings Desktop pane. */
     {"/settings/wallpapers/0", "\"/var/background/ubix.bmp\""},

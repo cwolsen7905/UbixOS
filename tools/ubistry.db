@@ -13,10 +13,11 @@
 /views/startmenu/2/exec = "/bin/settings"
 /views/startmenu/3/label = "About"
 /views/startmenu/3/exec = "@about"
-/views/desktop/mode = "jailbars"
-/views/desktop/image = "/var/background/ubix.bmp"
+/views/desktop/mode = "image"
+/views/desktop/image = "/var/background/tropical-miami.png"
 /views/desktop/color = 2900136
 /views/desktop/barcolor = 1710638
+/views/theme/accent = 12595340
 /settings/wallpapers/0 = "/var/background/ubix.bmp"
 /settings/wallpapers/1 = "/var/background/tropical-sunset.png"
 /settings/wallpapers/2 = "/var/background/tropical-palms.png"

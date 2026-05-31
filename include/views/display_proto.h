@@ -52,6 +52,7 @@
 #define DISPLAY_SETTITLE 13        /* update an existing window's title bar text */
 #define DISPLAY_REFRESH_DESKTOP 14 /* re-read desktop settings and repaint desktop */
 #define DISPLAY_SET_USER 15        /* set the active session user (per-user desktop) */
+#define DISPLAY_THEME 16           /* re-read theme (accent colour) and repaint (to taskbar) */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */

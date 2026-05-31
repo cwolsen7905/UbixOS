@@ -55,6 +55,11 @@ static const uint32_t g_jailbar_colors[4] = {
     FB_RGB(0x00, 0x1A, 0x1A),
 };
 
+/* Focused title-bar colours; driven by the per-user accent (views/theme/accent),
+ * resolved in set_desktop_from_registry().  Default to the historical blue. */
+uint32_t g_theme_decor_bg = FB_RGB(0x28, 0x48, 0x70);
+uint32_t g_theme_decor_hi = FB_RGB(0x40, 0x70, 0xA8);
+
 Compositor::Compositor(WindowRegistry &reg)
     : reg_(reg), cur_x_(0), cur_y_(0), cur_drawn_(false), damage_{0, 0, 0, 0, false}
 {
@@ -218,6 +223,16 @@ void Compositor::set_desktop_from_registry()
 		solid_color_ = (uint32_t)ival & 0x00FFFFFFu;
 	if (ubistry_get_for_int(u, "views/desktop/barcolor", &ival) == 0)
 		bar_base_ = (uint32_t)ival & 0x00FFFFFFu;
+
+	/* Accent colour for the focused window title bar (defaults to the blue). */
+	g_theme_decor_bg = FB_RGB(0x28, 0x48, 0x70);
+	g_theme_decor_hi = FB_RGB(0x40, 0x70, 0xA8);
+	if (ubistry_get_for_int(u, "views/theme/accent", &ival) == 0)
+	{
+		uint32_t a = (uint32_t)ival & 0x00FFFFFFu;
+		g_theme_decor_bg = a;
+		g_theme_decor_hi = scale_color(a, 14, 10); /* brighter highlight line */
+	}
 
 	wp_.clear();
 	wp_w_ = wp_h_ = 0;

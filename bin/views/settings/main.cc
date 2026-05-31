@@ -80,10 +80,17 @@
 #define THUMB_X DD_X
 #define THUMB_Y (SUB_TOP + ROW_H + 14)
 
+/* Apply button below the thumbnail (image mode commits on Apply, not on select). */
+#define APPLY_X THUMB_X
+#define APPLY_Y (THUMB_Y + THUMB_H + 12)
+#define APPLY_W 90
+#define APPLY_H 24
+
 /* Sidebar categories (index == pane id); Settings opens on General. */
-static const char *g_pane_labels[] = {"General", "Desktop"};
+static const char *g_pane_labels[] = {"General", "Desktop", "Appearance"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
+#define PANE_APPEARANCE 2
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
 
 /* Desktop background modes (== /views/desktop/mode). */
@@ -110,6 +117,7 @@ static int g_thumb_for = -1;
 static bool g_thumb_ok = false;
 static int g_solid[3] = {0x2C, 0x60, 0xA8};
 static int g_bar[3] = {0x1A, 0x1A, 0x2E};
+static int g_accent[3] = {0x28, 0x48, 0x70}; /* window title-bar accent */
 
 static std::string basename_of(const std::string &p)
 {
@@ -198,6 +206,12 @@ static void load_desktop()
 		g_bar[1] = (v >> 8) & 0xFF;
 		g_bar[2] = v & 0xFF;
 	}
+	if (ubistry_get_for_int(u, "views/theme/accent", &v) == 0)
+	{
+		g_accent[0] = (v >> 16) & 0xFF;
+		g_accent[1] = (v >> 8) & 0xFF;
+		g_accent[2] = v & 0xFF;
+	}
 }
 
 static void refresh_desktop()
@@ -220,6 +234,17 @@ static void apply()
 	else if (g_mode == DM_BARS)
 		ubistry_set_user_int(u, "views/desktop/barcolor", (int)packed(g_bar));
 	refresh_desktop();
+}
+
+/* Write the accent colour as the user's override and notify views + taskbar. */
+static void apply_accent()
+{
+	ubistry_set_user_int(current_user(), "views/theme/accent", (int)packed(g_accent));
+	refresh_desktop(); /* views re-reads the accent for window title bars */
+
+	mpi_message_t r = {};
+	r.header = DISPLAY_THEME;
+	ubix::post_message("taskbar", DISPLAY_THEME, r); /* taskbar re-reads its palette */
 }
 
 /**
@@ -346,6 +371,14 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 	set_color(font, 0x00FFFFFF, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP, g_pane_labels[pane]);
 
+	if (pane == PANE_APPEARANCE)
+	{
+		set_color(font, 0x00A0B0C0, BG);
+		font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Accent colour (window title bars)");
+		draw_picker(surf, font, g_accent);
+		return;
+	}
+
 	if (pane != PANE_DESKTOP)
 	{
 		set_color(font, 0x00A0B0C0, BG);
@@ -369,7 +402,13 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 	{
 		draw_dropdown(surf, font);
 		if (!g_img_open)
+		{
 			draw_thumb(surf, font);
+			surf.ogFillRect(APPLY_X, APPLY_Y, APPLY_X + APPLY_W - 1, APPLY_Y + APPLY_H - 1, ROW_SEL);
+			surf.ogRect(APPLY_X, APPLY_Y, APPLY_X + APPLY_W - 1, APPLY_Y + APPLY_H - 1, 0x00586470u);
+			set_color(font, 0x00FFFFFF, ROW_SEL);
+			font.PutString(surf, APPLY_X + 26, APPLY_Y + 8, "Apply");
+		}
 	}
 	else
 	{
@@ -390,7 +429,9 @@ static bool desktop_click(int x, int y)
 			{
 				g_mode = m;
 				g_img_open = false;
-				apply();
+				/* Image mode commits via Apply; colour modes apply live. */
+				if (m != DM_IMAGE)
+					apply();
 				return true;
 			}
 		}
@@ -408,10 +449,16 @@ static bool desktop_click(int x, int y)
 				g_img_open = true;
 				return true;
 			}
+			/* Apply button commits the selected wallpaper. */
+			if (x >= APPLY_X && x < APPLY_X + APPLY_W && y >= APPLY_Y && y < APPLY_Y + APPLY_H)
+			{
+				apply();
+				return true;
+			}
 			return false;
 		}
 
-		/* Open: clicking the header closes; clicking a row selects; else dismiss. */
+		/* Open: clicking the header closes; a row only selects (preview); else dismiss. */
 		if (in_box)
 		{
 			g_img_open = false;
@@ -422,8 +469,7 @@ static bool desktop_click(int x, int y)
 		{
 			g_img_sel = i;
 			g_img_open = false;
-			apply();
-			return true;
+			return true; /* preview updates; commit happens on Apply */
 		}
 		g_img_open = false;
 		return true;
@@ -449,10 +495,32 @@ static bool desktop_click(int x, int y)
 	return false;
 }
 
+/* Handle a click in the Appearance pane (the accent RGB picker). */
+static bool appearance_click(int x, int y)
+{
+	for (int k = 0; k < 3; k++)
+	{
+		int by = SUB_TOP + k * PICK_ROW;
+		if (y >= by - 2 && y <= by + 15 && x >= PICK_X && x < PICK_X + PICK_W)
+		{
+			int v = (x - PICK_X) * 255 / (PICK_W - 1);
+			if (v < 0)
+				v = 0;
+			if (v > 255)
+				v = 255;
+			g_accent[k] = v;
+			apply_accent();
+			return true;
+		}
+	}
+	return false;
+}
+
 /*
- * Keyboard navigation for the image dropdown.  Up/Down move the selection (and
- * apply it live so the desktop previews as you scroll); Enter/Space toggle the
- * list open/closed; Esc closes it.  Returns true if anything changed.
+ * Keyboard navigation for the image dropdown.  Up/Down move the selection (the
+ * preview updates but the desktop is not changed until Apply); Space toggles the
+ * list; Enter applies when the list is closed (or closes it when open); Esc
+ * closes it.  Returns true if anything changed.
  */
 static bool desktop_key(uint32_t kc)
 {
@@ -466,22 +534,25 @@ static bool desktop_key(uint32_t kc)
 			if (g_img_sel > 0)
 			{
 				g_img_sel--;
-				apply();
-				return true;
+				return true; /* preview only */
 			}
 			return false;
 		case KEY_DOWN:
 			if (g_img_sel < n - 1)
 			{
 				g_img_sel++;
-				apply();
-				return true;
+				return true; /* preview only */
 			}
 			return false;
-		case '\r':
-		case '\n':
 		case ' ':
 			g_img_open = !g_img_open;
+			return true;
+		case '\r':
+		case '\n':
+			if (g_img_open)
+				g_img_open = false; /* confirm selection into the box */
+			else
+				apply(); /* commit the previewed wallpaper */
 			return true;
 		case KEY_ESC:
 			if (g_img_open)
@@ -623,6 +694,11 @@ int main(int argc, char **argv)
 			else if (active == PANE_DESKTOP)
 			{
 				if (desktop_click(me->x, me->y))
+					render();
+			}
+			else if (active == PANE_APPEARANCE)
+			{
+				if (appearance_click(me->x, me->y))
 					render();
 			}
 		}

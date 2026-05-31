@@ -32,62 +32,63 @@
 #include "icanvas.hh"
 #include "framebuffer.hh"
 
-/* Decoration colour palette */
-#define DECOR_BG       FB_RGB(0x28, 0x48, 0x70)
-#define DECOR_HI       FB_RGB(0x40, 0x70, 0xA8)
+/* Decoration colour palette.  The focused title bar uses the user's accent
+ * colour (g_theme_decor_*), resolved from the registry by the Compositor; the
+ * rest are fixed.  Defaults match the historical blue. */
+extern uint32_t g_theme_decor_bg; /* focused title bar fill (accent) */
+extern uint32_t g_theme_decor_hi; /* focused title bar top highlight */
 #define DECOR_BG_INACT FB_RGB(0x28, 0x28, 0x38)
 #define DECOR_HI_INACT FB_RGB(0x38, 0x38, 0x50)
-#define DECOR_SEP      FB_RGB(0x10, 0x20, 0x30)
+#define DECOR_SEP FB_RGB(0x10, 0x20, 0x30)
 #define DECOR_CLOSE_BG FB_RGB(0x90, 0x22, 0x22)
 
 /* ------------------------------------------------------------------ */
 /* Window — client window state and rendering helpers                  */
 /* ------------------------------------------------------------------ */
 
-class Window {
-public:
-	uint32_t     id;
-	int32_t      x, y, w, h;
-	uint32_t     pitch;
-	void        *buf;       /* page-aligned region shared with client */
-	int          decor_h;
-	bool         closing = false;   /* close button clicked; awaiting DISPLAY_RELEASE */
-	std::string  title;
-	std::string  mbox;
+class Window
+{
+      public:
+	uint32_t id;
+	int32_t x, y, w, h;
+	uint32_t pitch;
+	void *buf; /* page-aligned region shared with client */
+	int decor_h;
+	bool closing = false; /* close button clicked; awaiting DISPLAY_RELEASE */
+	std::string title;
+	std::string mbox;
 
-	bool hit_test(int cx, int cy) const {
-		return cx >= x && cx < x + w &&
-		       cy >= y && cy < y + decor_h + h;
+	bool hit_test(int cx, int cy) const
+	{
+		return cx >= x && cx < x + w && cy >= y && cy < y + decor_h + h;
 	}
 
-	bool in_decor(int cx, int cy) const {
-		return decor_h > 0 &&
-		       cx >= x && cx < x + w &&
-		       cy >= y && cy < y + decor_h;
+	bool in_decor(int cx, int cy) const
+	{
+		return decor_h > 0 && cx >= x && cx < x + w && cy >= y && cy < y + decor_h;
 	}
 
-	bool in_close_btn(int cx, int cy) const {
+	bool in_close_btn(int cx, int cy) const
+	{
 		return in_decor(cx, cy) && cx >= x + w - decor_h;
 	}
 
-	void draw_decor(ICanvas &canvas, bool is_focused) const {
-		uint32_t bg = is_focused ? DECOR_BG    : DECOR_BG_INACT;
-		uint32_t hi = is_focused ? DECOR_HI    : DECOR_HI_INACT;
-		canvas.rect(x, y,               w, decor_h, bg);
-		canvas.rect(x, y,               w, 1,       hi);
-		canvas.rect(x, y + decor_h - 1, w, 1,       DECOR_SEP);
-		canvas.text(x + 6, y + (decor_h - FB_FONT_H) / 2,
-		    title.c_str(), FB_WHITE, bg);
+	void draw_decor(ICanvas &canvas, bool is_focused) const
+	{
+		uint32_t bg = is_focused ? g_theme_decor_bg : DECOR_BG_INACT;
+		uint32_t hi = is_focused ? g_theme_decor_hi : DECOR_HI_INACT;
+		canvas.rect(x, y, w, decor_h, bg);
+		canvas.rect(x, y, w, 1, hi);
+		canvas.rect(x, y + decor_h - 1, w, 1, DECOR_SEP);
+		canvas.text(x + 6, y + (decor_h - FB_FONT_H) / 2, title.c_str(), FB_WHITE, bg);
 		int cbx = x + w - decor_h;
 		canvas.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
-		canvas.ch(cbx + (decor_h - FB_FONT_W) / 2,
-		    y + (decor_h - FB_FONT_H) / 2,
-		    'X', FB_WHITE, DECOR_CLOSE_BG);
+		canvas.ch(
+		    cbx + (decor_h - FB_FONT_W) / 2, y + (decor_h - FB_FONT_H) / 2, 'X', FB_WHITE, DECOR_CLOSE_BG);
 	}
 
-	void blit_to(ICanvas &canvas) const {
-		canvas.blit(x, y + decor_h, w, h,
-		    (const uint32_t *)buf,
-		    (int)(pitch / WIN_BPP));
+	void blit_to(ICanvas &canvas) const
+	{
+		canvas.blit(x, y + decor_h, w, h, (const uint32_t *)buf, (int)(pitch / WIN_BPP));
 	}
 };
