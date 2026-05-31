@@ -46,6 +46,8 @@ class WindowManager
 
 	void notify_taskbar(Window *w, uint8_t added);
 	void close_window(Window *w);
+	void minimize_window(Window *w);
+	void resize_window(Window *w, int new_w, int new_h);
 
       public:
 	WindowManager();

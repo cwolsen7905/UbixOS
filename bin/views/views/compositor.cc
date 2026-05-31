@@ -250,6 +250,16 @@ void Compositor::set_active_user(const char *user)
 	set_desktop_from_registry();
 }
 
+void Compositor::set_resize_preview(bool active, int x, int y, int w, int h)
+{
+	resize_preview_ = active;
+	rp_x_ = x;
+	rp_y_ = y;
+	rp_w_ = w;
+	rp_h_ = h;
+	invalidate_all();
+}
+
 void Compositor::reopen_fb()
 {
 	if (fb_.reopen() != 0)
@@ -273,6 +283,8 @@ bool Compositor::rect_covered(int rx, int ry, int rw, int rh)
 {
 	for (auto *w : reg_.z_stack())
 	{
+		if (w->minimized)
+			continue;
 		int cy = w->y + w->decor_h;
 		if (w->x <= rx && w->y <= ry && w->x + w->w >= rx + rw && cy + w->h >= ry + rh)
 			return true;
@@ -284,6 +296,8 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 {
 	for (auto *w : reg_.z_stack())
 	{
+		if (w->minimized)
+			continue;
 		int cy = w->y + w->decor_h;
 
 		int x1 = (rx > w->x) ? rx : w->x;
@@ -305,6 +319,7 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 
 		if (w->decor_h > 0 && rx < w->x + w->w && rx + rw > w->x && ry < w->y + w->decor_h && ry + rh > w->y)
 			w->draw_decor(fb_, w == reg_.focused());
+		w->draw_grip(fb_);
 	}
 }
 
@@ -346,9 +361,20 @@ void Compositor::composite_all()
 	draw_desktop();
 	for (auto *w : reg_.z_stack())
 	{
+		if (w->minimized)
+			continue;
 		w->blit_to(fb_);
 		if (w->decor_h > 0)
 			w->draw_decor(fb_, w == reg_.focused());
+		w->draw_grip(fb_);
+	}
+	if (resize_preview_)
+	{
+		uint32_t c = FB_WHITE;
+		fb_.rect(rp_x_, rp_y_, rp_w_, 1, c);
+		fb_.rect(rp_x_, rp_y_ + rp_h_ - 1, rp_w_, 1, c);
+		fb_.rect(rp_x_, rp_y_, 1, rp_h_, c);
+		fb_.rect(rp_x_ + rp_w_ - 1, rp_y_, 1, rp_h_, c);
 	}
 	cursor_save(cur_x_, cur_y_);
 	cursor_draw(cur_x_, cur_y_);

@@ -77,6 +77,10 @@ class Compositor
 	 * default.  Empty = no user logged in (system layer only). */
 	std::string active_user_;
 
+	/* Rubber-band outline shown while a window is being resized by its grip. */
+	bool resize_preview_ = false;
+	int rp_x_ = 0, rp_y_ = 0, rp_w_ = 0, rp_h_ = 0;
+
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
 	void load_wallpaper(const char *path);
@@ -102,6 +106,9 @@ class Compositor
 	/* Re-map the framebuffer after a live resolution change and re-resolve the
 	 * desktop for the new geometry (clamps the cursor into the new bounds). */
 	void reopen_fb();
+
+	/* Show/update or hide the resize rubber-band outline (full-window coords). */
+	void set_resize_preview(bool active, int x, int y, int w, int h);
 
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);

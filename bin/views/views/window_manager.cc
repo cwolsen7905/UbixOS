@@ -44,7 +44,13 @@ static int share_buffer(int dst_pid, void *buf, uint32_t size, uint32_t *client_
 
 WindowManager::WindowManager()
     : comp_(reg_),
-      input_(reg_, comp_, this, [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->close_window(w); })
+      input_(
+          reg_,
+          comp_,
+          this,
+          [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->close_window(w); },
+          [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->minimize_window(w); },
+          [](void *ctx, Window *w, int nw, int nh) { static_cast<WindowManager *>(ctx)->resize_window(w, nw, nh); })
 {
 }
 
@@ -104,6 +110,69 @@ void WindowManager::close_window(Window *w)
 		std::free(w->buf);
 		reg_.destroy(w);
 	}
+}
+
+void WindowManager::minimize_window(Window *w)
+{
+	w->minimized = true;
+	/* If it had focus, move focus to the topmost still-visible window. */
+	if (reg_.focused() == w)
+	{
+		Window *nf = nullptr;
+		for (auto it = reg_.z_stack().rbegin(); it != reg_.z_stack().rend(); ++it)
+			if (!(*it)->minimized)
+			{
+				nf = *it;
+				break;
+			}
+		reg_.set_focused(nf);
+	}
+	comp_.invalidate_all();
+	/* The taskbar already shows a button for this window (from DISPLAY_NOTIFY);
+	 * clicking it sends DISPLAY_RAISE, which restores it in handle_raise(). */
+}
+
+void WindowManager::resize_window(Window *w, int new_w, int new_h)
+{
+	if (new_w < 1 || new_h < 1 || (new_w == w->w && new_h == w->h))
+		return;
+
+	/* Allocate and share a fresh buffer of the new size for the client. */
+	uint32_t pitch = (uint32_t)new_w * WIN_BPP;
+	uint32_t buf_size = pitch * (uint32_t)new_h;
+	uint32_t alloc_size = (buf_size + PAGE_SIZE - 1) & ~(uint32_t)(PAGE_SIZE - 1);
+	void *nbuf = std::aligned_alloc(PAGE_SIZE, alloc_size);
+	if (!nbuf)
+		return;
+	std::memset(nbuf, 0, buf_size);
+
+	uint32_t client_vaddr = 0;
+	if (share_buffer(w->sender_pid, nbuf, buf_size, &client_vaddr) != 0)
+	{
+		std::free(nbuf);
+		return;
+	}
+
+	/* Keep the old buffer mapped: the client may still be mid-write, and freeing
+	 * it here risks corrupting views' heap (same hazard as the close path).  A
+	 * small per-resize leak, traded for safety. */
+	w->buf = nbuf;
+	w->w = new_w;
+	w->h = new_h;
+	w->pitch = pitch;
+
+	mpi_message_t m = {};
+	struct display_winresize *wr = (struct display_winresize *)m.data;
+	m.header = DISPLAY_WINRESIZE;
+	wr->window_id = w->id;
+	wr->shm_base = (void *)client_vaddr;
+	wr->pitch = (uint16_t)pitch;
+	wr->w = new_w;
+	wr->h = new_h;
+	if (!w->mbox.empty())
+		ubix::post_message(w->mbox, DISPLAY_WINRESIZE, m);
+
+	comp_.invalidate_all();
 }
 
 void WindowManager::handle_query(struct display_query *dq)
@@ -184,6 +253,12 @@ void WindowManager::handle_claim(struct display_claim_req *creq)
 	w->decor_h = dh;
 	w->title = creq->title;
 	w->mbox = creq->reply;
+	w->sender_pid = creq->sender_pid;
+	/* Resize constraints: default to fixed at the granted size. */
+	w->min_w = creq->min_w > 0 ? creq->min_w : ww;
+	w->min_h = creq->min_h > 0 ? creq->min_h : wh;
+	w->max_w = creq->max_w > 0 ? creq->max_w : ww;
+	w->max_h = creq->max_h > 0 ? creq->max_h : wh;
 
 	/* Assign a stable ID after alloc so find() works from this point on */
 	static uint32_t next_id = 1;
@@ -253,6 +328,7 @@ void WindowManager::handle_raise(struct display_raise *dr)
 	Window *w = reg_.find(dr->window_id);
 	if (!w)
 		return;
+	w->minimized = false; /* a taskbar click restores a minimized window */
 	reg_.z_raise(w);
 	reg_.set_focused(w);
 	comp_.invalidate_all();

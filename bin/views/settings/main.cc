@@ -151,6 +151,9 @@ static struct vesa_mode g_disp_modes[32];
 static int g_disp_count = 0;
 static int g_disp_sel = 0;
 
+/* Current window height — fixed width (WIN_W), variable height via resize grip. */
+static int g_win_h = WIN_H;
+
 static std::string basename_of(const std::string &p)
 {
 	size_t s = p.find_last_of('/');
@@ -707,7 +710,7 @@ static bool display_click(int x, int y)
 
 static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 {
-	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, WIN_H - 1, BG);
+	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, g_win_h - 1, BG);
 	set_color(font, 0x00FFFFFF, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP, g_pane_labels[pane]);
 
@@ -950,6 +953,11 @@ int main(int argc, char **argv)
 	creq->y = 60;
 	creq->w = WIN_W;
 	creq->h = WIN_H;
+	/* Fixed width, variable height (the macOS System Settings style). */
+	creq->min_w = WIN_W;
+	creq->max_w = WIN_W;
+	creq->min_h = 280;
+	creq->max_h = 720;
 	creq->sender_pid = ubix::pid();
 	std::strncpy(creq->title, "Settings", sizeof(creq->title) - 1);
 	std::strncpy(creq->reply, mbox.c_str(), sizeof(creq->reply) - 1);
@@ -989,7 +997,7 @@ int main(int argc, char **argv)
 
 	auto draw_sidebar = [&]()
 	{
-		surf.ogFillRect(0, 0, SIDEBAR_W - 1, WIN_H - 1, SIDEBAR_BG);
+		surf.ogFillRect(0, 0, SIDEBAR_W - 1, g_win_h - 1, SIDEBAR_BG);
 		for (int i = 0; i < NUM_PANES; i++)
 		{
 			int y = SIDE_TOP + i * ROW_H;
@@ -1022,6 +1030,16 @@ int main(int argc, char **argv)
 				ubix::post_message("views", DISPLAY_RELEASE, rel);
 				mbox.destroy();
 				return 0;
+			}
+			if (reply.header == DISPLAY_WINRESIZE)
+			{
+				struct display_winresize *wr = (struct display_winresize *)reply.data;
+				act_w = wr->w;
+				act_h = wr->h;
+				g_win_h = wr->h;
+				surf.ogAttach(wr->shm_base, (uint32_t)wr->w, (uint32_t)wr->h, OG_PIXFMT_32BPP);
+				render();
+				continue;
 			}
 			if (reply.header == DISPLAY_KEY)
 			{

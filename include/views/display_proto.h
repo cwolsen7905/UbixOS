@@ -55,6 +55,7 @@
 #define DISPLAY_THEME 16           /* re-read theme (accent colour) and repaint (to taskbar) */
 #define DISPLAY_SETMODE 17         /* client → display: switch the VBE video mode (live) */
 #define DISPLAY_RESIZE 18          /* display → client: screen geometry changed, re-claim */
+#define DISPLAY_WINRESIZE 19       /* display → client: window resized; re-attach new buffer */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
@@ -81,6 +82,10 @@ struct display_claim_req
 	char title[64];
 	char reply[64];   /* client mailbox name */
 	uint8_t no_decor; /* 1 = skip server-side title bar (panels, flyouts) */
+	/* Resize policy.  All zero (the default) = fixed at w x h (no resize grip).
+	 * The window is resizable when max_w>min_w or max_h>min_h; a fixed dimension
+	 * sets min==max (e.g. min_w==max_w for the macOS fixed-width style). */
+	int32_t min_w, min_h, max_w, max_h;
 };
 
 /*
@@ -218,6 +223,20 @@ struct display_resize
 {
 	uint32_t screen_w;
 	uint32_t screen_h;
+};
+
+/*
+ * DISPLAY_WINRESIZE payload (display → client).
+ * The compositor resized this window: it allocated a new shared buffer (shm_base
+ * / pitch) of w x h content pixels.  The client must re-attach its surface to
+ * the new buffer, re-render, and FLIP.  The old buffer is no longer composited.
+ */
+struct display_winresize
+{
+	uint32_t window_id;
+	void *shm_base;
+	uint16_t pitch;
+	int32_t w, h;
 };
 
 /*

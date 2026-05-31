@@ -41,6 +41,7 @@ extern uint32_t g_theme_decor_hi; /* focused title bar top highlight */
 #define DECOR_HI_INACT FB_RGB(0x38, 0x38, 0x50)
 #define DECOR_SEP FB_RGB(0x10, 0x20, 0x30)
 #define DECOR_CLOSE_BG FB_RGB(0x90, 0x22, 0x22)
+#define DECOR_MIN_BG FB_RGB(0x40, 0x44, 0x50)
 
 /* ------------------------------------------------------------------ */
 /* Window — client window state and rendering helpers                  */
@@ -54,9 +55,17 @@ class Window
 	uint32_t pitch;
 	void *buf; /* page-aligned region shared with client */
 	int decor_h;
-	bool closing = false; /* close button clicked; awaiting DISPLAY_RELEASE */
+	bool closing = false;                           /* close button clicked; awaiting DISPLAY_RELEASE */
+	bool minimized = false;                         /* hidden to the taskbar; restored via DISPLAY_RAISE */
+	int sender_pid = 0;                             /* client PID — needed to re-share the buffer on resize */
+	int min_w = 0, min_h = 0, max_w = 0, max_h = 0; /* resize constraints (0 = fixed) */
 	std::string title;
 	std::string mbox;
+
+	bool resizable() const
+	{
+		return max_w > min_w || max_h > min_h;
+	}
 
 	bool hit_test(int cx, int cy) const
 	{
@@ -73,6 +82,20 @@ class Window
 		return in_decor(cx, cy) && cx >= x + w - decor_h;
 	}
 
+	/* Minimize button: the title-bar square immediately left of the close box. */
+	bool in_min_btn(int cx, int cy) const
+	{
+		return in_decor(cx, cy) && cx >= x + w - 2 * decor_h && cx < x + w - decor_h;
+	}
+
+	/* Resize grip: a small square at the bottom-right corner of the content. */
+	static const int GRIP = 14;
+	bool in_resize_grip(int cx, int cy) const
+	{
+		int by = y + decor_h + h;
+		return resizable() && cx >= x + w - GRIP && cx < x + w && cy >= by - GRIP && cy < by;
+	}
+
 	void draw_decor(ICanvas &canvas, bool is_focused) const
 	{
 		uint32_t bg = is_focused ? g_theme_decor_bg : DECOR_BG_INACT;
@@ -81,6 +104,11 @@ class Window
 		canvas.rect(x, y, w, 1, hi);
 		canvas.rect(x, y + decor_h - 1, w, 1, DECOR_SEP);
 		canvas.text(x + 6, y + (decor_h - FB_FONT_H) / 2, title.c_str(), FB_WHITE, bg);
+
+		int mbx = x + w - 2 * decor_h;
+		canvas.rect(mbx, y + 1, decor_h - 1, decor_h - 2, DECOR_MIN_BG);
+		canvas.ch(mbx + (decor_h - FB_FONT_W) / 2, y + (decor_h - FB_FONT_H) / 2, '_', FB_WHITE, DECOR_MIN_BG);
+
 		int cbx = x + w - decor_h;
 		canvas.rect(cbx, y + 1, decor_h - 1, decor_h - 2, DECOR_CLOSE_BG);
 		canvas.ch(
@@ -90,5 +118,16 @@ class Window
 	void blit_to(ICanvas &canvas) const
 	{
 		canvas.blit(x, y + decor_h, w, h, (const uint32_t *)buf, (int)(pitch / WIN_BPP));
+	}
+
+	/* Draw the resize grip (three diagonal dots) at the bottom-right corner. */
+	void draw_grip(ICanvas &canvas) const
+	{
+		if (!resizable())
+			return;
+		uint32_t gc = FB_RGB(0xC0, 0xC0, 0xD0);
+		int bx = x + w - 3, by = y + decor_h + h - 3;
+		for (int i = 0; i < 3; i++)
+			canvas.rect(bx - i * 4, by - i * 4, 2, 2, gc);
 	}
 };
