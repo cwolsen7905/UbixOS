@@ -29,6 +29,9 @@
 #include <setjmp.h>
 #include <poll.h>
 #include <dirent.h>
+#include <pwd.h>
+#include <grp.h>
+#include <sys/sysmacros.h>
 
 /* --- feature switches (turn on the editor features we want) --- */
 #define ENABLE_FEATURE_VI_COLON           1
@@ -95,6 +98,38 @@
 #define ENABLE_FEATURE_FIND_CTIME         1
 #define ENABLE_FEATURE_FIND_SAMEFILE      0
 
+/* coreutils replacements: cat, uname, ls, stat */
+#define ENABLE_CAT                        1
+#define ENABLE_FEATURE_CATN               1
+#define ENABLE_FEATURE_CATV               1
+#define ENABLE_UNAME                      1
+#define ENABLE_BB_ARCH                    0
+#define ENABLE_FEDORA_COMPAT              0
+#define ENABLE_FEATURE_LS_FILETYPES       1
+#define ENABLE_FEATURE_LS_FOLLOWLINKS     1
+#define ENABLE_FEATURE_LS_RECURSIVE       1
+#define ENABLE_FEATURE_LS_SORTFILES       1
+#define ENABLE_FEATURE_LS_TIMESTAMPS      1
+#define ENABLE_FEATURE_LS_USERNAME        0
+#define ENABLE_FEATURE_LS_WIDTH           1
+#define ENABLE_FEATURE_LS_COLOR           0
+#define ENABLE_FEATURE_LS_COLOR_IS_DEFAULT 0
+#define ENABLE_FEATURE_HUMAN_READABLE     1
+#define ENABLE_FEATURE_AUTOWIDTH          1
+#define ENABLE_FEATURE_STAT_FORMAT        1
+#define ENABLE_FEATURE_STAT_FILESYSTEM    0
+#define ENABLE_FTPD                       0
+#define ENABLE_SELINUX                    0
+#define CONFIG_UNAME_OSNAME               "UbixOS"
+
+/* Width strings/macros used by ls.c when laying out columns with
+ * make_human_readable_str.  Upstream picks these per-platform; on
+ * a 32-bit i386 build the off_t is long long, so use the wider
+ * formatter and reserve 12 columns for sizes. */
+#define HUMAN_READABLE_MAX_WIDTH      7
+#define HUMAN_READABLE_MAX_WIDTH_STR  "7"
+#define OFF_FMT                       "ll"
+
 #define ENABLE_FEATURE_LESS_BRACKETS      0
 #define ENABLE_FEATURE_LESS_DASHCMD       1
 #define ENABLE_FEATURE_LESS_ENV           0
@@ -121,6 +156,20 @@
 /* busybox shortcuts for exit() with the standard exit codes. */
 #define exit_SUCCESS()  exit(EXIT_SUCCESS)
 #define exit_FAILURE()  exit(EXIT_FAILURE)
+#define fflush_stdout_and_exit_SUCCESS()  fflush_stdout_and_exit(EXIT_SUCCESS)
+#define fflush_stdout_and_exit_FAILURE()  fflush_stdout_and_exit(EXIT_FAILURE)
+
+/* IF_SELINUX / IF_LONG_OPTS gates */
+#if ENABLE_SELINUX
+# define IF_SELINUX(...) __VA_ARGS__
+#else
+# define IF_SELINUX(...)
+#endif
+#if ENABLE_LONG_OPTS
+# define IF_LONG_OPTS(...) __VA_ARGS__
+#else
+# define IF_LONG_OPTS(...)
+#endif
 
 #define ENABLE_PLATFORM_MINGW32           0
 #define ENABLE_LOCALE_SUPPORT             0
@@ -128,7 +177,7 @@
 #define ENABLE_FEATURE_EDITING            0
 #define ENABLE_FEATURE_EDITING_VI         0
 #define ENABLE_FEATURE_EDITING_FANCY_KEYS 0
-#define ENABLE_LONG_OPTS                  0
+#define ENABLE_LONG_OPTS                  1
 #define ENABLE_DESKTOP                    0
 
 #define CONFIG_FEATURE_VI_MAX_LEN         4096
@@ -245,6 +294,87 @@
 # define IF_FEATURE_LESS_ASK_TERMINAL(...) __VA_ARGS__
 #else
 # define IF_FEATURE_LESS_ASK_TERMINAL(...)
+#endif
+
+/* coreutils gates */
+#define IF_CAT(...)              __VA_ARGS__
+#define IF_UNAME(...)            __VA_ARGS__
+
+#if ENABLE_FEATURE_CATN
+# define IF_FEATURE_CATN(...)    __VA_ARGS__
+#else
+# define IF_FEATURE_CATN(...)
+#endif
+#if ENABLE_FEATURE_CATV
+# define IF_FEATURE_CATV(...)    __VA_ARGS__
+#else
+# define IF_FEATURE_CATV(...)
+#endif
+#if ENABLE_BB_ARCH
+# define IF_BB_ARCH(...)         __VA_ARGS__
+#else
+# define IF_BB_ARCH(...)
+#endif
+
+#if ENABLE_FEATURE_LS_FILETYPES
+# define IF_FEATURE_LS_FILETYPES(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_FILETYPES(...)
+#endif
+#if ENABLE_FEATURE_LS_FOLLOWLINKS
+# define IF_FEATURE_LS_FOLLOWLINKS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_FOLLOWLINKS(...)
+#endif
+#if ENABLE_FEATURE_LS_RECURSIVE
+# define IF_FEATURE_LS_RECURSIVE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_RECURSIVE(...)
+#endif
+#if ENABLE_FEATURE_LS_SORTFILES
+# define IF_FEATURE_LS_SORTFILES(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_SORTFILES(...)
+#endif
+#if ENABLE_FEATURE_LS_TIMESTAMPS
+# define IF_FEATURE_LS_TIMESTAMPS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_TIMESTAMPS(...)
+#endif
+#if ENABLE_FEATURE_LS_USERNAME
+# define IF_FEATURE_LS_USERNAME(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_USERNAME(...)
+#endif
+#if ENABLE_FEATURE_LS_WIDTH
+# define IF_FEATURE_LS_WIDTH(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_WIDTH(...)
+#endif
+#if ENABLE_FEATURE_LS_COLOR
+# define IF_FEATURE_LS_COLOR(...) __VA_ARGS__
+#else
+# define IF_FEATURE_LS_COLOR(...)
+#endif
+#if ENABLE_FEATURE_HUMAN_READABLE
+# define IF_FEATURE_HUMAN_READABLE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_HUMAN_READABLE(...)
+#endif
+#if ENABLE_FEATURE_AUTOWIDTH
+# define IF_FEATURE_AUTOWIDTH(...) __VA_ARGS__
+#else
+# define IF_FEATURE_AUTOWIDTH(...)
+#endif
+#if ENABLE_FEATURE_STAT_FORMAT
+# define IF_FEATURE_STAT_FORMAT(...) __VA_ARGS__
+#else
+# define IF_FEATURE_STAT_FORMAT(...)
+#endif
+#if ENABLE_FEATURE_STAT_FILESYSTEM
+# define IF_FEATURE_STAT_FILESYSTEM(...) __VA_ARGS__
+#else
+# define IF_FEATURE_STAT_FILESYSTEM(...)
 #endif
 
 /* IF_FEATURE_FIND_*(t): variadic so wrappers like
@@ -465,6 +595,33 @@ int    xopen(const char *pathname, int flags);
 char  *xmalloc_ttyname(int fd);
 void  *xrealloc_vector(void *vector, unsigned shift, int idx);
 int    bb_cat(char **argv);
+
+/* coreutils helpers */
+typedef unsigned long long uoff_t;
+DIR   *warn_opendir(const char *path);
+unsigned get_terminal_width(int fd);
+char  *bb_mode_string(char buf[11], mode_t mode);
+
+enum {
+	VISIBLE_ENDLINE   = 1 << 0,
+	VISIBLE_SHOW_TABS = 1 << 1,
+};
+void visible(unsigned ch, char *buf, int flags);
+
+struct number_state {
+	unsigned width;
+	unsigned start;
+	unsigned inc;
+	const char *sep;
+	const char *empty_str;
+	smallint all, nonempty;
+};
+int print_numbered_lines(struct number_state *ns, const char *filename);
+char  *xmalloc_readlink(const char *path);
+char  *xmalloc_readlink_or_warn(const char *path);
+const char *make_human_readable_str(unsigned long long val,
+                                    unsigned long block_size,
+                                    unsigned long display_unit);
 
 /* find: small helpers + argv-max constant */
 const char *bb_basename(const char *name);

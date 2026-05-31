@@ -29,4 +29,30 @@ enum {
  * On UbixOS where every char is treated as ASCII, isprint suffices. */
 #define isprint_asciionly(c)  isprint((unsigned char)(c))
 
+/* uni_stat_t / printable_string family — ls.c uses these for column
+ * width math.  ASCII-only: every byte is one char, one display column. */
+typedef struct {
+	unsigned byte_count;
+	unsigned unicode_count;
+	unsigned unicode_width;
+} uni_stat_t;
+
+static inline const char *printable_string(const char *str)
+{
+	return str ? str : "";
+}
+
+static inline const char *printable_string2(uni_stat_t *stats, const char *str)
+{
+	if (!str)
+		str = "";
+	if (stats) {
+		size_t n = strlen(str);
+		stats->byte_count    = (unsigned)n;
+		stats->unicode_count = (unsigned)n;
+		stats->unicode_width = (unsigned)n;
+	}
+	return str;
+}
+
 #endif /* UBIX_UNICODE_H */

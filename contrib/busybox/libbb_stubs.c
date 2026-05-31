@@ -408,6 +408,176 @@ const char *bb_basename(const char *name)
 	return cp ? cp + 1 : name;
 }
 
+DIR *warn_opendir(const char *path)
+{
+	DIR *d = opendir(path);
+	if (!d)
+		bb_simple_perror_msg(path);
+	return d;
+}
+
+unsigned get_terminal_width(int fd)
+{
+	unsigned w = 80;
+	(void)get_terminal_width_height(fd, &w, NULL);
+	return w;
+}
+
+/* Generate ls-style "mode string" like "-rwxr-xr-x" or "drwxrwxrwt". */
+char *bb_mode_string(char buf[11], mode_t mode)
+{
+	static const char type_chars[16] = "?pc?d?b?-?l?s???";
+	static const char mode_chars[7]  = "rwxSTst";
+
+	buf[0]  = type_chars[(mode >> 12) & 0xf];
+	buf[1]  = (mode & S_IRUSR) ? 'r' : '-';
+	buf[2]  = (mode & S_IWUSR) ? 'w' : '-';
+	if (mode & S_ISUID)
+		buf[3] = (mode & S_IXUSR) ? 's' : 'S';
+	else
+		buf[3] = (mode & S_IXUSR) ? 'x' : '-';
+	buf[4]  = (mode & S_IRGRP) ? 'r' : '-';
+	buf[5]  = (mode & S_IWGRP) ? 'w' : '-';
+	if (mode & S_ISGID)
+		buf[6] = (mode & S_IXGRP) ? 's' : 'S';
+	else
+		buf[6] = (mode & S_IXGRP) ? 'x' : '-';
+	buf[7]  = (mode & S_IROTH) ? 'r' : '-';
+	buf[8]  = (mode & S_IWOTH) ? 'w' : '-';
+	if (mode & S_ISVTX)
+		buf[9] = (mode & S_IXOTH) ? 't' : 'T';
+	else
+		buf[9] = (mode & S_IXOTH) ? 'x' : '-';
+	buf[10] = '\0';
+	(void)mode_chars;
+	return buf;
+}
+
+/* readlink into a freshly-malloc'd, NUL-terminated buffer.  Returns NULL
+ * and leaves errno set on failure. */
+char *xmalloc_readlink(const char *path)
+{
+	size_t cap = 256;
+	for (;;) {
+		char *buf = xmalloc(cap);
+		ssize_t n = readlink(path, buf, cap - 1);
+		if (n < 0) {
+			free(buf);
+			return NULL;
+		}
+		if ((size_t)n < cap - 1) {
+			buf[n] = '\0';
+			return buf;
+		}
+		free(buf);
+		cap *= 2;
+	}
+}
+
+/* Convert one char into a printable representation in buf[<=4 chars]:
+ *  \xx for tabs (under VISIBLE_SHOW_TABS) or non-printables,
+ *  ^X / M-^X for control / 8-bit, plain otherwise.  Appends terminator. */
+void visible(unsigned ch, char *buf, int flags)
+{
+	if (ch == '\t' && !(flags & VISIBLE_SHOW_TABS)) {
+		*buf++ = '\t';
+		*buf = '\0';
+		return;
+	}
+	if (ch == '\n') {
+		if (flags & VISIBLE_ENDLINE)
+			*buf++ = '$';
+		*buf++ = '\n';
+		*buf = '\0';
+		return;
+	}
+	if (ch >= 128) {
+		*buf++ = 'M';
+		*buf++ = '-';
+		ch -= 128;
+	}
+	if (ch < 32) {
+		*buf++ = '^';
+		*buf++ = (char)(ch + '@');
+	} else if (ch == 127) {
+		*buf++ = '^';
+		*buf++ = '?';
+	} else {
+		*buf++ = (char)ch;
+	}
+	*buf = '\0';
+}
+
+int print_numbered_lines(struct number_state *ns, const char *filename)
+{
+	FILE *fp = fopen_or_warn_stdin(filename);
+	unsigned N;
+	char *line;
+
+	if (!fp)
+		return EXIT_FAILURE;
+
+	N = ns->start;
+	while ((line = xmalloc_fgetline(fp)) != NULL) {
+		if (ns->all || (ns->nonempty && line[0])) {
+			printf("%*u%s", ns->width, N, ns->sep);
+			N += ns->inc;
+		} else if (ns->empty_str) {
+			fputs_stdout(ns->empty_str);
+		}
+		puts(line);
+		free(line);
+	}
+	fclose_if_not_stdin(fp);
+	return EXIT_SUCCESS;
+}
+
+char *xmalloc_readlink_or_warn(const char *path)
+{
+	char *buf = xmalloc_readlink(path);
+	if (!buf) {
+		const char *msg = (errno == EINVAL) ? "not a symlink" : strerror(errno);
+		bb_error_msg("%s: %s", path, msg);
+	}
+	return buf;
+}
+
+/* Format a byte count with a human-readable suffix.  Returns a pointer
+ * into a static buffer (overwritten by next call), matching busybox.
+ * block_size: input is multiplied by this; display_unit picks the
+ * suffix (0 = auto, 1 = bytes, 1024 = K, etc.). */
+const char *make_human_readable_str(unsigned long long val,
+                                    unsigned long block_size,
+                                    unsigned long display_unit)
+{
+	static char buf[16];
+	static const char fmt[] = " KMGTPE";
+	unsigned int rem = 0;
+	int suffix_idx = 0;
+
+	val *= block_size;
+	if (display_unit) {
+		val += display_unit / 2;
+		val /= display_unit;
+	} else {
+		while (val >= 1024) {
+			rem = (unsigned int)(val % 1024);
+			val /= 1024;
+			suffix_idx++;
+		}
+	}
+	if (suffix_idx == 0)
+		snprintf(buf, sizeof(buf), "%llu", val);
+	else if (val < 10) {
+		unsigned int frac = (rem * 10 + 512) / 1024;
+		if (frac == 10) { val++; frac = 0; }
+		snprintf(buf, sizeof(buf), "%llu.%u%c", val, frac, fmt[suffix_idx]);
+	} else {
+		snprintf(buf, sizeof(buf), "%llu%c", val, fmt[suffix_idx]);
+	}
+	return buf;
+}
+
 void bb_perror_msg_and_die(const char *fmt, ...)
 {
 	va_list ap;
