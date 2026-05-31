@@ -43,6 +43,7 @@
 #include <views/display.hh>
 #include <objgfx/objgfx.h>
 #include <objgfx/ogFont.h>
+#include <objgfx/ogImage.h>
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
 #include <sys/kbd.h>
@@ -73,6 +74,12 @@
 #define DD_X (CONTENT_X - 4)
 #define DD_W (WIN_W - 9 - DD_X)
 
+/* Wallpaper preview thumbnail, shown below the dropdown when the list is closed. */
+#define THUMB_W 200
+#define THUMB_H 150
+#define THUMB_X DD_X
+#define THUMB_Y (SUB_TOP + ROW_H + 14)
+
 /* Sidebar categories (index == pane id); Settings opens on General. */
 static const char *g_pane_labels[] = {"General", "Desktop"};
 #define PANE_GENERAL 0
@@ -96,6 +103,11 @@ static std::vector<ImgOption> g_images;
 static int g_mode = DM_BARS;
 static int g_img_sel = 0;
 static bool g_img_open = false; /* image dropdown expanded? */
+
+/* Cached downscaled preview of g_images[g_img_sel], rebuilt on selection change. */
+static std::vector<uint32_t> g_thumb;
+static int g_thumb_for = -1;
+static bool g_thumb_ok = false;
 static int g_solid[3] = {0x2C, 0x60, 0xA8};
 static int g_bar[3] = {0x1A, 0x1A, 0x2E};
 
@@ -240,6 +252,66 @@ static void draw_picker(ogSurface &surf, ogBitFont &font, const int *rgb)
 }
 
 /**
+ * Decode the selected wallpaper and downscale it (nearest-neighbour) into the
+ * THUMB_W x THUMB_H preview cache.  Rebuilt only when the selection changes.
+ */
+static void build_thumb()
+{
+	g_thumb_for = g_img_sel;
+	g_thumb_ok = false;
+	g_thumb.assign(THUMB_W * THUMB_H, 0);
+	if (g_images.empty())
+		return;
+
+	ogImage img;
+	ogSurface src;
+	if (!img.Load(g_images[g_img_sel].path.c_str(), src))
+		return;
+
+	int sw = (int)src.ogGetMaxX() + 1;
+	int sh = (int)src.ogGetMaxY() + 1;
+	if (sw <= 0 || sh <= 0)
+		return;
+
+	for (int ty = 0; ty < THUMB_H; ty++)
+		for (int tx = 0; tx < THUMB_W; tx++)
+		{
+			uint8_t r, g, b;
+			src.ogUnpack(src.ogGetPixel(tx * sw / THUMB_W, ty * sh / THUMB_H), r, g, b);
+			g_thumb[ty * THUMB_W + tx] = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
+		}
+	g_thumb_ok = true;
+}
+
+/**
+ * Paint the cached wallpaper preview (a "Preview" label + framed thumbnail).
+ */
+static void draw_thumb(ogSurface &surf, ogBitFont &font)
+{
+	if (g_thumb_for != g_img_sel)
+		build_thumb();
+
+	set_color(font, 0x00A0B0C0, BG);
+	font.PutString(surf, THUMB_X, THUMB_Y - 13, "Preview");
+
+	if (!g_thumb_ok)
+	{
+		surf.ogFillRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, 0x00181E26u);
+		surf.ogRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, 0x00586470u);
+		return;
+	}
+
+	for (int ty = 0; ty < THUMB_H; ty++)
+		for (int tx = 0; tx < THUMB_W; tx++)
+		{
+			uint32_t c = g_thumb[ty * THUMB_W + tx];
+			surf.ogSetPixel(
+			    THUMB_X + tx, THUMB_Y + ty, (uint8_t)(c >> 16), (uint8_t)(c >> 8), (uint8_t)c, 255);
+		}
+	surf.ogRect(THUMB_X, THUMB_Y, THUMB_X + THUMB_W - 1, THUMB_Y + THUMB_H - 1, 0x00586470u);
+}
+
+/**
  * Draw the wallpaper picker as a dropdown: a combo box showing the current
  * selection, plus (when expanded) the full option list below it.  This keeps the
  * pane compact no matter how many wallpapers ship.
@@ -294,9 +366,15 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 	}
 
 	if (g_mode == DM_IMAGE)
+	{
 		draw_dropdown(surf, font);
+		if (!g_img_open)
+			draw_thumb(surf, font);
+	}
 	else
+	{
 		draw_picker(surf, font, g_mode == DM_SOLID ? g_solid : g_bar);
+	}
 }
 
 /* Handle a click in the Desktop pane content; returns true if it changed state. */
