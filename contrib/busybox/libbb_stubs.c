@@ -67,6 +67,13 @@ void die_if_ferror_stdout(void)
 	}
 }
 
+void die_if_ferror(FILE *fp, const char *fn)
+{
+	if (ferror(fp)) {
+		bb_error_msg_and_die("%s: %s", fn, "I/O error");
+	}
+}
+
 unsigned xatou_sfx(const char *numstr, const struct suffix_mult *suffixes)
 {
 	unsigned long long v = xatoul_sfx(numstr, suffixes);
@@ -844,6 +851,111 @@ FILE *fopen_or_warn_stdin(const char *filename)
 	if (!fp)
 		bb_simple_perror_msg(filename);
 	return fp;
+}
+
+FILE *fopen_or_warn(const char *path, const char *mode)
+{
+	FILE *fp = fopen(path, mode);
+	if (!fp)
+		bb_simple_perror_msg(path);
+	return fp;
+}
+
+void bb_simple_perror_msg_and_die(const char *s)
+{
+	bb_simple_perror_msg(s);
+	exit(xfunc_error_retval);
+}
+
+void bb_putchar_stderr(char ch)
+{
+	fputc(ch, stderr);
+}
+
+/* Read a line including the trailing newline into a freshly-malloc'd
+ * buffer.  *end gets the terminating char (newline or EOF=0).  Returns
+ * NULL on EOF with no bytes read; otherwise a NUL-terminated string. */
+char *bb_get_chunk_from_file(FILE *file, int *end)
+{
+	size_t cap = 128;
+	size_t len = 0;
+	char *buf = xmalloc(cap);
+	int c;
+	int terminator = 0;
+
+	for (;;) {
+		c = getc(file);
+		if (c == EOF) {
+			if (len == 0) {
+				free(buf);
+				if (end) *end = 0;
+				return NULL;
+			}
+			break;
+		}
+		if (len + 1 >= cap) {
+			cap *= 2;
+			buf = xrealloc(buf, cap);
+		}
+		buf[len++] = (char)c;
+		if (c == '\n') {
+			terminator = '\n';
+			break;
+		}
+	}
+	buf[len] = '\0';
+	if (end) *end = terminator;
+	return buf;
+}
+
+/* Decode one backslash escape (\n, \t, \xHH, \ooo, etc.) starting at
+ * *ptr (which points one past the backslash).  Advances *ptr past the
+ * consumed bytes and returns the decoded char.  Used by tr -d, tr -s. */
+char bb_process_escape_sequence(const char **ptr)
+{
+	const char *p = *ptr;
+	char c;
+
+	switch (*p) {
+	case 'a':  c = '\a'; p++; break;
+	case 'b':  c = '\b'; p++; break;
+	case 'f':  c = '\f'; p++; break;
+	case 'n':  c = '\n'; p++; break;
+	case 'r':  c = '\r'; p++; break;
+	case 't':  c = '\t'; p++; break;
+	case 'v':  c = '\v'; p++; break;
+	case '\\': c = '\\'; p++; break;
+	case '?':  c = '?';  p++; break;
+	case '\'': c = '\''; p++; break;
+	case '"':  c = '"';  p++; break;
+	case 'x': {
+		int n = 0; int v = 0;
+		p++;
+		while (n < 2 && isxdigit((unsigned char)*p)) {
+			v = v * 16 + (isdigit((unsigned char)*p)
+			              ? *p - '0'
+			              : (*p | 0x20) - 'a' + 10);
+			p++; n++;
+		}
+		c = (char)v;
+		break;
+	}
+	default:
+		if (*p >= '0' && *p <= '7') {
+			int n = 0; int v = 0;
+			while (n < 3 && *p >= '0' && *p <= '7') {
+				v = v * 8 + (*p - '0');
+				p++; n++;
+			}
+			c = (char)v;
+		} else {
+			c = *p;
+			if (*p) p++;
+		}
+		break;
+	}
+	*ptr = p;
+	return c;
 }
 
 int fclose_if_not_stdin(FILE *fp)

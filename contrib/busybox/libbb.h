@@ -118,6 +118,13 @@
 #define ENABLE_FEATURE_AUTOWIDTH          1
 #define ENABLE_FEATURE_STAT_FORMAT        1
 #define ENABLE_FEATURE_STAT_FILESYSTEM    0
+
+/* text-processing batch (sort, cut, tr, uniq, more) */
+#define ENABLE_FEATURE_SORT_BIG           1
+#define ENABLE_FEATURE_SORT_OPTIMIZE_MEMORY 0
+#define ENABLE_FEATURE_CUT_REGEX          1
+#define ENABLE_FEATURE_TR_CLASSES         1
+#define ENABLE_FEATURE_TR_EQUIV           1
 #define ENABLE_FTPD                       0
 #define ENABLE_SELINUX                    0
 #define CONFIG_UNAME_OSNAME               "UbixOS"
@@ -376,6 +383,26 @@
 #else
 # define IF_FEATURE_STAT_FILESYSTEM(...)
 #endif
+#if ENABLE_FEATURE_SORT_BIG
+# define IF_FEATURE_SORT_BIG(...) __VA_ARGS__
+#else
+# define IF_FEATURE_SORT_BIG(...)
+#endif
+#if ENABLE_FEATURE_CUT_REGEX
+# define IF_FEATURE_CUT_REGEX(...) __VA_ARGS__
+#else
+# define IF_FEATURE_CUT_REGEX(...)
+#endif
+#if ENABLE_FEATURE_TR_CLASSES
+# define IF_FEATURE_TR_CLASSES(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TR_CLASSES(...)
+#endif
+#if ENABLE_FEATURE_TR_EQUIV
+# define IF_FEATURE_TR_EQUIV(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TR_EQUIV(...)
+#endif
 
 /* IF_FEATURE_FIND_*(t): variadic so wrappers like
  *     IF_FEATURE_FIND_PATH(ACTS(path, ...))
@@ -551,6 +578,11 @@ FILE  *xfopen_stdin(const char *filename);
 FILE  *fopen_for_read(const char *filename);
 FILE  *fopen_for_write(const char *filename);
 char  *xmalloc_fgetline(FILE *fp);
+char  *bb_get_chunk_from_file(FILE *file, int *end);
+char  bb_process_escape_sequence(const char **ptr);
+void   bb_simple_perror_msg_and_die(const char *s) NORETURN;
+FILE  *fopen_or_warn(const char *path, const char *mode);
+void   bb_putchar_stderr(char ch);
 void   bb_error_msg_and_die(const char *fmt, ...) NORETURN __attribute__((format(printf, 1, 2)));
 void   llist_add_to(llist_t **old_head, void *data);
 void   llist_free(llist_t *elm, void (*freeit)(void *data));
@@ -595,6 +627,13 @@ int    xopen(const char *pathname, int flags);
 char  *xmalloc_ttyname(int fd);
 void  *xrealloc_vector(void *vector, unsigned shift, int idx);
 int    bb_cat(char **argv);
+
+/* unicode.h provides the ASCII-only inline helpers (isprint_asciionly,
+ * unicode_strlen, uni_stat_t, etc.) that several coreutils call without
+ * including the header themselves. */
+#include "unicode.h"
+
+void die_if_ferror(FILE *fp, const char *fn);
 
 /* coreutils helpers */
 typedef unsigned long long uoff_t;
