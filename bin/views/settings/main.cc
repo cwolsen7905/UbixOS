@@ -27,11 +27,10 @@
  */
 
 /*
- * settings — the UbixOS Settings window, modelled on macOS System Preferences:
- * a single window showing an icon grid ("home"); clicking an icon drills into
- * that pane in-place, with a "Show All" button to return.  Panes are built-in
- * modules (v1: Desktop, which sets the wallpaper).  Pane settings are stored in
- * the ubistry registry; the Desktop pane asks the compositor to repaint live.
+ * settings — the UbixOS Settings window, modelled on macOS System Settings:
+ * a category sidebar on the left, the selected category's content on the right.
+ * It opens on General.  Panes are built-in modules; the Desktop pane sets the
+ * wallpaper, stored in ubistry and applied live by the compositor.
  */
 
 #include <string>
@@ -45,22 +44,22 @@
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
 
-#define WIN_W 480
+#define WIN_W 520
 #define WIN_H 320
-#define BG 0x00202830u
-#define ROW_SEL 0x00405890u
-#define BACK_H 26
-#define CELL_W 84
-#define CELL_H 84
-#define COLS 5
-#define MARGIN 12
-#define ICON_SZ 48
+#define BG 0x00202830u         /* content background */
+#define SIDEBAR_BG 0x00181E26u /* sidebar background */
+#define ROW_SEL 0x00405890u    /* selected row highlight */
+#define SIDEBAR_W 128
 #define ROW_H 24
+#define SIDE_TOP 8
+#define CONTENT_X (SIDEBAR_W + 14)
+#define CONTENT_TOP 12
 #define FONT_PATH "/var/fonts/ROM8X8.DPF"
 
-/* Built-in panes shown in the home grid (index == view id). */
-static const char *g_pane_labels[] = {"Desktop"};
-#define PANE_DESKTOP 0
+/* Sidebar categories (index == pane id); Settings opens on General. */
+static const char *g_pane_labels[] = {"General", "Desktop"};
+#define PANE_GENERAL 0
+#define PANE_DESKTOP 1
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
 
 /* Desktop-pane state: selectable wallpapers ("None" + registry entries). */
@@ -121,66 +120,49 @@ static void load_wallpapers()
 			}
 }
 
-/**
- * Draw the home view: a grid of pane icons (placeholder tiles for now).
- */
-static void draw_home(ogSurface &surf, ogBitFont &font)
-{
-	surf.ogFillRect(0, 0, WIN_W - 1, WIN_H - 1, BG);
-	for (int i = 0; i < NUM_PANES; i++)
-	{
-		int col = i % COLS;
-		int row = i / COLS;
-		int x = MARGIN + col * CELL_W;
-		int y = MARGIN + row * CELL_H;
-		int ix = x + (CELL_W - ICON_SZ) / 2;
-		uint32_t tile = 0x00405890u;
-
-		surf.ogFillRect(ix, y + 4, ix + ICON_SZ - 1, y + 4 + ICON_SZ - 1, tile);
-		surf.ogRect(ix, y + 4, ix + ICON_SZ - 1, y + 4 + ICON_SZ - 1, 0x00708090u);
-		set_color(font, 0x00FFFFFF, tile);
-		char letter[2] = {g_pane_labels[i][0], '\0'};
-		font.PutString(surf, ix + ICON_SZ / 2 - 4, y + 4 + ICON_SZ / 2 - 4, letter);
-		set_color(font, 0x00E0E0E0, BG);
-		font.PutString(surf, x + 4, y + 4 + ICON_SZ + 4, g_pane_labels[i]);
-	}
-}
-
-/**
- * Draw the "Show All ‹ | <title>" back bar shared by all panes.
- */
-static void draw_back_bar(ogSurface &surf, ogBitFont &font, const char *title)
-{
-	surf.ogFillRect(0, 0, WIN_W - 1, BACK_H - 1, 0x00161C24u);
-	set_color(font, 0x0090C0F0, 0x00161C24u);
-	font.PutString(surf, 8, 9, "< Show All");
-	set_color(font, 0x00E0E0E0, 0x00161C24u);
-	font.PutString(surf, 120, 9, title);
-}
-
-static void draw_desktop_pane(ogSurface &surf, ogBitFont &font)
-{
-	surf.ogFillRect(0, BACK_H, WIN_W - 1, WIN_H - 1, BG);
-	draw_back_bar(surf, font, "Desktop");
-
-	int top = BACK_H + 12;
-	set_color(font, 0x00C0D0E0, BG);
-	font.PutString(surf, 12, top, "Background:");
-
-	for (int i = 0; i < (int)g_wallpapers.size(); i++)
-	{
-		int y = top + 20 + i * ROW_H;
-		uint32_t bg = (i == g_wp_current) ? ROW_SEL : BG;
-		surf.ogFillRect(8, y, WIN_W - 9, y + ROW_H - 2, bg);
-		set_color(font, 0x00F0F0F0, bg);
-		font.PutString(surf, 16, y + 6, g_wallpapers[i].label.c_str());
-	}
-}
-
-/* y of the first wallpaper row within the Desktop pane. */
+/* y of the first wallpaper row within the Desktop pane content. */
 static int desktop_rows_top()
 {
-	return BACK_H + 12 + 20;
+	return CONTENT_TOP + 20;
+}
+
+static void draw_sidebar(ogSurface &surf, ogBitFont &font, int active)
+{
+	surf.ogFillRect(0, 0, SIDEBAR_W - 1, WIN_H - 1, SIDEBAR_BG);
+	for (int i = 0; i < NUM_PANES; i++)
+	{
+		int y = SIDE_TOP + i * ROW_H;
+		uint32_t bg = (i == active) ? ROW_SEL : SIDEBAR_BG;
+		surf.ogFillRect(4, y, SIDEBAR_W - 5, y + ROW_H - 2, bg);
+		set_color(font, 0x00F0F0F0, bg);
+		font.PutString(surf, 14, y + 6, g_pane_labels[i]);
+	}
+}
+
+static void draw_content(ogSurface &surf, ogBitFont &font, int active)
+{
+	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, WIN_H - 1, BG);
+
+	set_color(font, 0x00FFFFFF, BG);
+	font.PutString(surf, CONTENT_X, CONTENT_TOP, g_pane_labels[active]);
+
+	if (active == PANE_DESKTOP)
+	{
+		for (int i = 0; i < (int)g_wallpapers.size(); i++)
+		{
+			int y = desktop_rows_top() + i * ROW_H;
+			uint32_t bg = (i == g_wp_current) ? ROW_SEL : BG;
+			surf.ogFillRect(CONTENT_X - 4, y, WIN_W - 9, y + ROW_H - 2, bg);
+			set_color(font, 0x00F0F0F0, bg);
+			font.PutString(surf, CONTENT_X + 4, y + 6, g_wallpapers[i].label.c_str());
+		}
+	}
+	else /* General — placeholder for now */
+	{
+		set_color(font, 0x00A0B0C0, BG);
+		font.PutString(surf, CONTENT_X, CONTENT_TOP + 28, "UbixOS desktop settings.");
+		font.PutString(surf, CONTENT_X, CONTENT_TOP + 44, "Choose a category on the left.");
+	}
 }
 
 int main(int argc, char **argv)
@@ -243,14 +225,12 @@ int main(int argc, char **argv)
 		ubix::post_message("views", DISPLAY_FLIP, m);
 	};
 
-	int view = -1; /* -1 = home, else pane id */
+	int active = PANE_GENERAL; /* open on General */
 
 	auto render = [&]()
 	{
-		if (view < 0)
-			draw_home(surf, font);
-		else if (view == PANE_DESKTOP)
-			draw_desktop_pane(surf, font);
+		draw_sidebar(surf, font, active);
+		draw_content(surf, font, active);
 		flip();
 	};
 
@@ -277,32 +257,23 @@ int main(int argc, char **argv)
 			if (me->buttons & 1)
 				continue; /* act on release */
 
-			if (view < 0)
+			/* Sidebar: switch category. */
+			if (me->x < SIDEBAR_W)
 			{
-				/* Home grid: drill into the clicked pane. */
-				if (me->x >= MARGIN && me->y >= MARGIN)
+				if (me->y >= SIDE_TOP)
 				{
-					int col = (me->x - MARGIN) / CELL_W;
-					int row = (me->y - MARGIN) / CELL_H;
-					int i = row * COLS + col;
-					if (col >= 0 && col < COLS && i >= 0 && i < NUM_PANES)
+					int i = (me->y - SIDE_TOP) / ROW_H;
+					if (i >= 0 && i < NUM_PANES && i != active)
 					{
-						view = i;
+						active = i;
 						render();
 					}
 				}
 				continue;
 			}
 
-			/* Pane view: the back bar returns home. */
-			if (me->y < BACK_H)
-			{
-				view = -1;
-				render();
-				continue;
-			}
-
-			if (view == PANE_DESKTOP && me->y >= desktop_rows_top())
+			/* Content: dispatch to the active pane. */
+			if (active == PANE_DESKTOP && me->y >= desktop_rows_top())
 			{
 				int i = (me->y - desktop_rows_top()) / ROW_H;
 				if (i >= 0 && i < (int)g_wallpapers.size())
