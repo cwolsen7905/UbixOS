@@ -85,5 +85,6 @@ class ogImage
 
       private:
 	bool DecodeBMP(int fd, ogSurface &surface);
+	bool DecodePNG(int fd, ogSurface &surface);
 	bool EncodeBMP(int fd, ogSurface &surface);
 };
