@@ -622,6 +622,63 @@ class Taskbar
 		send_flip_msg(win_id_);
 	}
 
+	/*
+	 * Re-claim the bottom strip at a new screen size after a live resolution
+	 * change (DISPLAY_RESIZE): release the old window, claim a full-width strip
+	 * at the new geometry, and re-attach the surface.  Returns true on success.
+	 */
+	bool reclaim(ubix::Mailbox &mbox, uint32_t new_w, uint32_t new_h)
+	{
+		mpi_message_t rel = {};
+		struct display_release *dr = (struct display_release *)rel.data;
+		rel.header = DISPLAY_RELEASE;
+		dr->window_id = win_id_;
+		ubix::post_message("views", DISPLAY_RELEASE, rel);
+
+		sw_ = new_w;
+		sh_ = new_h;
+
+		mpi_message_t claim = {};
+		struct display_claim_req *creq = (struct display_claim_req *)claim.data;
+		claim.header = DISPLAY_CLAIM;
+		creq->x = 0;
+		creq->y = (int32_t)(sh_ - TB_H);
+		creq->w = (int32_t)sw_;
+		creq->h = TB_H;
+		creq->sender_pid = ubix::pid();
+		creq->no_decor = 1;
+		std::strncpy(creq->title, "taskbar", sizeof(creq->title) - 1);
+		creq->title[sizeof(creq->title) - 1] = '\0';
+		std::strncpy(creq->reply, "taskbar", sizeof(creq->reply) - 1);
+		creq->reply[sizeof(creq->reply) - 1] = '\0';
+		ubix::post_message("views", DISPLAY_CLAIM, claim);
+
+		/* Wait for the ACK, ignoring any unrelated messages that interleave. */
+		mpi_message_t reply;
+		int tries = 200000;
+		for (;;)
+		{
+			if (mbox.try_fetch(reply))
+			{
+				if (reply.header == DISPLAY_ACK)
+					break;
+			}
+			else
+			{
+				ubix::yield();
+				if (--tries == 0)
+					return false;
+			}
+		}
+
+		struct display_ack *da = (struct display_ack *)reply.data;
+		win_id_ = da->window_id;
+		if (da->shm_base == nullptr)
+			return false;
+		surf_.ogAttach(da->shm_base, sw_, TB_H, OG_PIXFMT_32BPP);
+		return true;
+	}
+
 	void win_add(uint32_t id, const char *title)
 	{
 		tracked_.push_back({id, std::string(title)});
@@ -796,6 +853,17 @@ int main(int argc, char **argv)
 				apply_theme();
 				tb.draw();
 				tb.send_flip();
+				continue;
+			}
+
+			if (reply.header == DISPLAY_RESIZE)
+			{
+				struct display_resize *dr = (struct display_resize *)reply.data;
+				if (tb.reclaim(mbox, dr->screen_w, dr->screen_h))
+				{
+					tb.draw();
+					tb.send_flip();
+				}
 				continue;
 			}
 

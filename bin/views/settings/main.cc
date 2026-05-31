@@ -48,6 +48,7 @@
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
 #include <api/netcfg.h>
+#include <api/display.h>
 #include <sys/kbd.h>
 
 extern char **environ; /* session env, forwarded to launched helpers */
@@ -91,12 +92,18 @@ extern char **environ; /* session env, forwarded to launched helpers */
 #define APPLY_H 24
 
 /* Sidebar categories (index == pane id); Settings opens on General. */
-static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network"};
+static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network", "Display"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
 #define PANE_APPEARANCE 2
 #define PANE_NETWORK 3
+#define PANE_DISPLAY 4
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
+
+/* Display pane: a 2-column grid of enumerated resolutions. */
+#define DISP_CW 125
+#define DISP_CH 22
+#define DISP_COLS 2
 
 /* Network pane geometry + state (system-wide; written to bare /net keys). */
 #define NM_DHCP 0
@@ -138,6 +145,11 @@ static char g_net_field[4][24]; /* ip, netmask, gateway, dns */
 static int g_net_focus = -1;    /* index of the field being edited, or -1 */
 static const char *g_net_flabels[4] = {"IP Address", "Netmask", "Gateway", "DNS"};
 static const char *g_net_fkeys[4] = {"/net/ip", "/net/netmask", "/net/gateway", "/net/dns"};
+
+/* Display pane state: enumerated VBE modes (from the kernel cache). */
+static struct vesa_mode g_disp_modes[32];
+static int g_disp_count = 0;
+static int g_disp_sel = 0;
 
 static std::string basename_of(const std::string &p)
 {
@@ -595,6 +607,104 @@ static bool network_key(uint32_t kc)
 	return false;
 }
 
+/* ---------------------------- Display pane ---------------------------- */
+
+/* Read the enumerated VBE modes and select the saved /display/mode. */
+static void load_display()
+{
+	char mode_s[16];
+	unsigned cur = 0x118;
+
+	g_disp_count = ubix_vesa_modes(g_disp_modes, 32);
+	if (g_disp_count < 0)
+		g_disp_count = 0;
+	if (ubistry_get_str("/display/mode", mode_s, sizeof(mode_s)) == 0)
+		cur = (unsigned)strtol(mode_s, NULL, 0);
+
+	g_disp_sel = 0;
+	for (int i = 0; i < g_disp_count; i++)
+		if (g_disp_modes[i].mode == cur)
+		{
+			g_disp_sel = i;
+			break;
+		}
+}
+
+/* Persist the chosen mode and ask the compositor to switch to it live. */
+static void apply_display()
+{
+	if (g_disp_count <= 0)
+		return;
+
+	char buf[16];
+	snprintf(buf, sizeof(buf), "0x%X", g_disp_modes[g_disp_sel].mode);
+	ubistry_set_str("/display/mode", buf);
+
+	mpi_message_t m = {};
+	struct display_setmode *sm = (struct display_setmode *)m.data;
+	m.header = DISPLAY_SETMODE;
+	sm->mode = g_disp_modes[g_disp_sel].mode;
+	ubix::post_message("views", DISPLAY_SETMODE, m);
+}
+
+static void draw_display(ogSurface &surf, ogBitFont &font)
+{
+	set_color(font, 0x00A0B0C0, BG);
+	font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Screen resolution");
+
+	if (g_disp_count <= 0)
+	{
+		font.PutString(surf, CONTENT_X, SUB_TOP + 6, "No video modes reported.");
+		return;
+	}
+
+	for (int i = 0; i < g_disp_count; i++)
+	{
+		int r = i / DISP_COLS, c = i % DISP_COLS;
+		int x = CONTENT_X + c * DISP_CW;
+		int y = SUB_TOP + r * DISP_CH;
+		uint32_t bg = (i == g_disp_sel) ? ROW_SEL : 0x00303A46u;
+		surf.ogFillRect(x, y, x + DISP_CW - 4, y + DISP_CH - 3, bg);
+		surf.ogRect(x, y, x + DISP_CW - 4, y + DISP_CH - 3, 0x00586470u);
+		set_color(font, 0x00F0F0F0, bg);
+		char lbl[24];
+		snprintf(lbl, sizeof(lbl), "%ux%u", g_disp_modes[i].width, g_disp_modes[i].height);
+		font.PutString(surf, x + 8, y + 5, lbl);
+	}
+
+	int rows = (g_disp_count + DISP_COLS - 1) / DISP_COLS;
+	int ay = SUB_TOP + rows * DISP_CH + 8;
+	surf.ogFillRect(CONTENT_X, ay, CONTENT_X + 89, ay + ROW_H - 1, ROW_SEL);
+	surf.ogRect(CONTENT_X, ay, CONTENT_X + 89, ay + ROW_H - 1, 0x00586470u);
+	set_color(font, 0x00FFFFFF, ROW_SEL);
+	font.PutString(surf, CONTENT_X + 26, ay + 8, "Apply");
+}
+
+/* Handle a click in the Display pane (resolution grid + Apply). */
+static bool display_click(int x, int y)
+{
+	for (int i = 0; i < g_disp_count; i++)
+	{
+		int r = i / DISP_COLS, c = i % DISP_COLS;
+		int cx = CONTENT_X + c * DISP_CW;
+		int cy = SUB_TOP + r * DISP_CH;
+		if (x >= cx && x < cx + DISP_CW - 4 && y >= cy && y < cy + DISP_CH - 3)
+		{
+			g_disp_sel = i;
+			return true;
+		}
+	}
+
+	int rows = (g_disp_count + DISP_COLS - 1) / DISP_COLS;
+	int ay = SUB_TOP + rows * DISP_CH + 8;
+	if (g_disp_count > 0 && x >= CONTENT_X && x < CONTENT_X + 90 && y >= ay && y < ay + ROW_H)
+	{
+		apply_display();
+		return true;
+	}
+	return false;
+}
+
 static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, WIN_H - 1, BG);
@@ -612,6 +722,12 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 	if (pane == PANE_NETWORK)
 	{
 		draw_network(surf, font);
+		return;
+	}
+
+	if (pane == PANE_DISPLAY)
+	{
+		draw_display(surf, font);
 		return;
 	}
 
@@ -821,6 +937,7 @@ int main(int argc, char **argv)
 
 	load_desktop();
 	load_network();
+	load_display();
 
 	/* Fork the launcher helper now, BEFORE the window's shared memory exists,
 	 * so a later fork() (to run netcfg) can't COW-break the shared region. */
@@ -953,6 +1070,11 @@ int main(int argc, char **argv)
 			else if (active == PANE_NETWORK)
 			{
 				if (network_click(me->x, me->y))
+					render();
+			}
+			else if (active == PANE_DISPLAY)
+			{
+				if (display_click(me->x, me->y))
 					render();
 			}
 		}

@@ -222,4 +222,15 @@ struct sys_net_configure_args
 };
 int sys_net_configure(struct thread *, struct sys_net_configure_args *);
 
+struct sys_vesa_modes_args
+{
+	char buf_l_[PADL_(void *)];
+	void *buf; /* user pointer to struct vesa_mode array */
+	char buf_r_[PADR_(void *)];
+	char max_l_[PADL_(u_int32_t)];
+	u_int32_t max;
+	char max_r_[PADR_(u_int32_t)];
+};
+int sys_vesa_modes(struct thread *, struct sys_vesa_modes_args *);
+
 #endif

@@ -69,4 +69,8 @@ public:
 	void next_cascade(int32_t *out_x, int32_t *out_y,
 	                  int32_t ww, int32_t dh, int32_t wh,
 	                  uint32_t fb_w, uint32_t fb_h);
+
+	/* Clamp every window's origin so it stays on a screen of sw x sh (used
+	 * after a live resolution change). */
+	void clamp_to(int sw, int sh);
 };

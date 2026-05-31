@@ -26,83 +26,37 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <algorithm>
-#include "window_registry.hh"
+/*
+ * display.h - userland view of the VBE mode syscalls (int $0x81, slots 60/61).
+ * struct vesa_mode MUST stay byte-for-byte identical with the kernel copy in
+ * sys/include/lib/vesa.h.
+ */
 
-#define CASCADE_STEP 24
-#define CASCADE_START 20
+#ifndef _API_DISPLAY_H
+#define _API_DISPLAY_H
 
-WindowRegistry::WindowRegistry() : next_id_(1), cascade_x_(CASCADE_START), cascade_y_(CASCADE_START), focused_(nullptr)
+#include <stdint.h>
+
+struct vesa_mode
 {
-}
+	uint16_t mode; /* VBE mode number */
+	uint16_t width;
+	uint16_t height;
+	uint8_t bpp;
+};
 
-Window *WindowRegistry::alloc()
+#ifdef __cplusplus
+extern "C"
 {
-	auto w = std::make_unique<Window>();
-	Window *p = w.get();
-	windows_.push_back(std::move(w));
-	return p;
-}
+#endif
 
-void WindowRegistry::destroy(Window *w)
-{
-	auto it = std::find_if(
-	    windows_.begin(), windows_.end(), [w](const std::unique_ptr<Window> &p) { return p.get() == w; });
-	if (it != windows_.end())
-		windows_.erase(it);
-}
+	/* Copy up to max enumerated VBE modes into buf; returns the total count.
+	 * Mode switching is done via the views compositor (DISPLAY_SETMODE), which
+	 * routes through the systemtask — not a syscall. */
+	int ubix_vesa_modes(struct vesa_mode *buf, int max);
 
-Window *WindowRegistry::find(uint32_t id) const
-{
-	for (auto &w : windows_)
-		if (w->id == id)
-			return w.get();
-	return nullptr;
+#ifdef __cplusplus
 }
+#endif
 
-void WindowRegistry::z_push(Window *w)
-{
-	z_stack_.push_back(w);
-}
-
-void WindowRegistry::z_remove(Window *w)
-{
-	auto it = std::find(z_stack_.begin(), z_stack_.end(), w);
-	if (it != z_stack_.end())
-		z_stack_.erase(it);
-}
-
-void WindowRegistry::z_raise(Window *w)
-{
-	z_remove(w);
-	z_push(w);
-}
-
-void WindowRegistry::next_cascade(
-    int32_t *out_x, int32_t *out_y, int32_t ww, int32_t dh, int32_t wh, uint32_t fb_w, uint32_t fb_h)
-{
-	*out_x = (int32_t)cascade_x_;
-	*out_y = (int32_t)cascade_y_;
-	cascade_x_ += CASCADE_STEP;
-	cascade_y_ += CASCADE_STEP;
-	if (cascade_x_ + ww > (int32_t)fb_w || cascade_y_ + dh + wh > (int32_t)fb_h)
-	{
-		cascade_x_ = CASCADE_START;
-		cascade_y_ = CASCADE_START;
-	}
-}
-
-void WindowRegistry::clamp_to(int sw, int sh)
-{
-	for (auto *w : z_stack_)
-	{
-		if (w->x + w->w > sw)
-			w->x = sw - w->w;
-		if (w->y + w->decor_h + w->h > sh)
-			w->y = sh - (w->decor_h + w->h);
-		if (w->x < 0)
-			w->x = 0;
-		if (w->y < 0)
-			w->y = 0;
-	}
-}
+#endif /* _API_DISPLAY_H */

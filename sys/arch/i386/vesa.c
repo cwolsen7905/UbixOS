@@ -44,6 +44,10 @@ u_int16_t vesa_height      = 0;
 u_int8_t  vesa_bpp         = 0;
 u_int16_t vesa_current_mode = 0;
 
+/* Enumerated-mode cache; populated by the systemtask via vesa_enum_modes(). */
+struct vesa_mode g_vesa_modes[VESA_MAX_MODES];
+int              g_vesa_mode_count = -1;
+
 int vesa_init(u_int16_t mode) {
   struct biosRegs r;
   vbe_info_t    *info  = (vbe_info_t    *)VBE_INFO_PADDR;
@@ -116,6 +120,64 @@ int vesa_init(u_int16_t mode) {
   kprintf("vesa: mode 0x%X set OK — %dx%dx%d, LFB @ 0x%X, pitch=%d\n",
       mode, vesa_width, vesa_height, vesa_bpp, vesa_fb_paddr, vesa_pitch);
   return 0;
+}
+
+/*
+ * vesa_enum_modes — enumerate the BIOS VBE mode list and return the ones with a
+ * linear framebuffer at 24bpp and a sane resolution (the formats the compositor
+ * supports).  Re-queries GetVBEInfo to find the VideoModePtr, then walks the
+ * mode-number array calling GetModeInfo for each.  Returns the number stored.
+ */
+int vesa_enum_modes(struct vesa_mode *out, int max) {
+  struct biosRegs   r;
+  vbe_info_t       *info = (vbe_info_t       *)VBE_INFO_PADDR;
+  vbe_mode_info_t  *mi   = (vbe_mode_info_t  *)VBE_MODE_PADDR;
+  u_int16_t        *list;
+  u_int32_t         ptr, listp;
+  int               i, n = 0;
+
+  if (out == NULL || max <= 0)
+    return 0;
+
+  memset(info, 0, 512);
+  info->VbeSignature[0] = 'V';
+  info->VbeSignature[1] = 'B';
+  info->VbeSignature[2] = 'E';
+  info->VbeSignature[3] = '2';
+  biosCallEx(0x10, 0x4F00, 0, 0, 0, 0, 0, VBE_INFO_SEG, 0, &r);
+  if (r.ax != 0x004F)
+    return 0;
+
+  /* VideoModePtr is a real-mode far pointer (seg:off) → physical address. */
+  ptr   = info->VideoModePtr;
+  listp = ((ptr >> 16) << 4) + (ptr & 0xFFFF);
+  list  = (u_int16_t *)listp;
+
+  for (i = 0; i < 256 && n < max; i++) {
+    u_int16_t m = list[i];
+    if (m == 0xFFFF)
+      break;
+
+    memset(mi, 0, 256);
+    biosCallEx(0x10, 0x4F01, 0, m, 0, 0, 0, VBE_MODE_SEG, 0, &r);
+    if (r.ax != 0x004F)
+      continue;
+    if (!(mi->ModeAttributes & 0x80))      /* needs a linear framebuffer */
+      continue;
+    if (mi->BitsPerPixel != 24)            /* compositor is 24bpp BGR */
+      continue;
+    if (mi->XResolution < 640 || mi->YResolution < 480)
+      continue;
+
+    out[n].mode   = m;
+    out[n].width  = mi->XResolution;
+    out[n].height = mi->YResolution;
+    out[n].bpp    = mi->BitsPerPixel;
+    n++;
+  }
+
+  kprintf("vesa: enumerated %d usable LFB 24bpp modes\n", n);
+  return n;
 }
 
 /*

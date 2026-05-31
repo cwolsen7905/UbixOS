@@ -99,6 +99,10 @@ class Compositor
 	 * background.  Pass nullptr/empty to revert to the system default. */
 	void set_active_user(const char *user);
 
+	/* Re-map the framebuffer after a live resolution change and re-resolve the
+	 * desktop for the new geometry (clamps the cursor into the new bounds). */
+	void reopen_fb();
+
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);
 	void invalidate_all();

@@ -29,6 +29,7 @@
 #include <sys/fb.h>
 #include <sys/sysproto.h>
 #include <sys/klog.h>
+#include <string.h>
 #include <sys/thread.h>
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
@@ -83,6 +84,28 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 	kbd_gui_mode = 1;
 
 	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * sys_vesa_modes (slot 60) — copy the enumerated VBE mode list to userland.
+ * The list is enumerated once by the systemtask (the V86 BIOS call is unsafe
+ * from a process syscall); here we just copy the kernel cache.  Returns the
+ * total number of usable modes (0 if not yet enumerated), copying up to
+ * args->max into the caller's buffer.  Mode switching goes through the 0x82 MPI
+ * to "system", not a syscall, for the same V86-context reason.
+ */
+int sys_vesa_modes(struct thread *td, struct sys_vesa_modes_args *args)
+{
+	int n = (g_vesa_mode_count > 0) ? g_vesa_mode_count : 0;
+
+	if (args->buf != NULL && args->max > 0 && n > 0)
+	{
+		int copy = (n < (int)args->max) ? n : (int)args->max;
+		memcpy(args->buf, g_vesa_modes, (size_t)copy * sizeof(struct vesa_mode));
+	}
+
+	td->td_retval[0] = n;
 	return (0);
 }
 

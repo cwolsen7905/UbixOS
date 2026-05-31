@@ -53,6 +53,8 @@
 #define DISPLAY_REFRESH_DESKTOP 14 /* re-read desktop settings and repaint desktop */
 #define DISPLAY_SET_USER 15        /* set the active session user (per-user desktop) */
 #define DISPLAY_THEME 16           /* re-read theme (accent colour) and repaint (to taskbar) */
+#define DISPLAY_SETMODE 17         /* client → display: switch the VBE video mode (live) */
+#define DISPLAY_RESIZE 18          /* display → client: screen geometry changed, re-claim */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */
@@ -195,6 +197,27 @@ struct display_settitle
 struct display_set_user
 {
 	char user[64];
+};
+
+/*
+ * DISPLAY_SETMODE payload (client → display).
+ * Settings asks the compositor to switch to a VBE mode number (live); the
+ * compositor re-maps the framebuffer and repaints.
+ */
+struct display_setmode
+{
+	uint16_t mode;
+};
+
+/*
+ * DISPLAY_RESIZE payload (display → client).
+ * Sent after a live resolution change so geometry-sensitive clients (the
+ * taskbar) can re-claim their window at the new screen size.
+ */
+struct display_resize
+{
+	uint32_t screen_w;
+	uint32_t screen_h;
 };
 
 /*

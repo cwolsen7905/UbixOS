@@ -28,11 +28,14 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <unistd.h>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <ubix/process.hh>
 #include <views/display.hh>
+#include <ubistry/ubistry.h>
+#include <api/display.h>
 #include "window_manager.hh"
 
 /* ------------------------------------------------------------------ */
@@ -107,11 +110,23 @@ main(int argc, char **argv)
 		return 1;
 	}
 
-	/* Request VESA init from the kernel display driver */
+	/* Request VESA init from the kernel display driver.  The desired VBE mode
+	 * (the user's saved resolution preference from ubistry, 0 = kernel default)
+	 * is carried at data[64]; the systemtask sets it where the V86 BIOS call is
+	 * safe.  data[0..] is the reply mailbox name. */
 	mpi_message_t req;
+	std::memset(&req, 0, sizeof(req));
 	req.header  = 0x82;
 	req.data[0] = 'v'; req.data[1] = 'i'; req.data[2] = 'e';
 	req.data[3] = 'w'; req.data[4] = 's'; req.data[5] = '\0';
+	{
+		char mode_s[16];
+		if (ubistry_get_str("/display/mode", mode_s, sizeof(mode_s)) == 0) {
+			long m = std::strtol(mode_s, nullptr, 0);
+			if (m > 0)
+				*(uint16_t *)&req.data[64] = (uint16_t)m;
+		}
+	}
 	ubix::post_message("system", 0x82, req);
 
 	mpi_message_t reply;

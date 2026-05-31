@@ -91,6 +91,10 @@ static const struct reg_entry g_defaults[] = {
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
 
+    /* Display: the VBE mode number views sets at startup (0x118 = 1024x768x24,
+     * the kernel default).  Settings writes the user's chosen mode here. */
+    {"/display/mode", "\"0x118\""},
+
     /* Network: mode = dhcp | static.  The static ip/netmask/gateway/dns are
      * defaults shown by the Settings Network pane and applied only in static
      * mode.  bin/netcfg reads these at boot and pushes them to the kernel. */

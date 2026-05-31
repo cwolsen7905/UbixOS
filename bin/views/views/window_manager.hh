@@ -42,6 +42,7 @@ class WindowManager
 	WindowRegistry reg_;
 	Compositor comp_;
 	InputRouter input_;
+	bool mode_pending_ = false; /* awaiting the 0x82 reply for a live mode switch */
 
 	void notify_taskbar(Window *w, uint8_t added);
 	void close_window(Window *w);
@@ -67,6 +68,8 @@ class WindowManager
 	void handle_settitle(struct display_settitle *st);
 	void handle_refresh_desktop();
 	void handle_set_user(struct display_set_user *su);
+	void handle_setmode(struct display_setmode *sm);
+	void handle_vesa_ready();
 	void handle_mouse(mouse_event_t &ev);
 	void handle_kbd(kbd_event_t &ev);
 };

@@ -106,6 +106,7 @@ struct syscall_entry systemCalls[] = {
      "net_configure",
      (sys_call_t *)sys_net_configure,
      SYSCALL_VALID}, // 59 - net_configure
+    {ARG_COUNT(sys_vesa_modes_args), "vesa_modes", (sys_call_t *)sys_vesa_modes, SYSCALL_VALID}, // 60 - vesa_modes
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

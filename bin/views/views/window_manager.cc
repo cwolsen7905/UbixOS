@@ -283,6 +283,45 @@ void WindowManager::handle_set_user(struct display_set_user *su)
 	comp_.invalidate_all();
 }
 
+void WindowManager::handle_setmode(struct display_setmode *sm)
+{
+	/* Ask the systemtask to switch the VBE mode (the V86 BIOS call is only safe
+	 * there).  The 0x82 reply comes back to our mailbox and drives the actual
+	 * re-map in handle_vesa_ready(). */
+	mpi_message_t m = {};
+	m.data[0] = 'v';
+	m.data[1] = 'i';
+	m.data[2] = 'e';
+	m.data[3] = 'w';
+	m.data[4] = 's';
+	m.data[5] = '\0';
+	*(uint16_t *)&m.data[64] = sm->mode;
+	m.header = 0x82;
+	mode_pending_ = true;
+	ubix::post_message("system", 0x82, m);
+}
+
+void WindowManager::handle_vesa_ready()
+{
+	if (!mode_pending_)
+		return;
+	mode_pending_ = false;
+
+	/* The new mode is live in the kernel; re-map our framebuffer, reposition any
+	 * off-screen windows, tell the taskbar to re-claim its strip, and repaint. */
+	comp_.reopen_fb();
+	reg_.clamp_to((int)comp_.screen_w(), (int)comp_.screen_h());
+
+	mpi_message_t m = {};
+	struct display_resize *dr = (struct display_resize *)m.data;
+	m.header = DISPLAY_RESIZE;
+	dr->screen_w = comp_.screen_w();
+	dr->screen_h = comp_.screen_h();
+	ubix::post_message("taskbar", DISPLAY_RESIZE, m);
+
+	comp_.invalidate_all();
+}
+
 void WindowManager::flush()
 {
 	comp_.flush();
@@ -319,6 +358,13 @@ void WindowManager::dispatch(uint32_t id, void *data)
 		     wm.handle_refresh_desktop();
 	     }},
 	    {DISPLAY_SET_USER, [](WindowManager &wm, void *d) { wm.handle_set_user((struct display_set_user *)d); }},
+	    {DISPLAY_SETMODE, [](WindowManager &wm, void *d) { wm.handle_setmode((struct display_setmode *)d); }},
+	    {0x82,
+	     [](WindowManager &wm, void *d)
+	     {
+		     (void)d;
+		     wm.handle_vesa_ready();
+	     }},
 	};
 	for (const auto &e : table)
 		if (e.id == id)

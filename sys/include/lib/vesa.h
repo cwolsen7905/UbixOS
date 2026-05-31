@@ -98,6 +98,27 @@ void vesa_map_fb(void);
 void vesa_draw_test(void);
 void vesa_draw_circle(u_int32_t cx, u_int32_t cy, u_int32_t r, u_int32_t color);
 
+/* One enumerated VBE mode (linear framebuffer, 24bpp).  Layout matches the
+ * userland struct vesa_mode in include/api/display.h. */
+struct vesa_mode
+{
+	u_int16_t mode; /* VBE mode number */
+	u_int16_t width;
+	u_int16_t height;
+	u_int8_t  bpp;
+};
+
+/* Enumerate up to max LFB 24bpp modes the BIOS reports; returns the count.
+ * MUST be called from the systemtask (kernel) context — the V86 BIOS-call
+ * machinery races with task reaping when invoked from a user-process syscall. */
+int vesa_enum_modes(struct vesa_mode *out, int max);
+
+/* Cache of enumerated modes, filled once by the systemtask (where the BIOS call
+ * is safe) and copied to userland by the sys_vesa_modes syscall. */
+#define VESA_MAX_MODES 32
+extern struct vesa_mode g_vesa_modes[VESA_MAX_MODES];
+extern int g_vesa_mode_count; /* -1 until enumerated */
+
 /* Populated by vesa_init() for use by graphics code */
 extern u_int32_t vesa_fb_paddr;    /* physical base of linear framebuffer */
 extern u_int16_t vesa_pitch;       /* bytes per scanline */

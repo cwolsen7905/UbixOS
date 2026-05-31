@@ -250,6 +250,25 @@ void Compositor::set_active_user(const char *user)
 	set_desktop_from_registry();
 }
 
+void Compositor::reopen_fb()
+{
+	if (fb_.reopen() != 0)
+		return;
+
+	/* Clamp the cursor into the new screen bounds. */
+	if (cur_x_ > (int)fb_.width - CUR_W)
+		cur_x_ = (int)fb_.width - CUR_W;
+	if (cur_y_ > (int)fb_.height - CUR_H)
+		cur_y_ = (int)fb_.height - CUR_H;
+	if (cur_x_ < 0)
+		cur_x_ = 0;
+	if (cur_y_ < 0)
+		cur_y_ = 0;
+	cur_drawn_ = false;
+
+	set_desktop_from_registry(); /* re-stretch the wallpaper to the new size */
+}
+
 bool Compositor::rect_covered(int rx, int ry, int rw, int rh)
 {
 	for (auto *w : reg_.z_stack())
