@@ -159,16 +159,13 @@ int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {
     td->td_retval[0] = -EFAULT;
     return (EFAULT);
   }
-  /* sysMkDir returns 0 on success, -1 on filesystem failure.  Propagate
-   * that as -EIO so mkdir -p can tell us "already exists" vs "couldn't
-   * create" and not blindly try to mkdir the next level into a directory
-   * that doesn't exist. */
-  if (sysMkDir(args->path) != 0) {
-    td->td_retval[0] = -EIO;
-    return (EIO);
-  }
-  td->td_retval[0] = 0;
-  return (0);
+  /* sysMkDir returns 0 on success, -EEXIST when the path already names
+   * a directory, -EIO on filesystem failure.  busybox's mkdir -p relies
+   * on EEXIST being distinguishable so it can walk through interior
+   * components that already exist. */
+  int r = sysMkDir(args->path);
+  td->td_retval[0] = r;
+  return (r == 0 ? 0 : -r);
 }
 
 int sys_rmdir(struct thread *td, struct sys_rmdir_args *args) {
@@ -766,9 +763,19 @@ int fclose(fileDescriptor_t *fd) {
  * already splits the path and walks parent_cluster internally, so
  * passing the whole path is what it actually expects.
  */
+/**
+ * sysMkDir — Create a directory at `path`.
+ *
+ * Returns 0 on success, -EEXIST if the path already names a directory,
+ * -EIO on filesystem failure.  The EEXIST signal matters: busybox's
+ * mkdir -p walks the path and tolerates EEXIST for each interior
+ * level, so without it "mkdir -p /a/b/c" gets -EIO on "/" or "/tmp"
+ * and bails out before ever creating the leaves.
+ */
 int sysMkDir(const char *path) {
     char fullpath[1024];
     fileDescriptor_t mkdir_fd;
+    kDIR_t *existing;
 
     /* Resolve relative paths against CWD. */
     if (path[0] != '/')
@@ -779,26 +786,40 @@ int sysMkDir(const char *path) {
 
     /* busybox mkdir -p passes paths with trailing slashes; fat_dir_mkdir's
      * basename extraction sees "" and the call fails.  Strip them here,
-     * but leave a bare "/" alone. */
+     * but leave a bare "/" alone — mkdir_fat's own basename parser also
+     * strips trailing slashes defensively, but doing it here keeps the
+     * EEXIST probe below working off the canonical form. */
     {
         size_t n = strlen(fullpath);
         while (n > 1 && fullpath[n - 1] == '/')
             fullpath[--n] = '\0';
     }
 
+    /* If the path already names a directory, report EEXIST and skip the
+     * actual create — keeps fat_dir_create_entry from silently writing a
+     * duplicate directory entry, and lets mkdir -p walk through existing
+     * interior components. */
+    existing = vfs_opendir(fullpath);
+    if (existing != NULL) {
+        vfs_closedir(existing);
+        return (-EEXIST);
+    }
+
     struct vfs_mountPoint *mp = vfs_findMount(fullpath);
     if (mp == NULL || mp->fs == NULL) {
         klog(KLOG_ERR, "sysMkDir: no mount for %s", fullpath);
-        return (-1);
+        return (-EIO);
     }
     if (mp->fs->vfsMakeDir == NULL) {
         klog(KLOG_ERR, "sysMkDir: %s: filesystem does not support mkdir", fullpath);
-        return (-1);
+        return (-EIO);
     }
 
     memset(&mkdir_fd, 0, sizeof(mkdir_fd));
     mkdir_fd.mp = mp;
-    return (mp->fs->vfsMakeDir(fullpath, &mkdir_fd));
+    if (mp->fs->vfsMakeDir(fullpath, &mkdir_fd) != 0)
+        return (-EIO);
+    return (0);
 }
 
 /************************************************************************

@@ -880,6 +880,7 @@ fat_path_to_dir_cluster(struct fat_fs *fs, const char *path,
 int
 fat_dir_mkdir(struct fat_fs *fs, const char *path)
 {
+	char		 work[256];
 	char		 parent_path[256];
 	const char	*base;
 	u_int32_t	 parent_cluster, new_cluster;
@@ -887,19 +888,32 @@ fat_dir_mkdir(struct fat_fs *fs, const char *path)
 	u_int16_t	 entry_off, dot_off;
 	u_int8_t		 buf[512];
 
+	/* Defensive copy + trailing-slash strip.  Callers (including the
+	 * VFS layer's sysMkDir) may hand us "/foo/bar/"; without the strip
+	 * the basename loop below sees the trailing '/' as the last
+	 * separator and sets base="" which fails fat_dir_create_entry. */
+	strncpy(work, path, sizeof(work) - 1);
+	work[sizeof(work) - 1] = '\0';
+	{
+		size_t n = strlen(work);
+		while (n > 1 && work[n - 1] == '/')
+			work[--n] = '\0';
+	}
+
 	/* Split path into parent and basename */
-	strncpy(parent_path, path, 255);
-	parent_path[255] = '\0';
-	base = path;
-	for (const char *p = path; *p; p++)
+	base = work;
+	for (const char *p = work; *p; p++)
 		if (*p == '/')
 			base = p + 1;
 
-	if (base != path) {
-		int	 plen = (int)(base - path - 1);
+	if (*base == '\0')
+		return (-1);
+
+	if (base != work) {
+		int	 plen = (int)(base - work - 1);
 		if (plen >= 256)
 			plen = 255;
-		memcpy(parent_path, path, (size_t)plen);
+		memcpy(parent_path, work, (size_t)plen);
 		parent_path[plen] = '\0';
 		if (fat_path_to_dir_cluster(fs, parent_path,
 		    &parent_cluster) != 0)
