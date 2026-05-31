@@ -30,6 +30,7 @@
 #include <sys/sysproto_posix.h>
 #include <sys/sysproto.h>
 #include <fs/vfs/vfs.h>
+#include <fs/fat/fat_file.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
@@ -243,18 +244,18 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
 /**
  * sys_ftruncate — POSIX ftruncate(2), FreeBSD ABI syscall 480.
  *
- * Updates the file's tracked size so subsequent stat/fstat report the
- * truncated length and so callers like vi accept the save as successful.
- * For files just written with O_TRUNC followed by writes that fully
- * cover the new length (vi's save flow), this is sufficient — the bytes
- * already on disk match what the caller intends to keep.
+ * Resizes the on-disk file plus the in-kernel tracked size.  Shrinking
+ * frees the cluster chain beyond the new length and updates the FAT
+ * directory entry; growing produces a sparse-style file (size bumped,
+ * gap filled by subsequent writes).
  *
- * NOTE: this does not yet shrink the on-disk allocation, so editing an
- * existing file and shortening it will leave stale tail bytes on disk
- * (visible only via raw block reads).  A per-FS truncate hook would be
- * the proper fix and is tracked separately.
+ * Implementation currently calls fat_file_truncate directly via fd->res —
+ * UbixOS's only writable filesystem is FAT, and we don't yet have a
+ * per-FS truncate hook in the vfs op table.  When a second writable FS
+ * lands we should switch to dispatching through the mount's fs vector.
  *
- * @return 0 on success, -EBADF if fd does not refer to an open file.
+ * @return 0 on success, -EBADF if fd does not refer to an open writable
+ *         file, -EINVAL for negative length, -EIO on FS failure.
  */
 int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args) {
     struct file *fdd = 0x0;
@@ -270,6 +271,18 @@ int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args) {
     if (args->length < 0) {
         td->td_retval[0] = -EINVAL;
         return (EINVAL);
+    }
+
+    /* FAT: ask the driver to resize the chain.  Other FSes (ufs/ubixfs)
+     * land in the in-memory-only fallback below since they're read-only
+     * for our current workloads. */
+    if (fd->res != NULL && fd->mp != NULL && fd->mp->fs != NULL &&
+        fd->mp->fs->vfsType == 0xFA) {
+        if (fat_file_truncate((struct fat_file *)fd->res,
+                              (u_int32_t)args->length) != 0) {
+            td->td_retval[0] = -EIO;
+            return (EIO);
+        }
     }
 
     fd->size = (u_int32_t)args->length;

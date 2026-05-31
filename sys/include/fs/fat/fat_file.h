@@ -72,6 +72,14 @@ int		 fat_file_seek(struct fat_file *f, u_int32_t pos);
  */
 int		 fat_file_flush(struct fat_file *f);
 
+/*
+ * Resize the file to exactly new_size bytes.  Shrinking frees the cluster
+ * chain past the truncation point and updates the directory entry; growing
+ * just updates file_size (sparse — subsequent writes fill the gap).
+ * Returns 0 on success, -1 on error.
+ */
+int		 fat_file_truncate(struct fat_file *f, u_int32_t new_size);
+
 /* Flush and free the fat_file structure. */
 void		 fat_file_close(struct fat_file *f);
 

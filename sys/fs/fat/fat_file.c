@@ -445,6 +445,78 @@ fat_file_flush(struct fat_file *f)
 	return (0);
 }
 
+int
+fat_file_truncate(struct fat_file *f, u_int32_t new_size)
+{
+	struct fat_fs	*fs = f->fs;
+	u_int32_t	 cluster_bytes =
+	    (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
+	u_int32_t	 c, next;
+
+	/* Make sure any dirty data is on disk before we mutate the chain — we
+	 * don't want a buffered sector for a cluster we are about to free. */
+	if (f->buf_dirty) {
+		if (fat_sector_write(fs, f->buf_lba, f->buf) != 0)
+			return (-1);
+		f->buf_dirty = 0;
+	}
+	f->buf_lba = (u_int32_t)-1;
+
+	/* Growing: just bump the tracked size; subsequent writes fill the gap. */
+	if (new_size >= f->file_size) {
+		f->file_size  = new_size;
+		f->size_dirty = 1;
+		return (fat_file_flush(f));
+	}
+
+	/* Shrinking to zero: free everything and allocate one fresh cluster
+	 * so the file still has a valid start_cluster for future writes. */
+	if (new_size == 0) {
+		if (f->start_cluster >= 2)
+			fat_cluster_free_chain(fs, f->start_cluster);
+		f->start_cluster = fat_cluster_alloc(fs, 0);
+		if (f->start_cluster == 0)
+			return (-1);
+		f->cur_cluster   = f->start_cluster;
+		f->position      = 0;
+		f->file_size     = 0;
+		f->size_dirty    = 0;
+		return (dirent_set_clus_size(fs, f->dir_sector, f->dir_offset,
+		    f->start_cluster, 0));
+	}
+
+	/* Shrinking but keeping data: walk to the cluster that holds the
+	 * last byte we keep (byte at offset new_size - 1), terminate the
+	 * chain there, free the tail. */
+	{
+		u_int32_t target_idx = (new_size - 1) / cluster_bytes;
+		c = f->start_cluster;
+		for (u_int32_t i = 0; i < target_idx; i++) {
+			next = fat_cluster_next(fs, c);
+			if (next == FAT_CLUSTER_EOC || next < 2)
+				return (-1);
+			c = next;
+		}
+	}
+	next = fat_cluster_next(fs, c);
+	if (fat_cluster_write_entry(fs, c, FAT_CLUSTER_EOC) != 0)
+		return (-1);
+	if (next != FAT_CLUSTER_EOC && next >= 2) {
+		if (fat_cluster_free_chain(fs, next) != 0)
+			return (-1);
+	}
+
+	f->file_size  = new_size;
+	f->size_dirty = 1;
+	if (f->position > new_size) {
+		f->position = new_size;
+		/* Force seek_to_cluster on next read/write by resetting the
+		 * tracked current cluster. */
+		f->cur_cluster = c;
+	}
+	return (fat_file_flush(f));
+}
+
 void
 fat_file_close(struct fat_file *f)
 {
