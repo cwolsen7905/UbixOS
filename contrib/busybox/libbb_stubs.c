@@ -6,7 +6,106 @@
  */
 #include "libbb.h"
 
-const char *applet_name = "vi";
+/* The active applet sets applet_name in its own main() wrapper. */
+const char *applet_name = "busybox";
+const char bb_msg_standard_input[] = "standard input";
+const char bb_msg_read_error[]     = "read error";
+
+char bb_common_bufsiz1[COMMON_BUFSIZE];
+
+void setup_common_bufsiz(void)
+{
+	/* upstream zeros the scratch buffer here; we already have a BSS global */
+}
+
+/* Suffix table used by head/tail/dd-style "-n 100k" parsing. */
+const struct suffix_mult bkm_suffixes[] = {
+	{ "b",  512 },
+	{ "k",  1024 },
+	{ "K",  1024 },
+	{ "m",  1024 * 1024 },
+	{ "M",  1024 * 1024 },
+	{ "",   0 }
+};
+
+unsigned long long xatoul_sfx(const char *numstr, const struct suffix_mult *suffixes)
+{
+	char *end;
+	unsigned long long v;
+
+	errno = 0;
+	v = strtoull(numstr, &end, 10);
+	if (errno || end == numstr)
+		bb_simple_error_msg_and_die(numstr);
+	if (*end != '\0' && suffixes) {
+		const struct suffix_mult *s;
+		for (s = suffixes; s->mult; s++) {
+			if (strcmp(end, s->suffix) == 0) {
+				v *= s->mult;
+				end = (char *)"";
+				break;
+			}
+		}
+		if (*end != '\0')
+			bb_simple_error_msg_and_die(numstr);
+	}
+	return v;
+}
+
+void die_if_ferror_stdout(void)
+{
+	if (ferror(stdout)) {
+		bb_simple_error_msg_and_die("write error");
+	}
+}
+
+unsigned xatou_sfx(const char *numstr, const struct suffix_mult *suffixes)
+{
+	unsigned long long v = xatoul_sfx(numstr, suffixes);
+	if (v > UINT_MAX)
+		bb_simple_error_msg_and_die(numstr);
+	return (unsigned)v;
+}
+
+int fdprintf(int fd, const char *fmt, ...)
+{
+	va_list ap;
+	char buf[1024];
+	int n;
+	va_start(ap, fmt);
+	n = vsnprintf(buf, sizeof(buf), fmt, ap);
+	va_end(ap);
+	if (n < 0)
+		return n;
+	if ((size_t)n >= sizeof(buf))
+		n = sizeof(buf) - 1;
+	return (int)full_write(fd, buf, (size_t)n);
+}
+
+int open_or_warn_stdin(const char *filename)
+{
+	int fd;
+	if (filename[0] == '-' && filename[1] == '\0')
+		return 0;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		bb_simple_perror_msg(filename);
+	return fd;
+}
+
+off_t xlseek(int fd, off_t offset, int whence)
+{
+	off_t r = lseek(fd, offset, whence);
+	if (r == (off_t)-1)
+		bb_perror_msg("lseek"), exit(1);
+	return r;
+}
+
+void xwrite(int fd, const void *buf, size_t count)
+{
+	if ((size_t)full_write(fd, buf, count) != count)
+		bb_perror_msg("write"), exit(1);
+}
 
 /* vi.c uses `#define G (*ptr_to_globals)`; the storage lives here. */
 struct globals *ptr_to_globals;
@@ -17,7 +116,7 @@ void *xmalloc(size_t size)
 {
 	void *p = malloc(size);
 	if (!p) {
-		fputs("vi: out of memory\n", stderr);
+		fputs("out of memory\n", stderr);
 		exit(1);
 	}
 	return p;
@@ -27,7 +126,7 @@ void *xrealloc(void *ptr, size_t size)
 {
 	void *p = realloc(ptr, size);
 	if (!p && size) {
-		fputs("vi: out of memory\n", stderr);
+		fputs("out of memory\n", stderr);
 		exit(1);
 	}
 	return p;
@@ -44,7 +143,7 @@ char *xstrdup(const char *s)
 {
 	char *p = strdup(s);
 	if (!p) {
-		fputs("vi: out of memory\n", stderr);
+		fputs("out of memory\n", stderr);
 		exit(1);
 	}
 	return p;
@@ -212,14 +311,135 @@ void fflush_all(void)
 
 void bb_show_usage(void)
 {
-	fputs("usage: vi [-Hh] [-c CMD]... [-R] FILE...\n", stderr);
+	fprintf(stderr, "%s: invalid usage\n", applet_name);
 	exit(1);
 }
 
 void bb_simple_error_msg_and_die(const char *s)
 {
-	fprintf(stderr, "vi: %s\n", s);
+	fprintf(stderr, "%s: %s\n", applet_name, s);
 	exit(1);
+}
+
+void bb_simple_perror_msg(const char *s)
+{
+	fprintf(stderr, "%s: %s: %s\n", applet_name, s, strerror(errno));
+}
+
+FILE *fopen_or_warn_stdin(const char *filename)
+{
+	FILE *fp;
+	if (filename[0] == '-' && filename[1] == '\0')
+		return stdin;
+	fp = fopen(filename, "r");
+	if (!fp)
+		bb_simple_perror_msg(filename);
+	return fp;
+}
+
+int fclose_if_not_stdin(FILE *fp)
+{
+	if (fp == stdin)
+		return 0;
+	return fclose(fp);
+}
+
+void fflush_stdout_and_exit(int status)
+{
+	if (fflush(stdout) != 0)
+		status = 1;
+	exit(status);
+}
+
+/* xmalloc_fgets: read one line into a freshly-malloc'd buffer; strip the
+ * trailing \n if any.  Returns NULL on EOF / error. */
+char *xmalloc_fgets(FILE *fp)
+{
+	size_t cap = 128;
+	size_t len = 0;
+	char *buf = xmalloc(cap);
+	int c;
+
+	for (;;) {
+		c = getc(fp);
+		if (c == EOF) {
+			if (len == 0) {
+				free(buf);
+				return NULL;
+			}
+			break;
+		}
+		if (len + 1 >= cap) {
+			cap *= 2;
+			buf = xrealloc(buf, cap);
+		}
+		if (c == '\n')
+			break;
+		buf[len++] = (char)c;
+	}
+	buf[len] = '\0';
+	return buf;
+}
+
+void bb_error_msg(const char *fmt, ...)
+{
+	va_list ap;
+	fprintf(stderr, "%s: ", applet_name);
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+	fputc('\n', stderr);
+}
+
+void bb_perror_msg(const char *fmt, ...)
+{
+	va_list ap;
+	int saved = errno;
+	fprintf(stderr, "%s: ", applet_name);
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+	fprintf(stderr, ": %s\n", strerror(saved));
+}
+
+void bb_perror_nomsg_and_die(void)
+{
+	fprintf(stderr, "%s: %s\n", applet_name, strerror(errno));
+	exit(1);
+}
+
+void xmove_fd(int from, int to)
+{
+	if (from == to)
+		return;
+	if (dup2(from, to) < 0) {
+		bb_perror_msg("dup2");
+		exit(1);
+	}
+	close(from);
+}
+
+/* Copy up to `size` bytes from fd1 to fd2.  -1 size means until EOF.
+ * Returns bytes actually copied. */
+off_t bb_copyfd_size(int fd1, int fd2, off_t size)
+{
+	char buf[4096];
+	off_t total = 0;
+
+	while (size != 0) {
+		size_t want = sizeof(buf);
+		if (size > 0 && (off_t)want > size)
+			want = (size_t)size;
+		ssize_t n = safe_read(fd1, buf, want);
+		if (n <= 0)
+			break;
+		if (full_write(fd2, buf, (size_t)n) != n)
+			break;
+		total += n;
+		if (size > 0)
+			size -= n;
+	}
+	return total;
 }
 
 unsigned bb_strtou(const char *arg, char **endp, int base)
@@ -295,7 +515,7 @@ char *xasprintf(const char *fmt, ...)
 	n = vasprintf(&res, fmt, ap);
 	va_end(ap);
 	if (n < 0 || !res) {
-		fputs("vi: out of memory\n", stderr);
+		fputs("out of memory\n", stderr);
 		exit(1);
 	}
 	return res;
@@ -479,7 +699,7 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 				if (opts[i].letter == *q) { found = i; break; }
 			}
 			if (found < 0) {
-				fprintf(stderr, "vi: unknown option -%c\n", *q);
+				fprintf(stderr, "unknown option -%c\n", *q);
 				bb_show_usage();
 			}
 			mask |= (1u << found);
@@ -491,7 +711,7 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 				} else if (argv[n + 1]) {
 					val = argv[++n];
 				} else {
-					fprintf(stderr, "vi: option -%c needs an argument\n", *q);
+					fprintf(stderr, "option -%c needs an argument\n", *q);
 					bb_show_usage();
 				}
 				if (opts[found].is_star) {
@@ -522,11 +742,6 @@ unsigned getopt32(char **argv, const char *applet_opts, ...)
 	return mask;
 }
 
-/* --------------------------- entry point -------------------------------- */
-
-extern int vi_main(int argc, char **argv);
-
-int main(int argc, char **argv)
-{
-	return vi_main(argc, argv);
-}
+/* Each applet's bin/<applet>/main.c supplies the actual main() that calls
+ * <applet>_main.  Keeping main() out of this shared shim means the same
+ * libbb_stubs.o source works for vi, wc, head, tail, etc. */
