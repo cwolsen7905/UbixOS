@@ -15,7 +15,13 @@
 
 #define O_ASYNC         0x0040
 #define O_DIRECT        0x4000
-#define O_LARGEFILE     0x8000
+/*
+ * FreeBSD has no O_LARGEFILE (all files are 64-bit capable), so it must be 0.
+ * The Linux i386 value 0x8000 collides with FreeBSD O_NOCTTY: musl's open()
+ * ORs O_LARGEFILE into every open(), which the kernel then read as O_NOCTTY —
+ * silently preventing any program from acquiring a controlling terminal.
+ */
+#define O_LARGEFILE     0
 #define O_NOATIME       0
 #define O_PATH          0
 #define O_TMPFILE       0
