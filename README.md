@@ -67,6 +67,45 @@ For a detailed breakdown of kernel internals, see [ARCHITECTURE.md](ARCHITECTURE
 
 ---
 
+## License
+
+UbixOS itself is licensed under the **BSD 3-Clause License**. The `sys/`,
+`bin/`, `lib/`, `libexec/`, `share/`, `tools/`, and `include/` trees are
+all original UbixOS code under that license.
+
+### Third-party components
+
+The `contrib/` tree contains imported third-party code, each retained
+under its original license. The compiled UbixOS image bundles these
+binaries alongside the BSD-licensed base — analogous to how FreeBSD
+historically shipped GPL'd gcc/binutils in `/usr/bin`. License terms
+apply per-binary; the BSD base is unaffected.
+
+| Component | Version | Purpose | License |
+|-----------|---------|---------|---------|
+| [musl](contrib/musl/) | git snapshot | libc (dynamic, ld-musl-i386.so.1) | MIT |
+| [libcxx](contrib/libcxx/) | 18.x subset | LLVM C++ standard library | Apache 2.0 with LLVM exception |
+| [libcxxabi](contrib/libcxxabi/) | 18.x subset | Itanium C++ ABI | Apache 2.0 with LLVM exception |
+| [lwip-2.0.3](contrib/lwip-2.0.3/) | 2.0.3 | TCP/IP stack | BSD 3-Clause |
+| [jemalloc](contrib/jemalloc/) | — | malloc implementation | BSD 2-Clause |
+| [tcsh-6.24.16](contrib/tcsh-6.24.16/) | 6.24.16 | Interactive shell | BSD 3-Clause |
+| [tcc](contrib/tcc/) | — | Tiny C Compiler (self-hosted dev) | LGPL 2.1 |
+| [tzcode](contrib/tzcode/) | — | POSIX time-zone routines | Public Domain |
+| [gdtoa](contrib/gdtoa/) | David Gay's | strtod/dtoa floating-point conversion | Permissive (Gay) |
+| [libc-pwcache](contrib/libc-pwcache/) | FreeBSD | passwd/group cache | BSD 2-Clause |
+| [libc-vis](contrib/libc-vis/) | FreeBSD | string-visualization helpers | BSD 3-Clause |
+| [minimp3](contrib/minimp3/) | — | MP3 decoder (used by `mp3play`) | CC0 / Public Domain |
+| [doomgeneric](contrib/doomgeneric/) | id Software | DOOM source release (`bin/doom`, `bin/vdoom`) | GPL 2 |
+| [busybox-vi](contrib/busybox-vi/) | 1.36.1 (vi only) | `bin/vi` editor | GPL 2 |
+
+The GPL'd components (`doomgeneric`, `busybox-vi`) build into standalone
+executables. Their source remains in `contrib/` (and is shipped under
+`/usr/src/` on the disk image) per GPL source-redistribution terms.
+The BSD-licensed UbixOS base does not link against or derive from
+GPL'd code.
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for conventions, code style, and the doc-sync rules that keep documentation current with the source.
