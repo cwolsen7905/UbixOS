@@ -1038,3 +1038,109 @@ fat_dir_unlink(struct fat_fs *fs, const char *path)
 
 	return (0);
 }
+
+/*
+ * Rename a file (regular files only — directory rename adds parent-link
+ * fixup that we don't tackle yet).  Same FS, same mount; the upper layer
+ * is expected to fall back to copy+unlink for cross-device renames.
+ *
+ *  1. Resolve src → get start_cluster, file_size, attr.  Reject if it's
+ *     a directory.
+ *  2. Resolve dst.  If it already exists as a regular file, unlink it
+ *     first so we don't grow a duplicate entry (which would orphan the
+ *     old chain forever).
+ *  3. Create a new entry under dst's parent cluster pointing at the
+ *     same start_cluster, then fix the size with fat_dir_update_size
+ *     (fat_dir_create_entry writes size=0 — fine for "create new file"
+ *     but wrong when we're stealing an existing chain).
+ *  4. Delete the src entry, but DON'T free the cluster chain — the
+ *     new entry now references it.
+ *
+ * Returns 0 on success, -1 on filesystem failure.
+ */
+int
+fat_dir_rename(struct fat_fs *fs, const char *src_path, const char *dst_path)
+{
+	struct fat_raw_dirent	 src_ent, dst_ent;
+	u_int32_t		 src_dir_cluster, src_sec;
+	u_int32_t		 src_start_cluster, src_size;
+	u_int16_t		 src_off;
+	u_int8_t		 src_attr;
+	char			 dst_parent[256];
+	const char		*dst_base;
+	u_int32_t		 dst_dir_cluster, dst_sec;
+	u_int16_t		 dst_off;
+	u_int32_t		 new_sec;
+	u_int16_t		 new_off;
+	int			 i;
+
+	if (fat_path_resolve(fs, src_path, &src_dir_cluster, &src_ent,
+	    &src_sec, &src_off) != 0)
+		return (-1);
+	if (src_ent.attr & FAT_ATTR_DIR)
+		return (-1);
+
+	src_start_cluster = ((u_int32_t)src_ent.clus_hi << 16) | src_ent.clus_lo;
+	src_size          = src_ent.file_size;
+	src_attr          = src_ent.attr;
+
+	/* Split dst_path into parent dir + basename. */
+	{
+		size_t n = strlen(dst_path);
+		if (n >= sizeof(dst_parent))
+			return (-1);
+		dst_base = dst_path;
+		for (const char *p = dst_path; *p; p++)
+			if (*p == '/')
+				dst_base = p + 1;
+		if (*dst_base == '\0')
+			return (-1);
+		if (dst_base != dst_path) {
+			size_t plen = (size_t)(dst_base - dst_path - 1);
+			memcpy(dst_parent, dst_path, plen);
+			dst_parent[plen] = '\0';
+			if (plen == 0) {
+				dst_dir_cluster = (fs->type == 32)
+				    ? fs->root_cluster : 0;
+			} else if (fat_path_to_dir_cluster(fs, dst_parent,
+			    &dst_dir_cluster) != 0) {
+				return (-1);
+			}
+		} else {
+			dst_dir_cluster = (fs->type == 32)
+			    ? fs->root_cluster : 0;
+		}
+	}
+
+	/* If dst already exists, blow it away first. */
+	{
+		u_int32_t scratch;
+		if (fat_path_resolve(fs, dst_path, &scratch, &dst_ent,
+		    &dst_sec, &dst_off) == 0) {
+			u_int32_t dst_start =
+			    ((u_int32_t)dst_ent.clus_hi << 16) | dst_ent.clus_lo;
+			if (dst_ent.attr & FAT_ATTR_DIR)
+				return (-1);
+			if (fat_dir_delete_with_lfn(fs, dst_dir_cluster,
+			    dst_sec, dst_off) != 0)
+				return (-1);
+			if (dst_start >= 2)
+				fat_cluster_free_chain(fs, dst_start);
+		}
+	}
+	(void)i;
+
+	/* Create the new dst entry pointing at src's existing chain. */
+	if (fat_dir_create_entry(fs, dst_dir_cluster, dst_base, src_attr,
+	    src_start_cluster, &new_sec, &new_off) != 0)
+		return (-1);
+	if (fat_dir_update_size(fs, new_sec, new_off, src_size) != 0)
+		return (-1);
+
+	/* Remove the src entry — but DO NOT free its cluster chain.  The
+	 * new dst entry references it now. */
+	if (fat_dir_delete_with_lfn(fs, src_dir_cluster, src_sec, src_off) != 0)
+		return (-1);
+
+	return (0);
+}

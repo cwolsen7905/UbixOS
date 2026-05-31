@@ -31,6 +31,7 @@
 #include <sys/sysproto.h>
 #include <fs/vfs/vfs.h>
 #include <fs/fat/fat_file.h>
+#include <fs/fat/fat_dir.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
@@ -366,7 +367,70 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args) {
     return (error);
 }
 
+/**
+ * sys_rename — POSIX rename(2), FreeBSD ABI syscall 128.
+ *
+ * Same-FS rename only.  Both paths must live under the same mount;
+ * cross-mount renames return -EXDEV so userland (mv) falls back to
+ * the copy + unlink dance.  Calls into the FS-specific rename hook
+ * via the mount's fs vector — currently only FAT (vfsType 0xFA).
+ */
 int sys_rename(struct thread *td, struct sys_rename_args *args) {
+    char src_full[1024], dst_full[1024];
+    const char *src_fs, *dst_fs;
+    struct vfs_mountPoint *src_mp, *dst_mp;
+    size_t mlen;
+
+    if (args->from == NULL || args->to == NULL) {
+        td->td_retval[0] = -EFAULT;
+        return (EFAULT);
+    }
+
+    /* Resolve both paths against CWD if relative. */
+    if (args->from[0] != '/')
+        snprintf(src_full, sizeof(src_full), "%s%s", _current->oInfo.cwd, args->from);
+    else
+        strncpy(src_full, args->from, sizeof(src_full) - 1);
+    src_full[sizeof(src_full) - 1] = '\0';
+
+    if (args->to[0] != '/')
+        snprintf(dst_full, sizeof(dst_full), "%s%s", _current->oInfo.cwd, args->to);
+    else
+        strncpy(dst_full, args->to, sizeof(dst_full) - 1);
+    dst_full[sizeof(dst_full) - 1] = '\0';
+
+    src_mp = vfs_findMount(src_full);
+    dst_mp = vfs_findMount(dst_full);
+    if (src_mp == NULL || dst_mp == NULL) {
+        td->td_retval[0] = -ENOENT;
+        return (ENOENT);
+    }
+    if (src_mp != dst_mp) {
+        td->td_retval[0] = -EXDEV;
+        return (EXDEV);
+    }
+
+    /* Strip the mount prefix to hand the FS a relative path. */
+    mlen = strlen(src_mp->mountPoint);
+    src_fs = (mlen > 1) ? src_full + mlen : src_full;
+    dst_fs = (mlen > 1) ? dst_full + mlen : dst_full;
+    if (src_fs[0] == '\0') src_fs = "/";
+    if (dst_fs[0] == '\0') dst_fs = "/";
+
+    /* Only FAT supports rename today. */
+    if (src_mp->fs->vfsType != 0xFA) {
+        td->td_retval[0] = -EXDEV;
+        return (EXDEV);
+    }
+
+    {
+        struct fat_fs *fs = (struct fat_fs *)src_mp->fsInfo;
+        if (fat_dir_rename(fs, src_fs, dst_fs) != 0) {
+            td->td_retval[0] = -EIO;
+            return (EIO);
+        }
+    }
+
     td->td_retval[0] = 0;
     return (0);
 }

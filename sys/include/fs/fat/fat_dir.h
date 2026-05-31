@@ -121,6 +121,10 @@ int	fat_path_to_dir_cluster(struct fat_fs *fs, const char *path,
 /* Create directory at path.  Returns 0 on success. */
 int	fat_dir_mkdir(struct fat_fs *fs, const char *path);
 
+/* Rename a regular file from src to dst (same FS).  Returns 0 on
+ * success, -1 on failure (src missing, dst is a directory, etc.). */
+int	fat_dir_rename(struct fat_fs *fs, const char *src, const char *dst);
+
 /* Remove empty directory at path.  Returns 0 on success. */
 int	fat_dir_rmdir(struct fat_fs *fs, const char *path);
 
