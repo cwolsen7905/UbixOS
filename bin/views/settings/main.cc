@@ -39,6 +39,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <unistd.h>
+#include <sys/utsname.h>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include <views/display.hh>
@@ -92,13 +93,18 @@ extern char **environ; /* session env, forwarded to launched helpers */
 #define APPLY_H 24
 
 /* Sidebar categories (index == pane id); Settings opens on General. */
-static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network", "Display"};
+static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network", "Display", "About"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
 #define PANE_APPEARANCE 2
 #define PANE_NETWORK 3
 #define PANE_DISPLAY 4
+#define PANE_ABOUT 5
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
+
+/* System identity (uname), read once at startup for the General/About panes. */
+static struct utsname g_uts;
+static bool g_uts_ok = false;
 
 /* Display pane: a 2-column grid of enumerated resolutions. */
 #define DISP_CW 125
@@ -708,6 +714,59 @@ static bool display_click(int x, int y)
 	return false;
 }
 
+/* --------------------------- General / About -------------------------- */
+
+static const char *session_user()
+{
+	const char *u = getenv("USER");
+	return (u != NULL && u[0] != '\0') ? u : "(none)";
+}
+
+static void draw_general(ogSurface &surf, ogBitFont &font)
+{
+	char line[96];
+
+	set_color(font, 0x00FFFFFF, BG);
+	font.PutString(surf, CONTENT_X, CONTENT_TOP + 30, g_uts_ok ? g_uts.version : "UbixOS");
+
+	set_color(font, 0x00A0B0C0, BG);
+	snprintf(line, sizeof(line), "Logged in as %s", session_user());
+	font.PutString(surf, CONTENT_X, CONTENT_TOP + 56, line);
+	if (g_uts_ok)
+	{
+		snprintf(line, sizeof(line), "Architecture: %s", g_uts.machine);
+		font.PutString(surf, CONTENT_X, CONTENT_TOP + 76, line);
+	}
+	font.PutString(surf, CONTENT_X, CONTENT_TOP + 104, "Choose a category on the left to configure");
+	font.PutString(surf, CONTENT_X, CONTENT_TOP + 120, "your desktop, network and display.");
+}
+
+static void draw_about(ogSurface &surf, ogBitFont &font)
+{
+	int y = CONTENT_TOP + 30;
+	auto row = [&](const char *k, const char *v)
+	{
+		set_color(font, 0x00A0B0C0, BG);
+		font.PutString(surf, CONTENT_X, y, k);
+		set_color(font, 0x00FFFFFF, BG);
+		font.PutString(surf, CONTENT_X + 120, y, v);
+		y += 20;
+	};
+
+	if (g_uts_ok)
+	{
+		row("Operating System", g_uts.version);
+		row("Release", g_uts.release);
+		row("Kernel", g_uts.sysname);
+		row("Architecture", g_uts.machine);
+		row("Host name", g_uts.nodename);
+	}
+	row("Logged in as", session_user());
+
+	set_color(font, 0x0080909C, BG);
+	font.PutString(surf, CONTENT_X, y + 14, "(C) 2002-2026 The UbixOS Project");
+}
+
 static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, g_win_h - 1, BG);
@@ -731,6 +790,18 @@ static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
 	if (pane == PANE_DISPLAY)
 	{
 		draw_display(surf, font);
+		return;
+	}
+
+	if (pane == PANE_GENERAL)
+	{
+		draw_general(surf, font);
+		return;
+	}
+
+	if (pane == PANE_ABOUT)
+	{
+		draw_about(surf, font);
 		return;
 	}
 
@@ -941,6 +1012,7 @@ int main(int argc, char **argv)
 	load_desktop();
 	load_network();
 	load_display();
+	g_uts_ok = (uname(&g_uts) == 0);
 
 	/* Fork the launcher helper now, BEFORE the window's shared memory exists,
 	 * so a later fork() (to run netcfg) can't COW-break the shared region. */
