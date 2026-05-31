@@ -28,6 +28,7 @@
 
 #pragma once
 
+#include <vector>
 #include "framebuffer.hh"
 #include "window_registry.hh"
 
@@ -55,8 +56,14 @@ class Compositor {
 	bool       cur_drawn_;
 	DamageRect damage_;
 
+	/* Optional desktop wallpaper, decoded to 32bpp (empty = solid fill). */
+	std::vector<uint32_t> wp_;
+	int                   wp_w_ = 0;
+	int                   wp_h_ = 0;
+
 	void desktop_fill_rect(int x, int y, int w, int h);
 	void draw_desktop();
+	void load_wallpaper(const char *path);
 	bool rect_covered(int rx, int ry, int rw, int rh);
 	void reblit_rect(int rx, int ry, int rw, int rh);
 	void cursor_save(int x, int y);
@@ -68,6 +75,9 @@ public:
 
 	int  init();
 	void startup();
+
+	/* Re-read /views/desktop/wallpaper from the registry and reload it. */
+	void set_wallpaper_from_registry();
 
 	/* Deferred rendering: accumulate damage, render once per tick. */
 	void invalidate(int x, int y, int w, int h);

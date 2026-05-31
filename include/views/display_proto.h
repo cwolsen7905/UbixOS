@@ -44,12 +44,13 @@
  */
 
 /* Client → display */
-#define DISPLAY_CLAIM 1     /* request a window region */
-#define DISPLAY_FLIP 2      /* buffer updated, please composite */
-#define DISPLAY_RELEASE 3   /* window closing */
-#define DISPLAY_QUERY 8     /* request screen geometry */
-#define DISPLAY_RAISE 11    /* ask compositor to raise/focus a window */
-#define DISPLAY_SETTITLE 13 /* update an existing window's title bar text */
+#define DISPLAY_CLAIM 1            /* request a window region */
+#define DISPLAY_FLIP 2             /* buffer updated, please composite */
+#define DISPLAY_RELEASE 3          /* window closing */
+#define DISPLAY_QUERY 8            /* request screen geometry */
+#define DISPLAY_RAISE 11           /* ask compositor to raise/focus a window */
+#define DISPLAY_SETTITLE 13        /* update an existing window's title bar text */
+#define DISPLAY_REFRESH_DESKTOP 14 /* re-read desktop settings and repaint desktop */
 
 /* display → client */
 #define DISPLAY_ACK 4     /* region granted; carries window_id + shm token */

@@ -270,6 +270,12 @@ void WindowManager::handle_settitle(struct display_settitle *st)
 	comp_.invalidate_all();
 }
 
+void WindowManager::handle_refresh_desktop()
+{
+	comp_.set_wallpaper_from_registry();
+	comp_.invalidate_all();
+}
+
 void WindowManager::flush()
 {
 	comp_.flush();
@@ -299,6 +305,12 @@ void WindowManager::dispatch(uint32_t id, void *data)
 	    {DISPLAY_RELEASE, [](WindowManager &wm, void *d) { wm.handle_release((struct display_release *)d); }},
 	    {DISPLAY_RAISE, [](WindowManager &wm, void *d) { wm.handle_raise((struct display_raise *)d); }},
 	    {DISPLAY_SETTITLE, [](WindowManager &wm, void *d) { wm.handle_settitle((struct display_settitle *)d); }},
+	    {DISPLAY_REFRESH_DESKTOP,
+	     [](WindowManager &wm, void *d)
+	     {
+		     (void)d;
+		     wm.handle_refresh_desktop();
+	     }},
 	};
 	for (const auto &e : table)
 		if (e.id == id)
