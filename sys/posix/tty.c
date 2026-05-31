@@ -57,6 +57,46 @@ static inline void irq_restore(u_int32_t flags)
 	asm volatile("pushl %0; popfl" : : "r"(flags) : "memory");
 }
 
+/*
+ * Load FreeBSD-sane termios defaults and an 80x25 window onto a terminal.
+ * Shared by tty_init() (first-time setup) and pty_alloc() (so a reused pty
+ * slot returns to canonical mode even if the previous owner set raw mode).
+ */
+static void tty_init_termios(tty_term *t)
+{
+	t->t_termios.c_iflag = 0x2B02;
+	t->t_termios.c_oflag = 0x3;
+	t->t_termios.c_cflag = 0x4B00;
+	t->t_termios.c_lflag = IEXTEN | ICANON | ISIG | ECHOCTL | ECHO | ECHOE | ECHOK | ECHOKE;
+	t->t_termios.c_cc[0] = 4;    /* VEOF */
+	t->t_termios.c_cc[1] = 255;  /* VEOL */
+	t->t_termios.c_cc[2] = 255;  /* VEOL2 */
+	t->t_termios.c_cc[3] = 127;  /* VERASE */
+	t->t_termios.c_cc[4] = 23;   /* VWERASE */
+	t->t_termios.c_cc[5] = 21;   /* VKILL */
+	t->t_termios.c_cc[6] = 18;   /* VREPRINT */
+	t->t_termios.c_cc[7] = 8;    /* spare */
+	t->t_termios.c_cc[8] = 3;    /* VINTR */
+	t->t_termios.c_cc[9] = 28;   /* VQUIT */
+	t->t_termios.c_cc[10] = 26;  /* VSUSP */
+	t->t_termios.c_cc[11] = 25;  /* VDSUSP */
+	t->t_termios.c_cc[12] = 17;  /* VSTART */
+	t->t_termios.c_cc[13] = 19;  /* VSTOP */
+	t->t_termios.c_cc[14] = 22;  /* VLNEXT */
+	t->t_termios.c_cc[15] = 15;  /* VDISCARD */
+	t->t_termios.c_cc[16] = 1;   /* VMIN */
+	t->t_termios.c_cc[17] = 0;   /* VTIME */
+	t->t_termios.c_cc[18] = 20;  /* VSTATUS */
+	t->t_termios.c_cc[19] = 255; /* spare */
+	t->t_termios.c_ispeed = 9600;
+	t->t_termios.c_ospeed = 9600;
+
+	t->t_winsize.ws_row = 25;
+	t->t_winsize.ws_col = 80;
+	t->t_winsize.ws_xpixel = 0;
+	t->t_winsize.ws_ypixel = 0;
+}
+
 int tty_init()
 {
 	int i = 0x0;
@@ -84,39 +124,11 @@ int tty_init()
 		terms[i].t_type = TTY_TYPE_VGA;
 		terms[i].t_eof = 0;
 		terms[i].t_stopped = 0;
+		/* Fixed physical terminals are always live; pty pool starts free. */
+		terms[i].t_inuse = (i < TTY_PTY_BASE) ? 1 : 0;
 
-		/* Full termios — FreeBSD sane defaults */
-		terms[i].t_termios.c_iflag = 0x2B02;
-		terms[i].t_termios.c_oflag = 0x3;
-		terms[i].t_termios.c_cflag = 0x4B00;
-		terms[i].t_termios.c_lflag = IEXTEN | ICANON | ISIG | ECHOCTL | ECHO | ECHOE | ECHOK | ECHOKE;
-		terms[i].t_termios.c_cc[0] = 4;    /* VEOF */
-		terms[i].t_termios.c_cc[1] = 255;  /* VEOL */
-		terms[i].t_termios.c_cc[2] = 255;  /* VEOL2 */
-		terms[i].t_termios.c_cc[3] = 127;  /* VERASE */
-		terms[i].t_termios.c_cc[4] = 23;   /* VWERASE */
-		terms[i].t_termios.c_cc[5] = 21;   /* VKILL */
-		terms[i].t_termios.c_cc[6] = 18;   /* VREPRINT */
-		terms[i].t_termios.c_cc[7] = 8;    /* spare */
-		terms[i].t_termios.c_cc[8] = 3;    /* VINTR */
-		terms[i].t_termios.c_cc[9] = 28;   /* VQUIT */
-		terms[i].t_termios.c_cc[10] = 26;  /* VSUSP */
-		terms[i].t_termios.c_cc[11] = 25;  /* VDSUSP */
-		terms[i].t_termios.c_cc[12] = 17;  /* VSTART */
-		terms[i].t_termios.c_cc[13] = 19;  /* VSTOP */
-		terms[i].t_termios.c_cc[14] = 22;  /* VLNEXT */
-		terms[i].t_termios.c_cc[15] = 15;  /* VDISCARD */
-		terms[i].t_termios.c_cc[16] = 1;   /* VMIN */
-		terms[i].t_termios.c_cc[17] = 0;   /* VTIME */
-		terms[i].t_termios.c_cc[18] = 20;  /* VSTATUS */
-		terms[i].t_termios.c_cc[19] = 255; /* spare */
-		terms[i].t_termios.c_ispeed = 9600;
-		terms[i].t_termios.c_ospeed = 9600;
-
-		terms[i].t_winsize.ws_row = 25;
-		terms[i].t_winsize.ws_col = 80;
-		terms[i].t_winsize.ws_xpixel = 0;
-		terms[i].t_winsize.ws_ypixel = 0;
+		/* Full termios + 80x25 window — FreeBSD sane defaults */
+		tty_init_termios(&terms[i]);
 		terms[i].t_pgrp = 0;
 
 		/* ANSI state machine */
@@ -225,248 +237,260 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 
 	switch (cmd)
 	{
-	case 'A': /* cursor up */
-		if (p0 == 0)
-			p0 = 1;
-		row = (row >= p0) ? row - p0 : 0;
-		bufferOffset = (row * 80u + col) * 2u;
-		break;
-	case 'B': /* cursor down */
-		if (p0 == 0)
-			p0 = 1;
-		row += p0;
-		if (row >= 25u)
-			row = 24u;
-		bufferOffset = (row * 80u + col) * 2u;
-		break;
-	case 'C': /* cursor right */
-		if (p0 == 0)
-			p0 = 1;
-		col += p0;
-		if (col >= 80u)
-			col = 79u;
-		bufferOffset = (row * 80u + col) * 2u;
-		break;
-	case 'D': /* cursor left */
-		if (p0 == 0)
-			p0 = 1;
-		col = (col >= p0) ? col - p0 : 0;
-		bufferOffset = (row * 80u + col) * 2u;
-		break;
-	case 'G': /* cursor horizontal absolute (1-based col) */
-		col = (p0 > 0u ? p0 - 1u : 0u);
-		if (col >= 80u)
-			col = 79u;
-		bufferOffset = (row * 80u + col) * 2u;
-		break;
-	case 'H':
-	case 'f': /* cursor position: row;col (1-based) */
-		row = (p0 > 0u ? p0 - 1u : 0u);
-		col = (p1 > 0u ? p1 - 1u : 0u);
-		if (row >= 25u)
-			row = 24u;
-		if (col >= 80u)
-			col = 79u;
-		bufferOffset = (row * 80u + col) * 2u;
-		break;
-	case 'J': /* erase display */
-		switch (p0)
-		{
-		case 0: /* cursor to end */
-			for (i = bufferOffset; i < 160u * 25u; i += 2u)
+		case 'A': /* cursor up */
+			if (p0 == 0)
+				p0 = 1;
+			row = (row >= p0) ? row - p0 : 0;
+			bufferOffset = (row * 80u + col) * 2u;
+			break;
+		case 'B': /* cursor down */
+			if (p0 == 0)
+				p0 = 1;
+			row += p0;
+			if (row >= 25u)
+				row = 24u;
+			bufferOffset = (row * 80u + col) * 2u;
+			break;
+		case 'C': /* cursor right */
+			if (p0 == 0)
+				p0 = 1;
+			col += p0;
+			if (col >= 80u)
+				col = 79u;
+			bufferOffset = (row * 80u + col) * 2u;
+			break;
+		case 'D': /* cursor left */
+			if (p0 == 0)
+				p0 = 1;
+			col = (col >= p0) ? col - p0 : 0;
+			bufferOffset = (row * 80u + col) * 2u;
+			break;
+		case 'G': /* cursor horizontal absolute (1-based col) */
+			col = (p0 > 0u ? p0 - 1u : 0u);
+			if (col >= 80u)
+				col = 79u;
+			bufferOffset = (row * 80u + col) * 2u;
+			break;
+		case 'H':
+		case 'f': /* cursor position: row;col (1-based) */
+			row = (p0 > 0u ? p0 - 1u : 0u);
+			col = (p1 > 0u ? p1 - 1u : 0u);
+			if (row >= 25u)
+				row = 24u;
+			if (col >= 80u)
+				col = 79u;
+			bufferOffset = (row * 80u + col) * 2u;
+			break;
+		case 'J': /* erase display */
+			switch (p0)
 			{
-				term->tty_pointer[i] = ' ';
-				term->tty_pointer[i + 1] = term->tty_colour;
+				case 0: /* cursor to end */
+					for (i = bufferOffset; i < 160u * 25u; i += 2u)
+					{
+						term->tty_pointer[i] = ' ';
+						term->tty_pointer[i + 1] = term->tty_colour;
+					}
+					break;
+				case 1: /* start to cursor */
+					for (i = 0; i <= bufferOffset && i + 1 < 160u * 25u; i += 2u)
+					{
+						term->tty_pointer[i] = ' ';
+						term->tty_pointer[i + 1] = term->tty_colour;
+					}
+					break;
+				case 2:
+				case 3: /* whole screen */
+					for (i = 0; i < 160u * 25u; i += 2u)
+					{
+						term->tty_pointer[i] = ' ';
+						term->tty_pointer[i + 1] = term->tty_colour;
+					}
+					bufferOffset = 0;
+					break;
 			}
 			break;
-		case 1: /* start to cursor */
-			for (i = 0; i <= bufferOffset && i + 1 < 160u * 25u; i += 2u)
+		case 'K': /* erase line */
+			switch (p0)
 			{
-				term->tty_pointer[i] = ' ';
-				term->tty_pointer[i + 1] = term->tty_colour;
+				case 0: /* cursor to end of line */
+					for (i = col; i < 80u; i++)
+					{
+						term->tty_pointer[row * 160u + i * 2u] = ' ';
+						term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+					}
+					break;
+				case 1: /* start of line to cursor */
+					for (i = 0; i <= col; i++)
+					{
+						term->tty_pointer[row * 160u + i * 2u] = ' ';
+						term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+					}
+					break;
+				case 2: /* whole line */
+					for (i = 0; i < 80u; i++)
+					{
+						term->tty_pointer[row * 160u + i * 2u] = ' ';
+						term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+					}
+					break;
 			}
 			break;
-		case 2:
-		case 3: /* whole screen */
-			for (i = 0; i < 160u * 25u; i += 2u)
+		case 'L':
+		{ /* insert lines — shift rows at cursor and below down by p0 */
+			unsigned int j;
+			if (p0 == 0)
+				p0 = 1;
+			if (p0 > 25u - row)
+				p0 = 25u - row;
+			for (i = 25u; i > row + p0; i--)
 			{
-				term->tty_pointer[i] = ' ';
-				term->tty_pointer[i + 1] = term->tty_colour;
+				unsigned int dst = (i - 1) * 160u;
+				unsigned int src = (i - 1 - p0) * 160u;
+				for (j = 0; j < 160u; j++)
+					term->tty_pointer[dst + j] = term->tty_pointer[src + j];
 			}
-			bufferOffset = 0;
+			for (i = row; i < row + p0; i++)
+			{
+				for (j = 0; j < 80u; j++)
+				{
+					term->tty_pointer[i * 160u + j * 2u] = ' ';
+					term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
+				}
+			}
 			break;
 		}
-		break;
-	case 'K': /* erase line */
-		switch (p0)
-		{
-		case 0: /* cursor to end of line */
-			for (i = col; i < 80u; i++)
+		case 'M':
+		{ /* delete lines — shift rows below cursor up by p0 */
+			unsigned int j;
+			if (p0 == 0)
+				p0 = 1;
+			if (p0 > 25u - row)
+				p0 = 25u - row;
+			for (i = row; i + p0 < 25u; i++)
+			{
+				unsigned int dst = i * 160u;
+				unsigned int src = (i + p0) * 160u;
+				for (j = 0; j < 160u; j++)
+					term->tty_pointer[dst + j] = term->tty_pointer[src + j];
+			}
+			for (i = 25u - p0; i < 25u; i++)
+			{
+				for (j = 0; j < 80u; j++)
+				{
+					term->tty_pointer[i * 160u + j * 2u] = ' ';
+					term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
+				}
+			}
+			break;
+		}
+		case '@': /* insert characters — shift chars at cursor right by p0 */
+			if (p0 == 0)
+				p0 = 1;
+			if (p0 > 80u - col)
+				p0 = 80u - col;
+			for (i = 80u; i > col + p0; i--)
+			{
+				term->tty_pointer[row * 160u + (i - 1) * 2u] =
+				    term->tty_pointer[row * 160u + (i - 1 - p0) * 2u];
+				term->tty_pointer[row * 160u + (i - 1) * 2u + 1] =
+				    term->tty_pointer[row * 160u + (i - 1 - p0) * 2u + 1];
+			}
+			for (i = col; i < col + p0; i++)
 			{
 				term->tty_pointer[row * 160u + i * 2u] = ' ';
 				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
 			}
 			break;
-		case 1: /* start of line to cursor */
-			for (i = 0; i <= col; i++)
+		case 'P': /* delete characters (shift left) */
+			if (p0 == 0)
+				p0 = 1;
+			for (i = col; i + p0 < 80u; i++)
+			{
+				term->tty_pointer[row * 160u + i * 2u] = term->tty_pointer[row * 160u + (i + p0) * 2u];
+				term->tty_pointer[row * 160u + i * 2u + 1] =
+				    term->tty_pointer[row * 160u + (i + p0) * 2u + 1];
+			}
+			for (i = 80u - p0; i < 80u; i++)
 			{
 				term->tty_pointer[row * 160u + i * 2u] = ' ';
 				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
 			}
 			break;
-		case 2: /* whole line */
-			for (i = 0; i < 80u; i++)
+		case 'm':
+		{ /* SGR — select graphic rendition */
+			unsigned int k;
+			unsigned int nparams = (term->t_esc_nparams > 0) ? term->t_esc_nparams : 1;
+			for (k = 0; k < nparams; k++)
 			{
-				term->tty_pointer[row * 160u + i * 2u] = ' ';
-				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+				unsigned int v = term->t_esc_params[k];
+				switch (v)
+				{
+					case 0:
+						term->tty_colour = term->t_default_colour;
+						break;
+					case 1: /* bold → bright fg */
+						term->tty_colour |= 0x08u;
+						break;
+					case 2:
+					case 22: /* dim / normal */
+						term->tty_colour &= (u_int8_t)~0x08u;
+						break;
+					case 5:
+					case 6: /* blink → bright bg */
+						term->tty_colour |= 0x80u;
+						break;
+					case 7:
+					{ /* reverse video */
+						u_int8_t fg = term->tty_colour & 0x07u;
+						u_int8_t bg = (term->tty_colour >> 4) & 0x07u;
+						term->tty_colour =
+						    (u_int8_t)((fg << 4) | bg | (term->tty_colour & 0x88u));
+						break;
+					}
+					case 27:
+						break; /* reverse off — no tracking */
+					case 39:       /* default fg */
+						term->tty_colour = (u_int8_t)((term->tty_colour & 0xF0u) |
+						                              (term->t_default_colour & 0x0Fu));
+						break;
+					case 49: /* default bg */
+						term->tty_colour = (u_int8_t)((term->tty_colour & 0x0Fu) |
+						                              (term->t_default_colour & 0xF0u));
+						break;
+					default:
+						if (v >= 30u && v <= 37u)
+							term->tty_colour = (u_int8_t)((term->tty_colour & 0xF8u) |
+							                              ansi_to_vga[v - 30u]);
+						else if (v >= 90u && v <= 97u)
+							term->tty_colour = (u_int8_t)((term->tty_colour & 0xF0u) |
+							                              (ansi_to_vga[v - 90u] | 8u));
+						else if (v >= 40u && v <= 47u)
+							term->tty_colour =
+							    (u_int8_t)((term->tty_colour & 0x8Fu) |
+							               (u_int8_t)(ansi_to_vga[v - 40u] << 4u));
+						else if (v >= 100u && v <= 107u)
+							term->tty_colour =
+							    (u_int8_t)((term->tty_colour & 0x0Fu) |
+							               (u_int8_t)((ansi_to_vga[v - 100u] | 8u) << 4u));
+						break;
+				}
 			}
 			break;
 		}
-		break;
-	case 'L':
-	{ /* insert lines — shift rows at cursor and below down by p0 */
-		unsigned int j;
-		if (p0 == 0)
-			p0 = 1;
-		if (p0 > 25u - row)
-			p0 = 25u - row;
-		for (i = 25u; i > row + p0; i--)
-		{
-			unsigned int dst = (i - 1) * 160u;
-			unsigned int src = (i - 1 - p0) * 160u;
-			for (j = 0; j < 160u; j++)
-				term->tty_pointer[dst + j] = term->tty_pointer[src + j];
-		}
-		for (i = row; i < row + p0; i++)
-		{
-			for (j = 0; j < 80u; j++)
-			{
-				term->tty_pointer[i * 160u + j * 2u] = ' ';
-				term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
-			}
-		}
-		break;
-	}
-	case 'M':
-	{ /* delete lines — shift rows below cursor up by p0 */
-		unsigned int j;
-		if (p0 == 0)
-			p0 = 1;
-		if (p0 > 25u - row)
-			p0 = 25u - row;
-		for (i = row; i + p0 < 25u; i++)
-		{
-			unsigned int dst = i * 160u;
-			unsigned int src = (i + p0) * 160u;
-			for (j = 0; j < 160u; j++)
-				term->tty_pointer[dst + j] = term->tty_pointer[src + j];
-		}
-		for (i = 25u - p0; i < 25u; i++)
-		{
-			for (j = 0; j < 80u; j++)
-			{
-				term->tty_pointer[i * 160u + j * 2u] = ' ';
-				term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
-			}
-		}
-		break;
-	}
-	case '@': /* insert characters — shift chars at cursor right by p0 */
-		if (p0 == 0)
-			p0 = 1;
-		if (p0 > 80u - col)
-			p0 = 80u - col;
-		for (i = 80u; i > col + p0; i--)
-		{
-			term->tty_pointer[row * 160u + (i - 1) * 2u] = term->tty_pointer[row * 160u + (i - 1 - p0) * 2u];
-			term->tty_pointer[row * 160u + (i - 1) * 2u + 1] = term->tty_pointer[row * 160u + (i - 1 - p0) * 2u + 1];
-		}
-		for (i = col; i < col + p0; i++)
-		{
-			term->tty_pointer[row * 160u + i * 2u] = ' ';
-			term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
-		}
-		break;
-	case 'P': /* delete characters (shift left) */
-		if (p0 == 0)
-			p0 = 1;
-		for (i = col; i + p0 < 80u; i++)
-		{
-			term->tty_pointer[row * 160u + i * 2u] = term->tty_pointer[row * 160u + (i + p0) * 2u];
-			term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_pointer[row * 160u + (i + p0) * 2u + 1];
-		}
-		for (i = 80u - p0; i < 80u; i++)
-		{
-			term->tty_pointer[row * 160u + i * 2u] = ' ';
-			term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
-		}
-		break;
-	case 'm':
-	{ /* SGR — select graphic rendition */
-		unsigned int k;
-		unsigned int nparams = (term->t_esc_nparams > 0) ? term->t_esc_nparams : 1;
-		for (k = 0; k < nparams; k++)
-		{
-			unsigned int v = term->t_esc_params[k];
-			switch (v)
-			{
-			case 0:
-				term->tty_colour = term->t_default_colour;
-				break;
-			case 1: /* bold → bright fg */
-				term->tty_colour |= 0x08u;
-				break;
-			case 2:
-			case 22: /* dim / normal */
-				term->tty_colour &= (u_int8_t)~0x08u;
-				break;
-			case 5:
-			case 6: /* blink → bright bg */
-				term->tty_colour |= 0x80u;
-				break;
-			case 7:
-			{ /* reverse video */
-				u_int8_t fg = term->tty_colour & 0x07u;
-				u_int8_t bg = (term->tty_colour >> 4) & 0x07u;
-				term->tty_colour = (u_int8_t)((fg << 4) | bg | (term->tty_colour & 0x88u));
-				break;
-			}
-			case 27:
-				break; /* reverse off — no tracking */
-			case 39:       /* default fg */
-				term->tty_colour = (u_int8_t)((term->tty_colour & 0xF0u) | (term->t_default_colour & 0x0Fu));
-				break;
-			case 49: /* default bg */
-				term->tty_colour = (u_int8_t)((term->tty_colour & 0x0Fu) | (term->t_default_colour & 0xF0u));
-				break;
-			default:
-				if (v >= 30u && v <= 37u)
-					term->tty_colour = (u_int8_t)((term->tty_colour & 0xF8u) | ansi_to_vga[v - 30u]);
-				else if (v >= 90u && v <= 97u)
-					term->tty_colour = (u_int8_t)((term->tty_colour & 0xF0u) | (ansi_to_vga[v - 90u] | 8u));
-				else if (v >= 40u && v <= 47u)
-					term->tty_colour = (u_int8_t)((term->tty_colour & 0x8Fu) | (u_int8_t)(ansi_to_vga[v - 40u] << 4u));
-				else if (v >= 100u && v <= 107u)
-					term->tty_colour = (u_int8_t)((term->tty_colour & 0x0Fu) | (u_int8_t)((ansi_to_vga[v - 100u] | 8u) << 4u));
-				break;
-			}
-		}
-		break;
-	}
-	case 's': /* save cursor */
-		term->t_saved_x = term->tty_x;
-		term->t_saved_y = term->tty_y;
-		term->t_saved_colour = term->tty_colour;
-		break;
-	case 'u': /* restore cursor */
-		term->tty_x = term->t_saved_x;
-		term->tty_y = term->t_saved_y;
-		term->tty_colour = term->t_saved_colour;
-		bufferOffset = ((unsigned int)term->tty_y * 256u + term->tty_x) * 2u;
-		break;
-	/* Intentionally ignored: h/l (mode set/reset), r (scroll region), n (DSR) */
-	default:
-		break;
+		case 's': /* save cursor */
+			term->t_saved_x = term->tty_x;
+			term->t_saved_y = term->tty_y;
+			term->t_saved_colour = term->tty_colour;
+			break;
+		case 'u': /* restore cursor */
+			term->tty_x = term->t_saved_x;
+			term->tty_y = term->t_saved_y;
+			term->tty_colour = term->t_saved_colour;
+			bufferOffset = ((unsigned int)term->tty_y * 256u + term->tty_x) * 2u;
+			break;
+		/* Intentionally ignored: h/l (mode set/reset), r (scroll region), n (DSR) */
+		default:
+			break;
 	}
 	return (bufferOffset);
 }
@@ -495,40 +519,40 @@ int tty_print(char *string, tty_term *term)
 			/* Received ESC — next char determines sequence type */
 			switch (character)
 			{
-			case '[':
-				term->t_esc_state = 2;
-				term->t_esc_priv = 0;
-				term->t_esc_nparams = 0;
-				memset(term->t_esc_params, 0, sizeof(term->t_esc_params));
-				break;
-			case 'M':
-			{ /* reverse index — scroll down if at top */
-				unsigned int row = (bufferOffset / 2u) / 80u;
-				if (row > 0u)
-				{
-					bufferOffset -= 160u;
-				}
-				else
-				{
-					unsigned int j;
-					for (j = 160u * 24u; j >= 160u; j--)
-						term->tty_pointer[j] = term->tty_pointer[j - 160u];
-					for (j = 0; j < 80u; j++)
+				case '[':
+					term->t_esc_state = 2;
+					term->t_esc_priv = 0;
+					term->t_esc_nparams = 0;
+					memset(term->t_esc_params, 0, sizeof(term->t_esc_params));
+					break;
+				case 'M':
+				{ /* reverse index — scroll down if at top */
+					unsigned int row = (bufferOffset / 2u) / 80u;
+					if (row > 0u)
 					{
-						term->tty_pointer[j * 2u] = ' ';
-						term->tty_pointer[j * 2u + 1] = term->tty_colour;
+						bufferOffset -= 160u;
 					}
+					else
+					{
+						unsigned int j;
+						for (j = 160u * 24u; j >= 160u; j--)
+							term->tty_pointer[j] = term->tty_pointer[j - 160u];
+						for (j = 0; j < 80u; j++)
+						{
+							term->tty_pointer[j * 2u] = ' ';
+							term->tty_pointer[j * 2u + 1] = term->tty_colour;
+						}
+					}
+					term->t_esc_state = 0;
+					break;
 				}
-				term->t_esc_state = 0;
-				break;
-			}
-			case '=':
-			case '>': /* application/numeric keypad — ignore */
-				term->t_esc_state = 0;
-				break;
-			default:
-				term->t_esc_state = 0;
-				break;
+				case '=':
+				case '>': /* application/numeric keypad — ignore */
+					term->t_esc_state = 0;
+					break;
+				default:
+					term->t_esc_state = 0;
+					break;
 			}
 			continue;
 		}
@@ -545,7 +569,9 @@ int tty_print(char *string, tty_term *term)
 			{
 				if (term->t_esc_nparams == 0)
 					term->t_esc_nparams = 1;
-				term->t_esc_params[term->t_esc_nparams - 1] = (u_int16_t)(term->t_esc_params[term->t_esc_nparams - 1] * 10u + (unsigned int)(character - '0'));
+				term->t_esc_params[term->t_esc_nparams - 1] =
+				    (u_int16_t)(term->t_esc_params[term->t_esc_nparams - 1] * 10u +
+				                (unsigned int)(character - '0'));
 				continue;
 			}
 			if (character == ';')
@@ -574,44 +600,44 @@ int tty_print(char *string, tty_term *term)
 		/* ── Normal character output ── */
 		switch (character)
 		{
-		case 0x1B: /* ESC */
-			term->t_esc_state = 1;
-			break;
-		case '\r': /* carriage return — column 0, same row */
-			bufferOffset = (bufferOffset / 160u) * 160u;
-			break;
-		case '\n':
-			/* Phase 9: OPOST+ONLCR → col 0 of next row; OPOST only → same col, next row */
-			if (term->t_termios.c_oflag & OPOST)
-			{
-				if (term->t_termios.c_oflag & ONLCR)
-					bufferOffset = (bufferOffset / 160u) * 160u + 160u; /* CR+LF */
-				else
-					bufferOffset += 160u; /* LF only — stay in same column */
+			case 0x1B: /* ESC */
+				term->t_esc_state = 1;
+				break;
+			case '\r': /* carriage return — column 0, same row */
+				bufferOffset = (bufferOffset / 160u) * 160u;
+				break;
+			case '\n':
+				/* Phase 9: OPOST+ONLCR → col 0 of next row; OPOST only → same col, next row */
+				if (term->t_termios.c_oflag & OPOST)
+				{
+					if (term->t_termios.c_oflag & ONLCR)
+						bufferOffset = (bufferOffset / 160u) * 160u + 160u; /* CR+LF */
+					else
+						bufferOffset += 160u; /* LF only — stay in same column */
+				}
+				break;
+			case '\b': /* move cursor left without erasing */
+				if (bufferOffset >= 2u)
+					bufferOffset -= 2u;
+				break;
+			case '\t':
+			{ /* advance to next 8-column tab stop */
+				unsigned int col = (bufferOffset / 2u) % 80u;
+				unsigned int spaces = 8u - (col % 8u);
+				while (spaces-- > 0 && (bufferOffset / 2u) % 80u < 79u)
+				{
+					term->tty_pointer[bufferOffset++] = ' ';
+					term->tty_pointer[bufferOffset++] = term->tty_colour;
+				}
+				break;
 			}
-			break;
-		case '\b': /* move cursor left without erasing */
-			if (bufferOffset >= 2u)
-				bufferOffset -= 2u;
-			break;
-		case '\t':
-		{ /* advance to next 8-column tab stop */
-			unsigned int col = (bufferOffset / 2u) % 80u;
-			unsigned int spaces = 8u - (col % 8u);
-			while (spaces-- > 0 && (bufferOffset / 2u) % 80u < 79u)
-			{
-				term->tty_pointer[bufferOffset++] = ' ';
-				term->tty_pointer[bufferOffset++] = term->tty_colour;
-			}
-			break;
-		}
-		default:
-			if (character >= 0x20u)
-			{
-				term->tty_pointer[bufferOffset++] = (char)character;
-				term->tty_pointer[bufferOffset++] = term->tty_colour;
-			}
-			break;
+			default:
+				if (character >= 0x20u)
+				{
+					term->tty_pointer[bufferOffset++] = (char)character;
+					term->tty_pointer[bufferOffset++] = term->tty_colour;
+				}
+				break;
 		} /* switch */
 
 		/* Scroll if past last line */
@@ -729,6 +755,12 @@ void tty_inject(tty_term *tty, char ch)
 						rs232_putc(' ');
 						rs232_putc('\b');
 					}
+					else if (tty->t_type == TTY_TYPE_PTY)
+					{
+						/* Erase into the pty cell grid; backSpace()
+						 * would poke the VGA hardware cursor. */
+						tty_print("\b \b", tty);
+					}
 					else
 					{
 						backSpace();
@@ -774,6 +806,12 @@ void tty_inject(tty_term *tty, char ch)
 						rs232_putc('\b');
 						rs232_putc(' ');
 						rs232_putc('\b');
+					}
+					else if (tty->t_type == TTY_TYPE_PTY)
+					{
+						/* Erase into the pty cell grid; backSpace()
+						 * would poke the VGA hardware cursor. */
+						tty_print("\b \b", tty);
 					}
 					else
 					{
@@ -851,4 +889,114 @@ void tty_inject(tty_term *tty, char ch)
 			}
 		}
 	}
+}
+
+/*
+ * pty_alloc — hand out a free pseudo-terminal slot from the pty pool.
+ *
+ * The slot renders into its own tty_buffer (never the VGA framebuffer) and is
+ * reset to a blank 80x25 grid in canonical mode, so a slot reused after tcsh
+ * left it in raw mode comes back clean.
+ *
+ * @return slot index, or -1 if the pool is exhausted.
+ */
+int pty_alloc(void)
+{
+	int slot;
+
+	for (slot = TTY_PTY_BASE; slot < TTY_MAX_TERMS; slot++)
+	{
+		tty_term *t = &terms[slot];
+		int i;
+
+		if (t->t_inuse)
+			continue;
+
+		t->t_inuse = 1;
+		t->t_type = TTY_TYPE_PTY;
+		t->tty_pointer = t->tty_buffer;
+		t->tty_x = 0;
+		t->tty_y = 0;
+		t->tty_colour = 0x07;
+		t->stdinSize = 0;
+		t->t_linelen = 0;
+		t->t_echo = 1;
+		t->t_raw = 0;
+		t->t_eof = 0;
+		t->t_stopped = 0;
+		t->t_exclusive = 0;
+		t->t_pgrp = 0;
+		t->owner = 0;
+		t->t_esc_state = 0;
+		t->t_esc_priv = 0;
+		t->t_esc_nparams = 0;
+		t->t_default_colour = 0x07;
+		t->t_saved_x = 0;
+		t->t_saved_y = 0;
+		t->t_saved_colour = 0x07;
+		memset(t->t_esc_params, 0, sizeof(t->t_esc_params));
+		tty_init_termios(t);
+
+		/* Blank the cell grid: space glyph + default attribute. */
+		for (i = 0; i < 80 * 25; i++)
+		{
+			t->tty_buffer[i * 2] = ' ';
+			t->tty_buffer[i * 2 + 1] = (char)0x07;
+		}
+		return (slot);
+	}
+	return (-1);
+}
+
+/*
+ * pty_free — return a pseudo-terminal slot to the pool.  Ignored for fixed
+ * physical terminals (slot < TTY_PTY_BASE).
+ */
+void pty_free(int slot)
+{
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS)
+		return;
+	terms[slot].t_inuse = 0;
+	terms[slot].t_pgrp = 0;
+	terms[slot].owner = 0;
+}
+
+/*
+ * tty_inject_user — feed a userland keystroke buffer through a pty's line
+ * discipline (the graphical terminal's keyboard → shell stdin path).
+ *
+ * @return bytes injected, or -1 for an invalid/unallocated slot.
+ */
+int tty_inject_user(int slot, const char *buf, int n)
+{
+	int i;
+
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS || !terms[slot].t_inuse)
+		return (-1);
+	if (buf == NULL || n < 0)
+		return (-1);
+	for (i = 0; i < n; i++)
+		tty_inject(&terms[slot], buf[i]);
+	return (n);
+}
+
+/*
+ * tty_snapshot — copy a pty's rendered 80x25 cell grid and cursor out to
+ * userland for the graphical terminal to draw.
+ *
+ * @param dst  destination for 80*25*2 bytes of char+attribute cells.
+ * @return 0 on success, -1 for an invalid/unallocated slot.
+ */
+int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y)
+{
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS || !terms[slot].t_inuse)
+		return (-1);
+	if (dst == NULL)
+		return (-1);
+	memcpy(dst, terms[slot].tty_buffer, 80 * 25 * 2);
+	if (x != NULL)
+		*x = terms[slot].tty_x;
+	if (y != NULL)
+		*y = terms[slot].tty_y;
+	return (0);
 }

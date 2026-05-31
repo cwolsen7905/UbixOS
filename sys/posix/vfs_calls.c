@@ -92,75 +92,92 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 	{
 		switch (fd->fd_type)
 		{
-		case FD_TYPE_DIR:
-			if (fd->data != NULL)
-			{
-				vfs_closedir((kDIR_t *)fd->data);
-				fd->data = NULL;
-			}
-			fdestroy(td, fd, args->fd);
-			td->td_retval[0] = 0;
-			break;
-		case 3:
-			p_fd = fd->data;
-			if (args->fd == p_fd->rFD)
-			{
-				if (p_fd->rfdCNT < 2 && td->o_files[args->fd] != NULL) {
-					if (fdestroy(td, fd, args->fd) != 0) {
-						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe rFD %d", args->fd);
-}
-}
-				p_fd->rfdCNT--;
-			}
-
-			if (args->fd == p_fd->wFD)
-			{
-				if (p_fd->wfdCNT < 2 && td->o_files[args->fd] != NULL) {
-					if (fdestroy(td, fd, args->fd) != 0) {
-						klog(KLOG_ERR, "sys_close: fdestroy failed for pipe wFD %d", args->fd);
-}
-}
-				p_fd->wfdCNT--;
-			}
-
-			if (p_fd->rfdCNT <= 0 && p_fd->wfdCNT <= 0)
-			{
-				struct pipeBuf *pbuf = p_fd->headPB;
-				while (pbuf != NULL)
+			case FD_TYPE_DIR:
+				if (fd->data != NULL)
 				{
-					struct pipeBuf *next = pbuf->next;
-					kfree(pbuf->buffer);
-					kfree(pbuf);
-					pbuf = next;
+					vfs_closedir((kDIR_t *)fd->data);
+					fd->data = NULL;
 				}
-				kfree(p_fd);
-			}
-
-			td->td_retval[0] = 0;
-			break;
-		case FD_TYPE_TTY:
-		case FD_TYPE_TTYV:
-			/* tty fds have no underlying fileDescriptor_t to close */
-			if (args->fd >= 3) {
 				fdestroy(td, fd, args->fd);
-}
-			td->td_retval[0] = 0;
-			break;
-		default:
-			if (args->fd < 3) {
 				td->td_retval[0] = 0;
-			} else
-			{
-				if (fd->fd != NULL && fclose(fd->fd) != 0) {
-					td->td_retval[0] = -1;
-}
+				break;
+			case 3:
+				p_fd = fd->data;
+				if (args->fd == p_fd->rFD)
+				{
+					if (p_fd->rfdCNT < 2 && td->o_files[args->fd] != NULL)
+					{
+						if (fdestroy(td, fd, args->fd) != 0)
+						{
+							klog(KLOG_ERR,
+							     "sys_close: fdestroy failed for pipe rFD %d",
+							     args->fd);
+						}
+					}
+					p_fd->rfdCNT--;
+				}
 
-				if (fdestroy(td, fd, args->fd) != 0x0) {
-					kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
-}
+				if (args->fd == p_fd->wFD)
+				{
+					if (p_fd->wfdCNT < 2 && td->o_files[args->fd] != NULL)
+					{
+						if (fdestroy(td, fd, args->fd) != 0)
+						{
+							klog(KLOG_ERR,
+							     "sys_close: fdestroy failed for pipe wFD %d",
+							     args->fd);
+						}
+					}
+					p_fd->wfdCNT--;
+				}
+
+				if (p_fd->rfdCNT <= 0 && p_fd->wfdCNT <= 0)
+				{
+					struct pipeBuf *pbuf = p_fd->headPB;
+					while (pbuf != NULL)
+					{
+						struct pipeBuf *next = pbuf->next;
+						kfree(pbuf->buffer);
+						kfree(pbuf);
+						pbuf = next;
+					}
+					kfree(p_fd);
+				}
 
 				td->td_retval[0] = 0;
-			}
+				break;
+			case FD_TYPE_TTY:
+			case FD_TYPE_TTYV:
+				/* tty fds have no underlying fileDescriptor_t to close */
+				if (args->fd >= 3)
+				{
+					fdestroy(td, fd, args->fd);
+				}
+				td->td_retval[0] = 0;
+				break;
+			default:
+				if (args->fd < 3)
+				{
+					td->td_retval[0] = 0;
+				}
+				else
+				{
+					if (fd->fd != NULL && fclose(fd->fd) != 0)
+					{
+						td->td_retval[0] = -1;
+					}
+
+					if (fdestroy(td, fd, args->fd) != 0x0)
+					{
+						kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n",
+						        __FILE__,
+						        __LINE__,
+						        fd,
+						        td->o_files[args->fd]);
+					}
+
+					td->td_retval[0] = 0;
+				}
 		}
 	}
 	return (0);
@@ -194,9 +211,10 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			return (-1);
 		}
 		int r = lwip_recv(fd->socket, kbuf, args->nbyte, 0);
-		if (r > 0) {
+		if (r > 0)
+		{
 			memcpy((void *)args->buf, kbuf, (size_t)r);
-}
+		}
 		kfree(kbuf);
 		td->td_retval[0] = r;
 		return (0);
@@ -234,7 +252,9 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			p_fd->reader_pid = 0;
 		}
 		{
-			nbytes = (args->nbyte - (p_fd->headPB->nbytes - p_fd->headPB->offset) <= 0) ? args->nbyte : (p_fd->headPB->nbytes - p_fd->headPB->offset);
+			nbytes = (args->nbyte - (p_fd->headPB->nbytes - p_fd->headPB->offset) <= 0)
+			             ? args->nbyte
+			             : (p_fd->headPB->nbytes - p_fd->headPB->offset);
 			memcpy(args->buf, p_fd->headPB->buffer + p_fd->headPB->offset, nbytes);
 			p_fd->headPB->offset += nbytes;
 
@@ -242,9 +262,10 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			{
 				rp_fd = p_fd->headPB;
 				p_fd->headPB = p_fd->headPB->next;
-				if (p_fd->headPB == NULL) {
+				if (p_fd->headPB == NULL)
+				{
 					p_fd->tailPB = NULL;
-}
+				}
 				kfree(rp_fd->buffer);
 				kfree(rp_fd);
 				p_fd->bCNT--;
@@ -263,8 +284,8 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		/* Specific virtual terminal fd: read from the bound tty_term. */
 		tty_term *t = (tty_term *)fd->data;
 		/* Phase 12: background process reading from its controlling tty */
-		if (t != NULL && t->t_pgrp != 0 &&
-		    (pid_t)_current->pgrp != t->t_pgrp) {
+		if (t != NULL && t->t_pgrp != 0 && (pid_t)_current->pgrp != t->t_pgrp)
+		{
 			signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
 			td->td_retval[0] = -EINTR;
 			return (EINTR);
@@ -281,13 +302,15 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				int i;
 				c = t->stdin[0];
 				t->stdinSize--;
-				for (i = 0; i < t->stdinSize; i++) {
+				for (i = 0; i < t->stdinSize; i++)
+				{
 					t->stdin[i] = t->stdin[i + 1];
-}
+				}
 				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte) {
+				if (c == '\n' || x >= (int)args->nbyte)
+				{
 					break;
-}
+				}
 			}
 			else if (t->t_eof)
 			{
@@ -315,22 +338,25 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		while (x < (int)args->nbyte)
 		{
 			int raw;
-			while ((raw = serial_rx_getbyte()) >= 0) {
+			while ((raw = serial_rx_getbyte()) >= 0)
+			{
 				tty_inject(_current->term, (char)raw);
-}
+			}
 
 			if (_current->term->stdinSize > 0)
 			{
 				int i;
 				c = _current->term->stdin[0];
 				_current->term->stdinSize--;
-				for (i = 0; i < _current->term->stdinSize; i++) {
+				for (i = 0; i < _current->term->stdinSize; i++)
+				{
 					_current->term->stdin[i] = _current->term->stdin[i + 1];
-}
+				}
 				buf[x++] = c;
-				if (c == '\n' || x >= (int)args->nbyte) {
+				if (c == '\n' || x >= (int)args->nbyte)
+				{
 					break;
-}
+				}
 			}
 			else if (_current->term->t_eof)
 			{
@@ -354,8 +380,8 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 		/* Phase 12: background process reading from its controlling tty */
 		{
 			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
-			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
-			    (pid_t)_current->pgrp != t_bg->t_pgrp) {
+			if (t_bg != NULL && t_bg->t_pgrp != 0 && (pid_t)_current->pgrp != t_bg->t_pgrp)
+			{
 				signal_post_pgrp((pid_t)_current->pgrp, SIGTTIN);
 				td->td_retval[0] = -EINTR;
 				return (EINTR);
@@ -402,7 +428,8 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 			if (c != 0x0)
 			{
 				buf[x++] = c;
-				if (c == '\n' || c == '\r' || x >= (int)args->nbyte) {
+				if (c == '\n' || c == '\r' || x >= (int)args->nbyte)
+				{
 					break;
 				}
 			}
@@ -449,9 +476,10 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 	else
 	{
 		bf[1] = '\0';
-		if (_current->term == tty_foreground) {
+		if (_current->term == tty_foreground)
+		{
 			c = getchar();
-}
+		}
 
 		for (x = 0; x < args->nbyte && c != '\n';)
 		{
@@ -479,9 +507,10 @@ int sys_pread(struct thread *td, struct sys_pread_args *args)
 				sched_yield();
 			}
 		}
-		if (c == '\n') {
+		if (c == '\n')
+		{
 			buf[x++] = '\n';
-}
+		}
 
 		bf[0] = '\n';
 		kprintf(bf);
@@ -543,20 +572,23 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 
 		p_buf->nbytes = uap->nbyte;
 
-		if (p_fd->tailPB) {
+		if (p_fd->tailPB)
+		{
 			p_fd->tailPB->next = p_buf;
-}
+		}
 
 		p_fd->tailPB = p_buf;
 
-		if (!p_fd->headPB) {
+		if (!p_fd->headPB)
+		{
 			p_fd->headPB = p_buf;
-}
+		}
 
 		p_fd->bCNT++;
 
 		/* Phase 3.2: boost the blocked reader so it runs before CPU-bound tasks. */
-		if (p_fd->reader_pid != 0) {
+		if (p_fd->reader_pid != 0)
+		{
 			kTask_t *reader = schedFindTask((u_int32_t)p_fd->reader_pid);
 			if (reader != NULL)
 				sched_io_wakeup(reader);
@@ -569,9 +601,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		/* Specific virtual terminal fd: write to the bound tty_term. */
 		tty_term *t = (tty_term *)fd->data;
 		/* Phase 12: background process writing to its controlling tty */
-		if (t != NULL && t->t_pgrp != 0 &&
-		    (pid_t)_current->pgrp != t->t_pgrp &&
-		    (t->t_termios.c_lflag & TOSTOP)) {
+		if (t != NULL && t->t_pgrp != 0 && (pid_t)_current->pgrp != t->t_pgrp &&
+		    (t->t_termios.c_lflag & TOSTOP))
+		{
 			signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
 			td->td_retval[0] = -EINTR;
 			return (EINTR);
@@ -587,9 +619,10 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		if (t != NULL && t->t_type == TTY_TYPE_SERIAL)
 		{
 			size_t i;
-			for (i = 0; i < uap->nbyte; i++) {
+			for (i = 0; i < uap->nbyte; i++)
+			{
 				rs232_putc(buffer[i]);
-}
+			}
 		}
 		else if (t != NULL)
 		{
@@ -604,9 +637,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap)
 		/* Phase 12: background process writing to its controlling tty */
 		{
 			tty_term *t_bg = _current->ct_tty ? _current->ct_tty : _current->term;
-			if (t_bg != NULL && t_bg->t_pgrp != 0 &&
-			    (pid_t)_current->pgrp != t_bg->t_pgrp &&
-			    (t_bg->t_termios.c_lflag & TOSTOP)) {
+			if (t_bg != NULL && t_bg->t_pgrp != 0 && (pid_t)_current->pgrp != t_bg->t_pgrp &&
+			    (t_bg->t_termios.c_lflag & TOSTOP))
+			{
 				signal_post_pgrp((pid_t)_current->pgrp, SIGTTOU);
 				td->td_retval[0] = -EINTR;
 				return (EINTR);
@@ -683,14 +716,16 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 
 	while (remaining > 0)
 	{
-		if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0) {
+		if (vfs_readdir((kDIR_t *)fd->data, &kent) != 0)
+		{
 			break;
-}
+		}
 
 		namelen = strlen(kent.d_name);
-		if (namelen == 0) {
+		if (namelen == 0)
+		{
 			continue;
-}
+		}
 		/*
 		 * linux_dirent64 layout (musl/Linux i386 ABI):
 		 *   d_ino    u_int64_t  offset 0  (8 bytes)
@@ -702,9 +737,10 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args)
 		 */
 		reclen = (19 + namelen + 1 + 7) & ~7u;
 
-		if (reclen > remaining) {
+		if (reclen > remaining)
+		{
 			break;
-}
+		}
 
 		u_int8_t *p = buf + total;
 		memset(p, 0, reclen);
@@ -727,7 +763,8 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 	const char *path = args->path;
 
 	/* /proc/self/fd/N → synthesize a path from the open fd. */
-	if (strncmp(path, "/proc/self/fd/", 14) == 0) {
+	if (strncmp(path, "/proc/self/fd/", 14) == 0)
+	{
 		int fdno = 0;
 		const char *p = path + 14;
 		while (*p >= '0' && *p <= '9')
@@ -736,16 +773,20 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 		char target[32];
 		if (fdno >= 0 && fdno < O_FILES)
 			fp = (struct file *)thr->o_files[fdno];
-		if (fp == NULL) {
+		if (fp == NULL)
+		{
 			thr->td_retval[0] = EBADF;
 			return (EBADF);
 		}
 		/* Synthesize a stable name: fd objects don't have a stored path,
 		 * so return the VFS cwd as a stand-in for terminal fds. */
-		if (fp->fd == NULL) {
+		if (fp->fd == NULL)
+		{
 			/* TTY or pipe fd — return "terminal" so callers know. */
 			snprintf(target, sizeof(target), "/dev/tty");
-		} else {
+		}
+		else
+		{
 			snprintf(target, sizeof(target), "/proc/self/fd/%d", fdno);
 		}
 		size_t n = strlen(target);
@@ -773,9 +814,10 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 	 */
 	if (flags & O_EXEC)
 	{
-		if (flags & O_ACCMODE) {
+		if (flags & O_ACCMODE)
+		{
 			return (EINVAL);
-}
+		}
 	}
 	else if ((flags & O_ACCMODE) == O_ACCMODE)
 	{
@@ -863,33 +905,41 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		}
 	}
 
-	/* /dev/ttyv0.../dev/ttyv3 — open a specific virtual terminal. */
+	/* /dev/ttyvN — open a specific virtual terminal or pty pool slot.
+	 * Accepts any decimal slot index (ttyv0-3 fixed consoles, 5+ ptys). */
 	{
 		const char *tvp = NULL;
 		if (strncmp(path, "/dev/ttyv", 9) == 0)
 			tvp = path + 9;
-		if (tvp != NULL && *tvp >= '0' && *tvp <= '3' && *(tvp + 1) == '\0')
+		if (tvp != NULL && *tvp >= '0' && *tvp <= '9')
 		{
-			int idx = *tvp - '0';
-			tty_term *t = tty_find((u_int16_t)idx);
-			if (t == NULL)
+			int idx = 0;
+			const char *p = tvp;
+			while (*p >= '0' && *p <= '9')
+				idx = idx * 10 + (*p++ - '0');
+			if (*p == '\0')
 			{
-				fdestroy(thr, nfp, fd);
-				thr->td_retval[0] = ENODEV;
-				return (ENODEV);
+				tty_term *t = tty_find((u_int16_t)idx);
+				if (t == NULL)
+				{
+					fdestroy(thr, nfp, fd);
+					thr->td_retval[0] = ENODEV;
+					return (ENODEV);
+				}
+				nfp->fd = NULL;
+				nfp->fd_type = FD_TYPE_TTYV;
+				nfp->data = t;
+				/* POSIX: session leader opening a terminal without
+				 * O_NOCTTY implicitly acquires it as controlling tty. */
+				if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL)
+				{
+					_current->ct_tty = t;
+					if (t->t_pgrp == 0)
+						t->t_pgrp = (int)_current->pgrp;
+				}
+				thr->td_retval[0] = fd;
+				return (0);
 			}
-			nfp->fd = NULL;
-			nfp->fd_type = FD_TYPE_TTYV;
-			nfp->data = t;
-			/* POSIX: session leader opening a terminal without O_NOCTTY
-			 * implicitly acquires it as controlling terminal. */
-			if (!(oflags & O_NOCTTY) && _current->ct_tty == NULL) {
-				_current->ct_tty = t;
-				if (t->t_pgrp == 0)
-					t->t_pgrp = (int)_current->pgrp;
-			}
-			thr->td_retval[0] = fd;
-			return (0);
 		}
 	}
 
@@ -910,21 +960,29 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 		return (0);
 	}
 
-	if ((oflags & O_WRONLY) && (oflags & O_APPEND)) {
+	if ((oflags & O_WRONLY) && (oflags & O_APPEND))
+	{
 		nfp->fd = fopen(path, "a");
-	} else if (oflags & O_WRONLY) {
+	}
+	else if (oflags & O_WRONLY)
+	{
 		nfp->fd = fopen(path, "w");
-	} else if (oflags & O_RDWR) {
+	}
+	else if (oflags & O_RDWR)
+	{
 		nfp->fd = fopen(path, "rwb");
-	} else {
+	}
+	else
+	{
 		nfp->fd = fopen(path, "r");
-}
+	}
 
 	if (nfp->fd == 0x0)
 	{
-		if (fdestroy(thr, nfp, fd) != 0x0) {
+		if (fdestroy(thr, nfp, fd) != 0x0)
+		{
 			kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
-}
+		}
 
 		thr->td_retval[0] = -ENOENT;
 		return (ENOENT);
@@ -938,9 +996,10 @@ int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
 {
 	int error = 0x0;
 	td->td_retval[0] = unlink(uap->path);
-	if (td->td_retval[0] != 0x0) {
+	if (td->td_retval[0] != 0x0)
+	{
 		kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
-}
+	}
 	return (error);
 }
 
@@ -957,30 +1016,34 @@ int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
  */
 int sys_mount(struct thread *td, struct sys_mount_args *uap)
 {
-	static const struct { const char *name; int type; const char *perms; } fs_map[] = {
-		{ "devfs",  1,    "rw" },
-		{ "procfs", 0x02, "r"  },
-		{ "fat",    0xFA, "rw" },
-		{ "msdos",  0xFA, "rw" },
-		{ NULL, 0, NULL }
-	};
+	static const struct
+	{
+		const char *name;
+		int type;
+		const char *perms;
+	} fs_map[] = {
+	    {"devfs", 1, "rw"}, {"procfs", 0x02, "r"}, {"fat", 0xFA, "rw"}, {"msdos", 0xFA, "rw"}, {NULL, 0, NULL}};
 	int i, vfs_type = -1;
 	const char *fs_perms = "r";
 	char mpath[1024];
 
-	if (uap->type == NULL || uap->path == NULL) {
+	if (uap->type == NULL || uap->path == NULL)
+	{
 		td->td_retval[0] = -EINVAL;
 		return (EINVAL);
 	}
 
-	for (i = 0; fs_map[i].name != NULL; i++) {
-		if (strcmp(uap->type, fs_map[i].name) == 0) {
+	for (i = 0; fs_map[i].name != NULL; i++)
+	{
+		if (strcmp(uap->type, fs_map[i].name) == 0)
+		{
 			vfs_type = fs_map[i].type;
 			fs_perms = fs_map[i].perms;
 			break;
 		}
 	}
-	if (vfs_type < 0) {
+	if (vfs_type < 0)
+	{
 		kprintf("sys_mount: unknown fstype \"%s\"\n", uap->type);
 		td->td_retval[0] = -EINVAL;
 		return (EINVAL);
@@ -989,7 +1052,8 @@ int sys_mount(struct thread *td, struct sys_mount_args *uap)
 	strncpy(mpath, uap->path, sizeof(mpath) - 1);
 	mpath[sizeof(mpath) - 1] = '\0';
 
-	if (vfs_mount(0, 0, 0, vfs_type, mpath, fs_perms) != 0) {
+	if (vfs_mount(0, 0, 0, vfs_type, mpath, fs_perms) != 0)
+	{
 		kprintf("sys_mount: vfs_mount(%s, %s) failed\n", uap->type, mpath);
 		td->td_retval[0] = -EIO;
 		return (EIO);
@@ -1008,12 +1072,14 @@ int sys_mount(struct thread *td, struct sys_mount_args *uap)
  */
 int sys_umount(struct thread *td, struct sys_umount_args *uap)
 {
-	if (uap->path == NULL) {
+	if (uap->path == NULL)
+	{
 		td->td_retval[0] = -EINVAL;
 		return (EINVAL);
 	}
 
-	if (vfs_umount(uap->path) != 0) {
+	if (vfs_umount(uap->path) != 0)
+	{
 		kprintf("sys_umount: no mount at \"%s\"\n", uap->path);
 		td->td_retval[0] = -EINVAL;
 		return (EINVAL);

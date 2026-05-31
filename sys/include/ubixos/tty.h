@@ -32,46 +32,55 @@
 #include <sys/types.h>
 #include <sys/ioctl.h>
 
-#define TTY_MAX_TERMS 5
+/*
+ * Slots 0-4 are the fixed physical terminals (ttyv0-3 + com1).  Slots
+ * TTY_PTY_BASE..TTY_MAX_TERMS-1 form the pseudo-terminal pool handed out by
+ * pty_alloc() for graphical terminal apps (e.g. bin/views/term).
+ */
+#define TTY_PTY_BASE 5
+#define TTY_MAX_TERMS 13
 
 /* tty_setmode cmd values */
-#define TTY_SETRAW   0  /* val 1 = raw, 0 = canonical */
-#define TTY_SETECHO  1  /* val 1 = echo on, 0 = echo off */
+#define TTY_SETRAW 0  /* val 1 = raw, 0 = canonical */
+#define TTY_SETECHO 1 /* val 1 = echo on, 0 = echo off */
 
 /* t_type: controls how echo is delivered */
-#define TTY_TYPE_VGA    0   /* VGA text console — echo via tty_print / backSpace() */
-#define TTY_TYPE_SERIAL 1   /* COM1 serial — echo via rs232_putc() */
+#define TTY_TYPE_VGA 0    /* VGA text console — echo via tty_print / backSpace() */
+#define TTY_TYPE_SERIAL 1 /* COM1 serial — echo via rs232_putc() */
+#define TTY_TYPE_PTY 2    /* pseudo-terminal — echo into tty_buffer via tty_print() */
 
-typedef struct tty_termNode {
-    char *tty_buffer;
-    char *tty_pointer;
-    u_int8_t tty_colour;
-    u_int16_t tty_x;
-    u_int16_t tty_y;
-    pidType owner;
-    char stdin[512];
-    int stdinSize;
-    /* Line discipline */
-    char t_linebuf[512]; /* canonical input buffer (getchar fills until Enter) */
-    int  t_linelen;      /* chars currently in t_linebuf */
-    u_int8_t t_echo;      /* 1 = echo input to terminal (default) */
-    u_int8_t t_raw;       /* 1 = raw mode: bypass line discipline */
-    u_int8_t t_type;      /* TTY_TYPE_VGA or TTY_TYPE_SERIAL */
-    u_int8_t t_eof;       /* 1 = VEOF delivered; next read with stdinSize==0 returns 0 */
-    u_int8_t t_stopped;   /* 1 = IXON Ctrl-S received; output suspended */
-    u_int8_t t_exclusive; /* 1 = TIOCEXCL set; no further opens allowed */
-    struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
-    struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
-    pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */
-    /* ANSI/VT100 escape sequence parser */
-    u_int8_t  t_esc_state;      /* 0=normal 1=ESC_seen 2=CSI_collecting */
-    u_int8_t  t_esc_priv;       /* 1 if '?' seen after CSI '[' */
-    u_int8_t  t_esc_nparams;    /* number of CSI params collected so far */
-    u_int8_t  t_default_colour; /* colour at init time — SGR 0 resets to this */
-    u_int16_t t_esc_params[8];  /* CSI numeric parameters (';'-separated) */
-    u_int16_t t_saved_x;        /* cursor save/restore (same encoding as tty_x) */
-    u_int16_t t_saved_y;
-    u_int8_t  t_saved_colour;
+typedef struct tty_termNode
+{
+	char *tty_buffer;
+	char *tty_pointer;
+	u_int8_t tty_colour;
+	u_int16_t tty_x;
+	u_int16_t tty_y;
+	pidType owner;
+	char stdin[512];
+	int stdinSize;
+	/* Line discipline */
+	char t_linebuf[512];      /* canonical input buffer (getchar fills until Enter) */
+	int t_linelen;            /* chars currently in t_linebuf */
+	u_int8_t t_echo;          /* 1 = echo input to terminal (default) */
+	u_int8_t t_raw;           /* 1 = raw mode: bypass line discipline */
+	u_int8_t t_type;          /* TTY_TYPE_VGA or TTY_TYPE_SERIAL */
+	u_int8_t t_eof;           /* 1 = VEOF delivered; next read with stdinSize==0 returns 0 */
+	u_int8_t t_stopped;       /* 1 = IXON Ctrl-S received; output suspended */
+	u_int8_t t_exclusive;     /* 1 = TIOCEXCL set; no further opens allowed */
+	u_int8_t t_inuse;         /* pty pool: 1 = slot allocated (fixed slots always 1) */
+	struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
+	struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
+	pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */
+	/* ANSI/VT100 escape sequence parser */
+	u_int8_t t_esc_state;      /* 0=normal 1=ESC_seen 2=CSI_collecting */
+	u_int8_t t_esc_priv;       /* 1 if '?' seen after CSI '[' */
+	u_int8_t t_esc_nparams;    /* number of CSI params collected so far */
+	u_int8_t t_default_colour; /* colour at init time — SGR 0 resets to this */
+	u_int16_t t_esc_params[8]; /* CSI numeric parameters (';'-separated) */
+	u_int16_t t_saved_x;       /* cursor save/restore (same encoding as tty_x) */
+	u_int16_t t_saved_y;
+	u_int8_t t_saved_colour;
 } tty_term;
 
 int tty_init();
@@ -79,6 +88,17 @@ int tty_change(u_int16_t);
 tty_term *tty_find(u_int16_t);
 int tty_print(char *, tty_term *);
 void tty_inject(tty_term *tty, char ch); /* push one char through line discipline */
+
+/*
+ * Pseudo-terminal pool — backs graphical terminal apps.  pty_alloc() hands out
+ * a free pool slot whose screen lives in its tty_buffer (never VGA); the app
+ * feeds keystrokes with tty_inject_user() and reads the rendered cell grid back
+ * with tty_snapshot().
+ */
+int pty_alloc(void);
+void pty_free(int slot);
+int tty_inject_user(int slot, const char *buf, int n);
+int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y);
 
 extern tty_term *tty_foreground;
 

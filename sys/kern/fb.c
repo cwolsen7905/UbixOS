@@ -72,7 +72,12 @@ int sys_mapfb(struct thread *td, struct sys_mapfb_args *args)
 	out->pitch = vesa_pitch;
 	out->bpp = vesa_bpp;
 
-	kprintf("sys_mapfb: pid %d mapped fb paddr=0x%X vaddr=0x10000000 %dx%d bpp=%d\n", pid, vesa_fb_paddr, vesa_width, vesa_height, vesa_bpp);
+	kprintf("sys_mapfb: pid %d mapped fb paddr=0x%X vaddr=0x10000000 %dx%d bpp=%d\n",
+	        pid,
+	        vesa_fb_paddr,
+	        vesa_width,
+	        vesa_height,
+	        vesa_bpp);
 
 	/* Signal that a GUI compositor now owns the keyboard ring. */
 	kbd_gui_mode = 1;
@@ -158,21 +163,21 @@ int sys_klog_read(struct thread *td, struct sys_klog_read_args *args)
  *
  * slot: tty_term[] index to use as the serial TTY (convention: 1).
  */
-int
-sys_settty(struct thread *td, struct sys_settty_args *args)
+int sys_settty(struct thread *td, struct sys_settty_args *args)
 {
 	tty_term *t;
 
-	if (args->slot < 0 || args->slot >= TTY_MAX_TERMS) {
+	if (args->slot < 0 || args->slot >= TTY_MAX_TERMS)
+	{
 		td->td_retval[0] = -1;
 		return (-1);
 	}
 
 	t = tty_find(args->slot);
 	/* Slots 0-3: VGA virtual consoles.  Slot 4+: serial. */
-	t->t_type  = (args->slot <= 3) ? TTY_TYPE_VGA : TTY_TYPE_SERIAL;
-	t->t_echo  = 1;
-	t->t_raw   = 0;
+	t->t_type = (args->slot <= 3) ? TTY_TYPE_VGA : TTY_TYPE_SERIAL;
+	t->t_echo = 1;
+	t->t_raw = 0;
 	t->stdinSize = 0;
 	t->t_linelen = 0;
 
@@ -181,5 +186,46 @@ sys_settty(struct thread *td, struct sys_settty_args *args)
 		serial_claimed = 1;
 
 	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * sys_ptyalloc (slot 55) — allocate a pseudo-terminal slot from the pty pool.
+ * Returns the slot index, or -1 if the pool is exhausted.
+ */
+int sys_ptyalloc(struct thread *td, struct sys_ptyalloc_args *args)
+{
+	(void)args;
+	td->td_retval[0] = pty_alloc();
+	return (0);
+}
+
+/*
+ * sys_ptyfree (slot 56) — release a pseudo-terminal slot back to the pool.
+ */
+int sys_ptyfree(struct thread *td, struct sys_ptyfree_args *args)
+{
+	pty_free(args->slot);
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * sys_ptyinject (slot 57) — push a userland keystroke buffer through a pty's
+ * line discipline (keyboard → shell stdin).  Returns bytes injected or -1.
+ */
+int sys_ptyinject(struct thread *td, struct sys_ptyinject_args *args)
+{
+	td->td_retval[0] = tty_inject_user(args->slot, args->buf, args->n);
+	return (0);
+}
+
+/*
+ * sys_ptysnap (slot 58) — copy a pty's 80x25 cell grid + cursor to userland.
+ * Returns 0 on success, -1 for an invalid slot.
+ */
+int sys_ptysnap(struct thread *td, struct sys_ptysnap_args *args)
+{
+	td->td_retval[0] = tty_snapshot(args->slot, args->dst, args->x, args->y);
 	return (0);
 }

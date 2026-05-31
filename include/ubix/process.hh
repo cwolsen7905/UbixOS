@@ -45,6 +45,9 @@ extern "C" {
 #include <unistd.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <sys/wait.h>
+#include <api/ubix.h>
 }
 
 namespace ubix {
@@ -116,6 +119,92 @@ public:
 
 	bool valid()    const { return pid_ > 0; }
 	int  out_fd()   const { return out_fd_; }
+};
+
+/*
+ * Pty — RAII wrapper that runs a shell on a real kernel pseudo-terminal.
+ *
+ * Unlike Shell (which uses pipes), the child's stdin/stdout/stderr are a tty,
+ * so isatty() is true and tcsh enables line editing, history, and job control,
+ * rendering exactly as on the text console.  The kernel renders the shell's
+ * output into an 80x25 cell grid that the terminal reads back with snapshot();
+ * keystrokes are fed in with inject().
+ */
+class Pty {
+	int   slot_ = -1;
+	pid_t pid_  = -1;
+
+public:
+	Pty() = default;
+	Pty(const Pty &) = delete;
+	Pty &operator=(const Pty &) = delete;
+
+	bool spawn(const char *path, char **argv = nullptr, char **envp = nullptr) {
+		slot_ = ::pty_alloc();
+		if (slot_ < 0)
+			return false;
+		pid_ = ::fork();
+		if (pid_ == 0) {
+			char dev[24];
+			::snprintf(dev, sizeof(dev), "/dev/ttyv%d", slot_);
+			/* New session → no controlling tty; opening the pty without
+			 * O_NOCTTY then claims it as the ctty with us as foreground
+			 * pgrp (so Ctrl-C and reads target this shell). */
+			::setsid();
+			int fd = ::open(dev, O_RDWR);
+			if (fd < 0)
+				::_exit(127);
+			::dup2(fd, 0);
+			::dup2(fd, 1);
+			::dup2(fd, 2);
+			if (fd > 2)
+				::close(fd);
+			static char *default_argv[] = { (char *)"sh", nullptr };
+			static char *default_envp[] = { nullptr };
+			::execve(path,
+			    argv ? argv : default_argv,
+			    envp ? envp : default_envp);
+			::_exit(127);
+		}
+		return pid_ > 0;
+	}
+
+	int inject(const char *buf, int n) const {
+		return ::pty_inject(slot_, buf, n);
+	}
+
+	int snapshot(void *grid, unsigned short *x, unsigned short *y) const {
+		return ::pty_snapshot(slot_, grid, x, y);
+	}
+
+	void kill() const {
+		if (pid_ > 0)
+			::kill(pid_, SIGKILL);
+	}
+
+	void release() {
+		if (slot_ >= 0) {
+			::pty_free(slot_);
+			slot_ = -1;
+		}
+	}
+
+	/* Reap the shell without blocking; true once it has exited. */
+	bool exited() {
+		if (pid_ <= 0)
+			return true;
+		int st = 0;
+		int r = ::waitpid(pid_, &st, WNOHANG);
+		if (r == pid_ || r < 0) { /* exited, or no such child left */
+			pid_ = -1;
+			return true;
+		}
+		return false;
+	}
+
+	bool  valid() const { return pid_ > 0; }
+	pid_t pid()   const { return pid_; }
+	int   slot()  const { return slot_; }
 };
 
 } /* namespace ubix */
