@@ -69,9 +69,15 @@ static const struct reg_entry g_defaults[] = {
      * own params.  Colours are packed 0xRRGGBB stored as integers.  The system
      * default is jailbars; a user's choice persists and overrides it. */
     {"/views/desktop/mode", "\"image\""},
-    {"/views/desktop/image", "\"/var/background/tropical-miami.png\""},
-    {"/views/desktop/color", "2900136"},    /* 0x2C60A8 solid blue        */
-    {"/views/desktop/barcolor", "1710638"}, /* 0x1A1A2E jailbar base shade */
+    {"/views/desktop/image", "\"/var/background/ubix.bmp\""}, /* system default wallpaper */
+    {"/views/desktop/color", "2900136"},                      /* 0x2C60A8 solid blue        */
+    {"/views/desktop/barcolor", "1710638"},                   /* 0x1A1A2E jailbar base shade */
+
+    /* Per-user wallpaper overrides: root and reddawg get the tropical-miami
+     * wallpaper; everyone else (and the login screen, which is user-agnostic)
+     * uses the ubix.bmp system default above. */
+    {"/users/root/views/desktop/image", "\"/var/background/tropical-miami.png\""},
+    {"/users/reddawg/views/desktop/image", "\"/var/background/tropical-miami.png\""},
 
     /* Theme: accent colour for focused window title bars (0xRRGGBB as int).
      * Retro magenta/purple to match the default synthwave (miami) wallpaper. */

@@ -14,9 +14,11 @@
 /views/startmenu/3/label = "About"
 /views/startmenu/3/exec = "@about"
 /views/desktop/mode = "image"
-/views/desktop/image = "/var/background/tropical-miami.png"
+/views/desktop/image = "/var/background/ubix.bmp"
 /views/desktop/color = 2900136
 /views/desktop/barcolor = 1710638
+/users/root/views/desktop/image = "/var/background/tropical-miami.png"
+/users/reddawg/views/desktop/image = "/var/background/tropical-miami.png"
 /views/theme/accent = 12595340
 /settings/wallpapers/0 = "/var/background/ubix.bmp"
 /settings/wallpapers/1 = "/var/background/tropical-sunset.png"
