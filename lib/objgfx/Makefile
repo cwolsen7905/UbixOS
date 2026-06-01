@@ -6,7 +6,8 @@ include ../Makefile.incl
 MUSL_SRC = ${SRCTOP}/contrib/musl
 MUSL_OBJ = ${OBJ_DIR}/obj/musl
 
-OBJS = objgfx.o ogEdgeTable.o ogImage.o ogPixCon.o ogPixelFmt.o vWindow.o ogFont.o vWidget.o og_stbimpl.o
+OBJS = objgfx.o ogEdgeTable.o ogImage.o ogPixCon.o ogPixelFmt.o vWindow.o ogFont.o vWidget.o og_stbimpl.o \
+       og_sttimpl.o ogScalableFont.o
 
 INCLUDES  = -I${MUSL_SRC}/include \
             -I${MUSL_OBJ}/obj/include \
