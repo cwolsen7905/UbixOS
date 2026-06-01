@@ -50,7 +50,8 @@ WindowManager::WindowManager()
           this,
           [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->close_window(w); },
           [](void *ctx, Window *w) { static_cast<WindowManager *>(ctx)->minimize_window(w); },
-          [](void *ctx, Window *w, int nw, int nh) { static_cast<WindowManager *>(ctx)->resize_window(w, nw, nh); })
+          [](void *ctx, Window *w, int nw, int nh) { static_cast<WindowManager *>(ctx)->resize_window(w, nw, nh); },
+          [](void *ctx, Window *w, int mode) { static_cast<WindowManager *>(ctx)->place_window(w, mode); })
 {
 }
 
@@ -172,6 +173,62 @@ void WindowManager::resize_window(Window *w, int new_w, int new_h)
 	if (!w->mbox.empty())
 		ubix::post_message(w->mbox, DISPLAY_WINRESIZE, m);
 
+	comp_.invalidate_all();
+}
+
+void WindowManager::place_window(Window *w, int mode)
+{
+	if (!w->resizable())
+		return;
+
+	int sw = (int)comp_.screen_w();
+	int sh = (int)comp_.screen_h();
+	const int reserve = 32; /* leave room for the taskbar at the bottom */
+	int avail_h = sh - reserve;
+
+	/* Restore from a maximized/snapped state (the maximize button toggles). */
+	if (mode == 0 && w->maximized)
+	{
+		w->x = w->saved_x;
+		w->y = w->saved_y;
+		resize_window(w, w->saved_w, w->saved_h);
+		w->maximized = false;
+		comp_.invalidate_all();
+		return;
+	}
+
+	if (!w->maximized)
+	{
+		w->saved_x = w->x;
+		w->saved_y = w->y;
+		w->saved_w = w->w;
+		w->saved_h = w->h;
+	}
+
+	int tx, tw;
+	if (mode == 1)
+	{
+		tx = 0;
+		tw = sw / 2; /* left half */
+	}
+	else if (mode == 2)
+	{
+		tx = sw / 2;
+		tw = sw - sw / 2; /* right half */
+	}
+	else
+	{
+		tx = 0;
+		tw = sw; /* maximize */
+	}
+
+	w->x = tx;
+	w->y = 0;
+	resize_window(w, tw, avail_h - w->decor_h); /* resize_window clamps to the window's max_* */
+	/* Centre horizontally if a fixed/constrained width came out narrower. */
+	if (w->w < tw)
+		w->x = tx + (tw - w->w) / 2;
+	w->maximized = true;
 	comp_.invalidate_all();
 }
 
