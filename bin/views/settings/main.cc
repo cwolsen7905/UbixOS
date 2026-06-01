@@ -45,7 +45,7 @@
 #include <ubix/sched.hh>
 #include <views/display.hh>
 #include <objgfx/objgfx.h>
-#include <objgfx/ogFont.h>
+#include <objgfx/ogScalableFont.h>
 #include <objgfx/ogImage.h>
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
@@ -65,7 +65,8 @@ extern char **environ; /* session env, forwarded to launched helpers */
 #define SIDE_TOP 8
 #define CONTENT_X (SIDEBAR_W + 14)
 #define CONTENT_TOP 12
-#define FONT_PATH "/var/fonts/ROM8X8.DPF"
+#define FONT_PATH "/var/fonts/DejaVuSans.ttf"
+#define FONT_SIZE 14
 
 /* Desktop pane geometry. */
 #define TAB_Y 40
@@ -167,7 +168,7 @@ static std::string basename_of(const std::string &p)
 	return (s == std::string::npos) ? p : p.substr(s + 1);
 }
 
-static void set_color(ogBitFont &f, uint32_t fg, uint32_t bg)
+static void set_color(ogScalableFont &f, uint32_t fg, uint32_t bg)
 {
 	f.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
 	f.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
@@ -354,7 +355,7 @@ static void apply_accent()
 /**
  * Draw a click-to-set RGB picker editing rgb[3], with a colour preview.
  */
-static void draw_picker(ogSurface &surf, ogBitFont &font, const int *rgb)
+static void draw_picker(ogSurface &surf, ogScalableFont &font, const int *rgb)
 {
 	static const char *chan = "RGB";
 	for (int k = 0; k < 3; k++)
@@ -415,7 +416,7 @@ static void build_thumb()
 /**
  * Paint the cached wallpaper preview (a "Preview" label + framed thumbnail).
  */
-static void draw_thumb(ogSurface &surf, ogBitFont &font)
+static void draw_thumb(ogSurface &surf, ogScalableFont &font)
 {
 	if (g_thumb_for != g_img_sel)
 		build_thumb();
@@ -445,7 +446,7 @@ static void draw_thumb(ogSurface &surf, ogBitFont &font)
  * selection, plus (when expanded) the full option list below it.  This keeps the
  * pane compact no matter how many wallpapers ship.
  */
-static void draw_dropdown(ogSurface &surf, ogBitFont &font)
+static void draw_dropdown(ogSurface &surf, ogScalableFont &font)
 {
 	const char *cur = g_images.empty() ? "(none)" : g_images[g_img_sel].label.c_str();
 
@@ -498,7 +499,7 @@ static void apply_network()
 	g_launcher.launch("/bin/netcfg");
 }
 
-static void draw_network(ogSurface &surf, ogBitFont &font)
+static void draw_network(ogSurface &surf, ogScalableFont &font)
 {
 	static const char *modes[2] = {"DHCP", "Static"};
 
@@ -657,7 +658,7 @@ static void apply_display()
 	ubix::post_message("views", DISPLAY_SETMODE, m);
 }
 
-static void draw_display(ogSurface &surf, ogBitFont &font)
+static void draw_display(ogSurface &surf, ogScalableFont &font)
 {
 	set_color(font, 0x00A0B0C0, BG);
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Screen resolution");
@@ -723,7 +724,7 @@ static const char *session_user()
 	return (u != NULL && u[0] != '\0') ? u : "(none)";
 }
 
-static void draw_general(ogSurface &surf, ogBitFont &font)
+static void draw_general(ogSurface &surf, ogScalableFont &font)
 {
 	char line[96];
 
@@ -742,7 +743,7 @@ static void draw_general(ogSurface &surf, ogBitFont &font)
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 120, "your desktop, network and display.");
 }
 
-static void draw_about(ogSurface &surf, ogBitFont &font)
+static void draw_about(ogSurface &surf, ogScalableFont &font)
 {
 	int y = CONTENT_TOP + 30;
 	auto row = [&](const char *k, const char *v)
@@ -768,7 +769,7 @@ static void draw_about(ogSurface &surf, ogBitFont &font)
 	font.PutString(surf, CONTENT_X, y + 14, "(C) 2002-2026 The UbixOS Project");
 }
 
-static void draw_content(ogSurface &surf, ogBitFont &font, int pane)
+static void draw_content(ogSurface &surf, ogScalableFont &font, int pane)
 {
 	surf.ogFillRect(SIDEBAR_W, 0, WIN_W - 1, g_win_h - 1, BG);
 	set_color(font, 0x00FFFFFF, BG);
@@ -1058,8 +1059,8 @@ int main(int argc, char **argv)
 		return 1;
 
 	ogSurface surf;
-	ogBitFont font;
-	if (!surf.ogAttach(shm, (uint32_t)act_w, (uint32_t)act_h, OG_PIXFMT_32BPP) || !font.Load(FONT_PATH, 0))
+	ogScalableFont font;
+	if (!surf.ogAttach(shm, (uint32_t)act_w, (uint32_t)act_h, OG_PIXFMT_32BPP) || !font.Load(FONT_PATH, FONT_SIZE))
 		return 1;
 
 	auto flip = [&]()

@@ -175,6 +175,19 @@ void ogScalableFont::PutChar(ogSurface &dest, int32 x, int32 y, char ch)
 	int baseline = y + ascent_;
 	bool opaque_bg = bg_.alpha != 0;
 
+	/* In opaque mode fill the whole character cell (advance wide, one cap+
+	 * descent band tall) with the background first, so redrawing text cleanly
+	 * erases what was there — matching ogBitFont's per-cell fill.  The band
+	 * height equals the requested pixel height (ScaleForPixelHeight makes
+	 * ascent-descent == pixelHeight), so adjacent rows do not overlap. */
+	if (opaque_bg)
+	{
+		int cell_h = ascent_ + descent_;
+		for (int cy = 0; cy < cell_h; cy++)
+			for (int cx = 0; cx < g->advance; cx++)
+				dest.ogSetPixel(x + cx, y + cy, bg_.red, bg_.green, bg_.blue, bg_.alpha);
+	}
+
 	for (int gy = 0; gy < g->h; gy++)
 	{
 		int py = baseline + g->yoff + gy;
@@ -182,13 +195,9 @@ void ogScalableFont::PutChar(ogSurface &dest, int32 x, int32 y, char ch)
 		for (int gx = 0; gx < g->w; gx++)
 		{
 			uInt8 cov = crow[gx];
-			int px = x + g->xoff + gx;
 			if (cov == 0)
-			{
-				if (opaque_bg)
-					dest.ogSetPixel(px, py, bg_.red, bg_.green, bg_.blue, bg_.alpha);
-				continue;
-			}
+				continue; /* background already painted (opaque) or left untouched */
+			int px = x + g->xoff + gx;
 
 			uInt8 br, bgc, bb;
 			if (opaque_bg)

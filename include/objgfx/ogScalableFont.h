@@ -98,6 +98,18 @@ class ogScalableFont
 	/** Horizontal advance of one codepoint, in whole pixels. */
 	int Advance(int cp);
 
+	/* Nominal cell metrics, for callers that lay out on a fixed grid (login,
+	 * terminal).  Exact for a monospace face; for a proportional face GetWidth
+	 * is only an estimate (the advance of 'M') — use TextWidth() instead. */
+	uInt32 GetWidth()
+	{
+		return (uInt32)Advance('M');
+	}
+	uInt32 GetHeight() const
+	{
+		return (uInt32)(ascent_ + descent_);
+	}
+
 	/** Total advance width of a string, in pixels. */
 	uInt32 TextWidth(const char *s);
 
