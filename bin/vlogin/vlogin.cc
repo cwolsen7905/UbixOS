@@ -29,6 +29,7 @@
 #include <objgfx/ogScalableFont.h>
 #include <objgfx/ogImage.h>
 #include <objgfx/ogPixelFmt.h>
+#include <ubistry/ubistry.h>
 #include <authd.h>
 #include <vector>
 
@@ -86,9 +87,20 @@ class LoginUI
 	 * solid BG_COLOR. */
 	void load_background()
 	{
+		/* Use the *system-default* desktop wallpaper (no user — login does not
+		 * know who is logging in yet).  Honour the desktop mode: only show an
+		 * image when the system desktop is in image mode; otherwise fall back to
+		 * the solid login background. */
+		char mode[32] = {0};
+		char path[256] = {0};
+		if (ubistry_get_str("views/desktop/mode", mode, sizeof(mode)) == 0 && std::strcmp(mode, "image") != 0)
+			return;
+		if (ubistry_get_str("views/desktop/image", path, sizeof(path)) != 0 || path[0] == '\0')
+			std::strncpy(path, "/var/background/ubix.bmp", sizeof(path) - 1);
+
 		ogImage img;
 		ogSurface src;
-		if (!img.Load("/var/background/ubix.bmp", src))
+		if (!img.Load(path, src))
 			return;
 		int iw = (int)src.ogGetMaxX() + 1;
 		int ih = (int)src.ogGetMaxY() + 1;
