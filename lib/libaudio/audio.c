@@ -30,20 +30,37 @@
 #include <sched.h>
 #include <sys/ioctl.h>
 
-int
-audio_open(const char *dev)
+int audio_open(const char *dev)
 {
 	return open(dev, O_WRONLY);
 }
 
-int
-audio_set_rate(int fd, uint32_t rate)
+int audio_set_rate(int fd, uint32_t rate)
 {
 	return ioctl(fd, AUDIO_SET_RATE, &rate);
 }
 
-int
-audio_write(int fd, const void *buf, int n)
+int audio_set_volume(int fd, uint32_t pct)
+{
+	return ioctl(fd, AUDIO_SET_VOLUME, &pct);
+}
+
+int audio_get_volume(int fd, uint32_t *pct)
+{
+	return ioctl(fd, AUDIO_GET_VOLUME, pct);
+}
+
+int audio_set_mute(int fd, uint32_t mute)
+{
+	return ioctl(fd, AUDIO_SET_MUTE, &mute);
+}
+
+int audio_get_mute(int fd, uint32_t *mute)
+{
+	return ioctl(fd, AUDIO_GET_MUTE, mute);
+}
+
+int audio_write(int fd, const void *buf, int n)
 {
 	int total = 0;
 	const char *p = (const char *)buf;
@@ -53,13 +70,17 @@ audio_write(int fd, const void *buf, int n)
 	 * attempts.  The kernel write is non-blocking: it returns 0 when the
 	 * ring is full rather than blocking with interrupts disabled.
 	 */
-	while (total < n) {
+	while (total < n)
+	{
 		int r = (int)write(fd, p + total, (size_t)(n - total));
 		if (r < 0)
 			return (-1);
-		if (r > 0) {
+		if (r > 0)
+		{
 			total += r;
-		} else {
+		}
+		else
+		{
 			/* Ring full — yield so the ISR gets a chance to drain it. */
 			sched_yield();
 		}
@@ -67,8 +88,7 @@ audio_write(int fd, const void *buf, int n)
 	return (total);
 }
 
-void
-audio_close(int fd)
+void audio_close(int fd)
 {
 	close(fd);
 }

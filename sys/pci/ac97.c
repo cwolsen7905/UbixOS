@@ -51,8 +51,8 @@
 #include <string.h>
 
 /* Major number for /dev/audio — must not conflict with hd(1), kbd(1), mouse(13), net(14) */
-#define AC97_MAJOR   15
-#define AC97_MINOR    0
+#define AC97_MAJOR 15
+#define AC97_MINOR 0
 
 /* Module-level state — one AC'97 controller */
 static struct ac97_softc ac97_sc;
@@ -61,50 +61,42 @@ static struct ac97_softc ac97_sc;
  * Register accessors
  * --------------------------------------------------------------------- */
 
-static inline u_int16_t
-nam_rd16(struct ac97_softc *sc, u_int16_t reg)
+static inline u_int16_t nam_rd16(struct ac97_softc *sc, u_int16_t reg)
 {
 	return inportWord(sc->nam_base + reg);
 }
 
-static inline void
-nam_wr16(struct ac97_softc *sc, u_int16_t reg, u_int16_t val)
+static inline void nam_wr16(struct ac97_softc *sc, u_int16_t reg, u_int16_t val)
 {
 	outportWord(sc->nam_base + reg, val);
 }
 
-static inline u_int32_t
-nabm_rd32(struct ac97_softc *sc, u_int16_t reg)
+static inline u_int32_t nabm_rd32(struct ac97_softc *sc, u_int16_t reg)
 {
 	return inportDWord(sc->nabm_base + reg);
 }
 
-static inline void
-nabm_wr32(struct ac97_softc *sc, u_int16_t reg, u_int32_t val)
+static inline void nabm_wr32(struct ac97_softc *sc, u_int16_t reg, u_int32_t val)
 {
 	outportDWord(sc->nabm_base + reg, val);
 }
 
-static inline u_int16_t
-nabm_rd16(struct ac97_softc *sc, u_int16_t reg)
+static inline u_int16_t nabm_rd16(struct ac97_softc *sc, u_int16_t reg)
 {
 	return inportWord(sc->nabm_base + reg);
 }
 
-static inline void
-nabm_wr16(struct ac97_softc *sc, u_int16_t reg, u_int16_t val)
+static inline void nabm_wr16(struct ac97_softc *sc, u_int16_t reg, u_int16_t val)
 {
 	outportWord(sc->nabm_base + reg, val);
 }
 
-static inline u_int8_t
-nabm_rd8(struct ac97_softc *sc, u_int16_t reg)
+static inline u_int8_t nabm_rd8(struct ac97_softc *sc, u_int16_t reg)
 {
 	return inportByte(sc->nabm_base + reg);
 }
 
-static inline void
-nabm_wr8(struct ac97_softc *sc, u_int16_t reg, u_int8_t val)
+static inline void nabm_wr8(struct ac97_softc *sc, u_int16_t reg, u_int8_t val)
 {
 	outportByte(sc->nabm_base + reg, val);
 }
@@ -113,12 +105,11 @@ nabm_wr8(struct ac97_softc *sc, u_int16_t reg, u_int8_t val)
  * ISR — fires when a BDL entry with IOC completes
  * --------------------------------------------------------------------- */
 
-static void
-ac97_isr(void)
+static void ac97_isr(void)
 {
 	struct ac97_softc *sc = &ac97_sc;
 	u_int16_t sr;
-	u_int8_t  fill_buf;
+	u_int8_t fill_buf;
 	u_int32_t avail;
 
 	/* Always drain pi/mc status so spurious QEMU interrupt bits don't cause
@@ -126,8 +117,10 @@ ac97_isr(void)
 	{
 		u_int16_t pi_sr = nabm_rd16(sc, 0x00 + NABM_SR);
 		u_int16_t mc_sr = nabm_rd16(sc, 0x20 + NABM_SR);
-		if (pi_sr) nabm_wr16(sc, 0x00 + NABM_SR, pi_sr);
-		if (mc_sr) nabm_wr16(sc, 0x20 + NABM_SR, mc_sr);
+		if (pi_sr)
+			nabm_wr16(sc, 0x00 + NABM_SR, pi_sr);
+		if (mc_sr)
+			nabm_wr16(sc, 0x20 + NABM_SR, mc_sr);
 	}
 
 	/* Check BCIS on the PCM-out channel before acting. */
@@ -138,7 +131,7 @@ ac97_isr(void)
 	/* Acknowledge the PCM-out buffer completion */
 	nabm_wr16(sc, NABM_PO_BASE + NABM_SR, sr);
 
-	fill_buf    = sc->next_buf;
+	fill_buf = sc->next_buf;
 	sc->next_buf ^= 1;
 
 	/* Drain ring into the next ping-pong buffer.
@@ -150,14 +143,18 @@ ac97_isr(void)
 	avail = sc->ring_wr - sc->ring_rd;
 	if (avail > (u_int32_t)AC97_BUF_BYTES)
 		avail = AC97_BUF_BYTES;
-	if (avail > 0) {
-		u_int32_t rd    = sc->ring_rd & AC97_RING_MASK;
-		u_int32_t tail  = AC97_RING_SIZE - rd;
-		if (tail >= avail) {
+	if (avail > 0)
+	{
+		u_int32_t rd = sc->ring_rd & AC97_RING_MASK;
+		u_int32_t tail = AC97_RING_SIZE - rd;
+		if (tail >= avail)
+		{
 			memcpy(sc->buf[fill_buf], sc->ring + rd, avail);
-		} else {
-			memcpy(sc->buf[fill_buf],        sc->ring + rd, tail);
-			memcpy(sc->buf[fill_buf] + tail, sc->ring,      avail - tail);
+		}
+		else
+		{
+			memcpy(sc->buf[fill_buf], sc->ring + rd, tail);
+			memcpy(sc->buf[fill_buf] + tail, sc->ring, avail - tail);
 		}
 	}
 	if (avail < (u_int32_t)AC97_BUF_BYTES)
@@ -166,8 +163,8 @@ ac97_isr(void)
 
 	/* Advance LVI to include the newly filled buffer */
 	sc->lvi = (sc->lvi + 1) & 31;
-	sc->bdl[sc->lvi].addr  = sc->buf_dma[fill_buf].db_paddr;
-	sc->bdl[sc->lvi].len   = AC97_BDL_LEN;
+	sc->bdl[sc->lvi].addr = sc->buf_dma[fill_buf].db_paddr;
+	sc->bdl[sc->lvi].len = AC97_BDL_LEN;
 	sc->bdl[sc->lvi].flags = AC97_BDL_IOC;
 	nabm_wr8(sc, NABM_PO_BASE + NABM_LVI, sc->lvi);
 }
@@ -176,8 +173,7 @@ ac97_isr(void)
  * Codec initialisation
  * --------------------------------------------------------------------- */
 
-static int
-ac97_codec_init(struct ac97_softc *sc)
+static int ac97_codec_init(struct ac97_softc *sc)
 {
 	u_int32_t i;
 
@@ -185,7 +181,8 @@ ac97_codec_init(struct ac97_softc *sc)
 	nabm_wr32(sc, NABM_GLOB_CNT, NABM_GCNT_COLD);
 
 	/* Poll for primary codec ready (QEMU sets it instantly; real hw ~50 ms) */
-	for (i = 0; i < 1000; i++) {
+	for (i = 0; i < 1000; i++)
+	{
 		if (nabm_rd32(sc, NABM_GLOB_STA) & NABM_GSTA_CODEC)
 			break;
 		/* burn a few I/O reads ≈ 1 µs each */
@@ -193,7 +190,8 @@ ac97_codec_init(struct ac97_softc *sc)
 		inportByte(0x80);
 	}
 
-	if (!(nabm_rd32(sc, NABM_GLOB_STA) & NABM_GSTA_CODEC)) {
+	if (!(nabm_rd32(sc, NABM_GLOB_STA) & NABM_GSTA_CODEC))
+	{
 		kprintf("ac97: codec not ready\n");
 		return -1;
 	}
@@ -203,8 +201,10 @@ ac97_codec_init(struct ac97_softc *sc)
 
 	/* Unmute and set full volume */
 	nam_wr16(sc, NAM_MASTER_VOL, 0x0000);
-	nam_wr16(sc, NAM_HP_VOL,     0x0000);
-	nam_wr16(sc, NAM_PCM_VOL,    0x0000);
+	nam_wr16(sc, NAM_HP_VOL, 0x0000);
+	nam_wr16(sc, NAM_PCM_VOL, 0x0000);
+	sc->vol_pct = 100;
+	sc->muted = 0;
 
 	/* Enable Variable Rate Audio so userland can change sample rate via ioctl. */
 	nam_wr16(sc, NAM_EXT_AUDIO, nam_rd16(sc, NAM_EXT_AUDIO) | NAM_EXT_VRA);
@@ -220,14 +220,13 @@ ac97_codec_init(struct ac97_softc *sc)
  * DMA initialisation — allocate BDL + ping-pong buffers, start PCM out
  * --------------------------------------------------------------------- */
 
-static int
-ac97_dma_init(struct ac97_softc *sc)
+static int ac97_dma_init(struct ac97_softc *sc)
 {
 	u_int32_t i;
 
 	/* BDL: 32 entries × 8 bytes, 8-byte aligned */
-	if (dma_alloc(sizeof(struct ac97_bdle) * AC97_BDL_ENTRIES, 8,
-	    &sc->bdl_dma) != 0) {
+	if (dma_alloc(sizeof(struct ac97_bdle) * AC97_BDL_ENTRIES, 8, &sc->bdl_dma) != 0)
+	{
 		kprintf("ac97: BDL alloc failed\n");
 		return -1;
 	}
@@ -235,20 +234,22 @@ ac97_dma_init(struct ac97_softc *sc)
 	memset(sc->bdl, 0, sizeof(struct ac97_bdle) * AC97_BDL_ENTRIES);
 
 	/* Two ping-pong PCM buffers, pre-filled with silence */
-	for (i = 0; i < 2; i++) {
-		if (dma_alloc(AC97_BUF_BYTES, 4, &sc->buf_dma[i]) != 0) {
+	for (i = 0; i < 2; i++)
+	{
+		if (dma_alloc(AC97_BUF_BYTES, 4, &sc->buf_dma[i]) != 0)
+		{
 			kprintf("ac97: PCM buffer %u alloc failed\n", i);
 			return -1;
 		}
 		sc->buf[i] = (u_int8_t *)sc->buf_dma[i].db_vaddr;
 		memset(sc->buf[i], 0, AC97_BUF_BYTES);
 
-		sc->bdl[i].addr  = sc->buf_dma[i].db_paddr;
-		sc->bdl[i].len   = AC97_BDL_LEN;
+		sc->bdl[i].addr = sc->buf_dma[i].db_paddr;
+		sc->bdl[i].len = AC97_BDL_LEN;
 		sc->bdl[i].flags = AC97_BDL_IOC;
 	}
 
-	sc->lvi      = 1;
+	sc->lvi = 1;
 	sc->next_buf = 0;
 
 	/* Reset the PCM out channel */
@@ -260,21 +261,19 @@ ac97_dma_init(struct ac97_softc *sc)
 	/* Clear any stale status bits on all three DMA channels.
 	 * QEMU sets BCIS on pi/mc when it fails to open those host streams;
 	 * if we don't clear them here, IRQ 10 storms immediately after attach. */
-	nabm_wr16(sc, 0x00 + NABM_SR, 0x001E);  /* PCM in  */
-	nabm_wr16(sc, NABM_PO_BASE + NABM_SR, 0x001E);  /* PCM out */
-	nabm_wr16(sc, 0x20 + NABM_SR, 0x001E);  /* Mic     */
+	nabm_wr16(sc, 0x00 + NABM_SR, 0x001E);         /* PCM in  */
+	nabm_wr16(sc, NABM_PO_BASE + NABM_SR, 0x001E); /* PCM out */
+	nabm_wr16(sc, 0x20 + NABM_SR, 0x001E);         /* Mic     */
 
 	/* Point hardware at BDL and set LVI */
 	nabm_wr32(sc, NABM_PO_BASE + NABM_BDL_ADDR, sc->bdl_dma.db_paddr);
-	nabm_wr8(sc,  NABM_PO_BASE + NABM_LVI,      sc->lvi);
+	nabm_wr8(sc, NABM_PO_BASE + NABM_LVI, sc->lvi);
 
 	/* Enable IOC interrupt and start DMA */
-	nabm_wr8(sc, NABM_PO_BASE + NABM_CR,
-	    NABM_CR_IOCE | NABM_CR_RPBM);
+	nabm_wr8(sc, NABM_PO_BASE + NABM_CR, NABM_CR_IOCE | NABM_CR_RPBM);
 
 	sc->running = 1;
-	kprintf("ac97: DMA started, BDL phys=0x%X lvi=%u\n",
-	    sc->bdl_dma.db_paddr, sc->lvi);
+	kprintf("ac97: DMA started, BDL phys=0x%X lvi=%u\n", sc->bdl_dma.db_paddr, sc->lvi);
 	return 0;
 }
 
@@ -282,8 +281,7 @@ ac97_dma_init(struct ac97_softc *sc)
  * Ring buffer write — called from devfs write path (process context)
  * --------------------------------------------------------------------- */
 
-int
-ac97_ring_write(const char *src, int len)
+int ac97_ring_write(const char *src, int len)
 {
 	struct ac97_softc *sc = &ac97_sc;
 	u_int32_t free_space, write_len;
@@ -308,13 +306,16 @@ ac97_ring_write(const char *src, int len)
 		write_len = free_space;
 
 	{
-		u_int32_t wr   = sc->ring_wr & AC97_RING_MASK;
+		u_int32_t wr = sc->ring_wr & AC97_RING_MASK;
 		u_int32_t tail = AC97_RING_SIZE - wr;
-		if (tail >= write_len) {
+		if (tail >= write_len)
+		{
 			memcpy(sc->ring + wr, src, write_len);
-		} else {
-			memcpy(sc->ring + wr, src,        tail);
-			memcpy(sc->ring,      src + tail, write_len - tail);
+		}
+		else
+		{
+			memcpy(sc->ring + wr, src, tail);
+			memcpy(sc->ring, src + tail, write_len - tail);
 		}
 	}
 	sc->ring_wr += write_len;
@@ -325,8 +326,7 @@ ac97_ring_write(const char *src, int len)
  * devfs char_write hook — bridges ubx_device write to ring buffer
  * --------------------------------------------------------------------- */
 
-static int
-ac97_dev_write(struct ubx_device *dev, const char *buf, int len)
+static int ac97_dev_write(struct ubx_device *dev, const char *buf, int len)
 {
 	(void)dev;
 	return ac97_ring_write(buf, len);
@@ -336,19 +336,60 @@ ac97_dev_write(struct ubx_device *dev, const char *buf, int len)
  * devfs char_ioctl hook — handles AUDIO_SET_RATE / AUDIO_GET_RATE
  * --------------------------------------------------------------------- */
 
-static int
-ac97_dev_ioctl(struct ubx_device *dev, u_int32_t cmd, void *arg)
+/*
+ * Apply the cached master volume / mute to the codec.  The AC97 master volume
+ * register holds a 6-bit attenuation per channel (0 = loudest, 0x3F = silent,
+ * 1.5 dB per step) and bit 15 mutes.  Volume percent is mapped linearly onto
+ * the attenuation range.  Both Master and PCM-out are set together.
+ */
+static void ac97_apply_volume(struct ac97_softc *sc)
+{
+	u_int16_t v;
+
+	if (sc->muted || sc->vol_pct == 0)
+	{
+		v = 0x8000; /* hardware mute bit */
+	}
+	else
+	{
+		u_int8_t pct = sc->vol_pct > 100 ? 100 : sc->vol_pct;
+		u_int8_t atten = (u_int8_t)(((100 - pct) * 0x3F) / 100);
+		v = (u_int16_t)((atten << 8) | atten);
+	}
+	nam_wr16(sc, NAM_MASTER_VOL, v);
+	nam_wr16(sc, NAM_PCM_VOL, v);
+}
+
+static int ac97_dev_ioctl(struct ubx_device *dev, u_int32_t cmd, void *arg)
 {
 	struct ac97_softc *sc = &ac97_sc;
 	(void)dev;
 
-	switch (cmd) {
-	case AUDIO_SET_RATE:
-		nam_wr16(sc, NAM_PCM_RATE, (u_int16_t)(*(u_int32_t *)arg));
-		return (0);
-	case AUDIO_GET_RATE:
-		*(u_int32_t *)arg = nam_rd16(sc, NAM_PCM_RATE);
-		return (0);
+	switch (cmd)
+	{
+		case AUDIO_SET_RATE:
+			nam_wr16(sc, NAM_PCM_RATE, (u_int16_t)(*(u_int32_t *)arg));
+			return (0);
+		case AUDIO_GET_RATE:
+			*(u_int32_t *)arg = nam_rd16(sc, NAM_PCM_RATE);
+			return (0);
+		case AUDIO_SET_VOLUME:
+		{
+			u_int32_t pct = *(u_int32_t *)arg;
+			sc->vol_pct = (u_int8_t)(pct > 100 ? 100 : pct);
+			ac97_apply_volume(sc);
+			return (0);
+		}
+		case AUDIO_GET_VOLUME:
+			*(u_int32_t *)arg = sc->vol_pct;
+			return (0);
+		case AUDIO_SET_MUTE:
+			sc->muted = (*(u_int32_t *)arg) ? 1 : 0;
+			ac97_apply_volume(sc);
+			return (0);
+		case AUDIO_GET_MUTE:
+			*(u_int32_t *)arg = sc->muted;
+			return (0);
 	}
 	return (-1);
 }
@@ -357,55 +398,53 @@ ac97_dev_ioctl(struct ubx_device *dev, u_int32_t cmd, void *arg)
  * Probe / Attach
  * --------------------------------------------------------------------- */
 
-static int
-ac97_ubx_probe(struct ubx_device *dev)
+static int ac97_ubx_probe(struct ubx_device *dev)
 {
 	if (dev->dev_vendor == AC97_VENDOR && dev->dev_device_id == AC97_DEVICE)
 		return 0;
 	return -1;
 }
 
-static int
-ac97_ubx_attach(struct ubx_device *dev)
+static int ac97_ubx_attach(struct ubx_device *dev)
 {
 	struct ac97_softc *sc = &ac97_sc;
 	struct ubx_resource *res;
 	u_int32_t i;
 
-	kprintf("ac97: attaching (vendor=0x%X dev=0x%X)\n",
-	    dev->dev_vendor, dev->dev_device_id);
+	kprintf("ac97: attaching (vendor=0x%X dev=0x%X)\n", dev->dev_vendor, dev->dev_device_id);
 
 	memset(sc, 0, sizeof(*sc));
 	sc->sc_dev = dev;
 
 	/* Extract BARs (NAM first, NABM second) and IRQ from resources */
-	for (i = 0; i < (u_int32_t)dev->dev_nres; i++) {
+	for (i = 0; i < (u_int32_t)dev->dev_nres; i++)
+	{
 		res = &dev->dev_res[i];
-		if (res->r_type == UBX_RES_IOPORT) {
+		if (res->r_type == UBX_RES_IOPORT)
+		{
 			if (sc->nam_base == 0)
 				sc->nam_base = (u_int16_t)res->r_start;
 			else if (sc->nabm_base == 0)
 				sc->nabm_base = (u_int16_t)res->r_start;
-		} else if (res->r_type == UBX_RES_IRQ && sc->irq == 0) {
+		}
+		else if (res->r_type == UBX_RES_IRQ && sc->irq == 0)
+		{
 			sc->irq = (u_int8_t)res->r_start;
 		}
 	}
 
-	if (sc->nam_base == 0 || sc->nabm_base == 0) {
-		kprintf("ac97: missing BARs (nam=0x%X nabm=0x%X)\n",
-		    sc->nam_base, sc->nabm_base);
+	if (sc->nam_base == 0 || sc->nabm_base == 0)
+	{
+		kprintf("ac97: missing BARs (nam=0x%X nabm=0x%X)\n", sc->nam_base, sc->nabm_base);
 		return -1;
 	}
 
-	kprintf("ac97: NAM=0x%X NABM=0x%X IRQ=%u\n",
-	    sc->nam_base, sc->nabm_base, sc->irq);
+	kprintf("ac97: NAM=0x%X NABM=0x%X IRQ=%u\n", sc->nam_base, sc->nabm_base, sc->irq);
 
 	/* Enable PCI I/O space (bit 0) and bus mastering (bit 2) */
 	{
-		u_int32_t cmd = pciRead(dev->dev_bus, dev->dev_slot,
-		    dev->dev_func, 0x04, 2);
-		pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func,
-		    0x04, cmd | 0x05, 2);
+		u_int32_t cmd = pciRead(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, 2);
+		pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd | 0x05, 2);
 	}
 
 	/* Register the IRQ handler */
@@ -432,8 +471,8 @@ ac97_ubx_attach(struct ubx_device *dev)
  * --------------------------------------------------------------------- */
 
 struct ubx_driver ac97_ubx_driver = {
-	.drv_name   = "ac97",
-	.drv_probe  = ac97_ubx_probe,
-	.drv_attach = ac97_ubx_attach,
-	.drv_detach = NULL,
+    .drv_name = "ac97",
+    .drv_probe = ac97_ubx_probe,
+    .drv_attach = ac97_ubx_attach,
+    .drv_detach = NULL,
 };
