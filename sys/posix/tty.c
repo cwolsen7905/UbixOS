@@ -95,6 +95,8 @@ static void tty_init_termios(tty_term *t)
 	t->t_winsize.ws_col = 80;
 	t->t_winsize.ws_xpixel = 0;
 	t->t_winsize.ws_ypixel = 0;
+	t->t_cols = 80;
+	t->t_rows = 25;
 }
 
 int tty_init()
@@ -116,6 +118,8 @@ int tty_init()
 		terms[i].tty_pointer = terms[i].tty_buffer;
 		terms[i].tty_x = 0x0;
 		terms[i].tty_y = 0x0;
+		terms[i].t_cols = 80;
+		terms[i].t_rows = 25;
 		terms[i].tty_colour = 0x0A + i;
 		terms[i].stdinSize = 0;
 		terms[i].t_linelen = 0;
@@ -213,12 +217,15 @@ static const u_int8_t ansi_to_vga[8] = {0, 4, 2, 6, 1, 5, 3, 7};
 static void tty_scroll(tty_term *term)
 {
 	unsigned int i;
-	for (i = 0; i < 160u * 24u; i++)
-		term->tty_pointer[i] = term->tty_pointer[i + 160];
-	for (i = 0; i < 80u; i++)
+	unsigned int cols = term->t_cols, rows = term->t_rows;
+	unsigned int stride = cols * 2u;          /* bytes per row */
+	unsigned int last = stride * (rows - 1u); /* byte offset of the last row */
+	for (i = 0; i < last; i++)
+		term->tty_pointer[i] = term->tty_pointer[i + stride];
+	for (i = 0; i < cols; i++)
 	{
-		term->tty_pointer[(160u * 24u) + (i * 2u)] = 0x20;
-		term->tty_pointer[(160u * 24u) + (i * 2u) + 1] = term->tty_colour;
+		term->tty_pointer[last + (i * 2u)] = 0x20;
+		term->tty_pointer[last + (i * 2u) + 1] = term->tty_colour;
 	}
 }
 
@@ -227,10 +234,12 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 {
 	unsigned int linear, row, col, i;
 	unsigned int p0, p1;
+	unsigned int cols = term->t_cols, rows = term->t_rows;
+	unsigned int stride = cols * 2u; /* bytes per row */
 
 	linear = bufferOffset / 2u;
-	row = linear / 80u;
-	col = linear % 80u;
+	row = linear / cols;
+	col = linear % cols;
 
 	p0 = term->t_esc_params[0];
 	p1 = term->t_esc_params[1];
@@ -241,58 +250,58 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 			if (p0 == 0)
 				p0 = 1;
 			row = (row >= p0) ? row - p0 : 0;
-			bufferOffset = (row * 80u + col) * 2u;
+			bufferOffset = (row * cols + col) * 2u;
 			break;
 		case 'B': /* cursor down */
 			if (p0 == 0)
 				p0 = 1;
 			row += p0;
-			if (row >= 25u)
-				row = 24u;
-			bufferOffset = (row * 80u + col) * 2u;
+			if (row >= rows)
+				row = rows - 1u;
+			bufferOffset = (row * cols + col) * 2u;
 			break;
 		case 'C': /* cursor right */
 			if (p0 == 0)
 				p0 = 1;
 			col += p0;
-			if (col >= 80u)
-				col = 79u;
-			bufferOffset = (row * 80u + col) * 2u;
+			if (col >= cols)
+				col = cols - 1u;
+			bufferOffset = (row * cols + col) * 2u;
 			break;
 		case 'D': /* cursor left */
 			if (p0 == 0)
 				p0 = 1;
 			col = (col >= p0) ? col - p0 : 0;
-			bufferOffset = (row * 80u + col) * 2u;
+			bufferOffset = (row * cols + col) * 2u;
 			break;
 		case 'G': /* cursor horizontal absolute (1-based col) */
 			col = (p0 > 0u ? p0 - 1u : 0u);
-			if (col >= 80u)
-				col = 79u;
-			bufferOffset = (row * 80u + col) * 2u;
+			if (col >= cols)
+				col = cols - 1u;
+			bufferOffset = (row * cols + col) * 2u;
 			break;
 		case 'H':
 		case 'f': /* cursor position: row;col (1-based) */
 			row = (p0 > 0u ? p0 - 1u : 0u);
 			col = (p1 > 0u ? p1 - 1u : 0u);
-			if (row >= 25u)
-				row = 24u;
-			if (col >= 80u)
-				col = 79u;
-			bufferOffset = (row * 80u + col) * 2u;
+			if (row >= rows)
+				row = rows - 1u;
+			if (col >= cols)
+				col = cols - 1u;
+			bufferOffset = (row * cols + col) * 2u;
 			break;
 		case 'J': /* erase display */
 			switch (p0)
 			{
 				case 0: /* cursor to end */
-					for (i = bufferOffset; i < 160u * 25u; i += 2u)
+					for (i = bufferOffset; i < stride * rows; i += 2u)
 					{
 						term->tty_pointer[i] = ' ';
 						term->tty_pointer[i + 1] = term->tty_colour;
 					}
 					break;
 				case 1: /* start to cursor */
-					for (i = 0; i <= bufferOffset && i + 1 < 160u * 25u; i += 2u)
+					for (i = 0; i <= bufferOffset && i + 1 < stride * rows; i += 2u)
 					{
 						term->tty_pointer[i] = ' ';
 						term->tty_pointer[i + 1] = term->tty_colour;
@@ -300,7 +309,7 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 					break;
 				case 2:
 				case 3: /* whole screen */
-					for (i = 0; i < 160u * 25u; i += 2u)
+					for (i = 0; i < stride * rows; i += 2u)
 					{
 						term->tty_pointer[i] = ' ';
 						term->tty_pointer[i + 1] = term->tty_colour;
@@ -313,24 +322,24 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 			switch (p0)
 			{
 				case 0: /* cursor to end of line */
-					for (i = col; i < 80u; i++)
+					for (i = col; i < cols; i++)
 					{
-						term->tty_pointer[row * 160u + i * 2u] = ' ';
-						term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+						term->tty_pointer[row * stride + i * 2u] = ' ';
+						term->tty_pointer[row * stride + i * 2u + 1] = term->tty_colour;
 					}
 					break;
 				case 1: /* start of line to cursor */
 					for (i = 0; i <= col; i++)
 					{
-						term->tty_pointer[row * 160u + i * 2u] = ' ';
-						term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+						term->tty_pointer[row * stride + i * 2u] = ' ';
+						term->tty_pointer[row * stride + i * 2u + 1] = term->tty_colour;
 					}
 					break;
 				case 2: /* whole line */
-					for (i = 0; i < 80u; i++)
+					for (i = 0; i < cols; i++)
 					{
-						term->tty_pointer[row * 160u + i * 2u] = ' ';
-						term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+						term->tty_pointer[row * stride + i * 2u] = ' ';
+						term->tty_pointer[row * stride + i * 2u + 1] = term->tty_colour;
 					}
 					break;
 			}
@@ -340,21 +349,21 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 			unsigned int j;
 			if (p0 == 0)
 				p0 = 1;
-			if (p0 > 25u - row)
-				p0 = 25u - row;
-			for (i = 25u; i > row + p0; i--)
+			if (p0 > rows - row)
+				p0 = rows - row;
+			for (i = rows; i > row + p0; i--)
 			{
-				unsigned int dst = (i - 1) * 160u;
-				unsigned int src = (i - 1 - p0) * 160u;
-				for (j = 0; j < 160u; j++)
+				unsigned int dst = (i - 1) * stride;
+				unsigned int src = (i - 1 - p0) * stride;
+				for (j = 0; j < stride; j++)
 					term->tty_pointer[dst + j] = term->tty_pointer[src + j];
 			}
 			for (i = row; i < row + p0; i++)
 			{
-				for (j = 0; j < 80u; j++)
+				for (j = 0; j < cols; j++)
 				{
-					term->tty_pointer[i * 160u + j * 2u] = ' ';
-					term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
+					term->tty_pointer[i * stride + j * 2u] = ' ';
+					term->tty_pointer[i * stride + j * 2u + 1] = term->tty_colour;
 				}
 			}
 			break;
@@ -364,21 +373,21 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 			unsigned int j;
 			if (p0 == 0)
 				p0 = 1;
-			if (p0 > 25u - row)
-				p0 = 25u - row;
-			for (i = row; i + p0 < 25u; i++)
+			if (p0 > rows - row)
+				p0 = rows - row;
+			for (i = row; i + p0 < rows; i++)
 			{
-				unsigned int dst = i * 160u;
-				unsigned int src = (i + p0) * 160u;
-				for (j = 0; j < 160u; j++)
+				unsigned int dst = i * stride;
+				unsigned int src = (i + p0) * stride;
+				for (j = 0; j < stride; j++)
 					term->tty_pointer[dst + j] = term->tty_pointer[src + j];
 			}
-			for (i = 25u - p0; i < 25u; i++)
+			for (i = rows - p0; i < rows; i++)
 			{
-				for (j = 0; j < 80u; j++)
+				for (j = 0; j < cols; j++)
 				{
-					term->tty_pointer[i * 160u + j * 2u] = ' ';
-					term->tty_pointer[i * 160u + j * 2u + 1] = term->tty_colour;
+					term->tty_pointer[i * stride + j * 2u] = ' ';
+					term->tty_pointer[i * stride + j * 2u + 1] = term->tty_colour;
 				}
 			}
 			break;
@@ -386,34 +395,35 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 		case '@': /* insert characters — shift chars at cursor right by p0 */
 			if (p0 == 0)
 				p0 = 1;
-			if (p0 > 80u - col)
-				p0 = 80u - col;
-			for (i = 80u; i > col + p0; i--)
+			if (p0 > cols - col)
+				p0 = cols - col;
+			for (i = cols; i > col + p0; i--)
 			{
-				term->tty_pointer[row * 160u + (i - 1) * 2u] =
-				    term->tty_pointer[row * 160u + (i - 1 - p0) * 2u];
-				term->tty_pointer[row * 160u + (i - 1) * 2u + 1] =
-				    term->tty_pointer[row * 160u + (i - 1 - p0) * 2u + 1];
+				term->tty_pointer[row * stride + (i - 1) * 2u] =
+				    term->tty_pointer[row * stride + (i - 1 - p0) * 2u];
+				term->tty_pointer[row * stride + (i - 1) * 2u + 1] =
+				    term->tty_pointer[row * stride + (i - 1 - p0) * 2u + 1];
 			}
 			for (i = col; i < col + p0; i++)
 			{
-				term->tty_pointer[row * 160u + i * 2u] = ' ';
-				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+				term->tty_pointer[row * stride + i * 2u] = ' ';
+				term->tty_pointer[row * stride + i * 2u + 1] = term->tty_colour;
 			}
 			break;
 		case 'P': /* delete characters (shift left) */
 			if (p0 == 0)
 				p0 = 1;
-			for (i = col; i + p0 < 80u; i++)
+			for (i = col; i + p0 < cols; i++)
 			{
-				term->tty_pointer[row * 160u + i * 2u] = term->tty_pointer[row * 160u + (i + p0) * 2u];
-				term->tty_pointer[row * 160u + i * 2u + 1] =
-				    term->tty_pointer[row * 160u + (i + p0) * 2u + 1];
+				term->tty_pointer[row * stride + i * 2u] =
+				    term->tty_pointer[row * stride + (i + p0) * 2u];
+				term->tty_pointer[row * stride + i * 2u + 1] =
+				    term->tty_pointer[row * stride + (i + p0) * 2u + 1];
 			}
-			for (i = 80u - p0; i < 80u; i++)
+			for (i = cols - p0; i < cols; i++)
 			{
-				term->tty_pointer[row * 160u + i * 2u] = ' ';
-				term->tty_pointer[row * 160u + i * 2u + 1] = term->tty_colour;
+				term->tty_pointer[row * stride + i * 2u] = ' ';
+				term->tty_pointer[row * stride + i * 2u + 1] = term->tty_colour;
 			}
 			break;
 		case 'm':
@@ -498,6 +508,8 @@ static unsigned int tty_csi_execute(tty_term *term, unsigned int bufferOffset, c
 int tty_print(char *string, tty_term *term)
 {
 	unsigned int bufferOffset = 0x0, character = 0x0;
+	unsigned int cols = term->t_cols, rows = term->t_rows;
+	unsigned int stride = cols * 2u; /* bytes per row */
 
 	/* IXON: output suspended by Ctrl-S */
 	if (term->t_stopped)
@@ -527,17 +539,17 @@ int tty_print(char *string, tty_term *term)
 					break;
 				case 'M':
 				{ /* reverse index — scroll down if at top */
-					unsigned int row = (bufferOffset / 2u) / 80u;
+					unsigned int row = (bufferOffset / 2u) / cols;
 					if (row > 0u)
 					{
-						bufferOffset -= 160u;
+						bufferOffset -= stride;
 					}
 					else
 					{
 						unsigned int j;
-						for (j = 160u * 24u; j >= 160u; j--)
-							term->tty_pointer[j] = term->tty_pointer[j - 160u];
-						for (j = 0; j < 80u; j++)
+						for (j = stride * (rows - 1u); j >= stride; j--)
+							term->tty_pointer[j] = term->tty_pointer[j - stride];
+						for (j = 0; j < cols; j++)
 						{
 							term->tty_pointer[j * 2u] = ' ';
 							term->tty_pointer[j * 2u + 1] = term->tty_colour;
@@ -586,7 +598,7 @@ int tty_print(char *string, tty_term *term)
 			bufferOffset = tty_csi_execute(term, bufferOffset, (char)character);
 			term->t_esc_state = 0;
 			/* Skip scroll check for control commands */
-			if (bufferOffset < 160u * 25u)
+			if (bufferOffset < stride * rows)
 				continue;
 			/* Fall through to scroll if somehow past end */
 		}
@@ -604,16 +616,16 @@ int tty_print(char *string, tty_term *term)
 				term->t_esc_state = 1;
 				break;
 			case '\r': /* carriage return — column 0, same row */
-				bufferOffset = (bufferOffset / 160u) * 160u;
+				bufferOffset = (bufferOffset / stride) * stride;
 				break;
 			case '\n':
 				/* Phase 9: OPOST+ONLCR → col 0 of next row; OPOST only → same col, next row */
 				if (term->t_termios.c_oflag & OPOST)
 				{
 					if (term->t_termios.c_oflag & ONLCR)
-						bufferOffset = (bufferOffset / 160u) * 160u + 160u; /* CR+LF */
+						bufferOffset = (bufferOffset / stride) * stride + stride; /* CR+LF */
 					else
-						bufferOffset += 160u; /* LF only — stay in same column */
+						bufferOffset += stride; /* LF only — stay in same column */
 				}
 				break;
 			case '\b': /* move cursor left without erasing */
@@ -622,9 +634,9 @@ int tty_print(char *string, tty_term *term)
 				break;
 			case '\t':
 			{ /* advance to next 8-column tab stop */
-				unsigned int col = (bufferOffset / 2u) % 80u;
+				unsigned int col = (bufferOffset / 2u) % cols;
 				unsigned int spaces = 8u - (col % 8u);
-				while (spaces-- > 0 && (bufferOffset / 2u) % 80u < 79u)
+				while (spaces-- > 0 && (bufferOffset / 2u) % cols < cols - 1u)
 				{
 					term->tty_pointer[bufferOffset++] = ' ';
 					term->tty_pointer[bufferOffset++] = term->tty_colour;
@@ -641,10 +653,10 @@ int tty_print(char *string, tty_term *term)
 		} /* switch */
 
 		/* Scroll if past last line */
-		if (bufferOffset >= 160u * 25u)
+		if (bufferOffset >= stride * rows)
 		{
 			tty_scroll(term);
-			bufferOffset -= 160u;
+			bufferOffset -= stride;
 		}
 	} /* while */
 
@@ -938,7 +950,7 @@ int pty_alloc(void)
 		tty_init_termios(t);
 
 		/* Blank the cell grid: space glyph + default attribute. */
-		for (i = 0; i < 80 * 25; i++)
+		for (i = 0; i < (int)t->t_cols * t->t_rows; i++)
 		{
 			t->tty_buffer[i * 2] = ' ';
 			t->tty_buffer[i * 2 + 1] = (char)0x07;
@@ -993,7 +1005,7 @@ int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y)
 		return (-1);
 	if (dst == NULL)
 		return (-1);
-	memcpy(dst, terms[slot].tty_buffer, 80 * 25 * 2);
+	memcpy(dst, terms[slot].tty_buffer, (size_t)terms[slot].t_cols * terms[slot].t_rows * 2);
 	if (x != NULL)
 		*x = terms[slot].tty_x;
 	if (y != NULL)

@@ -72,6 +72,8 @@ typedef struct tty_termNode
 	struct termios t_termios; /* full termios state for TIOCGETA/TIOCSETA */
 	struct winsize t_winsize; /* window size for TIOCGWINSZ/TIOCSWINSZ */
 	pid_t t_pgrp;             /* foreground process group (TIOCGPGRP/TIOCSPGRP) */
+	u_int16_t t_cols;         /* active grid width  (cells); VGA consoles = 80 */
+	u_int16_t t_rows;         /* active grid height (cells); VGA consoles = 25 */
 	/* ANSI/VT100 escape sequence parser */
 	u_int8_t t_esc_state;      /* 0=normal 1=ESC_seen 2=CSI_collecting */
 	u_int8_t t_esc_priv;       /* 1 if '?' seen after CSI '[' */
