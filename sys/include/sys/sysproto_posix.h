@@ -306,6 +306,14 @@ struct sys_umask_args
 	char newmask_r_[PADR_(int)];
 };
 
+struct sys_utimensat_args
+{
+	char fd_l_[PADL_(int)];        int fd;        char fd_r_[PADR_(int)];
+	char path_l_[PADL_(char *)];   char *path;    char path_r_[PADR_(char *)];
+	char times_l_[PADL_(void *)];  void *times;   char times_r_[PADR_(void *)];
+	char flag_l_[PADL_(int)];      int flag;      char flag_r_[PADR_(int)];
+};
+
 struct sys_sysctl_args
 {
 	char name_l_[PADL_(int *)];
@@ -1196,6 +1204,7 @@ int sys_fseek(struct thread *td, struct sys_fseek_args *);
 int sys_lseek(struct thread *td, struct sys_lseek_args *);
 int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *);
 int sys_umask(struct thread *td, struct sys_umask_args *);
+int sys_utimensat(struct thread *td, struct sys_utimensat_args *);
 
 int sys_sched_yield(struct thread *td, void *);
 int sys_nanosleep(struct thread *td, void *);

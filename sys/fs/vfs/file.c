@@ -316,6 +316,39 @@ int sys_umask(struct thread *td, struct sys_umask_args *args) {
     return (0);
 }
 
+/**
+ * sys_utimensat — POSIX utimensat(2), FreeBSD ABI syscall 547.
+ *
+ * Set access + modification times on a file.  UbixOS doesn't track
+ * per-file timestamps yet (stat synthesises 1970-01-01 for everything),
+ * so the actual set is a no-op for paths that resolve.
+ *
+ * The path-existence check matters even though we don't store the
+ * times — busybox touch calls utimensat first to detect "no such
+ * file" and falls back to open(O_CREAT) only when this returns
+ * ENOENT.  Returning 0 unconditionally would make touch think the
+ * file already existed and skip the create.
+ *
+ * @return 0 if the path resolves, -ENOENT otherwise.  AT_FDCWD only
+ *         today; non-zero fd arguments are not yet supported.
+ */
+int sys_utimensat(struct thread *td, struct sys_utimensat_args *args) {
+    if (args->path == NULL) {
+        td->td_retval[0] = -EFAULT;
+        return (EFAULT);
+    }
+    /* Probe existence: open for read.  fopen returns NULL when the
+     * path doesn't resolve — exactly the signal busybox touch needs. */
+    fileDescriptor_t *fp = fopen(args->path, "r");
+    if (fp == NULL) {
+        td->td_retval[0] = -ENOENT;
+        return (ENOENT);
+    }
+    fclose(fp);
+    td->td_retval[0] = 0;
+    return (0);
+}
+
 int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
     char newcwd[1024];
     size_t len;
@@ -900,7 +933,7 @@ int unlink(const char *node) {
     struct vfs_mountPoint *mp = 0x0;
 
     if (node == NULL || node[0] == '\0')
-        return (0x0);
+        return (-EINVAL);
 
     if (node[0] != '/')
         snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, node);
@@ -909,10 +942,8 @@ int unlink(const char *node) {
     fullpath[sizeof(fullpath) - 1] = '\0';
 
     mp = vfs_findMount(fullpath);
-    if (mp == 0x0) {
-        kprintf("DBG: Mount Point Bad");
-        return (0x0);
-    }
+    if (mp == 0x0)
+        return (-ENOENT);
 
     size_t mlen = strlen(mp->mountPoint);
     fs_path = (mlen > 1) ? fullpath + mlen : fullpath;
@@ -920,11 +951,24 @@ int unlink(const char *node) {
 
     if (mp->fs->vfsUnlink == NULL) {
         klog(KLOG_ERR, "unlink: filesystem does not support unlink for %s", fs_path);
-        return (0x0);
+        return (-ENOSYS);
     }
-    mp->fs->vfsUnlink(fs_path, mp);
+    /* Distinguish "no such file" from other failures so rm reports a
+     * sensible errno.  Probe with fopen first — FAT's unlink path
+     * collapses both cases to -1, and busybox rm wants to see ENOENT
+     * specifically for the "cannot remove '...': No such file" message. */
+    {
+        fileDescriptor_t *probe = fopen(fullpath, "r");
+        if (probe == NULL)
+            return (-ENOENT);
+        fclose(probe);
+    }
+    /* Propagate the FS result — callers like mv's copy+unlink fallback
+     * and rm need to know whether the entry actually went away. */
+    if (mp->fs->vfsUnlink(fs_path, mp) != 0)
+        return (-EIO);
 
-    return (0x0);
+    return (0);
 }
 
 kDIR_t *vfs_opendir(const char *path) {

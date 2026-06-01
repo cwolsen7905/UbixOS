@@ -983,13 +983,9 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)
 
 int sys_unlink(struct thread *td, struct sys_unlink_args *uap)
 {
-	int error = 0x0;
-	td->td_retval[0] = unlink(uap->path);
-	if (td->td_retval[0] != 0x0)
-	{
-		kprintf("[%s:%i]Path: %s", __FILE__, __LINE__, uap->path);
-	}
-	return (error);
+	int r = unlink(uap->path);
+	td->td_retval[0] = r;
+	return (r == 0 ? 0 : -r);
 }
 
 /*

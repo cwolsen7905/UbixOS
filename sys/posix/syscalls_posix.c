@@ -584,7 +584,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "procctl", sys_invalid, SYSCALL_NOTIMP},                                                                /* 544 - Invalid */
     {0, "ppoll", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 545 - Invalid */
     {0, "futimens", sys_invalid, SYSCALL_NOTIMP},                                                               /* 546 - Invalid */
-    {0, "utimensat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 547 - Invalid */
+    {ARG_COUNT(sys_utimensat_args), "utimensat", (sys_call_t *)sys_utimensat, SYSCALL_VALID},                  /* 547 - sys_utimensat */
     {0, "numa_getaffinity", sys_invalid, SYSCALL_NOTIMP},                                                       /* 548 - Invalid */
     {0, "num_setaffinity", sys_invalid, SYSCALL_NOTIMP},                                                        /* 549 - Invalid */
     {0, "fdatasync", sys_invalid, SYSCALL_NOTIMP},                                                              /* 550 - Invalid */
