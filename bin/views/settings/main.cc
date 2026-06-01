@@ -51,6 +51,8 @@
 #include <ubistry/ubistry.h>
 #include <api/netcfg.h>
 #include <api/display.h>
+#include <api/ubix.h>
+#include <audio/audio.h>
 #include <sys/kbd.h>
 
 extern char **environ; /* session env, forwarded to launched helpers */
@@ -95,13 +97,14 @@ extern char **environ; /* session env, forwarded to launched helpers */
 #define APPLY_H 24
 
 /* Sidebar categories (index == pane id); Settings opens on General. */
-static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network", "Display", "About"};
+static const char *g_pane_labels[] = {"General", "Desktop", "Appearance", "Network", "Display", "Sound", "About"};
 #define PANE_GENERAL 0
 #define PANE_DESKTOP 1
 #define PANE_APPEARANCE 2
 #define PANE_NETWORK 3
 #define PANE_DISPLAY 4
-#define PANE_ABOUT 5
+#define PANE_SOUND 5
+#define PANE_ABOUT 6
 #define NUM_PANES ((int)(sizeof(g_pane_labels) / sizeof(g_pane_labels[0])))
 
 /* System identity (uname), read once at startup for the General/About panes. */
@@ -146,6 +149,11 @@ static bool g_thumb_ok = false;
 static int g_solid[3] = {0x2C, 0x60, 0xA8};
 static int g_bar[3] = {0x1A, 0x1A, 0x2E};
 static int g_accent[3] = {0x28, 0x48, 0x70}; /* window title-bar accent */
+
+/* Sound pane state: master volume 0..100 + mute, mirrored from the AC97 codec. */
+static int g_volume = 100;
+static bool g_muted = false;
+static bool g_sound_loaded = false;
 
 /* Network pane state: dotted-quad strings, editable in static mode. */
 static int g_net_mode = NM_DHCP;
@@ -743,15 +751,19 @@ static void draw_general(ogSurface &surf, ogScalableFont &font)
 	font.PutString(surf, CONTENT_X, CONTENT_TOP + 120, "your desktop, network and display.");
 }
 
+/* About pane: the value column is offset far enough that the longest label
+ * ("Operating System") never overlaps the value with the proportional font. */
+#define ABOUT_VAL_X (CONTENT_X + 160)
+
 static void draw_about(ogSurface &surf, ogScalableFont &font)
 {
-	int y = CONTENT_TOP + 30;
+	int y = CONTENT_TOP + 28;
 	auto row = [&](const char *k, const char *v)
 	{
 		set_color(font, 0x00A0B0C0, BG);
 		font.PutString(surf, CONTENT_X, y, k);
 		set_color(font, 0x00FFFFFF, BG);
-		font.PutString(surf, CONTENT_X + 120, y, v);
+		font.PutString(surf, ABOUT_VAL_X, y, v);
 		y += 20;
 	};
 
@@ -765,8 +777,122 @@ static void draw_about(ogSurface &surf, ogScalableFont &font)
 	}
 	row("Logged in as", session_user());
 
+	/* Live system vitals (uptime + physical memory) via the sysinfo syscall. */
+	struct ubix_sysinfo si;
+	if (ubix_sysinfo(&si) == 0)
+	{
+		char buf[80];
+		unsigned int u = si.uptime_sec;
+		unsigned int d = u / 86400, h = (u % 86400) / 3600, m = (u % 3600) / 60, s = u % 60;
+		if (d > 0)
+			snprintf(buf, sizeof(buf), "%ud %uh %um %us", d, h, m, s);
+		else if (h > 0)
+			snprintf(buf, sizeof(buf), "%uh %um %us", h, m, s);
+		else
+			snprintf(buf, sizeof(buf), "%um %us", m, s);
+		row("Uptime", buf);
+
+		unsigned long long pg = (unsigned long long)si.page_size;
+		unsigned long tot_mb = (unsigned long)((unsigned long long)si.total_pages * pg / (1024ULL * 1024));
+		unsigned long free_mb = (unsigned long)((unsigned long long)si.free_pages * pg / (1024ULL * 1024));
+		snprintf(buf, sizeof(buf), "%lu MB total, %lu MB free", tot_mb, free_mb);
+		row("Memory", buf);
+	}
+
 	set_color(font, 0x0080909C, BG);
 	font.PutString(surf, CONTENT_X, y + 14, "(C) 2002-2026 The UbixOS Project");
+}
+
+/* Sound pane layout. */
+#define SND_TRACK_Y SUB_TOP
+#define SND_MUTE_Y (SUB_TOP + 44)
+#define SND_BOX 16
+
+/* Read the current master volume/mute from the AC97 codec (once). */
+static void sound_load()
+{
+	g_sound_loaded = true;
+	int fd = audio_open("/dev/audio");
+	if (fd < 0)
+		return;
+	uint32_t v = 100, m = 0;
+	if (audio_get_volume(fd, &v) == 0)
+		g_volume = (int)v;
+	if (audio_get_mute(fd, &m) == 0)
+		g_muted = (m != 0);
+	audio_close(fd);
+}
+
+/* Push the current volume/mute to the codec and persist it for the record. */
+static void sound_apply()
+{
+	int fd = audio_open("/dev/audio");
+	if (fd >= 0)
+	{
+		audio_set_volume(fd, (uint32_t)g_volume);
+		audio_set_mute(fd, g_muted ? 1u : 0u);
+		audio_close(fd);
+	}
+	ubistry_set_int("audio/volume", g_volume);
+	ubistry_set_int("audio/mute", g_muted ? 1 : 0);
+}
+
+static void draw_sound(ogSurface &surf, ogScalableFont &font)
+{
+	if (!g_sound_loaded)
+		sound_load();
+
+	set_color(font, 0x00A0B0C0, BG);
+	font.PutString(surf, CONTENT_X, CONTENT_TOP + 22, "Master volume");
+
+	/* Slider track with a filled level and a position marker. */
+	int ty = SND_TRACK_Y;
+	surf.ogFillRect(PICK_X, ty, PICK_X + PICK_W, ty + 12, 0x00303A46u);
+	int fillw = g_volume * PICK_W / 100;
+	uint32_t fillc = g_muted ? 0x00555A66u : 0x00409CFFu;
+	if (fillw > 0)
+		surf.ogFillRect(PICK_X, ty, PICK_X + fillw, ty + 12, fillc);
+	surf.ogRect(PICK_X, ty, PICK_X + PICK_W, ty + 12, 0x00586470u);
+	int mx = PICK_X + g_volume * (PICK_W - 1) / 100;
+	surf.ogFillRect(mx - 1, ty - 2, mx + 1, ty + 14, 0x00FFFFFFu);
+
+	char pbuf[8];
+	snprintf(pbuf, sizeof(pbuf), "%d%%", g_volume);
+	set_color(font, 0x00FFFFFF, BG);
+	font.PutString(surf, PICK_X + PICK_W + 14, ty - 1, pbuf);
+
+	/* Mute checkbox. */
+	int my = SND_MUTE_Y;
+	surf.ogFillRect(CONTENT_X, my, CONTENT_X + SND_BOX, my + SND_BOX, 0x00303A46u);
+	surf.ogRect(CONTENT_X, my, CONTENT_X + SND_BOX, my + SND_BOX, 0x00586470u);
+	if (g_muted)
+		surf.ogFillRect(CONTENT_X + 3, my + 3, CONTENT_X + SND_BOX - 3, my + SND_BOX - 3, 0x00409CFFu);
+	set_color(font, 0x00C0C0C0, BG);
+	font.PutString(surf, CONTENT_X + SND_BOX + 10, my + 1, "Mute");
+}
+
+static bool sound_click(int x, int y)
+{
+	int ty = SND_TRACK_Y;
+	if (y >= ty - 2 && y <= ty + 14 && x >= PICK_X && x <= PICK_X + PICK_W)
+	{
+		int v = (x - PICK_X) * 100 / PICK_W;
+		if (v < 0)
+			v = 0;
+		if (v > 100)
+			v = 100;
+		g_volume = v;
+		sound_apply();
+		return true;
+	}
+	int my = SND_MUTE_Y;
+	if (x >= CONTENT_X && x <= CONTENT_X + SND_BOX + 60 && y >= my && y <= my + SND_BOX)
+	{
+		g_muted = !g_muted;
+		sound_apply();
+		return true;
+	}
+	return false;
 }
 
 static void draw_content(ogSurface &surf, ogScalableFont &font, int pane)
@@ -798,6 +924,12 @@ static void draw_content(ogSurface &surf, ogScalableFont &font, int pane)
 	if (pane == PANE_GENERAL)
 	{
 		draw_general(surf, font);
+		return;
+	}
+
+	if (pane == PANE_SOUND)
+	{
+		draw_sound(surf, font);
 		return;
 	}
 
@@ -1169,6 +1301,11 @@ int main(int argc, char **argv)
 			else if (active == PANE_NETWORK)
 			{
 				if (network_click(me->x, me->y))
+					render();
+			}
+			else if (active == PANE_SOUND)
+			{
+				if (sound_click(me->x, me->y))
 					render();
 			}
 			else if (active == PANE_DISPLAY)

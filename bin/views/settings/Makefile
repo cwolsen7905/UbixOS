@@ -5,5 +5,6 @@ include ../../Makefile.incl
 
 BINARY  = settings
 OBJS    = main.o
+EXTRA_LIBS = ${OBJ_DIR}/lib/libaudio.a
 
 .include "${UBIX_MK}/ubix.musl.cxx.ubix.prog.mk"
