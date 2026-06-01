@@ -56,12 +56,19 @@ asm(".text                            \n"
     "_do_ptysnap:                     \n"
     "  movl $58, %eax                 \n"
     "  int  $0x81                     \n"
+    "  ret                            \n"
+    ".globl _do_ptyresize             \n"
+    ".type  _do_ptyresize, @function  \n"
+    "_do_ptyresize:                   \n"
+    "  movl $61, %eax                 \n"
+    "  int  $0x81                     \n"
     "  ret                            \n");
 
 static int _do_ptyalloc(void);
 static int _do_ptyfree(int slot);
 static int _do_ptyinject(int slot, const char *buf, int n);
 static int _do_ptysnap(int slot, void *dst, unsigned short *x, unsigned short *y);
+static int _do_ptyresize(int slot, int cols, int rows);
 
 /**
  * Allocate a pseudo-terminal slot from the kernel pty pool.
@@ -97,4 +104,13 @@ int pty_inject(int slot, const char *buf, int n)
 int pty_snapshot(int slot, void *dst, unsigned short *x, unsigned short *y)
 {
 	return _do_ptysnap(slot, dst, x, y);
+}
+
+/**
+ * Resize a pty's cell grid to cols x rows (clamped by the kernel) and update its
+ * winsize.  @return 0 on success, -1 for an invalid slot.
+ */
+int pty_resize(int slot, int cols, int rows)
+{
+	return _do_ptyresize(slot, cols, rows);
 }

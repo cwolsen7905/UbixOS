@@ -214,6 +214,20 @@ struct sys_ptysnap_args
 };
 int sys_ptysnap(struct thread *, struct sys_ptysnap_args *);
 
+struct sys_ptyresize_args
+{
+	char slot_l_[PADL_(int)];
+	int slot;
+	char slot_r_[PADR_(int)];
+	char cols_l_[PADL_(int)];
+	int cols;
+	char cols_r_[PADR_(int)];
+	char rows_l_[PADL_(int)];
+	int rows;
+	char rows_r_[PADR_(int)];
+};
+int sys_ptyresize(struct thread *, struct sys_ptyresize_args *);
+
 struct sys_net_configure_args
 {
 	char cfg_l_[PADL_(const void *)];

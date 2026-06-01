@@ -47,13 +47,21 @@
 #include <objgfx/ogPixelFmt.h>
 #include <sys/kbd.h>
 
-#define GRID_COLS 80
-#define GRID_ROWS 25
-#define CELL_BYTES (GRID_COLS * GRID_ROWS * 2)
-#define TERM_W (GRID_COLS * 8)  /* 640 with the 8x14 ROM font */
-#define TERM_H (GRID_ROWS * 14) /* 350 */
+#define DEF_COLS 80
+#define DEF_ROWS 25
+#define TERM_FW 8 /* ROM8X14 cell size */
+#define TERM_FH 14
+#define TERM_MAX_COLS 200 /* matches kernel TTY_MAX_COLS */
+#define TERM_MAX_ROWS 64  /* matches kernel TTY_MAX_ROWS */
+#define MAX_CELL_BYTES (TERM_MAX_COLS * TERM_MAX_ROWS * 2)
+#define TERM_W (DEF_COLS * TERM_FW) /* 640 */
+#define TERM_H (DEF_ROWS * TERM_FH) /* 350 */
 #define TERM_BG 0x00000000u
 #define FONT_PATH "/var/fonts/ROM8X14.DPF"
+
+/* Current grid dimensions (cells); change on a live window resize. */
+static int g_cols = DEF_COLS;
+static int g_rows = DEF_ROWS;
 
 /* CGA/VGA 16-colour text palette → 0x00RRGGBB. */
 static const uint32_t g_vga_palette[16] = {0x00000000,
@@ -83,6 +91,8 @@ class TerminalView
 	ogBitFont font_;
 	int fw_ = 8;
 	int fh_ = 14;
+	int sw_ = 0; /* attached surface dimensions */
+	int sh_ = 0;
 
 	void set_attr(unsigned char attr)
 	{
@@ -95,6 +105,8 @@ class TerminalView
       public:
 	bool attach(void *shm, int w, int h)
 	{
+		sw_ = w;
+		sh_ = h;
 		return surf_.ogAttach(shm, (uint32_t)w, (uint32_t)h, OG_PIXFMT_32BPP);
 	}
 
@@ -122,14 +134,16 @@ class TerminalView
 	 */
 	void render(const unsigned char *cells, int cx, int cy, bool exited)
 	{
-		surf_.ogFillRect(0, 0, GRID_COLS * fw_ - 1, GRID_ROWS * fh_ - 1, TERM_BG);
+		/* Clear the whole surface (covers the few-pixel margin when the window
+		 * size isn't an exact multiple of the cell size). */
+		surf_.ogFillRect(0, 0, sw_ - 1, sh_ - 1, TERM_BG);
 
 		int last_attr = -1;
-		for (int row = 0; row < GRID_ROWS; row++)
+		for (int row = 0; row < g_rows; row++)
 		{
-			for (int col = 0; col < GRID_COLS; col++)
+			for (int col = 0; col < g_cols; col++)
 			{
-				int idx = (row * GRID_COLS + col) * 2;
+				int idx = (row * g_cols + col) * 2;
 				unsigned char ch = cells[idx];
 				unsigned char attr = cells[idx + 1];
 				if (ch == 0)
@@ -147,8 +161,8 @@ class TerminalView
 		{
 			/* Status banner over the bottom row — the shell is gone. */
 			static const char msg[] = " [process exited - press any key to close]";
-			int by = (GRID_ROWS - 1) * fh_;
-			surf_.ogFillRect(0, by, GRID_COLS * fw_ - 1, by + fh_ - 1, 0x00701010u);
+			int by = (g_rows - 1) * fh_;
+			surf_.ogFillRect(0, by, g_cols * fw_ - 1, by + fh_ - 1, 0x00701010u);
 			font_.SetFGColor(0xFF, 0xFF, 0xFF, 255);
 			font_.SetBGColor(0x70, 0x10, 0x10, 255);
 			font_.PutString(surf_, 0, by, msg);
@@ -156,12 +170,12 @@ class TerminalView
 		}
 
 		/* Block cursor: filled cell with the underlying glyph inverted. */
-		if (cx >= 0 && cx < GRID_COLS && cy >= 0 && cy < GRID_ROWS)
+		if (cx >= 0 && cx < g_cols && cy >= 0 && cy < g_rows)
 		{
 			int px = cx * fw_;
 			int py = cy * fh_;
 			surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, 0x00AAAAAAu);
-			unsigned char ch = cells[(cy * GRID_COLS + cx) * 2];
+			unsigned char ch = cells[(cy * g_cols + cx) * 2];
 			if (ch == 0)
 				ch = ' ';
 			font_.SetFGColor(0, 0, 0, 255);
@@ -339,6 +353,11 @@ int main(int argc, char **argv)
 	creq->y = 20;
 	creq->w = TERM_W;
 	creq->h = TERM_H;
+	/* Resizable: the grid reflows to whatever cells fit the window. */
+	creq->min_w = 40 * TERM_FW;
+	creq->min_h = 10 * TERM_FH;
+	creq->max_w = 120 * TERM_FW; /* 960 — fits a 1024-wide screen */
+	creq->max_h = 50 * TERM_FH;  /* 700 — fits a 768-tall screen  */
 	creq->sender_pid = ubix::pid();
 	std::strncpy(creq->title, "Terminal", sizeof(creq->title) - 1);
 	std::strncpy(creq->reply, mbox.c_str(), sizeof(creq->reply) - 1);
@@ -411,8 +430,8 @@ int main(int argc, char **argv)
 		ubix::post_message("views", DISPLAY_SETTITLE, m);
 	};
 
-	unsigned char grid[CELL_BYTES];
-	unsigned char prev[CELL_BYTES];
+	unsigned char grid[MAX_CELL_BYTES];
+	unsigned char prev[MAX_CELL_BYTES];
 	std::memset(prev, 0xFF, sizeof(prev)); /* force first draw */
 	bool shell_exited = false;
 
@@ -420,13 +439,14 @@ int main(int argc, char **argv)
 	{
 		unsigned short cx16 = 0, cy16 = 0;
 		bool dirty = false;
+		int cell_bytes = g_cols * g_rows * 2;
 
 		/* Pull the latest rendered screen; redraw only when it changed. */
 		if (pty.snapshot(grid, &cx16, &cy16) == 0)
 		{
-			if (std::memcmp(grid, prev, sizeof(grid)) != 0)
+			if (std::memcmp(grid, prev, (size_t)cell_bytes) != 0)
 			{
-				std::memcpy(prev, grid, sizeof(grid));
+				std::memcpy(prev, grid, (size_t)cell_bytes);
 				dirty = true;
 			}
 		}
@@ -445,6 +465,28 @@ int main(int argc, char **argv)
 			{
 				close_term();
 				return 0;
+			}
+			if (reply.header == DISPLAY_WINRESIZE)
+			{
+				struct display_winresize *wr = (struct display_winresize *)reply.data;
+				int nc = wr->w / tv.fw();
+				int nr = wr->h / tv.fh();
+				if (nc < 40)
+					nc = 40;
+				if (nc > 120)
+					nc = 120;
+				if (nr < 10)
+					nr = 10;
+				if (nr > 50)
+					nr = 50;
+				pty.resize(nc, nr); /* resizes the grid + SIGWINCHes the shell */
+				g_cols = nc;
+				g_rows = nr;
+				act_w = wr->w;
+				act_h = wr->h;
+				tv.attach(wr->shm_base, wr->w, wr->h);
+				std::memset(prev, 0xFF, sizeof(prev)); /* force a full redraw */
+				continue;
 			}
 			if (reply.header != DISPLAY_KEY)
 				continue;
@@ -470,8 +512,8 @@ int main(int argc, char **argv)
 
 		/* The cursor is stored as a split linear offset (see tty_print). */
 		int linear = (cy16 << 8) | cx16;
-		int cx = linear % GRID_COLS;
-		int cy = linear / GRID_COLS;
+		int cx = linear % g_cols;
+		int cy = linear / g_cols;
 
 		if (dirty)
 		{

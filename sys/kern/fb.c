@@ -252,3 +252,13 @@ int sys_ptysnap(struct thread *td, struct sys_ptysnap_args *args)
 	td->td_retval[0] = tty_snapshot(args->slot, args->dst, args->x, args->y);
 	return (0);
 }
+
+/*
+ * sys_ptyresize (slot 61) — set a pty's grid to cols x rows and update its
+ * winsize.  The caller SIGWINCHes its shell afterwards.
+ */
+int sys_ptyresize(struct thread *td, struct sys_ptyresize_args *args)
+{
+	td->td_retval[0] = tty_resize(args->slot, args->cols, args->rows);
+	return (0);
+}

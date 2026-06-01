@@ -43,6 +43,9 @@ static tty_term *terms = 0x0;
 tty_term *tty_foreground = 0x0;
 static struct spinLock tty_spinLock = SPIN_LOCK_INITIALIZER;
 
+/* Scratch for tty_resize content preservation (too big for the kernel stack). */
+static char g_tty_resize_tmp[TTY_MAX_COLS * TTY_MAX_ROWS * 2];
+
 /* Protects stdin[]/stdinSize from concurrent access by the rs232 ISR and task
  * context readers.  Use irq_save/restore so the same lock is safe from both
  * ISR and task context without deadlocking on a single-CPU system. */
@@ -111,7 +114,7 @@ int tty_init()
 	/* Set up all default terminal information */
 	for (i = 0; i < TTY_MAX_TERMS; i++)
 	{
-		terms[i].tty_buffer = (char *)kmalloc(80 * 60 * 2);
+		terms[i].tty_buffer = (char *)kmalloc(TTY_MAX_COLS * TTY_MAX_ROWS * 2);
 		if (terms[i].tty_buffer == 0x0)
 			kpanic("tty_init: Failed to allocate buffer memory. File: %s, Line: %i\n", __FILE__, __LINE__);
 
@@ -1010,5 +1013,72 @@ int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y)
 		*x = terms[slot].tty_x;
 	if (y != NULL)
 		*y = terms[slot].tty_y;
+	return (0);
+}
+
+/*
+ * tty_resize — set a pseudo-terminal's grid to cols x rows (clamped to the
+ * TTY_MAX_* bounds), update its winsize for TIOCGWINSZ, blank the grid, and home
+ * the cursor.  The caller (the terminal app) is expected to SIGWINCH its shell
+ * so it re-queries the size and redraws.  @return 0 on success, -1 on error.
+ */
+int tty_resize(int slot, int cols, int rows)
+{
+	tty_term *t;
+	int i, n, r, c, oc, orow, mc, mr;
+	unsigned int linear, crow, ccol;
+
+	if (slot < TTY_PTY_BASE || slot >= TTY_MAX_TERMS || !terms[slot].t_inuse)
+		return (-1);
+	t = &terms[slot];
+
+	if (cols < 8)
+		cols = 8;
+	if (cols > TTY_MAX_COLS)
+		cols = TTY_MAX_COLS;
+	if (rows < 2)
+		rows = 2;
+	if (rows > TTY_MAX_ROWS)
+		rows = TTY_MAX_ROWS;
+
+	oc = t->t_cols;   /* old grid width  */
+	orow = t->t_rows; /* old grid height */
+
+	/* Save the old content (stride changes, so we can't reflow in place). */
+	memcpy(g_tty_resize_tmp, t->tty_buffer, (size_t)oc * orow * 2);
+
+	t->t_cols = (u_int16_t)cols;
+	t->t_rows = (u_int16_t)rows;
+	t->t_winsize.ws_col = (u_int16_t)cols;
+	t->t_winsize.ws_row = (u_int16_t)rows;
+
+	/* Blank the new grid, then re-lay the old cells top-left up to the overlap
+	 * (preserves the visible prompt/output; wrapped lines keep their old wrap). */
+	n = cols * rows;
+	for (i = 0; i < n; i++)
+	{
+		t->tty_buffer[i * 2] = ' ';
+		t->tty_buffer[i * 2 + 1] = (char)0x07;
+	}
+	mc = (cols < oc) ? cols : oc;
+	mr = (rows < orow) ? rows : orow;
+	for (r = 0; r < mr; r++)
+		for (c = 0; c < mc; c++)
+		{
+			t->tty_buffer[(r * cols + c) * 2] = g_tty_resize_tmp[(r * oc + c) * 2];
+			t->tty_buffer[(r * cols + c) * 2 + 1] = g_tty_resize_tmp[(r * oc + c) * 2 + 1];
+		}
+
+	/* Re-base the cursor (a split linear index) onto the new width. */
+	linear = ((unsigned int)t->tty_y << 8) | t->tty_x;
+	crow = linear / (unsigned int)oc;
+	ccol = linear % (unsigned int)oc;
+	if (crow >= (unsigned int)rows)
+		crow = (unsigned int)rows - 1u;
+	if (ccol >= (unsigned int)cols)
+		ccol = (unsigned int)cols - 1u;
+	linear = crow * (unsigned int)cols + ccol;
+	t->tty_x = (u_int16_t)(linear & 0xFFu);
+	t->tty_y = (u_int16_t)(linear >> 8u);
 	return (0);
 }

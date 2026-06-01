@@ -31,6 +31,7 @@ extern "C"
 	int pty_free(int slot);
 	int pty_inject(int slot, const char *buf, int n);
 	int pty_snapshot(int slot, void *dst, unsigned short *x, unsigned short *y);
+	int pty_resize(int slot, int cols, int rows); /* set grid size + winsize */
 
 	/* System log levels (mirror the kernel klog severities). */
 #define ULOG_EMERG 0

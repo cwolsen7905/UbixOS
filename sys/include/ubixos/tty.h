@@ -40,6 +40,11 @@
 #define TTY_PTY_BASE 5
 #define TTY_MAX_TERMS 13
 
+/* Upper bound on a (pseudo-)terminal's cell grid; the cell buffer is sized for
+ * this so a pty can be resized up to it without reallocating. */
+#define TTY_MAX_COLS 200
+#define TTY_MAX_ROWS 64
+
 /* tty_setmode cmd values */
 #define TTY_SETRAW 0  /* val 1 = raw, 0 = canonical */
 #define TTY_SETECHO 1 /* val 1 = echo on, 0 = echo off */
@@ -101,6 +106,7 @@ int pty_alloc(void);
 void pty_free(int slot);
 int tty_inject_user(int slot, const char *buf, int n);
 int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y);
+int tty_resize(int slot, int cols, int rows); /* set a pty's grid size + winsize */
 
 extern tty_term *tty_foreground;
 
