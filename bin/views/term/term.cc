@@ -43,7 +43,7 @@
 #include <ubix/process.hh>
 #include <views/display.hh>
 #include <objgfx/objgfx.h>
-#include <objgfx/ogFont.h>
+#include <objgfx/ogScalableFont.h>
 #include <objgfx/ogPixelFmt.h>
 #include <sys/kbd.h>
 
@@ -57,7 +57,7 @@
 #define TERM_W (DEF_COLS * TERM_FW) /* 640 */
 #define TERM_H (DEF_ROWS * TERM_FH) /* 350 */
 #define TERM_BG 0x00000000u
-#define FONT_PATH "/var/fonts/ROM8X14.DPF"
+#define FONT_PATH "/var/fonts/DejaVuSansMono.ttf"
 
 /* Current grid dimensions (cells); change on a live window resize. */
 static int g_cols = DEF_COLS;
@@ -88,18 +88,23 @@ static const uint32_t g_vga_palette[16] = {0x00000000,
 class TerminalView
 {
 	ogSurface surf_;
-	ogBitFont font_;
-	int fw_ = 8;
-	int fh_ = 14;
+	ogScalableFont font_;
+	int fw_ = TERM_FW;
+	int fh_ = TERM_FH;
 	int sw_ = 0; /* attached surface dimensions */
 	int sh_ = 0;
+	uint32_t cur_bg_ = 0; /* current cell background (filled per cell) */
 
+	/* Select the VT100 attribute: the glyph foreground is set on the font; the
+	 * cell background is remembered so render() can fill the full cell rect.
+	 * The font background is kept transparent so the antialiased glyph blends
+	 * over whatever colour the cell was filled with. */
 	void set_attr(unsigned char attr)
 	{
 		uint32_t fg = g_vga_palette[attr & 0x0F];
-		uint32_t bg = g_vga_palette[(attr >> 4) & 0x07];
+		cur_bg_ = g_vga_palette[(attr >> 4) & 0x07];
 		font_.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
-		font_.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
+		font_.SetBGColor(0, 0, 0, 0);
 	}
 
       public:
@@ -112,11 +117,10 @@ class TerminalView
 
 	bool load_font(const char *path)
 	{
-		if (!font_.Load(path, 0))
-			return false;
-		fw_ = (int)font_.GetWidth();
-		fh_ = (int)font_.GetHeight();
-		return true;
+		/* The cell grid is pinned to a fixed TERM_FW x TERM_FH so the resize
+		 * math and the kernel pty geometry stay consistent; the monospace glyph
+		 * is rendered within that cell (its natural advance is <= TERM_FW). */
+		return font_.Load(path, TERM_FH);
 	}
 
 	int fw() const
@@ -153,7 +157,12 @@ class TerminalView
 					set_attr(attr);
 					last_attr = (int)attr;
 				}
-				font_.PutChar(surf_, col * fw_, row * fh_, (char)ch);
+				/* Fill the whole cell with its background, then blend the glyph
+				 * over it (the antialiased font keeps a transparent background). */
+				int px = col * fw_, py = row * fh_;
+				surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, cur_bg_);
+				if (ch != ' ')
+					font_.PutChar(surf_, px, py, (char)ch);
 			}
 		}
 
@@ -164,7 +173,7 @@ class TerminalView
 			int by = (g_rows - 1) * fh_;
 			surf_.ogFillRect(0, by, g_cols * fw_ - 1, by + fh_ - 1, 0x00701010u);
 			font_.SetFGColor(0xFF, 0xFF, 0xFF, 255);
-			font_.SetBGColor(0x70, 0x10, 0x10, 255);
+			font_.SetBGColor(0, 0, 0, 0);
 			font_.PutString(surf_, 0, by, msg);
 			return;
 		}
@@ -176,11 +185,12 @@ class TerminalView
 			int py = cy * fh_;
 			surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, 0x00AAAAAAu);
 			unsigned char ch = cells[(cy * g_cols + cx) * 2];
-			if (ch == 0)
-				ch = ' ';
-			font_.SetFGColor(0, 0, 0, 255);
-			font_.SetBGColor(0xAA, 0xAA, 0xAA, 255);
-			font_.PutChar(surf_, px, py, (char)ch);
+			if (ch != 0 && ch != ' ')
+			{
+				font_.SetFGColor(0, 0, 0, 255);
+				font_.SetBGColor(0, 0, 0, 0);
+				font_.PutChar(surf_, px, py, (char)ch);
+			}
 		}
 	}
 };
