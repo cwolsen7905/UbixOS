@@ -3,22 +3,25 @@
 # Run via: tools/mcr.sh [file...]
 #
 # NOTE: naming checks are warnings only during migration — existing code
-# violates them intentionally.  New code must be clean.
+# violates them intentionally. New code must be clean.
 
+# Broad but practical baseline: naming + bugprone checks + clang-analyzer
 Checks: >
   readability-identifier-naming,
   readability-inconsistent-newlines,
-  bugprone-macro-parentheses,
-  bugprone-integer-division,
-  bugprone-misplaced-operator-in-strlen-in-alloc,
-  bugprone-sizeof-expression,
-  bugprone-suspicious-string-compare,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  clang-analyzer-*,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
   misc-redundant-expression,
+  misc-use-internal-linkage,
   -clang-diagnostic-*
 
+# Keep warnings permissive by default; consider tightening for new code
 WarningsAsErrors: ''
 
-HeaderFilterRegex: '.*\.(h|hpp)$'
+# Analyze headers as well so issues in included headers are reported
+HeaderFilterRegex: '.*'
 
 CheckOptions:
 

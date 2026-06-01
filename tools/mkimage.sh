@@ -25,10 +25,22 @@ SWAP_SIZE_MB=64     # raw swap partition (type 0x82)
 KERNEL="build/boot/kernel"
 GRUB_CFG="tools/grub.cfg"
 BUILD="build"
-GRUB_LIB="/opt/homebrew/Cellar/i686-elf-grub/2.12/lib/i686-elf/grub/i386-pc"
+# Detect GRUB library directory and mkimage command dynamically.
+if command -v brew >/dev/null 2>&1 && brew --prefix i686-elf-grub >/dev/null 2>&1; then
+    GRUB_LIB="$(brew --prefix i686-elf-grub)/lib/i686-elf/grub/i386-pc"
+    GRUB_MKIMAGE=i686-elf-grub-mkimage
+elif [ -d /usr/lib/grub/i386-pc ]; then
+    GRUB_LIB="/usr/lib/grub/i386-pc"
+    GRUB_MKIMAGE=grub-mkimage
+elif [ -d /usr/lib/grub2/i386-pc ]; then
+    GRUB_LIB="/usr/lib/grub2/i386-pc"
+    GRUB_MKIMAGE=grub2-mkimage
+else
+    echo "ERROR: cannot locate GRUB i386-pc modules" >&2; exit 1
+fi
 
 # ── Preflight checks ────────────────────────────────────────────────────────
-for cmd in qemu-img mformat mmd mcopy i686-elf-grub-mkimage python3; do
+for cmd in qemu-img mformat mmd mcopy "${GRUB_MKIMAGE}" python3; do
   command -v "$cmd" >/dev/null 2>&1 || { echo "ERROR: $cmd not found" >&2; exit 1; }
 done
 [ -f "$KERNEL" ]   || { echo "ERROR: $KERNEL not found — run 'bmake kernel' first." >&2; exit 1; }
@@ -78,7 +90,7 @@ echo "==> Building GRUB core image"
 CORE_IMG=$(mktemp /tmp/grub_core.XXXXXX.img)
 trap 'rm -f "$CORE_IMG"' EXIT
 
-i686-elf-grub-mkimage \
+${GRUB_MKIMAGE} \
   -O i386-pc \
   -o "$CORE_IMG" \
   -p '(hd0,msdos1)/boot/grub' \
@@ -231,13 +243,18 @@ done
 echo "==> Creating /mnt (automountd mount point root)"
 mmd -i "$IMG"@@1M ::/mnt 2>/dev/null || true
 
+echo "==> Creating /tmp (scratch space for editors, builds, etc.)"
+mmd -i "$IMG"@@1M ::/tmp 2>/dev/null || true
+
 echo "==> Installing assets (var/)"
 mmd -i "$IMG"@@1M ::/var 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/log 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
-[ -f sys/sde/assets/ubix.bmp ] && mcopy -i "$IMG"@@1M sys/sde/assets/ubix.bmp ::/var/background/ubix.bmp
+for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/background/; done
 mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true
 for f in tools/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
+mmd -i "$IMG"@@1M ::/var/db 2>/dev/null || true
+[ -f tools/ubistry.db ] && mcopy -o -i "$IMG"@@1M tools/ubistry.db ::/var/db/ubistry.db
 
 echo ""
 echo "Done: $IMG"

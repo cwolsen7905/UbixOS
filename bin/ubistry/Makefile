@@ -4,6 +4,6 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 BINARY    = ubistry
-OBJS      = db.o message.o main.o
+OBJS      = db.o persist.o message.o main.o
 
 .include "${UBIX_MK}/ubix.musl.ubix.prog.mk"

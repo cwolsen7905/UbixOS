@@ -38,10 +38,10 @@
  */
 struct fb_info {
 	void     *base;
-	uint32_t  width;
-	uint32_t  height;
-	uint16_t  pitch;   /* bytes per scanline */
-	uint8_t   bpp;
+	u_int32_t  width;
+	u_int32_t  height;
+	u_int16_t  pitch;   /* bytes per scanline */
+	u_int8_t   bpp;
 };
 
 #endif /* _SYS_FB_H */

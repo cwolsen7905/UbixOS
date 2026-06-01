@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -26,80 +26,61 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdio.h>
+/*
+ * ubistry — the UbixOS registry daemon.  Owns the hierarchical settings tree in
+ * RAM, loads/persists it to /var/db/ubistry.db, and serves GET/SET/ENUM/DEL
+ * requests over the "ubistry" MPI mailbox.  Started early at boot by init via
+ * /etc/init.d/15-ubistry.
+ */
+
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/sys.h>
-#include <sys/sched.h>
-#include "./include/ubistry.h"
+#include <sched.h>
+#include <api/ubix.h>
+#include <ubistry/ubistry.h>
+#include "db.h"
+#include "persist.h"
+#include "message.h"
 
-int main(int argc,char **argv) {
-  //FILE *pidFile;
+/* Loop iterations a pending change waits before being flushed to disk — long
+ * enough to coalesce bursts of SETs, short enough to persist promptly. */
+#define FLUSH_TICKS 256
 
-  if (fork() != 0x0) {
-    exit(0x0);
-    }
+int main(int argc, char **argv)
+{
+	int tick = 0;
 
-  ubistryInitMbox(MBOX_NAME);
+	(void)argc;
+	(void)argv;
 
-  ubistryAddKey("Ubu","Creator Of UbixOS");
-  ubistryAddKey("TCA","The GUI GUY!!!");
+	if (ubistry_init_mbox(UBISTRY_MBOX) != 0)
+		exit(1);
 
-  while (1) {
-    ubistryProcessMessages();
-    sched_yield();
-    }
+	ub_root(); /* materialise the root container */
 
-  exit(0x0);
-  }
+	if (persist_load(UBISTRY_DB) != 0)
+		ulogf(ULOG_WARNING, "ubistry: %s not found — starting empty", UBISTRY_DB);
 
-/***
- $Log: main.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:09  reddawg
- ubix2
+	ulogf(ULOG_INFO, "ubistry: ready (db %s)", UBISTRY_DB);
 
- Revision 1.2  2005/10/12 00:13:28  reddawg
- Removed
+	for (;;)
+	{
+		ubistry_process_messages();
 
- Revision 1.1.1.1  2005/09/26 17:14:04  reddawg
- no message
+		if (persist_dirty())
+		{
+			if (++tick >= FLUSH_TICKS)
+			{
+				persist_save(UBISTRY_DB);
+				tick = 0;
+			}
+		}
+		else
+		{
+			tick = 0;
+		}
 
- Revision 1.10  2004/09/08 23:19:58  reddawg
- hmm
+		sched_yield();
+	}
 
- Revision 1.9  2004/08/02 18:50:13  reddawg
- Updates to make some variable volatile to make work with gcc 3.3. However there are still some issues but we have not caused new issues with gcc 2.95
-
- Revision 1.8  2004/07/17 16:43:10  reddawg
- shell: fixed stress testing
- ubistry: fixed some segfaults
- spinlock: added assert()
-
- Revision 1.7  2004/06/17 15:10:55  reddawg
- Fixed Some Global Variables
-
- Revision 1.6  2004/06/10 13:08:00  reddawg
- Minor Bug Fixes
-
- Revision 1.5  2004/06/01 01:30:43  reddawg
- No more warnings and organized make files
-
- Revision 1.4  2004/05/26 15:41:20  reddawg
- ubistry: added command 666 which will restart the registry server also added
-          command 51 to add a key format key,value
-
- Revision 1.3  2004/05/26 13:10:39  reddawg
- ubistry: added two functions
-          ubistryFindKey(char *name) <- Will find key with specified name
-          ubistryAddKey(char *name,char *value) <-> Will add key with specified
-            name and value
-
- Revision 1.2  2004/05/26 12:16:02  reddawg
- ubistry: now runs as a deamon
-
- Revision 1.1  2004/05/26 12:09:12  reddawg
- ubistry: this is the frame work for the ubix registry system more to come
-          over the next few days
-
- END
- ***/
+	return (0);
+}

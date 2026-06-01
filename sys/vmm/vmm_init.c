@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -40,12 +40,17 @@ struct spinLock pdSpinLock = SPIN_LOCK_INITIALIZER;
  Notes:
 
  */
-int vmm_init() {
-  if (vmm_memMapInit() != 0x0)
-    K_PANIC("Couldn't Initialize vmm_memMap");
+int vmm_init()
+{
+	if (vmm_mem_map_init() != 0)
+	{
+		K_PANIC("Couldn't Initialize vmm_memMap");
+	}
 
-  if (vmm_pagingInit() != 0x0)
-    K_PANIC("Couldn't Initialize paging system");
+	if (vmm_paging_init() != 0)
+	{
+		K_PANIC("Couldn't Initialize paging system");
+	}
 
-  return (0x0);
+	return 0;
 }

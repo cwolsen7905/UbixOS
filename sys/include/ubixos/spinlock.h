@@ -40,7 +40,7 @@
 
 struct spinLock {
     struct spinLock *next;
-    uint32_t locked;
+    u_int32_t locked;
 };
 
 typedef struct spinLock *spinLock_t;
@@ -57,7 +57,7 @@ void spinLock_scheduler(spinLock_t *); /* Only use this spinlock in the sched. *
 int spinLockLocked(spinLock_t *);
 
 /* Atomic exchange (of various sizes) */
-static inline u_long xchg_64(volatile uint32_t *ptr, u_long x) {
+static inline u_long xchg_64(volatile u_int32_t *ptr, u_long x) {
   __asm__ __volatile__("xchgq %1,%0"
     :"+r" (x),
     "+m" (*ptr));
@@ -65,7 +65,7 @@ static inline u_long xchg_64(volatile uint32_t *ptr, u_long x) {
   return x;
 }
 
-static inline unsigned xchg_32(volatile uint32_t *ptr, uint32_t x) {
+static inline unsigned xchg_32(volatile u_int32_t *ptr, u_int32_t x) {
   __asm__ __volatile__("xchgl %1,%0"
     :"+r" (x),
     "+m" (*ptr));
@@ -73,7 +73,7 @@ static inline unsigned xchg_32(volatile uint32_t *ptr, uint32_t x) {
   return x;
 }
 
-static inline unsigned short xchg_16(volatile uint32_t *ptr, uint16_t x) {
+static inline unsigned short xchg_16(volatile u_int32_t *ptr, u_int16_t x) {
   __asm__ __volatile__("xchgw %1,%0"
     :"+r" (x),
     "+m" (*ptr));

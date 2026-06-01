@@ -35,9 +35,9 @@
 struct devfs_devices {
     struct devfs_devices *next;
     struct devfs_devices *prev;
-    uInt8 devType;
-    uInt16 devMajor;
-    uInt16 devMinor;
+    u_int8_t devType;
+    u_int16_t devMajor;
+    u_int16_t devMinor;
     char devName[32];
 };
 
@@ -46,7 +46,7 @@ struct devfs_info {
 };
 
 int devfs_init();
-int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor);
+int devfs_makeNode(char *name, u_int8_t type, u_int16_t major, u_int16_t minor);
 /*
  int devfs_open(char *file,fileDescriptor *fd);
  void devFSInit(struct mountPoints *mp);

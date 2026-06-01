@@ -32,22 +32,22 @@
 #include <sys/types.h>
 
 struct cpuinfo_t {
-    uInt8 id;
-    uInt8 ok;  // 1=Ok, 0=Bad
-    uInt8 apic_id, apic_ver;
-    uInt32 signature; // Family, Model, Stepping
-    uInt32 feature;
-    uInt32 max;
+    u_int8_t id;
+    u_int8_t ok;  // 1=Ok, 0=Bad
+    u_int8_t apic_id, apic_ver;
+    u_int32_t signature; // Family, Model, Stepping
+    u_int32_t feature;
+    u_int32_t max;
     char brand[49];  // Brand name
     char ident[17];
 };
 
 void smpInit();
 void cpuidDetect();
-uInt8 cpuInfo();
-uInt32 getEflags();
-void setEflags(uInt32);
-void cpuid(uInt32, uInt32 *);
+u_int8_t cpuInfo();
+u_int32_t getEflags();
+void setEflags(u_int32_t);
+void cpuid(u_int32_t, u_int32_t *);
 void apicMagic();
 
 #endif

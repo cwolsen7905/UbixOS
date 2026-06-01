@@ -62,21 +62,21 @@
 
 /* Command Block Wrapper — 31 bytes, sent as a single bulk OUT */
 struct ums_cbw {
-	uint32_t dCBWSignature;		/* UMS_CBW_SIGNATURE */
-	uint32_t dCBWTag;
-	uint32_t dCBWDataTransferLength;
-	uint8_t  bmCBWFlags;		/* UMS_CBW_FLAGS_IN / _OUT */
-	uint8_t  bCBWLUN;
-	uint8_t  bCBWCBLength;		/* 1–16 */
-	uint8_t  CBWCB[16];		/* SCSI CDB */
+	u_int32_t dCBWSignature;		/* UMS_CBW_SIGNATURE */
+	u_int32_t dCBWTag;
+	u_int32_t dCBWDataTransferLength;
+	u_int8_t  bmCBWFlags;		/* UMS_CBW_FLAGS_IN / _OUT */
+	u_int8_t  bCBWLUN;
+	u_int8_t  bCBWCBLength;		/* 1–16 */
+	u_int8_t  CBWCB[16];		/* SCSI CDB */
 } __attribute__((packed));
 
 /* Command Status Wrapper — 13 bytes, received as a single bulk IN */
 struct ums_csw {
-	uint32_t dCSWSignature;		/* UMS_CSW_SIGNATURE */
-	uint32_t dCSWTag;
-	uint32_t dCSWDataResidue;
-	uint8_t  bCSWStatus;		/* UMS_CSW_STATUS_* */
+	u_int32_t dCSWSignature;		/* UMS_CSW_SIGNATURE */
+	u_int32_t dCSWTag;
+	u_int32_t dCSWDataResidue;
+	u_int8_t  bCSWStatus;		/* UMS_CSW_STATUS_* */
 } __attribute__((packed));
 
 /* Forward declaration — avoid pulling in bus.h from usb headers */
@@ -88,15 +88,15 @@ struct ubx_device;
 struct ums_softc {
 	struct usb_device *um_dev;
 	struct ubx_device *um_udev;		/* newbus-lite block device node */
-	uint8_t            um_bulk_in_ep;
-	uint8_t            um_bulk_out_ep;
-	uint16_t           um_max_pkt_in;
-	uint16_t           um_max_pkt_out;
-	uint8_t            um_toggle_in;
-	uint8_t            um_toggle_out;
-	uint32_t           um_tag;
-	uint32_t           um_blocks;		/* total block count */
-	uint32_t           um_blk_size;		/* bytes per block */
+	u_int8_t            um_bulk_in_ep;
+	u_int8_t            um_bulk_out_ep;
+	u_int16_t           um_max_pkt_in;
+	u_int16_t           um_max_pkt_out;
+	u_int8_t            um_toggle_in;
+	u_int8_t            um_toggle_out;
+	u_int32_t           um_tag;
+	u_int32_t           um_blocks;		/* total block count */
+	u_int32_t           um_blk_size;		/* bytes per block */
 	char               um_mountpath[96];	/* path automountd mounted us at */
 };
 

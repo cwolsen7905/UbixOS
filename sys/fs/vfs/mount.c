@@ -82,7 +82,7 @@ int vfs_mount( int major, int minor, int partition, int vfsType, char *mountPoin
   /* Set Up Mp Defaults */
   mp->device = device;
   mp->partition = partition;
-  mp->perms = *perms;
+  mp->perms = (perms && perms[0] == 'r' && perms[1] == 'w') ? 'w' : 'r';
 
   /* Add Mountpoint; if it fails free and return */
   if ( vfs_addMount( mp ) != 0x0 ) {

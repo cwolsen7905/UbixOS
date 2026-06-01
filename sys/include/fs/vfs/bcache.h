@@ -59,14 +59,14 @@ void	bcache_init(void);
  * Read sector <lba> from <dev> into <buf> (512 bytes).
  * Returns 0 on success, -1 on device error.
  */
-int	bcache_read(struct ubx_device *dev, uint32_t lba, void *buf);
+int	bcache_read(struct ubx_device *dev, u_int32_t lba, void *buf);
 
 /*
  * Write 512 bytes from <buf> to sector <lba> on <dev>.
  * Updates any matching cache slot, then writes through to device.
  * Returns 0 on success, -1 on device error.
  */
-int	bcache_write(struct ubx_device *dev, uint32_t lba, const void *buf);
+int	bcache_write(struct ubx_device *dev, u_int32_t lba, const void *buf);
 
 /*
  * Invalidate all cache slots belonging to <dev>.

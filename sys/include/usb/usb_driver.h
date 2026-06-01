@@ -39,9 +39,9 @@ struct usb_device;
  * Use 0xFF as a wildcard for any field.
  */
 struct usb_driver {
-	uint8_t  drv_class;
-	uint8_t  drv_subclass;
-	uint8_t  drv_protocol;
+	u_int8_t  drv_class;
+	u_int8_t  drv_subclass;
+	u_int8_t  drv_protocol;
 	int    (*drv_probe)(struct usb_device *);
 	int    (*drv_attach)(struct usb_device *);
 	int    (*drv_detach)(struct usb_device *);

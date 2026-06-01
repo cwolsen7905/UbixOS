@@ -64,7 +64,7 @@
  so do not use out side of kernel space
 
  *****************************************************************************************/
-uInt32 execThread(void (*tproc)(void), uInt32 stack, char *arg) {
+u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg) {
   kTask_t * newProcess = 0x0;
   /* Find A New Thread */
   newProcess = schedNewTask();
@@ -133,7 +133,7 @@ uInt32 execThread(void (*tproc)(void), uInt32 stack, char *arg) {
   sched_setStatus(newProcess->id, READY);
 
   /* Return with the new process ID */
-  return ((uInt32) newProcess);
+  return ((u_int32_t) newProcess);
 }
 
 /*****************************************************************************************
@@ -156,7 +156,7 @@ void execFile(char *file, int argc, char **argv, int console) {
 
   int i = 0x0;
   int x = 0x0;
-  uint32_t *tmp = 0x0;
+  u_int32_t *tmp = 0x0;
 
   fileDescriptor *tmpFd = 0x0;
   elfHeader *binaryHeader = 0x0;
@@ -175,13 +175,13 @@ void execFile(char *file, int argc, char **argv, int console) {
   _current->term->owner = _current->id;
 
   /* Now We Must Create A Virtual Space For This Proccess To Run In */
-  _current->tss.cr3 = (uInt32) vmmCreateVirtualSpace(_current->id);
+  _current->tss.cr3 = (u_int32_t) vmmCreateVirtualSpace(_current->id);
 
   /* To Better Load This Application We Will Switch Over To Its VM Space */
   asm volatile(
     "movl %0,%%eax          \n"
     "movl %%eax,%%cr3       \n"
-    : : "d" ((uInt32 *)(_current->tss.cr3))
+    : : "d" ((u_int32_t *)(_current->tss.cr3))
   );
 
   /* Lets Find The File */
@@ -242,7 +242,7 @@ void execFile(char *file, int argc, char **argv, int console) {
        */
       for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
+        if (vmm_remap_page(vmm_find_free_page(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
           K_PANIC("Remap Page Failed");
 
         memset((void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000);
@@ -255,8 +255,8 @@ void execFile(char *file, int argc, char **argv, int console) {
       if ((programHeader[i].phFlags & 0x2) != 0x2) {
         kprintf("pH: [0x%X]\n", programHeader[i].phMemsz);
         for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
-          if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
-            kpanic("Error: vmm_setPageAttributes failed, File: %s, Line: %i\n", __FILE__, __LINE__);
+          if ((vmm_set_page_attributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
+            kpanic("Error: vmm_set_page_attributes failed, File: %s, Line: %i\n", __FILE__, __LINE__);
         }
       }
     }
@@ -268,12 +268,12 @@ void execFile(char *file, int argc, char **argv, int console) {
 
   /* Set Up Stack Space */
   for (x = 1; x < 100; x++) {
-    vmm_remapPage(vmm_findFreePage(_current->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK);
+    vmm_remap_page(vmm_find_free_page(_current->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK);
   }
 
   /* Kernel Stack 0x2000 bytes long */
-  vmm_remapPage(vmm_findFreePage(_current->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
-  vmm_remapPage(vmm_findFreePage(_current->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remap_page(vmm_find_free_page(_current->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remap_page(vmm_find_free_page(_current->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
 
   /* Set All The Proper Information For The Task */
   _current->tss.back_link = 0x0;
@@ -308,23 +308,23 @@ void execFile(char *file, int argc, char **argv, int console) {
   kfree(programHeader);
   fclose(tmpFd);
 
-  tmp = (uInt32 *) _current->tss.esp0 - 5;
+  tmp = (u_int32_t *) _current->tss.esp0 - 5;
   tmp[0] = binaryHeader->eEntry;
   tmp[3] = STACK_ADDR - 12;
 
-  tmp = (uInt32 *) STACK_ADDR - 2;
+  tmp = (u_int32_t *) STACK_ADDR - 2;
 
   if (_current->id > 4)
     kprintf("argv[0]: [%s]\n", argv[0]);
   kprintf("argv: [0x%X]\n", argv);
-  tmp[0] = (uint32_t) argv;
-  tmp[1] = (uint32_t) argv;
+  tmp[0] = (u_int32_t) argv;
+  tmp[1] = (u_int32_t) argv;
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
     "movl %0,%%eax          \n"
     "movl %%eax,%%cr3       \n"
-    : : "d" ((uInt32 *)(kernelPageDirectory))
+    : : "d" ((u_int32_t *)(kernelPageDirectory))
   );
 
   /* Finally Return */
@@ -345,9 +345,9 @@ void sysExec(char *file, char *ap) {
   int x = 0x0;
   int argc = 0x0;
   unsigned int *tmp = 0x0;
-  uInt32 ldAddr = 0x0;
-  uInt32 seg_size = 0x0;
-  uInt32 seg_addr = 0x0;
+  u_int32_t ldAddr = 0x0;
+  u_int32_t seg_size = 0x0;
+  u_int32_t seg_addr = 0x0;
   char *interp = 0x0;
   char **argv = 0x0;
   char **argvNew = 0x0;
@@ -428,7 +428,7 @@ void sysExec(char *file, char *ap) {
          */
         for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
+          if (vmm_remap_page(vmm_find_free_page(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000);
         }
@@ -438,8 +438,8 @@ void sysExec(char *file, char *ap) {
         fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd);
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
           for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
-              kpanic("Error: vmm_setPageAttributes failed, File: %s,Line: %i\n", __FILE__, __LINE__);
+            if ((vmm_set_page_attributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
+              kpanic("Error: vmm_set_page_attributes failed, File: %s,Line: %i\n", __FILE__, __LINE__);
           }
         }
         kprintf("setting daddr\n");
@@ -478,8 +478,8 @@ void sysExec(char *file, char *ap) {
         tmp = (void *) elfDynamicS[i].dynPtr;
         if (tmp == 0x0)
           kpanic("tmp: NULL\n");
-        tmp[2] = (uInt32) ldAddr;
-        tmp[1] = (uInt32) tmpFd;
+        tmp[2] = (u_int32_t) ldAddr;
+        tmp[1] = (u_int32_t) tmpFd;
         break;
       }
       /*
@@ -512,7 +512,7 @@ void sysExec(char *file, char *ap) {
   }
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace(_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SIZE));
+  vmm_clean_virtual_space(_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SIZE));
 
   //! Adjust iframe
   iFrame = (struct i386_frame *) _current->tss.esp0 - sizeof(struct i386_frame);
@@ -522,7 +522,7 @@ void sysExec(char *file, char *ap) {
 
   //if (_current->id > 3) {
 
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 3));
+  iFrame->user_esp = ((u_int32_t) STACK_ADDR) - (sizeof(u_int32_t) * (argc + 3));
   tmp = (void *) iFrame->user_esp;
 
   //! build argc and argv[]
@@ -534,10 +534,10 @@ void sysExec(char *file, char *ap) {
   tmp[argc + 2] = 0x1;
   //}
   //else {
-  //tmp = (uint32_t *)STACK_ADDR - 2;
+  //tmp = (u_int32_t *)STACK_ADDR - 2;
   //tmp[0] = 0x1;
   //tmp[1] = 0x0;
-  //tmp[1] = (uint32_t)argv;
+  //tmp[1] = (u_int32_t)argv;
   //}
   kfree(argvNew);
   /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
@@ -556,12 +556,12 @@ void sys_exec(char *file, char *ap) {
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;
-  uint32_t *tmp = 0x0;
-  uint32_t seg_size = 0x0;
-  uint32_t seg_addr = 0x0;
-  uint32_t addr = 0x0;
-  uint32_t eip = 0x0;
-  uint32_t proghdr = 0x0;
+  u_int32_t *tmp = 0x0;
+  u_int32_t seg_size = 0x0;
+  u_int32_t seg_addr = 0x0;
+  u_int32_t addr = 0x0;
+  u_int32_t eip = 0x0;
+  u_int32_t proghdr = 0x0;
   char *args = 0x0;
   char *interp = 0x0;
   char **argv = 0x0;
@@ -606,7 +606,7 @@ void sys_exec(char *file, char *ap) {
          */
         for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
+          if (vmm_remap_page(vmm_find_free_page(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000);
         }
@@ -616,8 +616,8 @@ void sys_exec(char *file, char *ap) {
         fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, _current->files[0]);
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
           for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
-              K_PANIC("vmm_setPageAttributes failed");
+            if ((vmm_set_page_attributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
+              K_PANIC("vmm_set_page_attributes failed");
           }
         }
         if (binaryHeader->eEntry >= programHeader[i].phVaddr && binaryHeader->eEntry < (programHeader[i].phVaddr + programHeader[i].phMemsz)) {
@@ -678,7 +678,7 @@ void sys_exec(char *file, char *ap) {
   }
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace(_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SIZE));
+  vmm_clean_virtual_space(_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SIZE));
 
   //! Adjust iframe
   iFrame = _current->tss.esp0 - sizeof(struct i386_frame);
@@ -687,7 +687,7 @@ void sys_exec(char *file, char *ap) {
 
   //if (_current->id > 3) {
 
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 4)); // + (sizeof(Elf_Auxargs) * 2)));
+  iFrame->user_esp = ((u_int32_t) STACK_ADDR) - (sizeof(u_int32_t) * (argc + 4)); // + (sizeof(Elf_Auxargs) * 2)));
   kprintf("\n\n\nuser_esp: [0x%X]\n", iFrame->user_esp);
   tmp = iFrame->user_esp;
 
@@ -701,9 +701,9 @@ void sys_exec(char *file, char *ap) {
   memset(args, 0x0, 0x1000);
   strcpy(args, "LIBRARY_PATH=/lib");
   tmp[argc + 2] = args;
-  kprintf("env: [0x%X][0x%X]\n", (uInt32) tmp + argc + 2, tmp[argc + 2]);
+  kprintf("env: [0x%X][0x%X]\n", (u_int32_t) tmp + argc + 2, tmp[argc + 2]);
   tmp[argc + 3] = 0x0;
-  kprintf("env: [0x%X][0x%X]\n", (uInt32) tmp + argc + 2, tmp[argc + 2]);
+  kprintf("env: [0x%X][0x%X]\n", (u_int32_t) tmp + argc + 2, tmp[argc + 2]);
   //auxargs = iFrame->user_esp + argc +  3;
   tmp = iFrame->user_esp;
   tmp += argc + 4;

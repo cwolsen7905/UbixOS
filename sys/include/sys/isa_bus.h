@@ -38,8 +38,8 @@
  */
 struct isa_res_decl {
 	int		 ir_type;	/* UBX_RES_IOPORT, UBX_RES_IRQ, or 0 (terminator) */
-	uint32_t	 ir_start;	/* I/O base address or IRQ number */
-	uint32_t	 ir_size;	/* range size in bytes; 0 for IRQ entries */
+	u_int32_t	 ir_start;	/* I/O base address or IRQ number */
+	u_int32_t	 ir_size;	/* range size in bytes; 0 for IRQ entries */
 };
 
 /*

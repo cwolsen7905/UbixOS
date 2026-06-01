@@ -19,16 +19,16 @@
 // utility too
 
 typedef struct bNode { 
-  uInt32  magic1                          __attribute__ ((packed));
-  uInt32  used                            __attribute__ ((packed));
+  u_int32_t  magic1                          __attribute__ ((packed));
+  u_int32_t  used                            __attribute__ ((packed));
   uPtr    parent                          __attribute__ ((packed));
   uInt64  tag                             __attribute__ ((packed));
   char    keys[B_MAX_KEYS][B_MAX_NAME_LENGTH]      __attribute__ ((packed));
   bool    present[B_MAX_KEYS+1]           __attribute__ ((packed));
   uPtr    head[B_MAX_KEYS+1]              __attribute__ ((packed));
   uPtr    tail[B_MAX_KEYS+1]              __attribute__ ((packed));
-  uInt32   childCount[B_MAX_KEYS+1]        __attribute__ ((packed));
-  uInt32  magic2                          __attribute__ ((packed));
+  u_int32_t   childCount[B_MAX_KEYS+1]        __attribute__ ((packed));
+  u_int32_t  magic2                          __attribute__ ((packed));
   bool    leaf                            __attribute__ ((packed));
   char reserved[131] __attribute__ ((packed));
 } bNode; // bNode
@@ -41,7 +41,7 @@ class bTree {
   UbixFS         * fs;
   bTreeHeader    * header;
   fileDescriptor * fd;
-  uInt32           tag;
+  u_int32_t           tag;
   ubixfsInode    * treeSearch(bNode *, const char *);
   ubixfsInode    * inodeSearch(ubixfsInode *, const char *);
   void             splitNode(bNode *);

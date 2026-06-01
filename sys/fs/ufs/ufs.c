@@ -48,7 +48,7 @@
 #define INO_TO_VBA(fs, ipervblk, x) (fsbtodb(fs, cgimin(fs, ino_to_cg(fs, x))) + (((x) % (fs)->fs_ipg) / (ipervblk) * DBPERVBLK))
 #define INO_TO_VBO(ipervblk, x) ((x) % ipervblk)
 
-static int dskread(void *buf, uint64_t block, size_t count, fileDescriptor_t *fd)
+static int dskread(void *buf, u_int64_t block, size_t count, fileDescriptor_t *fd)
 {
 	fd->mp->device->dev_blk_ops->read(fd->mp->device, block, count, buf);
 	return (0x0);

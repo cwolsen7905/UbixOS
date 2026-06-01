@@ -37,6 +37,8 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <sys/descrip.h>
+#include <sys/pipe.h>
+#include <sys/descrip.h>
 
 int sys_fork(struct thread *td, struct sys_fork_args *args) {
   struct taskStruct *newProcess;
@@ -80,15 +82,25 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   /* Inherit all fds from parent (including stdin/stdout/stderr) */
   for (int i = 0; i < O_FILES; i++)
     if (td->o_files[i]) {
+      struct file *parent_f = (struct file *)td->o_files[i];
       newProcess->td.o_files[i] = (struct file *)kmalloc(sizeof(struct file));
-      memcpy(newProcess->td.o_files[i], td->o_files[i], sizeof(struct file));
-      if (((struct file *)td->o_files[i])->fd) {
+      memcpy(newProcess->td.o_files[i], parent_f, sizeof(struct file));
+      if (parent_f->fd) {
         ((struct file *)newProcess->td.o_files[i])->fd = kmalloc(sizeof(fileDescriptor_t));
-        memcpy(((struct file *)newProcess->td.o_files[i])->fd, ((struct file *)td->o_files[i])->fd, sizeof(fileDescriptor_t));
-        if (((struct file *)td->o_files[i])->fd->buffer) {
+        memcpy(((struct file *)newProcess->td.o_files[i])->fd, parent_f->fd, sizeof(fileDescriptor_t));
+        if (parent_f->fd->buffer) {
           ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
-          memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, ((struct file *)td->o_files[i])->fd->buffer, 4096);
+          memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, parent_f->fd->buffer, 4096);
         }
+      }
+      /* Pipes share their pipeInfo across processes; bump the matching
+       * refcount so neither end is freed while the child still references it. */
+      if (parent_f->fd_type == FD_TYPE_PIPE && parent_f->data != NULL) {
+        struct pipeInfo *pi = (struct pipeInfo *)parent_f->data;
+        if (parent_f->pipe_end == PIPE_END_READ)
+          pi->rfdCNT++;
+        else if (parent_f->pipe_end == PIPE_END_WRITE)
+          pi->wfdCNT++;
       }
     }
 
@@ -129,15 +141,17 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
+  newProcess->md.md_tss.cr3 = (u_int32_t) vmm_copy_virtual_space(newProcess->id);
+  memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
+  vm_map_copy(&newProcess->vm_map, &_current->vm_map);
 
   /*
-   * Signal state must be cleared AFTER vmm_copyVirtualSpace.
-   * vmm_getFreeKernelPage and the parent's kernel heap share the same VA
+   * Signal state must be cleared AFTER vmm_copy_virtual_space.
+   * vmm_get_free_kernel_page and the parent's kernel heap share the same VA
    * range (VMM_KERN_START..VMM_KERN_END).  A temporary double-mapping of
    * the physical page backing sig_pending can occur during the COW walk,
    * causing sig_pending to be overwritten with garbage.  Zeroing here
-   * guarantees a clean slate regardless of what vmm_copyVirtualSpace did.
+   * guarantees a clean slate regardless of what vmm_copy_virtual_space did.
    */
   /*
    * Clear delivery state (pending signals, queued info) — POSIX requires
@@ -221,8 +235,9 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
 
   /* Create A Copy Of The VM Space For New Task */
   //MrOlsen 2018kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->md.md_tss.esp0, newProcess->md.md_tss.esp, newProcess->md.md_tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr);
-  newProcess->md.md_tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
-  //kprintf( "Copied Mem Space!\n" );
+  newProcess->md.md_tss.cr3 = (u_int32_t) vmm_copy_virtual_space(newProcess->id);
+  memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
+  vm_map_copy(&newProcess->vm_map, &_current->vm_map);
 
   sched_ready(newProcess);
 

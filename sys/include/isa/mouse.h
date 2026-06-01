@@ -35,7 +35,7 @@
 struct mouse_event {
 	int16_t  dx;
 	int16_t  dy;
-	uint8_t  buttons;  /* bit 0=left, bit 1=right, bit 2=middle */
+	u_int8_t  buttons;  /* bit 0=left, bit 1=right, bit 2=middle */
 };
 typedef struct mouse_event mouse_event_t;
 

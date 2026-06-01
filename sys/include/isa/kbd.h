@@ -32,8 +32,8 @@
 #include <sys/types.h>
 
 struct kbd_event {
-	uint32_t keycode;   /* translated ASCII or KEY_* special value */
-	uint8_t  pressed;   /* 1 = key down, 0 = key up */
+	u_int32_t keycode;   /* translated ASCII or KEY_* special value */
+	u_int8_t  pressed;   /* 1 = key down, 0 = key up */
 };
 typedef struct kbd_event kbd_event_t;
 
@@ -66,7 +66,7 @@ typedef struct kbd_event kbd_event_t;
 #define KEY_ESC    0x1B
 
 int  kbd_getEvent(kbd_event_t *ev);
-void kbd_ring_push(uint32_t keycode, uint8_t pressed);
+void kbd_ring_push(u_int32_t keycode, u_int8_t pressed);
 int  kbd_input_available(void);
 
 /* Set to 1 by sys_mapfb when a GUI compositor maps the framebuffer.

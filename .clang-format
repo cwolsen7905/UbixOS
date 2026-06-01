@@ -15,8 +15,8 @@ TabWidth: 8
 IndentWidth: 8
 ContinuationIndentWidth: 4
 
-# 80-column limit (style(9) §1)
-ColumnLimit: 256
+# 120-column limit for better readability on modern displays
+ColumnLimit: 120
 
 # Allman / BSD brace style — opening brace on its own line for functions,
 # same line for control flow (if/for/while/do)
@@ -54,11 +54,13 @@ BreakBeforeBinaryOperators: None
 # Sort includes: off (kernel headers have load-order dependencies)
 SortIncludes: Never
 
-# No trailing commas in function parameters
+# Bin packing settings maximize readability for long parameter lists.
+BinPackArguments: false
+BinPackParameters: false
 ExperimentalAutoDetectBinPacking: false
 
-# Indent case labels inside switch
-IndentCaseLabels: false
+# Indent case labels inside switch for a more modern, readable style
+IndentCaseLabels: true
 
 # Penalty tuning to prefer breaking at sensible points
 PenaltyBreakBeforeFirstCallParameter: 19

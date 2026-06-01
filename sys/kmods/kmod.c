@@ -42,9 +42,9 @@
 
 List_t *List = 0x0;
 
-uInt32 kmod_add(const char *kmod_file, const char *name)
+u_int32_t kmod_add(const char *kmod_file, const char *name)
 {
-	uInt32 addr = 0x0;
+	u_int32_t addr = 0x0;
 	Item_t *tmp;
 	kmod_t *kmods;
 
@@ -70,7 +70,7 @@ uInt32 kmod_add(const char *kmod_file, const char *name)
 	return 0x0;
 }
 
-uInt32 kmod_load(const char *kmod_file)
+u_int32_t kmod_load(const char *kmod_file)
 {
 	int i = 0x0;
 	int x = 0x0;
@@ -79,7 +79,7 @@ uInt32 kmod_load(const char *kmod_file)
 	char *newLoc = 0x0;
 	char *shStr = 0x0;
 	char *dynStr = 0x0;
-	uInt32 *reMap = 0x0;
+	u_int32_t *reMap = 0x0;
 	fileDescriptor *kmod_fd = 0x0;
 	elfHeader *binaryHeader = 0x0;
 	elfProgramHeader *programHeader = 0x0;
@@ -135,7 +135,7 @@ uInt32 kmod_load(const char *kmod_file)
 			for (x = 0; x < ((programHeader[i].phMemsz) + 4095); x += 0x1000)
 			{
 				/* make r/w or ro */
-				if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT)) == 0x0)
+				if ((vmm_remap_page(vmm_find_free_page(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT)) == 0x0)
 					kpanic("vmmRemapPage: ld\n");
 				memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
 			}
@@ -178,17 +178,17 @@ uInt32 kmod_load(const char *kmod_file)
 			for (x = 0x0; x < sectionHeader[i].shSize / sizeof(elfPltInfo); x++)
 			{
 				rel = ELF32_R_SYM(elfRel[x].pltInfo);
-				reMap = (uInt32 *)((uInt32)LD_START + elfRel[x].pltOffset);
+				reMap = (u_int32_t *)((u_int32_t)LD_START + elfRel[x].pltOffset);
 				switch (ELF32_R_TYPE(elfRel[x].pltInfo))
 				{
 				case R_386_32:
-					*reMap += ((uInt32)LD_START + relSymTab[rel].dynValue);
+					*reMap += ((u_int32_t)LD_START + relSymTab[rel].dynValue);
 					break;
 				case R_386_PC32:
-					*reMap += ((uInt32)LD_START + relSymTab[rel].dynValue) - (uInt32)reMap;
+					*reMap += ((u_int32_t)LD_START + relSymTab[rel].dynValue) - (u_int32_t)reMap;
 					break;
 				case R_386_RELATIVE:
-					*reMap += (uInt32)LD_START;
+					*reMap += (u_int32_t)LD_START;
 					break;
 				default:
 					kprintf("[0x%X][0x%X](%i)[%s]\n", elfRel[x].pltOffset, elfRel[x].pltInfo, rel, elfGetRelType(ELF32_R_TYPE(elfRel[x].pltInfo)));
@@ -217,7 +217,7 @@ uInt32 kmod_load(const char *kmod_file)
 	kfree(binaryHeader);
 	fclose(kmod_fd);
 
-	return ((uInt32)i);
+	return ((u_int32_t)i);
 }
 
 /***

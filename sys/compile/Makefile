@@ -16,7 +16,9 @@ KPARTS = \
 	${OBJ_DIR}/obj/sys/sys/*.o \
 	${OBJ_DIR}/obj/sys/vmm/*.o \
 	${OBJ_DIR}/obj/sys/lib/*.o \
-	${OBJ_DIR}/obj/sys/kernel/*.o \
+	${OBJ_DIR}/obj/sys/kern/*.o \
+	${OBJ_DIR}/obj/sys/posix/*.o \
+	${OBJ_DIR}/obj/sys/exec/*.o \
 	${OBJ_DIR}/obj/sys/isa/*.o \
 	${OBJ_DIR}/obj/sys/vfs/*.o \
 	${OBJ_DIR}/obj/sys/pci/*.o \

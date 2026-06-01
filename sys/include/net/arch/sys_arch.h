@@ -20,8 +20,8 @@ struct sys_mutex {
 typedef struct sys_mutex sys_mutex_t;
 
 struct sys_mbox {
-  uint32_t head;
-  uint32_t tail;
+  u_int32_t head;
+  u_int32_t tail;
 
   //MrOlsen (2017-12-28) - This will break because size is passable
   void *msgs[SYS_MBOX_SIZE];
@@ -35,7 +35,7 @@ struct sys_mbox {
   int wait_send;
 
   //void **queue;
-  //uint32_t size;
+  //u_int32_t size;
 };
 
 typedef struct sys_mbox sys_mbox_t;

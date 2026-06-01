@@ -46,7 +46,7 @@ static unsigned char  *videoBuffer = (char *)0xB8000;
 
 void systemTask() {
   mpi_message_t myMsg;
-  uInt32       counter  = 0x0;
+  u_int32_t       counter  = 0x0;
   int          i        = 0x0;
   int          *x       = 0x0;
   kTask_t      *tmpTask = 0x0;
@@ -80,9 +80,9 @@ void systemTask() {
         case 0x80:
            if (!strcmp(myMsg.data,"sdeStart")) {
              kprintf("Starting SDE\n");
-             //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
+             //execThread(sdeThread,(u_int32_t)(kmalloc(0x2000)+0x2000),0x0);
              }
-           else if (!strcmp(myMsg.data,"freePage")) {
+           else if (!strcmp(myMsg.data,"free_page")) {
             kprintf("kkk Free Pages");
              }
            else if (!strcmp(myMsg.data,"sdeStop")) {

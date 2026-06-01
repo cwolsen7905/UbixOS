@@ -53,9 +53,9 @@ static struct usb_driver *const usb_driver_table[] = {
 /* -----------------------------------------------------------------------
  * USB address allocator (addresses 1–127; 0 reserved for enumeration)
  * --------------------------------------------------------------------- */
-static uint8_t usb_next_addr = 1;
+static u_int8_t usb_next_addr = 1;
 
-static uint8_t
+static u_int8_t
 usb_alloc_addr(void)
 {
 	if (usb_next_addr > 127)
@@ -67,8 +67,8 @@ usb_alloc_addr(void)
  * usb_control — build setup packet and issue control transfer
  * --------------------------------------------------------------------- */
 int
-usb_control(struct usb_device *dev, uint8_t bmRequestType, uint8_t bRequest,
-    uint16_t wValue, uint16_t wIndex, void *data, uint16_t wLength)
+usb_control(struct usb_device *dev, u_int8_t bmRequestType, u_int8_t bRequest,
+    u_int16_t wValue, u_int16_t wIndex, void *data, u_int16_t wLength)
 {
 	struct usb_setup_pkt setup;
 	int direction;
@@ -82,17 +82,17 @@ usb_control(struct usb_device *dev, uint8_t bmRequestType, uint8_t bRequest,
 	direction = (bmRequestType & USB_DIR_IN) ? 1 : 0;
 
 	return (uhci_control_transfer(dev->ud_hc, dev->ud_addr, 0,
-	    (uint8_t *)&setup, data, wLength, direction));
+	    (u_int8_t *)&setup, data, wLength, direction));
 }
 
 /* -----------------------------------------------------------------------
  * usb_parse_config — walk config blob extracting iface + endpoint descs
  * --------------------------------------------------------------------- */
 static void
-usb_parse_config(struct usb_device *dev, uint8_t *buf, uint16_t len)
+usb_parse_config(struct usb_device *dev, u_int8_t *buf, u_int16_t len)
 {
-	uint16_t off = 0;
-	uint8_t  blen, dtype;
+	u_int16_t off = 0;
+	u_int8_t  blen, dtype;
 
 	dev->ud_nep = 0;
 	memset(&dev->ud_iface_desc, 0, sizeof(dev->ud_iface_desc));
@@ -126,9 +126,9 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 {
 	struct usb_device *dev;
 	struct usb_driver *drv;
-	uint8_t  addr, i;
-	uint8_t *cfgbuf;
-	uint16_t cfglen;
+	u_int8_t  addr, i;
+	u_int8_t *cfgbuf;
+	u_int16_t cfglen;
 	int      rc;
 
 	(void)port;
@@ -139,7 +139,7 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 	memset(dev, 0, sizeof(*dev));
 	dev->ud_hc    = hc;
 	dev->ud_addr  = 0;   /* address 0 during enumeration */
-	dev->ud_speed = (uint8_t)speed;
+	dev->ud_speed = (u_int8_t)speed;
 
 	kprintf("usb: enumerating %s-speed device on port %d\n",
 	    speed == USB_SPEED_LOW ? "low" : "full", port + 1);
@@ -148,7 +148,7 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 	rc = usb_control(dev,
 	    USB_DIR_IN | USB_TYPE_STANDARD | USB_RECIP_DEVICE,
 	    USB_REQ_GET_DESCRIPTOR,
-	    (uint16_t)(USB_DT_DEVICE << 8), 0,
+	    (u_int16_t)(USB_DT_DEVICE << 8), 0,
 	    &dev->ud_dev_desc, 8);
 	if (rc != 0) {
 		kprintf("usb: GET_DESCRIPTOR(Device,8) failed\n");
@@ -181,7 +181,7 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 	rc = usb_control(dev,
 	    USB_DIR_IN | USB_TYPE_STANDARD | USB_RECIP_DEVICE,
 	    USB_REQ_GET_DESCRIPTOR,
-	    (uint16_t)(USB_DT_DEVICE << 8), 0,
+	    (u_int16_t)(USB_DT_DEVICE << 8), 0,
 	    &dev->ud_dev_desc, sizeof(struct usb_device_desc));
 	if (rc != 0) {
 		kprintf("usb: GET_DESCRIPTOR(Device,18) failed\n");
@@ -199,7 +199,7 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 	rc = usb_control(dev,
 	    USB_DIR_IN | USB_TYPE_STANDARD | USB_RECIP_DEVICE,
 	    USB_REQ_GET_DESCRIPTOR,
-	    (uint16_t)(USB_DT_CONFIG << 8), 0,
+	    (u_int16_t)(USB_DT_CONFIG << 8), 0,
 	    &dev->ud_cfg_desc, sizeof(struct usb_config_desc));
 	if (rc != 0) {
 		kprintf("usb: GET_DESCRIPTOR(Config,9) failed\n");
@@ -215,7 +215,7 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 	}
 
 	/* Step 5: GET_DESCRIPTOR(Config, wTotalLength) — full config blob */
-	cfgbuf = (uint8_t *)kmalloc(cfglen);
+	cfgbuf = (u_int8_t *)kmalloc(cfglen);
 	if (cfgbuf == NULL) {
 		kfree(dev);
 		return (-1);
@@ -223,7 +223,7 @@ usb_new_device(struct uhci_softc *hc, int port, int speed)
 	rc = usb_control(dev,
 	    USB_DIR_IN | USB_TYPE_STANDARD | USB_RECIP_DEVICE,
 	    USB_REQ_GET_DESCRIPTOR,
-	    (uint16_t)(USB_DT_CONFIG << 8), 0,
+	    (u_int16_t)(USB_DT_CONFIG << 8), 0,
 	    cfgbuf, cfglen);
 	if (rc != 0) {
 		kprintf("usb: GET_DESCRIPTOR(Config,full) failed\n");

@@ -45,9 +45,9 @@ static struct spinLock devfsSpinLock = SPIN_LOCK_INITIALIZER;
  * /dev/urandom.  Seeded lazily from sysTicks on first read.
  * On UbixOS both nodes produce the same output (no blocking pool).
  */
-static uint32_t rand_state = 0;
+static u_int32_t rand_state = 0;
 
-static uint32_t
+static u_int32_t
 devfs_rand32(void)
 {
 	if (rand_state == 0)
@@ -70,9 +70,9 @@ static int devfs_len = 0x0;
 #define DEVFS_QUEUE_MAX 64
 struct devfs_queued {
 	char   name[32];
-	uInt8  type;
-	uInt16 major;
-	uInt16 minor;
+	u_int8_t  type;
+	u_int16_t major;
+	u_int16_t minor;
 };
 static struct devfs_queued devfs_queue[DEVFS_QUEUE_MAX];
 static int                 devfs_queue_n  = 0;
@@ -125,7 +125,7 @@ static int devfs_open(char *file, fileDescriptor_t *fd) {
     file++;
   for (tmpDev = fsInfo->deviceList; tmpDev != 0x0; tmpDev = tmpDev->next) {
     if (strcmp(tmpDev->devName, file) == 0x0) {
-      fd->start = (uint32_t)(uintptr_t) tmpDev;
+      fd->start = (u_int32_t)(uintptr_t) tmpDev;
       spinUnlock(&devfsSpinLock);
       return (0x1);
     }
@@ -141,8 +141,8 @@ static int devfs_open(char *file, fileDescriptor_t *fd) {
  */
 static int devfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size) {
   int i = 0x0, x = 0x0;
-  uInt32 sectors = 0x0;
-  uInt16 diff = 0x0;
+  u_int32_t sectors = 0x0;
+  u_int16_t diff = 0x0;
   struct ubx_device *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;
 
@@ -230,7 +230,7 @@ static int devfs_write(fileDescriptor_t *fd, char *data, off_t offset, long size
   return (size);
 }
 
-int devfs_makeNode(char *name, uInt8 type, uInt16 major, uInt16 minor) {
+int devfs_makeNode(char *name, u_int8_t type, u_int16_t major, u_int16_t minor) {
   struct vfs_mountPoint *mp = 0x0;
   struct devfs_info *fsInfo = 0x0;
   struct devfs_devices *tmpDev = 0x0;
@@ -298,8 +298,8 @@ static int devfs_readdir(kDIR_t *dir, struct kdirent *ent) {
   if (dev == 0x0)
     return (-1);
 
-  ent->d_ino  = (uint32_t)(uintptr_t)dev;
-  ent->d_type = KDT_REG;
+  ent->d_ino  = (u_int32_t)(uintptr_t)dev;
+  ent->d_type = 2; /* DT_CHR — character device */
   strncpy(ent->d_name, dev->devName, sizeof(ent->d_name) - 1);
   ent->d_name[sizeof(ent->d_name) - 1] = '\0';
 

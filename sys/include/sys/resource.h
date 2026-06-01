@@ -88,24 +88,6 @@ typedef __rlim_t        rlim_t;
  * Resource limit string identifiers
  */
 
-static const char *rlimit_ident[RLIM_NLIMITS] = {
-        "cpu",
-        "fsize",
-        "data",
-        "stack",
-        "core",
-        "rss",
-        "memlock",
-        "nproc",
-        "nofile",
-        "sbsize",
-        "vmem",
-        "npts",
-        "swap",
-        "kqueues",
-        "umtx",
-};
-
 
 struct rlimit {
         rlim_t  rlim_cur;               /* current (soft) limit */

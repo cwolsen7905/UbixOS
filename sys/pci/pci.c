@@ -39,9 +39,9 @@
 
 const struct
 {
-	uInt8 baseClass;
-	uInt8 subClass;
-	uInt8 interface;
+	u_int8_t baseClass;
+	u_int8_t subClass;
+	u_int8_t interface;
 	const char *name;
 } pciClasses[] = {
     {0x00, 0x00, 0x00, "Undefined"},
@@ -185,14 +185,14 @@ const struct
 
 };
 
-uInt32 pciRead(int bus, int dev, int func, int reg, int bytes)
+u_int32_t pciRead(int bus, int dev, int func, int reg, int bytes)
 {
-	uInt16 base;
+	u_int16_t base;
 
 	union
 	{
 		struct confadd c;
-		uInt32 n;
+		u_int32_t n;
 	} u;
 
 	u.n = 0;
@@ -220,14 +220,14 @@ uInt32 pciRead(int bus, int dev, int func, int reg, int bytes)
 	}
 }
 
-void pciWrite(int bus, int dev, int func, int reg, uInt32 v, int bytes)
+void pciWrite(int bus, int dev, int func, int reg, u_int32_t v, int bytes)
 {
-	uInt16 base;
+	u_int16_t base;
 
 	union
 	{
 		struct confadd c;
-		uInt32 n;
+		u_int32_t n;
 	} u;
 
 	u.n = 0;
@@ -243,10 +243,10 @@ void pciWrite(int bus, int dev, int func, int reg, uInt32 v, int bytes)
 	switch (bytes)
 	{
 	case 1:
-		outportByte(base, (uInt8)v);
+		outportByte(base, (u_int8_t)v);
 		break;
 	case 2:
-		outportWord(base, (uInt16)v);
+		outportWord(base, (u_int16_t)v);
 		break;
 	case 4:
 		outportDWord(base, v);
@@ -254,7 +254,7 @@ void pciWrite(int bus, int dev, int func, int reg, uInt32 v, int bytes)
 	}
 }
 
-uint32_t pciProbe(int bus, int dev, int func)
+u_int32_t pciProbe(int bus, int dev, int func)
 {
 	struct pciConfig *cfg = 0x0;
 	int i;
@@ -262,7 +262,7 @@ uint32_t pciProbe(int bus, int dev, int func)
 	cfg = kmalloc(sizeof(struct pciConfig));
 	memset(cfg, 0x0, sizeof(struct pciConfig));
 
-	uint32_t *word = (uint32_t *)cfg;
+	u_int32_t *word = (u_int32_t *)cfg;
 
 	for (i = 0; i < 4; i++)
 		word[i] = pciRead(bus, dev, func, 4 * i, 4);
@@ -301,14 +301,14 @@ uint32_t pciProbe(int bus, int dev, int func)
 		/* BAR size discovery: write all-ones, read back mask, restore. */
 		for (i = 0; i < 6; i++)
 		{
-			uint32_t orig = cfg->bar[i];
+			u_int32_t orig = cfg->bar[i];
 			if (!orig)
 			{
 				cfg->barSize[i] = 0;
 				continue;
 			}
 			pciWrite(bus, dev, func, 0x10 + i * 4, 0xFFFFFFFFu, 4);
-			uint32_t mask = pciRead(bus, dev, func, 0x10 + i * 4, 4);
+			u_int32_t mask = pciRead(bus, dev, func, 0x10 + i * 4, 4);
 			pciWrite(bus, dev, func, 0x10 + i * 4, orig, 4);
 			if (orig & 1u)
 				cfg->barSize[i] = (~(mask & ~3u) + 1u) & 0xFFFFu; /* I/O */
@@ -376,7 +376,7 @@ uint32_t pciProbe(int bus, int dev, int func)
 	 }
 	 */
 
-	return ((uint32_t)cfg);
+	return ((u_int32_t)cfg);
 }
 
 extern struct ubx_driver ac97_ubx_driver;
@@ -461,9 +461,9 @@ int pci_init()
 	 * (class 0x06, subclass 0x04) is found, enqueue its secondary bus so
 	 * devices behind the bridge are also discovered.
 	 */
-	uint8_t  bus_queue[256];
+	u_int8_t  bus_queue[256];
 	int      qhead = 0, qtail = 0;
-	uint8_t  seen[256];
+	u_int8_t  seen[256];
 
 	int i;
 	struct pciConfig *pcfg;
@@ -474,11 +474,11 @@ int pci_init()
 	seen[0] = 1;
 
 	while (qhead < qtail) {
-		uint16_t bus = bus_queue[qhead++];
+		u_int16_t bus = bus_queue[qhead++];
 
-		for (uint16_t dev = 0; dev < 32; dev++) {
+		for (u_int16_t dev = 0; dev < 32; dev++) {
 			int multifunction = 0;
-			for (uint16_t func = 0; func < 8; func++) {
+			for (u_int16_t func = 0; func < 8; func++) {
 				/* Only scan functions 1-7 if function 0 advertised multi-function. */
 				if (func != 0 && !multifunction)
 					break;
@@ -495,7 +495,7 @@ int pci_init()
 
 				/* If this is a PCI-to-PCI bridge, enqueue the secondary bus. */
 				if (pcfg->classCode == 0x06 && pcfg->subClass == 0x04) {
-					uint8_t secondary = (uint8_t)(pciRead(bus, dev, func, 0x19, 1));
+					u_int8_t secondary = (u_int8_t)(pciRead(bus, dev, func, 0x19, 1));
 					if (secondary > 0 && !seen[secondary] && qtail < 256) {
 						seen[secondary] = 1;
 						bus_queue[qtail++] = secondary;

@@ -40,13 +40,13 @@ fat_sector_flush(struct fat_fs *fs)
 }
 
 int
-fat_sector_read(struct fat_fs *fs, uint32_t lba, void *buf)
+fat_sector_read(struct fat_fs *fs, u_int32_t lba, void *buf)
 {
 	return (bcache_read(fs->mp->device, lba, buf));
 }
 
 int
-fat_sector_write(struct fat_fs *fs, uint32_t lba, const void *buf)
+fat_sector_write(struct fat_fs *fs, u_int32_t lba, const void *buf)
 {
 	return (bcache_write(fs->mp->device, lba, buf));
 }

@@ -70,7 +70,7 @@ static struct spinLock rs232SpinLock = SPIN_LOCK_INITIALIZER;
  * through the serial TTY's line discipline.
  */
 #define SERIAL_RX_RING_SIZE 256
-static volatile uint8_t serial_rx_ring[SERIAL_RX_RING_SIZE];
+static volatile u_int8_t serial_rx_ring[SERIAL_RX_RING_SIZE];
 static volatile int     serial_rx_head = 0;
 static volatile int     serial_rx_tail = 0;
 
@@ -82,7 +82,7 @@ static volatile int     serial_rx_tail = 0;
 volatile int serial_claimed = 0;
 
 static void
-serial_rx_push(uint8_t ch)
+serial_rx_push(u_int8_t ch)
 {
 	int next = (serial_rx_head + 1) % SERIAL_RX_RING_SIZE;
 	if (next == serial_rx_tail)
@@ -97,7 +97,7 @@ serial_rx_getbyte(void)
 	int ch;
 	if (serial_rx_tail == serial_rx_head)
 		return (-1);
-	ch = (int)(uint8_t)serial_rx_ring[serial_rx_tail];
+	ch = (int)(u_int8_t)serial_rx_ring[serial_rx_tail];
 	serial_rx_tail = (serial_rx_tail + 1) % SERIAL_RX_RING_SIZE;
 	return (ch);
 }
@@ -116,7 +116,7 @@ rs232_putc(char c)
 void
 rs232_handler(void)
 {
-	uint8_t ch;
+	u_int8_t ch;
 
 	if (spinTryLock(&rs232SpinLock))
 		return;

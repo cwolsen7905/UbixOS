@@ -57,7 +57,6 @@ sys/
 ├── isa/            - ISA bus device drivers
 ├── pci/            - PCI bus enumeration and drivers
 ├── usb/            - USB host controller and device drivers
-├── sde/            - Software display environment (C++ graphics layer)
 ├── lib/            - Kernel library (kprintf, kmalloc, etc.)
 ├── sys/            - Core system services (DMA, IDT, I/O ports, video)
 ├── include/        - All kernel-internal headers
@@ -159,10 +158,11 @@ When `vmmCopyVirtualSpace()` runs (during `fork()`), no physical memory is copie
 
 Source: `sys/kernel/`, `sys/arch/i386/`
 
-- **Multitasking:** Preemptive, driven by PIT interrupts routed through the scheduler TSS (`sched.c`).
+- **Scheduler:** O(1) preemptive scheduler driven by PIT interrupts routed through the scheduler TSS (`sched.c`). Tasks are assigned a QoS class (`SCHED_CLASS_RT`, `INTERACTIVE`, `NORMAL`, `BATCH`) which maps to a priority band in the run-queue bitmap. I/O completion boosts priority transiently; CPU-bound tasks decay one band over time; starved tasks are aged upward after `AGING_THRESHOLD` ticks.
+- **Task lifecycle:** `READY → RUNNING → BLOCKED/STOPPED → ZOMBIE → (reaped)`. A dying task transitions to `ZOMBIE`, signals the parent with `SIGCHLD`, and is reaped by the parent's `wait4` call. `STOPPED` tasks are suspended by `SIGSTOP` and resumed by `SIGCONT`.
 - **Forking:** `fork.c` calls `vmmCopyVirtualSpace()` then duplicates the kernel task structure.
 - **ELF execution:** `elf.c` + `execve.c` parse and load standard i386 ELF binaries, set up the initial stack and entry point, then switch to ring 3.
-- **Signals:** `signal.c` / `kern_sig.c` implement POSIX-style signal delivery.
+- **Signals:** `signal.c` / `kern_sig.c` implement POSIX signal delivery (`sigaction`, `sigprocmask`, `sigpending`, `sigsuspend`). `SA_RESTART` and `SA_SIGINFO` flags are honoured. Default actions are enforced for `SIGSTOP`, `SIGCONT`, `SIGKILL`, `SIGTTIN`, `SIGCHLD`, etc.
 - **Threading:** `ubthread.c` provides user-level thread support.
 - **SMP:** `smp.c` coordinates multi-processor scheduling.
 - **TTY:** `tty.c` manages up to 5 virtual terminals (`TTY_MAX_TERMS`). `tty_foreground` points to the active terminal; `tty_change()` switches between them.
@@ -181,7 +181,11 @@ The VFS provides a uniform interface over multiple concrete filesystems:
 | `vfs/inode.c` | Inode allocation and caching |
 | `vfs/mount.c` | Filesystem mount/unmount |
 | `vfs/namei.c` | Path-to-inode resolution |
-| `vfs/stat.c` | File metadata |
+| `vfs/stat.c` | File metadata (`stat`, `statx`, `fstat`) |
+
+### VFS Path Convention
+
+All VFS paths use standard POSIX form (`/bin/init`, `/etc/userdb`, `/dev/tty0`). The historical `sys:` mountpoint prefix is no longer used in userland or kernel code. `sys_getcwd` strips the internal mountpoint prefix before returning to userland; `sys_getvfscwd` (native syscall 41) returns the full internal path for debugging.
 
 ### Supported Filesystems
 
@@ -191,7 +195,8 @@ The VFS provides a uniform interface over multiple concrete filesystems:
 | UbixFS v2 | `fs/ubixfsv2/` | Improved version with directory caching |
 | UFS | `fs/ufs/` | BSD Unix File System |
 | FAT16/FAT32 | `fs/fat/` | Boot partition and cross-platform media |
-| DevFS | `fs/devfs/` | Device abstraction |
+| DevFS | `fs/devfs/` | Virtual device filesystem (`/dev/tty0`…) |
+| procfs | `fs/procfs/` | Process information (`/proc/<pid>/status`, `/proc/mounts`) |
 
 ---
 
@@ -435,13 +440,15 @@ Userland is built separately from the kernel. All binaries link against **musl l
 |--------|-------------|
 | `init` | PID 1 — system initialization and process supervision |
 | `login` | User authentication |
-| `shell` | Command shell (primary; `sh` removed) |
+| `tcsh` | tcsh 6.24.16 — primary interactive shell |
 | `cat`, `cp`, `ls` | Core file utilities |
-| `mount` | Filesystem mounting |
+| `mount` | Show or perform filesystem mounts (no-arg reads `/proc/mounts`) |
 | `fdisk`, `disklabel`, `format` | Disk management |
 | `kill` | Signal delivery |
 | `stat` | File metadata |
-| `edit` | Text editor |
+| `ed` | POSIX `ed` line editor |
+| `uname` | Print OS/hardware identification |
+| `ps` | Process status listing (reads procfs) |
 | `clock` | System clock display |
 | `ttyd` | TTY daemon |
 | `views` | GUI compositor — owns framebuffer, composites windows, routes input |
@@ -458,7 +465,6 @@ Userland is built separately from the kernel. All binaries link against **musl l
 | `ubix/` | Core startup library — `crt1` (`_start.S`) and static initializers |
 | `libedit/` | Line editing library |
 | `libmd/` | Message digest library |
-| `libfb/` | Framebuffer helper library |
 | `csu/` | C startup support (crtbegin/crtend) |
 
 ### Runtime Linker (`libexec/`)

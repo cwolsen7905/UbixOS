@@ -45,8 +45,8 @@
 #include <string.h>
 #include <sys/descrip.h>
 
-#define ENVP_PAGE 0x100
-#define ARGV_PAGE 0x100
+#define ENVP_PAGE 0x4000
+#define ARGV_PAGE 0x4000
 #define ELF_AUX 0x100
 #define STACK_PAD 0x1000
 
@@ -96,7 +96,7 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 
 	int argc = argv_count(argv_in);
 
-	uint32_t *argv_tmp = (uint32_t *)kmalloc(
+	u_int32_t *argv_tmp = (u_int32_t *)kmalloc(
 	    sizeof(char *) * (argc + 2)); /* + 1 For ARGC + 1 For NULL TERM */
 
 	if (argv_tmp == 0x0)
@@ -111,7 +111,7 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 
 	argv_tmp[0] = argc;
 
-	uint32_t sp = 0x0;
+	u_int32_t sp = 0x0;
 
 	int i = 0x0;
 
@@ -123,7 +123,7 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out)
 			kfree(args_tmp);
 			return (-1);
 		}
-		argv_tmp[i] = (uint32_t)(args_tmp + sp);
+		argv_tmp[i] = (u_int32_t)(args_tmp + sp);
 		strcpy((char *)argv_tmp[i], argv_in[i - 1]);
 		sp += alen;
 	}
@@ -141,12 +141,12 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 
 	int envc = envp_count(envp_in);
 
-	uint32_t *envp_tmp = (uint32_t *)kmalloc(
+	u_int32_t *envp_tmp = (u_int32_t *)kmalloc(
 	    sizeof(char *) * (envc + 1)); // + 1 For NULL TERM
 
 	char *envs_tmp = (char *)kmalloc(ENVP_PAGE);
 
-	uint32_t sp = 0x0;
+	u_int32_t sp = 0x0;
 
 	int i = 0x0;
 
@@ -158,7 +158,7 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out)
 			kfree(envs_tmp);
 			return (-1);
 		}
-		envp_tmp[i] = (uint32_t)(envs_tmp + sp);
+		envp_tmp[i] = (u_int32_t)(envs_tmp + sp);
 		strcpy((char *)envp_tmp[i], envp_in[i]);
 		sp += elen;
 	}
@@ -183,11 +183,11 @@ static int elf_parse_dynamic(elf_file_t ef);
  kernel space so do not use out side of kernel space
 
  *****************************************************************************************/
-uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *name)
+u_int32_t execThread(void (*tproc)(void), u_int32_t stack, char *arg, const char *name)
 {
 
 	kTask_t *newProcess = 0x0;
-	uint32_t stackAddr = 0x0;
+	u_int32_t stackAddr = 0x0;
 
 	/* Find A New Thread */
 	newProcess = schedNewTask();
@@ -197,7 +197,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *
 		strncpy(newProcess->name, name, sizeof(newProcess->name) - 1);
 
 	stackAddr =
-	    (uint32_t)vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
+	    (u_int32_t)vmm_get_free_kernel_page(newProcess->id, stack / PAGE_SIZE);
 
 	/* Set All The Correct Thread Attributes */
 	newProcess->md.md_tss.back_link = 0x0;
@@ -262,7 +262,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg, const char *
 	sched_setStatus(newProcess->id, READY);
 
 	/* Return with the new process ID */
-	return ((uint32_t)newProcess);
+	return ((u_int32_t)newProcess);
 }
 
 /*****************************************************************************************
@@ -289,11 +289,11 @@ void execFile(char *file, char **argv, char **envp, int console)
 	int i = 0x0;
 	int x = 0x0;
 
-	uint32_t *tmp = 0x0;
+	u_int32_t *tmp = 0x0;
 
-	uint32_t seg_data_addr   = 0x0;
-	uint32_t seg_data_npages = 0x0;
-	uint32_t ldAddr          = 0x0;
+	u_int32_t seg_data_addr   = 0x0;
+	u_int32_t seg_data_npages = 0x0;
+	u_int32_t ldAddr          = 0x0;
 	char    *interp          = 0x0;
 
 	Elf_Ehdr *binaryHeader = 0x0;
@@ -347,7 +347,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->term->t_pgrp = (int)newProcess->pgrp;
 
 	/* Now We Must Create A Virtual Space For This Proccess To Run In */
-	newProcess->md.md_tss.cr3 = (uint32_t)vmm_createVirtualSpace(newProcess->id);
+	memset(&newProcess->vm_map, 0, sizeof(newProcess->vm_map));
+	newProcess->md.md_tss.cr3 = (u_int32_t)vmm_create_virtual_space(newProcess->id);
 
 	/* To Better Load This Application We Will Switch Over To Its VM Space
 	 */
@@ -447,8 +448,8 @@ void execFile(char *file, char **argv, char **envp, int console)
 			     x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
-				if (vmm_remapPage(
-				        vmm_findFreePage(newProcess->id),
+				if (vmm_remap_page(
+				        vmm_find_free_page(newProcess->id),
 				        ((programHeader[i].p_vaddr &
 				          0xFFFFF000) +
 				         x),
@@ -474,14 +475,14 @@ void execFile(char *file, char **argv, char **envp, int console)
 				for (x = 0x0; x < (int)programHeader[i].p_memsz;
 				     x += 0x1000)
 				{
-					if ((vmm_setPageAttributes(
+					if ((vmm_set_page_attributes(
 					        (programHeader[i].p_vaddr &
 					         0xFFFFF000) +
 					            x,
 					        PAGE_PRESENT | PAGE_USER)) !=
 					    0x0)
 						kpanic("Error: "
-						       "vmm_setPageAttributes "
+						       "vmm_set_page_attributes "
 						       "failed, File: %s, "
 						       "Line: %i\n",
 						       __FILE__, __LINE__);
@@ -520,7 +521,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	// address -1 fix!
 	for (x = 1; x <= 100; x++)
 	{
-		vmm_remapPage(vmm_findFreePage(newProcess->id),
+		vmm_remap_page(vmm_find_free_page(newProcess->id),
 		              (STACK_ADDR + 1) - (x * PAGE_SIZE),
 		              PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
 		bzero((void *)((STACK_ADDR + 1) - (x * PAGE_SIZE)), PAGE_SIZE);
@@ -528,13 +529,13 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	/* Kernel Stack 0x2000 bytes long */
 
-	// vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000,
+	// vmm_remap_page(vmm_find_free_page(newProcess->id), 0x5BC000,
 	// KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
-	// vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000,
+	// vmm_remap_page(vmm_find_free_page(newProcess->id), 0x5BB000,
 	// KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
 	/*
 	for (x = 0; x < 2; x++)
-	  vmm_remapPage(vmm_findFreePage(newProcess->id), 0xFFFFF000 -
+	  vmm_remap_page(vmm_find_free_page(newProcess->id), 0xFFFFF000 -
 	(PAGE_SIZE * x), KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
 	*/
 
@@ -565,17 +566,17 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	// sched_setStatus(newProcess->id, READY);
 
-	uint32_t e_entry    = binaryHeader->e_entry;
-	uint32_t e_phoff    = binaryHeader->e_phoff;
-	uint32_t e_phnum    = binaryHeader->e_phnum;
-	uint32_t e_phentsize = binaryHeader->e_phentsize;
+	u_int32_t e_entry    = binaryHeader->e_entry;
+	u_int32_t e_phoff    = binaryHeader->e_phoff;
+	u_int32_t e_phnum    = binaryHeader->e_phnum;
+	u_int32_t e_phentsize = binaryHeader->e_phentsize;
 
 	kfree(binaryHeader);
 	kfree(programHeader);
 	fclose(newProcess->files[0]);
 	newProcess->files[0] = 0x0;
 
-	tmp = (uint32_t *)newProcess->md.md_tss.esp0 - 5;
+	tmp = (u_int32_t *)newProcess->md.md_tss.esp0 - 5;
 
 	tmp[0] = e_entry;
 	tmp[3] = STACK_ADDR - 12;
@@ -583,11 +584,11 @@ void execFile(char *file, char **argv, char **envp, int console)
 	newProcess->md.md_tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
 	                      (argc + 1) - (envc + 1) - STACK_PAD;
 
-	tmp = (uint32_t *)newProcess->md.md_tss.esp;
+	tmp = (u_int32_t *)newProcess->md.md_tss.esp;
 
 	tmp[0] = argc;
 
-	uint32_t sp = 0x0;
+	u_int32_t sp = 0x0;
 
 	for (i = 1; i <= argc; i++)
 	{
@@ -609,7 +610,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	/* auxv — required by musl's _dlstart to resolve the dynamic linker */
 	if (ldAddr) {
-		uint32_t *av = &tmp[i + envc + 1];
+		u_int32_t *av = &tmp[i + envc + 1];
 		AUXARGS_ENTRY(av, AT_PHDR,   e_phoff + 0x08048000);
 		AUXARGS_ENTRY(av, AT_PHENT,  e_phentsize);
 		AUXARGS_ENTRY(av, AT_PHNUM,  e_phnum);
@@ -620,9 +621,9 @@ void execFile(char *file, char **argv, char **envp, int console)
 	}
 
 	/* Build LDT For GS and FS */
-	vmm_unmapPage(VMM_USER_LDT, 1);
+	vmm_unmap_page(VMM_USER_LDT, VMM_KEEP);
 
-	if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_LDT,
+	if (vmm_remap_page(vmm_find_free_page(newProcess->id), VMM_USER_LDT,
 	                  PAGE_DEFAULT, newProcess->id, 0) == 0x0)
 	{
 		K_PANIC("Error: Remap Page Failed");
@@ -632,7 +633,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 
 	taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT +
 	                                   sizeof(struct gdtDescriptor));
-	uint32_t data_addr = 0x0;
+	u_int32_t data_addr = 0x0;
 
 	taskLDT->limitLow = (0xFFFFF & 0xFFFF);
 	taskLDT->baseLow = (data_addr & 0xFFFF);
@@ -648,7 +649,7 @@ void execFile(char *file, char **argv, char **envp, int console)
 	asm volatile("movl %0,%%eax          \n"
 	             "movl %%eax,%%cr3       \n"
 	             :
-	             : "d"((uint32_t *)(kernelPageDirectory)));
+	             : "d"((u_int32_t *)(kernelPageDirectory)));
 
 	sprintf(newProcess->oInfo.cwd, "/");
 
@@ -673,15 +674,15 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	int argc = argv_count(argv);
 	int envc = envp_count(envp);
 
-	uint32_t cr3 = 0x0;
+	u_int32_t cr3 = 0x0;
 
-	uint32_t *tmp = 0x0;
+	u_int32_t *tmp = 0x0;
 
-	uInt32 seg_size = 0x0;
-	uInt32 seg_addr = 0x0;
+	u_int32_t seg_size = 0x0;
+	u_int32_t seg_addr = 0x0;
 
 	char *interp = 0x0;
-	uint32_t ldAddr = 0x0;
+	u_int32_t ldAddr = 0x0;
 
 	fileDescriptor_t *fd = 0x0;
 
@@ -749,10 +750,15 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	_current->files[0] = fd;
 
 	/* Copy In ARGS & ENVS Before Cleaning Virtual Space */
-	uint32_t *argv_out = 0x0;
+	u_int32_t *argv_out = 0x0;
 	char *args_out = 0x0;
 
-	args_copyin(argv, (char **)&argv_out, &args_out);
+	if (args_copyin(argv, (char **)&argv_out, &args_out) != 0) {
+		kprintf("sys_exec: args_copyin failed for %s\n", file);
+		fclose(fd);
+		td->td_retval[0] = -7; /* E2BIG */
+		return (-1);
+	}
 
 	{
 		const char *base = file, *p;
@@ -775,24 +781,32 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 		_current->cmdline[pos] = '\0';
 	}
 
-	uint32_t *envp_out = 0x0;
+	u_int32_t *envp_out = 0x0;
 	char *envs_out = 0x0;
 
-	envs_copyin(envp, (char **)&envp_out, &envs_out);
+	if (envs_copyin(envp, (char **)&envp_out, &envs_out) != 0) {
+		kprintf("sys_exec: envs_copyin failed for %s\n", file);
+		kfree(argv_out);
+		kfree(args_out);
+		fclose(fd);
+		td->td_retval[0] = -7; /* E2BIG */
+		return (-1);
+	}
 
 	//! Clean the virtual of COW pages left over from the fork
-	// vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr +
+	// vmm_clean_virtual_space( (u_int32_t) _current->td.vm_daddr +
 	// (_current->td.vm_dsize << PAGE_SHIFT) ); MrOlsen 2017-12-15 - FIX! -
 	// This should be done before it was causing a lot of problems why did I
-	// free space after loading binary???? vmm_cleanVirtualSpace((uint32_t)
+	// free space after loading binary???? vmm_clean_virtual_space((u_int32_t)
 	// 0x8048000);
-	vmm_cleanVirtualSpace((uint32_t)VMM_USER_START);
+	vm_map_free(&_current->vm_map);
+	vmm_clean_virtual_space((u_int32_t)VMM_USER_START);
 
 	/* Clear Stack */
 	// bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
 	for (x = 1; x <= 100; x++)
 	{
-		vmm_remapPage(vmm_findFreePage(_current->id),
+		vmm_remap_page(vmm_find_free_page(_current->id),
 		              (STACK_ADDR + 1) - (x * 0x1000),
 		              PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
 		bzero((void *)((STACK_ADDR + 1) - (x * 0x1000)), 0x1000);
@@ -849,8 +863,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 			     x += 0x1000)
 			{
 				/* Make readonly and read/write !!! */
-				if (vmm_remapPage(
-				        vmm_findFreePage(_current->id),
+				if (vmm_remap_page(
+				        vmm_find_free_page(_current->id),
 				        ((programHeader[i].p_vaddr &
 				          0xFFFFF000) +
 				         x),
@@ -885,14 +899,14 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 				     x < (round_page(programHeader[i].p_memsz));
 				     x += 0x1000)
 				{
-					if ((vmm_setPageAttributes(
+					if ((vmm_set_page_attributes(
 					        (programHeader[i].p_vaddr &
 					         0xFFFFF000) +
 					            x,
 					        PAGE_PRESENT | PAGE_USER)) !=
 					    0x0)
 						kpanic("Error: "
-						       "vmm_setPageAttributes "
+						       "vmm_set_page_attributes "
 						       "failed, File: %s,Line: "
 						       "%i\n",
 						       __FILE__, __LINE__);
@@ -997,24 +1011,24 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	// iFrame->edx = 0x0;
 
 	iFrame->user_esp =
-	    (uint32_t)(STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
+	    (u_int32_t)(STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX -
 	               (argc + 1) - (envc + 1) - STACK_PAD) &
 	    0xFFFFF000;
 
-	tmp = (uint32_t *)iFrame->user_esp;
+	tmp = (u_int32_t *)iFrame->user_esp;
 
 	//  memset((char *) tmp, 0x0, ARGV_PAGE + ENVP_PAGE + ELF_AUX + (argc +
 	//  1) + (envc + 1) + STACK_PAD);
 
 	tmp[0] = argc;
 
-	uint32_t sp = 0x0;
+	u_int32_t sp = 0x0;
 
 	char *EXECP = 0x0;
 
 	for (i = 1; i <= argc; i++)
 	{
-		tmp[i] = (uint32_t)STACK_ADDR - ARGV_PAGE + sp;
+		tmp[i] = (u_int32_t)STACK_ADDR - ARGV_PAGE + sp;
 		if (i == 1)
 		{
 			EXECP = (char *)tmp[i];
@@ -1037,7 +1051,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 
 	for (x = 0; x < envc; x++)
 	{
-		tmp[x + i] = (uint32_t)STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+		tmp[x + i] = (u_int32_t)STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
 		strcpy((char *)tmp[x + i], (const char *)envp_out[x]);
 		sp += strlen((const char *)envp_out[x]) + 1;
 	}
@@ -1112,7 +1126,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	tmp[i++] = 0x0;
 
 	tmp[i++] = 15; // EXEC PATH
-	tmp[i++] = (uint32_t)EXECP;
+	tmp[i++] = (u_int32_t)EXECP;
 
 	tmp[i++] = 19; // NCPUS
 	tmp[i++] = 0x1;
@@ -1147,7 +1161,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	/*
 	 kfree (iFrameNew);
 
-	 memAddr = (uint32_t) & (_current->tss);
+	 memAddr = (u_int32_t) & (_current->tss);
 	 ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
 	 ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
 	 ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
@@ -1160,8 +1174,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp)
 	 */
 
 	/* Build LDT For GS and FS */
-	vmm_unmapPage(VMM_USER_LDT, 1); // Can I Free This?
-	if (vmm_remapPage(vmm_findFreePage(_current->id), VMM_USER_LDT,
+	vmm_unmap_page(VMM_USER_LDT, VMM_KEEP); // Can I Free This?
+	if (vmm_remap_page(vmm_find_free_page(_current->id), VMM_USER_LDT,
 	                  PAGE_DEFAULT, _current->id, 0) == 0x0)
 	{
 		K_PANIC("Error: Remap Page Failed");
@@ -1288,8 +1302,8 @@ static int elf_parse_dynamic(elf_file_t ef)
 			ef->got = (Elf_Addr *)(ef->address + dynp->d_un.d_ptr);
 			/*
 			 tmp = (void *) dynp->d_un.d_ptr;
-			 //elfDynamicS[i].dynPtr; tmp[2] = (uInt32) ef->ld_addr;
-			 tmp[1] = (uInt32) ef; //0x0;//0xBEEFEAD;//STACK_ADDR -
+			 //elfDynamicS[i].dynPtr; tmp[2] = (u_int32_t) ef->ld_addr;
+			 tmp[1] = (u_int32_t) ef; //0x0;//0xBEEFEAD;//STACK_ADDR -
 			 128;//_current->imageFd;//0xBEEFDEAD;//ef;
 			 */
 			break;

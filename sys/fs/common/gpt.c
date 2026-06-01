@@ -204,7 +204,7 @@ found:
 
 static int gptread_hdr(const char *which, struct ubx_device *dev, struct gpt_hdr *hdr, u_int64_t hdrlba)
 {
-	uint32_t crc;
+	u_int32_t crc;
 
 	if (dev->dev_blk_ops->read(dev, hdrlba, 1, secbuf))
 	{

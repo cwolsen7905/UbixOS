@@ -36,7 +36,7 @@
  * bootloader (e.g. GRUB).  Zero when booted via the FreeBSD loader.
  * Cast to a struct multiboot_info * to inspect boot-time memory map etc.
  */
-extern uint32_t _multiboot_info;
+extern u_int32_t _multiboot_info;
 
 #include <vmm/vmm.h>
 #include <fs/vfs/vfs.h>

@@ -71,10 +71,10 @@ ubx_device_free(struct ubx_device *dev)
 }
 
 volatile void *
-ubx_alloc_memory(struct ubx_device *dev, uint32_t phys_base, uint32_t size)
+ubx_alloc_memory(struct ubx_device *dev, u_int32_t phys_base, u_int32_t size)
 {
 	struct ubx_resource *res;
-	uint32_t pages, i, phys, virt;
+	u_int32_t pages, i, phys, virt;
 
 	if (dev->dev_nres >= UBX_MAX_RESOURCES) {
 		kprintf("%s: ubx_alloc_memory: resource table full\n",
@@ -86,7 +86,7 @@ ubx_alloc_memory(struct ubx_device *dev, uint32_t phys_base, uint32_t size)
 
 	for (i = 0; i < pages; i++) {
 		phys = phys_base + i * PAGE_SIZE;
-		if (vmm_remapIOPage(phys,
+		if (vmm_remap_io_page(phys,
 		    KERNEL_PAGE_DEFAULT | PAGE_CACHE_DISABLED, sysID) != 0) {
 			kprintf("%s: ubx_alloc_memory: remap failed phys=0x%X\n",
 			    dev->dev_nameunit, phys);
@@ -94,7 +94,7 @@ ubx_alloc_memory(struct ubx_device *dev, uint32_t phys_base, uint32_t size)
 		}
 	}
 
-	/* On UbixOS, vmm_remapIOPage identity-maps phys == virt. */
+	/* On UbixOS, vmm_remap_io_page identity-maps phys == virt. */
 	virt = phys_base;
 
 	res = &dev->dev_res[dev->dev_nres++];
@@ -107,7 +107,7 @@ ubx_alloc_memory(struct ubx_device *dev, uint32_t phys_base, uint32_t size)
 }
 
 int
-ubx_alloc_ioport(struct ubx_device *dev, uint32_t base, uint32_t size)
+ubx_alloc_ioport(struct ubx_device *dev, u_int32_t base, u_int32_t size)
 {
 	struct ubx_resource *res;
 
@@ -127,10 +127,10 @@ ubx_alloc_ioport(struct ubx_device *dev, uint32_t base, uint32_t size)
 }
 
 int
-ubx_alloc_irq(struct ubx_device *dev, uint8_t irq, void (*isr)(void))
+ubx_alloc_irq(struct ubx_device *dev, u_int8_t irq, void (*isr)(void))
 {
 	struct ubx_resource *res;
-	uint8_t vec;
+	u_int8_t vec;
 
 	if (dev->dev_nres >= UBX_MAX_RESOURCES) {
 		kprintf("%s: ubx_alloc_irq: resource table full\n",

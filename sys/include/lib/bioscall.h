@@ -37,7 +37,7 @@
 #define EFLAG_VM         0x20000
 
 struct biosRegs {
-  uint16_t ax, bx, cx, dx, si, di, es, ds;
+  u_int16_t ax, bx, cx, dx, si, di, es, ds;
 };
 
 void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds);

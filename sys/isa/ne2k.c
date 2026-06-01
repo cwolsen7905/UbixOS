@@ -67,7 +67,7 @@ asm(".globl ne2kISR         \n"
 
 /************************************************************************
 
- Function: int ne2kInit(uInt32 ioAddr)
+ Function: int ne2kInit(u_int32_t ioAddr)
  Description: This Function Will Initialize The Programmable Timer
 
  Notes:
@@ -134,9 +134,9 @@ int ne2k_init()
 int PCtoNIC(struct device *dev, void *packet, int length)
 {
 	int i = 0x0;
-	uInt16 *packet16 = (uInt16 *)packet;
-	uInt8 *packet8 = (uInt8 *)packet;
-	uInt8 word16 = 0x1;
+	u_int16_t *packet16 = (u_int16_t *)packet;
+	u_int8_t *packet8 = (u_int8_t *)packet;
+	u_int8_t word16 = 0x1;
 
 	if ((inportByte(dev->ioAddr) & 0x04) == 0x04)
 	{
@@ -192,7 +192,7 @@ int PCtoNIC(struct device *dev, void *packet, int length)
 int NICtoPC(struct device *dev, void *packet, int length, int nic_addr)
 {
 	int i = 0x0;
-	uInt16 *packet16 = (uInt16 *)packet;
+	u_int16_t *packet16 = (u_int16_t *)packet;
 
 	assert(length);
 
@@ -218,8 +218,8 @@ int NICtoPC(struct device *dev, void *packet, int length, int nic_addr)
 
 void ne2kHandler()
 {
-	uInt16 isr = 0x0;
-	uInt16 status = 0x0;
+	u_int16_t isr = 0x0;
+	u_int16_t status = 0x0;
 
 	irqDisable(10);
 	outportByte(mPic, eoi);
@@ -257,9 +257,9 @@ static int dp_recv(struct device *dev)
 	dp_rcvhdr_t header;
 	unsigned int pageno = 0x0, curr = 0x0, next = 0x0;
 	int packet_processed = 0x0, r = 0x0;
-	uInt16 eth_type = 0x0;
+	u_int16_t eth_type = 0x0;
 
-	uInt32 length = 0x0;
+	u_int32_t length = 0x0;
 
 	pageno = inportByte(dev->ioAddr + NE_BNRY) + 1;
 	if (pageno == stopPage)
@@ -319,10 +319,10 @@ static int dp_recv(struct device *dev)
 
 static void getblock(struct device *dev, int page, size_t offset, size_t size, void *dst)
 {
-	uInt16 *ha = 0x0;
+	u_int16_t *ha = 0x0;
 	int i = 0x0;
 
-	ha = (uInt16 *)dst;
+	ha = (u_int16_t *)dst;
 	offset = page * DP_PAGESIZE + offset;
 	outportByte(dev->ioAddr + NE_RBCR0, size & 0xFF);
 	outportByte(dev->ioAddr + NE_RBCR1, size >> 8);

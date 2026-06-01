@@ -41,69 +41,90 @@
 
 /* VBE 2.0 Info Block — filled by INT 10h AX=0x4F00, ES:DI=VBE_INFO_PADDR */
 typedef struct {
-  uint8_t  VbeSignature[4];    /* "VESA" on return */
-  uint16_t VbeVersion;         /* 0x0200 = VBE 2.0 */
-  uint32_t OemStringPtr;       /* far ptr to OEM string */
-  uint8_t  Capabilities[4];
-  uint32_t VideoModePtr;       /* far ptr to mode list (seg:off) */
-  uint16_t TotalMemory;        /* 64KB blocks of video RAM */
-  uint16_t OemSoftwareRev;
-  uint32_t OemVendorNamePtr;
-  uint32_t OemProductNamePtr;
-  uint32_t OemProductRevPtr;
-  uint8_t  Reserved[222];
-  uint8_t  OemData[256];
+  u_int8_t  VbeSignature[4];    /* "VESA" on return */
+  u_int16_t VbeVersion;         /* 0x0200 = VBE 2.0 */
+  u_int32_t OemStringPtr;       /* far ptr to OEM string */
+  u_int8_t  Capabilities[4];
+  u_int32_t VideoModePtr;       /* far ptr to mode list (seg:off) */
+  u_int16_t TotalMemory;        /* 64KB blocks of video RAM */
+  u_int16_t OemSoftwareRev;
+  u_int32_t OemVendorNamePtr;
+  u_int32_t OemProductNamePtr;
+  u_int32_t OemProductRevPtr;
+  u_int8_t  Reserved[222];
+  u_int8_t  OemData[256];
 } __attribute__((packed)) vbe_info_t;
 
 /* VBE 2.0 Mode Info Block — filled by INT 10h AX=0x4F01, CX=mode, ES:DI=VBE_MODE_PADDR */
 typedef struct {
-  uint16_t ModeAttributes;       /* bit 7: linear framebuffer available */
-  uint8_t  WinAAttributes;
-  uint8_t  WinBAttributes;
-  uint16_t WinGranularity;       /* KB */
-  uint16_t WinSize;              /* KB */
-  uint16_t WinASegment;
-  uint16_t WinBSegment;
-  uint32_t WinFuncPtr;
-  uint16_t BytesPerScanLine;
-  uint16_t XResolution;
-  uint16_t YResolution;
-  uint8_t  XCharSize;
-  uint8_t  YCharSize;
-  uint8_t  NumberOfPlanes;
-  uint8_t  BitsPerPixel;
-  uint8_t  NumberOfBanks;
-  uint8_t  MemoryModel;
-  uint8_t  BankSize;
-  uint8_t  NumberOfImagePages;
-  uint8_t  Reserved1;
-  uint8_t  RedMaskSize;
-  uint8_t  RedFieldPosition;
-  uint8_t  GreenMaskSize;
-  uint8_t  GreenFieldPosition;
-  uint8_t  BlueMaskSize;
-  uint8_t  BlueFieldPosition;
-  uint8_t  RsvdMaskSize;
-  uint8_t  RsvdFieldPosition;
-  uint8_t  DirectColorModeInfo;
-  uint32_t PhysBasePtr;          /* physical address of linear framebuffer */
-  uint32_t OffScreenMemOffset;
-  uint16_t OffScreenMemSize;
-  uint8_t  Reserved2[206];
+  u_int16_t ModeAttributes;       /* bit 7: linear framebuffer available */
+  u_int8_t  WinAAttributes;
+  u_int8_t  WinBAttributes;
+  u_int16_t WinGranularity;       /* KB */
+  u_int16_t WinSize;              /* KB */
+  u_int16_t WinASegment;
+  u_int16_t WinBSegment;
+  u_int32_t WinFuncPtr;
+  u_int16_t BytesPerScanLine;
+  u_int16_t XResolution;
+  u_int16_t YResolution;
+  u_int8_t  XCharSize;
+  u_int8_t  YCharSize;
+  u_int8_t  NumberOfPlanes;
+  u_int8_t  BitsPerPixel;
+  u_int8_t  NumberOfBanks;
+  u_int8_t  MemoryModel;
+  u_int8_t  BankSize;
+  u_int8_t  NumberOfImagePages;
+  u_int8_t  Reserved1;
+  u_int8_t  RedMaskSize;
+  u_int8_t  RedFieldPosition;
+  u_int8_t  GreenMaskSize;
+  u_int8_t  GreenFieldPosition;
+  u_int8_t  BlueMaskSize;
+  u_int8_t  BlueFieldPosition;
+  u_int8_t  RsvdMaskSize;
+  u_int8_t  RsvdFieldPosition;
+  u_int8_t  DirectColorModeInfo;
+  u_int32_t PhysBasePtr;          /* physical address of linear framebuffer */
+  u_int32_t OffScreenMemOffset;
+  u_int16_t OffScreenMemSize;
+  u_int8_t  Reserved2[206];
 } __attribute__((packed)) vbe_mode_info_t;
 
-int  vesa_init(uint16_t mode);
+int  vesa_init(u_int16_t mode);
 void vesa_text_mode(void);
 void vesa_map_fb(void);
 void vesa_draw_test(void);
-void vesa_draw_circle(uint32_t cx, uint32_t cy, uint32_t r, uint32_t color);
+void vesa_draw_circle(u_int32_t cx, u_int32_t cy, u_int32_t r, u_int32_t color);
+
+/* One enumerated VBE mode (linear framebuffer, 24bpp).  Layout matches the
+ * userland struct vesa_mode in include/api/display.h. */
+struct vesa_mode
+{
+	u_int16_t mode; /* VBE mode number */
+	u_int16_t width;
+	u_int16_t height;
+	u_int8_t  bpp;
+};
+
+/* Enumerate up to max LFB 24bpp modes the BIOS reports; returns the count.
+ * MUST be called from the systemtask (kernel) context — the V86 BIOS-call
+ * machinery races with task reaping when invoked from a user-process syscall. */
+int vesa_enum_modes(struct vesa_mode *out, int max);
+
+/* Cache of enumerated modes, filled once by the systemtask (where the BIOS call
+ * is safe) and copied to userland by the sys_vesa_modes syscall. */
+#define VESA_MAX_MODES 32
+extern struct vesa_mode g_vesa_modes[VESA_MAX_MODES];
+extern int g_vesa_mode_count; /* -1 until enumerated */
 
 /* Populated by vesa_init() for use by graphics code */
-extern uint32_t vesa_fb_paddr;    /* physical base of linear framebuffer */
-extern uint16_t vesa_pitch;       /* bytes per scanline */
-extern uint16_t vesa_width;
-extern uint16_t vesa_height;
-extern uint8_t  vesa_bpp;
-extern uint16_t vesa_current_mode; /* mode number from last successful vesa_init() */
+extern u_int32_t vesa_fb_paddr;    /* physical base of linear framebuffer */
+extern u_int16_t vesa_pitch;       /* bytes per scanline */
+extern u_int16_t vesa_width;
+extern u_int16_t vesa_height;
+extern u_int8_t  vesa_bpp;
+extern u_int16_t vesa_current_mode; /* mode number from last successful vesa_init() */
 
 #endif /* _LIB_VESA_H */

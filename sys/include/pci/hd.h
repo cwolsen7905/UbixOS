@@ -165,15 +165,15 @@
 struct driveInfo {
     struct driveDiskLabel *diskLabel;
     struct ata_identify_data *ata_identify;
-    uint32_t lba_high;
-    uint32_t lba_low;
-    uint32_t sector_size;
+    u_int32_t lba_high;
+    u_int32_t lba_low;
+    u_int32_t sector_size;
     char hdEnable;
     char hdDev;
     char hdFlags;
     char hdShift;
     long hdMask;
-    uint32_t hdMulti;
+    u_int32_t hdMulti;
     long hdPort;
     long hdSize;
     long hdCalc;
@@ -184,8 +184,8 @@ struct driveInfo {
 };
 
 int initHardDisk();
-int hdWrite(struct driveInfo *hdd, void *, uInt32, uInt32);
-int hdRead(struct driveInfo *hdd, void *, uInt32, uInt32);
+int hdWrite(struct driveInfo *hdd, void *, u_int32_t, u_int32_t);
+int hdRead(struct driveInfo *hdd, void *, u_int32_t, u_int32_t);
 int hdReset();
 int hdIoctl();
 int hdStart();
@@ -202,14 +202,14 @@ struct dos_partition {
     unsigned char dp_ehd; /* end head */
     unsigned char dp_esect; /* end sector */
     unsigned char dp_ecyl; /* end cylinder */
-    uInt32 dp_start; /* absolute starting sector number */
-    uInt32 dp_size; /* partition size in sectors */
+    u_int32_t dp_start; /* absolute starting sector number */
+    u_int32_t dp_size; /* partition size in sectors */
 };
 
 #define MAXPARTITIONS   8
 
 struct bsd_disklabel {
-    uint32_t d_magic; /* the magic number */
+    u_int32_t d_magic; /* the magic number */
     u_int16_t d_type; /* drive type */
     u_int16_t d_subtype; /* controller/d_type specific */
     char d_typename[16]; /* type name, e.g. "eagle" */
@@ -217,12 +217,12 @@ struct bsd_disklabel {
     char d_packname[16]; /* pack identifier */
 
     /* disk geometry: */
-    uint32_t d_secsize; /* # of bytes per sector */
-    uint32_t d_nsectors; /* # of data sectors per track */
-    uint32_t d_ntracks; /* # of tracks per cylinder */
-    uint32_t d_ncylinders; /* # of data cylinders per unit */
-    uint32_t d_secpercyl; /* # of data sectors per cylinder */
-    uint32_t d_secperunit; /* # of data sectors per unit */
+    u_int32_t d_secsize; /* # of bytes per sector */
+    u_int32_t d_nsectors; /* # of data sectors per track */
+    u_int32_t d_ntracks; /* # of tracks per cylinder */
+    u_int32_t d_ncylinders; /* # of data cylinders per unit */
+    u_int32_t d_secpercyl; /* # of data sectors per cylinder */
+    u_int32_t d_secperunit; /* # of data sectors per unit */
 
     /*
      * Spares (bad sector replacements) below are not counted in
@@ -236,7 +236,7 @@ struct bsd_disklabel {
      * Alternate cylinders include maintenance, replacement, configuration
      * description areas, etc.
      */
-    uint32_t d_acylinders; /* # of alt. cylinders per unit */
+    u_int32_t d_acylinders; /* # of alt. cylinders per unit */
 
     /* hardware characteristics: */
     /*
@@ -259,24 +259,24 @@ struct bsd_disklabel {
     u_int16_t d_interleave; /* hardware sector interleave */
     u_int16_t d_trackskew; /* sector 0 skew, per track */
     u_int16_t d_cylskew; /* sector 0 skew, per cylinder */
-    uint32_t d_headswitch; /* head switch time, usec */
-    uint32_t d_trkseek; /* track-to-track seek, usec */
-    uint32_t d_flags; /* generic flags */
+    u_int32_t d_headswitch; /* head switch time, usec */
+    u_int32_t d_trkseek; /* track-to-track seek, usec */
+    u_int32_t d_flags; /* generic flags */
 #define NDDATA 5
-    uint32_t d_drivedata[NDDATA]; /* drive-type specific information */
+    u_int32_t d_drivedata[NDDATA]; /* drive-type specific information */
 #define NSPARE 5
-    uint32_t d_spare[NSPARE]; /* reserved for future use */
-    uint32_t d_magic2; /* the magic number (again) */
+    u_int32_t d_spare[NSPARE]; /* reserved for future use */
+    u_int32_t d_magic2; /* the magic number (again) */
     u_int16_t d_checksum; /* xor of data incl. partitions */
 
     /* filesystem and partition information: */
     u_int16_t d_npartitions; /* number of partitions in following */
-    uint32_t d_bbsize; /* size of boot area at sn0, bytes */
-    uint32_t d_sbsize; /* max size of fs superblock, bytes */
+    u_int32_t d_bbsize; /* size of boot area at sn0, bytes */
+    u_int32_t d_sbsize; /* max size of fs superblock, bytes */
     struct partition { /* the partition table */
-        uint32_t p_size; /* number of sectors in partition */
-        uint32_t p_offset; /* starting sector */
-        uint32_t p_fsize; /* filesystem basic fragment size */
+        u_int32_t p_size; /* number of sectors in partition */
+        u_int32_t p_offset; /* starting sector */
+        u_int32_t p_fsize; /* filesystem basic fragment size */
         u_int8_t p_fstype; /* filesystem type, see below */
         u_int8_t p_frag; /* filesystem fragments per block */
         u_int16_t p_cpg; /* filesystem cylinders per group */

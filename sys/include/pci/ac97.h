@@ -93,9 +93,9 @@
 #define AC97_BDL_IOC      (1 << 15)        /* interrupt on completion */
 
 struct ac97_bdle {
-	uint32_t  addr;    /* physical address of PCM buffer */
-	uint16_t  len;     /* sample count (stereo 16-bit: bytes / 4) */
-	uint16_t  flags;   /* AC97_BDL_IOC etc. */
+	u_int32_t  addr;    /* physical address of PCM buffer */
+	u_int16_t  len;     /* sample count (stereo 16-bit: bytes / 4) */
+	u_int16_t  flags;   /* AC97_BDL_IOC etc. */
 } __attribute__((packed));
 
 /* -----------------------------------------------------------------------
@@ -111,7 +111,7 @@ struct ac97_bdle {
  * AC97_RING_MASK is used ONLY for indexing (ring[idx & MASK]).
  * Never apply it to the distance (ring_wr - ring_rd) — that would make
  * a full ring (distance == RING_SIZE) look identical to an empty ring
- * (distance == 0).  Always compute distance as the raw uint32_t difference.
+ * (distance == 0).  Always compute distance as the raw u_int32_t difference.
  * --------------------------------------------------------------------- */
 /*
  * Latency budget:
@@ -139,24 +139,24 @@ struct ac97_bdle {
 struct ac97_softc {
 	struct ubx_device  *sc_dev;
 
-	uint16_t  nam_base;      /* BAR0 I/O port base */
-	uint16_t  nabm_base;     /* BAR1 I/O port base */
-	uint8_t   irq;
+	u_int16_t  nam_base;      /* BAR0 I/O port base */
+	u_int16_t  nabm_base;     /* BAR1 I/O port base */
+	u_int8_t   irq;
 
 	struct dma_buf    bdl_dma;
 	struct ac97_bdle *bdl;               /* virtual alias of bdl_dma */
 
 	struct dma_buf    buf_dma[2];        /* ping-pong PCM buffers */
-	uint8_t          *buf[2];
+	u_int8_t          *buf[2];
 
 	/* Kernel ring buffer written by sys_write, drained by ISR */
-	uint8_t            ring[AC97_RING_SIZE];
-	volatile uint32_t  ring_rd;   /* modified by ISR */
-	volatile uint32_t  ring_wr;   /* modified by write path */
+	u_int8_t            ring[AC97_RING_SIZE];
+	volatile u_int32_t  ring_rd;   /* modified by ISR */
+	volatile u_int32_t  ring_wr;   /* modified by write path */
 
-	uint8_t   next_buf;   /* ping-pong index to fill next (0 or 1) */
-	uint8_t   lvi;        /* current last-valid-index sent to hardware */
-	uint8_t   running;    /* DMA started */
+	u_int8_t   next_buf;   /* ping-pong index to fill next (0 or 1) */
+	u_int8_t   lvi;        /* current last-valid-index sent to hardware */
+	u_int8_t   running;    /* DMA started */
 };
 
 /* Called from devfs write path */

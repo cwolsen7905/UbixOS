@@ -32,84 +32,84 @@
 #include <sys/types.h>
 
 struct pciConfig {
-    uint16_t vendorID;
-    uint16_t deviceID;
+    u_int16_t vendorID;
+    u_int16_t deviceID;
 
-    uint16_t command;
-    uint16_t status;
+    u_int16_t command;
+    u_int16_t status;
 
-    uint8_t revisionID;
-    uint8_t progIf;
-    uint8_t subClass;
-    uint8_t classCode;
+    u_int8_t revisionID;
+    u_int8_t progIf;
+    u_int8_t subClass;
+    u_int8_t classCode;
 
-    uint8_t cacheLineSize;
-    uint8_t latencyTimer;
-    uint8_t headerType;
-    uint8_t bist;
+    u_int8_t cacheLineSize;
+    u_int8_t latencyTimer;
+    u_int8_t headerType;
+    u_int8_t bist;
 
-    uint32_t bar[6];
+    u_int32_t bar[6];
 
-    uint32_t cbPointer;
+    u_int32_t cbPointer;
 
-    uint16_t subsysVendorID;
-    uint16_t subsysID;
+    u_int16_t subsysVendorID;
+    u_int16_t subsysID;
 
-    uint32_t epromAddr;
+    u_int32_t epromAddr;
 
-    uint16_t capabilites;
-    uint16_t res1;
+    u_int16_t capabilites;
+    u_int16_t res1;
 
-    uint32_t res2;
+    u_int32_t res2;
 
-    uint8_t intLine;
-    uint8_t intPin;
-    uint8_t minGrant;
-    uint8_t maxLatency;
+    u_int8_t intLine;
+    u_int8_t intPin;
+    u_int8_t minGrant;
+    u_int8_t maxLatency;
 
     /* device info */
-    //uint8_t  bus;
-    //uint8_t  dev;
-    //uint8_t  func;
-    //uint8_t  irq;
-    //uint8_t irqLine;
+    //u_int8_t  bus;
+    //u_int8_t  dev;
+    //u_int8_t  func;
+    //u_int8_t  irq;
+    //u_int8_t irqLine;
     /* base registers */
-    //uInt32 base[6];
-    //uInt32 size[6];
-    //uint16_t subsysVendor;
-    //uint16_t subsys;
+    //u_int32_t base[6];
+    //u_int32_t size[6];
+    //u_int16_t subsysVendor;
+    //u_int16_t subsys;
     /* Device Info */
     //Move this to anotther struct eventually
-    uint8_t bus;
-    uint8_t dev;
-    uint8_t func;
-    uint8_t _pad;
+    u_int8_t bus;
+    u_int8_t dev;
+    u_int8_t func;
+    u_int8_t _pad;
 
     /* Decoded BAR sizes (filled by pciProbe after BAR size discovery) */
-    uint32_t barSize[6];
+    u_int32_t barSize[6];
 };
 
 struct confadd {
-    uint8_t reg :8;
-    uint8_t func :3;
-    uint8_t dev :5;
-    uint8_t bus :8;
-    uint8_t rsvd :7;
-    uint8_t enable :1;
+    u_int8_t reg :8;
+    u_int8_t func :3;
+    u_int8_t dev :5;
+    u_int8_t bus :8;
+    u_int8_t rsvd :7;
+    u_int8_t enable :1;
 };
 
 #define countof(a)     (sizeof(a) / sizeof(a[0]))
 
 struct pci_driver {
-    uint16_t vendor;
-    uint16_t device;
+    u_int16_t vendor;
+    u_int16_t device;
     int (*init)(struct pciConfig *);
 };
 
 int pci_init();
 
-uint32_t pciProbe(int bus, int dev, int func);
-uInt32 pciRead(int bus, int dev, int func, int reg, int bytes);
-void pciWrite(int bus, int dev, int func, int reg, uInt32 v, int bytes);
+u_int32_t pciProbe(int bus, int dev, int func);
+u_int32_t pciRead(int bus, int dev, int func, int reg, int bytes);
+void pciWrite(int bus, int dev, int func, int reg, u_int32_t v, int bytes);
 
 #endif

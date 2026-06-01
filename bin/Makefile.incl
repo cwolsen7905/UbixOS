@@ -1,13 +1,7 @@
+# (C) 2002-2026 The UbixOS Project
 # 'bin' options
 
-UNAME_S != uname -s
-.if ${UNAME_S} == "Darwin"
-CROSS_PREFIX?=x86_64-elf-
-CROSS_M32?=-m32
-.else
-CROSS_PREFIX?=
-CROSS_M32?=
-.endif
+.include "${UBIX_MK}/ubix.platform.mk"
 
 CC=${CROSS_PREFIX}gcc
 CXX=${CROSS_PREFIX}g++
@@ -20,7 +14,7 @@ RANLIB=${CROSS_PREFIX}ranlib
 
 BUILD_DIR?=${SRCTOP}/build
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti \
+CFLAGS = ${CROSS_M32} -nostdlib -nostdinc -fno-builtin -fno-exceptions -fno-rtti \
          -Wno-unused-command-line-argument \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP
 LDFLAGS = -Wl,-m,elf_i386

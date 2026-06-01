@@ -160,7 +160,7 @@
 #define DNS_MAX_SERVERS   2
 #define DNS_DOES_NAME_CHECK   1
 #define LWIP_DNS_SECURE   0
-#define LWIP_RAND()       ((uint32_t)0xdeadbeef)
+#define LWIP_RAND()       ((u_int32_t)0xdeadbeef)
 #define DNS_LOCAL_HOSTLIST   0
 #define DNS_LOCAL_HOSTLIST_IS_DYNAMIC   0
 #define LWIP_DNS_SUPPORT_MDNS_QUERIES   0

@@ -44,7 +44,7 @@
 
 #define IRQ_HANDLERS_MAX 4
 
-void irq_register(uint8_t irq, void (*handler)(void));
+void irq_register(u_int8_t irq, void (*handler)(void));
 void irq_dispatch(int irq); /* called from irq_stubs.S — not for drivers */
 
 #endif /* _ISA_IRQ_H */

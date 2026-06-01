@@ -75,10 +75,10 @@ void irqEnable_old(u_int16_t irqNo)
 	outportByte(sPic + 1, (irqMask >> 8) & 0xFF);
 }
 
-void irqEnable(uint16_t irqNo)
+void irqEnable(u_int16_t irqNo)
 {
-	uint16_t port;
-	uint8_t value;
+	u_int16_t port;
+	u_int8_t value;
 
 	if (irqNo < 8)
 	{
@@ -112,10 +112,10 @@ void irqDisable_old(u_int16_t irqNo)
 	outportByte(sPic + 1, (irqMask >> 8) & 0xFF);
 }
 
-void irqDisable(uint16_t irqNo)
+void irqDisable(u_int16_t irqNo)
 {
-	uint16_t port;
-	uint8_t value;
+	u_int16_t port;
+	u_int8_t value;
 
 	if (irqNo < 8)
 	{

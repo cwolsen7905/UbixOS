@@ -11,8 +11,8 @@ OBJS_SO = ubixcwd.o ttyctrl.o
 # Objects for the static ubix_api.a used by musl-linked programs.
 # pidStatus and MPI stubs duplicate symbols in the old libc; they must NOT
 # land in the source tree where LIBRARIES globs would pick them up.
-OBJS_A  = ubixcwd.o ttyctrl.o settty.o views.o \
-          pidstatus.o \
+OBJS_A  = ubixcwd.o ttyctrl.o settty.o pty.o ubistry.o ulog.o views.o \
+          pidstatus.o netcfg.o display.o \
           mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o mpi_destroymbox.o \
           sys_gettimeofday.o gettime.o mount.o
 
@@ -30,11 +30,12 @@ OUTPUT  = ubix_api.so
 
 .c.o:
 	@mkdir -p ${OBJDIR}
-	$(CC) $(CFLAGS) ${CROSS_M32} -Wall -nostdinc -O -I./include -I../../include \
+	$(CC) $(CFLAGS) ${CROSS_M32} -Wall -nostdinc -O \
 		-I${SRCTOP}/contrib/musl/include \
 		-I${OBJ_DIR}/obj/musl/obj/include \
 		-I${SRCTOP}/contrib/musl/arch/i386 \
 		-I${SRCTOP}/contrib/musl/arch/generic \
+		-I./include -I../../include \
 		-MT ${.TARGET:T} -MF ${OBJDIR}/${.TARGET:T:.o=.d} \
 		-c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
 

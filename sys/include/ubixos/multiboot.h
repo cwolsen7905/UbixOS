@@ -8,16 +8,16 @@
  * Only fields gated by the corresponding flags bit are valid.
  */
 struct multiboot_info {
-  uint32_t flags;         /* which fields below are valid            */
-  uint32_t mem_lower;     /* bit 0: KB of lower memory               */
-  uint32_t mem_upper;     /* bit 0: KB of upper memory               */
-  uint32_t boot_device;   /* bit 1: BIOS drive + partition           */
-  uint32_t cmdline;       /* bit 2: physical addr of command line    */
-  uint32_t mods_count;    /* bit 3: number of boot modules           */
-  uint32_t mods_addr;     /* bit 3: physical addr of modules array   */
-  uint32_t syms[4];       /* bits 4/5: symbol table info             */
-  uint32_t mmap_length;   /* bit 6: bytes in memory map              */
-  uint32_t mmap_addr;     /* bit 6: physical addr of memory map      */
+  u_int32_t flags;         /* which fields below are valid            */
+  u_int32_t mem_lower;     /* bit 0: KB of lower memory               */
+  u_int32_t mem_upper;     /* bit 0: KB of upper memory               */
+  u_int32_t boot_device;   /* bit 1: BIOS drive + partition           */
+  u_int32_t cmdline;       /* bit 2: physical addr of command line    */
+  u_int32_t mods_count;    /* bit 3: number of boot modules           */
+  u_int32_t mods_addr;     /* bit 3: physical addr of modules array   */
+  u_int32_t syms[4];       /* bits 4/5: symbol table info             */
+  u_int32_t mmap_length;   /* bit 6: bytes in memory map              */
+  u_int32_t mmap_addr;     /* bit 6: physical addr of memory map      */
 };
 
 /*
@@ -39,15 +39,15 @@ struct multiboot_info {
 #define MB_BOOT_PARTITION(bd) (((bd) >> 16) & 0xFF)
 
 /* Convert BIOS drive → kernel major (1-based) */
-static inline int mb_drive_to_major(uint32_t boot_device) {
-  uint8_t drive = MB_BOOT_DRIVE(boot_device);
+static inline int mb_drive_to_major(u_int32_t boot_device) {
+  u_int8_t drive = MB_BOOT_DRIVE(boot_device);
   return (drive >= 0x80) ? (int)(drive - 0x80 + 1) : 1;
 }
 
 /* Convert GRUB partition (0-based) → kernel minor (1-based).
  * 0xFF means unpartitioned — treat as first partition. */
-static inline int mb_partition_to_minor(uint32_t boot_device) {
-  uint8_t part = MB_BOOT_PARTITION(boot_device);
+static inline int mb_partition_to_minor(u_int32_t boot_device) {
+  u_int8_t part = MB_BOOT_PARTITION(boot_device);
   return (part == 0xFF) ? 1 : (int)(part + 1);
 }
 

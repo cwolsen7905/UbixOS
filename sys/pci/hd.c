@@ -42,12 +42,12 @@ static int hdC = 0;
 
 static int _initHardDisk(int hdD);
 
-static int hd_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
+static int hd_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	return (hdRead(dev->dev_softc, buf, lba, count));
 }
 
-static int hd_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
+static int hd_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	return (hdWrite(dev->dev_softc, buf, lba, count));
 }
@@ -91,8 +91,8 @@ int _initHardDisk(int hdD)
 	 */
 	{
 		int chk;
-		uint8_t st;
-		outportByte(0x1F0 + ATA_DRIVE, (uint8_t)hdD);
+		u_int8_t st;
+		outportByte(0x1F0 + ATA_DRIVE, (u_int8_t)hdD);
 		for (chk = 0; chk < 4; chk++)
 			inportByte(0x1F0 + hdStat);
 		st = inportByte(0x1F0 + hdStat);
@@ -444,7 +444,7 @@ go:
 	return (0x0);
 }
 
-int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
+int hdWrite(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int32_t sectorCount)
 {
 	long counter = 0x0;
 	long retVal = 0x0;
@@ -523,7 +523,7 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
 	return (0);
 }
 
-int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount)
+int hdRead(struct driveInfo *hdd, void *baseAddr, u_int32_t startSector, u_int32_t sectorCount)
 {
 	long  counter          = 0x0;
 	long  retVal           = 0x0;
@@ -562,7 +562,7 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
 		 * read exactly sectorCount sectors.
 		 */
 		remainder = (short)(sectorCount -
-		    (uInt32)transactionCount * hdd->hdMulti);
+		    (u_int32_t)transactionCount * hdd->hdMulti);
 		if (remainder > 0)
 			transactionCount++;
 	}
@@ -612,7 +612,7 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
 			retVal = inportByte(hdd->hdPort + hdStat);
 			if ((retVal & 1) != 0x0)
 			{
-				kprintf("HD Read Error: [%i:0x%X:%i]\n", counter, (uInt32)baseAddr, startSector);
+				kprintf("HD Read Error: [%i:0x%X:%i]\n", counter, (u_int32_t)baseAddr, startSector);
 				return (1);
 			}
 			if ((retVal & 8) != 0x0)

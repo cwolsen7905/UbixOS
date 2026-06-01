@@ -11,7 +11,7 @@
 #define LWIP_ERR_T int
 /*
 #ifdef LWIP_ERR_T
-typedef uint8_t err_t;
+typedef u_int8_t err_t;
 #endif
 */
 

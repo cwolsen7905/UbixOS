@@ -147,7 +147,7 @@ void sys_sem_signal(struct sys_sem **s);
  * @return time (in milliseconds) waited for the semaphore
  *         or SYS_ARCH_TIMEOUT on timeout
  */
-uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout);
+u_int32_t sys_arch_sem_wait(struct sys_sem **s, u_int32_t timeout);
 /**
  * @ingroup sys_sem
  * Delete a semaphore
@@ -226,7 +226,7 @@ err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg);
            or SYS_ARCH_TIMEOUT on timeout
  *         The returned time has to be accurate to prevent timer jitter!
  */
-uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout);
+u_int32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, u_int32_t timeout);
 /* Allow port to override with a macro, e.g. special timeout for sys_arch_mbox_fetch() */
 #ifndef sys_arch_mbox_tryfetch
 /**
@@ -237,7 +237,7 @@ uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout)
  * @return 0 (milliseconds) if a message has been received
  *         or SYS_MBOX_EMPTY if the mailbox is empty
  */
-uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg);
+u_int32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg);
 #endif
 /**
  * For now, we map straight to sys_arch implementation.

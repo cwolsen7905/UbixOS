@@ -44,7 +44,7 @@
 #define ocw3Isr 0x0B // Read ISR                
 
 int i8259_init();
-void irqEnable(uInt16 irqNo);
-void irqDisable(uInt16 irqNo);
+void irqEnable(u_int16_t irqNo);
+void irqDisable(u_int16_t irqNo);
 
 #endif

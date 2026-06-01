@@ -66,55 +66,55 @@ static const char *const icIdent[] = {
 
 struct nicBuffer *tmpBuf;
 
-void lnc_writeCSR(struct lncInfo *lnc, uint16_t port, uint16_t val)
+void lnc_writeCSR(struct lncInfo *lnc, u_int16_t port, u_int16_t val)
 {
 	outportWord(lnc->ioAddr + RAP, port);
 	outportWord(lnc->ioAddr + RDP, val);
 }
 
-void lnc_writeCSR32(struct lncInfo *lnc, uint32_t port, uint32_t val)
+void lnc_writeCSR32(struct lncInfo *lnc, u_int32_t port, u_int32_t val)
 {
 	outportDWord(lnc->ioAddr + RAP32, port);
 	outportDWord(lnc->ioAddr + RDP32, val);
 }
 
-uint16_t lnc_readCSR(struct lncInfo *lnc, uint16_t port)
+u_int16_t lnc_readCSR(struct lncInfo *lnc, u_int16_t port)
 {
 	outportWord(lnc->ioAddr + RAP, port);
 	return (inportWord(lnc->ioAddr + RDP));
 }
 
-uint32_t lnc_readCSR32(struct lncInfo *lnc, uint32_t port)
+u_int32_t lnc_readCSR32(struct lncInfo *lnc, u_int32_t port)
 {
 	outportDWord(lnc->ioAddr + RAP32, port);
 	return (inportDWord(lnc->ioAddr + RDP32));
 }
 
-void lnc_writeBCR(struct lncInfo *lnc, uint16_t port, uint16_t val)
+void lnc_writeBCR(struct lncInfo *lnc, u_int16_t port, u_int16_t val)
 {
 	outportWord(lnc->ioAddr + RAP, port);
 	outportWord(lnc->ioAddr + BDP, val);
 }
 
-void lnc_writeBCR32(struct lncInfo *lnc, uint32_t port, uint32_t val)
+void lnc_writeBCR32(struct lncInfo *lnc, u_int32_t port, u_int32_t val)
 {
 	outportDWord(lnc->ioAddr + RAP32, port);
 	outportDWord(lnc->ioAddr + BDP32, val);
 }
 
-uint16_t lnc_readBCR(struct lncInfo *lnc, uint16_t port)
+u_int16_t lnc_readBCR(struct lncInfo *lnc, u_int16_t port)
 {
 	outportWord(lnc->ioAddr + RAP, port);
 	return (inportWord(lnc->ioAddr + BDP));
 }
 
-uint32_t lnc_readBCR32(struct lncInfo *lnc, uint32_t port)
+u_int32_t lnc_readBCR32(struct lncInfo *lnc, u_int32_t port)
 {
 	outportDWord(lnc->ioAddr + RAP32, port);
 	return (inportDWord(lnc->ioAddr + BDP32));
 }
 
-int initLNC(uint32_t ioAddr)
+int initLNC(u_int32_t ioAddr)
 {
 	int i = 0x0;
 
@@ -163,7 +163,7 @@ int initLNC(uint32_t ioAddr)
 
 	lnc_switchDWord(lnc);
 
-	uint32_t iW = 0;
+	u_int32_t iW = 0;
 
 	iW = lnc_readBCR32(lnc, 0x2);
 	iW |= 0x2;
@@ -179,17 +179,17 @@ int initLNC(uint32_t ioAddr)
 	lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
 	lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
 
-	lnc->init.rdra = (uint32_t)vmm_getRealAddr((uint32_t)lnc->rxRing);
+	lnc->init.rdra = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->rxRing);
 	lnc->init.rlen = 3 << 4;
-	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr((uint32_t)lnc->rxRing));
+	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_get_real_addr((u_int32_t)lnc->rxRing));
 
-	lnc->init.tdra = (uint32_t)vmm_getRealAddr((uint32_t)lnc->txRing);
+	lnc->init.tdra = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->txRing);
 	lnc->init.tlen = 3 << 4;
-	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr((uint32_t)lnc->txRing));
+	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_get_real_addr((u_int32_t)lnc->txRing));
 
-	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr((uint32_t)&lnc->init));
+	kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_get_real_addr((u_int32_t)&lnc->init));
 
-	iW = vmm_getRealAddr((uint32_t)&lnc->init);
+	iW = vmm_get_real_addr((u_int32_t)&lnc->init);
 
 	lnc_writeCSR32(lnc, CSR1, iW & 0xFFFF);
 	lnc_writeCSR32(lnc, CSR2, (iW >> 16) & 0xFFFF);
@@ -220,7 +220,7 @@ int initLNC(uint32_t ioAddr)
 int lnc_probe(struct lncInfo *lnc)
 {
 
-	uInt32 chipId = 0x0;
+	u_int32_t chipId = 0x0;
 	int type = 0x0;
 
 	if ((type = lanceProbe(lnc)))
@@ -263,7 +263,7 @@ int lnc_probe(struct lncInfo *lnc)
 
 int lanceProbe(struct lncInfo *lnc)
 {
-	uInt16 inW = 0;
+	u_int16_t inW = 0;
 
 	lnc_writeCSR(lnc, CSR0, CSR0_STOP);
 
@@ -291,7 +291,7 @@ int lanceProbe(struct lncInfo *lnc)
 
 void lnc_INT()
 {
-	uint16_t csr0 = (uint16_t)lnc_readCSR32(lnc, CSR0);
+	u_int16_t csr0 = (u_int16_t)lnc_readCSR32(lnc, CSR0);
 
 	if (csr0 & ERR)
 		kprintf("lnc: CSR0 error: [0x%X]\n", csr0);
@@ -328,7 +328,7 @@ void lnc_thread()
 	{
 		while (lnc_driverOwnsRX(lnc))
 		{
-			// uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
+			// u_int16_t plen = 0 + (u_int16_t)lnc->rxRing[lnc->rxPtr].md[2];
 			int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff) - 4;
 			/*
 			 if (plen > 0)
@@ -369,7 +369,7 @@ void lnc_rxINT()
 
 	while (lnc_driverOwnsRX(lnc))
 	{
-		// uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
+		// u_int16_t plen = 0 + (u_int16_t)lnc->rxRing[lnc->rxPtr].md[2];
 		int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff) - 4;
 		/*
 		 if (plen > 0)
@@ -394,7 +394,7 @@ void lnc_rxINT()
 
 void lnc_txINT()
 {
-	uint16_t status = 0x0;
+	u_int16_t status = 0x0;
 
 	kprintf("TINT\n");
 	status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16);
@@ -442,8 +442,8 @@ asm(".globl lnc_isr       \n"
 int lncAttach(struct lncInfo *lnc, int unit)
 {
 	int i = 0;
-	uint32_t lncSize = 0x0;
-	uint16_t bcnt = 0x0;
+	u_int32_t lncSize = 0x0;
+	u_int16_t bcnt = 0x0;
 
 	/* Initialize rxRing */
 	lncSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
@@ -472,8 +472,8 @@ int lncAttach(struct lncInfo *lnc, int unit)
 	/* Setup the RX Ring */
 	for (i = 0; i < NDESC(lnc->nrdre); i++)
 	{
-		lnc->rxRing[i].addr = (uint32_t)vmm_getRealAddr((uint32_t)lnc->rxBuffer + (i * lnc->bufferSize));
-		bcnt = (uint16_t)(-lnc->bufferSize);
+		lnc->rxRing[i].addr = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->rxBuffer + (i * lnc->bufferSize));
+		bcnt = (u_int16_t)(-lnc->bufferSize);
 		bcnt &= 0x0FFF;
 		bcnt |= 0xF000;
 		// kprintf("rxR[%i].addr = 0x%X, BCNT 0x%X", i, lnc->rxRing[i].addr,bcnt);
@@ -508,8 +508,8 @@ int lncAttach(struct lncInfo *lnc, int unit)
 	/* Setup the TX Ring */
 	for (i = 0; i < NDESC(lnc->ntdre); i++)
 	{
-		lnc->txRing[i].addr = (uint32_t)vmm_getRealAddr((uint32_t)lnc->txBuffer + (i * lnc->bufferSize));
-		bcnt = (uint16_t)(-lnc->bufferSize);
+		lnc->txRing[i].addr = (u_int32_t)vmm_get_real_addr((u_int32_t)lnc->txBuffer + (i * lnc->bufferSize));
+		bcnt = (u_int16_t)(-lnc->bufferSize);
 		bcnt &= 0x0FFF;
 		bcnt |= 0xF000;
 		// kprintf("txR[%i].addr = 0x%X, BCNT 0x%X", i, lnc->txRing[i].addr,bcnt);
@@ -580,7 +580,7 @@ int lnc_nextRxPtr(struct lncInfo *lnc)
 	return (0);
 }
 
-int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest)
+int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, u_int8_t *dest)
 {
 	// kprintf("SEND PACKET1![%i]\n", lnc->txPtr);
 	if (!lnc_driverOwnsTX(lnc))
@@ -596,7 +596,7 @@ int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest)
 	lnc->txRing[lnc->txPtr].md[1] |= 0x2;
 	lnc->txRing[lnc->txPtr].md[1] |= 0x1;
 
-	uint16_t bcnt = (uint16_t)(-len);
+	u_int16_t bcnt = (u_int16_t)(-len);
 	bcnt &= 0xFFF;
 	bcnt |= 0xF000;
 	lnc->txRing[lnc->txPtr].bcnt = bcnt;
@@ -643,7 +643,7 @@ int lnc_switchDWord(struct lncInfo *lnc)
 	{
 		kprintf("Cannot Swithc To 32 Bit");
 	}
-	uint32_t _csr58 = lnc_readCSR32(lnc, CSR58);
+	u_int32_t _csr58 = lnc_readCSR32(lnc, CSR58);
 	_csr58 &= 0xFFF0;
 	_csr58 |= 2;
 	lnc_writeCSR32(lnc, CSR58, _csr58);
@@ -670,8 +670,8 @@ static int lnc_ubx_probe(struct ubx_device *dev)
 
 static int lnc_ubx_attach(struct ubx_device *dev)
 {
-	uint32_t iobase = 0;
-	uint32_t cmd;
+	u_int32_t iobase = 0;
+	u_int32_t cmd;
 	int i;
 
 	for (i = 0; i < dev->dev_nres; i++)
@@ -694,7 +694,7 @@ static int lnc_ubx_attach(struct ubx_device *dev)
 	cmd |= 0x05;
 	pciWrite(dev->dev_bus, dev->dev_slot, dev->dev_func, 0x04, cmd, 4);
 
-	kprintf("pci: found PCnet @ I/O 0x%X IRQ %u\n", iobase, dev->dev_res[0].r_type == UBX_RES_IRQ ? (uint8_t)dev->dev_res[0].r_start : 0);
+	kprintf("pci: found PCnet @ I/O 0x%X IRQ %u\n", iobase, dev->dev_res[0].r_type == UBX_RES_IRQ ? (u_int8_t)dev->dev_res[0].r_start : 0);
 
 	if (initLNC(iobase) == 0) {
 		devfs_makeNode("lnc0", 'c', 14, 1);

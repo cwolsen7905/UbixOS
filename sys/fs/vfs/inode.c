@@ -74,7 +74,7 @@ void iput(struct inode * inode) {
   if (inode->i_pipe) {
     unsigned long page = (unsigned long) PIPE_BASE(*inode);
     PIPE_BASE (*inode) = NULL;
-    vmm_freeVirtualPage(page);
+    vmm_free_virtual_page(page);
   }
 
   if (inode->i_sb && inode->i_sb->s_op && inode->i_sb->s_op->put_inode) {

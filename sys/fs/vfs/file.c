@@ -30,6 +30,8 @@
 #include <sys/sysproto_posix.h>
 #include <sys/sysproto.h>
 #include <fs/vfs/vfs.h>
+#include <fs/fat/fat_file.h>
+#include <fs/fat/fat_dir.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
@@ -39,6 +41,7 @@
 #include <lib/kprintf.h>
 #include <assert.h>
 #include <sys/klog.h>
+#include <sys/errno.h>
 #include <sys/descrip.h>
 #include <sys/pipe.h>
 /* fat_filelib.h removed — FAT now uses native driver via vfsClose */
@@ -46,7 +49,7 @@
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER
 ;
 
-void sysMkDir(const char *path);
+int sysMkDir(const char *path);
 
 fileDescriptor_t *fdTable = 0x0;
 
@@ -154,12 +157,16 @@ void sysRmDir(const char *path) {
 
 int sys_mkdir(struct thread *td, struct sys_mkdir_args *args) {
   if (args->path == 0x0) {
-    td->td_retval[0] = -1;
-    return (-1);
+    td->td_retval[0] = -EFAULT;
+    return (EFAULT);
   }
-  sysMkDir(args->path);
-  td->td_retval[0] = 0;
-  return (0);
+  /* sysMkDir returns 0 on success, -EEXIST when the path already names
+   * a directory, -EIO on filesystem failure.  busybox's mkdir -p relies
+   * on EEXIST being distinguishable so it can walk through interior
+   * components that already exist. */
+  int r = sysMkDir(args->path);
+  td->td_retval[0] = r;
+  return (r == 0 ? 0 : -r);
 }
 
 int sys_rmdir(struct thread *td, struct sys_rmdir_args *args) {
@@ -239,6 +246,109 @@ int sys_lseek(struct thread *td, struct sys_lseek_args *args) {
     return (0);
 }
 
+/**
+ * sys_ftruncate — POSIX ftruncate(2), FreeBSD ABI syscall 480.
+ *
+ * Resizes the on-disk file plus the in-kernel tracked size.  Shrinking
+ * frees the cluster chain beyond the new length and updates the FAT
+ * directory entry; growing produces a sparse-style file (size bumped,
+ * gap filled by subsequent writes).
+ *
+ * Implementation currently calls fat_file_truncate directly via fd->res —
+ * UbixOS's only writable filesystem is FAT, and we don't yet have a
+ * per-FS truncate hook in the vfs op table.  When a second writable FS
+ * lands we should switch to dispatching through the mount's fs vector.
+ *
+ * @return 0 on success, -EBADF if fd does not refer to an open writable
+ *         file, -EINVAL for negative length, -EIO on FS failure.
+ */
+int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *args) {
+    struct file *fdd = 0x0;
+    fileDescriptor_t *fd = 0x0;
+
+    getfd(td, &fdd, args->fd);
+    if (fdd == 0x0 || fdd->fd == 0x0) {
+        td->td_retval[0] = -EBADF;
+        return (EBADF);
+    }
+    fd = fdd->fd;
+
+    if (args->length < 0) {
+        td->td_retval[0] = -EINVAL;
+        return (EINVAL);
+    }
+
+    /* FAT: ask the driver to resize the chain.  Other FSes (ufs/ubixfs)
+     * land in the in-memory-only fallback below since they're read-only
+     * for our current workloads. */
+    if (fd->res != NULL && fd->mp != NULL && fd->mp->fs != NULL &&
+        fd->mp->fs->vfsType == 0xFA) {
+        if (fat_file_truncate((struct fat_file *)fd->res,
+                              (u_int32_t)args->length) != 0) {
+            td->td_retval[0] = -EIO;
+            return (EIO);
+        }
+    }
+
+    fd->size = (u_int32_t)args->length;
+    if (fd->offset > args->length)
+        fd->offset = args->length;
+
+    td->td_retval[0] = 0;
+    return (0);
+}
+
+/**
+ * sys_umask — POSIX umask(2), FreeBSD ABI syscall 60.
+ *
+ * Returns the old umask and sets the new one.  The per-process umask
+ * isn't yet applied at file-create time (kern_openat doesn't consult
+ * it), but tools that pass through "save and restore umask" — mkdir,
+ * touch, tar — call it during init and would fail outright if the
+ * syscall returned -ENOSYS.  Stubbing to 022 / accept-anything keeps
+ * those callers happy until per-process umask tracking lands.
+ *
+ * @return previous umask (0022 fixed for now).
+ */
+int sys_umask(struct thread *td, struct sys_umask_args *args) {
+    (void)args;
+    td->td_retval[0] = 0022;
+    return (0);
+}
+
+/**
+ * sys_utimensat — POSIX utimensat(2), FreeBSD ABI syscall 547.
+ *
+ * Set access + modification times on a file.  UbixOS doesn't track
+ * per-file timestamps yet (stat synthesises 1970-01-01 for everything),
+ * so the actual set is a no-op for paths that resolve.
+ *
+ * The path-existence check matters even though we don't store the
+ * times — busybox touch calls utimensat first to detect "no such
+ * file" and falls back to open(O_CREAT) only when this returns
+ * ENOENT.  Returning 0 unconditionally would make touch think the
+ * file already existed and skip the create.
+ *
+ * @return 0 if the path resolves, -ENOENT otherwise.  AT_FDCWD only
+ *         today; non-zero fd arguments are not yet supported.
+ */
+int sys_utimensat(struct thread *td, struct sys_utimensat_args *args) {
+    if (args->path == NULL) {
+        td->td_retval[0] = -EFAULT;
+        return (EFAULT);
+    }
+    /* Probe existence: open for read.  fopen returns NULL when the
+     * path doesn't resolve — exactly the signal busybox touch needs. */
+    fileDescriptor_t *fp = fopen(args->path, "r");
+    if (fp == NULL) {
+        td->td_retval[0] = -ENOENT;
+        return (ENOENT);
+    }
+    fclose(fp);
+    td->td_retval[0] = 0;
+    return (0);
+}
+
 int sys_chdir(struct thread *td, struct sys_chdir_args *args) {
     char newcwd[1024];
     size_t len;
@@ -290,7 +400,70 @@ int sys_fchdir(struct thread *td, struct sys_fchdir_args *args) {
     return (error);
 }
 
+/**
+ * sys_rename — POSIX rename(2), FreeBSD ABI syscall 128.
+ *
+ * Same-FS rename only.  Both paths must live under the same mount;
+ * cross-mount renames return -EXDEV so userland (mv) falls back to
+ * the copy + unlink dance.  Calls into the FS-specific rename hook
+ * via the mount's fs vector — currently only FAT (vfsType 0xFA).
+ */
 int sys_rename(struct thread *td, struct sys_rename_args *args) {
+    char src_full[1024], dst_full[1024];
+    const char *src_fs, *dst_fs;
+    struct vfs_mountPoint *src_mp, *dst_mp;
+    size_t mlen;
+
+    if (args->from == NULL || args->to == NULL) {
+        td->td_retval[0] = -EFAULT;
+        return (EFAULT);
+    }
+
+    /* Resolve both paths against CWD if relative. */
+    if (args->from[0] != '/')
+        snprintf(src_full, sizeof(src_full), "%s%s", _current->oInfo.cwd, args->from);
+    else
+        strncpy(src_full, args->from, sizeof(src_full) - 1);
+    src_full[sizeof(src_full) - 1] = '\0';
+
+    if (args->to[0] != '/')
+        snprintf(dst_full, sizeof(dst_full), "%s%s", _current->oInfo.cwd, args->to);
+    else
+        strncpy(dst_full, args->to, sizeof(dst_full) - 1);
+    dst_full[sizeof(dst_full) - 1] = '\0';
+
+    src_mp = vfs_findMount(src_full);
+    dst_mp = vfs_findMount(dst_full);
+    if (src_mp == NULL || dst_mp == NULL) {
+        td->td_retval[0] = -ENOENT;
+        return (ENOENT);
+    }
+    if (src_mp != dst_mp) {
+        td->td_retval[0] = -EXDEV;
+        return (EXDEV);
+    }
+
+    /* Strip the mount prefix to hand the FS a relative path. */
+    mlen = strlen(src_mp->mountPoint);
+    src_fs = (mlen > 1) ? src_full + mlen : src_full;
+    dst_fs = (mlen > 1) ? dst_full + mlen : dst_full;
+    if (src_fs[0] == '\0') src_fs = "/";
+    if (dst_fs[0] == '\0') dst_fs = "/";
+
+    /* Only FAT supports rename today. */
+    if (src_mp->fs->vfsType != 0xFA) {
+        td->td_retval[0] = -EXDEV;
+        return (EXDEV);
+    }
+
+    {
+        struct fat_fs *fs = (struct fat_fs *)src_mp->fsInfo;
+        if (fat_dir_rename(fs, src_fs, dst_fs) != 0) {
+            td->td_retval[0] = -EIO;
+            return (EIO);
+        }
+    }
+
     td->td_retval[0] = 0;
     return (0);
 }
@@ -673,11 +846,33 @@ int fclose(fileDescriptor_t *fd) {
  Notes:
 
  ************************************************************************/
-void sysMkDir(const char *path) {
-    fileDescriptor_t *tmpFD = 0x0;
+/**
+ * sysMkDir — Create a directory at `path`.
+ *
+ * The previous version split the path into parent + basename and tried to
+ * fopen() the parent — but the parent is a directory, not a regular file,
+ * so fopen() always failed and the error path fired ("invalid mount point
+ * for ...") for every interior component on a "mkdir -p /a/b/c" call.
+ *
+ * The right shape: resolve the mount via vfs_findMount, build a stack-
+ * allocated fileDescriptor_t with just the mount pointer set, and hand
+ * the full path off to the filesystem's vfsMakeDir.  FAT's mkdir_fat
+ * already splits the path and walks parent_cluster internally, so
+ * passing the whole path is what it actually expects.
+ */
+/**
+ * sysMkDir — Create a directory at `path`.
+ *
+ * Returns 0 on success, -EEXIST if the path already names a directory,
+ * -EIO on filesystem failure.  The EEXIST signal matters: busybox's
+ * mkdir -p walks the path and tolerates EEXIST for each interior
+ * level, so without it "mkdir -p /a/b/c" gets -EIO on "/" or "/tmp"
+ * and bails out before ever creating the leaves.
+ */
+int sysMkDir(const char *path) {
     char fullpath[1024];
-    char parentpath[1024];
-    const char *basename = 0x0;
+    fileDescriptor_t mkdir_fd;
+    kDIR_t *existing;
 
     /* Resolve relative paths against CWD. */
     if (path[0] != '/')
@@ -686,37 +881,42 @@ void sysMkDir(const char *path) {
         strncpy(fullpath, path, sizeof(fullpath) - 1);
     fullpath[sizeof(fullpath) - 1] = '\0';
 
-    /* Split fullpath into parent dir and last component. */
-    char *last_slash = NULL;
+    /* busybox mkdir -p passes paths with trailing slashes; fat_dir_mkdir's
+     * basename extraction sees "" and the call fails.  Strip them here,
+     * but leave a bare "/" alone — mkdir_fat's own basename parser also
+     * strips trailing slashes defensively, but doing it here keeps the
+     * EEXIST probe below working off the canonical form. */
     {
-        char *p = fullpath;
-        while (*p) { if (*p == '/') last_slash = p; p++; }
-    }
-    if (last_slash == NULL)
-        return;
-    basename = last_slash + 1;
-    if (last_slash == fullpath) {
-        strncpy(parentpath, "/", sizeof(parentpath) - 1);
-    } else {
-        size_t n = (size_t)(last_slash - fullpath);
-        strncpy(parentpath, fullpath, n);
-        parentpath[n] = '\0';
+        size_t n = strlen(fullpath);
+        while (n > 1 && fullpath[n - 1] == '/')
+            fullpath[--n] = '\0';
     }
 
-    tmpFD = fopen(parentpath, "rb");
-    if (tmpFD == NULL || tmpFD->mp == NULL) {
-        kprintf("sysMkDir: invalid mount point for %s\n", parentpath);
-        klog(KLOG_ERR, "sysMkDir: invalid mount point for %s", parentpath);
-        return;
+    /* If the path already names a directory, report EEXIST and skip the
+     * actual create — keeps fat_dir_create_entry from silently writing a
+     * duplicate directory entry, and lets mkdir -p walk through existing
+     * interior components. */
+    existing = vfs_opendir(fullpath);
+    if (existing != NULL) {
+        vfs_closedir(existing);
+        return (-EEXIST);
     }
-    if (tmpFD->mp->fs->vfsMakeDir == NULL) {
-        kprintf("sysMkDir: filesystem does not support mkdir\n");
-        klog(KLOG_ERR, "sysMkDir: filesystem does not support mkdir");
-        fclose(tmpFD);
-        return;
+
+    struct vfs_mountPoint *mp = vfs_findMount(fullpath);
+    if (mp == NULL || mp->fs == NULL) {
+        klog(KLOG_ERR, "sysMkDir: no mount for %s", fullpath);
+        return (-EIO);
     }
-    tmpFD->mp->fs->vfsMakeDir(basename, tmpFD);
-    fclose(tmpFD);
+    if (mp->fs->vfsMakeDir == NULL) {
+        klog(KLOG_ERR, "sysMkDir: %s: filesystem does not support mkdir", fullpath);
+        return (-EIO);
+    }
+
+    memset(&mkdir_fd, 0, sizeof(mkdir_fd));
+    mkdir_fd.mp = mp;
+    if (mp->fs->vfsMakeDir(fullpath, &mkdir_fd) != 0)
+        return (-EIO);
+    return (0);
 }
 
 /************************************************************************
@@ -733,7 +933,7 @@ int unlink(const char *node) {
     struct vfs_mountPoint *mp = 0x0;
 
     if (node == NULL || node[0] == '\0')
-        return (0x0);
+        return (-EINVAL);
 
     if (node[0] != '/')
         snprintf(fullpath, sizeof(fullpath), "%s%s", _current->oInfo.cwd, node);
@@ -742,10 +942,8 @@ int unlink(const char *node) {
     fullpath[sizeof(fullpath) - 1] = '\0';
 
     mp = vfs_findMount(fullpath);
-    if (mp == 0x0) {
-        kprintf("DBG: Mount Point Bad");
-        return (0x0);
-    }
+    if (mp == 0x0)
+        return (-ENOENT);
 
     size_t mlen = strlen(mp->mountPoint);
     fs_path = (mlen > 1) ? fullpath + mlen : fullpath;
@@ -753,11 +951,24 @@ int unlink(const char *node) {
 
     if (mp->fs->vfsUnlink == NULL) {
         klog(KLOG_ERR, "unlink: filesystem does not support unlink for %s", fs_path);
-        return (0x0);
+        return (-ENOSYS);
     }
-    mp->fs->vfsUnlink(fs_path, mp);
+    /* Distinguish "no such file" from other failures so rm reports a
+     * sensible errno.  Probe with fopen first — FAT's unlink path
+     * collapses both cases to -1, and busybox rm wants to see ENOENT
+     * specifically for the "cannot remove '...': No such file" message. */
+    {
+        fileDescriptor_t *probe = fopen(fullpath, "r");
+        if (probe == NULL)
+            return (-ENOENT);
+        fclose(probe);
+    }
+    /* Propagate the FS result — callers like mv's copy+unlink fallback
+     * and rm need to know whether the entry actually went away. */
+    if (mp->fs->vfsUnlink(fs_path, mp) != 0)
+        return (-EIO);
 
-    return (0x0);
+    return (0);
 }
 
 kDIR_t *vfs_opendir(const char *path) {

@@ -39,7 +39,7 @@
 
 int idt_init();
 void setVector(void *handler, unsigned char interrupt, unsigned short controlMajor);
-void setTaskVector(uInt8 interrupt, uInt16 controlMajor, uInt8 selector);
+void setTaskVector(u_int8_t interrupt, u_int16_t controlMajor, u_int8_t selector);
 
 
 void timerInt();

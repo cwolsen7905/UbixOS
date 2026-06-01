@@ -67,8 +67,8 @@ dirList_t ubixFSLoadDir(char *data)
 
 int addDirEntry(struct directoryEntry *dir, fileDescriptor_t *fd)
 {
-	uInt32 i = 0x0;
-	uInt32 entries = 0x0;
+	u_int32_t i = 0x0;
+	u_int32_t entries = 0x0;
 	struct directoryEntry *tmp = 0x0;
 
 	tmp = (struct directoryEntry *)kmalloc(fd->size);

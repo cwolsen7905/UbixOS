@@ -44,13 +44,13 @@ struct device_node {
   };
   
 struct device_resource {
-  uInt8 irq;
+  u_int8_t irq;
   };
 
 typedef struct device_t {
   int    major;
   void  *info;
-  uInt32 sectors;
+  u_int32_t sectors;
   int  (*read)(device_t *, void *, off_t, size_t);
   int  (*write)(device_t *, void *, off_t, size_t);
   int  (*reset)(void *);

@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 #include <unistd.h>
-#include "fsAbstract.h"
+#include "fs_abstract.h"
 #include "types.h"
 #include "file.h"
 
@@ -62,21 +62,21 @@ typedef struct diskSuperBlock {
   int32     blockSize     __attribute__ ((packed));
 
 // number of bits needed to shift a block number to get a byte address
-  uInt32     blockShift    __attribute__ ((packed));
+  u_int32_t     blockShift    __attribute__ ((packed));
 
   off_t     numBlocks     __attribute__ ((packed));
   off_t     usedBlocks    __attribute__ ((packed));
 
 // BlockAllocationTable
-  uInt32    batSectors    __attribute__ ((packed));
+  u_int32_t    batSectors    __attribute__ ((packed));
 
-  uInt32    inodeCount    __attribute__ ((packed));
-  uInt32    inodeSize     __attribute__ ((packed));
-  uInt32    magic2        __attribute__ ((packed));
-  uInt32    blocksPerAG   __attribute__ ((packed));
-  uInt32    AGShift       __attribute__ ((packed));
-  uInt32    numAGs        __attribute__ ((packed));
-  uInt32    lastUsedAG    __attribute__ ((packed));
+  u_int32_t    inodeCount    __attribute__ ((packed));
+  u_int32_t    inodeSize     __attribute__ ((packed));
+  u_int32_t    magic2        __attribute__ ((packed));
+  u_int32_t    blocksPerAG   __attribute__ ((packed));
+  u_int32_t    AGShift       __attribute__ ((packed));
+  u_int32_t    numAGs        __attribute__ ((packed));
+  u_int32_t    lastUsedAG    __attribute__ ((packed));
 // flags tells whether the FS is clean (0x434C454E) or dirty (0x44495954)
   int32     flags         __attribute__ ((packed));
 
@@ -118,14 +118,14 @@ typedef struct ubixfsInode {
  // uInt64      createTime                 __attribute__ ((packed));
  // uInt64      lastModifiedTime           __attribute__ (packed));
   inodeAddr   attributes                 __attribute__ ((packed));
-  uInt32      type                       __attribute__ ((packed));
-  uInt32      inodeSize                  __attribute__ ((packed));
+  u_int32_t      type                       __attribute__ ((packed));
+  u_int32_t      inodeSize                  __attribute__ ((packed));
   uPtr        parent                     __attribute__ ((packed));
   uPtr        next                       __attribute__ ((packed));
   uPtr        prev                       __attribute__ ((packed));
   uPtr        data                       __attribute__ ((packed));
   dataStream  blocks                     __attribute__ ((packed));
-  uInt32      refCount                   __attribute__ ((packed));
+  u_int32_t      refCount                   __attribute__ ((packed));
   char        smallData[3200]            __attribute__ ((packed));
 } ubixfsInode;
 
@@ -136,13 +136,13 @@ class UbixFS : public vfs_abstract {
   fileDescriptor * root;
 
   blockRun         getFreeBlock(blockRun);
-  blockRun         getFreeBlock(uInt32);
+  blockRun         getFreeBlock(u_int32_t);
   blockRun         getFreeBlock(void);
-  blockRun         get8FreeBlocks(uInt32);
-  uInt32           getNextAG(void);
+  blockRun         get8FreeBlocks(u_int32_t);
+  u_int32_t           getNextAG(void);
   void *           mknod(const char *, ubixfsInode *, mode_t);
   void             printSuperBlock(void);
-  void             printFreeBlockList(uInt32);
+  void             printFreeBlockList(u_int32_t);
   void             setFreeBlock(blockRun);
  public:
                    UbixFS(void);

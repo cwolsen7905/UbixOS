@@ -41,22 +41,22 @@
  * Returns a heap-allocated fat_file on success, NULL on failure.
  */
 struct fat_file	*fat_file_open(struct fat_fs *fs, const char *path,
-		    uint8_t mode);
+		    u_int8_t mode);
 
 /*
  * Read up to size bytes at the current position.
  * *got is set to the number of bytes actually read (may be less at EOF).
  * Returns 0 on success, -1 on I/O error.
  */
-int		 fat_file_read(struct fat_file *f, void *buf, uint32_t size,
-		    uint32_t *got);
+int		 fat_file_read(struct fat_file *f, void *buf, u_int32_t size,
+		    u_int32_t *got);
 
 /*
  * Write size bytes at the current position, extending the file as needed.
  * Returns 0 on success, -1 on error.
  */
 int		 fat_file_write(struct fat_file *f, const void *buf,
-		    uint32_t size);
+		    u_int32_t size);
 
 /*
  * Seek to an absolute byte position within the file.
@@ -64,13 +64,21 @@ int		 fat_file_write(struct fat_file *f, const void *buf,
  * For writes: pos must be <= file_size (writing extends at current position).
  * Returns 0 on success, -1 on error.
  */
-int		 fat_file_seek(struct fat_file *f, uint32_t pos);
+int		 fat_file_seek(struct fat_file *f, u_int32_t pos);
 
 /*
  * Flush the write-behind data buffer and the directory entry size to disk.
  * Both data and metadata are committed; this is the fix for the fl_fflush bug.
  */
 int		 fat_file_flush(struct fat_file *f);
+
+/*
+ * Resize the file to exactly new_size bytes.  Shrinking frees the cluster
+ * chain past the truncation point and updates the directory entry; growing
+ * just updates file_size (sparse — subsequent writes fill the gap).
+ * Returns 0 on success, -1 on error.
+ */
+int		 fat_file_truncate(struct fat_file *f, u_int32_t new_size);
 
 /* Flush and free the fat_file structure. */
 void		 fat_file_close(struct fat_file *f);

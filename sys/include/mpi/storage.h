@@ -54,7 +54,7 @@
 #define STORAGE_MNT_MAX         96
 
 typedef struct {
-	uint32_t type;                        /* MPI_STORAGE_APPEARED / DEPARTED */
+	u_int32_t type;                        /* MPI_STORAGE_APPEARED / DEPARTED */
 	char     dev_path[STORAGE_DEV_MAX];   /* e.g. "/dev/uba0" */
 	char     volume_name[STORAGE_VOL_MAX];/* FAT volume label, e.g. "UBIX" */
 	char     fstype[STORAGE_FS_MAX];      /* "fat" */

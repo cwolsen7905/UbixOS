@@ -97,7 +97,7 @@
 #define UHCI_PID_SETUP 0x2D
 #define UHCI_PID_IN 0x69
 #define UHCI_PID_OUT 0xE1
-#define UHCI_TOKEN(maxlen, toggle, ep, addr, pid) (((uint32_t)((maxlen) - 1) << 21) | ((uint32_t)(toggle) << 19) | ((uint32_t)(ep) << 15) | ((uint32_t)(addr) << 8) | (pid))
+#define UHCI_TOKEN(maxlen, toggle, ep, addr, pid) (((u_int32_t)((maxlen) - 1) << 21) | ((u_int32_t)(toggle) << 19) | ((u_int32_t)(ep) << 15) | ((u_int32_t)(addr) << 8) | (pid))
 /* MaxLen=0 encodes as 0x7FF in the token field */
 #define UHCI_TOKEN_ZERO_LEN 0x7FFu
 
@@ -108,8 +108,8 @@
 /* Queue Head — 16-byte aligned */
 struct uhci_qh
 {
-	uint32_t qh_link;           /* next QH/TD phys | flags */
-	uint32_t qh_elt;            /* first TD phys | flags */
+	u_int32_t qh_link;           /* next QH/TD phys | flags */
+	u_int32_t qh_elt;            /* first TD phys | flags */
 	struct uhci_qh *qh_next_sw; /* software list linkage */
 	void *qh_softc;             /* owning transfer context */
 } __attribute__((packed, aligned(16)));
@@ -117,10 +117,10 @@ struct uhci_qh
 /* Transfer Descriptor — 16-byte aligned */
 struct uhci_td
 {
-	uint32_t td_link; /* next TD phys | flags */
-	uint32_t td_status;
-	uint32_t td_token;
-	uint32_t td_buffer; /* data buffer physical address */
+	u_int32_t td_link; /* next TD phys | flags */
+	u_int32_t td_status;
+	u_int32_t td_token;
+	u_int32_t td_buffer; /* data buffer physical address */
 	struct uhci_td *td_next_sw;
 	void *td_buf_vaddr;
 } __attribute__((packed, aligned(16)));
@@ -139,12 +139,12 @@ struct uhci_intr_slot {
 	struct uhci_qh *is_qh;
 	struct uhci_td *is_td;
 	struct dma_buf  is_buf;
-	void          (*is_cb)(void *arg, uint8_t *data, int len);
+	void          (*is_cb)(void *arg, u_int8_t *data, int len);
 	void           *is_arg;
-	uint16_t        is_maxpkt;
-	uint8_t         is_addr;
-	uint8_t         is_ep;
-	uint8_t         is_toggle;
+	u_int16_t        is_maxpkt;
+	u_int8_t         is_addr;
+	u_int8_t         is_ep;
+	u_int8_t         is_toggle;
 	int             is_used;
 };
 
@@ -160,10 +160,10 @@ struct uhci_intr_slot {
 struct uhci_softc
 {
 	struct ubx_device *sc_dev;
-	uint16_t sc_iobase; /* I/O BAR base (bar[4] & ~3u) */
-	uint8_t sc_irq;
+	u_int16_t sc_iobase; /* I/O BAR base (bar[4] & ~3u) */
+	u_int8_t sc_irq;
 	struct dma_buf sc_fl_buf;   /* frame list page */
-	uint32_t *sc_fl;            /* virtual frame list */
+	u_int32_t *sc_fl;            /* virtual frame list */
 	struct dma_buf sc_qh_buf;   /* QH slab page */
 	struct dma_buf sc_td_buf;   /* TD slab page */
 	struct dma_buf sc_xfer_buf; /* pre-allocated bulk transfer buffer */
@@ -183,11 +183,11 @@ struct uhci_softc
  * --------------------------------------------------------------------- */
 extern struct ubx_driver uhci_ubx_driver;
 
-int uhci_control_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint8_t *setup_pkt, void *data, uint16_t datalen, int direction);
+int uhci_control_transfer(struct uhci_softc *sc, u_int8_t addr, u_int8_t ep, u_int8_t *setup_pkt, void *data, u_int16_t datalen, int direction);
 
-int uhci_bulk_transfer(struct uhci_softc *sc, uint8_t addr, uint8_t ep, void *data, uint32_t datalen, int direction, uint8_t *toggle);
+int uhci_bulk_transfer(struct uhci_softc *sc, u_int8_t addr, u_int8_t ep, void *data, u_int32_t datalen, int direction, u_int8_t *toggle);
 
-struct uhci_qh *uhci_schedule_intr(struct uhci_softc *sc, uint8_t addr, uint8_t ep, uint16_t maxpkt, uint32_t interval_ms, void (*callback)(void *arg, uint8_t *data, int len), void *arg);
+struct uhci_qh *uhci_schedule_intr(struct uhci_softc *sc, u_int8_t addr, u_int8_t ep, u_int16_t maxpkt, u_int32_t interval_ms, void (*callback)(void *arg, u_int8_t *data, int len), void *arg);
 
 void uhci_root_port_init(struct uhci_softc *sc);
 

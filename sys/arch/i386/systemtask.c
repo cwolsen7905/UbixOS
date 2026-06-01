@@ -31,6 +31,7 @@
 #include <ubixos/exec.h>
 #include <ubixos/tty.h>
 #include <ubixos/sched.h>
+#include <vmm/vm_map.h>
 #include <ubixos/vitals.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -58,12 +59,12 @@ static unsigned char *videoBuffer = (unsigned char*) 0xB8000;
  * and notifies views to repaint.
  */
 static pidType disp_owner_pid  = 0;
-static uint16_t disp_saved_mode = 0;
+static u_int16_t disp_saved_mode = 0;
 
 void systemTask() {
 
   mpi_message_t myMsg;
-  uint32_t counter = 0x0;
+  u_int32_t counter = 0x0;
   int i = 0x0;
   int *x = 0x0;
   kTask_t *tmpTask = 0x0;
@@ -106,25 +107,30 @@ void systemTask() {
           }
           break;
         case 0x82: {
-          /* Display mode claim: init VESA 1024x768x24, reply when ready.
-           * Save the current mode so the reaper can restore it when the
-           * requesting process exits.  views sends this at startup and runs
-           * forever, so disp_owner_pid stays 0 for the compositor itself —
-           * we only track transient fullscreen apps that will eventually die. */
+          /* Display mode claim / change: set a VBE mode and reply when ready.
+           * The desired mode number is carried at data[64] (0 = the 0x118
+           * default).  This runs in the systemtask context where the V86 BIOS
+           * call is safe, so views also re-sends 0x82 for live resolution
+           * changes.  Save the current mode so the reaper can restore it when
+           * the requesting process exits. */
           mpi_message_t reply;
           int vesa_ok = 0;
-          uint16_t prev_mode = vesa_current_mode;
+          u_int16_t prev_mode = vesa_current_mode;
+          u_int16_t want_mode = *(u_int16_t *)&myMsg.data[64];
 
-          if (vesa_init(0x118) == 0) {
-            vesa_map_fb();
-            vesa_ok = 1;
-          }
+          if (want_mode == 0)
+            want_mode = 0x118;
+
+          vesa_ok = (vesa_init(want_mode) == 0);
+          if (!vesa_ok && want_mode != 0x118)
+            vesa_ok = (vesa_init(0x118) == 0); /* fall back to known-good default */
 
           if (vesa_ok) {
+            vesa_map_fb();
             disp_saved_mode = prev_mode;
             disp_owner_pid  = myMsg.pid;
-            kprintf("system: display claimed by pid %d (prev mode 0x%X)\n",
-                (int)myMsg.pid, prev_mode);
+            kprintf("system: display claimed by pid %d mode 0x%X (prev 0x%X)\n",
+                (int)myMsg.pid, vesa_current_mode, prev_mode);
           }
 
           reply.header = 0x82;
@@ -132,10 +138,15 @@ void systemTask() {
           reply.data[1] = '\0';
           if (myMsg.data[0] != '\0')
             mpi_postMessage(myMsg.data, 0x82, &reply);
+
+          /* Enumerate the available modes once (after replying so we don't
+           * delay the compositor's startup) for the sys_vesa_modes syscall. */
+          if (vesa_ok && g_vesa_mode_count < 0)
+            g_vesa_mode_count = vesa_enum_modes(g_vesa_modes, VESA_MAX_MODES);
           break;
         }
         case 0x80:
-          if (!strcmp(myMsg.data, "freePage")) {
+          if (!strcmp(myMsg.data, "free_page")) {
             kprintf("kkk Free Pages");
           }
           else if (!strcmp(myMsg.data, "sdeStop")) {
@@ -166,8 +177,8 @@ void systemTask() {
         kprintf("system: display owner pid %d exited — restoring mode 0x%X\n",
             (int)disp_owner_pid, disp_saved_mode);
         if (disp_saved_mode == 0) {
+          kbd_gui_mode = 0;  /* unblock keyboard before the slow BIOS call */
           vesa_text_mode();
-          kbd_gui_mode = 0;
         } else if (disp_saved_mode != vesa_current_mode) {
           if (vesa_init(disp_saved_mode) == 0)
             vesa_map_fb();
@@ -186,7 +197,8 @@ void systemTask() {
 
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
-      vmm_freeProcessPages(tmpTask->id);
+      vm_map_free(&tmpTask->vm_map);
+      vmm_free_process_pages(tmpTask->id);
       if (tmpTask->kernelStack != 0x0)
         kfree(tmpTask->kernelStack);
       else

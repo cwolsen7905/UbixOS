@@ -68,10 +68,10 @@
 #define CSR58 0x003A
 
 struct mds {
-    uint16_t md0;
-    uint16_t md1;
+    u_int16_t md0;
+    u_int16_t md1;
     short md2;
-    uint16_t md3;
+    u_int16_t md3;
 };
 
 struct hostRingEntry_old {
@@ -83,15 +83,15 @@ struct hostRingEntry_old {
 };
 
 struct hostRingEntry {
-    uint32_t addr;
-    uint16_t bcnt;
-    uint8_t md[6];
-    uint32_t reserved;
+    u_int32_t addr;
+    u_int16_t bcnt;
+    u_int8_t md[6];
+    u_int32_t reserved;
 };
 
 struct arpcom {
     //struct  ifnet ac_if;            /* network-visible interface */
-    uint8_t ac_enaddr[6]; /* ethernet hardware address */
+    u_int8_t ac_enaddr[6]; /* ethernet hardware address */
     int ac_multicnt; /* length of ac_multiaddrs list */
     void *ac_netgraph; /* ng_ether(4) netgraph node info */
 };
@@ -105,24 +105,24 @@ struct nicInfo {
 };
 
 struct initBlock16 {
-    uint16_t mode;    // Mode register
-    uint8_t padr[6];  // Ethernet address
-    uint8_t ladrf[8]; // Logical address filter (multicast)
-    uint16_t rdra;    // Low order pointer to receive ring
-    uint16_t rlen;    // High order pointer and no. rings
-    uint16_t tdra;    // Low order pointer to transmit ring
-    uint16_t tlen;    // High order pointer and no rings
+    u_int16_t mode;    // Mode register
+    u_int8_t padr[6];  // Ethernet address
+    u_int8_t ladrf[8]; // Logical address filter (multicast)
+    u_int16_t rdra;    // Low order pointer to receive ring
+    u_int16_t rlen;    // High order pointer and no. rings
+    u_int16_t tdra;    // Low order pointer to transmit ring
+    u_int16_t tlen;    // High order pointer and no rings
 };
 
 struct initBlock32 {
-    uint16_t mode;
-    uint8_t rlen;
-    uint8_t tlen;
-    uint8_t padr[6];
-    uint16_t res;
-    uint8_t ladrf[8];
-    uint32_t rdra;
-    uint32_t tdra;
+    u_int16_t mode;
+    u_int8_t rlen;
+    u_int8_t tlen;
+    u_int8_t padr[6];
+    u_int16_t res;
+    u_int8_t ladrf[8];
+    u_int32_t rdra;
+    u_int32_t tdra;
 };
 
 struct lncInfo {
@@ -142,17 +142,17 @@ struct lncInfo {
 };
 
 /* Functions */
-void lnc_writeCSR(struct lncInfo *, uint16_t, uint16_t);
-void lnc_writeCSR32(struct lncInfo *, uint32_t, uint32_t);
+void lnc_writeCSR(struct lncInfo *, u_int16_t, u_int16_t);
+void lnc_writeCSR32(struct lncInfo *, u_int32_t, u_int32_t);
 
-uint16_t lnc_readCSR(struct lncInfo *, uint16_t);
-uint32_t lnc_readCSR32(struct lncInfo *, uint32_t);
+u_int16_t lnc_readCSR(struct lncInfo *, u_int16_t);
+u_int32_t lnc_readCSR32(struct lncInfo *, u_int32_t);
 
-void lnc_writeBCR(struct lncInfo *, uint16_t, uint16_t);
-void lnc_writeBCR32(struct lncInfo *, uint32_t, uint32_t);
+void lnc_writeBCR(struct lncInfo *, u_int16_t, u_int16_t);
+void lnc_writeBCR32(struct lncInfo *, u_int32_t, u_int32_t);
 
-uint16_t lnc_readBCR(struct lncInfo *, uint16_t);
-uint32_t lnc_readBCR32(struct lncInfo *, uint32_t);
+u_int16_t lnc_readBCR(struct lncInfo *, u_int16_t);
+u_int32_t lnc_readBCR32(struct lncInfo *, u_int32_t);
 
 void lnc_reset(struct lncInfo *);
 void lnc_reset32(struct lncInfo *);
@@ -245,7 +245,7 @@ void lnc_txINT();
 
 extern struct lncInfo *lnc;
 
-int initLNC(uint32_t ioAddr);
+int initLNC(u_int32_t ioAddr);
 int probe(struct lncInfo *lnc);
 int lanceProbe(struct lncInfo *lnc);
 int lncAttach(struct lncInfo *lnc, int unit);
@@ -254,7 +254,7 @@ extern int lnc_ready;  /* 1 when lncAttach completed successfully */
 void lncInt();
 void _lncInt();
 
-int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest);
+int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, u_int8_t *dest);
 
 /* newbus-lite PCI driver registration */
 extern struct ubx_driver lnc_ubx_driver;

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -29,60 +29,245 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "./include/ubistry.h"
+#include "db.h"
 
-static struct ubistryKey *keys = 0x0;
+static struct ub_node g_root;
+static int g_root_init = 0;
 
-  
-struct ubistryKey * ubistryFindKey(char *name) {
-  struct ubistryKey *tmpKey = keys;
+/**
+ * Return the registry root container, initialising it on first use.
+ */
+struct ub_node *ub_root(void)
+{
+	if (!g_root_init)
+	{
+		memset(&g_root, 0, sizeof(g_root));
+		g_root.type = UB_CONTAINER;
+		g_root_init = 1;
+	}
+	return (&g_root);
+}
 
-  for (;tmpKey;tmpKey=tmpKey->next) {
-    if (!strcmp(name,tmpKey->name)) {
-      return(tmpKey);
-      }
-    }
-  return(0x0);
-  }
+/**
+ * Render a node's scalar value as text into out.
+ */
+static void node_value_text(const struct ub_node *n, char *out, int len)
+{
+	if (len <= 0)
+		return;
+	switch (n->type)
+	{
+		case UB_STR:
+			snprintf(out, (size_t)len, "%s", n->sval);
+			break;
+		case UB_INT:
+			snprintf(out, (size_t)len, "%d", n->ival);
+			break;
+		case UB_BOOL:
+			snprintf(out, (size_t)len, "%s", n->ival ? "true" : "false");
+			break;
+		default:
+			out[0] = '\0';
+			break;
+	}
+}
 
-int ubistryAddKey(char *name,char *value) {
-  struct ubistryKey *tmpKey = (struct ubistryKey *)malloc(sizeof(struct ubistryKey));
+/**
+ * Find a direct child of parent by name.
+ */
+static struct ub_node *find_child(struct ub_node *parent, const char *name)
+{
+	struct ub_node *c;
 
-  sprintf(tmpKey->name,name);
-  sprintf(tmpKey->value,value);
+	for (c = parent->child; c != NULL; c = c->sibling)
+		if (strcmp(c->name, name) == 0)
+			return (c);
+	return (NULL);
+}
 
-  if (keys == 0x0) {
-    keys = tmpKey;
-    keys->prev = 0x0;
-    keys->next = 0x0;
-    } 
-  else {
-    tmpKey->next = keys;
-    tmpKey->prev = 0x0;
-    keys->prev   = tmpKey;
-    keys         = tmpKey;
-    }
+/**
+ * Append a new empty container child to parent (preserving insertion order).
+ */
+static struct ub_node *add_child(struct ub_node *parent, const char *name)
+{
+	struct ub_node *n = (struct ub_node *)calloc(1, sizeof(struct ub_node));
 
-  return(0x0);
-  }
+	if (n == NULL)
+		return (NULL);
+	snprintf(n->name, sizeof(n->name), "%s", name);
+	n->type = UB_CONTAINER;
+	n->parent = parent;
 
-/***
- $Log: db.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:08  reddawg
- ubix2
+	if (parent->child == NULL)
+	{
+		parent->child = n;
+	}
+	else
+	{
+		struct ub_node *t = parent->child;
+		while (t->sibling != NULL)
+			t = t->sibling;
+		t->sibling = n;
+	}
+	return (n);
+}
 
- Revision 1.2  2005/10/12 00:13:28  reddawg
- Removed
+/**
+ * Walk an absolute path from the root, optionally creating intermediate
+ * containers.  "/" resolves to the root.
+ */
+static struct ub_node *walk(const char *path, int create)
+{
+	struct ub_node *cur = ub_root();
+	char buf[UB_PATH_MAX * 2];
+	char *save = NULL;
+	char *tok;
 
- Revision 1.1.1.1  2005/09/26 17:14:04  reddawg
- no message
+	snprintf(buf, sizeof(buf), "%s", path);
+	for (tok = strtok_r(buf, "/", &save); tok != NULL; tok = strtok_r(NULL, "/", &save))
+	{
+		struct ub_node *next = find_child(cur, tok);
+		if (next == NULL)
+		{
+			if (!create)
+				return (NULL);
+			next = add_child(cur, tok);
+			if (next == NULL)
+				return (NULL);
+		}
+		cur = next;
+	}
+	return (cur);
+}
 
- Revision 1.2  2004/06/17 15:10:55  reddawg
- Fixed Some Global Variables
+struct ub_node *ub_find(const char *path)
+{
+	return (walk(path, 0));
+}
 
- Revision 1.1  2004/05/26 15:41:20  reddawg
- ubistry: added command 666 which will restart the registry server also added
-          command 51 to add a key format key,value
+struct ub_node *ub_find_or_create(const char *path)
+{
+	return (walk(path, 1));
+}
 
- END
- ***/
+int ub_set(const char *path, ub_type_t type, const char *value)
+{
+	struct ub_node *n = ub_find_or_create(path);
+
+	if (n == NULL)
+		return (-1);
+
+	n->type = type;
+	switch (type)
+	{
+		case UB_STR:
+			snprintf(n->sval, sizeof(n->sval), "%s", value ? value : "");
+			n->ival = 0;
+			break;
+		case UB_INT:
+			n->ival = value ? atoi(value) : 0;
+			n->sval[0] = '\0';
+			break;
+		case UB_BOOL:
+			n->ival = (value && (value[0] == 't' || value[0] == 'T' || value[0] == '1')) ? 1 : 0;
+			n->sval[0] = '\0';
+			break;
+		default:
+			break;
+	}
+	return (0);
+}
+
+int ub_get(const char *path, ub_type_t *type, char *out, int len)
+{
+	struct ub_node *n = ub_find(path);
+
+	if (n == NULL)
+		return (-1);
+	if (type != NULL)
+		*type = n->type;
+	node_value_text(n, out, len);
+	return (0);
+}
+
+int ub_enum(const char *path, char *names, int len, int *truncated)
+{
+	struct ub_node *n = ub_find(path);
+	struct ub_node *c;
+	int count = 0;
+	int pos = 0;
+	int stopped = 0;
+
+	if (truncated != NULL)
+		*truncated = 0;
+	if (len > 0)
+		names[0] = '\0';
+	if (n == NULL)
+		return (-1);
+
+	for (c = n->child; c != NULL; c = c->sibling)
+	{
+		if (!stopped)
+		{
+			int nl = (int)strlen(c->name);
+			int need = (count > 0 ? 1 : 0) + nl;
+			if (pos + need + 1 > len)
+			{
+				stopped = 1;
+				if (truncated != NULL)
+					*truncated = 1;
+			}
+			else
+			{
+				if (count > 0)
+					names[pos++] = '\n';
+				memcpy(names + pos, c->name, (size_t)nl);
+				pos += nl;
+				names[pos] = '\0';
+			}
+		}
+		count++;
+	}
+	return (count);
+}
+
+/**
+ * Recursively free a node and all its descendants.
+ */
+static void free_subtree(struct ub_node *n)
+{
+	struct ub_node *c = n->child;
+
+	while (c != NULL)
+	{
+		struct ub_node *next = c->sibling;
+		free_subtree(c);
+		c = next;
+	}
+	free(n);
+}
+
+int ub_delete(const char *path)
+{
+	struct ub_node *n = ub_find(path);
+	struct ub_node *p;
+
+	if (n == NULL || n == ub_root())
+		return (-1);
+
+	p = n->parent;
+	if (p->child == n)
+	{
+		p->child = n->sibling;
+	}
+	else
+	{
+		struct ub_node *t = p->child;
+		while (t != NULL && t->sibling != n)
+			t = t->sibling;
+		if (t != NULL)
+			t->sibling = n->sibling;
+	}
+	free_subtree(n);
+	return (0);
+}

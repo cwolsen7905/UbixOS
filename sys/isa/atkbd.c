@@ -62,7 +62,7 @@ static volatile int kbd_ring_tail = 0;
  * Prevents VGA-console getchar() from stealing events meant for views. */
 volatile int kbd_gui_mode = 0;
 
-void kbd_ring_push(uint32_t keycode, uint8_t pressed)
+void kbd_ring_push(u_int32_t keycode, u_int8_t pressed)
 {
 	int next = (kbd_ring_head + 1) % KBD_RING_SIZE;
 	if (next == kbd_ring_tail)
@@ -86,11 +86,11 @@ int kbd_getEvent(kbd_event_t *ev)
 	kbd_ring_tail = (kbd_ring_tail + 1) % KBD_RING_SIZE;
 	return (0);
 }
-static uInt32 controlKeys = 0x0;
+static u_int32_t controlKeys = 0x0;
 
 static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
 
-volatile uint32_t reboot_at_tick = 0;
+volatile u_int32_t reboot_at_tick = 0;
 
 /* Deferred GUI→text VTY switch.  Set to target slot (0-3) by the keyboard ISR
  * when Ctrl+Alt+Fn is pressed in GUI mode; cleared by the VGA sys_read loop
@@ -117,7 +117,7 @@ static unsigned int keyboardMap[255][8] = {
     /* 0,) */ {0x30, 0x29, 0, 0, 0x30, 0x30, 0x29, 0x29},
     /* -,_ */ {0x2D, 0x5F, 0, 0, 0x2D, 0x2D, 0x5F, 0x5F},
     /* =,+ */ {0x3D, 0x2B, 0, 0, 0x3D, 0x3D, 0x2B, 0x2B},
-    /*  14 */ {0x08, 0x08, 0x8, 0x8, 0x08, 0x08, 0x08, 0x08},
+    /*  14 */ {0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F},
     /*  15 */ {0x09, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0x71, 0x51, 0, 0, 0, 0, 0, 0},
     /*     */ {0x77, 0x57, 0, 0, 0, 0, 0, 0},
@@ -131,7 +131,7 @@ static unsigned int keyboardMap[255][8] = {
     /*     */ {0x70, 0x50, 0, 0, 0, 0, 0, 0},
     /*     */ {0x5B, 0x7B, 0, 0, 0, 0, 0, 0},
     /*     */ {0x5D, 0x7D, 0, 0, 0, 0, 0, 0},
-    /*     */ {0x0A, 0, 0, 0, 0, 0, 0, 0},
+    /*     */ {0x0D, 0, 0, 0, 0, 0, 0, 0},
     /*     */ {0, 0, 0, 0, 0, 0, 0, 0},
     /* a,A */ {0x61, 0x41, 0x01, 0, 0, 0, 0, 0},
     /*     */ {0x73, 0x53, 0, 0, 0, 0, 0, 0},
@@ -270,7 +270,7 @@ static int atkbd_scan()
 void keyboardHandler(struct trapframe *frame)
 {
 	int      key;
-	uint32_t kc;
+	u_int32_t kc;
 
 	if (spinTryLock(&atkbdSpinLock))
 		return;
@@ -327,11 +327,11 @@ void keyboardHandler(struct trapframe *frame)
 	/* For key-up events: modifiers already pushed above; push key-up for
 	 * regular keys so callers (DOOM, etc.) can clear their held-key state. */
 	if (key >= 0x80) {
-		uint8_t down_scan = (uint8_t)(key & 0x7F);
+		u_int8_t down_scan = (u_int8_t)(key & 0x7F);
 		/* Skip modifier scancodes — already handled above */
 		if (down_scan != 0x1D && down_scan != 0x38 &&
 		    down_scan != 0x2A && down_scan != 0x36) {
-			uint32_t kc_up = keyboardMap[down_scan][keyMap];
+			u_int32_t kc_up = keyboardMap[down_scan][keyMap];
 			if (kc_up != 0)
 				kbd_ring_push(kc_up, 0);
 		}
@@ -373,7 +373,9 @@ void keyboardHandler(struct trapframe *frame)
 	case 0x09: /* Ctrl-Tab / Alt-C: immediate reboot */
 		sys_shutdown(REBOOT);
 		break;
-	case 0x0D: /* Ctrl-M: 5-second countdown reboot */
+	case 0x0D: /* Ctrl-M: 5-second countdown reboot (only with Ctrl held) */
+		if (!(controlKeys & controlKey))
+			break; /* plain Enter — push to ring */
 		if (reboot_at_tick == 0) {
 			reboot_at_tick = systemVitals->sysTicks + 5 * PIT_TIMER;
 			kprintf("\nSystem rebooting in 5 seconds...\n");
@@ -410,12 +412,12 @@ void setLED()
  * foreground TTY via the common tty_inject() line discipline.
  */
 static void
-kbd_apply_event(uint32_t kc)
+kbd_apply_event(u_int32_t kc)
 {
 	/* Specials (>= 0x100) and null keycodes are not TTY characters */
 	if (kc == 0 || kc >= 0x100 || tty_foreground == NULL)
 		return;
-	tty_inject(tty_foreground, (char)(uint8_t)kc);
+	tty_inject(tty_foreground, (char)(u_int8_t)kc);
 }
 
 int
@@ -423,7 +425,7 @@ getchar()
 {
 	kbd_event_t ev;
 	int         retKey;
-	uInt32      i;
+	u_int32_t      i;
 
 	if (tty_foreground == NULL)
 		return (0);
@@ -435,7 +437,7 @@ getchar()
 
 	/* Read one char from the stdin ring under IRQ disable so the rs232 ISR
 	 * cannot corrupt the ring while we shift the contents. */
-	uint32_t eflags;
+	u_int32_t eflags;
 	asm volatile("pushfl; popl %0; cli" : "=r"(eflags) : : "memory");
 	if (tty_foreground->stdinSize == 0) {
 		asm volatile("pushl %0; popfl" : : "r"(eflags) : "memory");
@@ -443,7 +445,7 @@ getchar()
 	}
 	retKey = (unsigned char)tty_foreground->stdin[0];
 	tty_foreground->stdinSize--;
-	for (i = 0; i < (uInt32)tty_foreground->stdinSize; i++)
+	for (i = 0; i < (u_int32_t)tty_foreground->stdinSize; i++)
 		tty_foreground->stdin[i] = tty_foreground->stdin[i + 1];
 	asm volatile("pushl %0; popfl" : : "r"(eflags) : "memory");
 

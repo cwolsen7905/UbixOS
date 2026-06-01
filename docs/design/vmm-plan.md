@@ -4,14 +4,14 @@
 
 | # | Task | Phase | Status |
 |---|------|-------|--------|
-| 1.1 | Red-black tree for `vm_map` entries (VMA lookup) | 1 | ⬜ Not started |
-| 1.2 | `vm_map_entry` struct — replace linear VMA list | 1 | ⬜ Not started |
-| 1.3 | O(log n) `mmap`/`munmap`/page-fault VMA lookup | 1 | ⬜ Not started |
-| 2.1 | Lazy page allocation (demand-zero pages) | 2 | ⬜ Not started |
-| 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | ⬜ Not started |
+| 1.1 | Red-black tree for `vm_map` entries (VMA lookup) | 1 | ✅ Done — `sys/lib/rbtree.c` + `sys/include/lib/rbtree.h`; intrusive RB tree with insert/erase/find/first/next |
+| 1.2 | `vm_map_entry` struct — replace linear VMA list | 1 | ✅ Done — `sys/include/vmm/vm_map.h` + `sys/vmm/vm_map.c`; `vm_map_t vm_map` embedded in `kTask_t`; fork copies, exec frees |
+| 1.3 | O(log n) `mmap`/`munmap`/page-fault VMA lookup | 1 | ✅ Done — `vm_map_insert` in `sys_mmap` (anon paths); `vm_map_remove` in `sys_munmap`; `vm_map_lookup` in page fault handler for demand-zero of anon VMAs |
+| 2.1 | Lazy page allocation (demand-zero pages) | 2 | ✅ Done — `sys_mmap(MAP_ANON)` now records VMA only (no physical pages); `vmm_reserve_anon_range` finds free VA without mapping; page fault handler backs pages on first touch; covers both MAP_FIXED and non-fixed anon; PT-missing case handled in `pageDir == 0` fault branch |
+| 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | ⬜ Not started — current mmap(fd) reads file into pre-allocated pages, no VMA backing |
 | 2.3 | `msync` — flush dirty file-backed pages | 2 | ⬜ Not started |
-| 3.1 | Swap device integration — page out to swap partition | 3 | ⬜ Not started |
-| 3.2 | LRU page reclaim (clock algorithm) | 3 | ⬜ Not started |
+| 3.1 | Swap device integration — page out to swap partition | 3 | ✅ Done — `sys/vmm/swap.c`: slot bitmap, `swap_write/read_page`, `swap_evict_page` (clock); page fault handler handles `PAGE_SWAPPED` PTEs |
+| 3.2 | Pageout daemon — proactive page reclaim | 3 | ✅ Done — `sys/vmm/pageout.c`; polls every 100 ticks, iterates task list with CR3 switching, calls `swap_evict_page` per task until high watermark; launched from `kmain` at `QOS_BACKGROUND` |
 | 3.3 | `madvise` hints (MADV_SEQUENTIAL, MADV_DONTNEED) | 3 | ⬜ Not started |
 
 **Legend:** ⬜ Not started · 🔄 In progress · ✅ Done · ⏸ Blocked

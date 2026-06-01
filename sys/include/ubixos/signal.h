@@ -40,16 +40,16 @@ struct sys_sigsuspend_args;
  * sys_sigreturn receives a pointer to this struct and restores the registers.
  */
 struct ubx_sigcontext {
-    uint32_t sc_eax;
-    uint32_t sc_ecx;
-    uint32_t sc_edx;
-    uint32_t sc_ebx;
-    uint32_t sc_esp;
-    uint32_t sc_ebp;
-    uint32_t sc_esi;
-    uint32_t sc_edi;
-    uint32_t sc_eip;
-    uint32_t sc_eflags;
+    u_int32_t sc_eax;
+    u_int32_t sc_ecx;
+    u_int32_t sc_edx;
+    u_int32_t sc_ebx;
+    u_int32_t sc_esp;
+    u_int32_t sc_ebp;
+    u_int32_t sc_esi;
+    u_int32_t sc_edi;
+    u_int32_t sc_eip;
+    u_int32_t sc_eflags;
     sigset_t sc_mask;   /* saved sigmask, restored by sys_sigreturn */
 };
 
@@ -63,10 +63,10 @@ struct ubx_sigcontext {
  * [new_esp + 24]  sf_sc                            (struct ubx_sigcontext)
  */
 struct ubx_sigframe {
-    uint32_t             sf_retaddr;        /*  0 */
-    uint32_t             sf_signum;         /*  4 */
-    uint8_t              sf_trampoline[14]; /*  8 */
-    uint8_t              sf_pad[2];         /* 22 */
+    u_int32_t             sf_retaddr;        /*  0 */
+    u_int32_t             sf_signum;         /*  4 */
+    u_int8_t              sf_trampoline[14]; /*  8 */
+    u_int8_t              sf_pad[2];         /* 22 */
     struct ubx_sigcontext sf_sc;            /* 24 */
 };
 
@@ -81,7 +81,7 @@ struct ubx_musl_siginfo {
     int      si_errno;          /* [4]  errno (usually 0) */
     int      si_code;           /* [8]  SI_USER / SI_KERNEL / ... */
     union {
-        uint8_t  __pad[116];    /* [12] pad to 128 bytes total */
+        u_int8_t  __pad[116];    /* [12] pad to 128 bytes total */
         struct {
             pid_t    si_pid;    /* [12] sender pid (kill-origin) */
             uid_t    si_uid;    /* [16] sender uid */
@@ -104,13 +104,13 @@ struct ubx_musl_siginfo {
  * [+160] sf_sc        saved CPU context
  */
 struct ubx_sigframe_info {
-    uint32_t                sf_retaddr;
-    uint32_t                sf_signo;
-    uint32_t                sf_info_ptr;
-    uint32_t                sf_uctx_ptr;
+    u_int32_t                sf_retaddr;
+    u_int32_t                sf_signo;
+    u_int32_t                sf_info_ptr;
+    u_int32_t                sf_uctx_ptr;
     struct ubx_musl_siginfo sf_info;        /* 128 bytes */
-    uint8_t                 sf_trampoline[14];
-    uint8_t                 sf_pad[2];
+    u_int8_t                 sf_trampoline[14];
+    u_int8_t                 sf_pad[2];
     struct ubx_sigcontext   sf_sc;
 };
 

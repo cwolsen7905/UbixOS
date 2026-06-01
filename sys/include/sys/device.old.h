@@ -33,10 +33,10 @@
 
 struct device {
   struct net *net;
-  uInt16 ioAddr;
-  uInt32 irq;
+  u_int16_t ioAddr;
+  u_int32_t irq;
   struct ei_device *priv;
-  uInt32 mtu;
+  u_int32_t mtu;
   };
 
 struct net {
@@ -49,8 +49,8 @@ struct ei_device {
   int rxStartPage;
   int stopPage;
   int currentPage;
-  uInt16 word16;
-  uInt32 pingPong;
+  u_int16_t word16;
+  u_int32_t pingPong;
   int tx1;
   int tx2;
   };

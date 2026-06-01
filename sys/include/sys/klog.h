@@ -48,24 +48,24 @@
  * as a cursor to drain only new entries each poll cycle.
  */
 struct klog_entry {
-	uint32_t  ke_seq;           /* monotonic sequence number */
-	uint32_t  ke_ticks;         /* systemVitals->sysTicks at log time */
-	uint32_t  ke_time;          /* Unix timestamp (seconds) at log time */
-	uint8_t   ke_level;         /* KLOG_* severity */
+	u_int32_t  ke_seq;           /* monotonic sequence number */
+	u_int32_t  ke_ticks;         /* systemVitals->sysTicks at log time */
+	u_int32_t  ke_time;          /* Unix timestamp (seconds) at log time */
+	u_int8_t   ke_level;         /* KLOG_* severity */
 	char      ke_msg[KLOG_MSG_MAX];
 } __attribute__((packed));
 
 /* Kernel-internal: push a pre-formatted message into the ring */
-void klog_push(uint8_t level, const char *msg);
+void klog_push(u_int8_t level, const char *msg);
 
 /* Primary logging entry point — printf-style, safe from any context */
-void klog(uint8_t level, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+void klog(u_int8_t level, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 
 /* Read up to max_entries entries with seq >= start_seq into buf.
  * Returns the number of entries copied.  Used by sys_klog_read. */
-int  klog_read(struct klog_entry *buf, int max_entries, uint32_t start_seq);
+int  klog_read(struct klog_entry *buf, int max_entries, u_int32_t start_seq);
 
 /* Current highest sequence number + 1 (next seq to be written) */
-uint32_t klog_next_seq(void);
+u_int32_t klog_next_seq(void);
 
 #endif /* _SYS_KLOG_H */

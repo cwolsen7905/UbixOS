@@ -1,9 +1,16 @@
-# Application Makefile (C) 2002-2026 The UbixOS Project
+# bin/stat/Makefile — build busybox stat (1.36.1) for UbixOS/i386.
 
 include ../../Makefile.incl
 include ../Makefile.incl
 
-BINARY    = stat
-OBJS      = main.o
+BB_SRC = ${SRCTOP}/contrib/busybox
 
-.include "${UBIX_MK}/ubix.musl.ubix.prog.mk"
+BINARY = stat
+
+.PATH.c: ${.CURDIR} ${BB_SRC} ${BB_SRC}/coreutils
+
+EXTRA_CFLAGS = -I${BB_SRC} -w
+
+OBJS = main.o stat.o libbb_stubs.o
+
+.include "${UBIX_MK}/ubix.musl.prog.mk"

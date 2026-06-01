@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2002-2018 The UbixOS Project.
+ * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
@@ -28,81 +28,100 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 #include <sys/mpi.h>
-#include "./include/ubistry.h"
+#include <api/ubix.h>
+#include <ubistry/ubistry.h>
+#include "db.h"
+#include "persist.h"
+#include "message.h"
 
-int ubistryInitMbox(char *name) {
+int ubistry_init_mbox(const char *name)
+{
+	if (mpi_createMbox(name) != 0)
+	{
+		ulogf(ULOG_ERR, "ubistry: error creating mailbox [%s]", name);
+		return (-1);
+	}
+	return (0);
+}
 
-  if (mpi_createMbox(name) != 0x0) {
-    printf("Error: Error Creating Mail Box: [%s]\n",name);
-    return(-1);
-    }
+/**
+ * Handle UB_MSG_GET: look up a value and reply UB_MSG_VALUE to reply_mbox.
+ */
+static void handle_get(struct ub_query_req *q)
+{
+	mpi_message_t rmsg;
+	struct ub_value_rsp *r = (struct ub_value_rsp *)rmsg.data;
+	ub_type_t t = UB_STR;
+	char val[UB_VAL_MAX];
 
-  return(0x0);
-  }
+	memset(&rmsg, 0, sizeof(rmsg));
+	if (ub_get(q->path, &t, val, (int)sizeof(val)) == 0)
+	{
+		r->ok = 1;
+		r->type = (uint8_t)t;
+		snprintf(r->value, sizeof(r->value), "%s", val);
+	}
+	else
+	{
+		r->ok = 0;
+		r->type = (uint8_t)UB_STR;
+		r->value[0] = '\0';
+	}
+	rmsg.header = UB_MSG_VALUE;
+	if (q->reply_mbox[0] != '\0')
+		mpi_postMessage(q->reply_mbox, UB_MSG_VALUE, &rmsg);
+}
 
-void ubistryProcessMessages() {
-  mpi_message_t       msg;
-  struct ubistryKey *tmpKey = 0x0;
-  char *key,*value;
+/**
+ * Handle UB_MSG_ENUM: list children and reply UB_MSG_CHILDREN to reply_mbox.
+ */
+static void handle_enum(struct ub_query_req *q)
+{
+	mpi_message_t rmsg;
+	struct ub_children_rsp *r = (struct ub_children_rsp *)rmsg.data;
+	int trunc = 0;
 
-  mfmStart:
-  if (mpi_fetchMessage("ubistry",&msg) == 0x0) {
-    switch (msg.header) {
-      case 50:
-        tmpKey = ubistryFindKey(msg.data);
-        if (tmpKey == 0x0)
-          printf("ubistry: Key (%s) Not Found\n",msg.data);
-        else
-          printf("ubistry: Key (%s) Found Has Value (%s)\n",tmpKey->name,tmpKey->value);
-        break;
-      case 51:
-         key = strtok(msg.data,",");
-         value = strtok(NULL,"\n");
-         printf("ubistry: Adding key (%s) with value (%s)\n",key,value); 
-         ubistryAddKey(key,value);
-         break;
-      case 666:
-        mpi_destroyMbox("ubistry");
-        if (fork() == 0x0) {
-          printf("ubistry: Restarting\n");
-          execve("ubistry@sys",0x0,0x0);
-          }
-        else {
-          exit(0x0);
-          }
-        break;
-      default:
-        printf("ubistry: Command (%i) With Data (%s) Not Valid\n",msg.header,msg.data);
-        break;
-      }
-    goto mfmStart;
-    }
-  return;
-  }
+	memset(&rmsg, 0, sizeof(rmsg));
+	r->count = ub_enum(q->path, r->names, (int)sizeof(r->names), &trunc);
+	r->truncated = (uint8_t)trunc;
+	rmsg.header = UB_MSG_CHILDREN;
+	if (q->reply_mbox[0] != '\0')
+		mpi_postMessage(q->reply_mbox, UB_MSG_CHILDREN, &rmsg);
+}
 
-/***
- $Log: message.c,v $
- Revision 1.2  2006/12/12 14:09:17  reddawg
- Changes
+void ubistry_process_messages(void)
+{
+	mpi_message_t msg;
 
- Revision 1.1.1.1  2006/06/01 12:46:09  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:28  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:14:04  reddawg
- no message
-
- Revision 1.2  2004/08/14 11:23:02  reddawg
- Changes
-
- Revision 1.1  2004/05/26 15:41:20  reddawg
- ubistry: added command 666 which will restart the registry server also added
-          command 51 to add a key format key,value
-
- END
- ***/
+	while (mpi_fetchMessage(UBISTRY_MBOX, &msg) == 0)
+	{
+		switch (msg.header)
+		{
+			case UB_MSG_GET:
+				handle_get((struct ub_query_req *)msg.data);
+				break;
+			case UB_MSG_ENUM:
+				handle_enum((struct ub_query_req *)msg.data);
+				break;
+			case UB_MSG_SET:
+			{
+				struct ub_set_req *s = (struct ub_set_req *)msg.data;
+				if (ub_set(s->path, (ub_type_t)s->type, s->value) == 0)
+					persist_mark_dirty();
+				break;
+			}
+			case UB_MSG_DEL:
+			{
+				struct ub_del_req *d = (struct ub_del_req *)msg.data;
+				if (ub_delete(d->path) == 0)
+					persist_mark_dirty();
+				break;
+			}
+			default:
+				/* Unknown command — ignore. */
+				break;
+		}
+	}
+}

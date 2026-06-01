@@ -78,52 +78,52 @@
  * --------------------------------------------------------------------- */
 
 struct usb_device_desc {
-	uint8_t   bLength;
-	uint8_t   bDescriptorType;
-	uint16_t  bcdUSB;
-	uint8_t   bDeviceClass;
-	uint8_t   bDeviceSubClass;
-	uint8_t   bDeviceProtocol;
-	uint8_t   bMaxPacketSize0;
-	uint16_t  idVendor;
-	uint16_t  idProduct;
-	uint16_t  bcdDevice;
-	uint8_t   iManufacturer;
-	uint8_t   iProduct;
-	uint8_t   iSerialNumber;
-	uint8_t   bNumConfigurations;
+	u_int8_t   bLength;
+	u_int8_t   bDescriptorType;
+	u_int16_t  bcdUSB;
+	u_int8_t   bDeviceClass;
+	u_int8_t   bDeviceSubClass;
+	u_int8_t   bDeviceProtocol;
+	u_int8_t   bMaxPacketSize0;
+	u_int16_t  idVendor;
+	u_int16_t  idProduct;
+	u_int16_t  bcdDevice;
+	u_int8_t   iManufacturer;
+	u_int8_t   iProduct;
+	u_int8_t   iSerialNumber;
+	u_int8_t   bNumConfigurations;
 } __attribute__((packed));
 
 struct usb_config_desc {
-	uint8_t   bLength;
-	uint8_t   bDescriptorType;
-	uint16_t  wTotalLength;
-	uint8_t   bNumInterfaces;
-	uint8_t   bConfigurationValue;
-	uint8_t   iConfiguration;
-	uint8_t   bmAttributes;
-	uint8_t   bMaxPower;
+	u_int8_t   bLength;
+	u_int8_t   bDescriptorType;
+	u_int16_t  wTotalLength;
+	u_int8_t   bNumInterfaces;
+	u_int8_t   bConfigurationValue;
+	u_int8_t   iConfiguration;
+	u_int8_t   bmAttributes;
+	u_int8_t   bMaxPower;
 } __attribute__((packed));
 
 struct usb_iface_desc {
-	uint8_t   bLength;
-	uint8_t   bDescriptorType;
-	uint8_t   bInterfaceNumber;
-	uint8_t   bAlternateSetting;
-	uint8_t   bNumEndpoints;
-	uint8_t   bInterfaceClass;
-	uint8_t   bInterfaceSubClass;
-	uint8_t   bInterfaceProtocol;
-	uint8_t   iInterface;
+	u_int8_t   bLength;
+	u_int8_t   bDescriptorType;
+	u_int8_t   bInterfaceNumber;
+	u_int8_t   bAlternateSetting;
+	u_int8_t   bNumEndpoints;
+	u_int8_t   bInterfaceClass;
+	u_int8_t   bInterfaceSubClass;
+	u_int8_t   bInterfaceProtocol;
+	u_int8_t   iInterface;
 } __attribute__((packed));
 
 struct usb_ep_desc {
-	uint8_t   bLength;
-	uint8_t   bDescriptorType;
-	uint8_t   bEndpointAddress;  /* bit 7: direction (1=IN) */
-	uint8_t   bmAttributes;      /* bits 1:0 = transfer type */
-	uint16_t  wMaxPacketSize;
-	uint8_t   bInterval;
+	u_int8_t   bLength;
+	u_int8_t   bDescriptorType;
+	u_int8_t   bEndpointAddress;  /* bit 7: direction (1=IN) */
+	u_int8_t   bmAttributes;      /* bits 1:0 = transfer type */
+	u_int16_t  wMaxPacketSize;
+	u_int8_t   bInterval;
 } __attribute__((packed));
 
 #define USB_EP_DIR_IN(ep)   ((ep)->bEndpointAddress & 0x80)
@@ -138,11 +138,11 @@ struct usb_ep_desc {
  * USB setup packet (8 bytes, sent in SETUP token)
  * --------------------------------------------------------------------- */
 struct usb_setup_pkt {
-	uint8_t   bmRequestType;
-	uint8_t   bRequest;
-	uint16_t  wValue;
-	uint16_t  wIndex;
-	uint16_t  wLength;
+	u_int8_t   bmRequestType;
+	u_int8_t   bRequest;
+	u_int16_t  wValue;
+	u_int16_t  wIndex;
+	u_int16_t  wLength;
 } __attribute__((packed));
 
 /* -----------------------------------------------------------------------
@@ -152,8 +152,8 @@ struct usb_setup_pkt {
 
 struct usb_device {
 	struct uhci_softc     *ud_hc;
-	uint8_t                ud_addr;
-	uint8_t                ud_speed;
+	u_int8_t                ud_addr;
+	u_int8_t                ud_speed;
 	struct usb_device_desc ud_dev_desc;
 	struct usb_config_desc ud_cfg_desc;
 	struct usb_iface_desc  ud_iface_desc;
@@ -169,7 +169,7 @@ struct usb_device {
 int  usb_new_device(struct uhci_softc *hc, int port, int speed);
 
 /* Helper: build and issue a standard control transfer */
-int  usb_control(struct usb_device *dev, uint8_t bmRequestType, uint8_t bRequest,
-         uint16_t wValue, uint16_t wIndex, void *data, uint16_t wLength);
+int  usb_control(struct usb_device *dev, u_int8_t bmRequestType, u_int8_t bRequest,
+         u_int16_t wValue, u_int16_t wIndex, void *data, u_int16_t wLength);
 
 #endif /* _USB_USB_H */

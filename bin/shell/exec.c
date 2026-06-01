@@ -38,7 +38,7 @@ static char argv_init_buf[1024];
 
 static char *envp_init_old[12] = {
     "HOST=MrOlsen.uBixOS.com",
-    "TERM=xterm",
+    "TERM=vt100",
     "SHELL=/bin/sh",
     "HOME=/",
     "PWD=/",

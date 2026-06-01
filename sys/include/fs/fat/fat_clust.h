@@ -37,26 +37,26 @@
  * Read the FAT entry for cluster n.  Returns 0 on I/O error (cluster 0 is
  * never valid in a chain, so 0 unambiguously signals failure here).
  */
-uint32_t	fat_cluster_next(struct fat_fs *fs, uint32_t cluster);
+u_int32_t	fat_cluster_next(struct fat_fs *fs, u_int32_t cluster);
 
 /* Convert cluster number to the absolute LBA of its first sector. */
-uint32_t	fat_cluster_to_lba(struct fat_fs *fs, uint32_t cluster);
+u_int32_t	fat_cluster_to_lba(struct fat_fs *fs, u_int32_t cluster);
 
 /*
  * Write value into the FAT entry for cluster.  Handles FAT12/16/32 encoding.
  * Returns 0 on success, -1 on error.
  */
-int		fat_cluster_write_entry(struct fat_fs *fs, uint32_t cluster,
-		    uint32_t value);
+int		fat_cluster_write_entry(struct fat_fs *fs, u_int32_t cluster,
+		    u_int32_t value);
 
 /*
  * Allocate a free cluster.  If after != 0 the new cluster is appended to that
  * chain (after's FAT entry is updated to point here).  Returns the new cluster
  * number, or 0 on failure (disk full or I/O error).
  */
-uint32_t	fat_cluster_alloc(struct fat_fs *fs, uint32_t after);
+u_int32_t	fat_cluster_alloc(struct fat_fs *fs, u_int32_t after);
 
 /* Free the entire cluster chain starting at start.  Returns 0 on success. */
-int		fat_cluster_free_chain(struct fat_fs *fs, uint32_t start);
+int		fat_cluster_free_chain(struct fat_fs *fs, u_int32_t start);
 
 #endif /* _FAT_CLUST_H */

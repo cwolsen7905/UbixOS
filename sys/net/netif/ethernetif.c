@@ -194,7 +194,7 @@ low_level_input(struct netif *netif)
 {
   struct ethernetif *ethernetif = netif->state;
   struct pbuf *p, *q;
-  uint16_t len;
+  u_int16_t len;
   char *bufPtr;
 
   /* Obtain the size of the packet and put it into the "len"

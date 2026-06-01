@@ -60,7 +60,7 @@
  * ep_addr is the full endpoint address byte (ep_num | 0x80 for IN endpoints).
  */
 static int
-ums_clear_halt(struct ums_softc *sc, uint8_t ep_addr)
+ums_clear_halt(struct ums_softc *sc, u_int8_t ep_addr)
 {
 	return (usb_control(sc->um_dev,
 	    USB_DIR_OUT | USB_TYPE_STANDARD | USB_RECIP_ENDPOINT,
@@ -129,8 +129,8 @@ ums_recv_csw(struct ums_softc *sc, struct ums_csw *csw)
  */
 static int
 ums_command(struct ums_softc *sc,
-    const uint8_t *cdb, uint8_t cdblen,
-    void *data, uint32_t datalen, int direction)
+    const u_int8_t *cdb, u_int8_t cdblen,
+    void *data, u_int32_t datalen, int direction)
 {
 	struct ums_cbw cbw;
 	struct ums_csw csw;
@@ -215,7 +215,7 @@ ums_command(struct ums_softc *sc,
 static int
 ums_test_unit_ready(struct ums_softc *sc)
 {
-	uint8_t cdb[6];
+	u_int8_t cdb[6];
 
 	memset(cdb, 0, sizeof(cdb));
 	cdb[0] = SCSI_TEST_UNIT_READY;
@@ -225,8 +225,8 @@ ums_test_unit_ready(struct ums_softc *sc)
 static int
 ums_read_capacity(struct ums_softc *sc)
 {
-	uint8_t  cdb[10];
-	uint8_t  buf[8];
+	u_int8_t  cdb[10];
+	u_int8_t  buf[8];
 	int      rc;
 
 	memset(cdb, 0, sizeof(cdb));
@@ -237,10 +237,10 @@ ums_read_capacity(struct ums_softc *sc)
 		return (rc);
 
 	/* Big-endian 32-bit values */
-	sc->um_blocks   = ((uint32_t)buf[0] << 24) | ((uint32_t)buf[1] << 16) |
-	    ((uint32_t)buf[2] << 8) | buf[3];
-	sc->um_blk_size = ((uint32_t)buf[4] << 24) | ((uint32_t)buf[5] << 16) |
-	    ((uint32_t)buf[6] << 8) | buf[7];
+	sc->um_blocks   = ((u_int32_t)buf[0] << 24) | ((u_int32_t)buf[1] << 16) |
+	    ((u_int32_t)buf[2] << 8) | buf[3];
+	sc->um_blk_size = ((u_int32_t)buf[4] << 24) | ((u_int32_t)buf[5] << 16) |
+	    ((u_int32_t)buf[6] << 8) | buf[7];
 
 	/* READ CAPACITY(10) returns the address of the *last* block */
 	sc->um_blocks += 1;
@@ -266,16 +266,16 @@ ums_read_capacity(struct ums_softc *sc)
 #define UMS_MAX_SECTORS  128
 
 static int
-ums_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
+ums_blk_read(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	struct ums_softc *sc = (struct ums_softc *)dev->dev_softc;
-	uint8_t  cdb[10];
-	uint8_t *p = (uint8_t *)buf;
-	uint32_t done = 0;
+	u_int8_t  cdb[10];
+	u_int8_t *p = (u_int8_t *)buf;
+	u_int32_t done = 0;
 
 	while (done < count) {
-		uint32_t n    = count - done;
-		uint32_t blk  = lba + done;
+		u_int32_t n    = count - done;
+		u_int32_t blk  = lba + done;
 		int      rc;
 
 		if (n > UMS_MAX_SECTORS)
@@ -283,12 +283,12 @@ ums_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 
 		memset(cdb, 0, sizeof(cdb));
 		cdb[0] = SCSI_READ10;
-		cdb[2] = (uint8_t)(blk >> 24);
-		cdb[3] = (uint8_t)(blk >> 16);
-		cdb[4] = (uint8_t)(blk >> 8);
-		cdb[5] = (uint8_t)(blk);
-		cdb[7] = (uint8_t)(n >> 8);
-		cdb[8] = (uint8_t)(n);
+		cdb[2] = (u_int8_t)(blk >> 24);
+		cdb[3] = (u_int8_t)(blk >> 16);
+		cdb[4] = (u_int8_t)(blk >> 8);
+		cdb[5] = (u_int8_t)(blk);
+		cdb[7] = (u_int8_t)(n >> 8);
+		cdb[8] = (u_int8_t)(n);
 
 		kprintf("ums: READ(10) lba=%u n=%u\n", blk, n);
 		rc = ums_command(sc, cdb, sizeof(cdb),
@@ -307,16 +307,16 @@ ums_blk_read(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 }
 
 static int
-ums_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
+ums_blk_write(struct ubx_device *dev, u_int32_t lba, u_int32_t count, void *buf)
 {
 	struct ums_softc *sc = (struct ums_softc *)dev->dev_softc;
-	uint8_t  cdb[10];
-	uint8_t *p = (uint8_t *)buf;
-	uint32_t done = 0;
+	u_int8_t  cdb[10];
+	u_int8_t *p = (u_int8_t *)buf;
+	u_int32_t done = 0;
 
 	while (done < count) {
-		uint32_t n    = count - done;
-		uint32_t blk  = lba + done;
+		u_int32_t n    = count - done;
+		u_int32_t blk  = lba + done;
 		int      rc;
 
 		if (n > UMS_MAX_SECTORS)
@@ -324,12 +324,12 @@ ums_blk_write(struct ubx_device *dev, uint32_t lba, uint32_t count, void *buf)
 
 		memset(cdb, 0, sizeof(cdb));
 		cdb[0] = SCSI_WRITE10;
-		cdb[2] = (uint8_t)(blk >> 24);
-		cdb[3] = (uint8_t)(blk >> 16);
-		cdb[4] = (uint8_t)(blk >> 8);
-		cdb[5] = (uint8_t)(blk);
-		cdb[7] = (uint8_t)(n >> 8);
-		cdb[8] = (uint8_t)(n);
+		cdb[2] = (u_int8_t)(blk >> 24);
+		cdb[3] = (u_int8_t)(blk >> 16);
+		cdb[4] = (u_int8_t)(blk >> 8);
+		cdb[5] = (u_int8_t)(blk);
+		cdb[7] = (u_int8_t)(n >> 8);
+		cdb[8] = (u_int8_t)(n);
 
 		rc = ums_command(sc, cdb, sizeof(cdb),
 		    p + (size_t)done * sc->um_blk_size,

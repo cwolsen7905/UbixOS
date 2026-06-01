@@ -31,7 +31,7 @@
 
 #include <sys/types.h>
 
-void dmaXfer(uInt8 channel, uInt32 address, uInt length, uInt8 read);
-void _dmaXfer(uInt8 dmaChannel, uInt8 page, uInt offset, uInt length, uInt8 mode);
+void dmaXfer(u_int8_t channel, u_int32_t address, u_int32_t length, u_int8_t read);
+void _dmaXfer(u_int8_t dmaChannel, u_int8_t page, u_int32_t offset, u_int32_t length, u_int8_t mode);
 
 #endif /* END _SYS_DMA_H */

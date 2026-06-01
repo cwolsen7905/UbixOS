@@ -35,7 +35,7 @@ static unsigned char *videoBuffer = (unsigned char*) 0xB8000;
 int printColor = defaultColor;
 
 void backSpace() {
-    uInt32 bufferOffset = 0x0;
+    u_int32_t bufferOffset = 0x0;
     outportByte(0x3d4, 0x0e);
     bufferOffset = inportByte(0x3d5);
     bufferOffset <<= 0x8; /* Shift Address Left 8 Bits */

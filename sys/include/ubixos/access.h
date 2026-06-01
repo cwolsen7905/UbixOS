@@ -32,11 +32,11 @@
 #include <ubixos/ubthread.h>
 
 struct sys_setUID_args {
-    uint32_t uid;
+    u_int32_t uid;
 };
 
 struct sys_setGID_args {
-    uint32_t gid;
+    u_int32_t gid;
 };
 
 int sys_getUID(struct thread *, void *);

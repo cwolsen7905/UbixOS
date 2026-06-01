@@ -30,7 +30,7 @@
 #include <fs/ubixfs/ubixfs.h>
 #include <sys/types.h>
 #include <sys/bus.h>
-#include <fs/ubixfs/dirCache.h>
+#include <fs/ubixfs/dir_cache.h>
 #include <fs/vfs/vfs.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
@@ -41,7 +41,7 @@
 #include <assert.h>
 
 /* Static defines */
-static int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 batIndex);
+static int ubixfs_loadData(fileDescriptor_t *fd,char *data,u_int32_t size,u_int32_t batIndex);
 
   
 static int openFileUbixFS(const char *file, fileDescriptor_t *fd) {
@@ -119,7 +119,7 @@ kprintf("Ouch! in filewrite!\n");
 int writeFileByte(int ch, fileDescriptor_t *fd, long offset) {
 
   int blockCount = 0x0,batIndex = 0x0,batIndexPrev = 0x0;
-  uInt32 i = 0x0;
+  u_int32_t i = 0x0;
   struct directoryEntry *dirEntry = 0x0;
   struct ubixFSInfo *fsInfo = NULL;
 
@@ -170,7 +170,7 @@ int writeFileByte(int ch, fileDescriptor_t *fd, long offset) {
     fd->buffer[offset-(blockCount*4096)] = ch;
     fd->mp->device->dev_blk_ops->write(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[batIndex].realSector,8,fd->buffer);
     }    
-  if ((uInt32)offset > fd->size) {
+  if ((u_int32_t)offset > fd->size) {
     fd->size = offset;
     dirEntry = (struct directoryEntry *)kmalloc(4096);
   /*
@@ -231,10 +231,10 @@ Notes:
 
 ************************************************************************/
 int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
-  uInt32 blockOffset    = 0x0;
-  uInt32 blockIndex;
-  uInt32 blockIndexPrev;
-  uInt32 i              = 0x0;
+  u_int32_t blockOffset    = 0x0;
+  u_int32_t blockIndex;
+  u_int32_t blockIndexPrev;
+  u_int32_t i              = 0x0;
   struct ubixFSInfo *fsInfo = NULL;
   struct directoryEntry *dirEntry = 0x0;
 
@@ -263,7 +263,7 @@ int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
     }
 
   fd->mp->device->dev_blk_ops->read(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize,fd->buffer);
-  for (i = 0x0;i < (uInt32)size;i++) {
+  for (i = 0x0;i < (u_int32_t)size;i++) {
 
     fd->buffer[(offset- (blockOffset *0x1000))] = data[i];
     offset++;
@@ -286,7 +286,7 @@ int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
     }
   fd->mp->device->dev_blk_ops->write(fd->mp->device,fd->mp->diskLabel->partitions[fd->mp->partition].pOffset+fsInfo->blockAllocationTable[blockIndex].realSector,blockSize,fd->buffer);
 
-  if ((uInt32)offset > fd->size) {
+  if ((u_int32_t)offset > fd->size) {
     fd->size = offset;
     dirEntry = (struct directoryEntry *)kmalloc(4096);
 /*
@@ -314,7 +314,7 @@ void ubixFSUnlink(char *path,struct vfs_mountPoint *mp) {
   
   mp->device->dev_blk_ops->read(mp->device,(mp->diskLabel->partitions[mp->partition].pOffset+fsInfo->blockAllocationTable[fsInfo->rootDir].realSector),8,dirEntry);
 
-  for (x=0;(uInt32)x<(4096/sizeof(struct directoryEntry));x++) {
+  for (x=0;(u_int32_t)x<(4096/sizeof(struct directoryEntry));x++) {
     if ((int)!strcmp(dirEntry[x].fileName,path)) {
       dirEntry[x].attributes |= typeDeleted;
       dirEntry[x].fileName[0] = '?';
@@ -330,7 +330,7 @@ void ubixFSUnlink(char *path,struct vfs_mountPoint *mp) {
 /*****************************************************************************************
 
 Function: static
-          int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 batIndex)
+          int ubixfs_loadData(fileDescriptor_t *fd,char *data,u_int32_t size,u_int32_t batIndex)
 
 Description: This will load the node data in from the disk
 
@@ -339,8 +339,8 @@ Notes:
                actual file size
 
 *****************************************************************************************/    
-static int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 batIndex) {
-  uInt32 i = 0x0;
+static int ubixfs_loadData(fileDescriptor_t *fd,char *data,u_int32_t size,u_int32_t batIndex) {
+  u_int32_t i = 0x0;
 
   struct ubixFSInfo *fsInfo = NULL;
 

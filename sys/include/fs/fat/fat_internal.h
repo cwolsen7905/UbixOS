@@ -57,62 +57,62 @@ struct fat_fs {
 	volatile int		 fs_lock;		/* per-mount spinlock */
 	struct vfs_mountPoint	*mp;
 	char			 vol_label[12];		/* FAT volume label (lowercased) */
-	uint8_t			 type;			/* FAT_TYPE_12/16/32 */
-	uint32_t		 bytes_per_sector;	/* always 512 on UbixOS */
-	uint8_t			 sectors_per_cluster;
-	uint32_t		 fat_begin_lba;		/* first sector of FAT region */
-	uint32_t		 fat_sectors;		/* sectors per FAT copy */
-	uint8_t			 fat_copies;
-	uint32_t		 root_lba;		/* FAT12/16: fixed root dir start */
-	uint32_t		 root_sectors;		/* FAT12/16: size of root region */
-	uint32_t		 root_cluster;		/* FAT32: cluster 2 = root */
-	uint32_t		 data_lba;		/* first data sector (cluster 2) */
-	uint32_t		 total_clusters;
-	uint32_t		 fsinfo_lba;		/* FAT32 only */
-	uint32_t		 free_cluster_hint;	/* FAT32 FSINFO next-free */
+	u_int8_t			 type;			/* FAT_TYPE_12/16/32 */
+	u_int32_t		 bytes_per_sector;	/* always 512 on UbixOS */
+	u_int8_t			 sectors_per_cluster;
+	u_int32_t		 fat_begin_lba;		/* first sector of FAT region */
+	u_int32_t		 fat_sectors;		/* sectors per FAT copy */
+	u_int8_t			 fat_copies;
+	u_int32_t		 root_lba;		/* FAT12/16: fixed root dir start */
+	u_int32_t		 root_sectors;		/* FAT12/16: size of root region */
+	u_int32_t		 root_cluster;		/* FAT32: cluster 2 = root */
+	u_int32_t		 data_lba;		/* first data sector (cluster 2) */
+	u_int32_t		 total_clusters;
+	u_int32_t		 fsinfo_lba;		/* FAT32 only */
+	u_int32_t		 free_cluster_hint;	/* FAT32 FSINFO next-free */
 };
 
 /* Open file state — stored in fileDescriptor_t.res */
 struct fat_file {
 	struct fat_fs	*fs;
-	uint32_t	 start_cluster;
-	uint32_t	 cur_cluster;
-	uint32_t	 file_size;
-	uint32_t	 position;
-	uint32_t	 dir_sector;		/* sector holding directory entry */
-	uint16_t	 dir_offset;		/* byte offset within that sector */
-	uint8_t		 mode;			/* FAT_MODE_R / _W / _A */
-	uint8_t		 size_dirty;		/* directory entry needs update */
-	uint8_t		 buf[512];		/* write-behind sector buffer */
-	uint8_t		 buf_dirty;
-	uint32_t	 buf_lba;		/* sector currently in buf */
+	u_int32_t	 start_cluster;
+	u_int32_t	 cur_cluster;
+	u_int32_t	 file_size;
+	u_int32_t	 position;
+	u_int32_t	 dir_sector;		/* sector holding directory entry */
+	u_int16_t	 dir_offset;		/* byte offset within that sector */
+	u_int8_t		 mode;			/* FAT_MODE_R / _W / _A */
+	u_int8_t		 size_dirty;		/* directory entry needs update */
+	u_int8_t		 buf[512];		/* write-behind sector buffer */
+	u_int8_t		 buf_dirty;
+	u_int32_t	 buf_lba;		/* sector currently in buf */
 };
 
 /* Directory iterator — stored in kDIR_t.dirHandle */
 struct fat_dir_iter {
 	struct fat_fs	*fs;
-	uint32_t	 cluster;		/* 0 = root for FAT12/16 */
-	uint32_t	 sector_in_cluster;
-	uint16_t	 entry_offset;		/* within sector, 0-480 step 32 */
+	u_int32_t	 cluster;		/* 0 = root for FAT12/16 */
+	u_int32_t	 sector_in_cluster;
+	u_int16_t	 entry_offset;		/* within sector, 0-480 step 32 */
 	char		 lfn[256];
-	uint8_t		 lfn_seq;
-	uint8_t		 lfn_checksum;
+	u_int8_t		 lfn_seq;
+	u_int8_t		 lfn_checksum;
 };
 
 /* Raw 32-byte FAT directory entry (on-disk layout) */
 struct fat_raw_dirent {
-	uint8_t		 name[11];
-	uint8_t		 attr;
-	uint8_t		 nt_res;
-	uint8_t		 crt_time_tenth;
-	uint16_t	 crt_time;
-	uint16_t	 crt_date;
-	uint16_t	 acc_date;
-	uint16_t	 clus_hi;
-	uint16_t	 wrt_time;
-	uint16_t	 wrt_date;
-	uint16_t	 clus_lo;
-	uint32_t	 file_size;
+	u_int8_t		 name[11];
+	u_int8_t		 attr;
+	u_int8_t		 nt_res;
+	u_int8_t		 crt_time_tenth;
+	u_int16_t	 crt_time;
+	u_int16_t	 crt_date;
+	u_int16_t	 acc_date;
+	u_int16_t	 clus_hi;
+	u_int16_t	 wrt_time;
+	u_int16_t	 wrt_date;
+	u_int16_t	 clus_lo;
+	u_int32_t	 file_size;
 } __attribute__((packed));
 
 #endif /* _FAT_INTERNAL_H */

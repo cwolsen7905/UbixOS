@@ -42,11 +42,8 @@ struct msghdr;
 #include <fs/vfs/file.h>
 #include <fs/vfs/stat.h>
 
-#ifndef _SYS_SYSPROTO_H   /* avoid redefinition if sysproto.h was included first */
-typedef int register_t;
-
+#ifndef PAD_
 #define PAD_(t) (sizeof(register_t) <= sizeof(t) ? 0 : sizeof(register_t) - sizeof(t))
-
 #if BYTE_ORDER == LITTLE_ENDIAN
 #define PADL_(t) 0
 #define PADR_(t) PAD_(t)
@@ -54,7 +51,7 @@ typedef int register_t;
 #define PADL_(t) PAD_(t)
 #define PADR_(t) 0
 #endif
-#endif /* _SYS_SYSPROTO_H */
+#endif
 
 struct sys_exit_args
 {
@@ -154,9 +151,9 @@ struct sys_getcwd_args
 	void *buf;
 	char buf_r_[PADR_(const void *)];
 
-	char size_l_[PADL_(uint32_t)];
-	uint32_t size;
-	char size_r_[PADR_(uint32_t)];
+	char size_l_[PADL_(u_int32_t)];
+	u_int32_t size;
+	char size_r_[PADR_(u_int32_t)];
 };
 
 struct sys_setUID_args
@@ -289,6 +286,32 @@ struct sys_lseek_args
 	char whence_l_[PADL_(int)];
 	int whence;
 	char whence_r_[PADR_(int)];
+};
+
+struct sys_ftruncate_args
+{
+	char fd_l_[PADL_(int)];
+	int fd;
+	char fd_r_[PADR_(int)];
+
+	char length_l_[PADL_(off_t)];
+	off_t length;
+	char length_r_[PADR_(off_t)];
+};
+
+struct sys_umask_args
+{
+	char newmask_l_[PADL_(int)];
+	int newmask;
+	char newmask_r_[PADR_(int)];
+};
+
+struct sys_utimensat_args
+{
+	char fd_l_[PADL_(int)];        int fd;        char fd_r_[PADR_(int)];
+	char path_l_[PADL_(char *)];   char *path;    char path_r_[PADR_(char *)];
+	char times_l_[PADL_(void *)];  void *times;   char times_r_[PADR_(void *)];
+	char flag_l_[PADL_(int)];      int flag;      char flag_r_[PADR_(int)];
 };
 
 struct sys_sysctl_args
@@ -1179,6 +1202,9 @@ int sys_closedir(struct thread *td, struct sys_closedir_args *);
 int sys_fgetc(struct thread *td, struct sys_fgetc_args *);
 int sys_fseek(struct thread *td, struct sys_fseek_args *);
 int sys_lseek(struct thread *td, struct sys_lseek_args *);
+int sys_ftruncate(struct thread *td, struct sys_ftruncate_args *);
+int sys_umask(struct thread *td, struct sys_umask_args *);
+int sys_utimensat(struct thread *td, struct sys_utimensat_args *);
 
 int sys_sched_yield(struct thread *td, void *);
 int sys_nanosleep(struct thread *td, void *);

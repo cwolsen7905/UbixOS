@@ -20,5 +20,6 @@
   "[cpp]": {
     "editor.formatOnSave": true
 },
-"idf.currentSetup": "/Users/cwolsen/.espressif/v6.0.1/esp-idf"
+"idf.currentSetup": "/Users/cwolsen/.espressif/v6.0.1/esp-idf",
+"cmake.sourceDirectory": "/Users/cwolsen/git/UbixOS/contrib/libcxx"
 }

@@ -1,64 +1,25 @@
-# Copyright (c) 2002-2026 The UbixOS Project.
+# Views desktop environment Makefile (C) 2002-2026 The UbixOS Project
+#
+# Groups the display-stack binaries: the compositor (views) and every
+# GUI client app that draws into a vmm_share_region buffer.  Add a new
+# directory name to SUBDIRS to include it in the build and clean targets.
 
-include ../../Makefile.incl
-include ../Makefile.incl
+SUBDIRS = views taskbar term settings
 
-BINARY  = views
-OBJS    = views.o framebuffer.o window_registry.o compositor.o \
-          input_router.o window_manager.o
-OBJDIR  = ${OBJ_DIR}/obj/bin/views
+# bin/Makefile recurses into this group with a bare ${MAKE} (no target), so the
+# default target must build every SUBDIR — not just the first .for-generated one.
+.MAIN: all
 
-MUSL_SRC = ${SRCTOP}/contrib/musl
-MUSL_LIB = ${OBJ_DIR}/obj/musl/lib
+.PHONY: all clean ${SUBDIRS}
 
-LIBCXX_SRC = ${SRCTOP}/contrib/libcxx
+.for _dir in ${SUBDIRS}
+${_dir}:
+	(cd ${_dir};${MAKE})
+.endfor
 
-INCLUDES = \
-	-I${LIBCXX_SRC}/include \
-	-I${SRCTOP}/contrib/libcxxabi/include \
-	-I${MUSL_SRC}/include \
-	-I${OBJ_DIR}/obj/musl/obj/include \
-	-I${MUSL_SRC}/arch/i386 \
-	-I${MUSL_SRC}/arch/generic \
-	-I../../include
-
-OBJGFX_OBJS != ls ${OBJ_DIR}/obj/gfx/objgfx/*.o 2>/dev/null
-
-.SUFFIXES: .o .cc
-.cc.o:
-	@mkdir -p ${OBJDIR}
-	$(CXX) -std=c++20 -Wall -O $(CFLAGS) \
-		-nostdinc -nostdinc++ -fno-builtin \
-		-fno-rtti -fno-exceptions \
-		-mno-sse -mno-sse2 -mno-mmx -mno-3dnow \
-		-D_LIBCPP_HAS_NO_EXCEPTIONS \
-		-MMD -MP \
-		$(INCLUDES) -c -o ${OBJDIR}/${.TARGET:T} ${.IMPSRC}
-
-all: ${BINARY}
-
-${BINARY}: ${OBJS}
-	$(CC) $(CFLAGS) -Wl,-m,elf_i386 \
-		-o ${BUILD_DIR}/bin/${BINARY} \
-		${MUSL_LIB}/crt1.o ${MUSL_LIB}/crti.o \
-		-Wl,--start-group \
-		${OBJ_DIR}/obj/ubix_api/mpi_creatembox.o \
-		${OBJ_DIR}/obj/ubix_api/mpi_fetchmessage.o \
-		${OBJ_DIR}/obj/ubix_api/mpi_postmessage.o \
-		${OBJ_DIR}/obj/ubix_api/mpi_destroymbox.o \
-		${OBJGFX_OBJS} \
-		${OBJ_DIR}/lib/libcxx.a \
-		${OBJ_DIR}/lib/libcxxabi.a \
-		${OBJS:S|^|${OBJDIR}/|} \
-		${OBJ_DIR}/lib/musl.a \
-		${OBJ_DIR}/lib/crt.a \
-		-Wl,--end-group \
-		${LIBGCC} \
-		${MUSL_LIB}/crtn.o
+all: ${SUBDIRS}
 
 clean:
-	$(REMOVE) ${OBJDIR} ${BUILD_DIR}/bin/${BINARY}
-
-.for _d in ${OBJS:.o=.d}
-.sinclude "${OBJDIR}/${_d}"
+.for _dir in ${SUBDIRS}
+	(cd ${_dir};${MAKE} clean)
 .endfor

@@ -36,13 +36,13 @@
 typedef struct kmod_struct {
     struct kmod_struct *next;
     struct kmod_struct *prev;
-    uInt16 id;
-    uInt16 refs;
-    uInt32 address;
+    u_int16_t id;
+    u_int16_t refs;
+    u_int32_t address;
     char name[128];
 } kmod_t;
 
-uInt32 kmod_load(const char *);
-uInt32 kmod_add(const char *, const char *name);
+u_int32_t kmod_load(const char *);
+u_int32_t kmod_add(const char *, const char *name);
 
 #endif

@@ -34,20 +34,20 @@
 #include <fs/vfs/vfs.h>
 
 typedef struct vitalsStruct {
-    uint32_t sysTicks;  // 0 - Do Not Change Order
-    uint32_t sysUptime; // 4 - Do Not Change Order
-    uint32_t quantum;   // 8 - Do Not Change Order
-    uint32_t dQuantum;  // 12 - Do Not Change Order
-    uint32_t openFiles;
-    uint32_t lastFD;
-    uint32_t freePages;
+    u_int32_t sysTicks;  // 0 - Do Not Change Order
+    u_int32_t sysUptime; // 4 - Do Not Change Order
+    u_int32_t quantum;   // 8 - Do Not Change Order
+    u_int32_t dQuantum;  // 12 - Do Not Change Order
+    u_int32_t openFiles;
+    u_int32_t lastFD;
+    u_int32_t freePages;
     struct fileSystem *fileSystems;
     struct vfs_mountPoint *mountPoints;
-    uint32_t timeStart;
+    u_int32_t timeStart;
     void *screen;
     void *font;
     char *packet;
-    uint32_t packetLength;
+    u_int32_t packetLength;
 } vitalsNode;
 
 extern vitalsNode *systemVitals;

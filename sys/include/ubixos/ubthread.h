@@ -46,15 +46,15 @@ struct ubthread {
 
 struct ubthread_cond {
     int id;
-    uint32_t lock;
+    u_int32_t lock;
 };
 
 struct ubthread_mutex {
     int id;
-    uint32_t lock;
+    u_int32_t lock;
     pidType pid;
     kTask_t *owner;     /* task currently holding the lock, or NULL */
-    uint8_t  pi_active; /* non-zero if a PI boost has been applied to owner */
+    u_int8_t  pi_active; /* non-zero if a PI boost has been applied to owner */
 };
 
 struct ubthread_list {
@@ -73,11 +73,11 @@ struct ubthread_mutex_list {
 };
 
 struct taskStruct *ubthread_self();
-int ubthread_cond_init(ubthread_cond_t *cond, const uInt32 attr);
-int ubthread_mutex_init(ubthread_mutex_t *mutex, const uInt32 attr);
+int ubthread_cond_init(ubthread_cond_t *cond, const u_int32_t attr);
+int ubthread_mutex_init(ubthread_mutex_t *mutex, const u_int32_t attr);
 int ubthread_cond_destroy(ubthread_cond_t *cond);
 int ubthread_mutex_destroy(ubthread_mutex_t *mutex);
-int ubthread_create(struct taskStruct **thread, const uInt32 *attr, void (*tproc)(void), void *arg, const char *name);
+int ubthread_create(struct taskStruct **thread, const u_int32_t *attr, void (*tproc)(void), void *arg, const char *name);
 int ubthread_mutex_lock(ubthread_mutex_t *mutex);
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex);
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime);

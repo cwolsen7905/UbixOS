@@ -166,9 +166,6 @@ extern "C" {
   extern int errno;
 #endif
 
-#ifndef err_t
-typedef int err_t;
-#endif
 
 #ifdef __cplusplus
 }
