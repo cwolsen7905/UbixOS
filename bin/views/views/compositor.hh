@@ -73,6 +73,13 @@ class Compositor
 	uint32_t solid_color_ = 0; /* DESK_SOLID fill */
 	uint32_t bar_base_ = 0;    /* DESK_BARS base shade */
 
+	/* Fully-rendered desktop background, screen-sized, rebuilt only when the
+	 * desktop changes; desktop_fill_rect() blits from it instead of re-stretching
+	 * the wallpaper per pixel on every composite. */
+	std::vector<uint32_t> desk_cache_;
+	int dc_w_ = 0, dc_h_ = 0;
+	void render_desktop_cache();
+
 	/* Active session user; desktop settings resolve user-first then system
 	 * default.  Empty = no user logged in (system layer only). */
 	std::string active_user_;

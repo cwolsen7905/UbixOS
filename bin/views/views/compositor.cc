@@ -103,6 +103,60 @@ static uint32_t scale_color(uint32_t c, int num, int den)
 	return FB_RGB(r, g, b);
 }
 
+/*
+ * Render the entire desktop background into desk_cache_ once.  Called only when
+ * the desktop changes (mode/colour/wallpaper/resolution) — never per composite.
+ */
+void Compositor::render_desktop_cache()
+{
+	int sw = (int)fb_.width, sh = (int)fb_.height;
+	if (sw <= 0 || sh <= 0)
+		return;
+	dc_w_ = sw;
+	dc_h_ = sh;
+	desk_cache_.assign((size_t)sw * sh, 0);
+	uint32_t *d = desk_cache_.data();
+
+	if (desk_mode_ == DESK_IMAGE && wp_w_ > 0 && wp_h_ > 0)
+	{
+		for (int py = 0; py < sh; py++)
+		{
+			int sy = py * wp_h_ / sh;
+			if (sy >= wp_h_)
+				sy = wp_h_ - 1;
+			const uint32_t *srow = &wp_[(size_t)sy * wp_w_];
+			uint32_t *drow = d + (size_t)py * sw;
+			for (int px = 0; px < sw; px++)
+			{
+				int sx = px * wp_w_ / sw;
+				if (sx >= wp_w_)
+					sx = wp_w_ - 1;
+				drow[px] = srow[sx];
+			}
+		}
+		return;
+	}
+
+	if (desk_mode_ == DESK_SOLID)
+	{
+		for (size_t i = 0, n = (size_t)sw * sh; i < n; i++)
+			d[i] = solid_color_;
+		return;
+	}
+
+	/* Jailbars: four brightness shades of the base colour as vertical stripes. */
+	static const int shade[4] = {10, 7, 13, 5};
+	uint32_t bar[4];
+	for (int i = 0; i < 4; i++)
+		bar[i] = bar_base_ ? scale_color(bar_base_, shade[i], 10) : g_jailbar_colors[i];
+	for (int py = 0; py < sh; py++)
+	{
+		uint32_t *drow = d + (size_t)py * sw;
+		for (int px = 0; px < sw; px++)
+			drow[px] = bar[px & 3];
+	}
+}
+
 void Compositor::desktop_fill_rect(int x, int y, int w, int h)
 {
 	int x2 = x + w, y2 = y + h;
@@ -114,44 +168,13 @@ void Compositor::desktop_fill_rect(int x, int y, int w, int h)
 		x2 = (int)fb_.width;
 	if (y2 > (int)fb_.height)
 		y2 = (int)fb_.height;
-
-	/* Image: stretch the decoded bitmap to fill the screen (nearest-neighbour). */
-	if (desk_mode_ == DESK_IMAGE && wp_w_ > 0 && wp_h_ > 0)
-	{
-		for (int py = y; py < y2; py++)
-		{
-			int sy = py * wp_h_ / (int)fb_.height;
-			if (sy >= wp_h_)
-				sy = wp_h_ - 1;
-			for (int px = x; px < x2; px++)
-			{
-				int sx = px * wp_w_ / (int)fb_.width;
-				if (sx >= wp_w_)
-					sx = wp_w_ - 1;
-				fb_.pixel(px, py, wp_[(size_t)sy * wp_w_ + sx]);
-			}
-		}
+	if (x2 <= x || y2 <= y)
 		return;
-	}
 
-	/* Solid: flat fill. */
-	if (desk_mode_ == DESK_SOLID)
-	{
-		for (int py = y; py < y2; py++)
-			for (int px = x; px < x2; px++)
-				fb_.pixel(px, py, solid_color_);
-		return;
-	}
-
-	/* Jailbars (also the fallback if an image fails to load): four brightness
-	 * shades of the base colour as vertical stripes. */
-	static const int num[4] = {10, 7, 13, 5};
-	uint32_t bar[4];
-	for (int i = 0; i < 4; i++)
-		bar[i] = bar_base_ ? scale_color(bar_base_, num[i], 10) : g_jailbar_colors[i];
-	for (int py = y; py < y2; py++)
-		for (int px = x; px < x2; px++)
-			fb_.pixel(px, py, bar[px & 3]);
+	/* Blit the pre-rendered background from the cache (one memcpy-style copy per
+	 * row) instead of re-stretching the wallpaper per pixel. */
+	if ((int)desk_cache_.size() >= dc_w_ * dc_h_ && dc_w_ == (int)fb_.width)
+		fb_.blit(x, y, x2 - x, y2 - y, desk_cache_.data() + (size_t)y * dc_w_ + x, dc_w_);
 }
 
 void Compositor::draw_desktop()
@@ -242,6 +265,8 @@ void Compositor::set_desktop_from_registry()
 		if (ubistry_get_for(u, "views/desktop/image", path, sizeof(path)) == 0)
 			load_wallpaper(path);
 	}
+
+	render_desktop_cache(); /* rebuild the cached background for the new settings */
 }
 
 void Compositor::set_active_user(const char *user)

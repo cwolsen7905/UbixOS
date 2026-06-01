@@ -82,13 +82,22 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 
 	if (dragging_ && drag_win_ && (ev.dx || ev.dy))
 	{
+		int ox = drag_win_->x, oy = drag_win_->y;
+		int fullh = drag_win_->decor_h + drag_win_->h;
 		drag_win_->x = comp_.cur_x() - drag_off_x_;
 		drag_win_->y = comp_.cur_y() - drag_off_y_;
 		if (drag_win_->x < 0)
 			drag_win_->x = 0;
 		if (drag_win_->y < 0)
 			drag_win_->y = 0;
-		comp_.invalidate_all();
+		/* Repaint only the union of the old and new window rectangles, not the
+		 * whole screen — keeps dragging snappy. */
+		int nx = drag_win_->x, ny = drag_win_->y;
+		int ux = (ox < nx) ? ox : nx;
+		int uy = (oy < ny) ? oy : ny;
+		int ux2 = ((ox > nx) ? ox : nx) + drag_win_->w;
+		int uy2 = ((oy > ny) ? oy : ny) + fullh;
+		comp_.invalidate(ux, uy, ux2 - ux, uy2 - uy);
 	}
 
 	if (resizing_ && resize_win_ && (ev.dx || ev.dy))
