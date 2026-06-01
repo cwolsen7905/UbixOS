@@ -17,6 +17,8 @@ const char bb_msg_standard_input[] = "standard input";
 const char bb_msg_read_error[]     = "read error";
 const char bb_msg_invalid_arg_to[] = "invalid argument '%s' to '%s'";
 const char bb_msg_requires_arg[]   = "%s requires an argument";
+const char bb_msg_invalid_date[]   = "invalid date '%s'";
+const char bb_default_root_path[]  = "/usr/bin:/bin:/usr/sbin:/sbin";
 long bb_arg_max                    = 131072;
 
 char bb_common_bufsiz1[COMMON_BUFSIZE];
@@ -80,6 +82,48 @@ unsigned xatou_sfx(const char *numstr, const struct suffix_mult *suffixes)
 	if (v > UINT_MAX)
 		bb_simple_error_msg_and_die(numstr);
 	return (unsigned)v;
+}
+
+unsigned xatou(const char *numstr)
+{
+	return xatou_sfx(numstr, NULL);
+}
+
+unsigned xatou_range_sfx(const char *numstr, unsigned lo, unsigned hi,
+                         const struct suffix_mult *suffixes)
+{
+	unsigned v = xatou_sfx(numstr, suffixes);
+	if (v < lo || v > hi)
+		bb_error_msg_and_die("number %s outside [%u..%u]", numstr, lo, hi);
+	return v;
+}
+
+long bb_strtol(const char *arg, char **endp, int base)
+{
+	errno = 0;
+	long v = strtol(arg, endp, base);
+	if (errno || (endp && *endp == arg)) {
+		errno = EINVAL;
+		return 0;
+	}
+	return v;
+}
+
+long long bb_strtoll(const char *arg, char **endp, int base)
+{
+	errno = 0;
+	long long v = strtoll(arg, endp, base);
+	if (errno || (endp && *endp == arg)) {
+		errno = EINVAL;
+		return 0;
+	}
+	return v;
+}
+
+void xgettimeofday(struct timeval *tv)
+{
+	if (gettimeofday(tv, NULL) < 0)
+		bb_perror_msg_and_die("gettimeofday");
 }
 
 int xatoi(const char *numstr)
@@ -868,9 +912,9 @@ int get_terminal_width_height(int fd, unsigned *width, unsigned *height)
 	return 0;
 }
 
-void fflush_all(void)
+int fflush_all(void)
 {
-	fflush(NULL);
+	return fflush(NULL);
 }
 
 void bb_show_usage(void)
@@ -1263,6 +1307,24 @@ int index_in_strings(const char *strings, const char *key)
 	int i = 0;
 	while (*strings) {
 		if (strcmp(strings, key) == 0)
+			return i;
+		strings += strlen(strings) + 1;
+		i++;
+	}
+	return -1;
+}
+
+/* index_in_substrings: like index_in_strings, but matches if the entry
+ * is a prefix of key (or vice-versa).  busybox date uses it to accept
+ * abbreviated keyword arguments. */
+int index_in_substrings(const char *strings, const char *key)
+{
+	int i = 0;
+	size_t keylen = strlen(key);
+	if (keylen == 0)
+		return -1;
+	while (*strings) {
+		if (strncmp(strings, key, keylen) == 0)
 			return i;
 		strings += strlen(strings) + 1;
 		i++;

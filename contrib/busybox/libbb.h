@@ -141,6 +141,14 @@
 #define ENABLE_FEATURE_DATE_ISOFMT            0
 #define ENABLE_INSTALL                        0
 #define ENABLE_FEATURE_INSTALL_LONG_OPTIONS   0
+
+/* small-utilities batch (env, sleep, date, basename, dirname, which) */
+#define ENABLE_FEATURE_FANCY_SLEEP            1
+#define ENABLE_FEATURE_DATE_COMPAT            1
+#define ENABLE_FEATURE_DATE_ISOFMT            1
+#define ENABLE_FEATURE_DATE_NANO              0
+#define ENABLE_FEATURE_DATE_BIRTHDAY          0
+#define ENABLE_FEATURE_ENV_DEFAULT_LONG_OPTIONS 0
 #define ENABLE_FTPD                       0
 #define ENABLE_SELINUX                    0
 #define CONFIG_UNAME_OSNAME               "UbixOS"
@@ -471,6 +479,31 @@
 #else
 # define IF_FEATURE_NON_POSIX_CP(...)
 #endif
+#if ENABLE_FEATURE_FANCY_SLEEP
+# define IF_FEATURE_FANCY_SLEEP(...) __VA_ARGS__
+#else
+# define IF_FEATURE_FANCY_SLEEP(...)
+#endif
+#if ENABLE_FEATURE_DATE_COMPAT
+# define IF_FEATURE_DATE_COMPAT(...) __VA_ARGS__
+#else
+# define IF_FEATURE_DATE_COMPAT(...)
+#endif
+#if ENABLE_FEATURE_DATE_ISOFMT
+# define IF_FEATURE_DATE_ISOFMT(...) __VA_ARGS__
+#else
+# define IF_FEATURE_DATE_ISOFMT(...)
+#endif
+#if ENABLE_FEATURE_DATE_NANO
+# define IF_FEATURE_DATE_NANO(...) __VA_ARGS__
+#else
+# define IF_FEATURE_DATE_NANO(...)
+#endif
+#if ENABLE_FEATURE_TIMEZONE
+# define IF_FEATURE_TIMEZONE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TIMEZONE(...)
+#endif
 
 /* IF_FEATURE_FIND_*(t): variadic so wrappers like
  *     IF_FEATURE_FIND_PATH(ACTS(path, ...))
@@ -636,6 +669,54 @@ struct suffix_mult {
 extern const struct suffix_mult bkm_suffixes[];
 unsigned long long xatoul_sfx(const char *numstr, const struct suffix_mult *suffixes);
 unsigned xatou_sfx(const char *numstr, const struct suffix_mult *suffixes);
+unsigned xatou(const char *numstr);
+unsigned xatou_range_sfx(const char *numstr, unsigned lo, unsigned hi,
+                         const struct suffix_mult *suffixes);
+long  bb_strtol(const char *arg, char **endp, int base);
+long long bb_strtoll(const char *arg, char **endp, int base);
+extern const char bb_msg_invalid_date[];
+extern const char bb_default_root_path[];
+
+/* small-util support */
+#define ENABLE_ASH_SLEEP                      0
+#define ENABLE_FEATURE_TIMEZONE               0
+/* String literal so which.c's sizeof() works.  bb_default_root_path
+ * remains as the named symbol for callers that want a runtime pointer. */
+#define BB_PATH_ROOT_PATH                     "/usr/bin:/bin:/usr/sbin:/sbin"
+/* BB_EXECVP_or_die: function provided by contrib/busybox/libbb/executable.c.
+ * env / which / etc. pull executable.o into their link line.  BB_EXECVP is
+ * the underlying macro upstream uses — defined here so executable.c's
+ * BB_EXECVP_or_die compiles. */
+#define BB_EXECVP(prog, cmd)  execvp(prog, cmd)
+void BB_EXECVP_or_die(char **argv);
+
+extern char **environ;
+
+#define ENABLE_FLOAT_DURATION 0
+typedef unsigned duration_t;
+#define DURATION_FMT "u"
+#define sleep_for_duration(duration) sleep(duration)
+duration_t parse_duration_str(char *str);
+int        index_in_substrings(const char *strings, const char *key);
+int        parse_datestr(const char *date_str, struct tm *tm_time);
+time_t     validate_tm_time(const char *date_str, struct tm *tm_time);
+int        file_is_executable(const char *name);
+char      *find_executable(const char *filename, char **PATHp);
+void       xgettimeofday(struct timeval *tv);
+char      *single_argv(char **argv);
+char      *strftime_HHMMSS(char *buf, unsigned len, time_t *tp);
+char      *strftime_YYYYMMDDHHMMSS(char *buf, unsigned len, time_t *tp);
+
+/* setlocale/LC_TIME stubs — UbixOS doesn't have locale support, so
+ * setlocale just returns NULL ("C") and apps that consult the result
+ * get the C/POSIX behaviour they'd see in a clean musl. */
+#define LC_TIME 2
+#define LC_ALL  6
+static inline char *setlocale(int category, const char *locale)
+{
+	(void)category; (void)locale;
+	return (char *)"C";
+}
 int xatoi(const char *numstr);
 int xatoi_positive(const char *numstr);
 unsigned long xatoul(const char *numstr);
@@ -834,7 +915,7 @@ char  *skip_whitespace(const char *s);
 char  *skip_non_whitespace(const char *s);
 int    index_in_strings(const char *strings, const char *key);
 void  *llist_pop(llist_t **head);
-void   fflush_all(void);
+int    fflush_all(void);
 void   tcsetattr_stdin_TCSANOW(const struct termios *tio);
 void   set_termios_to_raw(int fd, struct termios *orig_out, int flags);
 int    read_key(int fd, char *buffer, int timeout_ms);
