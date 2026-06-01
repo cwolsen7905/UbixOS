@@ -38,6 +38,7 @@
 #include <vector>
 #include <cstring>
 #include <cstdlib>
+#include <strings.h>
 #include <unistd.h>
 #include <sys/utsname.h>
 #include <ubix/mailbox.hh>
@@ -995,8 +996,15 @@ static bool desktop_key(uint32_t kc)
 
 int main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
+	/* Optional argv[1] selects the initial pane by name (e.g. "about"). */
+	int initial_pane = PANE_GENERAL;
+	if (argc > 1 && argv[1])
+		for (int i = 0; i < NUM_PANES; i++)
+			if (strcasecmp(argv[1], g_pane_labels[i]) == 0)
+			{
+				initial_pane = i;
+				break;
+			}
 
 	if (!ubix::views_running())
 	{
@@ -1065,7 +1073,7 @@ int main(int argc, char **argv)
 		ubix::post_message("views", DISPLAY_FLIP, m);
 	};
 
-	int active = PANE_GENERAL;
+	int active = initial_pane;
 
 	auto draw_sidebar = [&]()
 	{
