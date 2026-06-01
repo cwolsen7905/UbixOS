@@ -33,6 +33,7 @@
 #include <sys/thread.h>
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
+#include <ubixos/vitals.h>
 #include <lib/vesa.h>
 #include <lib/kprintf.h>
 #include <ubixos/sched.h>
@@ -106,6 +107,31 @@ int sys_vesa_modes(struct thread *td, struct sys_vesa_modes_args *args)
 	}
 
 	td->td_retval[0] = n;
+	return (0);
+}
+
+/*
+ * sys_sysinfo (slot 62) — report basic system vitals to userland: uptime in
+ * seconds, total/free physical pages, and the page size.  Written as four
+ * u_int32_t words to the caller's struct ubix_sysinfo pointer (kept in field
+ * order with the userland declaration in include/api/ubix.h).
+ */
+int sys_sysinfo(struct thread *td, struct sys_sysinfo_args *args)
+{
+	u_int32_t *out = (u_int32_t *)args->out;
+
+	if (out == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	out[0] = systemVitals ? systemVitals->sysUptime : 0; /* uptime, seconds */
+	out[1] = numPages;                                   /* total physical pages */
+	out[2] = systemVitals ? systemVitals->freePages : 0; /* free physical pages */
+	out[3] = PAGE_SIZE;                                  /* bytes per page */
+
+	td->td_retval[0] = 0;
 	return (0);
 }
 

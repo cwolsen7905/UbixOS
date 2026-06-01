@@ -33,6 +33,17 @@ extern "C"
 	int pty_snapshot(int slot, void *dst, unsigned short *x, unsigned short *y);
 	int pty_resize(int slot, int cols, int rows); /* set grid size + winsize */
 
+	/* Basic system vitals (uptime + physical memory).  Field order must match
+	 * the kernel writer in sys_sysinfo (sys/kern/fb.c). */
+	struct ubix_sysinfo
+	{
+		unsigned int uptime_sec;  /* seconds since boot */
+		unsigned int total_pages; /* total physical pages */
+		unsigned int free_pages;  /* free physical pages */
+		unsigned int page_size;   /* bytes per page */
+	};
+	int ubix_sysinfo(struct ubix_sysinfo *out); /* 0 on success, -1 on failure */
+
 	/* System log levels (mirror the kernel klog severities). */
 #define ULOG_EMERG 0
 #define ULOG_ALERT 1
