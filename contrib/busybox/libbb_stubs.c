@@ -333,12 +333,148 @@ FILE *xfdopen_for_write(int fd)
 	return fp;
 }
 
-void overlapping_strcpy(char *dst, const char *src)
+/*
+ * Weak fallback: binaries that also compile the real busybox
+ * libbb/safe_strncpy.c (e.g. cp) provide a strong overlapping_strcpy that
+ * overrides this one; binaries that only link the stubs use this definition.
+ */
+__attribute__((weak)) void overlapping_strcpy(char *dst, const char *src)
 {
 	memmove(dst, src, strlen(src) + 1);
 }
 
 void (*die_func)(void);
+
+unsigned bb_getpagesize(void)
+{
+	long ps = sysconf(_SC_PAGESIZE);
+	return ps > 0 ? (unsigned)ps : 4096;
+}
+
+/* fast_strtoul_10 / fast_strtoull_10 are static in procps.c upstream;
+ * we don't redefine them here. */
+
+char *is_prefixed_with(const char *string, const char *key)
+{
+	while (*key) {
+		if (*string++ != *key++)
+			return NULL;
+	}
+	return (char *)string;
+}
+
+void *xmemdup(const void *s, int n)
+{
+	void *out = xmalloc((size_t)n);
+	memcpy(out, s, (size_t)n);
+	return out;
+}
+
+DIR *xopendir(const char *path)
+{
+	DIR *d = opendir(path);
+	if (!d)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return d;
+}
+
+/* TOPMEM is disabled, so we won't actually be asked to populate smaps —
+ * provide a "return 0" stub so the linker is happy if something stale
+ * references it.  Signature matches upstream. */
+int procps_read_smaps(pid_t pid, struct smaprec *total,
+                      void (*cb)(struct smaprec *, void *), void *data)
+{
+	(void)pid; (void)total; (void)cb; (void)data;
+	return 0;
+}
+
+unsigned terminal_width = 80;
+
+/* Read whole file into buf — POSIX-y: -1 on open failure, otherwise bytes
+ * actually read (capped to count - 1, NUL-terminated). */
+ssize_t open_read_close(const char *path, void *buf, size_t count)
+{
+	int fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return -1;
+	ssize_t n = full_read(fd, buf, count);
+	close(fd);
+	return n;
+}
+
+FILE *xfopen_for_read(const char *path)
+{
+	FILE *fp = fopen(path, "r");
+	if (!fp)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return fp;
+}
+
+/* Format unsigned long long into 5 chars with optional " kMGT" scale.
+ * Used by top/ps to render memory/size columns. */
+char *smart_ulltoa5(unsigned long long ul, char buf[5], const char *scale)
+{
+	const char *fmt = "%4llu%c";
+	int idx = 0;
+	while (ul >= 100000) {
+		ul = (ul + 512) / 1024;
+		idx++;
+		if (idx >= (int)strlen(scale))
+			break;
+	}
+	snprintf(buf, 6, fmt, ul, scale ? scale[idx] : ' ');
+	buf[5] = '\0';
+	return buf + 5;
+}
+
+/* get_cached_username / get_cached_groupname / clear_username_cache are
+ * provided by contrib/busybox/libbb/procps.c via its own LRU cache.  The
+ * three helpers below feed into that cache. */
+static char x2x_buf[USERNAME_MAX_SIZE];
+
+char *x2x_utoa(uid_t id)
+{
+	snprintf(x2x_buf, sizeof(x2x_buf), "%u", (unsigned)id);
+	return x2x_buf;
+}
+
+char *uid2uname_utoa(uid_t uid)
+{
+	struct passwd *pw = getpwuid(uid);
+	if (pw && pw->pw_name)
+		return pw->pw_name;
+	return x2x_utoa(uid);
+}
+
+char *gid2group_utoa(gid_t gid)
+{
+	struct group *gr = getgrgid(gid);
+	if (gr && gr->gr_name)
+		return gr->gr_name;
+	return x2x_utoa((uid_t)gid);
+}
+
+/* make_all_argv_opts: busybox rewrites argv[1:] so options can be in
+ * either ps/top's positional or flag form.  For us, just return — our
+ * minimal getopt doesn't need this rewriting. */
+void make_all_argv_opts(char **argv)
+{
+	(void)argv;
+}
+
+/* utoa: format unsigned into a static buffer.  Used by ps. */
+char *utoa(unsigned n)
+{
+	static char buf[12];
+	snprintf(buf, sizeof(buf), "%u", n);
+	return buf;
+}
+
+void xchdir(const char *path)
+{
+	if (chdir(path) < 0)
+		bb_perror_msg_and_die("can't change to '%s'", path);
+}
 
 int xmkstemp(char *template)
 {

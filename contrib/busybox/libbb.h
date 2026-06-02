@@ -149,6 +149,29 @@
 #define ENABLE_FEATURE_DATE_NANO              0
 #define ENABLE_FEATURE_DATE_BIRTHDAY          0
 #define ENABLE_FEATURE_ENV_DEFAULT_LONG_OPTIONS 0
+
+/* top / ps batch */
+#define ENABLE_FEATURE_FAST_TOP                1
+#define ENABLE_FEATURE_TOPMEM                  0
+#define ENABLE_FEATURE_TOP_INTERACTIVE         1
+#define ENABLE_FEATURE_TOP_DECIMALS            1
+#define ENABLE_FEATURE_TOP_CPU_USAGE_PERCENTAGE 1
+#define ENABLE_FEATURE_TOP_CPU_GLOBAL_PERCENTS 1
+#define ENABLE_FEATURE_TOP_SMP_CPU             0
+#define ENABLE_FEATURE_TOP_SMP_PROCESS         0
+#define ENABLE_FEATURE_TOP_KSTAT_OWNER         0
+#define ENABLE_FEATURE_SHOW_THREADS            0
+#define ENABLE_FEATURE_PS_ADDITIONAL_COLUMNS   1
+#define ENABLE_FEATURE_PS_TIME                 1
+#define ENABLE_FEATURE_PS_UNUSUAL_SYSTEMS      0
+#define ENABLE_FEATURE_PS_WIDE                 1
+#define ENABLE_FEATURE_PS_LONG                 1
+#define ENABLE_KILLALL                         0
+#define ENABLE_PGREP                           0
+#define ENABLE_PKILL                           0
+#define ENABLE_PIDOF                           0
+#define ENABLE_SESTATUS                        0
+#define ENABLE_PMAP                            0
 #define ENABLE_FTPD                       0
 #define ENABLE_SELINUX                    0
 #define CONFIG_UNAME_OSNAME               "UbixOS"
@@ -504,6 +527,73 @@
 #else
 # define IF_FEATURE_TIMEZONE(...)
 #endif
+#if ENABLE_FEATURE_SHOW_THREADS
+# define IF_FEATURE_SHOW_THREADS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_SHOW_THREADS(...)
+#endif
+#if ENABLE_FEATURE_TOPMEM
+# define IF_FEATURE_TOPMEM(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOPMEM(...)
+#endif
+#if ENABLE_FEATURE_TOP_INTERACTIVE
+# define IF_FEATURE_TOP_INTERACTIVE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOP_INTERACTIVE(...)
+#endif
+#if ENABLE_FEATURE_TOP_DECIMALS
+# define IF_FEATURE_TOP_DECIMALS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOP_DECIMALS(...)
+#endif
+#if ENABLE_FEATURE_TOP_CPU_USAGE_PERCENTAGE
+# define IF_FEATURE_TOP_CPU_USAGE_PERCENTAGE(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOP_CPU_USAGE_PERCENTAGE(...)
+#endif
+#if ENABLE_FEATURE_TOP_CPU_GLOBAL_PERCENTS
+# define IF_FEATURE_TOP_CPU_GLOBAL_PERCENTS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOP_CPU_GLOBAL_PERCENTS(...)
+#endif
+#if ENABLE_FEATURE_TOP_SMP_CPU
+# define IF_FEATURE_TOP_SMP_CPU(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOP_SMP_CPU(...)
+#endif
+#if ENABLE_FEATURE_TOP_SMP_PROCESS
+# define IF_FEATURE_TOP_SMP_PROCESS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_TOP_SMP_PROCESS(...)
+#endif
+#if ENABLE_FEATURE_PS_ADDITIONAL_COLUMNS
+# define IF_FEATURE_PS_ADDITIONAL_COLUMNS(...) __VA_ARGS__
+#else
+# define IF_FEATURE_PS_ADDITIONAL_COLUMNS(...)
+#endif
+#if ENABLE_FEATURE_PS_TIME
+# define IF_FEATURE_PS_TIME(...) __VA_ARGS__
+#else
+# define IF_FEATURE_PS_TIME(...)
+#endif
+#if ENABLE_FEATURE_PS_WIDE
+# define IF_FEATURE_PS_WIDE(...) __VA_ARGS__
+# define IF_NOT_FEATURE_PS_WIDE(...)
+#else
+# define IF_FEATURE_PS_WIDE(...)
+# define IF_NOT_FEATURE_PS_WIDE(...) __VA_ARGS__
+#endif
+#if ENABLE_FEATURE_PS_LONG
+# define IF_FEATURE_PS_LONG(...) __VA_ARGS__
+#else
+# define IF_FEATURE_PS_LONG(...)
+#endif
+#if ENABLE_FEATURE_FAST_TOP
+# define IF_FEATURE_FAST_TOP(...) __VA_ARGS__
+#else
+# define IF_FEATURE_FAST_TOP(...)
+#endif
 
 /* IF_FEATURE_FIND_*(t): variadic so wrappers like
  *     IF_FEATURE_FIND_PATH(ACTS(path, ...))
@@ -689,6 +779,106 @@ void   overlapping_strcpy(char *dst, const char *src);
 /* die_func: optional cleanup hook bb_show_usage and xfunc_die can call.
  * sed sets it to flush its output buffer before exiting. */
 extern void (*die_func)(void);
+
+/* procps helpers + types — used by top + ps */
+enum { COMM_LEN = 16 };
+
+struct smaprec {
+	unsigned long mapped_rw, mapped_ro;
+	unsigned long shared_clean, shared_dirty;
+	unsigned long private_clean, private_dirty;
+	unsigned long stack;
+	unsigned long smap_pss, smap_swap;
+	unsigned long smap_size;
+	unsigned long long smap_start;
+	char smap_mode[5];
+	char *smap_name;
+};
+
+typedef struct procps_status_t {
+	DIR *dir;
+	uint8_t shift_pages_to_bytes;
+	uint8_t shift_pages_to_kb;
+	uint16_t argv_len;
+	char *argv0;
+	char *exe;
+	unsigned long vsz, rss;
+	unsigned long stime, utime;
+	unsigned long start_time;
+	unsigned pid;
+	unsigned ppid;
+	unsigned pgid;
+	unsigned sid;
+	unsigned uid;
+	unsigned gid;
+	unsigned ruid, rgid;
+	int      niceness;
+	unsigned tty_major, tty_minor;
+	char     state[4];
+	char     comm[COMM_LEN];
+} procps_status_t;
+
+enum {
+	PSSCAN_PID      = 1 << 0,
+	PSSCAN_PPID     = 1 << 1,
+	PSSCAN_PGID     = 1 << 2,
+	PSSCAN_SID      = 1 << 3,
+	PSSCAN_UIDGID   = 1 << 4,
+	PSSCAN_COMM     = 1 << 5,
+	PSSCAN_ARGV0    = 1 << 7,
+	PSSCAN_EXE      = 1 << 8,
+	PSSCAN_STATE    = 1 << 9,
+	PSSCAN_VSZ      = 1 << 10,
+	PSSCAN_RSS      = 1 << 11,
+	PSSCAN_STIME    = 1 << 12,
+	PSSCAN_UTIME    = 1 << 13,
+	PSSCAN_TTY      = 1 << 14,
+	PSSCAN_SMAPS    = 0,    /* TOPMEM=0, so this feature bit is dead */
+	PSSCAN_ARGVN    = 0,    /* killall/pgrep/pidof disabled */
+	PSSCAN_CONTEXT  = 0,    /* SELinux disabled */
+	PSSCAN_START_TIME = 1 << 18,
+	PSSCAN_CPU      = 0,    /* SMP_PROCESS disabled */
+	PSSCAN_NICE     = 1 << 20,
+	PSSCAN_RUIDGID  = 1 << 21,
+	PSSCAN_TASKS    = 0,    /* SHOW_THREADS disabled */
+};
+
+void free_procps_scan(procps_status_t *sp);
+procps_status_t *procps_scan(procps_status_t *sp, int flags);
+void read_cmdline(char *buf, int size, unsigned pid, const char *comm);
+int  procps_read_smaps(pid_t pid, struct smaprec *total,
+                       void (*cb)(struct smaprec *, void *), void *data);
+
+/* small helpers procps.c imports.  fast_strtoul_10 / fast_strtoull_10 are
+ * static inside procps.c — don't expose them here or the static
+ * definitions collide with our external declarations. */
+#define USERNAME_MAX_SIZE 32
+unsigned bb_getpagesize(void);
+char *uid2uname_utoa(uid_t uid);
+char *gid2group_utoa(gid_t gid);
+char *x2x_utoa(uid_t id);
+char *is_prefixed_with(const char *string, const char *key);
+void  *xmemdup(const void *s, int n);
+DIR   *xopendir(const char *path);
+ssize_t open_read_close(const char *path, void *buf, size_t count);
+FILE  *xfopen_for_read(const char *path);
+char  *smart_ulltoa5(unsigned long long ul, char buf[5], const char *scale);
+/* get_cached_username / _groupname / clear_username_cache live in
+ * contrib/busybox/libbb/procps.c — pulled in by ps + top builds. */
+const char *get_cached_username(uid_t uid);
+const char *get_cached_groupname(gid_t gid);
+void clear_username_cache(void);
+void   make_all_argv_opts(char **argv);
+
+extern unsigned terminal_width;
+
+char *utoa(unsigned n);
+void  xchdir(const char *path);
+
+/* TERMIOS_* extra raw-mode flag set bits busybox sometimes asks for. */
+#ifndef TERMIOS_CLEAR_ISIG
+# define TERMIOS_CLEAR_ISIG 0x4
+#endif
 
 /* small-util support */
 #define ENABLE_ASH_SLEEP                      0
