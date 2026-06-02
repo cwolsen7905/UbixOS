@@ -100,8 +100,9 @@ static void pcpu_register(u_int32_t id, u_int8_t apicid)
 		return;
 	g_pcpu[id].cpuid = id;
 	g_pcpu[id].apicid = apicid;
-	g_pcpu[id].current = 0;
-	g_pcpu[id].idle = 0;
+	/* Do NOT touch current/idle here — on the BSP, current already points at
+	 * the running thread by the time smpInit runs.  They are zero from BSS for
+	 * the APs, which have run nothing yet. */
 	g_pcpu[id].online = 1;
 }
 

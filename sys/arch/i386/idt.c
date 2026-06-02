@@ -963,12 +963,21 @@ void mathStateRestore() {
 }
 
 
+/*
+ * _int7 (device-not-available) — lazy FPU state restore.  _current is now a
+ * per-CPU macro (curcpu()->current) and has no symbol to reference from asm, so
+ * load the running thread from the per-CPU table directly.  This hardcodes the
+ * boot processor's slot (g_pcpu[0].current); per-CPU FPU handling on the APs is
+ * a later SMP phase, and they run nothing yet.  The field offset is asserted
+ * below so the asm cannot silently drift from the struct layout.
+ */
+_Static_assert(__builtin_offsetof(struct pcpu, current) == 8, "update _int7 g_pcpu offset");
 asm(
   ".globl _int7              \n"
   "_int7:                    \n"
   "  pushl %eax              \n"
   "  clts                    \n"
-  "  movl _current,%eax      \n"
+  "  movl g_pcpu+8,%eax      \n" /* g_pcpu[0].current (BSP) */
   "  cmpl _usedMath,%eax     \n"
   "  je mathDone             \n"
   "  call mathStateRestore   \n"

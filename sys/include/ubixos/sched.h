@@ -147,7 +147,19 @@ void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
 kTask_t *schedFindTask(u_int32_t id);
 
+/*
+ * _current — the thread running on the calling CPU.  On i386 this is per-CPU:
+ * a macro for curcpu()->current (SMP phase 2).  smp_processor_id() shortcuts to
+ * the boot processor until per-CPU scheduling is live, so single-CPU behaviour
+ * is unchanged.  Other arches keep the single global.
+ */
+#ifdef __i386__
+#include <i386/pcpu.h>
+#define _current (curcpu()->current)
+#else
 extern kTask_t *_current;
+#endif
+
 extern kTask_t *_usedMath;
 
 #ifdef __cplusplus

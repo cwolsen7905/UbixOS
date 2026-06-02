@@ -33,19 +33,20 @@
 
 #define MAXCPU 8 /* matches the cpuinfo[] pool size in smp.c */
 
+struct taskStruct; /* forward decl; full type in <ubixos/sched.h> (== kTask_t) */
+
 /*
- * Per-CPU state.  One instance per logical processor lives in g_pcpu[].  This is
- * the structure the SMP scheduler will hang the running thread ("current") and
- * the per-CPU idle thread off, replacing today's single global _current.  The
- * thread pointers are void * for now to avoid a dependency on the scheduler
- * headers; they become kTask_t * when the scheduler is made per-CPU.
+ * Per-CPU state.  One instance per logical processor lives in g_pcpu[].  The
+ * SMP scheduler hangs the running thread ("current") and the per-CPU idle
+ * thread off this, replacing the single global _current: with __i386__,
+ * <ubixos/sched.h> defines _current as a macro for curcpu()->current.
  */
 struct pcpu {
-	u_int32_t cpuid;  /* logical CPU index (0 = BSP) */
-	u_int8_t apicid;  /* Local APIC id of this CPU */
-	u_int8_t online;  /* 1 once this CPU has registered itself */
-	void *current;    /* thread currently running on this CPU */
-	void *idle;       /* this CPU's idle thread (pinned here) */
+	u_int32_t cpuid;          /* logical CPU index (0 = BSP) */
+	u_int8_t apicid;          /* Local APIC id of this CPU */
+	u_int8_t online;          /* 1 once this CPU has registered itself */
+	struct taskStruct *current; /* thread currently running on this CPU */
+	struct taskStruct *idle;    /* this CPU's idle thread (pinned here) */
 };
 
 extern struct pcpu g_pcpu[MAXCPU];
