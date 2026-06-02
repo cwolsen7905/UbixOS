@@ -62,4 +62,11 @@ struct taskStruct; /* == kTask_t */
  */
 void md_setup_initial_frame(struct taskStruct *t);
 
+/*
+ * Software context switch from prev to next (saves/restores callee-saved regs +
+ * kernel ESP, swaps CR3, updates the kernel TSS esp0).  Call with interrupts
+ * disabled.  Defined in arch/i386/context_switch.c.
+ */
+void switch_to(struct taskStruct *prev, struct taskStruct *next);
+
 #endif /* _MACHINE_PROC_H */

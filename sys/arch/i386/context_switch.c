@@ -51,7 +51,17 @@
 #include <sys/tss.h>
 #include <sys/types.h>
 
+/*
+ * The single kernel TSS used by software switching (the boot TSS the GDT's
+ * selector 0x20 / TR points at).  Only its esp0/ss0 matter now: on a ring3->
+ * ring0 trap the CPU reads them to find the kernel stack.  switch_to() updates
+ * esp0 to the incoming task's kernel stack on every switch instead of
+ * re-pointing the GDT descriptor at a per-task TSS.
+ */
+#define KERNEL_TSS ((struct tssStruct *)0x4200)
+
 extern void ret_from_fork(void);
+extern void cpu_switch(u_int32_t *save_ksp_slot, u_int32_t next_ksp, u_int32_t next_cr3);
 
 /**
  * Build a newly created task's initial kernel-stack frame for software switching.
@@ -138,3 +148,57 @@ asm(".globl ret_from_fork \n"
     "  popa                \n"
     "  add $8, %esp        \n" /* discard tf_trapno + tf_err */
     "  iret                \n");
+
+/**
+ * Software context switch from prev to next.
+ *
+ * Updates the single kernel TSS's esp0 to next's kernel stack (so a later
+ * ring3->ring0 trap lands correctly), then hands off to cpu_switch() which saves
+ * prev's callee-saved registers + kernel ESP, swaps CR3 if the address space
+ * differs, loads next's kernel ESP and returns into next's context.  Replaces
+ * the hardware `ljmp $0x20` switch.  Must be called with interrupts disabled.
+ *
+ * Setting esp0 here (in prev's context, before the stack switch) is safe: we run
+ * at CPL0, so any interrupt before the switch uses the current kernel stack, not
+ * esp0; esp0 is consulted only on the next ring3->ring0 entry, after the switch.
+ */
+void switch_to(kTask_t *prev, kTask_t *next)
+{
+	KERNEL_TSS->esp0 = next->md.md_tss.esp0;
+	cpu_switch(&prev->md.md_kstack, next->md.md_kstack, next->md.md_tss.cr3);
+}
+
+/*
+ * cpu_switch(save_ksp_slot, next_ksp, next_cr3) — the register-level switch.
+ *
+ * cdecl args (read before any callee-saved push):
+ *   4(%esp) = &prev->md.md_kstack   (where to save the outgoing kernel ESP)
+ *   8(%esp) = next->md.md_kstack    (incoming kernel ESP)
+ *  12(%esp) = next->md.md_tss.cr3   (incoming address space)
+ *
+ * Saves ebx/esi/edi/ebp + ESP into the prev slot, swaps CR3 if it changed
+ * (kernel VA is shared across all spaces, so the stack stays mapped), loads the
+ * next ESP, restores its callee-saved regs and returns — into the previous
+ * cpu_switch caller (existing task) or ret_from_fork / a thread entry (new task).
+ */
+asm(".globl cpu_switch \n"
+    "cpu_switch:        \n"
+    "  movl 4(%esp), %eax  \n" /* &prev->md_kstack  */
+    "  movl 8(%esp), %edx  \n" /* next_ksp          */
+    "  movl 12(%esp), %ecx \n" /* next_cr3          */
+    "  pushl %ebx          \n"
+    "  pushl %esi          \n"
+    "  pushl %edi          \n"
+    "  pushl %ebp          \n"
+    "  movl %esp, (%eax)   \n" /* *save_ksp_slot = current ESP */
+    "  movl %cr3, %ebx     \n"
+    "  cmpl %ecx, %ebx     \n"
+    "  je 1f               \n"
+    "  movl %ecx, %cr3     \n" /* swap address space */
+    "1:                    \n"
+    "  movl %edx, %esp     \n" /* load next kernel stack */
+    "  popl %ebp           \n"
+    "  popl %edi           \n"
+    "  popl %esi           \n"
+    "  popl %ebx           \n"
+    "  ret                 \n");
