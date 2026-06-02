@@ -158,13 +158,21 @@ void md_setup_initial_frame(kTask_t *t)
 		*--sp = (u_int32_t)tss->eip; /* switch_to rets to the thread entry */
 	}
 
-	/* Saved callee-saved registers popped by switch_to (pop ebp/edi/esi/ebx).
-	 * Their values are immaterial for a new task — the trapframe (user) or the
-	 * fresh function (kernel thread) establishes the real register state. */
+	/* Saved callee-saved registers popped by cpu_switch.  Their values are
+	 * immaterial for a new task — the trapframe (user) or the fresh function
+	 * (kernel thread) establishes the real GP register state. */
 	*--sp = 0; /* ebx */
 	*--sp = 0; /* esi */
 	*--sp = 0; /* edi */
 	*--sp = 0; /* ebp */
+
+	/* Kernel-context data segments restored by cpu_switch (kernel selectors).
+	 * For a user task ret_from_fork's iret then installs the user segments;
+	 * for a kernel thread these are the segments it runs with. */
+	*--sp = 0x10; /* gs */
+	*--sp = 0x10; /* fs */
+	*--sp = 0x10; /* es */
+	*--sp = 0x10; /* ds */
 
 	t->md.md_kstack = (u_int32_t)sp;
 }
@@ -253,6 +261,10 @@ asm(".globl cpu_switch \n"
     "  pushl %esi          \n"
     "  pushl %edi          \n"
     "  pushl %ebp          \n"
+    "  pushl %gs           \n" /* save data segments: with software switching   */
+    "  pushl %fs           \n" /* the segment registers are NOT saved/restored  */
+    "  pushl %es           \n" /* by hardware (the ljmp/TSS used to), so the     */
+    "  pushl %ds           \n" /* switch must, or %gs (user TLS) leaks tasks.    */
     "  movl %esp, (%eax)   \n" /* *save_ksp_slot = current ESP */
     "  movl %cr3, %ebx     \n"
     "  cmpl %ecx, %ebx     \n"
@@ -260,6 +272,10 @@ asm(".globl cpu_switch \n"
     "  movl %ecx, %cr3     \n" /* swap address space */
     "1:                    \n"
     "  movl %edx, %esp     \n" /* load next kernel stack */
+    "  popl %ds            \n" /* restore next's data segments (in next's CR3)   */
+    "  popl %es            \n"
+    "  popl %fs            \n"
+    "  popl %gs            \n"
     "  popl %ebp           \n"
     "  popl %edi           \n"
     "  popl %esi           \n"
