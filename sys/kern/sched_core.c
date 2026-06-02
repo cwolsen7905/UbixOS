@@ -45,8 +45,8 @@ kTask_t *taskList = 0x0;
 struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Phase 2: 32 per-priority run queues + bitmask (Windows ReadySummary trick). */
-kTask_t  *run_queue[SCHED_PRIORITIES];
-u_int32_t  ready_mask = 0;
+kTask_t *run_queue[SCHED_PRIORITIES];
+u_int32_t ready_mask = 0;
 
 static kTask_t *delList = 0x0;
 static u_int32_t nextID = 1;
@@ -55,17 +55,24 @@ static u_int32_t nextID = 1;
 #define SCHED_HASH_BUCKETS 256
 static kTask_t *pid_hash[SCHED_HASH_BUCKETS];
 
-static inline void pid_hash_insert(kTask_t *t) {
+static inline void pid_hash_insert(kTask_t *t)
+{
 	int b = t->id & (SCHED_HASH_BUCKETS - 1);
 	t->hash_next = pid_hash[b];
 	pid_hash[b] = t;
 }
 
-void pid_hash_remove(kTask_t *t) {
+void pid_hash_remove(kTask_t *t)
+{
 	int b = t->id & (SCHED_HASH_BUCKETS - 1);
 	kTask_t **pp = &pid_hash[b];
-	while (*pp) {
-		if (*pp == t) { *pp = t->hash_next; return; }
+	while (*pp)
+	{
+		if (*pp == t)
+		{
+			*pp = t->hash_next;
+			return;
+		}
 		pp = &(*pp)->hash_next;
 	}
 }
@@ -82,9 +89,9 @@ int sched_init()
 		kpanic("Unable to create task list");
 
 	memset(taskList, 0x0, sizeof(kTask_t));
-	taskList->id            = nextID++;
-	taskList->quantum       = 6;
-	taskList->priority      = QOS_REALTIME;
+	taskList->id = nextID++;
+	taskList->quantum = 6;
+	taskList->priority = QOS_REALTIME;
 	taskList->base_priority = QOS_REALTIME;
 	strncpy(taskList->name, "kernel", sizeof(taskList->name) - 1);
 	pid_hash_insert(taskList);
@@ -135,13 +142,13 @@ kTask_t *schedNewTask()
 	tmpTask->td.rlim[RLIMIT_NOFILE].rlim_cur = 64;
 	tmpTask->td.rlim[RLIMIT_NOFILE].rlim_max = 64;
 
-	tmpTask->priority      = 12;  /* QOS_DEFAULT — mid Normal band */
+	tmpTask->priority = 12; /* QOS_DEFAULT — mid Normal band */
 	tmpTask->base_priority = 12;
-	tmpTask->boost_quanta  = 0;
+	tmpTask->boost_quanta = 0;
 	/* Initialize to now so starvation aging can fire immediately if the
 	 * task never gets its first dispatch (last_run_tick==0 skips aging). */
 	tmpTask->last_run_tick = systemVitals ? systemVitals->sysTicks : 1;
-	tmpTask->on_rq         = 0;
+	tmpTask->on_rq = 0;
 
 	spinLock(&schedulerSpinLock);
 	tmpTask->id = nextID++;
@@ -160,8 +167,7 @@ kTask_t *schedNewTask()
  * Phase 2: run-queue helpers — caller must hold schedulerSpinLock.
  * ----------------------------------------------------------------------- */
 
-void
-rq_enqueue_locked(kTask_t *t)
+void rq_enqueue_locked(kTask_t *t)
 {
 	int pri;
 	kTask_t *head;
@@ -173,26 +179,28 @@ rq_enqueue_locked(kTask_t *t)
 	pri = (int)t->priority;
 	head = run_queue[pri];
 
-	if (head == NULL) {
+	if (head == NULL)
+	{
 		/* First task at this priority — circular singleton. */
-		t->rq_next     = t;
-		t->rq_prev     = t;
+		t->rq_next = t;
+		t->rq_prev = t;
 		run_queue[pri] = t;
-		ready_mask    |= (1u << pri);
-	} else {
+		ready_mask |= (1u << pri);
+	}
+	else
+	{
 		/* Append at the real tail (= just before head) for FIFO round-robin. */
-		tail           = head->rq_prev;
-		t->rq_next     = head;
-		t->rq_prev     = tail;
-		tail->rq_next  = t;
-		head->rq_prev  = t;
+		tail = head->rq_prev;
+		t->rq_next = head;
+		t->rq_prev = tail;
+		tail->rq_next = t;
+		head->rq_prev = t;
 		/* run_queue[pri] stays pointing at head for O(1) dequeue. */
 	}
 	t->on_rq = 1;
 }
 
-void
-rq_dequeue_locked(kTask_t *t)
+void rq_dequeue_locked(kTask_t *t)
 {
 	int pri;
 
@@ -201,11 +209,14 @@ rq_dequeue_locked(kTask_t *t)
 
 	pri = (int)t->priority;
 
-	if (t->rq_next == t) {
+	if (t->rq_next == t)
+	{
 		/* Only task in this queue. */
 		run_queue[pri] = NULL;
-		ready_mask    &= ~(1u << pri);
-	} else {
+		ready_mask &= ~(1u << pri);
+	}
+	else
+	{
 		t->rq_prev->rq_next = t->rq_next;
 		t->rq_next->rq_prev = t->rq_prev;
 		if (run_queue[pri] == t)
@@ -213,7 +224,7 @@ rq_dequeue_locked(kTask_t *t)
 	}
 	t->rq_next = NULL;
 	t->rq_prev = NULL;
-	t->on_rq   = 0;
+	t->on_rq = 0;
 }
 
 void sched_killTree(pidType id)
@@ -258,7 +269,8 @@ kTask_t *sched_getDelTask()
 	kTask_t *tmpTask = 0x0;
 
 	spinLock(&schedulerSpinLock);
-	if (delList != 0x0) {
+	if (delList != 0x0)
+	{
 		tmpTask = delList;
 		delList = delList->next;
 	}
@@ -323,8 +335,10 @@ void remove_wait_queue(struct wait_queue **p, struct wait_queue *wait)
 	{
 		struct wait_queue *head = *p;
 		tmp = head;
-		do {
-			if (tmp->next == wait) {
+		do
+		{
+			if (tmp->next == wait)
+			{
 				tmp->next = wait->next;
 				break;
 			}
@@ -396,10 +410,23 @@ void sched_ready(kTask_t *t)
 	u_int32_t flags;
 	if (t == NULL)
 		return;
+
+	/*
+	 * First time this task becomes runnable, build its software-switch initial
+	 * kernel-stack frame from the now-populated md_tss.  Guarded to fire once
+	 * (md_kstack stays 0 until built) and skipped for v86 tasks, which keep
+	 * hardware ljmp switching in the hybrid.  Touches only the task's own kernel
+	 * stack, so it is safe outside the scheduler lock.  Dormant until sched()
+	 * is flipped from ljmp to switch_to.
+	 */
+	if (t->md.md_kstack == 0 && t->oInfo.v86Task == 0)
+		md_setup_initial_frame(t);
+
 	save_flags(flags);
 	cli();
 	spinLock(&schedulerSpinLock);
-	if (t->state != READY) {
+	if (t->state != READY)
+	{
 		t->state = READY;
 		rq_enqueue_locked(t);
 	}
@@ -449,8 +476,7 @@ void sched_wakeup(kTask_t *t)
  * wait_find_child() can collect it.  sched() transitions ZOMBIE→DEAD
  * after notifying the parent; wait_find_child() removes from taskList.
  */
-void
-sched_zombie(kTask_t *t)
+void sched_zombie(kTask_t *t)
 {
 	u_int32_t flags;
 	if (t == NULL)
@@ -476,7 +502,8 @@ void sched_stop(kTask_t *t, int sig)
 	t->state = STOPPED;
 	t->t_stopped_sig = sig;
 	/* Wake parent so it can collect the stop event via WUNTRACED. */
-	if (t->parent != NULL && t->parent->state == WAIT) {
+	if (t->parent != NULL && t->parent->state == WAIT)
+	{
 		t->parent->state = READY;
 		rq_enqueue_locked(t->parent);
 	}
@@ -497,8 +524,7 @@ void sched_stop(kTask_t *t, int sig)
  * dequeues/re-enqueues when READY (preserving run-queue integrity), changes
  * in-place for RUNNING or sleeping tasks (not in any queue).
  */
-void
-sched_pi_boost(kTask_t *t, u_int8_t pri)
+void sched_pi_boost(kTask_t *t, u_int8_t pri)
 {
 	u_int32_t flags;
 
@@ -507,12 +533,16 @@ sched_pi_boost(kTask_t *t, u_int8_t pri)
 	save_flags(flags);
 	cli();
 	spinLock(&schedulerSpinLock);
-	if (pri > t->priority) {
-		if (t->state == READY) {
+	if (pri > t->priority)
+	{
+		if (t->state == READY)
+		{
 			rq_dequeue_locked(t);
 			t->priority = pri;
 			rq_enqueue_locked(t);
-		} else {
+		}
+		else
+		{
 			t->priority = pri;
 		}
 	}
@@ -525,8 +555,7 @@ sched_pi_boost(kTask_t *t, u_int8_t pri)
  * after releasing a mutex that had a PI boost applied.  Called after the lock
  * is released so the newly-unblocked high-priority waiter runs immediately.
  */
-void
-sched_pi_restore(kTask_t *t)
+void sched_pi_restore(kTask_t *t)
 {
 	u_int32_t flags;
 
@@ -535,12 +564,16 @@ sched_pi_restore(kTask_t *t)
 	save_flags(flags);
 	cli();
 	spinLock(&schedulerSpinLock);
-	if (t->priority > t->base_priority) {
-		if (t->state == READY) {
+	if (t->priority > t->base_priority)
+	{
+		if (t->state == READY)
+		{
 			rq_dequeue_locked(t);
 			t->priority = t->base_priority;
 			rq_enqueue_locked(t);
-		} else {
+		}
+		else
+		{
 			t->priority = t->base_priority;
 		}
 	}
@@ -548,11 +581,10 @@ sched_pi_restore(kTask_t *t)
 	restore_flags(flags);
 }
 
-void
-sched_io_wakeup(kTask_t *t)
+void sched_io_wakeup(kTask_t *t)
 {
 	u_int32_t flags;
-	u_int8_t  boosted;
+	u_int8_t boosted;
 
 	if (t == NULL)
 		return;
@@ -564,7 +596,8 @@ sched_io_wakeup(kTask_t *t)
 	if (boosted > 23)
 		boosted = 23;
 
-	if (t->state == READY) {
+	if (t->state == READY)
+	{
 		/*
 		 * Must dequeue before changing priority: rq_dequeue_locked
 		 * keys on t->priority to find the right bucket, so changing
@@ -575,13 +608,17 @@ sched_io_wakeup(kTask_t *t)
 			t->priority = boosted;
 		t->boost_quanta = 2;
 		rq_enqueue_locked(t);
-	} else if (t->state != RUNNING && t->state != DEAD) {
+	}
+	else if (t->state != RUNNING && t->state != DEAD)
+	{
 		if (boosted > t->priority)
 			t->priority = boosted;
 		t->boost_quanta = 2;
 		t->state = READY;
 		rq_enqueue_locked(t);
-	} else {
+	}
+	else
+	{
 		/* RUNNING: not in any queue — in-place change is safe. */
 		if (boosted > t->priority)
 			t->priority = boosted;

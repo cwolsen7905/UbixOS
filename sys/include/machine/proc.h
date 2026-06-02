@@ -37,12 +37,29 @@
  * md_tss and md_i387 directly.  An x86_64 port replaces this file
  * with a software context frame (no hardware TSS task switching).
  */
-struct md_proc {
-	struct tssStruct  md_tss;
+struct md_proc
+{
+	struct tssStruct md_tss;
 	struct i387Struct md_i387;
+	/*
+	 * Saved kernel stack pointer for software context switching (switch_to).
+	 * Points at this task's saved callee-registers frame on its kernel stack.
+	 * Zero until md_setup_initial_frame() builds the task's first frame.  Unused
+	 * while hardware (ljmp/TSS) switching is still active and for v86 tasks.
+	 */
+	u_int32_t md_kstack;
 };
 
 /* Convenience accessor so arch code can write TASK_TSS(t).eip */
 #define TASK_TSS(t) ((t)->md.md_tss)
+
+struct taskStruct; /* == kTask_t */
+
+/*
+ * Build a newly created task's initial kernel-stack frame for software context
+ * switching.  Call once, after md_tss is populated and before the task first
+ * runs (from sched_ready).  Defined in arch/i386/context_switch.c.
+ */
+void md_setup_initial_frame(struct taskStruct *t);
 
 #endif /* _MACHINE_PROC_H */
