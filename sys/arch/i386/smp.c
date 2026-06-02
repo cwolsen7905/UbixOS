@@ -44,6 +44,10 @@ struct cpuinfo_t cpuinfo[8];
  * Written by APs (paging off) with a locked add, polled by the BSP. */
 volatile u_int32_t ap_online = 0;
 
+/* The BSP's CR3 (kernel page directory, physical), captured before the APs
+ * start so each AP can load it and run in the kernel's virtual address space. */
+volatile u_int32_t g_kernel_cr3 = 0;
+
 /* Physical address the AP trampoline is copied to and started at.  It MUST be
  * 0x0: the trampoline's 32-bit jump uses flat, base-0 offsets, so the code only
  * lands correctly when its physical address equals those offsets.  This clobbers
@@ -157,6 +161,19 @@ void c_ap_boot(void)
 {
 	u_int32_t id = __sync_add_and_fetch(&ap_online, 1); /* 1, 2, 3, ... */
 
+	/* Join the kernel's virtual address space: load the BSP's page directory
+	 * (captured in g_kernel_cr3) and turn on paging.  The kernel identity-maps
+	 * the low 4 MB — covering this code, our trampoline stack and the AP GDT —
+	 * so execution continues seamlessly across the CR0.PG write, and the LAPIC
+	 * MMIO the BSP mapped becomes reachable through the shared page tables. */
+	__asm__ __volatile__("movl %0, %%cr3      \n"
+	                     "movl %%cr0, %%eax   \n"
+	                     "orl  $0x80000000, %%eax \n"
+	                     "movl %%eax, %%cr0   \n"
+	                     :
+	                     : "r"(g_kernel_cr3)
+	                     : "eax", "memory");
+
 	pcpu_register(id, apicRead(0x20) >> 24);
 
 	for (;;)
@@ -185,6 +202,10 @@ int smpInit(void)
 	        cpuinfo[0].apic_id,
 	        cpuinfo[0].apic_ver,
 	        cpuinfo[0].brand);
+
+	/* Capture the kernel page directory so each AP can adopt it and run in the
+	 * kernel address space. */
+	__asm__ __volatile__("movl %%cr3, %0" : "=r"(g_kernel_cr3));
 
 	/* Start the application processors (apicMagic waits for them to check in). */
 	apicMagic();
