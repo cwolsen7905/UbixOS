@@ -29,11 +29,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pw/pw.h>
 
+/* Must match struct userdb_entry in bin/authd/main.c byte-for-byte. */
 struct passwd
 {
 	char username[32];
-	char passwd[32];
+	char passwd[PW_HASH_STRLEN]; /* $pbkdf2-sha256$... (was plaintext[32]) */
 	int uid;
 	int gid;
 	char shell[128];
@@ -51,7 +53,7 @@ int main(int argc, char **argv)
 	out = fopen("./userdb", "wbb");
 
 	sprintf(password[0].username, "root");
-	sprintf(password[0].passwd, "user");
+	pw_hash("user", password[0].passwd, sizeof(password[0].passwd));
 	sprintf(password[0].shell, "/bin/tcsh");
 	sprintf(password[0].realname, "Root User");
 	sprintf(password[0].path, "/home/root");
@@ -59,7 +61,7 @@ int main(int argc, char **argv)
 	password[0].gid = 0;
 
 	sprintf(password[1].username, "guest");
-	sprintf(password[1].passwd, "user");
+	pw_hash("user", password[1].passwd, sizeof(password[1].passwd));
 	sprintf(password[1].shell, "/bin/tcsh");
 	sprintf(password[1].realname, "Guest User");
 	sprintf(password[1].path, "/home/guest");
@@ -67,7 +69,7 @@ int main(int argc, char **argv)
 	password[1].gid = 1;
 
 	sprintf(password[2].username, "reddawg");
-	sprintf(password[2].passwd, "temp123");
+	pw_hash("temp123", password[2].passwd, sizeof(password[2].passwd));
 	sprintf(password[2].shell, "/bin/tcsh");
 	sprintf(password[2].realname, "Christopher W. Olsen");
 	sprintf(password[2].path, "/home/reddawg");
@@ -75,7 +77,7 @@ int main(int argc, char **argv)
 	password[2].gid = 0;
 
 	sprintf(password[3].username, "bsd");
-	sprintf(password[3].passwd, "user");
+	pw_hash("user", password[3].passwd, sizeof(password[3].passwd));
 	sprintf(password[3].shell, "/bin/tcsh");
 	sprintf(password[3].realname, "BSD User");
 	sprintf(password[3].path, "/home/bsd");

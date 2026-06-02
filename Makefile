@@ -140,11 +140,19 @@ world:
 # Build a fresh bootable FAT32 disk image from scratch (GRUB + kernel + world).
 # Always authoritative — use this for releases or a clean initial image.
 makeuser:
-	@echo "==> Compiling and running tools/makeuser.c"
-	cc -o tools/makeuser tools/makeuser.c
+	@echo "==> Compiling and running tools/makeuser.c (PBKDF2-hashes passwords via libpw)"
+	cc -O2 -idirafter ${CURDIR}/include \
+		-I${CURDIR}/contrib/bearssl/inc -I${CURDIR}/contrib/bearssl/src \
+		${CURDIR}/tools/makeuser.c \
+		${CURDIR}/lib/libpw/pbkdf2.c ${CURDIR}/lib/libpw/pwhash.c \
+		${CURDIR}/contrib/bearssl/src/mac/hmac.c \
+		${CURDIR}/contrib/bearssl/src/hash/sha2small.c \
+		${CURDIR}/contrib/bearssl/src/codec/dec32be.c \
+		${CURDIR}/contrib/bearssl/src/codec/enc32be.c \
+		-o ${CURDIR}/tools/makeuser
 	cd tools && ./makeuser
 	cp tools/userdb etc/userdb
-	@echo "==> etc/userdb updated"
+	@echo "==> etc/userdb updated (PBKDF2-hashed)"
 
 image: makeuser
 	@sh tools/mkimage.sh ${DISK_IMAGE}

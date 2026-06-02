@@ -22,7 +22,7 @@ CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC \
          -Wall -O2
 
 OBJDIR = ${OBJ_DIR}/obj/lib/libpw
-OBJS   = pbkdf2.o
+OBJS   = pbkdf2.o pwhash.o
 
 .PATH: ${.CURDIR}
 .PATH.o: ${OBJDIR}

@@ -31,28 +31,62 @@ static const struct vec g_vecs[] = {
  *
  * @return 0 if all vectors match, 1 otherwise.
  */
-int
-main(void)
+int main(void)
 {
 	unsigned int v;
 	int fail = 0;
 
-	for (v = 0; v < sizeof(g_vecs) / sizeof(g_vecs[0]); v++) {
+	for (v = 0; v < sizeof(g_vecs) / sizeof(g_vecs[0]); v++)
+	{
 		unsigned char out[32];
 		char got[65];
 		int i;
 
-		pw_pbkdf2_sha256(g_vecs[v].pw, strlen(g_vecs[v].pw), g_vecs[v].salt,
-		    strlen(g_vecs[v].salt), g_vecs[v].iter, out, sizeof(out));
+		pw_pbkdf2_sha256(g_vecs[v].pw,
+		                 strlen(g_vecs[v].pw),
+		                 g_vecs[v].salt,
+		                 strlen(g_vecs[v].salt),
+		                 g_vecs[v].iter,
+		                 out,
+		                 sizeof(out));
 		for (i = 0; i < 32; i++)
 			sprintf(got + i * 2, "%02x", out[i]);
-		if (strcmp(got, g_vecs[v].hex) == 0) {
+		if (strcmp(got, g_vecs[v].hex) == 0)
+		{
 			printf("pbkdf2-sha256 c=%-5u PASS\n", g_vecs[v].iter);
-		} else {
+		}
+		else
+		{
 			printf("pbkdf2-sha256 c=%-5u FAIL got=%s\n", g_vecs[v].iter, got);
 			fail = 1;
 		}
 	}
+
+	/* hash/verify round-trip: salt comes from getentropy() -> kernel CSPRNG. */
+	{
+		char h[PW_HASH_STRLEN];
+
+		if (pw_hash("hunter2", h, sizeof(h)) != 0)
+		{
+			printf("pw_hash: FAIL\n");
+			fail = 1;
+		}
+		else if (pw_verify("hunter2", h) != 1)
+		{
+			printf("pw_verify correct: FAIL\n");
+			fail = 1;
+		}
+		else if (pw_verify("Hunter2", h) != 0)
+		{
+			printf("pw_verify wrong: FAIL (accepted bad password)\n");
+			fail = 1;
+		}
+		else
+		{
+			printf("pw_hash/verify round-trip PASS\n  %s\n", h);
+		}
+	}
+
 	printf(fail ? "pwtest: FAIL\n" : "pwtest: PASS\n");
 	return (fail);
 }
