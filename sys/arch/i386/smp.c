@@ -35,13 +35,20 @@
 #include <string.h>
 #include <sys/io.h>
 
-static struct spinLock initSpinLock = SPIN_LOCK_INITIALIZER;
 static struct spinLock cpuInfoLock = SPIN_LOCK_INITIALIZER;
 static u_int32_t cpus = 0;
 struct cpuinfo_t cpuinfo[8];
 
-u_int8_t kernel_function(void);
-u_int8_t *vram = (u_int8_t *)0xB8000;
+/* Count of application processors that have reached C code and checked in.
+ * Written by APs (paging off) with a locked add, polled by the BSP. */
+volatile u_int32_t ap_online = 0;
+
+/* Physical address the AP trampoline is copied to and started at.  It MUST be
+ * 0x0: the trampoline's 32-bit jump uses flat, base-0 offsets, so the code only
+ * lands correctly when its physical address equals those offsets.  This clobbers
+ * the real-mode IVT, which V86 BIOS calls (VESA) still need, so apicMagic saves
+ * and restores the overwritten bytes around AP startup. */
+#define AP_TRAMPOLINE_PHYS 0x0
 
 static inline unsigned int apicRead(unsigned int address)
 {
@@ -53,18 +60,6 @@ static inline void apicWrite(unsigned int address, unsigned int data)
 	*(volatile unsigned int *)(0xFEE00000 + address) = data;
 }
 
-static __inline__ void setDr3(void *dr3)
-{
-	register u_int32_t value = (u_int32_t)dr3;
-	__asm__ __volatile__("mov %0, %%dr3" ::"r"(value));
-}
-
-static __inline__ u_int32_t getDr3(void)
-{
-	register u_int32_t value;
-	__asm__ __volatile__("mov %%dr3, %0" : "=r"(value));
-	return value;
-}
 
 struct gdt_descr
 {
@@ -101,88 +96,31 @@ static void GDT_fixer()
 	 */
 }
 
-void cpu0_thread(void)
-{
-	for (;;)
-	{
-		vram[40 + 640] = kernel_function();
-		vram[42 + 640]++;
-	}
-}
-void cpu1_thread(void)
-{
-	for (;;)
-	{
-		vram[60 + 640] = kernel_function();
-		vram[62 + 640]++;
-	}
-}
-void cpu2_thread(void)
-{
-	for (;;)
-	{
-		vram[80 + 640] = kernel_function();
-		vram[82 + 640]++;
-	}
-}
-void cpu3_thread(void)
-{
-	for (;;)
-	{
-		vram[100 + 640] = kernel_function();
-		vram[102 + 640]++;
-	}
-}
-
-static struct spinLock bkl = SPIN_LOCK_INITIALIZER;
-u_int8_t kernel_function(void)
-{
-	struct cpuinfo_t *cpu;
-
-	spinLock(&bkl);
-
-	cpu = (struct cpuinfo_t *)getDr3();
-
-	spinUnlock(&bkl);
-
-	return ('0' + cpu->id);
-}
-
+/*
+ * c_ap_boot — C entry point for an application processor, reached from the
+ * real-mode trampoline (ap-boot.S) after it switches to 32-bit protected mode.
+ *
+ * The AP runs with PAGING OFF, so it may touch only identity-addressable low
+ * physical memory (the kernel is loaded below 4 MB) and I/O ports.  It must NOT
+ * call kprintf() or the yielding spinLock() — there is no scheduler context on
+ * this CPU yet.  Phase 1b therefore does the absolute minimum: record that this
+ * core reached C with a locked increment, then park forever with interrupts
+ * masked.  The BSP polls ap_online to report how many cores came up.
+ */
 void c_ap_boot(void)
 {
-
-	while (spinLockLocked(&initSpinLock))
-		;
-
-	switch (cpuInfo())
-	{
-	case 1:
-		cpu1_thread();
-		break;
-	case 2:
-		cpu2_thread();
-		break;
-	case 3:
-		cpu3_thread();
-		break;
-	}
-
-	outportByte(0xe9, '5');
+	__sync_add_and_fetch(&ap_online, 1);
 
 	for (;;)
-	{
-		asm("nop");
-	}
+		__asm__ __volatile__("cli; hlt");
 }
 
 /*
- * smpInit (SMP phase 1a) — bring the boot processor's view of SMP online:
- * map the Local APIC MMIO so the LAPIC is reachable, pre-build the AP GDT, and
- * register the BSP itself (reading its APIC id, version and CPUID brand).
- *
- * Application processors are NOT started yet — apicMagic() (INIT-SIPI) is
- * deferred to the next sub-phase so this step cannot fault an AP.  Called once
- * from the boot init-task list.  @return 0 always.
+ * smpInit (SMP phase 1b) — bring up the application processors far enough to
+ * prove the bootstrap path works.  Map the Local APIC, register the BSP, then
+ * INIT-SIPI the other cores.  Each AP lands in c_ap_boot(), records itself in
+ * ap_online and parks in hlt; nothing runs on them yet (no per-CPU scheduler).
+ * The BSP polls ap_online and reports the core count.  @return 0 always.
  */
 int smpInit(void)
 {
@@ -190,7 +128,7 @@ int smpInit(void)
 	 * identity into the kernel space before any apicRead/apicWrite. */
 	vmm_remap_io_page(LAPIC_PHYS, KERNEL_PAGE_DEFAULT, sysID);
 
-	GDT_fixer(); /* pre-build the flat GDT at 0x20000 that APs will load later */
+	GDT_fixer(); /* build the flat GDT at 0x20000 that the APs load */
 	cpuInfo();    /* BSP self-registers as cpuinfo[0] */
 
 	kprintf("smp: BSP online apic_id=%d ver=0x%x \"%s\"\n",
@@ -198,7 +136,10 @@ int smpInit(void)
 	        cpuinfo[0].apic_ver,
 	        cpuinfo[0].brand);
 
-	/* apicMagic() (AP INIT-SIPI-SIPI) is deferred to the next sub-phase. */
+	/* Start the application processors (apicMagic waits for them to check in). */
+	apicMagic();
+
+	kprintf("smp: %u application processor(s) online (+ BSP) = %u core(s)\n", ap_online, ap_online + 1);
 	return (0);
 }
 
@@ -258,7 +199,6 @@ u_int8_t cpuInfo()
 		cpuinfo[cpus].brand[0] = 0;
 	}
 
-	setDr3(&cpuinfo[cpus]); // DR3 always points to the cpu-struct for that CPU (should be thread-struct of current thread)
 	cpuinfo[cpus].id = cpus;
 
 	cpus++;
@@ -273,25 +213,33 @@ void apicMagic(void)
 {
 	u_int32_t tmp;
 
+	static u_int8_t lowmem_save[512];
 	u_int32_t tramp_len = (u_int32_t)((char *)ap_trampoline_end - (char *)ap_trampoline_start);
+	/* SIPI start vector = trampoline page number (phys >> 12). */
+	u_int32_t sipi = 0x000C4600 | (AP_TRAMPOLINE_PHYS >> 12);
 
-	kprintf("Copying %u bytes from 0x%x to 0x00\n", tramp_len, (u_int32_t)ap_trampoline_start);
-	memcpy((void *)0x0, (char *)ap_trampoline_start, tramp_len);
-	apicWrite(0x280, 0);
+	kprintf("smp: copying %u-byte AP trampoline to 0x%x\n", tramp_len, AP_TRAMPOLINE_PHYS);
+	/* Save the low memory (real-mode IVT) we are about to overwrite. */
+	memcpy(lowmem_save, (void *)AP_TRAMPOLINE_PHYS, tramp_len);
+	memcpy((void *)AP_TRAMPOLINE_PHYS, (char *)ap_trampoline_start, tramp_len);
+
+	apicWrite(0x280, 0); // clear APIC errors
 	apicRead(0x280);
 
-	apicWrite(0x300, 0x000C4500); // INIT IPI to all CPUs
+	apicWrite(0x300, 0x000C4500); // INIT IPI, all-excluding-self
+	for (tmp = 0; tmp < 800000; tmp++)
+		asm("nop"); // ~10 ms settle
+	apicWrite(0x300, sipi); // STARTUP IPI
 	for (tmp = 0; tmp < 800000; tmp++)
 		asm("nop");
-	// Sleep a little (should be 10ms)
-	apicWrite(0x300, 0x000C4600); // INIT SIPI to all CPUs
-	for (tmp = 0; tmp < 800000; tmp++)
+	apicWrite(0x300, sipi); // second STARTUP IPI (per Intel MP spec)
+
+	/* Let every AP run through the real-mode trampoline into c_ap_boot before
+	 * we restore the low memory it is executing from. */
+	for (tmp = 0; tmp < 20000000; tmp++)
 		asm("nop");
-	// Sleep a little (should be 200ms)
-	apicWrite(0x300, 0x000C4600); // Second INIT SIPI
-	for (tmp = 0; tmp < 800000; tmp++)
-		asm("nop");
-	// Sleep a little (should be 200ms)
+
+	memcpy((void *)AP_TRAMPOLINE_PHYS, lowmem_save, tramp_len); // restore IVT
 }
 
 u_int32_t getEflags()
