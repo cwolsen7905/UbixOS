@@ -98,12 +98,27 @@ switching in TWO ways:
    trapframe when it traps back into `trap()` (trap.c:83 already special-cases
    v86) and stashed where bioscall can read them.
 
-Two ways to handle v86: (A) **rework** — build the VM86 iret frame and capture
-results from the trapframe; full software switch everywhere. (B) **hybrid** —
-keep `ljmp`/TSS for v86 tasks only, software-switch everything else; simpler but
-the v86 hardware switch still clobbers %gs transiently (acceptable since v86
-runs only in systemtask for short BIOS calls, and %gs per-CPU is reloaded on
-every kernel entry).
+**Chosen: full software switch for v86 too, reusing the existing __gpf machinery.**
+The naive "keep ljmp for v86" hybrid is unsound: ljmp hardware-saves the OUTGOING
+task into the single shared kernel TSS, conflicting with software-switched tasks
+that resume from their own md_kstack. Instead:
+
+- v86 tasks are software-switched in/out like everyone else. Their initial frame
+  (md_setup_initial_frame, v86 branch) is a **VM86 iret frame**: switch_to rets
+  to an `enter_vm86` trampoline that does `popa` (load BIOS regs from md_tss) then
+  `iret` into VM86 (eflags.VM set; iret pops eip,cs,eflags,esp,ss,es,ds,fs,gs).
+- The **__gpf BIOS-INT virtualization stays a hardware task gate** (vector 13 ->
+  TSS 0x5200) — UNCHANGED. It hardware-saves the faulting task's regs into
+  whatever `ubixGDT[4].base` points at, which is also where bioscall reads
+  results from (md_tss).
+- So `switch_to` sets `ubixGDT[4].base` per task: **= next->md_tss while a v86
+  task runs** (so __gpf saves into md_tss, esp0 comes from md_tss, bioscall reads
+  results), **= the fixed kernel TSS (0x4200) for normal tasks** (esp0 updated to
+  next's kernel stack). The outgoing task is always saved in software (md_kstack),
+  so there is no shared-TSS save conflict.
+- bioscall.c and trap.c v86 handling are UNCHANGED. The GUI/VESA path keeps
+  working ([vesa.c](../../sys/arch/i386/vesa.c) biosCallEx 0x4F02 — required by
+  sys_mapfb, so this could not simply be parked).
 
 ### Initial kernel stack (built in `sched_ready`, guarded once per task)
 
@@ -122,6 +137,32 @@ the esp/ss words. Handle ring0 vs ring3 by cs RPL when building the frame.
 Replace [sched_switch.c:238-254](../../sys/arch/i386/sched_switch.c#L238) (cli;
 patch ubixGDT[4]; `ljmp`; sti) with: set `prev=outgoing`, `_current=next`,
 `switch_to(prev, next)`. No GDT patch, no ljmp.
+
+## Step 3 implementation details (the flip)
+
+1. **Initialize the kernel TSS at 0x4200**: it is never set up today (the ljmp
+   repoints ubixGDT[4] away from it on the first sched()). Under software
+   switching it is the live kernel TSS — set `ss0 = 0x10` and a benign `io_map`
+   once at boot (e.g. in idt_init); `esp0` is written by switch_to each switch.
+2. **switch_to branches on next->oInfo.v86Task**:
+   - v86: `ubixGDT[4].base = &next->md_tss; access = 0x89` (so __gpf + interrupt
+     esp0 + bioscall readback all use md_tss).
+   - normal: `ubixGDT[4].base = 0x4200; access = 0x89; KERNEL_TSS->esp0 =
+     next->md_tss.esp0`.
+   Then cpu_switch (software save/restore of the outgoing/incoming task).
+3. **md_setup_initial_frame v86 branch + `enter_vm86`**: VM86 iret frame —
+   `popa` (BIOS regs from md_tss) then `iret` (pops eip,cs,eflags,esp,ss,es,ds,
+   fs,gs from the crafted frame; eflags has VM|IF). Remove the v86 skip in
+   sched_ready.
+4. **First switch out of boot**: kmain runs on the boot stack as the kernel task
+   (taskList). The first switch_to(boot_task, init) saves the boot context into
+   boot_task->md_kstack (the slot exists, zero-initialized) and loads init's
+   crafted frame. boot_task later resumes as the idle/kernel task. Verify the
+   kernel task (taskList) has a kernel stack / valid esp0 — sched_init may need
+   to allocate one like schedNewTask does, since it is now a real switch target.
+5. **sched()**: capture `prev = _current` before `_current = next`; replace the
+   cli/GDT-patch/ljmp/sti tail with `switch_to(prev, next)` (switch_to/cpu_switch
+   run with interrupts disabled internally as needed).
 
 ## Phasing (each step builds + multi-boot tests; flip is isolated)
 

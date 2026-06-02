@@ -57,7 +57,7 @@ quantum_for_priority(u_int8_t pri)
 }
 
 void sched() {
-  u_int32_t memAddr = 0x0;
+  kTask_t *prev    = 0x0;
   kTask_t *delTask = 0x0;
   kTask_t *next    = 0x0;
   kTask_t *t       = 0x0;
@@ -225,6 +225,7 @@ void sched() {
     rq_dequeue_locked(next);
   }
 
+  prev     = _current;   /* outgoing task — saved by switch_to */
   _current = next;
   _current->last_run_tick = systemVitals->sysTicks;
 
@@ -237,20 +238,18 @@ void sched() {
 
   asm("cli");
 
-  memAddr = (u_int32_t) &(_current->md.md_tss);
-  ubixGDT[4].descriptor.baseLow  = (memAddr & 0xFFFF);
-  ubixGDT[4].descriptor.baseMed  = ((memAddr >> 16) & 0xFF);
-  ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
-  ubixGDT[4].descriptor.access   = '\x89';
-
   _current->state = RUNNING;
 
   spinUnlock(&schedulerSpinLock);
 
-  asm("ljmp $0x20,$0");
-  /* The outgoing task resumes here on its next scheduling slot.
-   * ljmp saved EFLAGS with IF=0 (from cli above) into its TSS, so
-   * we must re-enable interrupts explicitly here. */
+  /*
+   * Software context switch (replaces the hardware `ljmp $0x20`).  switch_to
+   * saves prev's kernel context and resumes next; prev resumes here on its next
+   * scheduling slot with IF cleared (cpu_switch restored the EFLAGS saved under
+   * the cli above), so re-enable interrupts explicitly.
+   */
+  switch_to(prev, _current);
+
   asm("sti");
 
   return;

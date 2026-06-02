@@ -61,7 +61,12 @@
 #define KERNEL_TSS ((struct tssStruct *)0x4200)
 
 extern void ret_from_fork(void);
+extern void enter_vm86(void);
 extern void cpu_switch(u_int32_t *save_ksp_slot, u_int32_t next_ksp, u_int32_t next_cr3);
+
+/* Discard slot for the very first switch out of the boot context (prev == NULL);
+ * the boot/kmain context is abandoned once init is dispatched. */
+static u_int32_t g_boot_kstack_discard;
 
 /**
  * Build a newly created task's initial kernel-stack frame for software switching.
@@ -87,7 +92,38 @@ void md_setup_initial_frame(kTask_t *t)
 	u_int32_t *sp;
 	int ring3 = ((tss->cs & 0x3) == 0x3);
 
-	if (ring3)
+	if (t->oInfo.v86Task)
+	{
+		/*
+		 * VM86 (BIOS) task: switch_to rets to enter_vm86, which does popa (BIOS
+		 * registers from md_tss) then iret into VM86 mode.  At CPL0 with EFLAGS.VM
+		 * set, iret pops eip,cs,eflags,esp,ss,es,ds,fs,gs (9 words), all real-mode
+		 * 16-bit values from md_tss.
+		 */
+		sp = (u_int32_t *)(tss->esp0);
+
+		*--sp = (u_int32_t)(tss->gs & 0xFFFF); /* iret VM86 frame (gs highest) */
+		*--sp = (u_int32_t)(tss->fs & 0xFFFF);
+		*--sp = (u_int32_t)(tss->ds & 0xFFFF);
+		*--sp = (u_int32_t)(tss->es & 0xFFFF);
+		*--sp = (u_int32_t)(tss->ss & 0xFFFF);
+		*--sp = (u_int32_t)tss->esp;
+		*--sp = (u_int32_t)tss->eflags; /* already has VM | IF | 2 */
+		*--sp = (u_int32_t)(tss->cs & 0xFFFF);
+		*--sp = (u_int32_t)tss->eip;
+
+		*--sp = (u_int32_t)tss->eax; /* popa area (eax highest, edi lowest) */
+		*--sp = (u_int32_t)tss->ecx;
+		*--sp = (u_int32_t)tss->edx;
+		*--sp = (u_int32_t)tss->ebx;
+		*--sp = 0; /* esp slot ignored by popa */
+		*--sp = (u_int32_t)tss->ebp;
+		*--sp = (u_int32_t)tss->esi;
+		*--sp = (u_int32_t)tss->edi;
+
+		*--sp = (u_int32_t)enter_vm86; /* switch_to rets here */
+	}
+	else if (ring3)
 	{
 		/* Top of the kernel stack; build the trapframe downward in the exact
 		 * field order of struct trapframe so ret_from_fork's epilogue pops it. */
@@ -164,9 +200,36 @@ asm(".globl ret_from_fork \n"
  */
 void switch_to(kTask_t *prev, kTask_t *next)
 {
+	u_int32_t *save_slot = prev ? &prev->md.md_kstack : &g_boot_kstack_discard;
+
 	KERNEL_TSS->esp0 = next->md.md_tss.esp0;
-	cpu_switch(&prev->md.md_kstack, next->md.md_kstack, next->md.md_tss.cr3);
+
+	/*
+	 * Set CR0.TS so the next task takes a device-not-available trap (#NM, _int7)
+	 * on its first FPU use, triggering the lazy FPU save/restore (mathStateRestore).
+	 * Hardware task switching set TS automatically on every ljmp; software
+	 * switching must do it explicitly or stale x87 state leaks between tasks
+	 * (symptom: a task's EIP jumps to the leftover FPU instruction pointer such
+	 * as 0xF000:FFxx).
+	 */
+	__asm__ __volatile__("movl %%cr0, %%eax \n"
+	                     "orl  $0x8, %%eax  \n" /* CR0.TS (bit 3) */
+	                     "movl %%eax, %%cr0 \n"
+	                     :
+	                     :
+	                     : "eax");
+
+	cpu_switch(save_slot, next->md.md_kstack, next->md.md_tss.cr3);
 }
+
+/*
+ * enter_vm86 — entry point a VM86 (BIOS) task is switched into the first time.
+ * popa loads the BIOS registers, iret enters VM86 mode at cs:eip.
+ */
+asm(".globl enter_vm86 \n"
+    "enter_vm86:        \n"
+    "  popa             \n"
+    "  iret             \n");
 
 /*
  * cpu_switch(save_ksp_slot, next_ksp, next_cr3) — the register-level switch.

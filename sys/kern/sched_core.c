@@ -419,7 +419,7 @@ void sched_ready(kTask_t *t)
 	 * stack, so it is safe outside the scheduler lock.  Dormant until sched()
 	 * is flipped from ljmp to switch_to.
 	 */
-	if (t->md.md_kstack == 0 && t->oInfo.v86Task == 0)
+	if (t->md.md_kstack == 0)
 		md_setup_initial_frame(t);
 
 	save_flags(flags);
