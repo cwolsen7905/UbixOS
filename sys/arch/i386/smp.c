@@ -27,6 +27,7 @@
  */
 
 #include <i386/smp.h>
+#include <i386/pcpu.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
@@ -58,6 +59,50 @@ static inline unsigned int apicRead(unsigned int address)
 static inline void apicWrite(unsigned int address, unsigned int data)
 {
 	*(volatile unsigned int *)(0xFEE00000 + address) = data;
+}
+
+/* ------------------------------------------------------------------ */
+/* Per-CPU state (Phase 2 scaffolding)                                 */
+/* ------------------------------------------------------------------ */
+
+struct pcpu g_pcpu[MAXCPU];
+
+/* Set to 1 once per-CPU scheduling is live.  Until then smp_processor_id()
+ * shortcuts to the BSP (cpu 0) so no MI caller has to touch the LAPIC. */
+static volatile int g_smp_active = 0;
+
+u_int32_t smp_processor_id(void)
+{
+	u_int8_t apicid;
+	u_int32_t i;
+
+	if (!g_smp_active)
+		return (0); /* single-CPU / pre-SMP: always the boot processor */
+
+	apicid = apicRead(0x20) >> 24;
+	for (i = 0; i < MAXCPU; i++)
+		if (g_pcpu[i].online && g_pcpu[i].apicid == apicid)
+			return (i);
+	return (0);
+}
+
+struct pcpu *curcpu(void)
+{
+	return (&g_pcpu[smp_processor_id()]);
+}
+
+/* Record a CPU's identity in its per-CPU slot.  Safe to call from an AP running
+ * paging-off: g_pcpu lives in low (<4 MB, identity-mapped) kernel memory and the
+ * LAPIC id register is reachable at its physical MMIO address. */
+static void pcpu_register(u_int32_t id, u_int8_t apicid)
+{
+	if (id >= MAXCPU)
+		return;
+	g_pcpu[id].cpuid = id;
+	g_pcpu[id].apicid = apicid;
+	g_pcpu[id].current = 0;
+	g_pcpu[id].idle = 0;
+	g_pcpu[id].online = 1;
 }
 
 
@@ -109,7 +154,9 @@ static void GDT_fixer()
  */
 void c_ap_boot(void)
 {
-	__sync_add_and_fetch(&ap_online, 1);
+	u_int32_t id = __sync_add_and_fetch(&ap_online, 1); /* 1, 2, 3, ... */
+
+	pcpu_register(id, apicRead(0x20) >> 24);
 
 	for (;;)
 		__asm__ __volatile__("cli; hlt");
@@ -130,8 +177,10 @@ int smpInit(void)
 
 	GDT_fixer(); /* build the flat GDT at 0x20000 that the APs load */
 	cpuInfo();    /* BSP self-registers as cpuinfo[0] */
+	pcpu_register(0, cpuinfo[0].apic_id); /* BSP per-CPU slot */
 
-	kprintf("smp: BSP online apic_id=%d ver=0x%x \"%s\"\n",
+	kprintf("smp: BSP online cpu%u apic_id=%d ver=0x%x \"%s\"\n",
+	        curcpu()->cpuid,
 	        cpuinfo[0].apic_id,
 	        cpuinfo[0].apic_ver,
 	        cpuinfo[0].brand);
@@ -140,6 +189,12 @@ int smpInit(void)
 	apicMagic();
 
 	kprintf("smp: %u application processor(s) online (+ BSP) = %u core(s)\n", ap_online, ap_online + 1);
+
+	/* Report the per-CPU table the cores filled in (proves curcpu/pcpu work). */
+	for (u_int32_t i = 0; i < MAXCPU; i++)
+		if (g_pcpu[i].online)
+			kprintf("smp:   pcpu[%u] apicid=%d\n", g_pcpu[i].cpuid, g_pcpu[i].apicid);
+
 	return (0);
 }
 
