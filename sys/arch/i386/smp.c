@@ -176,6 +176,26 @@ void c_ap_boot(void)
 
 	pcpu_register(id, apicRead(0x20) >> 24);
 
+	/* Per-CPU idle/liveness loop: bump our own heartbeat and pause.  This is the
+	 * first code an AP runs continuously in the kernel address space, in
+	 * parallel with the BSP — the seed of the real per-CPU idle thread.  We stay
+	 * cli (no scheduler/IRQs are SMP-safe yet) and touch only our own pcpu slot,
+	 * so there is no contention with any other CPU. */
+	/* Per-CPU idle loop: bump our own heartbeat (liveness the BSP can observe)
+	 * and pause.  This is the first code an AP runs continuously in the kernel
+	 * address space, in parallel with the BSP, and is the seed of the real
+	 * per-CPU idle thread.  We stay cli — no scheduler/IRQ path is SMP-safe yet
+	 * — and touch only our own pcpu slot, so there is no cross-CPU contention.
+	 * The pause also yields the vCPU under single-threaded TCG so the BSP is not
+	 * starved.  A proper sti/hlt idle replaces this once interrupts are
+	 * per-CPU-safe. */
+	if (id < MAXCPU)
+		for (;;)
+		{
+			g_pcpu[id].heartbeat++;
+			__asm__ __volatile__("pause");
+		}
+
 	for (;;)
 		__asm__ __volatile__("cli; hlt");
 }
@@ -216,6 +236,25 @@ int smpInit(void)
 	for (u_int32_t i = 0; i < MAXCPU; i++)
 		if (g_pcpu[i].online)
 			kprintf("smp:   pcpu[%u] apicid=%d\n", g_pcpu[i].cpuid, g_pcpu[i].apicid);
+
+	/* Prove the APs are executing C in parallel: snapshot each core's heartbeat,
+	 * wait, then show it advanced.  The BSP (cpu0) does not run the idle loop, so
+	 * its heartbeat stays 0. */
+	{
+		u_int32_t hb[MAXCPU];
+		u_int32_t i, d;
+		for (i = 0; i < MAXCPU; i++)
+			hb[i] = g_pcpu[i].heartbeat;
+		for (d = 0; d < 20000000; d++)
+			asm("nop");
+		for (i = 0; i < MAXCPU; i++)
+			if (g_pcpu[i].online)
+				kprintf("smp:   cpu%u heartbeat %u -> %u (%s)\n",
+				        i,
+				        hb[i],
+				        g_pcpu[i].heartbeat,
+				        (i == 0) ? "BSP" : (g_pcpu[i].heartbeat != hb[i]) ? "running" : "STALLED");
+	}
 
 	return (0);
 }

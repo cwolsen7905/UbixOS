@@ -30,7 +30,8 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 2.2| `_current` → per-CPU macro (`curcpu()->current`) | ✅ | uniprocessor no-op |
 | 2.2| Repoint `_int7` FPU asm off `_current` symbol | ✅ | offset static-assert |
 | 2.3| APs adopt kernel CR3 + enable paging | ✅ | APs in kernel address space |
-| 2.3| Per-CPU idle threads (created, pinned) | ⬜ | needs scheduler entry |
+| 2.3| APs run a per-CPU idle loop in parallel | 🟡 | busy `heartbeat++;pause` loop; verified advancing on all cores.  Real `sti/hlt` idle + scheduler-dispatched threads pending Phase 3 |
+| 2.3| Per-CPU idle *threads* (scheduler-dispatched) | ⬜ | needs per-CPU identity + SMP-safe IRQs |
 | 3  | Real per-CPU identity (`%gs`-base / LAPIC lookup) | ⬜ | see Phase 3 prerequisites |
 | 3  | LAPIC remap into shared kernel PD range | ⬜ | prereq for LAPIC-id lookup |
 | 3  | True spinlock type (spin, not yield; IRQs off) | ⬜ | current `spinLock` yields |
