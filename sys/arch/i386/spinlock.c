@@ -61,6 +61,10 @@ void spinUnlock(spinLock_t lock) {
   lock->locked = 0x0;
 }
 
+int spinLockLocked(spinLock_t lock) {
+  return (lock->locked != 0);
+}
+
 void spinLock(spinLock_t lock) {
   while (1) {
     if (!xchg_32(&lock->locked, LOCKED))

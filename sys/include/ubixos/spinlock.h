@@ -54,7 +54,7 @@ void spinLock(spinLock_t);
 
 void spinLock_scheduler(spinLock_t *); /* Only use this spinlock in the sched. */
 
-int spinLockLocked(spinLock_t *);
+int spinLockLocked(spinLock_t); /* nonzero if the lock is currently held */
 
 /* Atomic exchange (of various sizes) */
 static inline u_long xchg_64(volatile u_int32_t *ptr, u_long x) {

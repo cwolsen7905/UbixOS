@@ -26,11 +26,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ubixos/smp.h>
+#include <i386/smp.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
-#include <lib/string.h>
+#include <string.h>
 #include <sys/io.h>
 
 static struct spinLock initSpinLock = SPIN_LOCK_INITIALIZER;
@@ -41,7 +41,7 @@ struct cpuinfo_t cpuinfo[8];
 u_int8_t kernel_function(void);
 u_int8_t *vram = (u_int8_t *)0xB8000;
 
-static inline unsigned int apicRead(address)
+static inline unsigned int apicRead(unsigned int address)
 {
 	return *(volatile unsigned int *)(0xFEE00000 + address);
 }
@@ -88,6 +88,7 @@ static void GDT_fixer()
 
 	gdt_descr.limit = 32 * 4;
 	gdt_descr.base = gdt;
+	(void)gdt_descr; /* lgdt is commented out below; silence unused warning */
 
 	/*
 	 asm("lgdt %0;" : : "m" (gdt_descr));
@@ -259,8 +260,10 @@ void apicMagic(void)
 {
 	u_int32_t tmp;
 
-	kprintf("Copying %u bytes from 0x%x to 0x00\n", ap_trampoline_end - ap_trampoline_start, ap_trampoline_start);
-	memcpy(0x0, (char *)ap_trampoline_start, ap_trampoline_end - ap_trampoline_start);
+	u_int32_t tramp_len = (u_int32_t)((char *)ap_trampoline_end - (char *)ap_trampoline_start);
+
+	kprintf("Copying %u bytes from 0x%x to 0x00\n", tramp_len, (u_int32_t)ap_trampoline_start);
+	memcpy((void *)0x0, (char *)ap_trampoline_start, tramp_len);
 	apicWrite(0x280, 0);
 	apicRead(0x280);
 
