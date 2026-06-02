@@ -43,7 +43,6 @@
 
 #define FP_TO_LINEAR(seg, off) ((void*) ((((u_int16_t) (seg)) << 4) + ((u_int16_t) (off))))
 
-static u_int32_t gpfStack = 0x0;
 
 void intNull();
 
@@ -108,8 +107,6 @@ static struct {
 
  ************************************************************************/
 int idt_init() {
-  struct tssStruct *sfTSS = (struct tssStruct *) 0x6200;
-  struct tssStruct *gpfTSS = (struct tssStruct *) 0x5200;
   struct tssStruct *kernelTSS = (struct tssStruct *) 0x4200;
 
   /*
@@ -171,49 +168,13 @@ int idt_init() {
   setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
 
-  memset(gpfTSS, 0x0, sizeof(struct tssStruct));
-
-  gpfStack = 0x1D000;//(u_int32_t)vmm_get_free_kernel_page(sysID, 1) + (PAGE_SIZE - 0x4);
-
-  gpfTSS->back_link = 0x0;
-  gpfTSS->esp0 = 0x0;
-  gpfTSS->ss0 = 0x0;
-  gpfTSS->esp1 = 0x0;
-  gpfTSS->ss1 = 0x0;
-  gpfTSS->esp2 = 0x0;
-  gpfTSS->ss2 = 0x0;
-  gpfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  gpfTSS->eip = (unsigned int) &_gpf;
-  gpfTSS->eflags = 0x206;
-  gpfTSS->esp = gpfStack; //0x1D000;
-  gpfTSS->ebp = 0x0; // 0x1D000;
-  gpfTSS->esi = 0x0;
-  gpfTSS->edi = 0x0;
-  gpfTSS->es = 0x10;
-  gpfTSS->cs = 0x08;
-  gpfTSS->ss = 0x10;
-  gpfTSS->ds = 0x10;
-  gpfTSS->fs = 0x10;
-  gpfTSS->gs = 0x10;
-  gpfTSS->ldt = 0x0;
-  gpfTSS->trace_bitmap = 0x0000;
-  gpfTSS->io_map = 0x8000;
-
   /*
-  memset(sfTSS, 0x0, sizeof(struct tssStruct));
-  sfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  sfTSS->eip = (unsigned int) &__int8;
-  sfTSS->eflags = 0x206;
-  sfTSS->esp = 0x1C000;
-  sfTSS->ebp = 0x1C000;
-  sfTSS->es = 0x10;
-  sfTSS->cs = 0x08;
-  sfTSS->ss = 0x10;
-  sfTSS->ds = 0x10;
-  sfTSS->fs = 0x10;
-  sfTSS->gs = 0x10;
-  sfTSS->io_map = 0x8000;
-  */
+   * Note: the GPF (#13), double-fault (#8) and v86 BIOS-INT paths used to be
+   * hardware task gates with their own TSSes at 0x5200/0x6200.  Those are now
+   * ordinary interrupt gates (software task switching), so no per-handler TSS
+   * is built here.  The only TSS that matters is the kernel TSS above (0x4200),
+   * used solely for ss0/esp0 on ring3->ring0 entry.
+   */
 
   /* Print out information for the IDT */
   kprintf("idt0: addr=0x%X\n", &ubixIDT);
@@ -466,8 +427,6 @@ void __gpf(struct trapframe *frame) {
   u_int32_t *stack32 = 0x0;
   bool isOperand32 = FALSE, isAddress32 = FALSE;
 
-  struct tssStruct *gpfTSS = (struct tssStruct *) 0x5200;
-
   static pidType gpfLastPid = -1;
   static u_int32_t gpfIterCount = 0;
 
@@ -510,7 +469,6 @@ void __gpf(struct trapframe *frame) {
   _current->md.md_tss.edi    = frame->tf_edi;
   _current->md.md_tss.ebp    = frame->tf_ebp;
 
-  gpfEnter:
   asm("cli");
   isOperand32 = FALSE;
   isAddress32 = FALSE;
