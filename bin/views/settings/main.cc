@@ -809,21 +809,36 @@ static void draw_about(ogSurface &surf, ogScalableFont &font)
 #define SND_BOX 16
 
 /* Read the current master volume/mute from the AC97 codec (once). */
+/* The persisted master volume/mute live under /aural keys (the audio analog of the
+ * /views keys); bin/sndcfg applies them to the codec at boot. */
 static void sound_load()
 {
 	g_sound_loaded = true;
+
+	int iv;
+	bool have_vol = (ubistry_get_int("/aural/volume", &iv) == 0);
+	if (have_vol)
+		g_volume = iv < 0 ? 0 : (iv > 100 ? 100 : iv);
+	int im;
+	bool have_mute = (ubistry_get_int("/aural/mute", &im) == 0);
+	if (have_mute)
+		g_muted = (im != 0);
+	if (have_vol && have_mute)
+		return;
+
+	/* Fall back to the live codec state for whatever ubistry did not hold. */
 	int fd = audio_open("/dev/audio");
 	if (fd < 0)
 		return;
 	uint32_t v = 100, m = 0;
-	if (audio_get_volume(fd, &v) == 0)
+	if (!have_vol && audio_get_volume(fd, &v) == 0)
 		g_volume = (int)v;
-	if (audio_get_mute(fd, &m) == 0)
+	if (!have_mute && audio_get_mute(fd, &m) == 0)
 		g_muted = (m != 0);
 	audio_close(fd);
 }
 
-/* Push the current volume/mute to the codec and persist it for the record. */
+/* Push the current volume/mute to the codec and persist it under /aural. */
 static void sound_apply()
 {
 	int fd = audio_open("/dev/audio");
@@ -833,8 +848,8 @@ static void sound_apply()
 		audio_set_mute(fd, g_muted ? 1u : 0u);
 		audio_close(fd);
 	}
-	ubistry_set_int("audio/volume", g_volume);
-	ubistry_set_int("audio/mute", g_muted ? 1 : 0);
+	ubistry_set_int("/aural/volume", g_volume);
+	ubistry_set_int("/aural/mute", g_muted ? 1 : 0);
 }
 
 static void draw_sound(ogSurface &surf, ogScalableFont &font)

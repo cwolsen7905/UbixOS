@@ -97,6 +97,11 @@ static const struct reg_entry g_defaults[] = {
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
 
+    /* Audio: master volume (0..100) and mute, applied to the codec at boot by
+     * bin/sndcfg and managed by the Settings Sound pane. */
+    {"/aural/volume", "100"},
+    {"/aural/mute", "false"},
+
     /* Display: the VBE mode number views sets at startup (0x118 = 1024x768x24,
      * the kernel default).  Settings writes the user's chosen mode here. */
     {"/display/mode", "\"0x118\""},
