@@ -14,6 +14,38 @@ throughout. Single-CPU correctness must never regress.
 
 ---
 
+## Status Matrix
+
+Legend: ✅ done & verified · 🟡 partial · ⬜ not started
+
+| Phase | Item | Status | Commit / Notes |
+|-------|------|--------|----------------|
+| 0  | Build SMP objects + relocate `smp.h` to `i386/` | ✅ | boots `-smp 1/2/4` |
+| 0  | Implement missing `spinLockLocked()` | ✅ | |
+| 1a | Wire `smpInit()` into boot; map LAPIC; register BSP | ✅ | logs BSP apic id/brand |
+| 1a | Drop broken EFLAGS.ID CPUID-presence panic | ✅ | |
+| 1b | INIT-SIPI the APs; trampoline at `0x0` + IVT save/restore | ✅ | |
+| 1b | Enumerate cores (`ap_online`) | ✅ | `-smp N` → N cores |
+| 2.1| `struct pcpu` + `g_pcpu[]` + `curcpu()`/`smp_processor_id()` | ✅ | each core self-registers |
+| 2.2| `_current` → per-CPU macro (`curcpu()->current`) | ✅ | uniprocessor no-op |
+| 2.2| Repoint `_int7` FPU asm off `_current` symbol | ✅ | offset static-assert |
+| 2.3| APs adopt kernel CR3 + enable paging | ✅ | APs in kernel address space |
+| 2.3| Per-CPU idle threads (created, pinned) | ⬜ | needs scheduler entry |
+| 3  | Real per-CPU identity (`%gs`-base / LAPIC lookup) | ⬜ | see Phase 3 prerequisites |
+| 3  | LAPIC remap into shared kernel PD range | ⬜ | prereq for LAPIC-id lookup |
+| 3  | True spinlock type (spin, not yield; IRQs off) | ⬜ | current `spinLock` yields |
+| 3  | Per-CPU LAPIC timer + reschedule IPI | ⬜ | |
+| 3  | LAPIC EOI path | ⬜ | still 8259-only |
+| 4  | SMP scheduling — global run queue under one lock | ⬜ | two cores run threads |
+| 5  | TLB shootdown IPIs | ⬜ | |
+| 6  | Per-CPU run queues + load balancing + affinity | ⬜ | optimization layer |
+
+Backstops: tag `smp-scaffold-safe` (pre-`_current` refactor) and the per-phase
+commits.  Phases 0–2.3 landed as independently-bootable commits; Phase 3+ must
+land as a unit (see "Phase 3 prerequisites discovered").
+
+---
+
 ## How Other Systems Did It
 
 | System | Per-CPU "current" | Run queue | Cross-CPU invalidation | Bring-up |
