@@ -38,13 +38,14 @@ that set `%eax` and execute `int $0x80`.
 | 5 | `open` | routes through VFS |
 | 11 | `execve` | ELF loader in `sys/arch/i386/i386_exec.c` |
 | 20 | `getpid` | |
-| 41 | `getvfscwd` | **UbixOS extension** — returns full VFS path including mountpoint |
-| 49 | `getcwd` | POSIX `getcwd`; strips mountpoint prefix |
+| 41 | `getvfscwd` | **UbixOS extension** — returns the cwd (now a plain POSIX path) |
+| 49 | `getcwd` | POSIX `getcwd` — returns the cwd |
 | 59 | `execve` (alt) | |
 
-> Syscall 41 (`sys_getvfscwd`) is a UbixOS-specific slot added to the POSIX table so that
-> the native `ubix_getcwd()` API can be called from POSIX-linked binaries without switching
-> to `int $0x81`.  See [vfs.md](vfs.md) for the dual-getcwd design.
+> Syscall 41 (`sys_getvfscwd`) is a UbixOS-specific slot retained from when paths
+> used a `sys:/` mountpoint prefix and the two calls differed (full vs stripped).
+> Now that cwd is a plain POSIX path, both return the same string. See
+> [vfs.md](vfs.md).
 
 ---
 

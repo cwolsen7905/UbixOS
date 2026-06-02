@@ -52,7 +52,7 @@ GPU-accelerated compositing open without changing the protocol.
   │                 │           │                          │
   │  objgfx:        │           │  objgfx:                 │
   │    ogSurface    │           │    ogSurface             │
-  │    ogBitFont    │           │    ogBitFont             │
+  │ ogScalableFont  │           │ ogScalableFont           │
   └─────────────────┘           └──────────────────────────┘
 ```
 
@@ -152,21 +152,29 @@ surf.ogLine(0, 0, w-1, h-1, 0x00FF0000);       // line
 surf.ogSetPixel(x, y, color);                  // single pixel
 ```
 
-Load and render a bitmap font (`.DPF` files live at `sys:/var/fonts/`):
+Load and render text. The current UI uses **scalable, antialiased TrueType
+fonts** via `ogScalableFont` (stb_truetype); `.ttf` files live at `/var/fonts/`
+(`DejaVuSans.ttf`, `DejaVuSansMono.ttf`). The compositor, taskbar, terminal,
+settings, login and tessera all use this:
 
 ```cpp
-ogBitFont font;
-font.Load("sys:/var/fonts/ROM8X8.DPF", 0);
-font.SetFGColor(192, 192, 192, 255);  // R, G, B, A
+ogScalableFont font;
+font.Load("/var/fonts/DejaVuSans.ttf", 16);  // path, pixel height
+font.SetFGColor(192, 192, 192, 255);          // R, G, B, A
 font.SetBGColor(0, 0, 0, 255);
-font.PutString(surf, x, y, "Hello");
+font.PutString(surf, x, y, "Hello");          // baseline at y + Ascent()
 font.PutChar(surf, x, y, 'A');
+int w = font.TextWidth("Hello");              // pixel width (exact)
 ```
+
+> The older fixed-size bitmap font (`ogBitFont`, `.DPF` files) still exists for
+> legacy callers and uses the same `PutChar`/`PutString`/`SetFGColor` API, but
+> new code should use `ogScalableFont`.
 
 Color helpers when packing `uint32_t` colors from separate R/G/B components:
 
 ```cpp
-static void font_fg(ogBitFont &f, uint32_t c) {
+static void font_fg(ogScalableFont &f, uint32_t c) {
     f.SetFGColor((c>>16)&0xFF, (c>>8)&0xFF, c&0xFF, 255);
 }
 ```
