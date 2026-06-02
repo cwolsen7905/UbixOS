@@ -938,6 +938,13 @@ asm(
 
 /* Removed static however this is the only place it's called from */
 void mathStateRestore() {
+  /* Resolve the per-CPU current thread ONCE, before any FPU asm.  _current is a
+   * macro (curcpu()->current); evaluating it between the fnsave and frstor below
+   * would land a function call in the middle of a paired FPU save/restore whose
+   * asm declares no clobbers, corrupting FPU state (the font rasterizer in the
+   * compositor is FPU-heavy and tripped over exactly this). */
+  kTask_t *cur = _current;
+
   if (_usedMath != 0x0) {
     asm(
       "fnsave %0"
@@ -945,19 +952,19 @@ void mathStateRestore() {
       : "m" (_usedMath->md.md_i387)
     );
   }
-  if (_current->usedMath != 0x0) {
+  if (cur->usedMath != 0x0) {
     asm(
       "frstor %0"
       :
-      : "m" (_current->md.md_i387)
+      : "m" (cur->md.md_i387)
     );
   }
   else {
     asm("fninit");
-    _current->usedMath = 0x1;
+    cur->usedMath = 0x1;
   }
 
-  _usedMath = _current;
+  _usedMath = cur;
 
   //Return
 }
