@@ -33,30 +33,13 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/vitals.h>
+#include <ubixos/random.h>
 #include <lib/kmalloc.h>
 #include <string.h>
 #include <lib/kprintf.h>
 
 /* Spinlock for devfs we should start converting to sem/mutex */
 static struct spinLock devfsSpinLock = SPIN_LOCK_INITIALIZER;
-
-/*
- * Xorshift32 PRNG — fast, non-cryptographic, used for /dev/random and
- * /dev/urandom.  Seeded lazily from sysTicks on first read.
- * On UbixOS both nodes produce the same output (no blocking pool).
- */
-static u_int32_t rand_state = 0;
-
-static u_int32_t
-devfs_rand32(void)
-{
-	if (rand_state == 0)
-		rand_state = systemVitals->sysTicks ^ 0xdeadbeef;
-	rand_state ^= rand_state << 13;
-	rand_state ^= rand_state >> 17;
-	rand_state ^= rand_state << 5;
-	return (rand_state);
-}
 
 /* Length of dev list */
 static int devfs_len = 0x0;
@@ -165,12 +148,7 @@ static int devfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
       return (size);
     }
     if (tmpDev->devMinor == 3 || tmpDev->devMinor == 4) { /* random / urandom */
-      long i;
-      for (i = 0; i < size; i++) {
-        if ((i & 3) == 0)
-          rand_state = devfs_rand32();
-        data[i] = (char)(rand_state >> ((i & 3) * 8));
-      }
+      krandom_bytes(data, size);
       return (size);
     }
     return (0);

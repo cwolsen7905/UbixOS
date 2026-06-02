@@ -1527,4 +1527,20 @@ struct sys_tkill_args
 };
 int sys_tkill(struct thread *td, struct sys_tkill_args *uap);
 
+/* FreeBSD getrandom(2) — syscall 563.  flags (GRND_NONBLOCK/GRND_RANDOM) are
+ * accepted but ignored: the kernel CSPRNG never blocks. */
+struct sys_getrandom_args
+{
+	char buf_l_[PADL_(void *)];
+	void *buf;
+	char buf_r_[PADR_(void *)];
+	char buflen_l_[PADL_(size_t)];
+	size_t buflen;
+	char buflen_r_[PADR_(size_t)];
+	char flags_l_[PADL_(unsigned int)];
+	unsigned int flags;
+	char flags_r_[PADR_(unsigned int)];
+};
+int sys_getrandom(struct thread *td, struct sys_getrandom_args *uap);
+
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

@@ -38,6 +38,7 @@
 #include <ubixos/exec.h>
 #include <vmm/pageout.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/random.h>
 #include <ubixos/systemtask.h>
 #include <fs/vfs/mount.h>
 #include <lib/kprintf.h>
@@ -186,6 +187,9 @@ int kmain(u_int32_t rootdev)
 		else
 			kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
 	}
+
+	/* Seed the kernel CSPRNG now that systemVitals is live. */
+	krandom_init();
 
 	/* Initialize the system */
 	kprintf("Free Pages: [%i]\n", systemVitals->freePages);

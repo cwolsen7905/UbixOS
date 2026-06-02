@@ -1,6 +1,6 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code #csu-code
+all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -32,9 +32,18 @@ install:
 libaudio-code: libaudio
 	(cd libaudio;$(MAKE))
 
+libbearssl-code: libbearssl
+	(cd libbearssl;$(MAKE))
+
+# Must build after libbearssl (links libbearssl.so).
+libpw-code: libpw
+	(cd libpw;$(MAKE))
+
 clean:
 	(cd crt;${MAKE} clean)
 	(cd ubix_api;${MAKE} clean)
 	(cd ubix;${MAKE} clean)
 	(cd objgfx;${MAKE} clean)
 	(cd libaudio;${MAKE} clean)
+	(cd libbearssl;${MAKE} clean)
+	(cd libpw;${MAKE} clean)

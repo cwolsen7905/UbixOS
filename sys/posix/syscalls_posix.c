@@ -588,6 +588,19 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "numa_getaffinity", sys_invalid, SYSCALL_NOTIMP},                                                       /* 548 - Invalid */
     {0, "num_setaffinity", sys_invalid, SYSCALL_NOTIMP},                                                        /* 549 - Invalid */
     {0, "fdatasync", sys_invalid, SYSCALL_NOTIMP},                                                              /* 550 - Invalid */
+    {0, "fstat", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 551 - Invalid */
+    {0, "fstatat", sys_invalid, SYSCALL_NOTIMP},                                                                /* 552 - Invalid */
+    {0, "fhstat", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 553 - Invalid */
+    {0, "getdirentries", sys_invalid, SYSCALL_NOTIMP},                                                          /* 554 - Invalid */
+    {0, "statfs", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 555 - Invalid */
+    {0, "fstatfs", sys_invalid, SYSCALL_NOTIMP},                                                                /* 556 - Invalid */
+    {0, "getfsstat", sys_invalid, SYSCALL_NOTIMP},                                                              /* 557 - Invalid */
+    {0, "fhstatfs", sys_invalid, SYSCALL_NOTIMP},                                                               /* 558 - Invalid */
+    {0, "mknodat", sys_invalid, SYSCALL_NOTIMP},                                                                /* 559 - Invalid */
+    {0, "kevent", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 560 - Invalid */
+    {0, "cpuset_getdomain", sys_invalid, SYSCALL_NOTIMP},                                                       /* 561 - Invalid */
+    {0, "cpuset_setdomain", sys_invalid, SYSCALL_NOTIMP},                                                       /* 562 - Invalid */
+    {ARG_COUNT(sys_getrandom_args), "getrandom", (sys_call_t *)sys_getrandom, SYSCALL_VALID},                  /* 563 - getrandom */
 };
 
 int totalCalls_posix = sizeof(systemCalls_posix) / sizeof(struct syscall_entry);

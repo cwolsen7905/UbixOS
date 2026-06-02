@@ -32,6 +32,7 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
 #include <ubixos/endtask.h>
+#include <ubixos/random.h>
 #include <isa/atkbd.h>
 #include <isa/pit.h>
 #include <isa/8259.h>
@@ -60,6 +61,9 @@ void sched() {
   kTask_t *delTask = 0x0;
   kTask_t *next    = 0x0;
   kTask_t *t       = 0x0;
+
+  /* Stir the CSPRNG with timer-tick RDTSC jitter (lock-free, every tick). */
+  krandom_stir(0);
 
   /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
    * and reboot when time is up. Runs before the spinlock to keep it simple. */

@@ -352,7 +352,7 @@
 #define __NR_sched_getattr	352
 #define __NR_renameat2		353
 #define __NR_seccomp		354
-#define __NR_getrandom		355
+#define __NR_getrandom		563	/* UbixOS: FreeBSD getrandom(2) number, not Linux 355 */
 #define __NR_memfd_create	356
 #define __NR_bpf		357
 #define __NR_execveat		358

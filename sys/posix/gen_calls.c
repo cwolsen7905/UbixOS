@@ -33,6 +33,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
 #include <ubixos/endtask.h>
+#include <ubixos/random.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <string.h>
@@ -90,6 +91,30 @@ int getgid(struct thread *td, struct getgid_args *uap)
 int sys_issetugid(register struct thread *td, struct sys_issetugid_args *uap)
 {
 	td->td_retval[0] = 0;
+	return (0);
+}
+
+/*
+ * sys_getrandom (FreeBSD syscall 563) — fill the caller's buffer with bytes
+ * from the kernel ChaCha20 CSPRNG (the same source as /dev/urandom).  Backs
+ * musl getrandom()/getentropy(); arc4random ultimately draws from here.  Runs
+ * in the calling process's context, so the user pointer is written directly.
+ * The flags argument (GRND_NONBLOCK/GRND_RANDOM) is accepted but ignored — the
+ * generator never blocks.
+ *
+ * @return number of bytes written, or -1 on a NULL buffer.
+ */
+int sys_getrandom(struct thread *td, struct sys_getrandom_args *uap)
+{
+	if (uap->buf == NULL)
+	{
+		td->td_retval[0] = -1;
+		return (-1);
+	}
+
+	krandom_bytes(uap->buf, uap->buflen);
+
+	td->td_retval[0] = (int)uap->buflen;
 	return (0);
 }
 
