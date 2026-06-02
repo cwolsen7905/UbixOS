@@ -4,18 +4,28 @@
 
 | Document | Description |
 |----------|-------------|
-| [architecture/vmm.md](architecture/vmm.md) | Virtual Memory Manager: layout, functions, MMIO guards, fork PD re-sync |
-| [architecture/task-switching.md](architecture/task-switching.md) | Task switching internals: TSS, GDT, scheduler, fork, FPU |
-| [architecture/i386-page-directory-map.md](architecture/i386-page-directory-map.md) | Full i386 page directory (PDE 0–1023) with purpose annotations |
+| [architecture/vmm.md](architecture/vmm.md) | Virtual Memory Manager behaviour: functions, COW, MMIO guards, fork PD re-sync |
+| [architecture/task-switching.md](architecture/task-switching.md) | Software context switching (`switch_to`/`cpu_switch`), the single kernel TSS, the segment-save fix, fork, FPU, v86 |
+| [architecture/i386-page-directory-map.md](architecture/i386-page-directory-map.md) | Canonical memory map: PDEs 0–1023, physical low memory, GDT selectors, cleanup/multi-arch notes |
 | [architecture/mpi.md](architecture/mpi.md) | Message Passing Interface: mailboxes, syscalls, known bugs, limitations |
 | [architecture/syscalls.md](architecture/syscalls.md) | Dual syscall table design: int $0x80 (POSIX) vs int $0x81 (native) |
 | [architecture/vfs.md](architecture/vfs.md) | VFS layer, path format, dual-getcwd design, filesystem drivers |
 
 ## Design Specs
 
+Forward-looking plans live in [design/](design/) (e.g. `software-task-switch-plan.md`,
+`smp-plan.md`, `cross-arch-plan.md`, `scheduler-plan.md`).
+
 | Document | Description |
 |----------|-------------|
 | [design/fbcon.md](design/fbcon.md) | VESA framebuffer console spec (draft) |
+
+## Audit
+
+| Document | Description |
+|----------|-------------|
+| [audit/plan.md](audit/plan.md) | Subsystem-by-subsystem kernel audit plan + findings index |
+| [audit/vmm-audit.md](audit/vmm-audit.md) | VMM technical audit (dated snapshot: bootstrap, fork phases, COW, teardown) |
 
 ## Driver Development
 
