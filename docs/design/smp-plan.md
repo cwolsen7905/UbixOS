@@ -173,6 +173,24 @@ identity + true spinlock + LAPIC timer + a minimal AP idle/scheduler entry),
 not as the independently-bootable commits Phases 0–2 allowed.  `smp-scaffold-safe`
 and the per-phase commits are the backstops.
 
+## Lessons learned (the reverted Phase 2.2)
+
+1. **`_current` must be a memory access, never a macro.**  Making it
+   `curcpu()->current` turned a global read into a token substitution that
+   changed codegen across 56 files and injected a function call into the FPU
+   lazy-restore asm (`_int7`/`mathStateRestore`), between a paired `fnsave`/
+   `frstor` with no declared clobbers.  Result: nondeterministic FPU/state
+   corruption that smashed the FPU-heavy compositor.  Per-CPU current must come
+   from a `%gs`-relative *memory operand*, valid anywhere a plain global was.
+2. **Nondeterministic bugs need multi-boot bisects.**  The 2.2 crash fired only
+   sometimes; a single "clean" boot at a commit meant nothing.  The first fix
+   looked good on one lucky boot and shipped broken.  Re-bisecting with **4
+   boots per commit** found it cleanly (`smp-scaffold-safe` 4/4 clean, the macro
+   commit crashes, the revert 4/4 clean).  Treat any intermittent fault this way.
+3. **A headless repro beats clicking.**  A temporary vlogin auto-login +
+   taskbar term-autolaunch reproduced the exact "launch a 2nd GUI app" crash
+   without a human, making the bisect possible.  Keep that pattern handy.
+
 ---
 
 ## Phases
@@ -198,33 +216,52 @@ Each phase ends bootable and testable under `qemu -smp N`.
 - **This is the bounded milestone** — multi-core detected and booted, scheduler
   untouched.
 
-### Phase 2 — Per-CPU infrastructure
-- Define `struct pcpu { kTask_t *current; u_int32_t cpuid, apicid; kTask_t *idle;
-  u_int32_t flags; ... }`. Allocate one per CPU.
-- Establish `smp_processor_id()` and `curcpu()` — set each CPU's `%gs` base (or
-  TR) to its `pcpu` at AP start; BSP too.
-- Mechanically replace global `_current` with `curcpu()->current` everywhere
-  (compat macro first, then migrate sites).
-- Give each CPU an **idle thread**.
-- **Test:** single-CPU boot routes through `pcpu[0]` with zero behavior change;
-  APs still parked.
-- **Risk:** high churn (pervasive `_current` edit), low conceptual risk.
+### Phase 2 — Per-CPU infrastructure  ✅ partial / ⛔ _current reverted
+- ✅ Define `struct pcpu { kTask_t *current, *idle; u_int32_t cpuid, apicid; ... }`,
+  the `g_pcpu[]` array, and `curcpu()`/`smp_processor_id()` (LAPIC-id lookup,
+  short-circuited to cpu 0 while `g_smp_active == 0`).  Each core self-registers.
+- ✅ APs adopt the kernel CR3 + paging and run a per-CPU idle loop in parallel.
+- ⛔ **Do NOT make `_current` a macro.**  The attempt (`#define _current
+  curcpu()->current`, even reduced to a plain `g_pcpu[0].current` access) caused
+  nondeterministic memory corruption — a second GUI app launch smashed the
+  compositor (EIP into a shared buffer) and triple-faulted.  It was reverted;
+  `_current` stays a plain global.  **Per-CPU `current` is deferred to Phase 3
+  and done via a `%gs`-relative access**, not a token-substitution macro that can
+  inject a function call / different codegen into delicate asm paths (the FPU
+  lazy-restore `_int7`/`mathStateRestore` was one such victim).
 
-### Phase 3 — SMP-safe locking + LAPIC interrupts
-- Rewrite `spinLock()` to spin with `pause`; add `spin_lock_irqsave`-style
-  preemption/interrupt disable while held. Audit every existing lock holder for
-  "sleeps while holding" bugs.
-- LAPIC EOI; per-CPU LAPIC timer for the scheduler tick (replace PIT-drives-
-  scheduler on APs; BSP can keep PIT for timekeeping).
-- Reschedule IPI (a CPU can poke another to re-run the scheduler).
-- **Test:** APs take LAPIC timer ticks and idle-loop without corrupting state;
-  contended lock between BSP and a still-idle AP makes progress.
-- **Risk:** high — this is where deadlocks/races first appear.
+### Phase 3 — Real per-CPU base (%gs) + SMP-safe locking + LAPIC interrupts
+This is the interlocked unit; land it together, test with **many** boots (the
+2.2 bug was nondeterministic and single-boot bisects lied — see Lessons).
+- **Per-CPU `%gs` base.** Add per-CPU GDT descriptors (one `%gs` descriptor per
+  CPU, base = `&g_pcpu[i]`) + a `self` pointer in `struct pcpu`; load `%gs` on the
+  BSP and each AP.  Swap in the kernel `%gs` after the existing `push %gs` in
+  every entry path (`sys_call.S`, `sys_call_posix.S`, `timer.S`, IDT stubs) and
+  restore on exit — this is the part that conflicts with user-TLS `%gs`, so do it
+  carefully.  Then `_current` becomes `%gs:offsetof(current)` — a plain memory
+  operand, valid in asm, never a call.
+- **Spinlocks that spin.** Rewrite `spinLock()` to busy-wait with `pause`; add
+  `spin_lock_irqsave`-style preemption/IRQ disable while held.  Audit every
+  holder for "sleeps while holding".  (Today's `spinLock` *yields* — correct on
+  uniprocessor, deadlock on SMP.)
+- **LAPIC interrupts.** Map the LAPIC into the globally-synced kernel PD range
+  first; LAPIC EOI; per-CPU LAPIC timer for the scheduler tick on APs (BSP keeps
+  PIT for timekeeping); reschedule IPI.
+- **Test:** APs take LAPIC ticks and idle without corrupting state; contended
+  lock between BSP and a still-idle AP makes progress; the term-launch repro
+  stays clean across ≥8 boots.
+- **Risk:** high — deadlocks/races and the `%gs`/TLS interaction first appear here.
 
 ### Phase 4 — SMP scheduling (single global run queue under lock)
-- One global run queue + one scheduler lock (big-scheduler-lock). Every CPU, in
-  its idle loop, takes the lock, dequeues a runnable thread, runs it, re-enqueues
-  on quantum expiry.
+- **Reuse the existing structure as-is.**  `run_queue[32]` (32 per-priority
+  *circular doubly-linked* lists via `rq_next`/`rq_prev`) + `ready_mask` + the
+  `schedulerSpinLock` already *is* a single global run queue.  No restructuring:
+  the doubly-linked design gives O(1) enqueue/dequeue and O(1) remove-from-middle
+  (the `rq_prev` link), which SMP needs constantly (block, repriority, migrate).
+  The all-tasks list `taskList` likewise stays global + lock-protected.
+- Every CPU, in its idle loop, takes `schedulerSpinLock` (now a real spinlock),
+  dequeues the highest-priority runnable thread, runs it, re-enqueues on quantum
+  expiry.
 - Migration safety: a thread's address space + FPU state must be consistent
   across CPUs before it runs elsewhere.
 - **Test:** `qemu -smp 2`, spawn N CPU-bound threads, observe them progress on
@@ -239,8 +276,11 @@ Each phase ends bootable and testable under `qemu -smp N`.
 - **Risk:** high — corruption here is silent; needs careful stress testing.
 
 ### Phase 6 — Per-CPU run queues + balancing (optimization)
-- Replace the global run queue with per-CPU queues + a load balancer; CPU
-  affinity. Drop the big-scheduler-lock to per-queue locks.
+- Replicate the same structure per CPU: `run_queue[NCPU][32]` + per-CPU
+  `ready_mask` + per-CPU lock (the doubly-linked lists are unchanged, just one
+  set per core).  Add a load balancer that migrates tasks between cores'
+  queues — O(1) per task thanks to `rq_prev` — plus CPU affinity (which queue a
+  task lives in).  Drop the big-scheduler-lock to per-queue locks.
 - **Test:** throughput scales with core count; no starvation.
 - **Risk:** medium; purely a performance/scalability layer over a correct base.
 
