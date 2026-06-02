@@ -74,3 +74,30 @@ void spinLock(spinLock_t lock) {
   }
 }
 
+/*
+ * True spinlock for SMP (Phase 3).  Unlike spinLock() above — which *yields*
+ * the CPU while waiting and is therefore a mutex-style lock — this one disables
+ * interrupts on the local CPU and busy-waits with PAUSE.  Use it ONLY for short
+ * cross-CPU critical sections (the scheduler run queue, per-CPU state) where the
+ * holder must never sleep or yield.
+ *
+ * On a uniprocessor it never actually spins: interrupts are masked while held,
+ * so no other thread can run to contend for it.  On SMP a peer CPU spins until
+ * the holder releases.  Returns the caller's saved EFLAGS; pass it back to
+ * spinUnlockIrq so nested critical sections restore the prior interrupt state.
+ */
+u_int32_t spinLockIrq(spinLock_t lock) {
+  u_int32_t flags;
+
+  __asm__ __volatile__("pushfl ; popl %0 ; cli" : "=r"(flags) : : "memory");
+  while (xchg_32(&lock->locked, LOCKED))
+    cpu_relax();
+  return (flags);
+}
+
+void spinUnlockIrq(spinLock_t lock, u_int32_t flags) {
+  barrier();
+  lock->locked = UNLOCKED;
+  __asm__ __volatile__("pushl %0 ; popfl" : : "r"(flags) : "memory", "cc");
+}
+
