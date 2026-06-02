@@ -187,10 +187,15 @@ void signal_post_tty(tty_term *term, int sig)
 			return;
 	}
 
-	/* Fallback: signal the most recently created live task on this terminal. */
+	/* Fallback: signal the most recently created live task on this terminal.
+	 * A task is "on this terminal" if either its inherited term pointer or its
+	 * controlling-terminal pointer matches.  Pty children acquire only ct_tty
+	 * (via opening /dev/ttyvN after setsid), so checking both is required. */
 	for (t = taskList; t != NULL; t = t->next)
 	{
-		if (t->term != term || t->state == DEAD)
+		if (t->state == DEAD)
+			continue;
+		if (t->term != term && t->ct_tty != term)
 			continue;
 		if (target == NULL || t->id > target->id)
 			target = t;

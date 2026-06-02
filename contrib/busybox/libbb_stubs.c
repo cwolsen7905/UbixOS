@@ -1543,7 +1543,9 @@ void set_termios_to_raw(int fd, struct termios *orig_out, int flags)
 	else
 		t.c_iflag &= (tcflag_t)~ICRNL;
 	t.c_oflag &= (tcflag_t)~OPOST;
-	t.c_lflag &= (tcflag_t)~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	t.c_lflag &= (tcflag_t)~(ECHO | ECHONL | ICANON | IEXTEN);
+	if (flags & TERMIOS_CLEAR_ISIG)
+		t.c_lflag &= (tcflag_t)~ISIG;
 	t.c_cflag &= (tcflag_t)~(CSIZE | PARENB);
 	t.c_cflag |= CS8;
 	t.c_cc[VMIN] = 1;
