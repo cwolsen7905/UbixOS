@@ -19,6 +19,7 @@ const char bb_msg_invalid_arg_to[] = "invalid argument '%s' to '%s'";
 const char bb_msg_requires_arg[]   = "%s requires an argument";
 const char bb_msg_invalid_date[]   = "invalid date '%s'";
 const char bb_default_root_path[]  = "/usr/bin:/bin:/usr/sbin:/sbin";
+const char bb_msg_write_error[]    = "write error";
 long bb_arg_max                    = 131072;
 
 char bb_common_bufsiz1[COMMON_BUFSIZE];
@@ -299,6 +300,58 @@ void llist_add_to(llist_t **old_head, void *data)
 	node->data = data;
 	node->link = *old_head;
 	*old_head = node;
+}
+
+void llist_add_to_end(llist_t **list_head, void *data)
+{
+	llist_t *node = xmalloc(sizeof(*node));
+	node->data = data;
+	node->link = NULL;
+	if (!*list_head) {
+		*list_head = node;
+		return;
+	}
+	llist_t *p = *list_head;
+	while (p->link)
+		p = p->link;
+	p->link = node;
+}
+
+FILE *xfopen_for_write(const char *path)
+{
+	FILE *fp = fopen(path, "w");
+	if (!fp)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return fp;
+}
+
+FILE *xfdopen_for_write(int fd)
+{
+	FILE *fp = fdopen(fd, "w");
+	if (!fp)
+		bb_perror_msg_and_die("fdopen");
+	return fp;
+}
+
+void overlapping_strcpy(char *dst, const char *src)
+{
+	memmove(dst, src, strlen(src) + 1);
+}
+
+void (*die_func)(void);
+
+int xmkstemp(char *template)
+{
+	int fd = mkstemp(template);
+	if (fd < 0)
+		bb_perror_msg_and_die("can't create temp file '%s'", template);
+	return fd;
+}
+
+void xrename(const char *oldpath, const char *newpath)
+{
+	if (rename(oldpath, newpath) < 0)
+		bb_perror_msg_and_die("can't rename '%s' to '%s'", oldpath, newpath);
 }
 
 void llist_free(llist_t *elm, void (*freeit)(void *data))

@@ -676,6 +676,19 @@ long  bb_strtol(const char *arg, char **endp, int base);
 long long bb_strtoll(const char *arg, char **endp, int base);
 extern const char bb_msg_invalid_date[];
 extern const char bb_default_root_path[];
+extern const char bb_msg_write_error[];
+
+/* sed needs these too */
+void   llist_add_to_end(llist_t **list_head, void *data);
+FILE  *xfdopen_for_write(int fd);
+FILE  *xfopen_for_write(const char *path);
+int    xmkstemp(char *template);
+void   xrename(const char *oldpath, const char *newpath);
+void   overlapping_strcpy(char *dst, const char *src);
+
+/* die_func: optional cleanup hook bb_show_usage and xfunc_die can call.
+ * sed sets it to flush its output buffer before exiting. */
+extern void (*die_func)(void);
 
 /* small-util support */
 #define ENABLE_ASH_SLEEP                      0
