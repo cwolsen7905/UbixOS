@@ -70,9 +70,7 @@ void pid_hash_remove(kTask_t *t) {
 	}
 }
 
-#ifndef __i386__
-kTask_t *_current = 0x0; /* on i386 _current is a per-CPU macro (curcpu()->current) */
-#endif
+kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
 
 int need_resched = 0;

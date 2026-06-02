@@ -148,17 +148,15 @@ kTask_t *schedNewTask();
 kTask_t *schedFindTask(u_int32_t id);
 
 /*
- * _current — the thread running on the calling CPU.  On i386 this is per-CPU:
- * a macro for curcpu()->current (SMP phase 2).  smp_processor_id() shortcuts to
- * the boot processor until per-CPU scheduling is live, so single-CPU behaviour
- * is unchanged.  Other arches keep the single global.
+ * _current — the thread running on the calling CPU.  This is a plain global for
+ * now.  The SMP phase-2 attempt to make it per-CPU (a macro for
+ * curcpu()->current) was reverted: it caused subtle, nondeterministic memory
+ * corruption (a second GUI app launch would smash the compositor and triple
+ * fault).  Per-CPU current will return with real per-CPU scheduling, via a
+ * %gs-relative access — never a macro that injects a call into asm paths.  The
+ * per-CPU table (g_pcpu) and AP bring-up do not depend on this.
  */
-#ifdef __i386__
-#include <i386/pcpu.h>
-#define _current (curcpu()->current)
-#else
 extern kTask_t *_current;
-#endif
 
 extern kTask_t *_usedMath;
 

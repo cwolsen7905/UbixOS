@@ -937,14 +937,8 @@ asm(
 );
 
 /* Removed static however this is the only place it's called from */
+/* Removed static however this is the only place it's called from */
 void mathStateRestore() {
-  /* Resolve the per-CPU current thread ONCE, before any FPU asm.  _current is a
-   * macro (curcpu()->current); evaluating it between the fnsave and frstor below
-   * would land a function call in the middle of a paired FPU save/restore whose
-   * asm declares no clobbers, corrupting FPU state (the font rasterizer in the
-   * compositor is FPU-heavy and tripped over exactly this). */
-  kTask_t *cur = _current;
-
   if (_usedMath != 0x0) {
     asm(
       "fnsave %0"
@@ -952,39 +946,31 @@ void mathStateRestore() {
       : "m" (_usedMath->md.md_i387)
     );
   }
-  if (cur->usedMath != 0x0) {
+  if (_current->usedMath != 0x0) {
     asm(
       "frstor %0"
       :
-      : "m" (cur->md.md_i387)
+      : "m" (_current->md.md_i387)
     );
   }
   else {
     asm("fninit");
-    cur->usedMath = 0x1;
+    _current->usedMath = 0x1;
   }
 
-  _usedMath = cur;
+  _usedMath = _current;
 
   //Return
 }
 
 
-/*
- * _int7 (device-not-available) — lazy FPU state restore.  _current is now a
- * per-CPU macro (curcpu()->current) and has no symbol to reference from asm, so
- * load the running thread from the per-CPU table directly.  This hardcodes the
- * boot processor's slot (g_pcpu[0].current); per-CPU FPU handling on the APs is
- * a later SMP phase, and they run nothing yet.  The field offset is asserted
- * below so the asm cannot silently drift from the struct layout.
- */
-_Static_assert(__builtin_offsetof(struct pcpu, current) == 8, "update _int7 g_pcpu offset");
+/* _int7 (device-not-available) — lazy FPU state restore. */
 asm(
   ".globl _int7              \n"
   "_int7:                    \n"
   "  pushl %eax              \n"
   "  clts                    \n"
-  "  movl g_pcpu+8,%eax      \n" /* g_pcpu[0].current (BSP) */
+  "  movl _current,%eax      \n"
   "  cmpl _usedMath,%eax     \n"
   "  je mathDone             \n"
   "  call mathStateRestore   \n"
