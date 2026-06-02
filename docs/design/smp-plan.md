@@ -84,6 +84,64 @@ trampoline and atomics are the easy 90%; the per-CPU refactor + SMP-safe locking
 
 ---
 
+## Implementation status (as built)
+
+Done and verified booting on `qemu -smp 1/2/4` (tag `smp-scaffold-safe` marks
+the pre-`_current`-refactor point):
+
+- **Phase 0** — `smp.c`/`ap-boot.S` compile and link again; `smp.h` relocated to
+  `sys/include/i386/`; the declared-but-missing `spinLockLocked()` implemented.
+- **Phase 1a** — `smpInit()` wired into the boot task list; LAPIC identity-mapped
+  via `vmm_remap_io_page`; BSP self-registers (APIC id/ver, CPUID brand).  The
+  legacy EFLAGS.ID "supports CPUID?" panic was removed (always true here).
+- **Phase 1b** — `apicMagic()` INIT-SIPI-SIPIs the APs; each lands in
+  `c_ap_boot()` (the trampoline MUST load at phys `0x0` — its 32-bit jump uses
+  flat base-0 offsets — so we save/restore the clobbered real-mode IVT around AP
+  startup).  Cores enumerate (`ap_online`).
+- **Phase 2.1/2.2** — `struct pcpu` + `g_pcpu[]` + `curcpu()`/`smp_processor_id()`;
+  each core self-registers its identity.  `_current` is now a per-CPU macro
+  (`curcpu()->current`) on i386, a perfect uniprocessor no-op while
+  `g_smp_active == 0`.  The `_int7` FPU stub's asm `_current` reference was
+  repointed at `g_pcpu[0].current` with an offset static-assert.
+- **Phase 2.3 (partial)** — each AP adopts the BSP's CR3 and enables paging in
+  `c_ap_boot()`, so the APs now run in the kernel's virtual address space.  They
+  remain parked in `cli; hlt`.
+
+## Phase 3 prerequisites discovered (i386 specifics)
+
+Making `curcpu()` resolve to the *running* CPU (not always `pcpu[0]`) is the gate
+for everything below, and on i386 it is genuinely interlocked — there is no
+standalone, boot-verifiable slice:
+
+- **`%gs` is unavailable for free per-CPU.** Userland uses `%gs` for TLS (musl
+  i386) and the kernel saves/restores it on every entry (`push %gs`/`pop %gs` in
+  `sys_call.S`, `sys_call_posix.S`, `timer.S`, and the IDT stubs).  A `%gs`-base
+  per-CPU pointer requires swapping in a kernel `%gs` after each save and is
+  fragile: one missed entry/exit path corrupts user TLS.  Needs per-CPU GDT
+  descriptors (one `%gs` descriptor per CPU, base = `&g_pcpu[i]`) plus a `self`
+  pointer in `struct pcpu`.
+- **The LAPIC-id lookup fallback faults outside the BSP's PD.** The LAPIC is
+  identity-mapped at `0xFEE00000` = PD index 1019, which is **outside** the
+  globally-synced kernel PD range (770–1015).  Reading it from an arbitrary
+  process context (as `_current` would, everywhere) page-faults.  Activating
+  `g_smp_active` therefore requires first remapping the LAPIC into shared kernel
+  space, and it puts a slow MMIO read on every `_current` access.
+- **`spinLock()` yields by design.** It calls `sched_yield()` while waiting,
+  which is correct on a uniprocessor (the lock holder is another task that must
+  be scheduled to release).  Pure spinning would deadlock single-CPU.  SMP needs
+  either a second, true-spinlock type for short cross-CPU critical sections
+  (scheduler run queue) with preemption/IRQs disabled while held, or an audit of
+  every holder to guarantee it never sleeps.
+- **No per-CPU LAPIC timer.** An idle AP can only notice new work via a tick or
+  a reschedule IPI; the scheduler is still driven by the PIT on the BSP only.
+
+Consequence: Phase 3 must be developed and tested as a **unit** (per-CPU
+identity + true spinlock + LAPIC timer + a minimal AP idle/scheduler entry),
+not as the independently-bootable commits Phases 0–2 allowed.  `smp-scaffold-safe`
+and the per-phase commits are the backstops.
+
+---
+
 ## Phases
 
 Each phase ends bootable and testable under `qemu -smp N`.
