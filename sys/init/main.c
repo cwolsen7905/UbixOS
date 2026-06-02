@@ -88,13 +88,14 @@
  8 - 0x40 - Stack Fault TSS
  9 - 0x48 - SMP Private Data
  10 - 0x50 - USER %GS (Stack!)
+ 11 - 0x58 - SMP per-CPU data (%gs base = &g_pcpu[cpuid]); see pcpu_install_gs
 
  Notes:
 
  MrOlsen: test
 
  *****************************************************************************************/
-ubixDescriptorTable(ubixGDT, 11){
+ubixDescriptorTable(ubixGDT, 12){
     {.dummy = 0},
     ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
     ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
@@ -106,13 +107,21 @@ ubixDescriptorTable(ubixGDT, 11){
     ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
     ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
     ubixStandardDescriptor(0xBFC00000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+    /*
+     * Index 11 (selector SEL_PCPU = 0x58): per-CPU data segment for SMP.  Base
+     * is patched at runtime to &g_pcpu[cpuid] by pcpu_install_gs() (the macro
+     * cannot take a pointer as a constant), so %gs:offset reaches this CPU's
+     * struct pcpu — e.g. %gs:8 is the running task (_current).  Placeholder
+     * base 0 here; on the BSP it is set in smpInit().
+     */
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
 };
 
 struct
 {
 	unsigned short limit __attribute__((packed));
 	union descriptorTableUnion *gdt __attribute__((packed));
-} loadGDT = {(11 * sizeof(union descriptorTableUnion) - 1), ubixGDT};
+} loadGDT = {(12 * sizeof(union descriptorTableUnion) - 1), ubixGDT};
 
 static char *argv_init[2] = {
     "init",
@@ -120,7 +129,12 @@ static char *argv_init[2] = {
 }; /* ARGV For Initial Process */
 
 static char *envp_init[6] = {
-    "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", 0x0,
+    "HOME=/",
+    "PWD=/",
+    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
+    "USER=root",
+    "GROUP=admin",
+    0x0,
 }; /* ENVP For Initial Process */
 
 struct bootinfo _bootinfo;
@@ -175,7 +189,9 @@ int kmain(u_int32_t rootdev)
 				sys_minor = mb_partition_to_minor(mbi->boot_device);
 				kprintf("multiboot: boot_device=0x%X -> "
 				        "major=%i minor=%i\n",
-				        mbi->boot_device, sys_major, sys_minor);
+				        mbi->boot_device,
+				        sys_major,
+				        sys_minor);
 			}
 		}
 
@@ -183,7 +199,8 @@ int kmain(u_int32_t rootdev)
 		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "/", "rw") != 0x0)
 			kprintf("Problem Mounting root (FAT) from major=%i "
 			        "minor=%i\n",
-			        sys_major, sys_minor);
+			        sys_major,
+			        sys_minor);
 		else
 			kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
 	}
@@ -197,7 +214,11 @@ int kmain(u_int32_t rootdev)
 	kprintf("Starting OS\n");
 
 	kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
-	kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));
+	kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n",
+	        B_TYPE(_bootdev),
+	        B_SLICE(_bootdev),
+	        B_UNIT(_bootdev),
+	        B_PARTITION(_bootdev));
 	kprintf("_bootinfo.bi_version: 0x%X\n", _bootinfo.bi_version);
 	kprintf("_bootinfo.bi_size: 0x%X\n", _bootinfo.bi_size);
 	kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);

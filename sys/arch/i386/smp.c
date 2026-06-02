@@ -28,6 +28,7 @@
 
 #include <i386/smp.h>
 #include <i386/pcpu.h>
+#include <sys/gdt.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
@@ -110,6 +111,30 @@ static void pcpu_register(u_int32_t id, u_int8_t apicid)
 	g_pcpu[id].online = 1;
 }
 
+/**
+ * Point this CPU's %gs at its per-CPU area.
+ *
+ * Patches GDT index GDT_PCPU_INDEX so its base is &g_pcpu[id], then loads
+ * SEL_PCPU into %gs.  Thereafter %gs:offsetof(struct pcpu, field) reads this
+ * CPU's slot — e.g. %gs:8 is the running task.  On a uniprocessor only id 0 is
+ * ever used; each AP calls this with its own id against its own GDT copy.
+ *
+ * The descriptor base must be written before %gs is loaded: loading a segment
+ * register re-reads the descriptor from the GDT in memory, so no relgdt is
+ * needed.  Loading %gs is purely additive until kernel entry paths reload it
+ * and _current is switched to %gs:8.
+ */
+void pcpu_install_gs(u_int32_t id)
+{
+	u_int32_t base = (u_int32_t)&g_pcpu[id];
+	u_int16_t sel = SEL_PCPU;
+
+	ubixGDT[GDT_PCPU_INDEX].descriptor.baseLow = (base & 0xFFFF);
+	ubixGDT[GDT_PCPU_INDEX].descriptor.baseMed = ((base >> 16) & 0xFF);
+	ubixGDT[GDT_PCPU_INDEX].descriptor.baseHigh = ((base >> 24) & 0xFF);
+
+	__asm__ __volatile__("movw %0, %%gs" : : "rm"(sel) : "memory");
+}
 
 struct gdt_descr
 {
@@ -213,9 +238,10 @@ int smpInit(void)
 	 * identity into the kernel space before any apicRead/apicWrite. */
 	vmm_remap_io_page(LAPIC_PHYS, KERNEL_PAGE_DEFAULT, sysID);
 
-	GDT_fixer(); /* build the flat GDT at 0x20000 that the APs load */
-	cpuInfo();    /* BSP self-registers as cpuinfo[0] */
+	GDT_fixer();                          /* build the flat GDT at 0x20000 that the APs load */
+	cpuInfo();                            /* BSP self-registers as cpuinfo[0] */
 	pcpu_register(0, cpuinfo[0].apic_id); /* BSP per-CPU slot */
+	pcpu_install_gs(0);                   /* BSP %gs -> g_pcpu[0] (unused yet) */
 
 	kprintf("smp: BSP online cpu%u apic_id=%d ver=0x%x \"%s\"\n",
 	        curcpu()->cpuid,
@@ -253,7 +279,9 @@ int smpInit(void)
 				        i,
 				        hb[i],
 				        g_pcpu[i].heartbeat,
-				        (i == 0) ? "BSP" : (g_pcpu[i].heartbeat != hb[i]) ? "running" : "STALLED");
+				        (i == 0)                         ? "BSP"
+				        : (g_pcpu[i].heartbeat != hb[i]) ? "running"
+				                                         : "STALLED");
 	}
 
 	return (0);
@@ -344,7 +372,7 @@ void apicMagic(void)
 
 	apicWrite(0x300, 0x000C4500); // INIT IPI, all-excluding-self
 	for (tmp = 0; tmp < 800000; tmp++)
-		asm("nop"); // ~10 ms settle
+		asm("nop");     // ~10 ms settle
 	apicWrite(0x300, sipi); // STARTUP IPI
 	for (tmp = 0; tmp < 800000; tmp++)
 		asm("nop");

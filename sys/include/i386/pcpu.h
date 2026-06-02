@@ -41,12 +41,13 @@ struct taskStruct; /* forward decl; full type in <ubixos/sched.h> (== kTask_t) *
  * thread off this, replacing the single global _current: with __i386__,
  * <ubixos/sched.h> defines _current as a macro for curcpu()->current.
  */
-struct pcpu {
-	u_int32_t cpuid;            /* logical CPU index (0 = BSP) */
-	u_int8_t apicid;            /* Local APIC id of this CPU */
-	u_int8_t online;            /* 1 once this CPU has registered itself */
-	struct taskStruct *current; /* thread currently running on this CPU (offset 8; see idt.c) */
-	struct taskStruct *idle;    /* this CPU's idle thread (pinned here) */
+struct pcpu
+{
+	u_int32_t cpuid;              /* logical CPU index (0 = BSP) */
+	u_int8_t apicid;              /* Local APIC id of this CPU */
+	u_int8_t online;              /* 1 once this CPU has registered itself */
+	struct taskStruct *current;   /* thread currently running on this CPU (offset 8; see idt.c) */
+	struct taskStruct *idle;      /* this CPU's idle thread (pinned here) */
 	volatile u_int32_t heartbeat; /* liveness counter bumped by the AP idle loop */
 };
 
@@ -64,5 +65,8 @@ u_int32_t smp_processor_id(void);
 
 /** Per-CPU state for the calling CPU (&g_pcpu[smp_processor_id()]). */
 struct pcpu *curcpu(void);
+
+/** Point this CPU's %gs at &g_pcpu[id] (patches the GDT, loads SEL_PCPU). */
+void pcpu_install_gs(u_int32_t id);
 
 #endif /* _I386_PCPU_H */
