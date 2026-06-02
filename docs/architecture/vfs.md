@@ -6,70 +6,79 @@
 
 ## Overview
 
-All filesystem calls route through the VFS layer.  Concrete drivers (FAT, ubixfs, devfs, etc.)
-register a vtable of function pointers; callers always go through VFS dispatch — never call
-driver functions directly from outside `sys/fs/vfs/`.
+All filesystem calls route through the VFS layer. Concrete drivers (FAT, ubixfs,
+devfs, procfs, etc.) register a vtable of function pointers; callers always go
+through VFS dispatch — never call driver functions directly from outside
+`sys/fs/vfs/`.
 
 ---
 
 ## Path Format and Mountpoints
 
-UbixOS paths use a `<mountpoint>:/path` prefix convention:
+UbixOS uses **POSIX absolute paths** — `/bin/sh`, `/etc/userdb`, `/dev/tty`. The
+older `<mountpoint>:/path` (`sys:/bin/…`) convention has been removed.
 
-```
-sys:/bin/shell        — file "shell" under /bin on the "sys" mount
-sys:/etc/userdb       — user database
-```
+Mount points are themselves POSIX paths. At boot:
 
-The kernel tracks the **full VFS path** (including mountpoint) in `_current->oInfo.cwd`.
-Example: after `cd /bin`, cwd is `sys:/bin/`.
+| Mount point | Driver | Source |
+|-------------|--------|--------|
+| `/` | FAT32 (root, disk image) | `vfs_mount(major, minor, 0, 0xFA, "/", "rw")` in [main.c](../../sys/init/main.c) |
+| `/dev` | devfs | [sys/fs/devfs/](../../sys/fs/devfs/) |
+| `/proc` | procfs | [sys/fs/procfs/](../../sys/fs/procfs/) |
 
-`sys_chdir` preserves the mountpoint prefix for bare `/` paths: if the user does
-`cd /`, cwd becomes `sys:/`, not just `/`.
+`vfs_findMount(path)` ([mount.c](../../sys/fs/vfs/mount.c)) resolves a path to its
+filesystem by **longest-matching mount prefix**, matched on whole path
+components (so `/dev` does not match `/developer`). The mount point string passed
+to `vfs_mount` is stored verbatim in `mp->mountPoint`.
+
+A FAT volume's label (e.g. `SYS`, `UBIX`) is read from the BPB and stored in
+`fat_fs->vol_label` for **informational use only** (a future automount daemon);
+it does **not** affect the mount point — the FAT driver explicitly preserves the
+POSIX `mp->mountPoint`.
 
 ---
 
-## Dual `getcwd` Design
+## Current Working Directory
 
-Two syscalls return the current directory, for different audiences:
+`_current->oInfo.cwd` holds a plain **POSIX absolute path** (no mountpoint
+prefix). A new process starts at `/` (`sprintf(oInfo.cwd, "/")` in
+[i386_exec.c](../../sys/arch/i386/i386_exec.c)).
 
-| Syscall | Slot | Vector | Returns | Purpose |
-|---------|------|--------|---------|---------|
-| `sys_getcwd` | 49 | `int $0x80` | `/bin/` (no mountpoint) | POSIX compatibility |
-| `sys_getvfscwd` | 41 | `int $0x80` | `sys:/bin/` (full path) | UbixOS native apps |
+Two syscalls return the cwd, both now returning the POSIX path verbatim from
+`oInfo.cwd`:
 
-`sys_getcwd` strips the mountpoint prefix before returning, so POSIX programs that parse
-the result see a standard absolute path.  `sys_getvfscwd` returns the full internal path.
+| Syscall | Slot / table | Notes |
+|---------|--------------|-------|
+| `sys_getcwd` | POSIX (`int $0x80`, #326) | libc `getcwd()` |
+| `sys_getvfscwd` | native (`int $0x81`, slot 41) | `ubix_getcwd()` in `lib/ubix_api/` |
 
-Userland access:
-- `getcwd(buf, size)` in libc calls `sys_getcwd` — for portable code.
-- `ubix_getcwd(buf, size)` in `lib/ubix_api/ubixcwd.c` calls `sys_getvfscwd` via slot 41.
-
-The shell uses `ubix_getcwd()` for its prompt so it can display the full `sys:/bin/#` path.
-POSIX apps that call `getcwd()` are unaffected.
+> **Legacy note:** the two syscalls existed to distinguish a POSIX-stripped path
+> (`/bin/`) from a full mountpoint-prefixed path (`sys:/bin/`). Since cwd no
+> longer carries a mountpoint prefix, both return the same string and the
+> distinction is vestigial. `sys_getvfscwd` is retained for the native ABI.
 
 ---
 
 ## Shell Path Handling
 
-The shell treats paths containing `:` as absolute VFS paths, passing them directly to
-`execve` without prepending cwd.  This allows `sys:/bin/hello` to work from any directory.
-
-`execve` sets the initial cwd of the new process to `sys:/` (set in
-`sys/arch/i386/i386_exec.c`).
+The shell uses ordinary POSIX path resolution: absolute paths (`/bin/ls`) go
+straight to `execve`; relative paths are resolved against cwd. There is no longer
+a `:`-prefixed VFS-path special case. The prompt shows the POSIX cwd.
 
 ---
 
 ## Filesystem Drivers
 
-Each driver registers with VFS at boot.  Currently mounted drivers:
+Each driver registers a `fileSystem` vtable with VFS at boot and is attached to a
+POSIX mount point:
 
-| Name | Source | Mounted as |
+| Name | Source | Mounted at |
 |------|--------|-----------|
-| FAT32 | `sys/fs/fat/` | `sys:` — root filesystem on disk image |
-| devfs | `sys/fs/devfs/` | device namespace |
-| ubixfs | `sys/fs/ubixfs/` | (secondary; in-memory) |
+| FAT32 | [sys/fs/fat/](../../sys/fs/fat/) | `/` (root, disk image); additional FAT volumes (e.g. USB) mount at their own POSIX path |
+| devfs | [sys/fs/devfs/](../../sys/fs/devfs/) | `/dev` |
+| procfs | [sys/fs/procfs/](../../sys/fs/procfs/) | `/proc` |
+| ubixfs / ubixfsv2 | `sys/fs/ubixfs*/` | secondary / experimental |
 
-The FAT driver uses `hdRead` from the IDE driver.  `hdRead` adds the partition offset
-(`parOffset`, LBA 2048 for the disk image) transparently — do not add the offset again in
-the FAT layer when computing sector addresses.
+The FAT driver reads via `hdRead` from the IDE driver. `hdRead` adds the
+partition offset (`parOffset`, LBA 2048 for the disk image) transparently — do
+not add the offset again in the FAT layer when computing sector addresses.

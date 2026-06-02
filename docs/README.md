@@ -9,7 +9,7 @@
 | [architecture/i386-page-directory-map.md](architecture/i386-page-directory-map.md) | Canonical memory map: PDEs 0–1023, physical low memory, GDT selectors, cleanup/multi-arch notes |
 | [architecture/mpi.md](architecture/mpi.md) | Message Passing Interface: mailboxes, syscalls, known bugs, limitations |
 | [architecture/syscalls.md](architecture/syscalls.md) | Dual syscall table design: int $0x80 (POSIX) vs int $0x81 (native) |
-| [architecture/vfs.md](architecture/vfs.md) | VFS layer, path format, dual-getcwd design, filesystem drivers |
+| [architecture/vfs.md](architecture/vfs.md) | VFS layer, POSIX paths/mountpoints (`/`, `/dev`, `/proc`), cwd, filesystem drivers |
 
 ## Design Specs
 
