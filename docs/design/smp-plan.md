@@ -27,8 +27,8 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 1b | INIT-SIPI the APs; trampoline at `0x0` + IVT save/restore | ✅ | |
 | 1b | Enumerate cores (`ap_online`) | ✅ | `-smp N` → N cores |
 | 2.1| `struct pcpu` + `g_pcpu[]` + `curcpu()`/`smp_processor_id()` | ✅ | each core self-registers |
-| 2.2| `_current` → per-CPU macro (`curcpu()->current`) | ✅ | uniprocessor no-op |
-| 2.2| Repoint `_int7` FPU asm off `_current` symbol | ✅ | offset static-assert |
+| 2.2| `_current` → per-CPU macro | ⛔ | REVERTED: caused nondeterministic compositor corruption / triple-fault on 2nd GUI app. _current is a plain global; revisit with %gs-relative per-CPU when SMP scheduling lands |
+| 2.2| Repoint `_int7` FPU asm off `_current` symbol | ⛔ | reverted with 2.2 |
 | 2.3| APs adopt kernel CR3 + enable paging | ✅ | APs in kernel address space |
 | 2.3| APs run a per-CPU idle loop in parallel | 🟡 | busy `heartbeat++;pause` loop; verified advancing on all cores.  Real `sti/hlt` idle + scheduler-dispatched threads pending Phase 3 |
 | 2.3| Per-CPU idle *threads* (scheduler-dispatched) | ⬜ | needs per-CPU identity + SMP-safe IRQs |
