@@ -31,6 +31,8 @@
 
 #include <sys/types.h>
 
+#define LAPIC_PHYS 0xFEE00000 /* Local APIC MMIO physical base */
+
 struct cpuinfo_t {
     u_int8_t id;
     u_int8_t ok;  // 1=Ok, 0=Bad
@@ -42,7 +44,9 @@ struct cpuinfo_t {
     char ident[17];
 };
 
-void smpInit();
+extern struct cpuinfo_t cpuinfo[8];
+
+int smpInit(void);
 void cpuidDetect();
 u_int8_t cpuInfo();
 u_int32_t getEflags();

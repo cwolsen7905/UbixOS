@@ -30,6 +30,8 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
+#include <lib/kmalloc.h>
+#include <vmm/paging.h>
 #include <string.h>
 #include <sys/io.h>
 
@@ -173,16 +175,31 @@ void c_ap_boot(void)
 	}
 }
 
-void smpInit()
+/*
+ * smpInit (SMP phase 1a) — bring the boot processor's view of SMP online:
+ * map the Local APIC MMIO so the LAPIC is reachable, pre-build the AP GDT, and
+ * register the BSP itself (reading its APIC id, version and CPUID brand).
+ *
+ * Application processors are NOT started yet — apicMagic() (INIT-SIPI) is
+ * deferred to the next sub-phase so this step cannot fault an AP.  Called once
+ * from the boot init-task list.  @return 0 always.
+ */
+int smpInit(void)
 {
-	spinLock(&initSpinLock);
-	GDT_fixer();
-	cpuidDetect();
-	cpuInfo();
-	apicMagic();
-	spinUnlock(&initSpinLock);
+	/* The LAPIC lives at a fixed high MMIO address with no mapping yet; map it
+	 * identity into the kernel space before any apicRead/apicWrite. */
+	vmm_remap_io_page(LAPIC_PHYS, KERNEL_PAGE_DEFAULT, sysID);
 
-	// cpu0_thread();
+	GDT_fixer(); /* pre-build the flat GDT at 0x20000 that APs will load later */
+	cpuInfo();    /* BSP self-registers as cpuinfo[0] */
+
+	kprintf("smp: BSP online apic_id=%d ver=0x%x \"%s\"\n",
+	        cpuinfo[0].apic_id,
+	        cpuinfo[0].apic_ver,
+	        cpuinfo[0].brand);
+
+	/* apicMagic() (AP INIT-SIPI-SIPI) is deferred to the next sub-phase. */
+	return (0);
 }
 
 void cpuidDetect()
@@ -201,14 +218,10 @@ u_int8_t cpuInfo()
 {
 	u_int32_t data[4], i;
 
-	if (!(getEflags() & (1 << 21)))
-	{                                           // If the cpuid bit in eflags not set..
-		setEflags(getEflags() | (1 << 21)); // ..try and set it to see if it comes on..
-		if (!(getEflags() & (1 << 21)))
-		{ // It didn't.. This CPU suck
-			kpanic("CPU doesn't support CPUID, get a newer machine\n");
-		}
-	}
+	/* CPUID is unconditionally present on every CPU UbixOS boots on (GRUB
+	 * multiboot i386, Pentium and later), so we call it directly.  The legacy
+	 * EFLAGS.ID toggle test that used to gate this was both unnecessary and
+	 * unreliable. */
 
 	spinLock(&cpuInfoLock);
 	cpuinfo[cpus].ok = 1;
