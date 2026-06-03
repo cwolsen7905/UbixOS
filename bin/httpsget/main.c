@@ -7,10 +7,10 @@
  * validation against vendored root CAs -> HTTP exchange).
  *
  * Entropy for the TLS RNG is injected from getentropy() (the kernel CSPRNG),
- * since BearSSL's br_prng_seeder_system() is not wired on UbixOS.  Certificate
- * EXPIRY is not yet checked (X.509 time left at 0); the chain and hostname ARE
- * validated against the trust anchors.  Adding gettimeofday()-based time is a
- * follow-up.
+ * since BearSSL's br_prng_seeder_system() is not wired on UbixOS.  The X.509
+ * validator is given the current time from gettimeofday() (BearSSL requires a
+ * time or it returns BR_ERR_X509_TIME_UNKNOWN); chain, hostname/SNI and expiry
+ * are all validated against the vendored trust anchors.
  *
  * Usage: httpsget <host> [path]
  */
@@ -21,6 +21,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <sys/time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -143,6 +144,21 @@ int main(int argc, char **argv)
 
 	/* Set up the TLS client with the vendored trust anchors. */
 	br_ssl_client_init_full(&sc, &xc, TAs, TAs_NUM);
+
+	/*
+	 * Give the X.509 validator the current time, else it returns
+	 * BR_ERR_X509_TIME_UNKNOWN (53).  BearSSL counts days since 0000-01-01
+	 * (proleptic Gregorian); 719528 is the day index of 1970-01-01, so add it
+	 * to the Unix-epoch day count.  Requires a roughly-correct system clock.
+	 */
+	{
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+		uint32_t days = (uint32_t)(tv.tv_sec / 86400) + 719528;
+		uint32_t secs = (uint32_t)(tv.tv_sec % 86400);
+		printf("httpsget: validation clock = epoch %ld (day %u)\n", (long)tv.tv_sec, days);
+		br_x509_minimal_set_time(&xc, days, secs);
+	}
 
 	/* Seed the TLS RNG from the kernel CSPRNG (no system seeder on UbixOS). */
 	{
