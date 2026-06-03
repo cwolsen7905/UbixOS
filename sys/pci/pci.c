@@ -380,9 +380,11 @@ u_int32_t pciProbe(int bus, int dev, int func)
 }
 
 extern struct ubx_driver ac97_ubx_driver;
+extern struct ubx_driver ne2k_ubx_driver;
 
 static struct ubx_driver *const pci_drv_table[] = {
     &e1000_ubx_driver,
+    &ne2k_ubx_driver,
     &ide_ubx_driver,
     &lnc_ubx_driver,
     &uhci_ubx_driver,

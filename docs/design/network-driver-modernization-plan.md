@@ -40,7 +40,7 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 2 | Top-half / bottom-half (ithread) for all non-trivial ISRs | 🟡 | e1000 already "ISR wakes thread"; kbd/mouse are minimal top-halves (ring enqueue) — no inline-heavy ISR left to convert |
 | 3 | Callout / timer subsystem (expiry-sorted, O(1)/tick) | ✅ | commit 5ca1b070c — `sys/kern/callout.c`; timed sleep arms a callout, per-tick `wake_tick` taskList scan removed; lwIP timers ride it via tcpip_thread |
 | 4 | Zero-copy pbuf path (drop the copy-into-kernel-buffer for `tcpip_thread`) | ⬜ | needs the stack to run with proper kernel mappings |
-| 5 | newbus-style driver model: `probe`/`attach`/`detach` + resource manager | 🟡 | have PCI enumeration + `irq_register`; formalize lifecycle |
+| 5 | newbus-style driver model: `probe`/`attach`/`detach` + resource manager | ✅ | `sys/sys/bus.c` (`ubx_device`/`ubx_driver`/`ubx_resource`); all live drivers (e1000, pci, IDE `hd`, lnc, ac97, mouse, atkbd, fdc, hid_kbd) attach through it; last old-model driver (`ne2k`, unbuilt) deleted along with `device.old.h` |
 
 ---
 
@@ -121,17 +121,38 @@ so the NIC's RX buffer flows up as a pbuf chain without a copy; TX likewise.
 
 **Testable:** throughput improves; no per-packet `memcpy` in the RX/TX path.
 
-## Phase 5 — Driver / bus model
+## Phase 5 — Driver / bus model ✅
 
 **Why:** formalize driver lifecycle and resource ownership.
 
-**What:** a newbus-style model — drivers `probe`/`attach`/`detach` against a bus
-(PCI/ISA/USB), with IRQ/MMIO/DMA resources handed out by a resource manager.
-UbixOS already has PCI enumeration and `irq_register`; this layers lifecycle and
-resource tracking on top.
+**What (done):** a newbus-style model lives in `sys/sys/bus.c` /
+`sys/include/sys/bus.h` — `ubx_device` / `ubx_driver` / `ubx_resource` with
+`drv_probe` / `drv_attach` / `drv_detach`, resource allocators
+(`ubx_alloc_memory` / `ubx_alloc_ioport` / `ubx_alloc_irq`), block/char device
+registration, and `ubx_bus_probe_and_attach`. It was built out with the USB
+device-model work. **All live drivers attach through it**: e1000, pci, IDE
+(`hd`), lnc (PCNET), ac97, mouse, atkbd, fdc, hid_kbd.
 
-**Testable:** hot-path drivers (e1000, IDE, UHCI) attach/detach cleanly through
-the framework; resources are released on detach.
+The legacy `struct device` model (`sys/include/sys/device.old.h`) had a single
+remaining consumer, the old NE2000 driver (`sys/isa/ne2k.c`), which was not even
+compiled (`ne2k.o` was commented out of `sys/isa/Makefile`). It and
+`device.old.h` have been **deleted**, so newbus is now the only device model in
+the tree.
+
+NE2000 support was then **rewritten from scratch** on the modern stack
+(`sys/pci/ne2k.c` + `sys/net/netif/ne2knetif.c`) targeting the PCI RTL8029AS
+(vendor 0x10EC / device 0x8029, QEMU `ne2k_pci`): newbus probe/attach, an
+`irq_register` top-half that only flags + `sched_wakeup_chan`, and an RX thread
+that sleeps on `sched_wait_event_timeout` and drains the DP8390 ring — the same
+shape as the e1000. `net_init` prefers the e1000 (QEMU default) and falls back
+to ne2k. Verified in QEMU (`bmake run-ne2k`): probe→attach→MAC read→TX→
+IRQ-driven RX→DHCP bound (got 10.0.2.15, confirmed in the frame dump). The
+DP8390 register core takes `(iobase, irq)`, so an ISA attach for real vintage
+hardware is a small future addition; RX-ring overflow recovery (`ISR_OVW`) is
+not yet implemented (the RX-thread safety timeout covers it for now).
+
+**Future:** DMA-tag / busdma-style resource for zero-copy (ties into Phase 4);
+hot-plug detach paths exercised end-to-end (USB already detaches on unplug).
 
 ---
 

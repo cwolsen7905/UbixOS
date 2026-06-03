@@ -2,8 +2,6 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * This was developed by Christopher W. Olsen for the UbixOS Project.
- *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
  *
@@ -26,38 +24,14 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _DEVICE_H
-#define _DEVICE_H
+#ifndef _NETIF_NE2KNETIF_H
+#define _NETIF_NE2KNETIF_H
 
-#include <sys/types.h>
+#include "net/netif.h"
 
-struct device {
-  struct net *net;
-  u_int16_t ioAddr;
-  u_int32_t irq;
-  struct ei_device *priv;
-  u_int32_t mtu;
-  };
+extern struct netif ne2k_netif;
 
-struct net {
-  char mac[6];
-  char broadcast[6];
-  };
+err_t ne2knetif_init(struct netif *netif);
+void ne2knetif_input(struct netif *netif);
 
-struct ei_device {
-  int txStartPage;
-  int rxStartPage;
-  int stopPage;
-  int currentPage;
-  u_int16_t word16;
-  u_int32_t pingPong;
-  int tx1;
-  int tx2;
-  };
-
-#endif
-
-/***
- END
- ***/
-
+#endif /* _NETIF_NE2KNETIF_H */

@@ -40,16 +40,43 @@
 
 #include <netif/ethernet.h>
 #include <netif/e1000netif.h>
+#include <netif/ne2knetif.h>
 
 #include <ubixos/exec.h>
 #include <lib/kmalloc.h>
 #include <sys/klog.h>
 #include <pci/e1000.h>
+#include <pci/ne2k.h>
 
 static void e1000_thread_trampoline(void *arg) {
 	(void)arg;
 	void e1000_thread(void);
 	e1000_thread();
+}
+
+static void ne2k_thread_trampoline(void *arg) {
+	(void)arg;
+	void ne2k_thread(void);
+	ne2k_thread();
+}
+
+/*
+ * Pick the active NIC's lwIP netif + init function.  The e1000 is preferred
+ * when present (it is QEMU's default NIC); the NE2000/RTL8029 is the fallback
+ * for hardware that has one instead.  Returns NULL via *netif if no NIC
+ * attached.
+ */
+static struct netif *net_active_netif(netif_init_fn *init_fn_out) {
+	if (e1000_ready) {
+		*init_fn_out = e1000netif_init;
+		return &e1000_netif;
+	}
+	if (ne2k_ready) {
+		*init_fn_out = ne2knetif_init;
+		return &ne2k_netif;
+	}
+	*init_fn_out = NULL;
+	return NULL;
 }
 
 /*
@@ -78,32 +105,41 @@ static void net_status_cb(struct netif *netif) {
 
 static void net_tcpip_init_done(void *arg) {
 	ip_addr_t ipaddr, netmask, gw;
+	netif_init_fn init_fn;
+	struct netif *nif;
 	(void)arg;
+
+	nif = net_active_netif(&init_fn);
+	if (nif == NULL)
+		return;
 
 	IP4_ADDR(&ipaddr,  0, 0, 0, 0);
 	IP4_ADDR(&netmask, 0, 0, 0, 0);
 	IP4_ADDR(&gw,      0, 0, 0, 0);
 
-	netif_add(&e1000_netif, &ipaddr, &netmask, &gw, NULL,
-	    e1000netif_init, tcpip_input);
-	netif_set_status_callback(&e1000_netif, net_status_cb);
-	netif_set_link_up(&e1000_netif);
-	netif_set_up(&e1000_netif);
-	netif_set_default(&e1000_netif);
+	netif_add(nif, &ipaddr, &netmask, &gw, NULL, init_fn, tcpip_input);
+	netif_set_status_callback(nif, net_status_cb);
+	netif_set_link_up(nif);
+	netif_set_up(nif);
+	netif_set_default(nif);
 
-	dhcp_start(&e1000_netif);
+	dhcp_start(nif);
 	klog(KLOG_INFO, "net: DHCP requested");
 }
 
 int net_init(void) {
-	if (!e1000_ready) {
+	if (!e1000_ready && !ne2k_ready) {
 		klog(KLOG_WARNING, "net: no NIC available, skipping network init");
 		return 0;
 	}
 
 	tcpip_init(net_tcpip_init_done, NULL);
 
-	sys_thread_new("e1000Thread", e1000_thread_trampoline, NULL, 0x1000, 0);
+	/* Spawn the RX thread for whichever NIC attached (e1000 preferred). */
+	if (e1000_ready)
+		sys_thread_new("e1000Thread", e1000_thread_trampoline, NULL, 0x1000, 0);
+	else
+		sys_thread_new("ne2kThread", ne2k_thread_trampoline, NULL, 0x1000, 0);
 
 	klog(KLOG_INFO, "net: lwIP started");
 	return 0;

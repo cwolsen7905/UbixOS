@@ -294,6 +294,19 @@ run-debug:
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
+# Headless run with a NE2000 (RTL8029) NIC instead of the e1000, to exercise the
+# ne2k driver.  net_init falls back to ne2k when no e1000 is present.  Frames are
+# dumped to /tmp/ne2kdump.pcap (decode with: tcpdump -nr /tmp/ne2kdump.pcap).
+run-ne2k:
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -machine pc \
+	  -device piix3-usb-uhci,id=uhci-bus \
+	  -device usb-kbd,bus=uhci-bus.0,port=1 \
+	  ${_USB_FLAGS} \
+	  -nographic \
+	  -device ne2k_pci,netdev=net0 -netdev user,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/ne2kdump.pcap
+
 # Bridge NIC to en0 (requires sudo on macOS — vmnet-bridged needs entitlements).
 # The VM appears on your LAN and gets a real IP from your router's DHCP server.
 # Use this to bypass QEMU SLIRP and verify the e1000 driver against a real DHCP.
