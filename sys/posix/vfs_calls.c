@@ -53,6 +53,7 @@
 /* Forward-declare lwIP read/write so we can call them for socket fds. */
 int lwip_send(int s, const void *dataptr, size_t size, int flags);
 int lwip_recv(int s, void *mem, size_t len, int flags);
+int lwip_close(int s);
 
 /* True when an unblocked signal is pending — used to make blocking I/O
  * loops interruptible.  td must be struct thread *. */
@@ -130,6 +131,17 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 					kfree(p_fd);
 				}
 
+				td->td_retval[0] = 0;
+				break;
+			case 2:
+				/* Socket fd: tear down the lwIP netconn before freeing the
+				 * descriptor.  Without this, every closed socket leaks its
+				 * netconn (and lwIP socket slot) — the small MEMP_NUM_NETCONN
+				 * pool is exhausted after a few connections and socket()
+				 * starts failing. */
+				lwip_close(fd->socket);
+				if (fdestroy(td, fd, args->fd) != 0)
+					klog(KLOG_ERR, "sys_close: fdestroy failed for socket fd %d", args->fd);
 				td->td_retval[0] = 0;
 				break;
 			case FD_TYPE_TTY:
