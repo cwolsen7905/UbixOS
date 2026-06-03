@@ -66,13 +66,6 @@ void sched() {
   /* Stir the CSPRNG with timer-tick RDTSC jitter (lock-free, every tick). */
   krandom_stir(0);
 
-  /* Low-rate safety wake (~12 Hz) for a registered device-RX thread, so a
-   * dropped NIC IRQ can't hang the network.  Done before taking the scheduler
-   * lock (sched_wakeup_chan takes it itself); cheap re-check of a sleeper, not
-   * a busy poll. */
-  if (g_sched_poll_chan != NULL && (systemVitals->sysTicks & 0xF) == 0)
-    sched_wakeup_chan(g_sched_poll_chan);
-
   /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
    * and reboot when time is up. Runs before the spinlock to keep it simple. */
   if (reboot_at_tick != 0) {
@@ -133,6 +126,26 @@ void sched() {
           rq_enqueue_locked(tmp);
         }
       }
+    }
+  }
+
+  /* --- Timed-sleep expiry: wake tasks whose sched_wait_event_timeout()
+   * deadline has elapsed (lwIP protocol timers ride on these).  wake_tick==0
+   * means no timeout.  Signed compare handles sysTicks wrap. --- */
+  {
+    u_int32_t now = systemVitals->sysTicks;
+    kTask_t  *tw;
+    for (tw = taskList; tw != NULL; tw = tw->next) {
+      if (tw->wake_tick == 0)
+        continue;
+      if ((tw->state != WAIT && tw->state != UNINTERRUPTIBLE && tw->state != INTERRUPTIBLE))
+        continue;
+      if ((int32_t)(now - tw->wake_tick) < 0)
+        continue;
+      tw->wake_tick = 0;
+      tw->wait_chan = NULL;
+      tw->state = READY;
+      rq_enqueue_locked(tw);
     }
   }
 

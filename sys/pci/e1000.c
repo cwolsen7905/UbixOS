@@ -56,6 +56,10 @@
  * Driver state
  * --------------------------------------------------------------------- */
 
+/* ~50 ms at the 200 Hz scheduler tick: how often the RX thread wakes to poll
+ * the descriptor ring as a safety net for a dropped e1000 PIC IRQ (QEMU). */
+#define E1000_RX_SAFETY_TICKS 10
+
 int          e1000_ready      = 0;
 volatile int e1000_irq_pending = 0;
 u_int8_t      e1000_mac[6];
@@ -336,9 +340,16 @@ static int e1000_rx_ready(void *arg) {
 
 void e1000_thread(void) {
 	for (;;) {
-		/* Sleep (off the run queue) until the ISR wakes us via
-		 * sched_wakeup_chan(&e1000_irq_pending) — no busy polling. */
-		sched_wait_event(&e1000_irq_pending, e1000_rx_ready, NULL);
+		/*
+		 * Sleep (off the run queue) until the ISR wakes us via
+		 * sched_wakeup_chan(&e1000_irq_pending).  The bounded timeout (~50 ms)
+		 * is a safety net: QEMU occasionally fails to deliver the e1000 PIC
+		 * IRQ, so we wake periodically to poll the descriptor ring's DD bit
+		 * (checked by e1000_rx_ready) rather than stalling RX — and the whole
+		 * IP stack with it — until the next IRQ.  Still no busy spin: idle
+		 * between wakes.
+		 */
+		sched_wait_event_timeout(&e1000_irq_pending, e1000_rx_ready, NULL, E1000_RX_SAFETY_TICKS);
 		e1000_irq_pending = 0;
 		e1000_rx_process();
 	}
@@ -410,10 +421,6 @@ int initE1000(u_int32_t bar0_phys, u_int8_t irq) {
 	e1000_write(E1000_REG_IMS, E1000_ICR_RXT0 | E1000_ICR_RXO | E1000_ICR_LSC);
 
 	e1000_ready = 1;
-
-	/* Register the RX wait channel for the scheduler's low-rate safety wake,
-	 * so a dropped PIC IRQ cannot stall RX (QEMU e1000 quirk). */
-	g_sched_poll_chan = &e1000_irq_pending;
 
 	klog(KLOG_NOTICE, "e1000: ready (irq=%u)", irq);
 	return 0;

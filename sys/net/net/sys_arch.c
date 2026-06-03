@@ -422,58 +422,76 @@ struct thread_start_param {
   void *arg;
 };
 
+/* Scheduler tick rate (PIT_TIMER in <isa/pit.h>); inlined here because that
+ * header pulls in device declarations that clash with the lwIP socket headers
+ * (duplicate struct iovec). */
+#define SYS_ARCH_HZ 200
+
+/*
+ * Safety re-check interval for "infinite" waits (~50 ms).  An infinite sleep
+ * hangs forever if its single wakeup is ever missed (a lost signal, or a sync
+ * object freed under a sleeper at connection teardown).  The busy-wait this
+ * replaced re-polled the real condition (sem->signaled / mbox head!=tail) so it
+ * always recovered; we keep that safety net by waking periodically and letting
+ * the caller re-test the real condition — without the 100%-CPU spin.  A real
+ * signal still wakes us immediately via sched_wakeup_chan(); this only bounds
+ * the worst-case latency of a missed wakeup.
+ */
+#define SYS_ARCH_SAFETY_TICKS (SYS_ARCH_HZ / 20)
+
+/* sched_wait_event predicate: the cond is "signaled" once its lock clears
+ * (ubthread_cond_signal/broadcast set it FALSE). */
+static int sysarch_cond_signaled(void *arg) {
+  return ((ubthread_cond_t)arg)->lock == FALSE;
+}
+
+/*
+ * Block until the condition is signaled or (timeout > 0) the timeout elapses.
+ * Sleeps off the run queue via sched_wait_event[_timeout] instead of spinning
+ * on sched_yield(), so a waiting network thread no longer starves the rest of
+ * the system (the GUI compositor in particular).
+ *
+ * @return 0 on timeout (caller maps to SYS_ARCH_TIMEOUT); else elapsed ms
+ *         (>=1) when signaled.  timeout == 0 means wait forever.
+ */
 static u_int32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, u_int32_t timeout) {
   ubthread_cond_t ubcond = *cond;
-  struct timeval rtime1, rtime2, deadline;
+  struct timeval rtime1, rtime2;
   struct timezone tz;
   unsigned int tdiff;
 
   /*
    * Arm the cond before releasing the mutex.  ubthread_cond_signal /
-   * ubthread_cond_broadcast set lock=FALSE; we spin here waiting for
-   * that transition.  Without arming first the lock starts FALSE and
-   * the spin exits immediately without ever waiting.
+   * ubthread_cond_broadcast set lock=FALSE and wake us; arming first closes the
+   * lost-wakeup window (sched_wait_event re-checks the predicate under the
+   * scheduler lock before actually sleeping).
    */
   ubcond->lock = TRUE;
+  gettimeofday(&rtime1, &tz);
+  ubthread_mutex_unlock(mutex);
 
   if (timeout > 0) {
-    gettimeofday(&rtime1, &tz);
-    deadline.tv_sec  = rtime1.tv_sec  + (long)(timeout / 1000);
-    deadline.tv_usec = rtime1.tv_usec + (long)((timeout % 1000) * 1000);
-    if (deadline.tv_usec >= 1000000L) {
-      deadline.tv_sec++;
-      deadline.tv_usec -= 1000000L;
-    }
+    u_int32_t ticks = (timeout * SYS_ARCH_HZ) / 1000;
+    int timedout;
 
-    ubthread_mutex_unlock(mutex);
-
-    for (;;) {
-      if (ubcond->lock == FALSE)
-        break;
-      gettimeofday(&rtime2, &tz);
-      if (rtime2.tv_sec > deadline.tv_sec ||
-          (rtime2.tv_sec == deadline.tv_sec &&
-           rtime2.tv_usec >= deadline.tv_usec))
-        break;
-      sched_yield();
-    }
-
+    if (ticks == 0)
+      ticks = 1;
+    timedout = sched_wait_event_timeout(ubcond, sysarch_cond_signaled, ubcond, ticks);
     ubthread_mutex_lock(mutex);
 
-    if (ubcond->lock == TRUE)
-      return 0;   /* timed out — caller maps 0 to SYS_ARCH_TIMEOUT */
-
-    gettimeofday(&rtime2, &tz);
-    tdiff = (rtime2.tv_sec - rtime1.tv_sec) * 1000 +
-            (rtime2.tv_usec - rtime1.tv_usec) / 1000;
-    return tdiff > 0 ? tdiff : 1;
+    if (timedout && ubcond->lock == TRUE)
+      return 0; /* timed out — caller maps 0 to SYS_ARCH_TIMEOUT */
   } else {
-    ubthread_mutex_unlock(mutex);
-    while (ubcond->lock == TRUE)
-      sched_yield();
+    /* Infinite wait, but wake periodically as a safety net so a missed signal
+     * self-heals (caller re-tests the real condition).  A real signal still
+     * wakes us immediately. */
+    (void)sched_wait_event_timeout(ubcond, sysarch_cond_signaled, ubcond, SYS_ARCH_SAFETY_TICKS);
     ubthread_mutex_lock(mutex);
-    return 0;
   }
+
+  gettimeofday(&rtime2, &tz);
+  tdiff = (rtime2.tv_sec - rtime1.tv_sec) * 1000 + (rtime2.tv_usec - rtime1.tv_usec) / 1000;
+  return tdiff > 0 ? tdiff : 1;
 }
 
 static struct sys_thread* current_thread(void) {

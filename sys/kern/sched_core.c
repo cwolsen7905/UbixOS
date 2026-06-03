@@ -86,15 +86,6 @@ kTask_t *_usedMath = 0x0;
 
 int need_resched = 0;
 
-/*
- * Optional low-rate safety wake target.  A NIC RX thread registers its wait
- * channel here; sched() pokes it a few times a second so a dropped device IRQ
- * (QEMU occasionally fails to deliver the e1000 PIC IRQ) cannot hang the network
- * forever.  NULL = disabled.  This is NOT the old busy poll — the registered
- * thread sleeps off the run queue and merely re-checks on these rare wakes.
- */
-void *g_sched_poll_chan = NULL;
-
 int sched_init()
 {
 	taskList = (kTask_t *)kmalloc(sizeof(kTask_t));
@@ -688,12 +679,17 @@ void sched_set_priority(kTask_t *t, u_int8_t pri)
  *              sched_wakeup_chan() must pass the same address.
  * @param cond  Returns nonzero once the awaited condition is satisfied.
  */
-void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg)
+int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_int32_t ticks)
 {
 	u_int32_t flags;
+	u_int32_t deadline;
 
 	if (_current == NULL)
-		return;
+		return 0;
+
+	deadline = systemVitals->sysTicks + ticks;
+	if (deadline == 0)
+		deadline = 1; /* 0 is reserved in wake_tick for "no timeout" */
 
 	for (;;)
 	{
@@ -702,19 +698,30 @@ void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg)
 		if (cond(arg))
 		{
 			restore_flags(flags);
-			return;
+			return 0;
+		}
+		if (ticks != 0 && (int32_t)(systemVitals->sysTicks - deadline) >= 0)
+		{
+			restore_flags(flags);
+			return 1; /* timed out */
 		}
 		spinLock(&schedulerSpinLock);
 		rq_dequeue_locked(_current);
 		_current->wait_chan = chan;
+		_current->wake_tick = (ticks != 0) ? deadline : 0;
 		_current->state = WAIT;
 		spinUnlock(&schedulerSpinLock);
 		restore_flags(flags);
 
-		/* Switch away.  Returns once a wakeup re-enqueues us and we are
-		 * re-dispatched; loop and re-test the condition. */
+		/* Switch away.  Returns once a wakeup (signal or timeout scan)
+		 * re-enqueues us and we are re-dispatched; loop and re-test. */
 		sched();
 	}
+}
+
+void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg)
+{
+	(void)sched_wait_event_timeout(chan, cond, arg, 0);
 }
 
 /**
@@ -744,6 +751,7 @@ void sched_wakeup_chan(void *chan)
 			continue;
 
 		t->wait_chan = NULL;
+		t->wake_tick = 0; /* cancel any pending timeout — woken by signal */
 
 		/* Mirror sched_io_wakeup()'s boost, but inline so the whole scan
 		 * runs under a single lock acquisition. */

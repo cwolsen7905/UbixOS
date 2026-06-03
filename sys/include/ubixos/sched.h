@@ -105,6 +105,7 @@ typedef struct taskStruct {
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
     void      *wait_chan;        /* sleep/wakeup channel: address slept on, NULL if not blocked */
+    u_int32_t  wake_tick;        /* timed-sleep deadline in sysTicks (0 = no timeout) */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
 } kTask_t;
@@ -160,13 +161,17 @@ void sched_pi_boost(kTask_t *t, u_int8_t pri);  /* PI: raise t to pri if higher 
 void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg);
 void sched_wakeup_chan(void *chan);
 
+/*
+ * Like sched_wait_event() but also returns after `ticks` scheduler ticks even
+ * if cond never holds (the timer's per-tick scan wakes timed sleepers).  Needed
+ * for lwIP's tcpip_thread, which waits with a deadline to drive protocol timers.
+ * @return 0 if cond was satisfied, 1 if the timeout expired first.
+ */
+int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_int32_t ticks);
+
 /* Permanently set a task's QoS floor + current priority (re-homing it in the
  * run queue if enqueued).  Used to drop the idle thread to QOS_IDLE. */
 void sched_set_priority(kTask_t *t, u_int8_t pri);
-
-/* Low-rate safety-wake channel (e.g. a NIC RX thread), poked by sched() a few
- * times a second to recover from a dropped device IRQ.  NULL = disabled. */
-extern void *g_sched_poll_chan;
 void sched_pi_restore(kTask_t *t);             /* PI: drop t back to base_priority  */
 
 void schedEndTask(pidType pid);
