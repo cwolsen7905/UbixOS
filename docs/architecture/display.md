@@ -15,32 +15,32 @@ GPU-accelerated compositing open without changing the protocol.
 ## Component map
 
 ```
-  ┌─────────────────────────────────────────────────────────┐
-  │  Kernel                                                 │
-  │  sys/kernel/fb.c                                        │
-  │    sys_mapfb      – maps VESA framebuffer into views    │
-  │    sys_shareregion– shares a vmm region into a client   │
+  ┌──────────────────────────────────────────────────────────┐
+  │  Kernel                                                  │
+  │  sys/kernel/fb.c                                         │
+  │    sys_mapfb      – maps VESA framebuffer into views     │
+  │    sys_shareregion– shares a vmm region into a client    │
   │    sys_getmouse   – drains mouse ring buffer (syscall 44)│
   │    sys_getkbd     – drains kbd ring buffer  (syscall 46) │
-  │  sys/isa/atkbd.c  – ISR fills kbd_ring[]                │
-  │  sys/isa/mouse.c  – ISR fills mouse ring               │
-  └───────────────────────────┬─────────────────────────────┘
+  │  sys/isa/atkbd.c  – ISR fills kbd_ring[]                 │
+  │  sys/isa/mouse.c  – ISR fills mouse ring                 │
+  └───────────────────────────┬──────────────────────────────┘
                               │ syscalls / shared memory
-  ┌───────────────────────────▼─────────────────────────────┐
-  │  bin/views  (compositor — C++)                          │
-  │                                                         │
-  │  • Owns the physical framebuffer (via sys_mapfb)        │
-  │  • Maintains Window list: id, x/y/w/h, shm, mbox       │
-  │  • Polls mouse and kbd via inline syscall stubs         │
-  │  • Dispatches DISPLAY_MOUSE / DISPLAY_KEY to focused win│
-  │  • On DISPLAY_CLAIM: vmm_share_region → client gets shm │
-  │  • On DISPLAY_FLIP: composites client buffer onto screen│
-  │  • On DISPLAY_RELEASE: repaints desktop, reblit others  │
-  │  • Server-side decorations: draws title bar + close btn │
-  │  • focus-follows-click: left click sets focused window  │
-  └──────┬────────────────────────────────┬─────────────────┘
+  ┌───────────────────────────▼──────────────────────────────┐
+  │  bin/views  (compositor — C++)                           │
+  │                                                          │
+  │  • Owns the physical framebuffer (via sys_mapfb)         │
+  │  • Maintains Window list: id, x/y/w/h, shm, mbox         │
+  │  • Polls mouse and kbd via inline syscall stubs          │
+  │  • Dispatches DISPLAY_MOUSE / DISPLAY_KEY to focused win │
+  │  • On DISPLAY_CLAIM: vmm_share_region → client gets shm  │
+  │  • On DISPLAY_FLIP: composites client buffer onto screen │
+  │  • On DISPLAY_RELEASE: repaints desktop, reblit others   │
+  │  • Server-side decorations: draws title bar + close btn  │
+  │  • focus-follows-click: left click sets focused window   │
+  └──────┬────────────────────────────────┬──────────────────┘
          │ MPI                            │ MPI
-  ┌──────▼──────────┐           ┌─────────▼───────────────┐
+  ┌──────▼──────────┐           ┌─────────▼────────────────┐
   │  bin/taskbar    │           │  bin/term  (and others)  │
   │  (C++)          │           │  (C++)                   │
   │                 │           │                          │

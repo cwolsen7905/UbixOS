@@ -104,6 +104,7 @@ typedef struct taskStruct {
     struct taskStruct *rq_next;  /* per-priority run queue forward link */
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
+    void      *wait_chan;        /* sleep/wakeup channel: address slept on, NULL if not blocked */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
 } kTask_t;
@@ -113,6 +114,7 @@ typedef struct taskStruct {
  * below its QoS floor.  Inspired by macOS DISPATCH_QOS_CLASS_*.
  */
 typedef enum {
+    QOS_IDLE             =  0,  /* per-system idle thread — runs only when nothing else is ready */
     QOS_BACKGROUND       =  4,  /* maintenance work, automountd */
     QOS_UTILITY          =  8,  /* compilation, long-running tools */
     QOS_DEFAULT          = 12,  /* default — inherited from parent */
@@ -141,6 +143,30 @@ void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     *
 void sched_zombie(kTask_t *t);          /* ZOMBIE  — exited, awaiting wait() */
 void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
 void sched_pi_boost(kTask_t *t, u_int8_t pri);  /* PI: raise t to pri if higher      */
+
+/*
+ * Wait-channel sleep/wakeup (replaces sched_yield() busy-wait loops).
+ *
+ * sched_wait_event(chan, cond, arg): block _current on the address `chan` until
+ * cond(arg) returns nonzero, truly leaving the run queue (CPU goes idle instead
+ * of spinning).  cond is re-checked with interrupts disabled before each sleep,
+ * so it is race-free against a waker that sets the condition then calls
+ * sched_wakeup_chan(chan) — including a waker in interrupt context.
+ *
+ * sched_wakeup_chan(chan): make every task sleeping on `chan` runnable again
+ * (I/O-boosted).  Safe to call from an ISR: it never yields (schedulerSpinLock
+ * is only ever held with interrupts disabled, so it is free when an IRQ fires).
+ */
+void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg);
+void sched_wakeup_chan(void *chan);
+
+/* Permanently set a task's QoS floor + current priority (re-homing it in the
+ * run queue if enqueued).  Used to drop the idle thread to QOS_IDLE. */
+void sched_set_priority(kTask_t *t, u_int8_t pri);
+
+/* Low-rate safety-wake channel (e.g. a NIC RX thread), poked by sched() a few
+ * times a second to recover from a dropped device IRQ.  NULL = disabled. */
+extern void *g_sched_poll_chan;
 void sched_pi_restore(kTask_t *t);             /* PI: drop t back to base_priority  */
 
 void schedEndTask(pidType pid);

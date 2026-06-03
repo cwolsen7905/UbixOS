@@ -86,6 +86,15 @@ kTask_t *_usedMath = 0x0;
 
 int need_resched = 0;
 
+/*
+ * Optional low-rate safety wake target.  A NIC RX thread registers its wait
+ * channel here; sched() pokes it a few times a second so a dropped device IRQ
+ * (QEMU occasionally fails to deliver the e1000 PIC IRQ) cannot hang the network
+ * forever.  NULL = disabled.  This is NOT the old busy poll — the registered
+ * thread sleeps off the run queue and merely re-checks on these rare wakes.
+ */
+void *g_sched_poll_chan = NULL;
+
 int sched_init()
 {
 	taskList = (kTask_t *)kmalloc(sizeof(kTask_t));
@@ -627,6 +636,128 @@ void sched_io_wakeup(kTask_t *t)
 		if (boosted > t->priority)
 			t->priority = boosted;
 		t->boost_quanta = 2;
+	}
+
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
+/**
+ * Permanently set a task's QoS floor and current priority.
+ *
+ * Re-homes the task in the run queue when it is enqueued (rq_dequeue_locked
+ * keys on the old priority, so the bucket must be corrected by dequeue →
+ * change → enqueue).  Used at boot to drop the idle thread to QOS_IDLE.
+ */
+void sched_set_priority(kTask_t *t, u_int8_t pri)
+{
+	u_int32_t flags;
+	int       was_ready;
+
+	if (t == NULL)
+		return;
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+	was_ready = (t->state == READY);
+	if (was_ready)
+		rq_dequeue_locked(t);
+	t->base_priority = pri;
+	t->priority = pri;
+	t->boost_quanta = 0;
+	if (was_ready)
+		rq_enqueue_locked(t);
+	spinUnlock(&schedulerSpinLock);
+	restore_flags(flags);
+}
+
+/**
+ * Block _current on a wait channel until a condition holds.
+ *
+ * Replaces the sched_yield() busy-wait loops: instead of spinning READY (and
+ * burning a CPU / starving lower-priority work like the compositor), the task
+ * leaves the run queue (state WAIT) so the CPU can run something else or idle.
+ *
+ * The condition is re-tested with interrupts disabled immediately before each
+ * sleep, and _current is marked WAIT under schedulerSpinLock — the same lock
+ * sched_wakeup_chan() takes — so there is no lost-wakeup window against a waker
+ * that does "set condition; sched_wakeup_chan(chan)", even an ISR waker.  On UP,
+ * IRQs-off + no-preemption makes the cond() test atomic with the sleep.
+ *
+ * @param chan  Opaque address identifying the wait queue; the matching
+ *              sched_wakeup_chan() must pass the same address.
+ * @param cond  Returns nonzero once the awaited condition is satisfied.
+ */
+void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg)
+{
+	u_int32_t flags;
+
+	if (_current == NULL)
+		return;
+
+	for (;;)
+	{
+		save_flags(flags);
+		cli();
+		if (cond(arg))
+		{
+			restore_flags(flags);
+			return;
+		}
+		spinLock(&schedulerSpinLock);
+		rq_dequeue_locked(_current);
+		_current->wait_chan = chan;
+		_current->state = WAIT;
+		spinUnlock(&schedulerSpinLock);
+		restore_flags(flags);
+
+		/* Switch away.  Returns once a wakeup re-enqueues us and we are
+		 * re-dispatched; loop and re-test the condition. */
+		sched();
+	}
+}
+
+/**
+ * Wake every task sleeping on `chan` (paired with sched_wait_event()).
+ *
+ * Safe from interrupt context: sched() and all run-queue mutators hold
+ * schedulerSpinLock with interrupts disabled, so when an ISR runs the lock is
+ * free and the spinLock() below never yields.  Woken tasks get the same +4 I/O
+ * priority boost as sched_io_wakeup() so a just-satisfied waiter preempts the
+ * spinning/idle work that was running while it slept.
+ */
+void sched_wakeup_chan(void *chan)
+{
+	u_int32_t flags;
+	kTask_t  *t;
+
+	if (chan == NULL)
+		return;
+
+	save_flags(flags);
+	cli();
+	spinLock(&schedulerSpinLock);
+
+	for (t = taskList; t != NULL; t = t->next)
+	{
+		if (t->wait_chan != chan)
+			continue;
+
+		t->wait_chan = NULL;
+
+		/* Mirror sched_io_wakeup()'s boost, but inline so the whole scan
+		 * runs under a single lock acquisition. */
+		if (t->state == WAIT || t->state == UNINTERRUPTIBLE || t->state == INTERRUPTIBLE)
+		{
+			u_int8_t boosted = (u_int8_t)(t->base_priority + 4);
+			if (boosted > 23)
+				boosted = 23;
+			if (boosted > t->priority)
+				t->priority = boosted;
+			t->boost_quanta = 2;
+			t->state = READY;
+			rq_enqueue_locked(t);
+		}
 	}
 
 	spinUnlock(&schedulerSpinLock);

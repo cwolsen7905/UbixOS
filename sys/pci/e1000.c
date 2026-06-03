@@ -310,6 +310,9 @@ void e1000_handle_irq(void) {
 	}
 	if (icr & (E1000_ICR_RXT0 | E1000_ICR_RXO)) {
 		e1000_irq_pending = 1;
+		/* Wake the RX thread (sleeping in sched_wait_event on this address).
+		 * Safe from ISR context: sched_wakeup_chan() never yields. */
+		sched_wakeup_chan(&e1000_irq_pending);
 	}
 }
 
@@ -317,18 +320,27 @@ void e1000_handle_irq(void) {
  * RX thread — wakes on IRQ flag and drains the ring
  * --------------------------------------------------------------------- */
 
+/*
+ * Wait predicate for the RX thread: woken work exists when the ISR flagged a
+ * receive interrupt, or a descriptor's DD (descriptor-done) bit is already
+ * visible.  Checking DD as well as the flag absorbs the QEMU quirk where the
+ * descriptor write becomes visible slightly out of order with the PIC IRQ — any
+ * wake then still drains everything ready.
+ */
+static int e1000_rx_ready(void *arg) {
+	(void)arg;
+	if (e1000_irq_pending)
+		return 1;
+	return (*(volatile u_int8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD) != 0;
+}
+
 void e1000_thread(void) {
-	while (1) {
-		if (e1000_irq_pending) {
-			e1000_irq_pending = 0;
-			e1000_rx_process();
-		}
-		/* Fallback poll: catch packets if the IRQ path is not firing.
-		 * Required because QEMU does not always deliver the PIC IRQ
-		 * before the descriptor DD bit is visible to the driver. */
-		if (*(volatile u_int8_t *)&rx_descs[rx_tail].status & E1000_RXD_STAT_DD)
-			e1000_rx_process();
-		sched_yield();
+	for (;;) {
+		/* Sleep (off the run queue) until the ISR wakes us via
+		 * sched_wakeup_chan(&e1000_irq_pending) — no busy polling. */
+		sched_wait_event(&e1000_irq_pending, e1000_rx_ready, NULL);
+		e1000_irq_pending = 0;
+		e1000_rx_process();
 	}
 }
 
@@ -398,6 +410,11 @@ int initE1000(u_int32_t bar0_phys, u_int8_t irq) {
 	e1000_write(E1000_REG_IMS, E1000_ICR_RXT0 | E1000_ICR_RXO | E1000_ICR_LSC);
 
 	e1000_ready = 1;
+
+	/* Register the RX wait channel for the scheduler's low-rate safety wake,
+	 * so a dropped PIC IRQ cannot stall RX (QEMU e1000 quirk). */
+	g_sched_poll_chan = &e1000_irq_pending;
+
 	klog(KLOG_NOTICE, "e1000: ready (irq=%u)", irq);
 	return 0;
 }

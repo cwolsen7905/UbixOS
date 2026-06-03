@@ -44,6 +44,7 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <i386/pcpu.h>
+#include <ubixos/sched.h>
 
 #define B_ADAPTORSHIFT 24
 #define B_ADAPTORMASK 0x0f
@@ -144,6 +145,17 @@ u_long _bootdev;
 u_long _boothowto;
 
 /**
+ * Idle thread entry — the lowest-priority task, dispatched only when nothing
+ * else is runnable.  Halts the CPU until the next interrupt (sti before hlt so
+ * an IRQ can wake it), then loops.  Never blocks, so it is always runnable.
+ */
+static void idle_task(void)
+{
+	for (;;)
+		__asm__ __volatile__("sti; hlt");
+}
+
+/**
  * \brief This is the entry point into the os where all of the kernels sub
  * systems are started up.
  *
@@ -234,6 +246,16 @@ int kmain(u_int32_t rootdev)
 
 	execThread(systemTask, 0x2000, 0x0, "systemTask");
 	execThread(pageout_daemon, 0x2000, 0x0, "pageout");
+
+	/*
+	 * Idle thread: lowest priority, runs only when every other task is blocked.
+	 * It halts the CPU until the next interrupt, so tasks that sleep on a wait
+	 * channel (sched_wait_event) truly give up the CPU instead of spinning, and
+	 * the host isn't pegged at 100%.  Re-homed to QOS_IDLE since execThread
+	 * starts threads at QOS_DEFAULT.  (Safe to set priority here: the timer IRQ
+	 * is still masked until irqEnable() below, so the scheduler isn't running.)
+	 */
+	sched_set_priority((kTask_t *)execThread(idle_task, 0x2000, 0x0, "idle"), QOS_IDLE);
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

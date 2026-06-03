@@ -61,9 +61,17 @@ void sched() {
   kTask_t *delTask = 0x0;
   kTask_t *next    = 0x0;
   kTask_t *t       = 0x0;
+  u_int32_t flags;
 
   /* Stir the CSPRNG with timer-tick RDTSC jitter (lock-free, every tick). */
   krandom_stir(0);
+
+  /* Low-rate safety wake (~12 Hz) for a registered device-RX thread, so a
+   * dropped NIC IRQ can't hang the network.  Done before taking the scheduler
+   * lock (sched_wakeup_chan takes it itself); cheap re-check of a sleeper, not
+   * a busy poll. */
+  if (g_sched_poll_chan != NULL && (systemVitals->sysTicks & 0xF) == 0)
+    sched_wakeup_chan(g_sched_poll_chan);
 
   /* Reboot countdown: Ctrl-M sets reboot_at_tick; we print once per second
    * and reboot when time is up. Runs before the spinlock to keep it simple. */
@@ -85,8 +93,20 @@ void sched() {
     }
   }
 
-  if (spinTryLock(&schedulerSpinLock))
+  /*
+   * Hold schedulerSpinLock with interrupts disabled.  sched_wakeup_chan() is
+   * called from interrupt context (e.g. the NIC ISR) and takes this same lock;
+   * if sched() held it with IF set, an IRQ landing mid-critical-section would
+   * spin/yield on the held lock and re-enter the scheduler.  Disabling IRQs
+   * across the locked section closes that window (and the timer's spinTryLock
+   * bail handles the genuinely-reentrant timer case).
+   */
+  save_flags(flags);
+  cli();
+  if (spinTryLock(&schedulerSpinLock)) {
+    restore_flags(flags);
     return;
+  }
 
   /* --- Phase 3.4: starvation aging — scan every ~50 ms --- */
   {
@@ -181,6 +201,7 @@ void sched() {
     if (pri >= 31) {
       /* Realtime only: never preempt — runs until it voluntarily blocks. */
       spinUnlock(&schedulerSpinLock);
+      restore_flags(flags);
       return;
     }
 
@@ -189,6 +210,7 @@ void sched() {
       _current->quantum--;
     if (_current->quantum > 0) {
       spinUnlock(&schedulerSpinLock);
+      restore_flags(flags);
       return;
     }
 
@@ -213,6 +235,7 @@ void sched() {
   /* Nothing ready — return without switching. */
   if (ready_mask == 0) {
     spinUnlock(&schedulerSpinLock);
+    restore_flags(flags);
     return;
   }
 
@@ -247,8 +270,16 @@ void sched() {
    * saves prev's kernel context and resumes next; prev resumes here on its next
    * scheduling slot with IF cleared (cpu_switch restored the EFLAGS saved under
    * the cli above), so re-enable interrupts explicitly.
+   *
+   * Skip when the highest-priority runnable task is the one already running
+   * (prev == next): there is nothing to save or restore, and cpu_switch's
+   * self-switch is unsafe — it reads next_ksp before saving prev, so for
+   * prev == next it would discard the live frame and resume a stale one.  This
+   * happens when a just-woken, I/O-boosted task (e.g. the NIC RX thread) is the
+   * sole task at the top priority.
    */
-  switch_to(prev, _current);
+  if (prev != _current)
+    switch_to(prev, _current);
 
   asm("sti");
 
