@@ -2,212 +2,61 @@
  * Copyright (c) 2002-2026 The UbixOS Project.
  * All rights reserved.
  *
- * httpsget — minimal HTTPS GET client: TLS via BearSSL over an lwIP TCP socket.
- * Proves the full path end-to-end (DNS -> TCP -> TLS handshake -> certificate
- * validation against vendored root CAs -> HTTP exchange).
+ * httpsget — fetch an http:// or https:// URL via libhttp and print the
+ * response.  A thin client over libhttp (which owns the TLS, trust anchors,
+ * redirects and HTTP parsing).
  *
- * Entropy for the TLS RNG is injected from getentropy() (the kernel CSPRNG),
- * since BearSSL's br_prng_seeder_system() is not wired on UbixOS.  The X.509
- * validator is given the current time from gettimeofday() (BearSSL requires a
- * time or it returns BR_ERR_X509_TIME_UNKNOWN); chain, hostname/SNI and expiry
- * are all validated against the vendored trust anchors.
- *
- * Usage: httpsget <host> [path]
+ * Usage: httpsget <url|host> [path]
+ *   "example.com" is treated as "https://example.com/".
  */
 
-#include <bearssl.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <sys/time.h>
+#include <http/http.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-
-/* Vendored Mozilla CA bundle as BearSSL trust anchors: TAs[], TAs_NUM. */
-#include "trust_anchors.c"
-
-/* TLS engine needs a bidirectional record buffer; keep it off the stack. */
-static unsigned char g_iobuf[BR_SSL_BUFSIZE_BIDI];
+#include <unistd.h>
 
 /**
- * br_sslio low-level read callback: pull bytes from the TCP socket.
- * @param ctx  pointer to the socket fd.
- * @return bytes read (>0), or -1 on EOF/error.
- */
-static int sock_read(void *ctx, unsigned char *buf, size_t len)
-{
-	int fd = *(int *)ctx;
-
-	for (;;)
-	{
-		int n = (int)read(fd, buf, len);
-		if (n <= 0)
-		{
-			if (n < 0 && errno == EINTR)
-				continue;
-			return (-1);
-		}
-		return (n);
-	}
-}
-
-/**
- * br_sslio low-level write callback: push bytes to the TCP socket.
- * @return bytes written (>0), or -1 on error.
- */
-static int sock_write(void *ctx, const unsigned char *buf, size_t len)
-{
-	int fd = *(int *)ctx;
-
-	for (;;)
-	{
-		int n = (int)write(fd, buf, len);
-		if (n <= 0)
-		{
-			if (n < 0 && errno == EINTR)
-				continue;
-			return (-1);
-		}
-		return (n);
-	}
-}
-
-/**
- * Open a TCP connection to host:port, resolving the hostname via gethostbyname.
- * @return connected socket fd, or -1 on failure.
- */
-static int tcp_connect(const char *host, int port)
-{
-	struct hostent *he;
-	struct sockaddr_in sin;
-	int fd;
-
-	he = gethostbyname(host);
-	if (he == NULL || he->h_addr_list[0] == NULL)
-	{
-		fprintf(stderr, "httpsget: cannot resolve %s\n", host);
-		return (-1);
-	}
-
-	fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (fd < 0)
-	{
-		perror("socket");
-		return (-1);
-	}
-
-	memset(&sin, 0, sizeof(sin));
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons((unsigned short)port);
-	memcpy(&sin.sin_addr, he->h_addr_list[0], sizeof(sin.sin_addr));
-
-	if (connect(fd, (struct sockaddr *)&sin, sizeof(sin)) < 0)
-	{
-		perror("connect");
-		close(fd);
-		return (-1);
-	}
-	return (fd);
-}
-
-/**
- * Fetch https://<host>/<path> and print the response, then report the TLS
- * engine status.
- *
- * @return 0 if the handshake completed and the cert validated, 1 otherwise.
+ * @return 0 on a 2xx response, 1 on any error.
  */
 int main(int argc, char **argv)
 {
-	br_ssl_client_context sc;
-	br_x509_minimal_context xc;
-	br_sslio_context ioc;
-	const char *host, *path;
-	char req[512];
-	int fd, err, rlen, got_body = 0;
+	struct http_meta meta;
+	char url[1024];
+	void *body = NULL;
+	size_t len = 0;
+	int rc;
 
 	if (argc < 2)
 	{
-		fprintf(stderr, "usage: %s <host> [path]\n", argv[0]);
-		return (1);
-	}
-	host = argv[1];
-	path = (argc >= 3) ? argv[2] : "/";
-
-	fd = tcp_connect(host, 443);
-	if (fd < 0)
-		return (1);
-	printf("httpsget: connected to %s:443\n", host);
-
-	/* Set up the TLS client with the vendored trust anchors. */
-	br_ssl_client_init_full(&sc, &xc, TAs, TAs_NUM);
-
-	/*
-	 * Give the X.509 validator the current time, else it returns
-	 * BR_ERR_X509_TIME_UNKNOWN (53).  BearSSL counts days since 0000-01-01
-	 * (proleptic Gregorian); 719528 is the day index of 1970-01-01, so add it
-	 * to the Unix-epoch day count.  Requires a roughly-correct system clock.
-	 */
-	{
-		struct timeval tv;
-		gettimeofday(&tv, NULL);
-		uint32_t days = (uint32_t)(tv.tv_sec / 86400) + 719528;
-		uint32_t secs = (uint32_t)(tv.tv_sec % 86400);
-		printf("httpsget: validation clock = epoch %ld (day %u)\n", (long)tv.tv_sec, days);
-		br_x509_minimal_set_time(&xc, days, secs);
-	}
-
-	/* Seed the TLS RNG from the kernel CSPRNG (no system seeder on UbixOS). */
-	{
-		unsigned char seed[32];
-		if (getentropy(seed, sizeof(seed)) != 0)
-		{
-			fprintf(stderr, "httpsget: getentropy failed\n");
-			close(fd);
-			return (1);
-		}
-		br_ssl_engine_inject_entropy(&sc.eng, seed, sizeof(seed));
-	}
-
-	br_ssl_engine_set_buffer(&sc.eng, g_iobuf, sizeof(g_iobuf), 1);
-	br_ssl_client_reset(&sc, host, 0); /* host drives SNI + cert name check */
-
-	br_sslio_init(&ioc, &sc.eng, sock_read, &fd, sock_write, &fd);
-
-	rlen = snprintf(req,
-	                sizeof(req),
-	                "GET %s HTTP/1.0\r\nHost: %s\r\nConnection: close\r\nUser-Agent: UbixOS-httpsget\r\n\r\n",
-	                path,
-	                host);
-
-	if (br_sslio_write_all(&ioc, req, (size_t)rlen) < 0 || br_sslio_flush(&ioc) < 0)
-	{
-		fprintf(stderr, "httpsget: TLS write failed (err %d)\n", br_ssl_engine_last_error(&sc.eng));
-		close(fd);
+		fprintf(stderr, "usage: %s <url|host> [path]\n", argv[0]);
 		return (1);
 	}
 
-	/* Drain the response to stdout. */
-	for (;;)
+	/* Accept a bare host (default https) or a full URL; optional path arg. */
+	if (strncmp(argv[1], "http://", 7) == 0 || strncmp(argv[1], "https://", 8) == 0)
+		snprintf(url, sizeof(url), "%s%s", argv[1], (argc >= 3) ? argv[2] : "");
+	else
+		snprintf(url, sizeof(url), "https://%s%s", argv[1], (argc >= 3) ? argv[2] : "/");
+
+	memset(&meta, 0, sizeof(meta));
+	rc = http_get(url, &meta, &body, &len, HTTP_MAX_REDIRECTS);
+	if (rc != 0)
 	{
-		unsigned char buf[512];
-		int rc = br_sslio_read(&ioc, buf, sizeof(buf));
-		if (rc < 0)
-			break;
-		got_body += rc;
-		write(1, buf, (size_t)rc);
+		fprintf(stderr, "httpsget: %s", http_strerror(rc));
+		if (rc == HTTP_ERR_STATUS)
+			fprintf(stderr, " (HTTP %d)", meta.status);
+		fprintf(stderr, "\n");
+		free(body);
+		return (1);
 	}
 
-	err = br_ssl_engine_last_error(&sc.eng);
-	close(fd);
-
-	/* BR_ERR_OK (0) means the session closed cleanly after the exchange. */
-	printf("\nhttpsget: %d body bytes, TLS last_error=%d (%s)\n",
-	       got_body,
-	       err,
-	       err == 0 ? "OK" : "see bearssl_ssl.h BR_ERR_*");
-	return (err == 0 ? 0 : 1);
+	printf("httpsget: HTTP %d  %ld bytes  type=%s\n",
+	       meta.status,
+	       (long)len,
+	       meta.content_type[0] ? meta.content_type : "(none)");
+	printf("final URL: %s\n----\n", meta.final_url);
+	write(1, body, len);
+	free(body);
+	return (0);
 }

@@ -1,6 +1,6 @@
 # Makefile (C) 2002 The UbixOS Project
 
-all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code #csu-code
+all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -39,6 +39,10 @@ libbearssl-code: libbearssl
 libpw-code: libpw
 	(cd libpw;$(MAKE))
 
+# Must build after libbearssl (links libbearssl.so).
+libhttp-code: libhttp
+	(cd libhttp;$(MAKE))
+
 clean:
 	(cd crt;${MAKE} clean)
 	(cd ubix_api;${MAKE} clean)
@@ -47,3 +51,4 @@ clean:
 	(cd libaudio;${MAKE} clean)
 	(cd libbearssl;${MAKE} clean)
 	(cd libpw;${MAKE} clean)
+	(cd libhttp;${MAKE} clean)
