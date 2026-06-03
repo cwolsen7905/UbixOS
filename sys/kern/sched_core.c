@@ -77,7 +77,11 @@ void pid_hash_remove(kTask_t *t)
 	}
 }
 
+#ifndef __i386__
+/* On i386 _current is per-CPU state in g_pcpu[].current (reached via %gs:8);
+ * see the get_current()/set_current() accessors in <ubixos/sched.h>. */
 kTask_t *_current = 0x0;
+#endif
 kTask_t *_usedMath = 0x0;
 
 int need_resched = 0;

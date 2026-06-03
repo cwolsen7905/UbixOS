@@ -30,6 +30,8 @@
  Page fault wrapper this will aquire some values we need for later use
  */
 
+#include <i386/pcpu_asm.h>
+
 .globl _vmm_page_fault2
 .text
 .code32
@@ -76,6 +78,7 @@ mov $0x10,%eax
 mov %eax,%ds
 mov %eax,%es
 mov %eax,%fs
+PCPU_LOAD_GS    /* %gs = SEL_PCPU so %gs:off reaches per-CPU data */
 cld
 push %esp
 call trap

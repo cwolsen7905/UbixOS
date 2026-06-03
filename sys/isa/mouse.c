@@ -31,6 +31,7 @@
 #include <sys/bus.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <sys/io.h>
 #include <lib/kprintf.h>
 #include <fs/devfs/devfs.h>
@@ -157,7 +158,7 @@ asm(".globl mouseISR   \n"
     "  push %ds        \n"
     "  push %es        \n"
     "  push %fs        \n"
-    "  push %gs        \n"
+    "  push %gs        \n" ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data */
     "  call mouseHandler\n"
     "  pop  %gs        \n"
     "  pop  %fs        \n"

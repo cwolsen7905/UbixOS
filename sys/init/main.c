@@ -43,6 +43,7 @@
 #include <fs/vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <i386/pcpu.h>
 
 #define B_ADAPTORSHIFT 24
 #define B_ADAPTORMASK 0x0f
@@ -152,6 +153,14 @@ int kmain(u_int32_t rootdev)
 {
 	/* Set up counter for startup routine */
 	int i = 0x0;
+
+	/*
+	 * Point the BSP's %gs at g_pcpu[0] before anything touches _current.
+	 * _current is now per-CPU state at %gs:8 (g_pcpu[0].current); this patches
+	 * the SEL_PCPU GDT descriptor's base to &g_pcpu[0] and loads %gs = SEL_PCPU.
+	 * Must be the first thing in kmain — every later kernel path reads _current.
+	 */
+	pcpu_install_gs(0);
 
 	/* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
 	clearScreen();

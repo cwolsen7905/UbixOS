@@ -226,7 +226,7 @@ void sched() {
   }
 
   prev     = _current;   /* outgoing task — saved by switch_to */
-  _current = next;
+  set_current(next);     /* per-CPU store: g_pcpu[cpu].current = next (%gs:8) */
   _current->last_run_tick = systemVitals->sysTicks;
 
   /* Give the newly dispatched task a fresh time slice if it has none left. */

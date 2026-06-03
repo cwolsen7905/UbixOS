@@ -30,6 +30,7 @@
 #include <ubixos/syscall_posix.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <sys/io.h>
 #include <ubixos/sched.h>
 #include <isa/8259.h>
@@ -226,6 +227,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _intNull \n"
   "  pop %gs      \n"
@@ -252,6 +254,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _divideError  \n"
   "  pop %gs      \n"
@@ -278,6 +281,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _debug  \n"
   "  pop %gs      \n"
@@ -304,6 +308,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _nmi  \n"
   "  pop %gs      \n"
@@ -352,6 +357,7 @@ asm(
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp            \n"
   "  call __int6          \n"
   "  pop %gs              \n"
@@ -377,6 +383,7 @@ asm(
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp            \n"
   "  call __doubleFault   \n"
   "  pop %gs              \n"
@@ -804,6 +811,7 @@ asm(
   "  mov %eax,%ds    \n"
   "  mov %eax,%es    \n"
   "  mov %eax,%fs    \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp       \n"
   "  call __gpf      \n"
   "  add $0x4,%esp   \n"
@@ -833,6 +841,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __floatingPoint  \n"
   "  pop %gs      \n"
@@ -858,6 +867,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __alignmentCheck  \n"
   "  pop %gs      \n"
@@ -884,6 +894,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __machineCheck  \n"
   "  pop %gs      \n"
@@ -911,6 +922,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __simd  \n"
   "  pop %gs      \n"
@@ -937,6 +949,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __virtualization  \n"
   "  pop %gs      \n"
@@ -974,6 +987,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __security\n"
   "  pop %gs      \n"
@@ -1017,12 +1031,16 @@ asm(
   ".globl _int7              \n"
   "_int7:                    \n"
   "  pushl %eax              \n"
+  "  pushl %gs               \n" /* save interrupted %gs (may be user TLS)      */
+  ASM_PCPU_LOAD_GS              /* %gs = SEL_PCPU: %gs:8 == _current for the    */
+                               /* read below and for mathStateRestore          */
   "  clts                    \n"
-  "  movl _current,%eax      \n"
+  "  movl %gs:8, %eax        \n" /* _current */
   "  cmpl _usedMath,%eax     \n"
   "  je mathDone             \n"
   "  call mathStateRestore   \n"
   "mathDone:                 \n"
+  "  popl %gs                \n" /* restore interrupted %gs */
   "  popl %eax               \n"
   "  iret                    \n"
 );

@@ -26,6 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <i386/pcpu_asm.h>
+
 .globl _sys_call
 .text
 .code32
@@ -50,6 +52,7 @@ mov $0x10,%eax
 mov %eax,%ds
 mov %eax,%es
 mov %eax,%fs
+PCPU_LOAD_GS         /* %gs = SEL_PCPU so %gs:off reaches per-CPU data */
 cld
 push %esp
 call sys_call
@@ -96,6 +99,7 @@ mov $0x10,%eax
 mov %eax, %ds
 mov %eax, %es
 mov %eax, %fs
+PCPU_LOAD_GS         /* %gs = SEL_PCPU so %gs:off reaches per-CPU data */
 cld
 push %esp
 call sys_call

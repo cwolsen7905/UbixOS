@@ -148,15 +148,39 @@ kTask_t *schedNewTask();
 kTask_t *schedFindTask(u_int32_t id);
 
 /*
- * _current — the thread running on the calling CPU.  This is a plain global for
- * now.  The SMP phase-2 attempt to make it per-CPU (a macro for
- * curcpu()->current) was reverted: it caused subtle, nondeterministic memory
- * corruption (a second GUI app launch would smash the compositor and triple
- * fault).  Per-CPU current will return with real per-CPU scheduling, via a
- * %gs-relative access — never a macro that injects a call into asm paths.  The
- * per-CPU table (g_pcpu) and AP bring-up do not depend on this.
+ * _current — the thread running on the calling CPU.
+ *
+ * On i386 this is per-CPU state living in g_pcpu[cpu].current and reached
+ * through %gs (SEL_PCPU): %gs:8 == &g_pcpu[cpu].current (offset 8 — see
+ * <i386/pcpu.h>).  Every kernel entry stub loads %gs = SEL_PCPU and
+ * cpu_switch() re-establishes it on each switch, so %gs:8 is valid in every
+ * kernel context.  Reads go through get_current(); the single write site
+ * (sched()) uses set_current().  This is a bare %gs-relative load/store, NOT a
+ * macro that injects a function call into asm paths — an earlier curcpu()->current
+ * attempt was reverted for exactly that reason.
+ *
+ * Bootstrap: pcpu_install_gs(0) patches the SEL_PCPU GDT base to &g_pcpu[0] at
+ * the very top of kmain, before any _current access, and g_pcpu is zeroed BSS so
+ * current starts NULL.
  */
+#ifdef __i386__
+static inline kTask_t *get_current(void)
+{
+	kTask_t *p;
+	__asm__ __volatile__("movl %%gs:8, %0" : "=r"(p));
+	return p;
+}
+
+static inline void set_current(kTask_t *t)
+{
+	__asm__ __volatile__("movl %0, %%gs:8" : : "r"(t) : "memory");
+}
+
+#define _current (get_current())
+#else
 extern kTask_t *_current;
+#define set_current(t) (_current = (t))
+#endif
 
 extern kTask_t *_usedMath;
 

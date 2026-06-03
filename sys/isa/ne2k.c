@@ -32,6 +32,7 @@
 #include <sys/device.old.h>
 #include <sys/io.h>
 #include <sys/idt.h>
+#include <i386/pcpu_asm.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
@@ -60,7 +61,10 @@ static struct nicBuffer *ne2k_free_pool = NULL;
 asm(".globl ne2kISR         \n"
     "ne2kISR:               \n"
     "  pusha                \n" /* Save all registers           */
+    "  push %gs             \n" /* save the interrupted %gs (e.g. user TLS) */
+    ASM_PCPU_LOAD_GS         /* %gs = SEL_PCPU for per-CPU data access */
     "  call ne2kHandler     \n"
+    "  pop %gs              \n"
     "  popa                 \n"
     "  iret                 \n" /* Exit interrupt               */
 );

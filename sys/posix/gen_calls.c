@@ -30,6 +30,7 @@
 #include <sys/resource.h>
 #include <sys/thread.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <ubixos/sched.h>
 #include <ubixos/sched_internal.h>
 #include <ubixos/endtask.h>
@@ -561,11 +562,20 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args)
 		tmp_desc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
 		tmp_desc->baseHigh = base_addr >> 24;
 
+		/*
+		 * Reload LDTR and refresh the %gs hidden descriptor cache from the
+		 * just-updated LDT[1] (TLS) entry, then restore %gs = SEL_PCPU.  The
+		 * user's %gs = 0xF is re-installed by the syscall exit's `pop %gs`
+		 * (from the saved trapframe), so the live kernel %gs must be left as
+		 * the per-CPU selector or every subsequent _current (%gs:8) access in
+		 * kernel context would read the TLS base instead of g_pcpu.
+		 */
 		asm("push %eax\n"
 		    "mov $0x18,%ax\n"
-		    "lldt %ax\n" /* "lgdtl (loadGDT)\n" */
+		    "lldt %ax\n"
 		    "mov $0xF,%eax\n"
-		    "mov %eax,%gs\n"
+		    "mov %eax,%gs\n" /* refresh %gs cache from updated LDT[1] */
+		    ASM_PCPU_LOAD_GS /* then restore %gs = SEL_PCPU so _current (%gs:8) stays valid */
 		    "pop %eax\n");
 
 		td->td_retval[0] = 0;

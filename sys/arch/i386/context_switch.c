@@ -50,6 +50,14 @@
 #include <machine/proc.h>
 #include <sys/tss.h>
 #include <sys/types.h>
+#include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
+#include <lib/kprintf.h>
+
+/* The hand-written %gs loads in the entry stubs (PCPU_GS_SEL in <i386/pcpu_asm.h>)
+ * must match the SEL_PCPU selector the GDT actually defines, or %gs:8 would not
+ * reach g_pcpu.  Catch any divergence at compile time. */
+_Static_assert(PCPU_GS_SEL == SEL_PCPU, "PCPU_GS_SEL must equal SEL_PCPU");
 
 /*
  * The single kernel TSS used by software switching (the boot TSS the GDT's
@@ -210,6 +218,35 @@ void switch_to(kTask_t *prev, kTask_t *next)
 {
 	u_int32_t *save_slot = prev ? &prev->md.md_kstack : &g_boot_kstack_discard;
 
+	/*
+	 * Milestone B leak detector (zero behaviour change).
+	 *
+	 * cpu_switch pushes ...,%gs,%fs,%es,%ds and saves ESP, so the %gs selector it
+	 * will reload for `next` sits at next->md_kstack + 12 (slot index 3).  In the
+	 * per-CPU %gs design every kernel-context save must be SEL_PCPU; a value >=
+	 * 0x60 is no GDT/LDT selector at all but a leaked VM86 real-mode segment (the
+	 * old nondeterministic #GP saw 0x8298 here for the views task).  Flag it so a
+	 * leak is traced to a task instead of triple-faulting.  Must not fire in the
+	 * pre-Milestone-B working state.
+	 */
+	{
+		u_int32_t saved_gs = ((u_int32_t *)next->md.md_kstack)[3] & 0xFFFF;
+
+		if (saved_gs >= 0x60)
+		{
+			static u_int32_t g_gs_leak_count = 0;
+
+			if (g_gs_leak_count < 32)
+			{
+				g_gs_leak_count++;
+				kprintf("PCPU GS LEAK: next pid=%d name=%s saved_gs=0x%X\n",
+				        next->id,
+				        next->name,
+				        saved_gs);
+			}
+		}
+	}
+
 	KERNEL_TSS->esp0 = next->md.md_tss.esp0;
 
 	/*
@@ -275,7 +312,17 @@ asm(".globl cpu_switch \n"
     "  popl %ds            \n" /* restore next's data segments (in next's CR3)   */
     "  popl %es            \n"
     "  popl %fs            \n"
-    "  popl %gs            \n"
+    "  popl %gs            \n" /* popped then immediately overridden below        */
+    /*
+     * Milestone B: in kernel mode %gs is CPU-state, not task-state — it must be
+     * SEL_PCPU (base = &g_pcpu[cpu]) so %gs:offset reaches per-CPU data.  Force
+     * it here rather than trusting the popped value: a kernel context resumed by
+     * cpu_switch is always at CPL0, and the real user/VM86 %gs is restored
+     * separately by the trapframe (ret_from_fork) or the VM86 iret frame
+     * (enter_vm86), never from this slot.  Forcing also makes the switch robust
+     * against a leaked VM86 real-mode %gs reaching this point (the old #GP).
+     */
+    ASM_PCPU_LOAD_GS         /* %gs = SEL_PCPU */
     "  popl %ebp           \n"
     "  popl %edi           \n"
     "  popl %esi           \n"
