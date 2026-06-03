@@ -37,6 +37,7 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 3  | True spinlock type (spin, not yield; IRQs off) | ⬜ | current `spinLock` yields |
 | 3  | Per-CPU LAPIC timer + reschedule IPI | ⬜ | |
 | 3  | LAPIC EOI path | ⬜ | still 8259-only |
+| 3.5| Scheduler accounting — per-task `run_ticks`, per-CPU `busy/idle_ticks` | ⬜ | unblocks activity monitor; prereq for Phase 6 balancer |
 | 4  | SMP scheduling — global run queue under one lock | ⬜ | two cores run threads |
 | 5  | TLB shootdown IPIs | ⬜ | |
 | 6  | Per-CPU run queues + load balancing + affinity | ⬜ | optimization layer |
@@ -251,6 +252,38 @@ This is the interlocked unit; land it together, test with **many** boots (the
   lock between BSP and a still-idle AP makes progress; the term-launch repro
   stays clean across ≥8 boots.
 - **Risk:** high — deadlocks/races and the `%gs`/TLS interaction first appear here.
+
+### Phase 3.5 — Scheduler accounting (uniprocessor-safe, SMP-ready)
+
+A small, low-risk slice that lands between the per-CPU timer work of Phase 3
+and the multi-core dispatch of Phase 4.  Useful on its own (it unblocks an
+`/proc`-driven activity monitor — see `activity-monitor-plan.md`) and it is
+forced work for Phase 6's load balancer, so doing it here avoids retrofitting
+the tick handler twice.
+
+- **Per-task `run_ticks`.**  Add `u_int64_t run_ticks` (and optionally split
+  `user_ticks` / `sys_ticks`) to `kTask_t`.  In the scheduler tick handler,
+  bump `_current->run_ticks` (or the per-CPU equivalent — see below) before
+  decrementing `quantum`.
+- **Per-CPU `busy_ticks` / `idle_ticks`.**  Add to `struct pcpu`.  The tick
+  handler bumps `curcpu()->busy_ticks` when `current != idle`, otherwise
+  `idle_ticks`.  Until `g_smp_active == 0` this collapses to `g_pcpu[0]`,
+  which is exactly what we want on uniprocessor.
+- **Wall-clock anchor.**  A monotonically increasing `g_jiffies` (already
+  effectively present as the PIT tick counter) plus `HZ` lets userland turn
+  raw tick deltas into a percentage.
+- **procfs surface.**  `/proc/<pid>/stat` already exists — extend it (or add
+  `/proc/<pid>/schedstat`) with `run_ticks`.  Add a new `/proc/stat` with one
+  `cpuN busy idle` line per CPU plus a `cpu` aggregate line.
+- **Test (uniprocessor):** a CPU-bound spinner shows `run_ticks` climbing at
+  ~`HZ`/sec while `idle_ticks` on cpu0 stalls; an `idle` loop reverses the
+  ratio.  `bmake run` boot stays bit-identical.
+- **Test (Phase 4 follow-up):** spawn N spinners on `-smp 2`, observe
+  `busy_ticks` advancing on both `cpuN` lines.
+- **Risk:** very low.  Pure additive fields + two `++`s in the tick handler.
+  The one trap is making sure the tick handler reads `curcpu()` *before*
+  `schedule()` swaps `current` out, so the just-finished slice is charged to
+  the right task.
 
 ### Phase 4 — SMP scheduling (single global run queue under lock)
 - **Reuse the existing structure as-is.**  `run_queue[32]` (32 per-priority
