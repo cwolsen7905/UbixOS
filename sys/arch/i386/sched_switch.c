@@ -129,25 +129,11 @@ void sched() {
     }
   }
 
-  /* --- Timed-sleep expiry: wake tasks whose sched_wait_event_timeout()
-   * deadline has elapsed (lwIP protocol timers ride on these).  wake_tick==0
-   * means no timeout.  Signed compare handles sysTicks wrap. --- */
-  {
-    u_int32_t now = systemVitals->sysTicks;
-    kTask_t  *tw;
-    for (tw = taskList; tw != NULL; tw = tw->next) {
-      if (tw->wake_tick == 0)
-        continue;
-      if ((tw->state != WAIT && tw->state != UNINTERRUPTIBLE && tw->state != INTERRUPTIBLE))
-        continue;
-      if ((int32_t)(now - tw->wake_tick) < 0)
-        continue;
-      tw->wake_tick = 0;
-      tw->wait_chan = NULL;
-      tw->state = READY;
-      rq_enqueue_locked(tw);
-    }
-  }
+  /* --- Timed-sleep / timer expiry: fire any callouts whose deadline elapsed
+   * (sched_wait_event_timeout arms one per timed sleep; lwIP protocol timers
+   * ride these via tcpip_thread).  O(1) — only the expiry-sorted list head is
+   * inspected.  Runs under schedulerSpinLock; callbacks re-enqueue tasks. --- */
+  callout_run_expired(systemVitals->sysTicks);
 
   /* --- Phase 2: dead-task cleanup (separate from dispatch) --- */
   t = taskList;

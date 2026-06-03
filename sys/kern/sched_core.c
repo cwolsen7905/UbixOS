@@ -679,44 +679,80 @@ void sched_set_priority(kTask_t *t, u_int8_t pri)
  *              sched_wakeup_chan() must pass the same address.
  * @param cond  Returns nonzero once the awaited condition is satisfied.
  */
+/**
+ * Timeout-callout callback: re-enqueue a task whose timed sleep expired.
+ * Runs under schedulerSpinLock (callout_run_expired() is invoked from sched()
+ * with the lock held), so it manipulates the run queue directly.
+ */
+static void sleep_wake_cb(void *arg)
+{
+	kTask_t *t = (kTask_t *)arg;
+
+	if (t->state == WAIT || t->state == UNINTERRUPTIBLE || t->state == INTERRUPTIBLE)
+	{
+		t->wait_chan = NULL;
+		t->state = READY;
+		rq_enqueue_locked(t);
+	}
+}
+
 int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_int32_t ticks)
 {
 	u_int32_t flags;
 	u_int32_t deadline;
+	int       timed_out = 0;
 
 	if (_current == NULL)
 		return 0;
 
 	deadline = systemVitals->sysTicks + ticks;
-	if (deadline == 0)
-		deadline = 1; /* 0 is reserved in wake_tick for "no timeout" */
 
+	save_flags(flags);
+	cli();
 	for (;;)
 	{
-		save_flags(flags);
-		cli();
 		if (cond(arg))
 		{
-			restore_flags(flags);
-			return 0;
+			timed_out = 0;
+			break;
 		}
 		if (ticks != 0 && (int32_t)(systemVitals->sysTicks - deadline) >= 0)
 		{
-			restore_flags(flags);
-			return 1; /* timed out */
+			timed_out = 1;
+			break;
 		}
 		spinLock(&schedulerSpinLock);
 		rq_dequeue_locked(_current);
 		_current->wait_chan = chan;
-		_current->wake_tick = (ticks != 0) ? deadline : 0;
+		/* Arm a one-shot timeout that re-enqueues us at the deadline.  IRQs are
+		 * off, so sysTicks can't advance between the check above and here —
+		 * deadline - now is positive.  Signal wakeups cancel this via
+		 * sched_wakeup_chan(); a stale firing is a no-op (sleep_wake_cb checks
+		 * the state). */
+		if (ticks != 0)
+			callout_reset(&_current->sleep_callout, (u_int32_t)(deadline - systemVitals->sysTicks), sleep_wake_cb, _current);
 		_current->state = WAIT;
 		spinUnlock(&schedulerSpinLock);
 		restore_flags(flags);
 
-		/* Switch away.  Returns once a wakeup (signal or timeout scan)
+		/* Switch away.  Returns once a wakeup (signal or the timeout callout)
 		 * re-enqueues us and we are re-dispatched; loop and re-test. */
 		sched();
+
+		save_flags(flags);
+		cli();
 	}
+
+	/* Cancel any still-armed timeout so it cannot fire after we return (or
+	 * spuriously wake an unrelated later sleep on the same task). */
+	if (ticks != 0)
+	{
+		spinLock(&schedulerSpinLock);
+		callout_stop(&_current->sleep_callout);
+		spinUnlock(&schedulerSpinLock);
+	}
+	restore_flags(flags);
+	return timed_out;
 }
 
 void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg)
@@ -751,7 +787,7 @@ void sched_wakeup_chan(void *chan)
 			continue;
 
 		t->wait_chan = NULL;
-		t->wake_tick = 0; /* cancel any pending timeout — woken by signal */
+		callout_stop(&t->sleep_callout); /* cancel pending timeout — woken by signal */
 
 		/* Mirror sched_io_wakeup()'s boost, but inline so the whole scan
 		 * runs under a single lock acquisition. */

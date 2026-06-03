@@ -36,6 +36,7 @@ extern "C" {
 #include <sys/types.h>
 #include <fs/vfs/file.h>
 #include <ubixos/tty.h>
+#include <ubixos/callout.h>
 
 #include <machine/proc.h>
 #include <sys/thread.h>
@@ -105,7 +106,7 @@ typedef struct taskStruct {
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
     void      *wait_chan;        /* sleep/wakeup channel: address slept on, NULL if not blocked */
-    u_int32_t  wake_tick;        /* timed-sleep deadline in sysTicks (0 = no timeout) */
+    struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
 } kTask_t;

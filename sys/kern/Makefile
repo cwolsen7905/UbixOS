@@ -7,6 +7,7 @@ include ../Makefile.incl
 
 OBJS = \
 	access.o \
+	callout.o \
 	descrip.o \
 	endtask.o \
 	fb.o \
