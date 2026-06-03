@@ -107,12 +107,17 @@ them into a per-arch `machine/vmm_layout.h`
    `VMM_USER_START`; its per-process reachability has caused real bugs. Consider
    relocating, or eliminating the LDT entirely (x86-64 uses an `%fs`-base MSR for
    TLS, no LDT).
-3. **`VMM_CHILD_PD_WINDOW = 0x5A00000`** — a transient kernel mapping window
-   placed *inside* the user VA range (PDE 22). Move into kernel VA.
-4. **LAPIC (`0xFEE00000`, PDE 1019) and `VMM_KERN_STACK` (PDE 1016+)** are
-   *above* `VMM_KERN_END` (PDE 1015) — outside the globally-synced kernel PD
-   range (770–1015). Extend the sync or relocate so per-CPU LAPIC access works
-   from any address space (needed for the SMP LAPIC timer / IPIs).
+3. **`VMM_CHILD_PD_WINDOW = 0x5A00000`** — a transient window in the user VA
+   range (PDE 22). This is *intentional*: keeping it in the user half makes the
+   temporary mapping private to the acting process rather than leaking into the
+   shared kernel half. Documented in `vmm.h`; left as-is.
+4. **LAPIC / `VMM_KERN_STACK` reachability — verified OK.** `VMM_KERN_END` is
+   PDE 1015, but the kernel-PD *sync* actually covers PDEs **770–1023**
+   (`vmm_create_virtual_space` syncs to `PD_ENTRIES`; fork syncs 770–1015 plus a
+   separate `VMM_KERN_STACK` 1016–1023 loop), so the LAPIC (PDE 1019) is
+   reachable from any address space. kmalloc *allocation* stays within 770–1015.
+   The two ranges (sync vs allocation) could be named more clearly, but there is
+   no reachability bug.
 5. **Dead TSS GDT descriptors** (entries 7/8, bases `0x5200`/`0x6200`) — reclaim.
 6. **i386-only mechanisms to retire for portability**: hardware task switching
    (done), LDT-based TLS, and VM86/BIOS (no real mode in long mode — VESA must
