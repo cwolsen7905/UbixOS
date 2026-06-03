@@ -34,23 +34,25 @@
 
 #define MESSAGE_LENGTH 248
 
-#define MPI_ASYNC 0x1   /* post and return immediately */
-#define MPI_SYNC  0x2   /* post and wait until receiver drains the queue */
+#define MPI_ASYNC 0x1 /* post and return immediately */
+#define MPI_SYNC 0x2  /* post and wait until receiver drains the queue */
 
-struct mpi_message {
-    char data[MESSAGE_LENGTH];
-    u_int32_t header;
-    pidType pid;
-    struct mpi_message *next;
+struct mpi_message
+{
+	char data[MESSAGE_LENGTH];
+	u_int32_t header;
+	pidType pid;
+	struct mpi_message *next;
 };
 
-struct mpi_mbox {
-    struct mpi_mbox *next;
-    struct mpi_mbox *prev;
-    struct mpi_message *msg;
-    struct mpi_message *msgLast;
-    char name[64];
-    pidType pid;
+struct mpi_mbox
+{
+	struct mpi_mbox *next;
+	struct mpi_mbox *prev;
+	struct mpi_message *msg;
+	struct mpi_message *msgLast;
+	char name[64];
+	pidType pid;
 };
 
 typedef struct mpi_mbox mpi_mbox_t;
@@ -61,5 +63,6 @@ int mpi_destroyMbox(char *);
 int mpi_postMessage(char *, u_int32_t, mpi_message_t *);
 int mpi_fetchMessage(char *, mpi_message_t *);
 int mpi_spam(u_int32_t, void *);
+void mpi_destroyProcessMboxes(pidType);
 
 #endif

@@ -37,6 +37,7 @@
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>
+#include <mpi/mpi.h>
 
 /************************************************************************
 
@@ -73,6 +74,11 @@ void endTask(pidType pid)
 	 * the private PT/PD physical pages after this runs.
 	 */
 	vmm_clean_virtual_space(0x400000U);
+
+	/* Free any MPI mailboxes this task owned so their names/pids do not leak
+	 * (a leaked mailbox blocks a relaunched owner — e.g. a views app — from
+	 * recreating it or fetching its replies). */
+	mpi_destroyProcessMboxes(_current->id);
 
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
