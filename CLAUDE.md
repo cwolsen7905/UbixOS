@@ -102,7 +102,7 @@ Built separately from the kernel with different flags. Libraries build first, th
 - `lib/libc/` — FreeBSD-derived POSIX C library (primary libc)
 - `lib/ubix/` — OS-specific startup code (static initializers, `crt1`)
 - `lib/ubix_api/` — UbixOS-native API (`ubix_getcwd` etc.); header at `include/api/ubix.h`
-- `libexec/` — runtime dynamic linker (`ld.so`); at runtime it expects libraries at `sys:/lib/`
+- `libexec/` — the active runtime linker is musl's (`/lib/ld-musl-i386.so.1`); libraries are at `/lib/`. (The older native `libexec/ld`, which used `sys:/lib/`, is superseded.)
 - `bin/init/` — PID 1; uses MPI mailboxes, spawns `login`
 
 ### Display stack
@@ -112,11 +112,11 @@ Two-layer graphical system modelled after macOS WindowServer + Core Graphics:
 | Layer | Component | Role |
 |-------|-----------|------|
 | Compositor | `bin/views/` (C++) | Owns the VESA framebuffer via `sys_mapfb()`. Manages windows, server-side decorations, Z-order, drag, close. Composites shared-memory buffers to screen. |
-| App rendering | `lib/objgfx/` (C++) | Surface drawing API (`ogSurface`, `ogBitFont`). Apps render into their shared-memory window buffer using this library. |
+| App rendering | `lib/objgfx/` (C++) | Surface drawing API (`ogSurface`, `ogScalableFont` (TrueType); `ogBitFont` is legacy). Apps render into their shared-memory window buffer using this library. |
 
 **Rules:**
 - `views` is the only process that calls `sys_mapfb()`. All other processes get a `vmm_share_region` buffer.
-- Apps draw with `objGFX` (`ogSurface`/`ogBitFont`). No app writes to the framebuffer directly.
+- Apps draw with `objGFX` (`ogSurface`/`ogScalableFont`; `ogBitFont` is legacy). No app writes to the framebuffer directly.
 - MPI carries only signals (`DISPLAY_CLAIM`, `DISPLAY_FLIP`, `DISPLAY_RELEASE`), never drawing commands.
 - objGFX headers live in `include/objgfx/`. Apps include with `<objgfx/objgfx.h>` and pass `-I../../include` (not `-I../../lib/objgfx`).
 
@@ -132,7 +132,7 @@ lwIP 2.0.3, jemalloc, gdtoa (float↔ASCII), TCC (Tiny C Compiler), tzcode, NetB
 
 **Syscall paths**: There are two syscall tables — native (`syscalls.c` / `sys_call.S`, `int $0x81`) and POSIX (`syscalls_posix.c` / `sys_call_posix.S`, `int $0x80`). New syscalls must be added to the correct table. POSIX syscall numbers follow the FreeBSD ABI layout. The UbixOS-native API (`lib/ubix_api/`) uses `int $0x81`.
 
-**VFS paths**: The kernel stores the full VFS path in `_current->oInfo.cwd` including mountpoint (e.g. `sys:/bin/`). POSIX `sys_getcwd` strips the mountpoint prefix for compatibility; the native `sys_getvfscwd` (slot 41) returns the full path. The shell uses `ubix_getcwd()` from `lib/ubix_api/` for its prompt.
+**VFS paths**: Fully POSIX. Mount points are POSIX paths (`/` root FAT32, `/dev` devfs, `/proc` procfs); the `sys:/` mountpoint prefix is gone. `_current->oInfo.cwd` is a plain POSIX path (new processes start at `/`). `sys_getcwd` (POSIX) and `sys_getvfscwd` (native slot 41) now both return that cwd verbatim — the old strip-vs-full distinction is vestigial. The shell uses `ubix_getcwd()` from `lib/ubix_api/` for its prompt.
 
 **IPC**: The kernel uses a custom MPI (message-passing) system, not System V IPC. `init` and most system processes communicate via MPI mailboxes. Pipes and semaphores are also available.
 
@@ -234,17 +234,17 @@ The single source of truth for the OS version is **`sys/include/ubixos/version.h
 The system boots to a login prompt under QEMU:
 
 1. GRUB2 (i686-elf-grub) loads the kernel via multiboot from a FAT32 disk image.
-2. Kernel mounts the FAT32 partition as `sys:/` using the IDE + FAT driver stack.
+2. Kernel mounts the FAT32 partition at `/` using the IDE + FAT driver stack.
 3. `init` (PID 1) execs, forks `login`, which prompts for username/password.
 4. Default credentials: `root` / `user` (from `tools/userdb`).
-5. Shell prompt shows full VFS path: `uBixCube@sys:/bin/#`.
+5. Shell prompt shows the POSIX cwd (e.g. `uBixCube@/bin/#`).
 
 **Key lessons learned**:
 - Use `x86_64-elf-gcc -m32` — the `i386-elf-gcc` Homebrew formula is unmaintained.
 - All code must be compiled with `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow`. GCC can silently emit XMM instructions for struct copies which trigger `#UD` fault 6.
 - `kprintf` outputs to both VGA and COM1 serial. Run `bmake run` and check `serial.log` for kernel debug output.
 - The FAT library treats the partition-relative sector 0 as BPB; `hdRead` adds `parOffset` (LBA 2048) transparently — do not double-add the offset.
-- `sys:/etc/userdb` must exist on the image for `login` to authenticate. `tools/mkimage.sh` copies `tools/userdb` there automatically.
+- `/etc/userdb` must exist on the image for `login` to authenticate. `tools/mkimage.sh` copies `tools/userdb` there automatically.
 - TCC-compiled binaries require R_386_GOT32X relocation support (patched in `contrib/tcc/tccelf.c`).
 - **MMIO pages in the VMM**: Physical addresses at or above `numPages * PAGE_SIZE` (≥ 256 MB with the default QEMU `-m 256` config) are MMIO — framebuffer, PCI BARs, etc. These frames have no entry in `vmmMemoryMap`. Three rules follow from this:
   1. `copyvirtualspace.c` — when COW-marking pages during `fork`, check `(phys >> 12) >= numPages` and share MMIO PTEs as-is without touching the COW counter.
