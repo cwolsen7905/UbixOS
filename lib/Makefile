@@ -1,6 +1,6 @@
-# Makefile (C) 2002 The UbixOS Project
+# Makefile (C) 2002 The uBixOS Project
 
-all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code #csu-code
+all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -43,6 +43,32 @@ libpw-code: libpw
 libhttp-code: libhttp
 	(cd libhttp;$(MAKE))
 
+# NetSurf browser library stack (leaf lib, no deps / no codegen).
+libwapcaplet-code: libwapcaplet
+	(cd libwapcaplet;$(MAKE))
+
+# NetSurf parser/charset utils (aliases.inc pre-generated + vendored).
+libparserutils-code: libparserutils
+	(cd libparserutils;$(MAKE))
+
+# NetSurf CSS engine (property parsers pre-generated; links parserutils+wapcaplet).
+libcss-code: libcss
+	(cd libcss;$(MAKE))
+
+# NetSurf HTML5 parser (entities.inc + gperf element-type pre-generated).
+libhubbub-code: libhubbub
+	(cd libhubbub;$(MAKE))
+
+# NetSurf DOM (+ hubbub HTML binding; no codegen — JS bindings unused).
+libdom-code: libdom
+	(cd libdom;$(MAKE))
+
+# NetSurf image decoders (leaf libs).
+libnsgif-code: libnsgif
+	(cd libnsgif;$(MAKE))
+libnsbmp-code: libnsbmp
+	(cd libnsbmp;$(MAKE))
+
 clean:
 	(cd crt;${MAKE} clean)
 	(cd ubix_api;${MAKE} clean)
@@ -52,3 +78,10 @@ clean:
 	(cd libbearssl;${MAKE} clean)
 	(cd libpw;${MAKE} clean)
 	(cd libhttp;${MAKE} clean)
+	(cd libwapcaplet;${MAKE} clean)
+	(cd libparserutils;${MAKE} clean)
+	(cd libcss;${MAKE} clean)
+	(cd libhubbub;${MAKE} clean)
+	(cd libdom;${MAKE} clean)
+	(cd libnsgif;${MAKE} clean)
+	(cd libnsbmp;${MAKE} clean)
