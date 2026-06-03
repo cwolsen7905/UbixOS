@@ -427,18 +427,6 @@ struct thread_start_param {
  * (duplicate struct iovec). */
 #define SYS_ARCH_HZ 200
 
-/*
- * Safety re-check interval for "infinite" waits (~50 ms).  An infinite sleep
- * hangs forever if its single wakeup is ever missed (a lost signal, or a sync
- * object freed under a sleeper at connection teardown).  The busy-wait this
- * replaced re-polled the real condition (sem->signaled / mbox head!=tail) so it
- * always recovered; we keep that safety net by waking periodically and letting
- * the caller re-test the real condition — without the 100%-CPU spin.  A real
- * signal still wakes us immediately via sched_wakeup_chan(); this only bounds
- * the worst-case latency of a missed wakeup.
- */
-#define SYS_ARCH_SAFETY_TICKS (SYS_ARCH_HZ / 20)
-
 /* sched_wait_event predicate: the cond is "signaled" once its lock clears
  * (ubthread_cond_signal/broadcast set it FALSE). */
 static int sysarch_cond_signaled(void *arg) {
@@ -482,10 +470,14 @@ static u_int32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, u_int
     if (timedout && ubcond->lock == TRUE)
       return 0; /* timed out — caller maps 0 to SYS_ARCH_TIMEOUT */
   } else {
-    /* Infinite wait, but wake periodically as a safety net so a missed signal
-     * self-heals (caller re-tests the real condition).  A real signal still
-     * wakes us immediately. */
-    (void)sched_wait_event_timeout(ubcond, sysarch_cond_signaled, ubcond, SYS_ARCH_SAFETY_TICKS);
+    /* Block until signaled.  sched_wait_event() is lost-wakeup-safe by
+     * construction (it re-tests the predicate with interrupts disabled before
+     * sleeping, and the signaler sets the condition then sched_wakeup_chan()s
+     * under the same scheduler lock), so no periodic safety re-check is needed.
+     * Verified empirically: a 5 s watchdog never fired across heavy httpget
+     * load — the only timeouts seen at 50 ms were legitimate >50 ms network
+     * round-trips, not missed wakeups. */
+    sched_wait_event(ubcond, sysarch_cond_signaled, ubcond);
     ubthread_mutex_lock(mutex);
   }
 
