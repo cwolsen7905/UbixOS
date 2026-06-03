@@ -12,14 +12,17 @@ NSFB     = ${SRCTOP}/contrib/libnsfb
 
 INCLUDES = -I${NSFB} -I${NSFB}/include -I${NSFB}/src \
            -I${MUSL_SRC}/include -I${MUSL_OBJ}/obj/include \
-           -I${MUSL_SRC}/arch/i386 -I${MUSL_SRC}/arch/generic
+           -I${MUSL_SRC}/arch/i386 -I${MUSL_SRC}/arch/generic \
+           -I${SRCTOP}/include
+# (uBixOS userland headers LAST so musl's sys/* wins over include/sys/* — the
+#  ubix surface needs <sys/mpi.h>, <sys/kbd.h>, <sys/mouse.h>, <views/...>.)
 
 CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC -fcommon \
          -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP -Wall -Wno-incompatible-pointer-types -O2
 
 OBJDIR = ${OBJ_DIR}/obj/lib/libnsfb
 # common.c and 32bpp-common.c are #include templates, not compilation units.
-OBJS   = cursor.o dump.o libnsfb.o palette.o surface.o ram.o \
+OBJS   = cursor.o dump.o libnsfb.o palette.o surface.o ram.o ubix.o \
          api.o util.o generic.o 32bpp-xrgb8888.o 32bpp-xbgr8888.o 16bpp.o 8bpp.o
 
 .PATH: ${NSFB}/src ${NSFB}/src/surface ${NSFB}/src/plot
