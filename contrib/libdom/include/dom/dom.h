@@ -32,7 +32,6 @@
 #include <dom/core/doc_fragment.h>
 #include <dom/core/entity_ref.h>
 #include <dom/core/nodelist.h>
-#include <dom/core/tokenlist.h>
 #include <dom/core/string.h>
 #include <dom/core/text.h>
 #include <dom/core/pi.h>
@@ -52,7 +51,6 @@
 #include <dom/html/html_form_element.h>
 #include <dom/html/html_input_element.h>
 #include <dom/html/html_button_element.h>
-#include <dom/html/html_canvas_element.h>
 #include <dom/html/html_text_area_element.h>
 #include <dom/html/html_opt_group_element.h>
 #include <dom/html/html_option_element.h>
@@ -113,12 +111,6 @@ typedef enum dom_namespace {
 	DOM_NAMESPACE_COUNT   = 7
 } dom_namespace;
 
-/* Note, these are not valid until at least one function related to DOM
- * namespaces has been called such as the creation of a Document.
- */
 extern dom_string *dom_namespaces[DOM_NAMESPACE_COUNT];
-
-/* Optional client-callable namespace cleanup function */
-extern dom_exception dom_namespace_finalise(void);
 
 #endif

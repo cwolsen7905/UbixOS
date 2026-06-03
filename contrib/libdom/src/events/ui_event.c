@@ -11,14 +11,14 @@
 
 static void _virtual_dom_ui_event_destroy(struct dom_event *evt);
 
-static const struct dom_event_private_vtable _event_vtable = {
+static struct dom_event_private_vtable _event_vtable = {
 	_virtual_dom_ui_event_destroy
 };
 
 /* Constructor */
 dom_exception _dom_ui_event_create(struct dom_ui_event **evt)
 {
-	*evt = calloc(1, sizeof(dom_ui_event));
+	*evt = malloc(sizeof(dom_ui_event));
 	if (*evt == NULL) 
 		return DOM_NO_MEM_ERR;
 	
@@ -38,6 +38,7 @@ void _dom_ui_event_destroy(struct dom_ui_event *evt)
 /* Initialise function */
 dom_exception _dom_ui_event_initialise(struct dom_ui_event *evt)
 {
+	evt->view = NULL;
 	return _dom_event_initialise(&evt->base);
 }
 

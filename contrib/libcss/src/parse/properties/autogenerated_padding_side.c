@@ -3,7 +3,7 @@
  * 
  * Generated from:
  *
- * padding_side:op GENERIC: IDENT:( INHERIT: INITIAL: REVERT: UNSET: IDENT:) LENGTH_UNIT:( UNIT_PX:PADDING_SET MASK:UNIT_MASK_PADDING_SIDE RANGE:<0 LENGTH_UNIT:)
+ * padding_side:op GENERIC: IDENT:INHERIT LENGTH_UNIT:( UNIT_PX:PADDING_SET DISALLOW:unit&UNIT_ANGLE||unit&UNIT_TIME||unit&UNIT_FREQ  RANGE:<0 LENGTH_UNIT:)
  * 
  * Licensed under the MIT License,
  *		  http://www.opensource.org/licenses/mit-license.php
@@ -34,10 +34,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_padding_side(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result, enum css_properties_e op)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error;
 	const css_token *token;
 	bool match;
@@ -48,34 +48,8 @@ css_error css__parse_padding_side(css_language *c,
 		return CSS_INVALID;
 	}
 
-	if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[INHERIT],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_inherit(result,
-				op);
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[INITIAL],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_initial(result,
-				op);
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[REVERT],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_revert(result,
-				op);
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[UNSET],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_unset(result,
-				op);
-
+	if ((token->type == CSS_TOKEN_IDENT) && (lwc_string_caseless_isequal(token->idata, c->strings[INHERIT], &match) == lwc_error_ok && match)) {
+			error = css_stylesheet_style_inherit(result, op);
 	} else {
 		css_fixed length = 0;
 		uint32_t unit = 0;
@@ -87,7 +61,7 @@ css_error css__parse_padding_side(css_language *c,
 			return error;
 		}
 
-		if ((unit & UNIT_MASK_PADDING_SIDE ) == 0) {
+		if (unit&UNIT_ANGLE||unit&UNIT_TIME||unit&UNIT_FREQ) {
 			*ctx = orig_ctx;
 			return CSS_INVALID;
 		}

@@ -20,7 +20,7 @@ css_error css__cascade_volume(uint32_t opv, css_style *style,
 	css_fixed val = 0;
 	uint32_t unit = UNIT_PCT;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case VOLUME_NUMBER:
 			val = *((css_fixed *) style->bytecode);
@@ -46,7 +46,7 @@ css_error css__cascade_volume(uint32_t opv, css_style *style,
 	unit = css__to_css_unit(unit);
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		/** \todo volume */
 	}
 
@@ -65,16 +65,6 @@ css_error css__set_volume_from_hint(const css_hint *hint,
 css_error css__initial_volume(css_select_state *state)
 {
 	UNUSED(state);
-
-	return CSS_OK;
-}
-
-css_error css__copy_volume(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	UNUSED(from);
-	UNUSED(to);
 
 	return CSS_OK;
 }

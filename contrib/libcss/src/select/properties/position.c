@@ -21,7 +21,7 @@ css_error css__cascade_position(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case POSITION_STATIC:
 			value = CSS_POSITION_STATIC;
@@ -35,14 +35,11 @@ css_error css__cascade_position(uint32_t opv, css_style *style,
 		case POSITION_FIXED:
 			value = CSS_POSITION_FIXED;
 			break;
-		case POSITION_STICKY:
-			value = CSS_POSITION_STICKY;
-			break;
 		}
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_position(state->computed, value);
 	}
 
@@ -60,25 +57,16 @@ css_error css__initial_position(css_select_state *state)
 	return set_position(state->computed, CSS_POSITION_STATIC);
 }
 
-css_error css__copy_position(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_position(to, get_position(from));
-}
-
 css_error css__compose_position(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_position(child);
 
-	return css__copy_position(
-			type == CSS_POSITION_INHERIT ? parent : child,
-			result);
+	if (type == CSS_POSITION_INHERIT) {
+		type = get_position(parent);
+	}
+
+	return set_position(result, type);
 }
 

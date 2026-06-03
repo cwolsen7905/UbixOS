@@ -77,12 +77,13 @@ static dom_exception _dom_namespace_initialise(void)
 	return DOM_NO_ERR;
 }
 
+#ifdef FINALISE_NAMESPACE
 /**
  * Finalise the namespace component
  *
  * \return DOM_NO_ERR on success.
  */
-dom_exception dom_namespace_finalise(void)
+dom_exception _dom_namespace_finalise(void)
 {
 	int i;
 
@@ -105,6 +106,7 @@ dom_exception dom_namespace_finalise(void)
 
 	return DOM_NO_ERR;
 }
+#endif
 
 /**
  * Ensure a QName is valid

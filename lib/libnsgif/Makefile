@@ -8,7 +8,7 @@ LIBNSGIF      = ${SRCTOP}/contrib/libnsgif
 INCLUDES = -I${LIBNSGIF}/include -I${LIBNSGIF}/src -I${MUSL_SRC}/include -I${MUSL_OBJ}/obj/include -I${MUSL_SRC}/arch/i386 -I${MUSL_SRC}/arch/generic
 CFLAGS = ${CROSS_M32} -nostdinc -fno-builtin -fPIC -fcommon -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP -Wall -O2
 OBJDIR = ${OBJ_DIR}/obj/lib/libnsgif
-OBJS   = gif.o lzw.o 
+OBJS   = libnsgif.o lzw.o
 .PATH: ${LIBNSGIF}/src 
 .PATH.o: ${OBJDIR}
 .SUFFIXES: .o .c

@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <libcss/hint.h>
-
 #include "stylesheet.h"
 #include "select/hash.h"
 #include "select/mq.h"
@@ -370,8 +368,7 @@ css_error css__selector_hash_find(css_selector_hash *hash,
 						head->sel_chain_bloom,
 						req->node_bloom) &&
 				    mq_rule_good_for_media(head->sel->rule,
-						req->unit_ctx, req->media,
-						req->str)) {
+						req->media)) {
 					/* Found a match */
 					break;
 				}
@@ -447,12 +444,10 @@ css_error css__selector_hash_find_by_class(css_selector_hash *hash,
 					    _chain_good_for_element_name(
 							head->sel,
 							&(req->qname),
-							req->str->universal) &&
+							req->uni) &&
 					    mq_rule_good_for_media(
 							head->sel->rule,
-							req->unit_ctx,
-							req->media,
-							req->str)) {
+							req->media)) {
 						/* Found a match */
 						break;
 					}
@@ -529,12 +524,10 @@ css_error css__selector_hash_find_by_id(css_selector_hash *hash,
 					    _chain_good_for_element_name(
 							head->sel,
 							&req->qname,
-							req->str->universal) &&
+							req->uni) &&
 					    mq_rule_good_for_media(
 							head->sel->rule,
-							req->unit_ctx,
-							req->media,
-							req->str)) {
+							req->media)) {
 						/* Found a match */
 						break;
 					}
@@ -584,8 +577,7 @@ css_error css__selector_hash_find_universal(css_selector_hash *hash,
 					head->sel_chain_bloom,
 					req->node_bloom) &&
 			    mq_rule_good_for_media(head->sel->rule,
-					req->unit_ctx, req->media,
-					req->str)) {
+					req->media)) {
 				/* Found a match */
 				break;
 			}
@@ -765,7 +757,7 @@ static void print_chain_bloom_details(css_bloom bloom[CSS_BLOOM_SIZE])
 {
 	printf("Chain bloom:\t");
 	int total = 0, i;
-	int set[CSS_BLOOM_SIZE];
+	int set[4];
 	for (i = 0; i < CSS_BLOOM_SIZE; i++) {
 		set[i] = bits_set(bloom[i]);
 		total += set[i];
@@ -823,22 +815,23 @@ css_error _insert_into_chain(css_selector_hash *ctx, hash_entry *head,
 			search = search->next;
 		} while (search != NULL);
 
-		if (prev == NULL) {
-			*entry = *head;
-			head->next = entry;
-
-			entry = head;
-		} else {
-			entry->next = prev->next;
-			prev->next = entry;
-		}
-
 		entry->sel = selector;
 		_chain_bloom_generate(selector, entry->sel_chain_bloom);
 
 #ifdef PRINT_CHAIN_BLOOM_DETAILS
 		print_chain_bloom_details(entry->sel_chain_bloom);
 #endif
+
+		if (prev == NULL) {
+			hash_entry temp;
+			entry->next = entry;
+			temp = *entry;
+			*entry = *head;
+			*head = temp;
+		} else {
+			entry->next = prev->next;
+			prev->next = entry;
+		}
 
 		ctx->hash_size += sizeof(hash_entry);
 	}
@@ -928,8 +921,7 @@ css_error _iterate_elements(
 						head->sel_chain_bloom,
 						req->node_bloom) &&
 				    mq_rule_good_for_media(head->sel->rule,
-						req->unit_ctx, req->media,
-						req->str)) {
+						req->media)) {
 					/* Found a match */
 					break;
 				}
@@ -986,12 +978,10 @@ css_error _iterate_classes(
 					    _chain_good_for_element_name(
 							head->sel,
 							&(req->qname),
-							req->str->universal) &&
+							req->uni) &&
 					    mq_rule_good_for_media(
 							head->sel->rule,
-							req->unit_ctx,
-							req->media,
-							req->str)) {
+							req->media)) {
 						/* Found a match */
 						break;
 					}
@@ -1049,12 +1039,10 @@ css_error _iterate_ids(
 					    _chain_good_for_element_name(
 							head->sel,
 							&req->qname,
-							req->str->universal) &&
+							req->uni) &&
 					    mq_rule_good_for_media(
 							head->sel->rule,
-							req->unit_ctx,
-							req->media,
-							req->str)) {
+							req->media)) {
 						/* Found a match */
 						break;
 					}
@@ -1097,8 +1085,7 @@ css_error _iterate_universal(
 					head->sel_chain_bloom,
 					req->node_bloom) &&
 			    mq_rule_good_for_media(head->sel->rule,
-					req->unit_ctx, req->media,
-					req->str)) {
+					req->media)) {
 				/* Found a match */
 				break;
 			}

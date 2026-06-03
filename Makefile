@@ -132,8 +132,19 @@ world:
 	cd ${WORLD_BIN_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
+	@echo "Step 4: Build NetSurf browser (nsfb)"
+	@echo "***************************************************************"
+	${MAKE} netsurf
+	@echo
+	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
+
+# Build the NetSurf framebuffer browser (build/bin/nsfb).  Separate target so it
+# can be rebuilt on its own; depends on the world libraries (Step 1) being built.
+# Driven by a shell script because NetSurf uses its own GNU-make buildsystem.
+netsurf:
+	SRCTOP=${.CURDIR} ${.CURDIR}/tools/build-netsurf.sh
 
 # ── Disk image ───────────────────────────────────────────────────────────────
 
@@ -320,3 +331,4 @@ clean:
 		${GNU_MAKE} -C ${OBJ_DIR}/obj/musl clean; \
 	fi
 	rm -rf ${OBJ_DIR}/obj/lib
+	rm -rf contrib/netsurf/build ${OBJ_DIR}/netsurf-pc ${OBJ_DIR}/netsurf-build.log ${OBJ_DIR}/bin/nsfb

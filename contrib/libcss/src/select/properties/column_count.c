@@ -20,7 +20,7 @@ css_error css__cascade_column_count(uint32_t opv, css_style *style,
 	uint16_t value = CSS_COLUMN_COUNT_INHERIT;
 	css_fixed count = 0;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case COLUMN_COUNT_SET:
 			value = CSS_COLUMN_COUNT_SET;
@@ -34,7 +34,7 @@ css_error css__cascade_column_count(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_column_count(state->computed, value, count);
 	}
 
@@ -52,20 +52,6 @@ css_error css__initial_column_count(css_select_state *state)
 	return set_column_count(state->computed, CSS_COLUMN_COUNT_AUTO, 0);
 }
 
-css_error css__copy_column_count(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	int32_t count = 0;
-	uint8_t type = get_column_count(from, &count);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_column_count(to, type, count);
-}
-
 css_error css__compose_column_count(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -73,7 +59,9 @@ css_error css__compose_column_count(const css_computed_style *parent,
 	int32_t count = 0;
 	uint8_t type = get_column_count(child, &count);
 
-	return css__copy_column_count(
-			type == CSS_COLUMN_COUNT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_COLUMN_COUNT_INHERIT) {
+		type = get_column_count(parent, &count);
+	}
+
+	return set_column_count(result, type, count);
 }

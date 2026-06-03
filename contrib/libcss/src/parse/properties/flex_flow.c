@@ -29,10 +29,10 @@
  */
 
 css_error css__parse_flex_flow(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	css_error error;
@@ -40,28 +40,26 @@ css_error css__parse_flex_flow(css_language *c,
 	bool wrap = true;
 	css_style *direction_style;
 	css_style *wrap_style;
-	enum flag_value flag_value;
 
 	/* Firstly, handle inherit */
 	token = parserutils_vector_peek(vector, *ctx);
 	if (token == NULL) 
 		return CSS_INVALID;
-
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
+		
+	if (is_css_inherit(c, token)) {
+		error = css_stylesheet_style_inherit(result,
 				CSS_PROP_FLEX_DIRECTION);
-		if (error != CSS_OK)
+		if (error != CSS_OK) 
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
+		error = css_stylesheet_style_inherit(result,
 				CSS_PROP_FLEX_WRAP);
-		if (error == CSS_OK)
+
+		if (error == CSS_OK) 
 			parserutils_vector_iterate(vector, ctx);
 
 		return error;
-	}
+	} 
 
 	/* allocate styles */
 	error = css__stylesheet_style_create(c->sheet, &direction_style);
@@ -109,21 +107,15 @@ css_error css__parse_flex_flow(css_language *c,
 
 	/* defaults */
 	if (direction) {
-		error = css__stylesheet_style_appendOPV(direction_style,
+		error = css__stylesheet_style_appendOPV(direction_style, 
 				CSS_PROP_FLEX_DIRECTION,
 				0, FLEX_DIRECTION_ROW);
-		if (error != CSS_OK) {
-			goto css__parse_flex_flow_cleanup;
-		}
 	}
 
 	if (wrap) {
-		error = css__stylesheet_style_appendOPV(wrap_style,
+		error = css__stylesheet_style_appendOPV(wrap_style, 
 				CSS_PROP_FLEX_WRAP,
 				0, FLEX_WRAP_NOWRAP);
-		if (error != CSS_OK) {
-			goto css__parse_flex_flow_cleanup;
-		}
 	}
 
 	error = css__stylesheet_merge_style(result, direction_style);

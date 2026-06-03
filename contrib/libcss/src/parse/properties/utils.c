@@ -29,83 +29,77 @@
 css_error css__parse_list_style_type_value(css_language *c, const css_token *ident,
 		uint16_t *value)
 {
+	bool match;
+
 	/* IDENT (disc, circle, square, decimal, decimal-leading-zero,
 	 *	  lower-roman, upper-roman, lower-greek, lower-latin,
 	 *	  upper-latin, armenian, georgian, lower-alpha, upper-alpha,
 	 *	  none)
 	 */
-	#define MAP_ENTRIES 52
-	bool match;
-	int midx;
-	const struct {
-		int stringid;
-		int value;
-	} mapping[MAP_ENTRIES] = {
-		{ DISC, LIST_STYLE_TYPE_DISC },
-		{ CIRCLE, LIST_STYLE_TYPE_CIRCLE },
-		{ SQUARE, LIST_STYLE_TYPE_SQUARE },
-		{ DECIMAL, LIST_STYLE_TYPE_DECIMAL },
-		{ DECIMAL_LEADING_ZERO, LIST_STYLE_TYPE_DECIMAL_LEADING_ZERO },
-		{ LOWER_ROMAN, LIST_STYLE_TYPE_LOWER_ROMAN },
-		{ UPPER_ROMAN, LIST_STYLE_TYPE_UPPER_ROMAN },
-		{ LOWER_GREEK, LIST_STYLE_TYPE_LOWER_GREEK },
-		{ LOWER_LATIN, LIST_STYLE_TYPE_LOWER_LATIN },
-		{ UPPER_LATIN, LIST_STYLE_TYPE_UPPER_LATIN },
-		{ ARMENIAN, LIST_STYLE_TYPE_ARMENIAN },
-		{ GEORGIAN, LIST_STYLE_TYPE_GEORGIAN },
-		{ LOWER_ALPHA, LIST_STYLE_TYPE_LOWER_ALPHA },
-		{ UPPER_ALPHA, LIST_STYLE_TYPE_UPPER_ALPHA },
-		{ NONE, LIST_STYLE_TYPE_NONE },
-		{ BINARY, LIST_STYLE_TYPE_BINARY },
-		{ OCTAL, LIST_STYLE_TYPE_OCTAL},
-		{ LOWER_HEXADECIMAL, LIST_STYLE_TYPE_LOWER_HEXADECIMAL },
-		{ UPPER_HEXADECIMAL, LIST_STYLE_TYPE_UPPER_HEXADECIMAL },
-		{ ARABIC_INDIC, LIST_STYLE_TYPE_ARABIC_INDIC },
-		{ LOWER_ARMENIAN, LIST_STYLE_TYPE_LOWER_ARMENIAN },
-		{ UPPER_ARMENIAN, LIST_STYLE_TYPE_UPPER_ARMENIAN },
-		{ BENGALI, LIST_STYLE_TYPE_BENGALI },
-		{ CAMBODIAN, LIST_STYLE_TYPE_CAMBODIAN },
-		{ KHMER, LIST_STYLE_TYPE_KHMER },
-		{ CJK_DECIMAL, LIST_STYLE_TYPE_CJK_DECIMAL },
-		{ DEVANAGARI, LIST_STYLE_TYPE_DEVANAGARI },
-		{ GUJARATI, LIST_STYLE_TYPE_GUJARATI },
-		{ GURMUKHI, LIST_STYLE_TYPE_GURMUKHI },
-		{ HEBREW, LIST_STYLE_TYPE_HEBREW },
-		{ KANNADA, LIST_STYLE_TYPE_KANNADA },
-		{ LAO, LIST_STYLE_TYPE_LAO },
-		{ MALAYALAM, LIST_STYLE_TYPE_MALAYALAM },
-		{ MONGOLIAN, LIST_STYLE_TYPE_MONGOLIAN },
-		{ MYANMAR, LIST_STYLE_TYPE_MYANMAR },
-		{ ORIYA, LIST_STYLE_TYPE_ORIYA },
-		{ PERSIAN, LIST_STYLE_TYPE_PERSIAN },
-		{ TAMIL, LIST_STYLE_TYPE_TAMIL },
-		{ TELUGU, LIST_STYLE_TYPE_TELUGU },
-		{ THAI, LIST_STYLE_TYPE_THAI },
-		{ TIBETAN, LIST_STYLE_TYPE_TIBETAN },
-		{ CJK_EARTHLY_BRANCH, LIST_STYLE_TYPE_CJK_EARTHLY_BRANCH },
-		{ CJK_HEAVENLY_STEM, LIST_STYLE_TYPE_CJK_HEAVENLY_STEM },
-		{ HIAGANA, LIST_STYLE_TYPE_HIAGANA },
-		{ HIAGANA_IROHA, LIST_STYLE_TYPE_HIAGANA_IROHA },
-		{ KATAKANA, LIST_STYLE_TYPE_KATAKANA },
-		{ KATAKANA_IROHA, LIST_STYLE_TYPE_KATAKANA_IROHA },
-		{ JAPANESE_INFORMAL, LIST_STYLE_TYPE_JAPANESE_INFORMAL },
-		{ JAPANESE_FORMAL, LIST_STYLE_TYPE_JAPANESE_FORMAL },
-		{ KOREAN_HANGUL_FORMAL, LIST_STYLE_TYPE_KOREAN_HANGUL_FORMAL },
-		{ KOREAN_HANJA_INFORMAL, LIST_STYLE_TYPE_KOREAN_HANJA_INFORMAL },
-		{ KOREAN_HANJA_FORMAL, LIST_STYLE_TYPE_KOREAN_HANJA_FORMAL }
-	};
+	if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[DISC],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_DISC;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[CIRCLE],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_CIRCLE;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[SQUARE],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_SQUARE;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[DECIMAL],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_DECIMAL;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[DECIMAL_LEADING_ZERO],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_DECIMAL_LEADING_ZERO;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[LOWER_ROMAN],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_LOWER_ROMAN;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[UPPER_ROMAN],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_UPPER_ROMAN;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[LOWER_GREEK],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_LOWER_GREEK;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[LOWER_LATIN],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_LOWER_LATIN;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[UPPER_LATIN],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_UPPER_LATIN;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[ARMENIAN],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_ARMENIAN;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[GEORGIAN],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_GEORGIAN;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[LOWER_ALPHA],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_LOWER_ALPHA;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[UPPER_ALPHA],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_UPPER_ALPHA;
+	} else if ((lwc_string_caseless_isequal(
+			ident->idata, c->strings[NONE],
+			&match) == lwc_error_ok && match)) {
+		*value = LIST_STYLE_TYPE_NONE;
+	} else
+		return CSS_INVALID;
 
-	for (midx = 0; midx < MAP_ENTRIES; midx++) {
-		if ((lwc_string_caseless_isequal(
-				ident->idata,
-				c->strings[mapping[midx].stringid],
-				&match) == lwc_error_ok && match)) {
-			*value = mapping[midx].value;
-			return CSS_OK;
-		}
-	}
-
-	return CSS_INVALID;
+	return CSS_OK;
 }
 
 
@@ -126,10 +120,10 @@ css_error css__parse_list_style_type_value(css_language *c, const css_token *ide
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_border_side(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result, enum border_side_e side)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	css_error error = CSS_OK;
@@ -366,10 +360,10 @@ static void HSL_to_RGB(css_fixed hue, css_fixed sat, css_fixed lit, uint8_t *r, 
  *                 If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_colour_specifier(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		uint16_t *value, uint32_t *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	const css_token *token;
 	bool match;
 	css_error error;
@@ -913,11 +907,11 @@ css_error css__parse_hash_colour(lwc_string *data, uint32_t *result)
  *                 If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_unit_specifier(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		uint32_t default_unit,
 		css_fixed *length, uint32_t *unit)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	const css_token *token;
 	css_fixed num;
 	size_t consumed = 0;
@@ -938,7 +932,7 @@ css_error css__parse_unit_specifier(css_language *c,
 	if (token->type == CSS_TOKEN_DIMENSION) {
 		size_t len = lwc_string_length(token->idata);
 		const char *data = lwc_string_data(token->idata);
-		uint32_t temp_unit = CSS_UNIT_PX;
+		css_unit temp_unit = CSS_UNIT_PX;
 
 		error = css__parse_unit_keyword(data + consumed, len - consumed,
 				&temp_unit);
@@ -947,7 +941,7 @@ css_error css__parse_unit_specifier(css_language *c,
 			return error;
 		}
 
-		*unit = temp_unit;
+		*unit = (uint32_t) temp_unit;
 	} else if (token->type == CSS_TOKEN_NUMBER) {
 		/* Non-zero values are permitted in quirks mode */
 		if (num != 0) {
@@ -966,8 +960,8 @@ css_error css__parse_unit_specifier(css_language *c,
 			 * dimensions separated from their units by whitespace
 			 * (e.g. "0 px")
 			 */
-			int32_t temp_ctx = *ctx;
-			uint32_t temp_unit;
+			int temp_ctx = *ctx;
+			css_unit temp_unit;
 
 			consumeWhitespace(vector, &temp_ctx);
 
@@ -981,7 +975,7 @@ css_error css__parse_unit_specifier(css_language *c,
 				if (error == CSS_OK) {
 					c->sheet->quirks_used = true;
 					*ctx = temp_ctx;
-					*unit = temp_unit;
+					*unit = (uint32_t) temp_unit;
 				}
 			}
 		}
@@ -1032,8 +1026,12 @@ css_error css__parse_unit_keyword(const char *ptr, size_t len, uint32_t *unit)
 			*unit = UNIT_DEG;
 		else if (strncasecmp(ptr, "rad", 3) == 0)
 			*unit = UNIT_RAD;
+		else if (strncasecmp(ptr, "cap", 3) == 0)
+			*unit = UNIT_CAP;
 		else if (strncasecmp(ptr, "rem", 3) == 0)
 			*unit = UNIT_REM;
+		else if (strncasecmp(ptr, "rlh", 3) == 0)
+			*unit = UNIT_RLH;
 		else if (strncasecmp(ptr, "dpi", 3) == 0)
 			*unit = UNIT_DPI;
 		else
@@ -1061,6 +1059,8 @@ css_error css__parse_unit_keyword(const char *ptr, size_t len, uint32_t *unit)
 			*unit = UNIT_PC;
 		else if (strncasecmp(ptr, "ch", 2) == 0)
 			*unit = UNIT_CH;
+		else if (strncasecmp(ptr, "ic", 2) == 0)
+			*unit = UNIT_IC;
 		else if (strncasecmp(ptr, "lh", 2) == 0)
 			*unit = UNIT_LH;
 		else if (strncasecmp(ptr, "vh", 2) == 0)
@@ -1103,7 +1103,7 @@ css_error css__parse_unit_keyword(const char *ptr, size_t len, uint32_t *unit)
  *                 The resulting string's reference is passed to the caller
  */
 css_error css__ident_list_or_string_to_string(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		bool (*reserved)(css_language *c, const css_token *ident),
 		lwc_string **result)
 {
@@ -1117,7 +1117,7 @@ css_error css__ident_list_or_string_to_string(css_language *c,
 		token = parserutils_vector_iterate(vector, ctx);
 		*result = lwc_string_ref(token->idata);
 		return CSS_OK;
-	} else	if(token->type == CSS_TOKEN_IDENT) {
+	} else 	if(token->type == CSS_TOKEN_IDENT) {
 		return css__ident_list_to_string(c, vector, ctx, reserved,
 				result);
 	}
@@ -1141,11 +1141,11 @@ css_error css__ident_list_or_string_to_string(css_language *c,
  *                 The resulting string's reference is passed to the caller
  */
 css_error css__ident_list_to_string(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		bool (*reserved)(css_language *c, const css_token *ident),
 		lwc_string **result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	const css_token *token;
 	css_error error = CSS_OK;
 	parserutils_buffer *buffer;
@@ -1229,12 +1229,12 @@ cleanup:
  *                 If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__comma_list_to_style(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		bool (*reserved)(css_language *c, const css_token *ident),
 		css_code_t (*get_value)(css_language *c, const css_token *token, bool first),
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx = orig_ctx;
 	const css_token *token;
 	bool first = true;
@@ -1333,3 +1333,4 @@ cleanup:
 
 	return error;
 }
+

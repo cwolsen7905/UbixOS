@@ -28,13 +28,12 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_overflow(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error1, error2 = CSS_OK;
 	const css_token *token;
-	enum flag_value flag_value;
 	bool match;
 
 	token = parserutils_vector_iterate(vector, ctx);
@@ -43,12 +42,12 @@ css_error css__parse_overflow(css_language *c,
 		return CSS_INVALID;
 	}
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error1 = css_stylesheet_style_flag_value(result, flag_value,
+	if ((lwc_string_caseless_isequal(token->idata,
+			c->strings[INHERIT], &match) == lwc_error_ok &&
+			match)) {
+		error1 = css_stylesheet_style_inherit(result,
 				CSS_PROP_OVERFLOW_X);
-		error2 = css_stylesheet_style_flag_value(result, flag_value,
+		error2 = css_stylesheet_style_inherit(result,
 				CSS_PROP_OVERFLOW_Y);
 
 	} else if ((lwc_string_caseless_isequal(token->idata,

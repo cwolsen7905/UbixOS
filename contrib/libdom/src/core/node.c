@@ -55,14 +55,14 @@ static inline dom_exception _dom_node_detach_range(dom_node_internal *first,
 static inline void _dom_node_replace(dom_node_internal *old, 
 		dom_node_internal *replacement);
 
-static const struct dom_node_vtable node_vtable = {
+static struct dom_node_vtable node_vtable = {
 	{
 		DOM_NODE_EVENT_TARGET_VTABLE
 	},
 	DOM_NODE_VTABLE
 };
 
-static const struct dom_node_protect_vtable node_protect_vtable = {
+static struct dom_node_protect_vtable node_protect_vtable = {
 	DOM_NODE_PROTECT_VTABLE
 };
 
@@ -1827,8 +1827,8 @@ dom_exception _dom_node_set_user_data(dom_node_internal *node,
  * \param result  Pointer to location to receive result
  * \return DOM_NO_ERR.
  */
-dom_exception _dom_node_get_user_data(const dom_node_internal *node,
-		const dom_string *key, void **result)
+dom_exception _dom_node_get_user_data(dom_node_internal *node,
+		dom_string *key, void **result)
 {
 	struct dom_user_data *ud = NULL;
 
@@ -2172,9 +2172,7 @@ dom_exception _dom_node_detach_range(dom_node_internal *first,
  *
  * This is not implemented in terms of attach/detach in case 
  * we want to perform any special replacement-related behaviour 
- * at a later date.  If the replacement is essentially empty (either NULL
- * or an empty document fragment node) then this essentially just removes
- * the old node from its parent.  It is up to the caller to deal with that.
+ * at a later date.
  */
 void _dom_node_replace(dom_node_internal *old,
 		dom_node_internal *replacement)
@@ -2192,19 +2190,6 @@ void _dom_node_replace(dom_node_internal *old,
 		last = replacement;
 	}
 
-	if (first == NULL) {
-		/* All we're doing is removing old */
-		if (old->previous == NULL) {
-			old->parent->first_child = old->next;
-		}
-		if (old->next == NULL) {
-			old->parent->last_child = old->previous;
-		}
-		old->previous = old->next = old->parent = NULL;
-		return;
-	}
-
-	/* We're replacing old with first-to-last */
 	first->previous = old->previous;
 	last->next = old->next;
 
@@ -2218,7 +2203,7 @@ void _dom_node_replace(dom_node_internal *old,
 	else
 		old->parent->last_child = last;
 
-	for (n = first; n != NULL && n != last->next; n = n->next) {
+	for (n = first; n != last->next; n = n->next) {
 		n->parent = old->parent;
 	}
 

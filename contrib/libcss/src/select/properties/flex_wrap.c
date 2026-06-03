@@ -21,7 +21,7 @@ css_error css__cascade_flex_wrap(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FLEX_WRAP_NOWRAP:
 			value = CSS_FLEX_WRAP_NOWRAP;
@@ -36,7 +36,7 @@ css_error css__cascade_flex_wrap(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_flex_wrap(state->computed, value);
 	}
 
@@ -54,27 +54,16 @@ css_error css__initial_flex_wrap(css_select_state *state)
 	return set_flex_wrap(state->computed, CSS_FLEX_WRAP_NOWRAP);
 }
 
-css_error css__copy_flex_wrap(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	uint8_t type = get_flex_wrap(from);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_flex_wrap(to, type);
-}
-
 css_error css__compose_flex_wrap(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_flex_wrap(child);
 
-	return css__copy_flex_wrap(
-			type == CSS_FLEX_WRAP_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FLEX_WRAP_INHERIT) {
+		type = get_flex_wrap(parent);
+	}
+
+	return set_flex_wrap(result, type);
 }
 

@@ -21,7 +21,7 @@ css_error css__cascade_font_size(uint32_t opv, css_style *style,
 	css_fixed size = 0;
 	uint32_t unit = UNIT_PX;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FONT_SIZE_DIMENSION:
 			value = CSS_FONT_SIZE_DIMENSION;
@@ -65,7 +65,7 @@ css_error css__cascade_font_size(uint32_t opv, css_style *style,
 	unit = css__to_css_unit(unit);
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_font_size(state->computed, value, size, unit);
 	}
 
@@ -85,21 +85,6 @@ css_error css__initial_font_size(css_select_state *state)
 			0, CSS_UNIT_PX);
 }
 
-css_error css__copy_font_size(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_fixed size = 0;
-	css_unit unit = CSS_UNIT_PX;
-	uint8_t type = get_font_size(from, &size, &unit);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_font_size(to, type, size, unit);
-}
-
 css_error css__compose_font_size(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -108,8 +93,10 @@ css_error css__compose_font_size(const css_computed_style *parent,
 	css_unit unit = CSS_UNIT_PX;
 	uint8_t type = get_font_size(child, &size, &unit);
 
-	return css__copy_font_size(
-			type == CSS_FONT_SIZE_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FONT_SIZE_INHERIT) {
+		type = get_font_size(parent, &size, &unit);
+	}
+
+	return set_font_size(result, type, size, unit);
 }
 

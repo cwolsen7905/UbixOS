@@ -21,7 +21,7 @@
 
 /* The virtual functions for dom_characterdata, we make this vtable
  * public to each child class */
-const struct dom_characterdata_vtable characterdata_vtable = {
+struct dom_characterdata_vtable characterdata_vtable = {
 	{
 		{
 			DOM_NODE_EVENT_TARGET_VTABLE

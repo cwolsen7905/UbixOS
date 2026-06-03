@@ -21,7 +21,7 @@ css_error css__cascade_float(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FLOAT_LEFT:
 			value = CSS_FLOAT_LEFT;
@@ -36,7 +36,7 @@ css_error css__cascade_float(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_float(state->computed, value);
 	}
 
@@ -54,25 +54,16 @@ css_error css__initial_float(css_select_state *state)
 	return set_float(state->computed, CSS_FLOAT_NONE);
 }
 
-css_error css__copy_float(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_float(to, get_float(from));
-}
-
 css_error css__compose_float(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_float(child);
 
-	return css__copy_float(
-			type == CSS_FLOAT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FLOAT_INHERIT) {
+		type = get_float(parent);
+	}
+
+	return set_float(result, type);
 }
 

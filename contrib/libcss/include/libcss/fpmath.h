@@ -99,12 +99,10 @@ css_float_to_fixed(const float a) {
 	float xx = a * (float) (1 << CSS_RADIX_POINT);
 
 	if (xx < INT_MIN)
-		return INT_MIN;
+		xx = INT_MIN;
 
-	/* Conversion from int to float changes value from
-	 * 2147483647 to 2147483648, so we use >= instead of >. */
-	if (xx >= (float)INT_MAX)
-		return INT_MAX;
+	if (xx > INT_MAX)
+		xx = INT_MAX;
 
 	return (css_fixed) xx;
 }
@@ -130,8 +128,6 @@ css_float_to_fixed(const float a) {
 
 /* truncate a fixed point value */
 #define TRUNCATEFIX(a) (a & ~((1 << CSS_RADIX_POINT)- 1 ))
-/* get fractional component of a fixed point value */
-#define FIXFRAC(a) (a & ((1 << CSS_RADIX_POINT)- 1 ))
 
 /* Useful values */
 #define F_PI_2	0x00000648	/* 1.5708 (PI/2) */

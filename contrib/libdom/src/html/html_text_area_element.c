@@ -17,7 +17,7 @@
 #include "core/attr.h"
 #include "utils/utils.h"
 
-static const struct dom_element_protected_vtable _protect_vtable = {
+static struct dom_element_protected_vtable _protect_vtable = {
 	{
 		DOM_NODE_PROTECT_VTABLE_HTML_TEXT_AREA_ELEMENT
 	},
@@ -273,7 +273,7 @@ dom_exception dom_html_text_area_element_set_value(
 	if (ele->value != NULL)
 		dom_string_ref(ele->value);
 
-	return dom_node_set_text_content((dom_node *)ele, ele->value);
+	return DOM_NO_ERR;
 }
 
 /*------------------------------------------------------------------------*/

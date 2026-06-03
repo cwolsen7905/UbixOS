@@ -28,10 +28,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_outline(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	css_error error;
@@ -41,28 +41,23 @@ css_error css__parse_outline(css_language *c,
 	css_style *color_style;
 	css_style *style_style;
 	css_style *width_style;
-	enum flag_value flag_value;
 
 	/* Firstly, handle inherit */
 	token = parserutils_vector_peek(vector, *ctx);
 	if (token == NULL)
 		return CSS_INVALID;
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_OUTLINE_COLOR);
+	if (is_css_inherit(c, token)) {
+		error = css_stylesheet_style_inherit(result, CSS_PROP_OUTLINE_COLOR);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_OUTLINE_STYLE);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_OUTLINE_STYLE);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_OUTLINE_WIDTH);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_OUTLINE_WIDTH);
+
 		if (error == CSS_OK)
 			parserutils_vector_iterate(vector, ctx);
 
@@ -127,29 +122,20 @@ css_error css__parse_outline(css_language *c,
 	/* defaults */
 	if (color) {
 		error = css__stylesheet_style_appendOPV(color_style,
-				CSS_PROP_OUTLINE_COLOR,
+			       CSS_PROP_OUTLINE_COLOR,
 				0, OUTLINE_COLOR_INVERT);
-		if (error != CSS_OK) {
-			goto css__parse_outline_cleanup;
-		}
 	}
 
 	if (style) {
 		error = css__stylesheet_style_appendOPV(style_style,
-				CSS_PROP_OUTLINE_STYLE,
+			       CSS_PROP_OUTLINE_STYLE,
 				0, OUTLINE_STYLE_NONE);
-		if (error != CSS_OK) {
-			goto css__parse_outline_cleanup;
-		}
 	}
 
 	if (width) {
 		error = css__stylesheet_style_appendOPV(width_style,
-				CSS_PROP_OUTLINE_WIDTH,
+			       CSS_PROP_OUTLINE_WIDTH,
 				0, OUTLINE_WIDTH_MEDIUM);
-		if (error != CSS_OK) {
-			goto css__parse_outline_cleanup;
-		}
 	}
 
 

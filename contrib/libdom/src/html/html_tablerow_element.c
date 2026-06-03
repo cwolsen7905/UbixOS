@@ -20,7 +20,7 @@
 #include "core/attr.h"
 #include "utils/utils.h"
 
-static const struct dom_element_protected_vtable _protect_vtable = {
+static struct dom_element_protected_vtable _protect_vtable = {
 	{
 		DOM_NODE_PROTECT_VTABLE_HTML_TABLE_ROW_ELEMENT
 	},
@@ -244,17 +244,16 @@ dom_exception dom_html_table_row_element_get_row_index(
 			return exp;
 		}
 
-		if (t_head != NULL) {
-			exp = dom_html_table_section_element_get_rows(t_head, &rows);
-			dom_node_unref(t_head);
-			if (exp != DOM_NO_ERR) {
-				return exp;
-			}
-
-			dom_html_collection_get_length(rows, &len);
-			dom_html_collection_unref(rows);
-			count += len;
+		exp = dom_html_table_section_element_get_rows(t_head, &rows);
+		dom_node_unref(t_head);
+		if (exp != DOM_NO_ERR) {
+			return exp;
 		}
+
+		dom_html_collection_get_length(rows, &len);
+		dom_html_collection_unref(rows);
+
+		count += len;
 
 		for (n = n->first_child;n != parent && n != NULL;
 			n = n->next) {

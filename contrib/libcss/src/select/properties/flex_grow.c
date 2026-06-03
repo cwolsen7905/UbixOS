@@ -20,7 +20,7 @@ css_error css__cascade_flex_grow(uint32_t opv, css_style *style,
 	uint16_t value = CSS_FLEX_GROW_INHERIT;
 	css_fixed flex_grow = 0;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		value = CSS_FLEX_GROW_SET;
 
 		flex_grow = *((css_fixed *) style->bytecode);
@@ -28,7 +28,7 @@ css_error css__cascade_flex_grow(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_flex_grow(state->computed, value, flex_grow);
 	}
 
@@ -46,20 +46,6 @@ css_error css__initial_flex_grow(css_select_state *state)
 	return set_flex_grow(state->computed, CSS_FLEX_GROW_SET, INTTOFIX(0));
 }
 
-css_error css__copy_flex_grow(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_fixed flex_grow = 0;
-	uint8_t type = get_flex_grow(from, &flex_grow);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_flex_grow(to, type, flex_grow);
-}
-
 css_error css__compose_flex_grow(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -67,8 +53,10 @@ css_error css__compose_flex_grow(const css_computed_style *parent,
 	css_fixed flex_grow = 0;
 	uint8_t type = get_flex_grow(child, &flex_grow);
 
-	return css__copy_flex_grow(
-			type == CSS_FLEX_GROW_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FLEX_GROW_INHERIT) {
+		type = get_flex_grow(parent, &flex_grow);
+	}
+
+	return set_flex_grow(result, type, flex_grow);
 }
 

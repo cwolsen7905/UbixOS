@@ -21,7 +21,7 @@ css_error css__cascade_font_weight(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FONT_WEIGHT_NORMAL:
 			value = CSS_FONT_WEIGHT_NORMAL;
@@ -66,7 +66,7 @@ css_error css__cascade_font_weight(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_font_weight(state->computed, value);
 	}
 
@@ -84,25 +84,16 @@ css_error css__initial_font_weight(css_select_state *state)
 	return set_font_weight(state->computed, CSS_FONT_WEIGHT_NORMAL);
 }
 
-css_error css__copy_font_weight(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_font_weight(to, get_font_weight(from));
-}
-
 css_error css__compose_font_weight(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_font_weight(child);
 
-	return css__copy_font_weight(
-			type == CSS_FONT_WEIGHT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FONT_WEIGHT_INHERIT) {
+		type = get_font_weight(parent);
+	}
+
+	return set_font_weight(result, type);
 }
 

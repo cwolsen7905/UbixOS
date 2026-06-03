@@ -21,7 +21,7 @@ css_error css__cascade_justify_content(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case JUSTIFY_CONTENT_FLEX_START:
 			value = CSS_JUSTIFY_CONTENT_FLEX_START;
@@ -45,7 +45,7 @@ css_error css__cascade_justify_content(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_justify_content(state->computed, value);
 	}
 
@@ -64,25 +64,16 @@ css_error css__initial_justify_content(css_select_state *state)
 			CSS_JUSTIFY_CONTENT_FLEX_START);
 }
 
-css_error css__copy_justify_content(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_justify_content(to, get_justify_content(from));
-}
-
 css_error css__compose_justify_content(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_justify_content(child);
 
-	return css__copy_justify_content(
-			type == CSS_JUSTIFY_CONTENT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_JUSTIFY_CONTENT_INHERIT) {
+		type = get_justify_content(parent);
+	}
+
+	return set_justify_content(result, type);
 }
 

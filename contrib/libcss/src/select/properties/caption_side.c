@@ -21,7 +21,7 @@ css_error css__cascade_caption_side(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case CAPTION_SIDE_TOP:
 			value = CSS_CAPTION_SIDE_TOP;
@@ -33,7 +33,7 @@ css_error css__cascade_caption_side(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_caption_side(state->computed, value);
 	}
 
@@ -51,25 +51,16 @@ css_error css__initial_caption_side(css_select_state *state)
 	return set_caption_side(state->computed, CSS_CAPTION_SIDE_TOP);
 }
 
-css_error css__copy_caption_side(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_caption_side(to, get_caption_side(from));
-}
-
 css_error css__compose_caption_side(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_caption_side(child);
 
-	return css__copy_caption_side(
-			type == CSS_CAPTION_SIDE_INHERIT ? parent : child,
-			result);
+	if (type == CSS_CAPTION_SIDE_INHERIT) {
+		type = get_caption_side(parent);
+	}
+
+	return set_caption_side(result, type);
 }
 

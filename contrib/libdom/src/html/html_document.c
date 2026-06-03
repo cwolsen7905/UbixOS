@@ -17,7 +17,6 @@
 #include "html/html_head_element.h"
 #include "html/html_body_element.h"
 #include "html/html_base_element.h"
-#include "html/html_canvas_element.h"
 #include "html/html_div_element.h"
 #include "html/html_link_element.h"
 #include "html/html_title_element.h"
@@ -72,7 +71,7 @@
 #include "utils/namespace.h"
 #include "utils/utils.h"
 
-static const struct dom_html_document_vtable html_document_vtable = {
+static struct dom_html_document_vtable html_document_vtable = {
 	{
 		{
 			{
@@ -85,7 +84,7 @@ static const struct dom_html_document_vtable html_document_vtable = {
 	DOM_HTML_DOCUMENT_VTABLE
 };
 
-static const struct dom_node_protect_vtable html_document_protect_vtable = {
+static struct dom_node_protect_vtable html_document_protect_vtable = {
 	DOM_HTML_DOCUMENT_PROTECT_VTABLE
 };
 
@@ -536,10 +535,6 @@ _dom_html_document_create_element_internal(
 	dom_exception exc;
 	struct dom_html_element_create_params params;
 
-	/* If the input tag name is empty, this is an 'invalid character' error */
-	if (dom_string_length(in_tag_name) == 0)
-		return DOM_INVALID_CHARACTER_ERR;
-
 	exc = dom_string_toupper(in_tag_name, true, &params.name);
 	if (exc != DOM_NO_ERR)
 		return exc;
@@ -776,10 +771,6 @@ _dom_html_document_create_element_internal(
 		exc = _dom_html_isindex_element_create(&params,
 				(dom_html_isindex_element **) result);
 		break;
-	case DOM_HTML_ELEMENT_TYPE_CANVAS:
-		exc = _dom_html_canvas_element_create(&params,
-				(dom_html_canvas_element **) result);
-		break;
 	case DOM_HTML_ELEMENT_TYPE_DATA:
 	case DOM_HTML_ELEMENT_TYPE_SPAN:
 	case DOM_HTML_ELEMENT_TYPE_TIME:
@@ -788,6 +779,7 @@ _dom_html_document_create_element_internal(
 	case DOM_HTML_ELEMENT_TYPE_METER:
 	case DOM_HTML_ELEMENT_TYPE_TRACK:
 	case DOM_HTML_ELEMENT_TYPE_VIDEO:
+	case DOM_HTML_ELEMENT_TYPE_CANVAS:
 	case DOM_HTML_ELEMENT_TYPE_DIALOG:
 	case DOM_HTML_ELEMENT_TYPE_KEYGEN:
 	case DOM_HTML_ELEMENT_TYPE_OUTPUT:

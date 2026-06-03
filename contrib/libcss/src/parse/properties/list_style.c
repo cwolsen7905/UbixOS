@@ -28,10 +28,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_list_style(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	css_error error;
@@ -41,28 +41,23 @@ css_error css__parse_list_style(css_language *c,
 	css_style *image_style;
 	css_style *position_style;
 	css_style *type_style;
-	enum flag_value flag_value;
 
 	/* Firstly, handle inherit */
 	token = parserutils_vector_peek(vector, *ctx);
 	if (token == NULL)
 		return CSS_INVALID;
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_LIST_STYLE_IMAGE);
+	if (is_css_inherit(c, token)) {
+		error = css_stylesheet_style_inherit(result, CSS_PROP_LIST_STYLE_IMAGE);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_LIST_STYLE_POSITION);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_LIST_STYLE_POSITION);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_LIST_STYLE_TYPE);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_LIST_STYLE_TYPE);
+
 		if (error == CSS_OK)
 			parserutils_vector_iterate(vector, ctx);
 
@@ -127,29 +122,20 @@ css_error css__parse_list_style(css_language *c,
 	/* defaults */
 	if (image) {
 		error = css__stylesheet_style_appendOPV(image_style,
-				CSS_PROP_LIST_STYLE_IMAGE,
+			       CSS_PROP_LIST_STYLE_IMAGE,
 				0, LIST_STYLE_IMAGE_NONE);
-		if (error != CSS_OK) {
-			goto css__parse_list_style_cleanup;
-		}
 	}
 
 	if (position) {
 		error = css__stylesheet_style_appendOPV(position_style,
-				CSS_PROP_LIST_STYLE_POSITION,
+			       CSS_PROP_LIST_STYLE_POSITION,
 				0, LIST_STYLE_POSITION_OUTSIDE);
-		if (error != CSS_OK) {
-			goto css__parse_list_style_cleanup;
-		}
 	}
 
 	if (type) {
 		error = css__stylesheet_style_appendOPV(type_style,
-				CSS_PROP_LIST_STYLE_TYPE,
+			       CSS_PROP_LIST_STYLE_TYPE,
 				0, LIST_STYLE_TYPE_DISC);
-		if (error != CSS_OK) {
-			goto css__parse_list_style_cleanup;
-		}
 	}
 
 

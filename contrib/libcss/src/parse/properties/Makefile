@@ -45,7 +45,6 @@ DIR_SOURCES :=				\
 	cue.c				\
 	cursor.c			\
 	elevation.c			\
-	fill_opacity.c			\
 	flex.c				\
 	flex_flow.c			\
 	font.c				\
@@ -62,7 +61,6 @@ DIR_SOURCES :=				\
 	play_during.c			\
 	properties.c			\
 	quotes.c			\
-	stroke_opacity.c		\
 	text_decoration.c		\
 	utils.c				\
 	voice_family.c

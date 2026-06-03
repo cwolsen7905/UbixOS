@@ -21,7 +21,7 @@ css_error css__cascade_font_variant(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FONT_VARIANT_NORMAL:
 			value = CSS_FONT_VARIANT_NORMAL;
@@ -33,7 +33,7 @@ css_error css__cascade_font_variant(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_font_variant(state->computed, value);
 	}
 
@@ -51,25 +51,16 @@ css_error css__initial_font_variant(css_select_state *state)
 	return set_font_variant(state->computed, CSS_FONT_VARIANT_NORMAL);
 }
 
-css_error css__copy_font_variant(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_font_variant(to, get_font_variant(from));
-}
-
 css_error css__compose_font_variant(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_font_variant(child);
 
-	return css__copy_font_variant(
-			type == CSS_FONT_VARIANT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FONT_VARIANT_INHERIT) {
+		type = get_font_variant(parent);
+	}
+
+	return set_font_variant(result, type);
 }
 

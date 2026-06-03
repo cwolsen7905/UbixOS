@@ -21,7 +21,7 @@ css_error css__cascade_table_layout(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case TABLE_LAYOUT_AUTO:
 			value = CSS_TABLE_LAYOUT_AUTO;
@@ -33,7 +33,7 @@ css_error css__cascade_table_layout(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_table_layout(state->computed, value);
 	}
 
@@ -51,25 +51,16 @@ css_error css__initial_table_layout(css_select_state *state)
 	return set_table_layout(state->computed, CSS_TABLE_LAYOUT_AUTO);
 }
 
-css_error css__copy_table_layout(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_table_layout(to, get_table_layout(from));
-}
-
 css_error css__compose_table_layout(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_table_layout(child);
 
-	return css__copy_table_layout(
-			type == CSS_TABLE_LAYOUT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_TABLE_LAYOUT_INHERIT) {
+		type = get_table_layout(parent);
+	}
+
+	return set_table_layout(result, type);
 }
 

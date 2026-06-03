@@ -21,7 +21,7 @@ css_error css__cascade_flex_direction(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FLEX_DIRECTION_ROW:
 			value = CSS_FLEX_DIRECTION_ROW;
@@ -39,7 +39,7 @@ css_error css__cascade_flex_direction(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_flex_direction(state->computed, value);
 	}
 
@@ -57,25 +57,16 @@ css_error css__initial_flex_direction(css_select_state *state)
 	return set_flex_direction(state->computed, CSS_FLEX_DIRECTION_ROW);
 }
 
-css_error css__copy_flex_direction(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_flex_direction(to, get_flex_direction(from));
-}
-
 css_error css__compose_flex_direction(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_flex_direction(child);
 
-	return css__copy_flex_direction(
-			type == CSS_FLEX_DIRECTION_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FLEX_DIRECTION_INHERIT) {
+		type = get_flex_direction(parent);
+	}
+
+	return set_flex_direction(result, type);
 }
 

@@ -144,10 +144,24 @@ nsfb_type_from_name(const char *name)
 {
     int fend_loop;
 
-    for (fend_loop = 0; fend_loop < surface_count; fend_loop++) {
+    for (fend_loop = 0; name != NULL && fend_loop < surface_count; fend_loop++) {
         if (strcmp(surfaces[fend_loop].name, name) == 0)
             return surfaces[fend_loop].type;
     }
+
+    /*
+     * uBixOS only registers a single real display surface ("ubix"); the
+     * "ram" surface is memory-only.  NetSurf's framebuffer frontend defaults
+     * its surface name to a host backend (e.g. "sdl") that does not exist
+     * here, which would otherwise force every launch to pass "-f ubix".
+     * Fall back to the ubix surface for any unrecognised name so the default
+     * just works.
+     */
+    for (fend_loop = 0; fend_loop < surface_count; fend_loop++) {
+        if (surfaces[fend_loop].type == NSFB_SURFACE_UBIX)
+            return NSFB_SURFACE_UBIX;
+    }
+
     return NSFB_SURFACE_NONE;
 }
 

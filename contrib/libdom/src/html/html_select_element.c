@@ -17,7 +17,7 @@
 #include "core/node.h"
 #include "utils/utils.h"
 
-static const struct dom_element_protected_vtable _protect_vtable = {
+static struct dom_element_protected_vtable _protect_vtable = {
 	{
 		DOM_NODE_PROTECT_VTABLE_HTML_SELECT_ELEMENT
 	},
@@ -213,9 +213,6 @@ dom_exception dom_html_select_element_get_selected_index(
 	dom_html_options_collection *col;
 
 	err = _dom_html_select_element_make_collection(ele, &col);
-	if (err != DOM_NO_ERR) {
-		return err;
-	}
 
 	err = dom_html_options_collection_get_length(col, &len);
 	if (err != DOM_NO_ERR) {
@@ -269,9 +266,6 @@ dom_exception dom_html_select_element_set_selected_index(
 	dom_html_options_collection *col;
 
 	err = _dom_html_select_element_make_collection(ele, &col);
-	if (err != DOM_NO_ERR) {
-		return err;
-	}
 
 	err = dom_html_options_collection_item(col,
 			index, &option);

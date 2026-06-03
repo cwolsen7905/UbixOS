@@ -21,7 +21,7 @@ css_error css__cascade_white_space(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case WHITE_SPACE_NORMAL:
 			value = CSS_WHITE_SPACE_NORMAL;
@@ -42,7 +42,7 @@ css_error css__cascade_white_space(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_white_space(state->computed, value);
 	}
 
@@ -60,25 +60,16 @@ css_error css__initial_white_space(css_select_state *state)
 	return set_white_space(state->computed, CSS_WHITE_SPACE_NORMAL);
 }
 
-css_error css__copy_white_space(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_white_space(to, get_white_space(from));
-}
-
 css_error css__compose_white_space(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_white_space(child);
 
-	return css__copy_white_space(
-			type == CSS_WHITE_SPACE_INHERIT ? parent : child,
-			result);
+	if (type == CSS_WHITE_SPACE_INHERIT) {
+		type = get_white_space(parent);
+	}
+
+	return set_white_space(result, type);
 }
 

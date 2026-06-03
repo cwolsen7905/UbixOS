@@ -21,7 +21,7 @@ css_error css__cascade_flex_basis(uint32_t opv, css_style *style,
 	css_fixed length = 0;
 	uint32_t unit = UNIT_PX;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case FLEX_BASIS_AUTO:
 			value = CSS_FLEX_BASIS_AUTO;
@@ -42,7 +42,7 @@ css_error css__cascade_flex_basis(uint32_t opv, css_style *style,
 	unit = css__to_css_unit(unit);
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_flex_basis(state->computed, value, length, unit);
 	}
 
@@ -62,21 +62,6 @@ css_error css__initial_flex_basis(css_select_state *state)
 			CSS_UNIT_PX);
 }
 
-css_error css__copy_flex_basis(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_fixed length = 0;
-	css_unit unit = CSS_UNIT_PX;
-	uint8_t type = get_flex_basis(from, &length, &unit);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_flex_basis(to, type, length, unit);
-}
-
 css_error css__compose_flex_basis(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -85,8 +70,10 @@ css_error css__compose_flex_basis(const css_computed_style *parent,
 	css_unit unit = CSS_UNIT_PX;
 	uint8_t type = get_flex_basis(child, &length, &unit);
 
-	return css__copy_flex_basis(
-			type == CSS_FLEX_BASIS_INHERIT ? parent : child,
-			result);
+	if (type == CSS_FLEX_BASIS_INHERIT) {
+		type = get_flex_basis(parent, &length, &unit);
+	}
+
+	return set_flex_basis(result, type, length, unit);
 }
 

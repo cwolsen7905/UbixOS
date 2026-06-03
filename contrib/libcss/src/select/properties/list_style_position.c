@@ -21,7 +21,7 @@ css_error css__cascade_list_style_position(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case LIST_STYLE_POSITION_INSIDE:
 			value = CSS_LIST_STYLE_POSITION_INSIDE;
@@ -33,7 +33,7 @@ css_error css__cascade_list_style_position(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_list_style_position(state->computed, value);
 	}
 
@@ -52,25 +52,16 @@ css_error css__initial_list_style_position(css_select_state *state)
 			CSS_LIST_STYLE_POSITION_OUTSIDE);
 }
 
-css_error css__copy_list_style_position(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_list_style_position(to, get_list_style_position(from));
-}
-
 css_error css__compose_list_style_position(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_list_style_position(child);
 
-	return css__copy_list_style_position(
-			type == CSS_LIST_STYLE_POSITION_INHERIT ? parent : child,
-			result);
+	if (type == CSS_LIST_STYLE_POSITION_INHERIT) {
+		type = get_list_style_position(parent);
+	}
+
+	return set_list_style_position(result, type);
 }
 

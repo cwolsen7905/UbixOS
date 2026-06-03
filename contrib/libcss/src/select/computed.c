@@ -12,7 +12,6 @@
 #include "select/dispatch.h"
 #include "select/propget.h"
 #include "select/propset.h"
-#include "select/unit.h"
 #include "utils/utils.h"
 
 static css_error compute_absolute_color(css_computed_style *style,
@@ -233,37 +232,6 @@ css_error css__computed_style_initialise(css_computed_style *style,
 }
 
 /**
- * Clone a computed style
- *
- * \param orig       Style to copy
- * \param clone_out  Returns cloned style on success
- * \return CSS_OK on success.
- */
-css_error css__computed_style_clone(
-		const css_computed_style *orig,
-		css_computed_style **clone_out)
-{
-	css_error error;
-	css_computed_style *clone;
-
-	error = css__computed_style_create(&clone);
-	if (error != CSS_OK) {
-		return error;
-	}
-
-	for (size_t i = 0; i < CSS_N_PROPERTIES; i++) {
-		error = prop_dispatch[i].copy(orig, clone);
-		if (error != CSS_OK) {
-			css_computed_style_destroy(clone);
-			return error;
-		}
-	}
-
-	*clone_out = clone;
-	return CSS_OK;
-}
-
-/**
  * Compose two computed styles
  *
  * \param parent             Parent style
@@ -279,7 +247,9 @@ css_error css__computed_style_clone(
 css_error css_computed_style_compose(
 		const css_computed_style *restrict parent,
 		const css_computed_style *restrict child,
-		const css_unit_ctx *unit_ctx,
+		css_error (*compute_font_size)(void *pw,
+			const css_hint *parent, css_hint *size),
+		void *pw,
 		css_computed_style **restrict result)
 {
 	css_computed_style *composed;
@@ -305,7 +275,8 @@ css_error css_computed_style_compose(
 	}
 
 	/* Finally, compute absolute values for everything */
-	error = css__compute_absolute_values(parent, composed, unit_ctx);
+	error = css__compute_absolute_values(parent, composed,
+			compute_font_size, pw);
 	if (error != CSS_OK) {
 		return error;
 	}
@@ -810,18 +781,6 @@ uint8_t css_computed_opacity(const css_computed_style *style,
 	return get_opacity(style, opacity);
 }
 
-uint8_t css_computed_fill_opacity(const css_computed_style *style,
-		css_fixed *fill_opacity)
-{
-	return get_fill_opacity(style, fill_opacity);
-}
-
-uint8_t css_computed_stroke_opacity(const css_computed_style *style,
-		css_fixed *stroke_opacity)
-{
-	return get_stroke_opacity(style, stroke_opacity);
-}
-
 uint8_t css_computed_text_transform(const css_computed_style *style)
 {
 	return get_text_transform(style);
@@ -938,8 +897,6 @@ uint8_t css_computed_display(const css_computed_style *style,
 			return CSS_DISPLAY_TABLE;
 		} else if (display == CSS_DISPLAY_INLINE_FLEX) {
 			return CSS_DISPLAY_FLEX;
-		} else if (display == CSS_DISPLAY_INLINE_GRID) {
-			return CSS_DISPLAY_GRID;
 		} else if (display == CSS_DISPLAY_INLINE ||
 				display == CSS_DISPLAY_RUN_IN ||
 				display == CSS_DISPLAY_TABLE_ROW_GROUP ||
@@ -1130,36 +1087,31 @@ uint8_t css_computed_order(const css_computed_style *style,
  *
  * \param parent             Parent style, or NULL for tree root
  * \param style              Computed style to process
- * \param unit_ctx       Client length conversion context.
+ * \param compute_font_size  Callback to calculate an absolute font-size
+ * \param pw                 Private word for callback
  * \return CSS_OK on success.
  */
 css_error css__compute_absolute_values(const css_computed_style *parent,
 		css_computed_style *style,
-		const css_unit_ctx *unit_ctx)
+		css_error (*compute_font_size)(void *pw,
+			const css_hint *parent, css_hint *size),
+		void *pw)
 {
-	css_hint_length *ref_length = NULL;
 	css_hint psize, size, ex_size;
 	css_error error;
 
-	/* Get reference font-size for relative sizes. */
+	/* Ensure font-size is absolute */
 	if (parent != NULL) {
 		psize.status = get_font_size(parent,
 				&psize.data.length.value,
 				&psize.data.length.unit);
-		if (psize.status != CSS_FONT_SIZE_DIMENSION) {
-			return CSS_BADPARM;
-		}
-		ref_length = &psize.data.length;
 	}
 
 	size.status = get_font_size(style,
 			&size.data.length.value,
 			&size.data.length.unit);
 
-	error = css_unit_compute_absolute_font_size(ref_length,
-			unit_ctx->root_style,
-			unit_ctx->font_size_default,
-			&size);
+	error = compute_font_size(pw, parent != NULL ? &psize : NULL, &size);
 	if (error != CSS_OK)
 		return error;
 
@@ -1173,12 +1125,7 @@ css_error css__compute_absolute_values(const css_computed_style *parent,
 	ex_size.status = CSS_FONT_SIZE_DIMENSION;
 	ex_size.data.length.value = INTTOFIX(1);
 	ex_size.data.length.unit = CSS_UNIT_EX;
-
-	error = css_unit_compute_absolute_font_size(
-			&size.data.length,
-			unit_ctx->root_style,
-			unit_ctx->font_size_default,
-			&ex_size);
+	error = compute_font_size(pw, &size, &ex_size);
 	if (error != CSS_OK)
 		return error;
 
@@ -1513,8 +1460,6 @@ css_error compute_absolute_border_side_width(css_computed_style *style,
 			unit = ex_size->unit;
 		}
 		break;
-	default:
-		return CSS_INVALID;
 	}
 
 	return set(style, CSS_BORDER_WIDTH_WIDTH, length, unit);
@@ -1755,8 +1700,8 @@ css_error compute_absolute_length(css_computed_style *style,
 		css_error (*set)(css_computed_style *style, uint8_t type,
 				css_fixed len, css_unit unit))
 {
-	css_unit unit = CSS_UNIT_PX;
 	css_fixed length;
+	css_unit unit;
 	uint8_t type;
 
 	type = get(style, &length, &unit);
@@ -1795,10 +1740,6 @@ css_error compute_absolute_length_pair(css_computed_style *style,
 	uint8_t type;
 
 	type = get(style, &length1, &unit1, &length2, &unit2);
-
-	if (type != CSS_BACKGROUND_POSITION_SET) {
-		return CSS_OK;
-	}
 
 	if (unit1 == CSS_UNIT_EX) {
 		length1 = FMUL(length1, ex_size->value);

@@ -9,30 +9,22 @@
  * Bloom filter for CSS style selection optimisation.
  *
  * Attempting to match CSS rules by querying the client about DOM nodes via
- * the selection callbacks is slow.  To avoid the slow matching of CSS rule
- * selector chains, we build up two bloom filters.  One describing the rule
- * selector chain, and one describing the node we are selecting for in
- * css_get_style.
- *
- * These bloom filters have bits set according to the node's ancestor element
- * names, class names and id names.
+ * the selection callbacks is slow.  To avoid this, clients may pass a node
+ * bloom filter to css_get_style.  This bloom filter has bits set according
+ * to the node's ancestor element names, class names and id names.
  *
  * Generate the bloom filter by adding calling css_bloom_add_hash() on each
  * ancestor element name, class name and id name for the node.
  *
- * Use the insensitive hash value:
+ * Use the insesnsitive hash value:
  *
  *     lwc_err = lwc_string_caseless_hash_value(str, &hash);
- *
- * We avoid matching most selector chains by checking whether the rule bloom
- * is a subset of the node bloom.
  */
 
 #ifndef libcss_bloom_h_
 #define libcss_bloom_h_
 
 #include <stdint.h>
-#include <string.h>
 
 /* Size of bloom filter as multiple of 32 bits.
  * Has to be 4, 8, or 16.
@@ -96,8 +88,7 @@ static inline bool css_bloom_has_hash(const css_bloom bloom[CSS_BLOOM_SIZE],
  * \param b	superset bloom
  * \return true iff 'a' is subset of 'b'
  */
-static inline bool css_bloom_in_bloom(
-		const css_bloom a[CSS_BLOOM_SIZE],
+static inline bool css_bloom_in_bloom(const css_bloom a[CSS_BLOOM_SIZE],
 		const css_bloom b[CSS_BLOOM_SIZE])
 {
 	if ((a[0] & b[0]) != a[0])
@@ -141,14 +132,13 @@ static inline bool css_bloom_in_bloom(
 
 
 /**
- * Merge bloom \ref a into bloom \ref b.
+ * Merge bloom 'a' into bloom 'b'.
  *
  * \param a	bloom to insert
  * \param b	target bloom
  */
-static inline void css_bloom_merge(
-		const css_bloom a[restrict CSS_BLOOM_SIZE],
-		      css_bloom b[restrict CSS_BLOOM_SIZE])
+static inline void css_bloom_merge(const css_bloom a[CSS_BLOOM_SIZE],
+		css_bloom b[CSS_BLOOM_SIZE])
 {
 	b[0] |= a[0];
 	b[1] |= a[1];
@@ -180,7 +170,27 @@ static inline void css_bloom_merge(
  */
 static inline void css_bloom_init(css_bloom bloom[CSS_BLOOM_SIZE])
 {
-	memset(bloom, 0, sizeof(*bloom) * CSS_BLOOM_SIZE);
+	bloom[0] = 0;
+	bloom[1] = 0;
+	bloom[2] = 0;
+	bloom[3] = 0;
+#if (CSS_BLOOM_SIZE > 4)
+	bloom[4] = 0;
+	bloom[5] = 0;
+	bloom[6] = 0;
+	bloom[7] = 0;
+#endif
+#if (CSS_BLOOM_SIZE > 8)
+	bloom[8] = 0;
+	bloom[9] = 0;
+	bloom[10] = 0;
+	bloom[11] = 0;
+	bloom[12] = 0;
+	bloom[13] = 0;
+	bloom[14] = 0;
+	bloom[15] = 0;
+#endif
 }
 
 #endif
+

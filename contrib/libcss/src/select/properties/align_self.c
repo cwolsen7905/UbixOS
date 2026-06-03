@@ -21,7 +21,7 @@ css_error css__cascade_align_self(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case ALIGN_SELF_STRETCH:
 			value = CSS_ALIGN_SELF_STRETCH;
@@ -45,7 +45,7 @@ css_error css__cascade_align_self(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_align_self(state->computed, value);
 	}
 
@@ -63,25 +63,16 @@ css_error css__initial_align_self(css_select_state *state)
 	return set_align_self(state->computed, CSS_ALIGN_SELF_AUTO);
 }
 
-css_error css__copy_align_self(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_align_self(to, get_align_self(from));
-}
-
 css_error css__compose_align_self(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_align_self(child);
 
-	return css__copy_align_self(
-			type == CSS_ALIGN_SELF_INHERIT ? parent : child,
-			result);
+	if (type == CSS_ALIGN_SELF_INHERIT) {
+		type = get_align_self(parent);
+	}
+
+	return set_align_self(result, type);
 }
 

@@ -21,7 +21,7 @@ css_error css__cascade_empty_cells(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case EMPTY_CELLS_SHOW:
 			value = CSS_EMPTY_CELLS_SHOW;
@@ -33,7 +33,7 @@ css_error css__cascade_empty_cells(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_empty_cells(state->computed, value);
 	}
 
@@ -51,25 +51,16 @@ css_error css__initial_empty_cells(css_select_state *state)
 	return set_empty_cells(state->computed, CSS_EMPTY_CELLS_SHOW);
 }
 
-css_error css__copy_empty_cells(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_empty_cells(to, get_empty_cells(from));
-}
-
 css_error css__compose_empty_cells(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_empty_cells(child);
 
-	return css__copy_empty_cells(
-			type == CSS_EMPTY_CELLS_INHERIT ? parent : child,
-			result);
+	if (type == CSS_EMPTY_CELLS_INHERIT) {
+		type = get_empty_cells(parent);
+	}
+
+	return set_empty_cells(result, type);
 }
 

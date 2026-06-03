@@ -106,7 +106,7 @@ void output_header(FILE *outputf, const char *descriptor, struct keyval *parser_
 		" *		   If the input is invalid, then \\a *ctx remains unchanged.\n"
 		" */\n"
 		"css_error css__parse_%s(css_language *c,\n"
-		"		const parserutils_vector *vector, int32_t *ctx,\n"
+		"		const parserutils_vector *vector, int *ctx,\n"
 		"		css_style *result%s)\n"
 		"{\n",
 		descriptor,
@@ -120,7 +120,7 @@ void output_header(FILE *outputf, const char *descriptor, struct keyval *parser_
 void output_token_type_check(FILE *outputf, bool do_token_check, struct keyval_list *IDENT, struct keyval_list *URI, struct keyval_list *NUMBER)
 {
 	fprintf(outputf,
-		"	int32_t orig_ctx = *ctx;\n"
+		"	int orig_ctx = *ctx;\n"
 		"	css_error error;\n"
 		"	const css_token *token;\n"
 		"	bool match;\n\n"
@@ -169,38 +169,18 @@ void output_ident(FILE *outputf, bool only_ident, struct keyval *parseid, struct
 			"if (");
 		if (!only_ident) {
 			fprintf(outputf,
-			"(token->type == CSS_TOKEN_IDENT) &&\n\t\t\t");
+			"(token->type == CSS_TOKEN_IDENT) && ");
 		}
 		fprintf(outputf,
-			"(lwc_string_caseless_isequal(\n"
-			"\t\t\ttoken->idata, c->strings[%s],\n"
-			"\t\t\t&match) == lwc_error_ok && match)) {\n",
+			"(lwc_string_caseless_isequal(token->idata, c->strings[%s], &match) == lwc_error_ok && match)) {\n",
 			ckv->key);
 		if (strcmp(ckv->key,"INHERIT") == 0) {
 		fprintf(outputf,
-			"\t\terror = css_stylesheet_style_inherit(result,\n"
-			"\t\t\t\t%s);\n\n",
-			parseid->val);
-		} else if (strcmp(ckv->key,"INITIAL") == 0) {
-		fprintf(outputf,
-			"\t\terror = css_stylesheet_style_initial(result,\n"
-			"\t\t\t\t%s);\n\n",
-			parseid->val);
-		} else if (strcmp(ckv->key,"REVERT") == 0) {
-		fprintf(outputf,
-			"\t\terror = css_stylesheet_style_revert(result,\n"
-			"\t\t\t\t%s);\n\n",
-			parseid->val);
-		} else if (strcmp(ckv->key,"UNSET") == 0) {
-		fprintf(outputf,
-			"\t\terror = css_stylesheet_style_unset(result,\n"
-			"\t\t\t\t%s);\n\n",
+			"\t\t\terror = css_stylesheet_style_inherit(result, %s);\n",
 			parseid->val);
 		} else {
 		fprintf(outputf,
-			"\t\terror = css__stylesheet_style_appendOPV(result,\n"
-			"\t\t\t\t%s,\n"
-			"\t\t\t\t%s);\n\n",
+			"\t\t\terror = css__stylesheet_style_appendOPV(result, %s, %s);\n",
 			parseid->val,
 			ckv->val);
 		}
@@ -346,13 +326,6 @@ void output_length_unit(FILE *outputf, struct keyval *parseid, struct keyval_lis
 				"\t\t\treturn CSS_INVALID;\n"
 				"\t\t}\n\n",
 				ulkv->val);
-		} else if (strcmp(ulkv->key, "MASK") == 0) {
-			fprintf(outputf,
-				"\t\tif ((unit & %s ) == 0) {\n"
-				"\t\t\t*ctx = orig_ctx;\n"
-				"\t\t\treturn CSS_INVALID;\n"
-				"\t\t}\n\n",
-				ulkv->val);
 		} else if (strcmp(ulkv->key, "RANGE") == 0) {
 			fprintf(outputf,
 				"\t\tif (length %s) {\n"
@@ -486,21 +459,9 @@ void output_wrap(FILE *outputf, struct keyval *parseid, struct keyval_list *WRAP
 }
 
 char str_INHERIT[] = "INHERIT";
-char str_INITIAL[] = "INITIAL";
-char str_REVERT[] = "REVERT";
-char str_UNSET[] = "UNSET";
 
 struct keyval ident_inherit = {
 	.key = str_INHERIT,
-};
-struct keyval ident_initial = {
-	.key = str_INITIAL,
-};
-struct keyval ident_unset = {
-	.key = str_UNSET,
-};
-struct keyval ident_revert = {
-	.key = str_REVERT,
 };
 
 int main(int argc, char **argv)
@@ -586,12 +547,6 @@ int main(int argc, char **argv)
 				curlist = &base;
 			} else if (strcmp(rkv->val, str_INHERIT) == 0) {
 				IDENT.item[IDENT.count++] = &ident_inherit;
-			} else if (strcmp(rkv->val, str_INITIAL) == 0) {
-				IDENT.item[IDENT.count++] = &ident_initial;
-			} else if (strcmp(rkv->val, str_REVERT) == 0) {
-				IDENT.item[IDENT.count++] = &ident_revert;
-			} else if (strcmp(rkv->val, str_UNSET) == 0) {
-				IDENT.item[IDENT.count++] = &ident_unset;
 			}
 		} else if (strcmp(rkv->key, "IDENT_LIST") == 0) {
 			if (rkv->val[0] == '(') {

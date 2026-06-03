@@ -21,7 +21,7 @@ css_error css__cascade_background_attachment(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case BACKGROUND_ATTACHMENT_FIXED:
 			value = CSS_BACKGROUND_ATTACHMENT_FIXED;
@@ -33,7 +33,7 @@ css_error css__cascade_background_attachment(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_background_attachment(state->computed, value);
 	}
 
@@ -52,25 +52,16 @@ css_error css__initial_background_attachment(css_select_state *state)
 			CSS_BACKGROUND_ATTACHMENT_SCROLL);
 }
 
-css_error css__copy_background_attachment(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_background_attachment(to, get_background_attachment(from));
-}
-
 css_error css__compose_background_attachment(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_background_attachment(child);
 
-	return css__copy_background_attachment(
-			type == CSS_BACKGROUND_ATTACHMENT_INHERIT ? parent : child,
-			result);
+	if (type == CSS_BACKGROUND_ATTACHMENT_INHERIT) {
+		type = get_background_attachment(parent);
+	}
+
+	return set_background_attachment(result, type);
 }
 

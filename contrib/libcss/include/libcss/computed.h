@@ -19,7 +19,6 @@ extern "C"
 #include <libcss/functypes.h>
 #include <libcss/properties.h>
 #include <libcss/types.h>
-#include <libcss/unit.h>
 
 struct css_hint;
 struct css_select_handler;
@@ -82,34 +81,14 @@ css_error css_computed_style_destroy(css_computed_style *style);
 css_error css_computed_style_compose(
 		const css_computed_style *restrict parent,
 		const css_computed_style *restrict child,
-		const css_unit_ctx *unit_ctx,
+		css_error (*compute_font_size)(void *pw,
+				const struct css_hint *parent,
+				struct css_hint *size),
+		void *pw,
 		css_computed_style **restrict result);
 
 /******************************************************************************
- * speciality formatters                                                      *
- ******************************************************************************/
-
-/**
- * Format a value into a text string controled by a list style
- *
- * \param[in] style The computed style to use for formatting
- * \param[in] value The value to format
- * \param[out] buffer The buffer to recive the formatted result
- * \param[in] buffer_length The length of the buffer
- * \param[out] format_length The complete length of the formatted result which
- *                             may exceed buffer_length in which case the
- *                             buffer data will not be complete.
- * \return CSS_OK on success and the buffer and format_length updated
- */
-css_error css_computed_format_list_style(
-		const css_computed_style *style,
-		int value,
-		char *buffer,
-		size_t buffer_length,
-		size_t *format_length);
-
-/******************************************************************************
- * Property accessors                                                         *
+ * Property accessors below here                                              *
  ******************************************************************************/
 
 uint8_t css_computed_letter_spacing(
@@ -337,14 +316,6 @@ uint8_t css_computed_position(
 uint8_t css_computed_opacity(
 		const css_computed_style *style,
 		css_fixed *opacity);
-
-uint8_t css_computed_fill_opacity(
-		const css_computed_style *style,
-		css_fixed *fill_opacity);
-
-uint8_t css_computed_stroke_opacity(
-		const css_computed_style *style,
-		css_fixed *stroke_opacity);
 
 uint8_t css_computed_text_transform(
 		const css_computed_style *style);

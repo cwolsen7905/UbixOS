@@ -20,7 +20,7 @@ css_error css__cascade_z_index(uint32_t opv, css_style *style,
 	uint16_t value = CSS_Z_INDEX_INHERIT;
 	css_fixed index = 0;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case Z_INDEX_SET:
 			value = CSS_Z_INDEX_SET;
@@ -35,7 +35,7 @@ css_error css__cascade_z_index(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_z_index(state->computed, value, index);
 	}
 
@@ -53,20 +53,6 @@ css_error css__initial_z_index(css_select_state *state)
 	return set_z_index(state->computed, CSS_Z_INDEX_AUTO, 0);
 }
 
-css_error css__copy_z_index(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	int32_t index = 0;
-	uint8_t type = get_z_index(from, &index);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_z_index(to, type, index);
-}
-
 css_error css__compose_z_index(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -74,8 +60,10 @@ css_error css__compose_z_index(const css_computed_style *parent,
 	int32_t index = 0;
 	uint8_t type = get_z_index(child, &index);
 
-	return css__copy_z_index(
-			type == CSS_Z_INDEX_INHERIT ? parent : child,
-			result);
+	if (type == CSS_Z_INDEX_INHERIT) {
+		type = get_z_index(parent, &index);
+	}
+
+	return set_z_index(result, type, index);
 }
 

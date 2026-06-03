@@ -21,7 +21,7 @@ css_error css__cascade_align_items(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case ALIGN_ITEMS_STRETCH:
 			value = CSS_ALIGN_ITEMS_STRETCH;
@@ -42,7 +42,7 @@ css_error css__cascade_align_items(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_align_items(state->computed, value);
 	}
 
@@ -60,25 +60,16 @@ css_error css__initial_align_items(css_select_state *state)
 	return set_align_items(state->computed, CSS_ALIGN_ITEMS_STRETCH);
 }
 
-css_error css__copy_align_items(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_align_items(to, get_align_items(from));
-}
-
 css_error css__compose_align_items(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_align_items(child);
 
-	return css__copy_align_items(
-			type == CSS_ALIGN_ITEMS_INHERIT ? parent : child,
-			result);
+	if (type == CSS_ALIGN_ITEMS_INHERIT) {
+		type = get_align_items(parent);
+	}
+
+	return set_align_items(result, type);
 }
 

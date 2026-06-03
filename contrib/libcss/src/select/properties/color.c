@@ -17,11 +17,11 @@
 css_error css__cascade_color(uint32_t opv, css_style *style,
 		css_select_state *state)
 {
-	enum flag_value flag_value = getFlagValue(opv);
+	bool inherit = isInherit(opv);
 	uint16_t value = CSS_COLOR_INHERIT;
 	css_color color = 0;
 
-	if (flag_value == FLAG_VALUE__NONE) {
+	if (inherit == false) {
 		switch (getValue(opv)) {
 		case COLOR_TRANSPARENT:
 			value = CSS_COLOR_COLOR;
@@ -29,7 +29,7 @@ css_error css__cascade_color(uint32_t opv, css_style *style,
 		case COLOR_CURRENT_COLOR:
 			/* color: currentColor always computes to inherit */
 			value = CSS_COLOR_INHERIT;
-			flag_value = FLAG_VALUE_INHERIT;
+			inherit = true;
 			break;
 		case COLOR_SET:
 			value = CSS_COLOR_COLOR;
@@ -40,7 +40,7 @@ css_error css__cascade_color(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			flag_value)) {
+			inherit)) {
 		return set_color(state->computed, value, color);
 	}
 
@@ -66,20 +66,6 @@ css_error css__initial_color(css_select_state *state)
 	return css__set_color_from_hint(&hint, state->computed);
 }
 
-css_error css__copy_color(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_color color;
-	uint8_t type = get_color(from, &color);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_color(to, type, color);
-}
-
 css_error css__compose_color(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -87,8 +73,10 @@ css_error css__compose_color(const css_computed_style *parent,
 	css_color color;
 	uint8_t type = get_color(child, &color);
 
-	return css__copy_color(
-			type == CSS_COLOR_INHERIT ? parent : child,
-			result);
+	if (type == CSS_COLOR_INHERIT) {
+		type = get_color(parent, &color);
+	}
+
+	return set_color(result, type, color);
 }
 

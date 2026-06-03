@@ -325,11 +325,11 @@ static bmp_result bmp_info_header_parse(bmp_image *bmp, uint8_t *data)
                 if (!bmp->colour_table)
                         return BMP_INSUFFICIENT_MEMORY;
                 for (i = 0; i < bmp->colours; i++) {
-                        uint32_t colour = data[2] | (data[1] << 8) | (data[0] << 16);
+                        bmp->colour_table[i] = data[2] | (data[1] << 8) | (data[0] << 16);
                         if (bmp->opaque)
-                                colour |= ((uint32_t)0xff << 24);
+                                bmp->colour_table[i] |= ((uint32_t)0xff << 24);
                         data += palette_size;
-                        bmp->colour_table[i] = read_uint32((uint8_t *)&colour,0);
+                        bmp->colour_table[i] = read_uint32((uint8_t *)&bmp->colour_table[i],0);
                 }
 
                 /* some bitmaps have a bad offset if there is a pallete, work
@@ -530,7 +530,7 @@ static bmp_result bmp_decode_rgb32(bmp_image *bmp, uint8_t **start, int bytes)
         assert(bmp->bpp == 32);
 
         data = *start;
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top)
                 return BMP_INSUFFICIENT_MEMORY;
@@ -612,7 +612,7 @@ static bmp_result bmp_decode_rgb24(bmp_image *bmp, uint8_t **start, int bytes)
         assert(bmp->bpp == 24);
 
         data = *start;
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top) {
                 return BMP_INSUFFICIENT_MEMORY;
@@ -683,7 +683,7 @@ static bmp_result bmp_decode_rgb16(bmp_image *bmp, uint8_t **start, int bytes)
         uint16_t word;
 
         data = *start;
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top)
                 return BMP_INSUFFICIENT_MEMORY;
@@ -770,14 +770,11 @@ static bmp_result bmp_decode_rgb(bmp_image *bmp, uint8_t **start, int bytes)
         uint8_t bit_mask = (1 << bmp->bpp) - 1;
         uint8_t cur_byte = 0, bit, i;
 
-        /* Belt and braces, we shouldn't get here unless this holds */
-        assert(ppb >= 1);
-
         for (i = 0; i < ppb; i++)
                 bit_shifts[i] = 8 - ((i + 1) * bmp->bpp);
 
         data = *start;
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top)
                 return BMP_INSUFFICIENT_MEMORY;
@@ -842,7 +839,7 @@ static bmp_result bmp_decode_mask(bmp_image *bmp, uint8_t *data, int bytes)
         uint32_t x, y, swidth;
         uint32_t cur_byte = 0;
 
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top)
                 return BMP_INSUFFICIENT_MEMORY;
@@ -897,7 +894,7 @@ bmp_decode_rle8(bmp_image *bmp, uint8_t *data, int bytes)
         if (bmp->ico)
                 return BMP_DATA_ERROR;
 
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top)
                 return BMP_INSUFFICIENT_MEMORY;
@@ -1051,7 +1048,7 @@ bmp_decode_rle4(bmp_image *bmp, uint8_t *data, int bytes)
         if (bmp->ico)
                 return BMP_DATA_ERROR;
 
-        swidth = sizeof(uint32_t) * bmp->width;
+        swidth = bmp->bitmap_callbacks.bitmap_get_bpp(bmp->bitmap) * bmp->width;
         top = bmp->bitmap_callbacks.bitmap_get_buffer(bmp->bitmap);
         if (!top)
                 return BMP_INSUFFICIENT_MEMORY;

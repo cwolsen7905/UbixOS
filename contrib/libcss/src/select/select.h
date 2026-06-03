@@ -24,11 +24,11 @@ typedef struct reject_item {
 } reject_item;
 
 typedef struct prop_state {
-	uint32_t specificity;                 /* Specificity of property in result */
-	unsigned int    set              : 1, /* Whether property is set in result */
-	                origin           : 2, /* Origin of property in result */
-	                important        : 1; /* Importance of property in result */
-	enum flag_value explicit_default : 3; /* Property is set to inherit */
+	uint32_t specificity;		/* Specificity of property in result */
+	unsigned int set       : 1,	/* Whether property is set in result */
+	             origin    : 2,	/* Origin of property in result */
+	             important : 1,	/* Importance of property in result */
+	             inherit   : 1;	/* Property is set to inherit */
 } prop_state;
 
 
@@ -58,22 +58,13 @@ struct css_node_data {
 	css_node_flags flags;
 };
 
-struct revert_data {
-	prop_state props[CSS_N_PROPERTIES][CSS_PSEUDO_ELEMENT_COUNT];
-	css_computed_style *style[CSS_PSEUDO_ELEMENT_COUNT];
-};
-
 /**
  * Selection state
  */
 typedef struct css_select_state {
 	void *node;			/* Node we're selecting for */
 	const css_media *media;		/* Currently active media spec */
-	const css_unit_ctx *unit_ctx;	/* Unit conversion context. */
 	css_select_results *results;	/* Result set to populate */
-
-	/** UA and user styles for handling revert property value. */
-	struct revert_data *revert; /* Length: CSS_ORIGIN_AUTHOR */
 
 	css_pseudo_element current_pseudo;	/* Current pseudo element */
 	css_computed_style *computed;	/* Computed style to populate */
@@ -106,7 +97,7 @@ static inline void advance_bytecode(css_style *style, uint32_t n_bytes)
 }
 
 bool css__outranks_existing(uint16_t op, bool important,
-		css_select_state *state, enum flag_value explicit_default);
+		css_select_state *state, bool inherit);
 
 #endif
 

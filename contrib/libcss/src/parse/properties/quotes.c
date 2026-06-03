@@ -28,13 +28,12 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_quotes(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error = CSS_INVALID;
 	const css_token *token;
-	enum flag_value flag_value;
 	bool match;
 
 	/* [ STRING STRING ]+ | IDENT(none,inherit) */
@@ -46,12 +45,11 @@ css_error css__parse_quotes(css_language *c,
 		return CSS_INVALID;
 	}
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_QUOTES);
-
+	if ((token->type == CSS_TOKEN_IDENT) &&
+	    (lwc_string_caseless_isequal(token->idata,
+			c->strings[INHERIT],
+			&match) == lwc_error_ok && match)) {
+		error = css_stylesheet_style_inherit(result, CSS_PROP_QUOTES);
 	} else if ((token->type == CSS_TOKEN_IDENT) &&
 		   (lwc_string_caseless_isequal(token->idata,
 				c->strings[NONE],

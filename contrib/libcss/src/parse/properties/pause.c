@@ -28,10 +28,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_pause(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error;
 	const css_token *first_token;
 	const css_token *token;
@@ -57,23 +57,15 @@ css_error css__parse_pause(css_language *c,
 			error = css__parse_pause_after(c, vector, ctx, result);
 		} else {
 			/* second token - might be useful */
-			enum flag_value flag_value;
-
-			flag_value = get_css_flag_value(c, token);
-
-			if (flag_value != FLAG_VALUE__NONE) {
-				/* another generic property reset value
-				 * which is bogus */
+			if (is_css_inherit(c, token)) {
+				/* another bogus inherit */
 				error = CSS_INVALID;
 			} else {
 				error = css__parse_pause_after(c, vector, ctx, result);
 				if (error == CSS_OK) {
 					/* second token parsed */
-					flag_value = get_css_flag_value(c, first_token);
-
-					if (flag_value != FLAG_VALUE__NONE) {
-						/* valid second token after
-						 * generic property reset value */
+					if (is_css_inherit(c, first_token)) {
+						/* valid second token after inherit */
 						error = CSS_INVALID;
 					}
 				} else {

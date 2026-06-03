@@ -17,7 +17,7 @@
 #include "core/node.h"
 #include "utils/utils.h"
 
-static const struct dom_element_protected_vtable _protect_vtable = {
+static struct dom_element_protected_vtable _protect_vtable = {
 	{
 		DOM_NODE_PROTECT_VTABLE_HTML_TITLE_ELEMENT
 	},
@@ -157,7 +157,15 @@ dom_exception _dom_html_title_element_copy_internal(
 dom_exception dom_html_title_element_get_text(dom_html_title_element *ele,
 		dom_string **text)
 {
-	return dom_node_get_text_content(ele, text);
+	dom_node_internal *node = (dom_node_internal *) ele;
+	dom_node_internal *n = node->first_child;
+
+	/* There should be only one child of title element */
+	assert(node->first_child == node->last_child);
+	/* And it should be a text node */
+	assert(n->type == DOM_TEXT_NODE);
+
+	return dom_characterdata_get_data(n, text);
 }
 
 /**
@@ -170,6 +178,14 @@ dom_exception dom_html_title_element_get_text(dom_html_title_element *ele,
 dom_exception dom_html_title_element_set_text(dom_html_title_element *ele,
 		dom_string *text)
 {
-	return dom_node_set_text_content(ele, text);
+	dom_node_internal *node = (dom_node_internal *) ele;
+	dom_node_internal *n = node->first_child;
+
+	/* There should be only one child of title element */
+	assert(node->first_child == node->last_child);
+	/* And it should be a text node */
+	assert(n->type == DOM_TEXT_NODE);
+
+	return dom_characterdata_set_data(n, text);
 }
 

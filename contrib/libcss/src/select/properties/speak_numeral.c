@@ -19,7 +19,7 @@ css_error css__cascade_speak_numeral(uint32_t opv, css_style *style,
 {
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case SPEAK_NUMERAL_DIGITS:
 		case SPEAK_NUMERAL_CONTINUOUS:
@@ -29,7 +29,7 @@ css_error css__cascade_speak_numeral(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		/** \todo speak-numeral */
 	}
 
@@ -48,16 +48,6 @@ css_error css__set_speak_numeral_from_hint(const css_hint *hint,
 css_error css__initial_speak_numeral(css_select_state *state)
 {
 	UNUSED(state);
-
-	return CSS_OK;
-}
-
-css_error css__copy_speak_numeral(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	UNUSED(from);
-	UNUSED(to);
 
 	return CSS_OK;
 }

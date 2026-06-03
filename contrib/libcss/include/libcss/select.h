@@ -18,7 +18,6 @@ extern "C"
 #include <libcss/hint.h>
 #include <libcss/types.h>
 #include <libcss/computed.h>
-#include <libcss/unit.h>
 
 typedef enum css_pseudo_element {
 	CSS_PSEUDO_ELEMENT_NONE         = 0,
@@ -124,6 +123,9 @@ typedef struct css_select_handler {
 	css_error (*ua_default_for_property)(void *pw, uint32_t property,
 			css_hint *hint);
 
+	css_error (*compute_font_size)(void *pw, const css_hint *parent,
+			css_hint *size);
+
 	/**
 	 * Set libcss_node_data on a DOM node.
 	 *
@@ -219,16 +221,13 @@ css_error css_select_default_style(css_select_ctx *ctx,
 		css_select_handler *handler, void *pw,
 		css_computed_style **style);
 css_error css_select_style(css_select_ctx *ctx, void *node,
-		const css_unit_ctx *unit_ctx,
 		const css_media *media, const css_stylesheet *inline_style,
 		css_select_handler *handler, void *pw,
 		css_select_results **result);
 css_error css_select_results_destroy(css_select_results *results);
 
 css_error css_select_font_faces(css_select_ctx *ctx,
-		const css_media *media,
-		const css_unit_ctx *unit_ctx,
-		lwc_string *font_family,
+		const css_media *media, lwc_string *font_family,
 		css_select_font_faces_results **result);
 css_error css_select_font_faces_results_destroy(
 		css_select_font_faces_results *results);

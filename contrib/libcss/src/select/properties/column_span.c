@@ -21,7 +21,7 @@ css_error css__cascade_column_span(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case COLUMN_SPAN_NONE:
 			value = CSS_COLUMN_SPAN_NONE;
@@ -33,7 +33,7 @@ css_error css__cascade_column_span(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_column_span(state->computed, value);
 	}
 
@@ -51,25 +51,16 @@ css_error css__initial_column_span(css_select_state *state)
 	return set_column_span(state->computed, CSS_COLUMN_SPAN_NONE);
 }
 
-css_error css__copy_column_span(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_column_span(to, get_column_span(from));
-}
-
 css_error css__compose_column_span(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_column_span(child);
 
-	return css__copy_column_span(
-			type == CSS_COLUMN_SPAN_INHERIT ? parent : child,
-			result);
+	if (type == CSS_COLUMN_SPAN_INHERIT) {
+		type = get_column_span(parent);
+	}
+
+	return set_column_span(result, type);
 }
 

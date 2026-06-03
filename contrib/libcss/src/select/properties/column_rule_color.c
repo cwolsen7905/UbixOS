@@ -17,18 +17,17 @@
 css_error css__cascade_column_rule_color(uint32_t opv, css_style *style,
 		css_select_state *state)
 {
-	enum flag_value flag_value = getFlagValue(opv);
+	bool inherit = isInherit(opv);
 	uint16_t value = CSS_COLUMN_RULE_COLOR_INHERIT;
 	css_color color = 0;
 
-	if (flag_value == FLAG_VALUE__NONE) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case COLUMN_RULE_COLOR_TRANSPARENT:
 			value = CSS_COLUMN_RULE_COLOR_COLOR;
 			break;
 		case COLUMN_RULE_COLOR_CURRENT_COLOR:
 			value = CSS_COLUMN_RULE_COLOR_CURRENT_COLOR;
-			flag_value = FLAG_VALUE_INHERIT;
 			break;
 		case COLUMN_RULE_COLOR_SET:
 			value = CSS_COLUMN_RULE_COLOR_COLOR;
@@ -39,7 +38,7 @@ css_error css__cascade_column_rule_color(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			flag_value)) {
+			inherit)) {
 		return set_column_rule_color(state->computed, value, color);
 	}
 
@@ -58,20 +57,6 @@ css_error css__initial_column_rule_color(css_select_state *state)
 			CSS_COLUMN_RULE_COLOR_CURRENT_COLOR, 0);
 }
 
-css_error css__copy_column_rule_color(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_color color;
-	uint8_t type = get_column_rule_color(from, &color);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_column_rule_color(to, type, color);
-}
-
 css_error css__compose_column_rule_color(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -79,8 +64,10 @@ css_error css__compose_column_rule_color(const css_computed_style *parent,
 	css_color color;
 	uint8_t type = get_column_rule_color(child, &color);
 
-	return css__copy_column_rule_color(
-			type == CSS_COLUMN_RULE_COLOR_INHERIT ? parent : child,
-			result);
+	if (type == CSS_COLUMN_RULE_COLOR_INHERIT) {
+		type = get_column_rule_color(parent, &color);
+	}
+
+	return set_column_rule_color(result, type, color);
 }
 

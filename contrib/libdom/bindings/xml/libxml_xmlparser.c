@@ -36,21 +36,21 @@ static void xml_parser_end_element_ns(void *ctx, const xmlChar *localname,
 static dom_exception xml_parser_link_nodes(dom_xml_parser *parser,
 		struct dom_node *dom, xmlNodePtr xml);
 
-static dom_exception xml_parser_add_node(dom_xml_parser *parser,
+static void xml_parser_add_node(dom_xml_parser *parser, struct dom_node *parent,
+		xmlNodePtr child);
+static void xml_parser_add_element_node(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
+static void xml_parser_add_text_node(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
+static void xml_parser_add_cdata_section(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
+static void xml_parser_add_entity_reference(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
-		struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_entity(dom_xml_parser *parser,
+static void xml_parser_add_entity(dom_xml_parser *parser, 
         struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_comment(dom_xml_parser *parser,
+static void xml_parser_add_comment(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child);
-static dom_exception xml_parser_add_document_type(dom_xml_parser *parser,
+static void xml_parser_add_document_type(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child);
 
 static void xml_parser_internal_subset(void *ctx, const xmlChar *name,
@@ -96,8 +96,6 @@ struct dom_xml_parser {
 
 	dom_msg msg;		/**< Informational message function */
 	void *mctx;		/**< Pointer to client data */
-
-	dom_exception err;	/**< Last DOM error, if any */
 };
 
 /**
@@ -135,7 +133,7 @@ static xmlSAXHandler sax_handler = {
 	._private               = NULL,
 	.startElementNs         = xml_parser_start_element_ns,
 	.endElementNs           = xml_parser_end_element_ns,
-	.serror                 = NULL,
+	.serror                 = NULL
 };
 
 static void *dom_xml_alloc(void *ptr, size_t len, void *pw)
@@ -233,8 +231,6 @@ dom_xml_parser *dom_xml_parser_create(const char *enc, const char *int_enc,
 	parser->msg = msg;
 	parser->mctx = mctx;
 
-	parser->err = DOM_NO_ERR;
-
 	return parser;
 }
 
@@ -275,10 +271,6 @@ dom_xml_error dom_xml_parser_parse_chunk(dom_xml_parser *parser,
 		return DOM_XML_EXTERNAL_ERR | err;
 	}
 
-	if (parser->err != DOM_NO_ERR) {
-		return DOM_XML_DOM_ERR | parser->err;
-	}
-
 	return DOM_XML_OK;
 }
 
@@ -301,10 +293,6 @@ dom_xml_error dom_xml_parser_completed(dom_xml_parser *parser)
 		return DOM_XML_EXTERNAL_ERR | err;
 	}
 
-	if (parser->err != DOM_NO_ERR) {
-		return DOM_XML_DOM_ERR | parser->err;
-	}
-
 	return DOM_XML_OK;
 }
 
@@ -316,23 +304,15 @@ dom_xml_error dom_xml_parser_completed(dom_xml_parser *parser)
 void xml_parser_start_document(void *ctx)
 {
 	dom_xml_parser *parser = (dom_xml_parser *) ctx;
-	xmlErrorPtr xmlerr;
-
-	if (parser->err != DOM_NO_ERR)
-		return;
+	dom_exception err;
 
 	/* Invoke libxml2's default behaviour */
 	xmlSAX2StartDocument(parser->xml_ctx);
-	xmlerr = xmlCtxtGetLastError(parser->xml_ctx);
-	if (xmlerr != NULL && xmlerr->level >= XML_ERR_ERROR) {
-		return;
-	}
 
 	/* Link nodes together */
-	parser->err = xml_parser_link_nodes(parser,
-			(struct dom_node *) parser->doc,
+	err = xml_parser_link_nodes(parser, (struct dom_node *) parser->doc,
 			(xmlNodePtr) parser->xml_ctx->myDoc);
-	if (parser->err != DOM_NO_ERR) {
+	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_WARNING, parser->mctx,
 				"Not able to link document nodes");
 	}
@@ -348,17 +328,10 @@ void xml_parser_end_document(void *ctx)
 	dom_xml_parser *parser = (dom_xml_parser *) ctx;
 	xmlNodePtr node;
 	xmlNodePtr n;
-	xmlErrorPtr xmlerr;
-
-	if (parser->err != DOM_NO_ERR)
-		return;
+	dom_exception err;
 
 	/* Invoke libxml2's default behaviour */
 	xmlSAX2EndDocument(parser->xml_ctx);
-	xmlerr = xmlCtxtGetLastError(parser->xml_ctx);
-	if (xmlerr != NULL && xmlerr->level >= XML_ERR_ERROR) {
-		return;
-	}
 
 	/* If there is no document, we can't do anything */
 	if (parser->doc == NULL) {
@@ -371,13 +344,9 @@ void xml_parser_end_document(void *ctx)
 	 * children which occur after the last Element node in the list */
 
 	/* Get XML node */
-	parser->err = dom_node_get_user_data((struct dom_node *) parser->doc,
+	err = dom_node_get_user_data((struct dom_node *) parser->doc,
 			parser->udkey, (void **) (void *) &node);
-
-	/* The return value from dom_node_get_user_data() is always
-	 * DOM_NO_ERR, but the returned "node" will be NULL if no user
-	 * data is found. */
-	if (parser->err != DOM_NO_ERR || node == NULL) {
+	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_WARNING, parser->mctx,
 				"Failed finding XML node");
 		return;
@@ -399,10 +368,8 @@ void xml_parser_end_document(void *ctx)
 
 	/* Now, mirror nodes in the DOM */
 	for (; n != NULL; n = n->next) {
-		parser->err = xml_parser_add_node(parser,
+		xml_parser_add_node(parser,
 				(struct dom_node *) node->_private, n);
-		if (parser->err != DOM_NO_ERR)
-			return;
 	}
 }
 
@@ -430,19 +397,11 @@ void xml_parser_start_element_ns(void *ctx, const xmlChar *localname,
 {
 	dom_xml_parser *parser = (dom_xml_parser *) ctx;
 	xmlNodePtr parent = parser->xml_ctx->node;
-	xmlErrorPtr xmlerr;
-
-	if (parser->err != DOM_NO_ERR)
-		return;
 
 	/* Invoke libxml2's default behaviour */
 	xmlSAX2StartElementNs(parser->xml_ctx, localname, prefix, URI,
 			nb_namespaces, namespaces, nb_attributes,
 			nb_defaulted, attributes);
-	xmlerr = xmlCtxtGetLastError(parser->xml_ctx);
-	if (xmlerr != NULL && xmlerr->level >= XML_ERR_ERROR) {
-		return;
-	}
 
 	/* If there is no document, we can't do anything */
 	if (parser->doc == NULL) {
@@ -481,18 +440,16 @@ void xml_parser_start_element_ns(void *ctx, const xmlChar *localname,
 
 		/* Now, mirror nodes in the DOM */
 		for (; n != parser->xml_ctx->node; n = n->next) {
-			parser->err = xml_parser_add_node(parser,
+			xml_parser_add_node(parser,
 					(struct dom_node *) parent->_private,
 					n);
-			if (parser->err != DOM_NO_ERR)
-				return;
 		}
 	}
 
 	/* Mirror the created node and its attributes in the DOM */
-	parser->err = xml_parser_add_node(parser,
-			(struct dom_node *) parent->_private,
+	xml_parser_add_node(parser, (struct dom_node *) parent->_private,
 			parser->xml_ctx->node);
+
 }
 
 /**
@@ -509,17 +466,9 @@ void xml_parser_end_element_ns(void *ctx, const xmlChar *localname,
 	dom_xml_parser *parser = (dom_xml_parser *) ctx;
 	xmlNodePtr node = parser->xml_ctx->node;
 	xmlNodePtr n;
-	xmlErrorPtr xmlerr;
-
-	if (parser->err != DOM_NO_ERR)
-		return;
 
 	/* Invoke libxml2's default behaviour */
 	xmlSAX2EndElementNs(parser->xml_ctx, localname, prefix, URI);
-	xmlerr = xmlCtxtGetLastError(parser->xml_ctx);
-	if (xmlerr != NULL && xmlerr->level >= XML_ERR_ERROR) {
-		return;
-	}
 
 	/* If there is no document, we can't do anything */
 	if (parser->doc == NULL) {
@@ -554,10 +503,8 @@ void xml_parser_end_element_ns(void *ctx, const xmlChar *localname,
 
 	/* Now, mirror nodes in the DOM */
 	for (; n != NULL; n = n->next) {
-		parser->err = xml_parser_add_node(parser,
+		xml_parser_add_node(parser,
 				(struct dom_node *) node->_private, n);
-		if (parser->err != DOM_NO_ERR)
-			return;
 	}
 }
 
@@ -596,10 +543,9 @@ dom_exception xml_parser_link_nodes(dom_xml_parser *parser,
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_node(dom_xml_parser *parser,
-		struct dom_node *parent, xmlNodePtr child)
+void xml_parser_add_node(dom_xml_parser *parser, struct dom_node *parent,
+		xmlNodePtr child)
 {
 	static const char *node_types[] = {
 		"THIS_IS_NOT_A_NODE",
@@ -628,26 +574,31 @@ dom_exception xml_parser_add_node(dom_xml_parser *parser,
 
 	switch (child->type) {
 	case XML_ELEMENT_NODE:
-		return xml_parser_add_element_node(parser, parent, child);
+		xml_parser_add_element_node(parser, parent, child);
+		break;
 	case XML_TEXT_NODE:
-		return xml_parser_add_text_node(parser, parent, child);
+		xml_parser_add_text_node(parser, parent, child);
+		break;
 	case XML_CDATA_SECTION_NODE:
-		return xml_parser_add_cdata_section(parser, parent, child);
+		xml_parser_add_cdata_section(parser, parent, child);
+		break;
 	case XML_ENTITY_REF_NODE:
-		return xml_parser_add_entity_reference(parser, parent, child);
+		xml_parser_add_entity_reference(parser, parent, child);
+		break;
 	case XML_COMMENT_NODE:
-		return xml_parser_add_comment(parser, parent, child);
+		xml_parser_add_comment(parser, parent, child);
+		break;
 	case XML_DTD_NODE:
-		return xml_parser_add_document_type(parser, parent, child);
-	case XML_ENTITY_DECL:
-		return xml_parser_add_entity(parser, parent, child);
+		xml_parser_add_document_type(parser, parent, child);
+		break;
+    case XML_ENTITY_DECL:
+        xml_parser_add_entity(parser, parent, child);
+        break;
 	default:
 		parser->msg(DOM_MSG_NOTICE, parser->mctx,
 				"Unsupported node type: %s",
 				node_types[child->type]);
 	}
-
-	return DOM_NO_ERR;
 }
 
 /**
@@ -656,9 +607,8 @@ dom_exception xml_parser_add_node(dom_xml_parser *parser,
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_element_node(dom_xml_parser *parser, 
+void xml_parser_add_element_node(dom_xml_parser *parser, 
 		struct dom_node *parent, xmlNodePtr child)
 {
 	struct dom_element *el, *ins_el = NULL;
@@ -676,7 +626,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 		if (err != DOM_NO_ERR) {
 			parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"No memory for tag name");
-			return err;
+			return;
 		}
 
 		/* Create element node */
@@ -687,7 +637,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 			parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"Failed creating element '%s'",
 					child->name);
-			return err;
+			return;
 		}
 
 		/* No longer need tag name */
@@ -710,7 +660,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 		if (err != DOM_NO_ERR) {
 			parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"No memory for namespace");
-			return err;
+			return;
 		}
 
 		/* QName is "prefix:localname",
@@ -730,7 +680,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 			dom_string_unref(namespace);
 			parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"No memory for qname");
-			return err;
+			return;
 		}
 
 		/* Create element node */
@@ -742,7 +692,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 			parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"Failed creating element '%s'",
 					qnamebuf);
-			return err;
+			return;
 		}
 
 		/* No longer need namespace / qname */
@@ -802,7 +752,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 			if (err != DOM_NO_ERR) {
 				parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 						"No memory for namespace");
-				goto cleanup;
+				return;
 			}
 
 			/* QName is "prefix:localname",
@@ -822,7 +772,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 				dom_string_unref(namespace);
 				parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 						"No memory for qname");
-				goto cleanup;
+				return;
 			}
 
 			/* Create attribute */
@@ -834,7 +784,7 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 				parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 						"Failed creating attribute \
 						'%s'", qnamebuf);
-				goto cleanup;
+				return;
 			}
 
 			/* No longer need namespace / qname */
@@ -844,12 +794,8 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 
 		/* Clone subtree (attribute value) */
 		for (c = a->children; c != NULL; c = c->next) {
-			err = xml_parser_add_node(parser,
+			xml_parser_add_node(parser,
 					(struct dom_node *) attr, c);
-			if (err != DOM_NO_ERR) {
-				dom_node_unref((struct dom_node *) attr);
-				goto cleanup;
-			}
 		}
 
 		/* Link nodes together */
@@ -915,14 +861,14 @@ dom_exception xml_parser_add_element_node(dom_xml_parser *parser,
 	/* No longer interested in element node */
 	dom_node_unref((struct dom_node *) el);
 
-	return DOM_NO_ERR;
+	return;
 
 cleanup:
 	/* No longer want node (any attributes attached to it
 	 * will be cleaned up with it) */
 	dom_node_unref((struct dom_node *) el);
 
-	return err;
+	return;
 }
 
 /**
@@ -931,10 +877,9 @@ cleanup:
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
-		struct dom_node *parent, xmlNodePtr child)
+void xml_parser_add_text_node(dom_xml_parser *parser, struct dom_node *parent,
+		xmlNodePtr child)
 {
 	struct dom_text *text, *ins_text = NULL;
 	dom_string *data;
@@ -946,7 +891,7 @@ dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
 	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for text node contents ");
-		return err;
+		return;
 	}
 
 	/* Create text node */
@@ -955,7 +900,7 @@ dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
 		dom_string_unref(data);
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for text node");
-		return err;
+		return;
 	}
 
 	/* No longer need data */
@@ -968,7 +913,7 @@ dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
 		dom_node_unref((struct dom_node *) text);
 		parser->msg(DOM_MSG_ERROR, parser->mctx,
 				"Failed attaching text node");
-		return err;
+		return;
 	}
 
 	/* We're not interested in the inserted text node */
@@ -980,13 +925,11 @@ dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
 			child);
 	if (err != DOM_NO_ERR) {
 		dom_node_unref((struct dom_node *) text);
-		return err;
+		return;
 	}
 
 	/* No longer interested in text node */
 	dom_node_unref((struct dom_node *) text);
-
-	return DOM_NO_ERR;
 }
 
 /**
@@ -995,9 +938,8 @@ dom_exception xml_parser_add_text_node(dom_xml_parser *parser,
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
+void xml_parser_add_cdata_section(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child)
 {
 	struct dom_cdata_section *cdata, *ins_cdata = NULL;
@@ -1010,7 +952,7 @@ dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
 	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for cdata section contents");
-		return err;
+		return;
 	}
 
 	/* Create cdata section */
@@ -1019,7 +961,7 @@ dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
 		dom_string_unref(data);
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for cdata section");
-		return err;
+		return;
 	}
 
 	/* No longer need data */
@@ -1032,7 +974,7 @@ dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
 		dom_node_unref((struct dom_node *) cdata);
 		parser->msg(DOM_MSG_ERROR, parser->mctx,
 				"Failed attaching cdata section");
-		return err;
+		return;
 	}
 
 	/* We're not interested in the inserted cdata section */
@@ -1044,13 +986,11 @@ dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
 			child);
 	if (err != DOM_NO_ERR) {
 		dom_node_unref((struct dom_node *) cdata);
-		return err;
+		return;
 	}
 
 	/* No longer interested in cdata section */
 	dom_node_unref((struct dom_node *) cdata);
-
-	return DOM_NO_ERR;
 }
 
 /**
@@ -1059,9 +999,8 @@ dom_exception xml_parser_add_cdata_section(dom_xml_parser *parser,
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
+void xml_parser_add_entity_reference(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child)
 {
 	struct dom_entity_reference *entity, *ins_entity = NULL;
@@ -1075,7 +1014,7 @@ dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
 	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for entity reference name");
-		return err;
+		return;
 	}
 
 	/* Create text node */
@@ -1085,7 +1024,7 @@ dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
 		dom_string_unref(name);
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for entity reference");
-		return err;
+		return;
 	}
 
 	/* No longer need name */
@@ -1093,10 +1032,7 @@ dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
 
 	/* Mirror subtree (reference value) */
 	for (c = child->children; c != NULL; c = c->next) {
-		err = xml_parser_add_node(parser,
-				(struct dom_node *) entity, c);
-		if (err != DOM_NO_ERR)
-			return err;
+		xml_parser_add_node(parser, (struct dom_node *) entity, c);
 	}
 
 	/* Append entity reference to parent */
@@ -1106,7 +1042,7 @@ dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
 		dom_node_unref((struct dom_node *) entity);
 		parser->msg(DOM_MSG_ERROR, parser->mctx,
 				"Failed attaching entity reference");
-		return err;
+		return;
 	}
 
 	/* We're not interested in the inserted entity reference */
@@ -1118,33 +1054,19 @@ dom_exception xml_parser_add_entity_reference(dom_xml_parser *parser,
 			child);
 	if (err != DOM_NO_ERR) {
 		dom_node_unref((struct dom_node *) entity);
-		return err;
+		return;
 	}
 
 	/* No longer interested in entity reference */
 	dom_node_unref((struct dom_node *) entity);
-
-	return DOM_NO_ERR;
 }
 
-/**
- * Add an entity to the DOM
- *
- * \param parser  The parser context
- * \param parent  The parent DOM node
- * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
- */
-dom_exception xml_parser_add_entity(dom_xml_parser *parser, 
-		struct dom_node *parent, xmlNodePtr child)
+static void xml_parser_add_entity(dom_xml_parser *parser, 
+        struct dom_node *parent, xmlNodePtr child)
 {
-	UNUSED(parser);
-	UNUSED(parent);
-	UNUSED(child);
-
-	/** \todo implement */
-
-	return DOM_NO_ERR;
+    UNUSED(parser);
+    UNUSED(parent);
+    UNUSED(child);
 }
 
 /**
@@ -1153,10 +1075,9 @@ dom_exception xml_parser_add_entity(dom_xml_parser *parser,
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_comment(dom_xml_parser *parser,
-		struct dom_node *parent, xmlNodePtr child)
+void xml_parser_add_comment(dom_xml_parser *parser, struct dom_node *parent,
+		xmlNodePtr child)
 {
 	struct dom_comment *comment, *ins_comment = NULL;
 	dom_string *data;
@@ -1168,7 +1089,7 @@ dom_exception xml_parser_add_comment(dom_xml_parser *parser,
 	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"No memory for comment data");
-		return err;
+		return;
 	}
 
 	/* Create comment */
@@ -1177,7 +1098,7 @@ dom_exception xml_parser_add_comment(dom_xml_parser *parser,
 		dom_string_unref(data);
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"No memory for comment node");
-		return err;
+		return;
 	}
 
 	/* No longer need data */
@@ -1190,7 +1111,7 @@ dom_exception xml_parser_add_comment(dom_xml_parser *parser,
 		dom_node_unref((struct dom_node *) comment);
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"Failed attaching comment node");
-		return err;
+		return;
 	}
 
 	/* We're not interested in the inserted comment */
@@ -1202,13 +1123,11 @@ dom_exception xml_parser_add_comment(dom_xml_parser *parser,
 			child);
 	if (err != DOM_NO_ERR) {
 		dom_node_unref((struct dom_node *) comment);
-		return err;
+		return;
 	}
 
 	/* No longer interested in comment */
 	dom_node_unref((struct dom_node *) comment);
-
-	return DOM_NO_ERR;
 }
 
 /**
@@ -1217,9 +1136,8 @@ dom_exception xml_parser_add_comment(dom_xml_parser *parser,
  * \param parser  The parser context
  * \param parent  The parent DOM node
  * \param child   The xmlNode to mirror in the DOM as a child of parent
- * \return DOM_NO_ERR on success, appropriate error otherwise
  */
-dom_exception xml_parser_add_document_type(dom_xml_parser *parser,
+void xml_parser_add_document_type(dom_xml_parser *parser,
 		struct dom_node *parent, xmlNodePtr child)
 {
 	xmlDtdPtr dtd = (xmlDtdPtr) child;
@@ -1245,7 +1163,7 @@ dom_exception xml_parser_add_document_type(dom_xml_parser *parser,
 	if (err != DOM_NO_ERR) {
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 				"Failed to create document type");
-		return err;
+		return;
 	}
 
 	/* Add doctype to document */
@@ -1255,7 +1173,7 @@ dom_exception xml_parser_add_document_type(dom_xml_parser *parser,
 		dom_node_unref((struct dom_node *) doctype);
 		parser->msg(DOM_MSG_CRITICAL, parser->mctx,
 					"Failed attaching doctype");
-		return err;
+		return;
 	}
 
 	/* Not interested in inserted node */
@@ -1267,13 +1185,11 @@ dom_exception xml_parser_add_document_type(dom_xml_parser *parser,
 			child);
 	if (err != DOM_NO_ERR) {
 		dom_node_unref((struct dom_node *) doctype);
-		return err;
+		return;
 	}
 
 	/* No longer interested in doctype */
 	dom_node_unref((struct dom_node *) doctype);
-
-	return DOM_NO_ERR;
 }
 
 /* ------------------------------------------------------------------------*/

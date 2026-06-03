@@ -18,7 +18,6 @@
   css_error css__cascade_##pname (uint32_t opv, css_style *style, css_select_state *state); \
   css_error css__set_##pname##_from_hint(const css_hint *hint, css_computed_style *style); \
   css_error css__initial_##pname (css_select_state *state);                  \
-  css_error css__copy_##pname (const css_computed_style *from, css_computed_style *to); \
   css_error css__compose_##pname (const css_computed_style *parent, const css_computed_style *child, css_computed_style *result); \
   uint32_t destroy_##pname (void *bytecode)
 
@@ -72,7 +71,6 @@ PROPERTY_FUNCS(direction);
 PROPERTY_FUNCS(display);
 PROPERTY_FUNCS(elevation);
 PROPERTY_FUNCS(empty_cells);
-PROPERTY_FUNCS(fill_opacity);
 PROPERTY_FUNCS(flex_basis);
 PROPERTY_FUNCS(flex_direction);
 PROPERTY_FUNCS(flex_grow);
@@ -130,7 +128,6 @@ PROPERTY_FUNCS(speak_punctuation);
 PROPERTY_FUNCS(speak);
 PROPERTY_FUNCS(speech_rate);
 PROPERTY_FUNCS(stress);
-PROPERTY_FUNCS(stroke_opacity);
 PROPERTY_FUNCS(table_layout);
 PROPERTY_FUNCS(text_align);
 PROPERTY_FUNCS(text_decoration);

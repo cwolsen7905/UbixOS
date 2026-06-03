@@ -172,6 +172,16 @@ mmd -i "$IMG"@@1M ::/usr 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/usr/bin 2>/dev/null || true
 [ -f "$BUILD/bin/tcc" ] && mcopy -i "$IMG"@@1M "$BUILD/bin/tcc" ::/usr/bin/tcc
 
+# NetSurf browser runtime resources (Messages, CSS, icons) at a path baked into
+# nsfb's resource search list (/usr/local/share/netsurf).
+if [ -d contrib/netsurf-res ]; then
+  echo "==> Installing NetSurf resources (/usr/local/share/netsurf)"
+  mmd -i "$IMG"@@1M ::/usr/local 2>/dev/null || true
+  mmd -i "$IMG"@@1M ::/usr/local/share 2>/dev/null || true
+  mmd -i "$IMG"@@1M ::/usr/local/share/netsurf 2>/dev/null || true
+  mcopy -s -i "$IMG"@@1M contrib/netsurf-res/* ::/usr/local/share/netsurf/
+fi
+
 echo "==> Installing system headers (include/)"
 mmd -i "$IMG"@@1M ::/include 2>/dev/null || true
 for f in include/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/; done

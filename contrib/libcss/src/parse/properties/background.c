@@ -28,10 +28,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_background(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	css_error error = CSS_OK;
@@ -45,38 +45,31 @@ css_error css__parse_background(css_language *c,
 	css_style * image_style;
 	css_style * position_style;
 	css_style * repeat_style;
-	enum flag_value flag_value;
+
 
 	/* Firstly, handle inherit */
 	token = parserutils_vector_peek(vector, *ctx);
 	if (token == NULL)
 		return CSS_INVALID;
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BACKGROUND_ATTACHMENT);
+	if (is_css_inherit(c, token)) {
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BACKGROUND_ATTACHMENT);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BACKGROUND_COLOR);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BACKGROUND_COLOR);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BACKGROUND_IMAGE);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BACKGROUND_IMAGE);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BACKGROUND_POSITION);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BACKGROUND_POSITION);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BACKGROUND_REPEAT);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BACKGROUND_REPEAT);
 		if (error == CSS_OK)
 			parserutils_vector_iterate(vector, ctx);
 

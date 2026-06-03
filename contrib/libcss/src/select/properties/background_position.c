@@ -23,7 +23,7 @@ css_error css__cascade_background_position(uint32_t opv, css_style *style,
 	uint32_t hunit = UNIT_PX;
 	uint32_t vunit = UNIT_PX;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		value = CSS_BACKGROUND_POSITION_SET;
 
 		switch (getValue(opv) & 0xf0) {
@@ -73,7 +73,7 @@ css_error css__cascade_background_position(uint32_t opv, css_style *style,
 	vunit = css__to_css_unit(vunit);
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_background_position(state->computed, value,
 				hlength, hunit, vlength, vunit);
 	}
@@ -96,22 +96,6 @@ css_error css__initial_background_position(css_select_state *state)
 			0, CSS_UNIT_PCT, 0, CSS_UNIT_PCT);
 }
 
-css_error css__copy_background_position(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_fixed hlength = 0, vlength = 0;
-	css_unit hunit = CSS_UNIT_PX, vunit = CSS_UNIT_PX;
-	uint8_t type = get_background_position(from, &hlength, &hunit,
-			&vlength, &vunit);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_background_position(to, type, hlength, hunit, vlength, vunit);
-}
-
 css_error css__compose_background_position(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -121,8 +105,12 @@ css_error css__compose_background_position(const css_computed_style *parent,
 	uint8_t type = get_background_position(child, &hlength, &hunit,
 			&vlength, &vunit);
 
-	return css__copy_background_position(
-			type == CSS_BACKGROUND_POSITION_INHERIT ? parent : child,
-			result);
+	if (type == CSS_BACKGROUND_POSITION_INHERIT) {
+		type = get_background_position(parent,
+				&hlength, &hunit, &vlength, &vunit);
+	}
+
+	return set_background_position(result, type, hlength, hunit,
+				vlength, vunit);
 }
 

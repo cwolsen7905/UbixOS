@@ -23,7 +23,7 @@ css_error css__cascade_text_decoration(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		if (getValue(opv) == TEXT_DECORATION_NONE) {
 			value = CSS_TEXT_DECORATION_NONE;
 		} else {
@@ -41,7 +41,7 @@ css_error css__cascade_text_decoration(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_text_decoration(state->computed, value);
 	}
 
@@ -59,25 +59,16 @@ css_error css__initial_text_decoration(css_select_state *state)
 	return set_text_decoration(state->computed, CSS_TEXT_DECORATION_NONE);
 }
 
-css_error css__copy_text_decoration(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_text_decoration(to, get_text_decoration(from));
-}
-
 css_error css__compose_text_decoration(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_text_decoration(child);
 
-	return css__copy_text_decoration(
-			type == CSS_TEXT_DECORATION_INHERIT ? parent : child,
-			result);
+	if (type == CSS_TEXT_DECORATION_INHERIT) {
+		type = get_text_decoration(parent);
+	}
+
+	return set_text_decoration(result, type);
 }
 

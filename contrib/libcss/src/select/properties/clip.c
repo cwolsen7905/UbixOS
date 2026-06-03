@@ -22,7 +22,7 @@ css_error css__cascade_clip(uint32_t opv, css_style *style,
 			CSS_UNIT_PX, CSS_UNIT_PX, CSS_UNIT_PX, CSS_UNIT_PX,
 			false, false, false, false };
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv) & CLIP_SHAPE_MASK) {
 		case CLIP_SHAPE_RECT:
 			if (getValue(opv) & CLIP_RECT_TOP_AUTO) {
@@ -71,7 +71,7 @@ css_error css__cascade_clip(uint32_t opv, css_style *style,
 	rect.lunit = css__to_css_unit(rect.lunit);
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_clip(state->computed, value, &rect);
 	}
 
@@ -93,22 +93,6 @@ css_error css__initial_clip(css_select_state *state)
 	return set_clip(state->computed, CSS_CLIP_AUTO, &rect);
 }
 
-css_error css__copy_clip(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_computed_clip_rect rect = { 0, 0, 0, 0,
-			CSS_UNIT_PX, CSS_UNIT_PX, CSS_UNIT_PX, CSS_UNIT_PX,
-			false, false, false, false };
-	uint8_t type = get_clip(from, &rect);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_clip(to, type, &rect);
-}
-
 css_error css__compose_clip(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -118,7 +102,9 @@ css_error css__compose_clip(const css_computed_style *parent,
 			false, false, false, false };
 	uint8_t type = get_clip(child, &rect);
 
-	return css__copy_clip(
-			type == CSS_CLIP_INHERIT ? parent : child,
-			result);
+	if (type == CSS_CLIP_INHERIT) {
+		type = get_clip(parent, &rect);
+	}
+
+	return set_clip(result, type, &rect);
 }

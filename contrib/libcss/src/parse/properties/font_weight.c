@@ -28,10 +28,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_font_weight(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error;
 	const css_token *token;
 	uint8_t flags = 0;
@@ -47,29 +47,10 @@ css_error css__parse_font_weight(css_language *c,
 		return CSS_INVALID;
 	}
 
-	if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
+	if ((lwc_string_caseless_isequal(
 			token->idata, c->strings[INHERIT],
 			&match) == lwc_error_ok && match)) {
 		flags |= FLAG_INHERIT;
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[INITIAL],
-			&match) == lwc_error_ok && match)) {
-		flags |= FLAG_INITIAL;
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[REVERT],
-			&match) == lwc_error_ok && match)) {
-		flags |= FLAG_REVERT;
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[UNSET],
-			&match) == lwc_error_ok && match)) {
-		flags |= FLAG_UNSET;
-
 	} else if (token->type == CSS_TOKEN_NUMBER) {
 		size_t consumed = 0;
 		css_fixed num = css__number_from_lwc_string(token->idata,

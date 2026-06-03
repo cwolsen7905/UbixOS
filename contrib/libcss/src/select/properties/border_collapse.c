@@ -21,7 +21,7 @@ css_error css__cascade_border_collapse(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case BORDER_COLLAPSE_SEPARATE:
 			value = CSS_BORDER_COLLAPSE_SEPARATE;
@@ -33,7 +33,7 @@ css_error css__cascade_border_collapse(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_border_collapse(state->computed, value);
 	}
 
@@ -51,25 +51,16 @@ css_error css__initial_border_collapse(css_select_state *state)
 	return set_border_collapse(state->computed, CSS_BORDER_COLLAPSE_SEPARATE);
 }
 
-css_error css__copy_border_collapse(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_border_collapse(to, get_border_collapse(from));
-}
-
 css_error css__compose_border_collapse(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_border_collapse(child);
 
-	return css__copy_border_collapse(
-			type == CSS_BORDER_COLLAPSE_INHERIT ? parent : child,
-			result);
+	if (type == CSS_BORDER_COLLAPSE_INHERIT) {
+		type = get_border_collapse(parent);
+	}
+
+	return set_border_collapse(result, type);
 }
 

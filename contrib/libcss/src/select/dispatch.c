@@ -15,7 +15,6 @@
 	css__cascade_##pname,				\
 	css__set_##pname##_from_hint,			\
 	css__initial_##pname,				\
-	css__copy_##pname,				\
 	css__compose_##pname
 
 struct prop_table prop_dispatch[CSS_N_PROPERTIES] = {
@@ -514,13 +513,5 @@ struct prop_table prop_dispatch[CSS_N_PROPERTIES] = {
 	{
 		PROPERTY_FUNCS(order),
 		0,
-	},
-	{
-		PROPERTY_FUNCS(fill_opacity),
-		1,
-	},
-	{
-		PROPERTY_FUNCS(stroke_opacity),
-		1,
 	}
 };

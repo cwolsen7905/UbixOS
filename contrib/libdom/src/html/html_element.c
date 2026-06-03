@@ -18,7 +18,7 @@
 #include "core/document.h"
 #include "utils/utils.h"
 
-const struct dom_html_element_vtable _dom_html_element_vtable = {
+struct dom_html_element_vtable _dom_html_element_vtable = {
 	{
 		{
 			{
@@ -31,7 +31,7 @@ const struct dom_html_element_vtable _dom_html_element_vtable = {
 	DOM_HTML_ELEMENT_VTABLE
 };
 
-static const struct dom_element_protected_vtable _dom_html_element_protect_vtable = {
+static struct dom_element_protected_vtable _dom_html_element_protect_vtable = {
 	{
 		DOM_HTML_ELEMENT_PROTECT_VTABLE
 	},
@@ -477,7 +477,7 @@ dom_exception dom_html_element_get_int32_t_property(dom_html_element *ele,
 			char *s3 = _strndup(dom_string_data(s2),
 					    dom_string_byte_length(s2));
 			if (s3 != NULL) {
-				*value = strtol(s3, NULL, 0);
+				*value = strtoul(s3, NULL, 0);
 				free(s3);
 			} else {
 				err = DOM_NO_MEM_ERR;
@@ -518,7 +518,7 @@ dom_exception dom_html_element_set_int32_t_property(dom_html_element *ele,
 	if (err != DOM_NO_ERR)
 		goto fail;
 	
-	if (snprintf(numbuffer, 32, "%"PRIu32, value) == 32)
+	if (snprintf(numbuffer, 32, "%u", value) == 32)
 		numbuffer[31] = '\0';
 	
 	err = dom_string_create((const uint8_t *) numbuffer,
@@ -526,7 +526,7 @@ dom_exception dom_html_element_set_int32_t_property(dom_html_element *ele,
 	if (err != DOM_NO_ERR)
 		goto cleanup;
 	
-	err = dom_element_set_attribute(ele, str, svalue);
+	err = dom_element_set_attribute(ele, svalue, str);
 	
 	dom_string_unref(svalue);
 cleanup:
@@ -607,7 +607,7 @@ dom_exception dom_html_element_set_dom_ulong_property(dom_html_element *ele,
 	if (err != DOM_NO_ERR)
 		goto fail;
 
-	if (snprintf(numbuffer, 32, "%"PRIu32, value) == 32)
+	if (snprintf(numbuffer, 32, "%u", value) == 32)
 		numbuffer[31] = '\0';
 
 	err = dom_string_create((const uint8_t *) numbuffer,
@@ -615,7 +615,7 @@ dom_exception dom_html_element_set_dom_ulong_property(dom_html_element *ele,
 	if (err != DOM_NO_ERR)
 		goto cleanup;
 
-	err = dom_element_set_attribute(ele, str, svalue);
+	err = dom_element_set_attribute(ele, svalue, str);
 
 	dom_string_unref(svalue);
 cleanup:

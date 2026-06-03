@@ -21,7 +21,7 @@ css_error css__cascade_display(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case DISPLAY_INLINE:
 			value = CSS_DISPLAY_INLINE;
@@ -77,17 +77,11 @@ css_error css__cascade_display(uint32_t opv, css_style *style,
 		case DISPLAY_INLINE_FLEX:
 			value = CSS_DISPLAY_INLINE_FLEX;
 			break;
-		case DISPLAY_GRID:
-			value = CSS_DISPLAY_GRID;
-			break;
-		case DISPLAY_INLINE_GRID:
-			value = CSS_DISPLAY_INLINE_GRID;
-			break;
 		}
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_display(state->computed, value);
 	}
 
@@ -105,25 +99,16 @@ css_error css__initial_display(css_select_state *state)
 	return set_display(state->computed, CSS_DISPLAY_INLINE);
 }
 
-css_error css__copy_display(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_display(to, get_display(from));
-}
-
 css_error css__compose_display(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_display(child);
 
-	return css__copy_display(
-			type == CSS_DISPLAY_INHERIT ? parent : child,
-			result);
+	if (type == CSS_DISPLAY_INHERIT) {
+		type = get_display(parent);
+	}
+
+	return set_display(result, type);
 }
 

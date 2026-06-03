@@ -32,20 +32,6 @@ css_error css__initial_background_color(css_select_state *state)
 			CSS_BACKGROUND_COLOR_COLOR, 0);
 }
 
-css_error css__copy_background_color(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_color color;
-	uint8_t type = get_background_color(from, &color);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_background_color(to, type, color);
-}
-
 css_error css__compose_background_color(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
@@ -53,8 +39,10 @@ css_error css__compose_background_color(const css_computed_style *parent,
 	css_color color;
 	uint8_t type = get_background_color(child, &color);
 
-	return css__copy_background_color(
-			type == CSS_BACKGROUND_COLOR_INHERIT ? parent : child,
-			result);
+	if (type == CSS_BACKGROUND_COLOR_INHERIT) {
+		type = get_background_color(parent, &color);
+	}
+
+	return set_background_color(result, type, color);
 }
 

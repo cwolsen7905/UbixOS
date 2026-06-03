@@ -99,10 +99,10 @@ static css_code_t font_family_value(css_language *c, const css_token *token, boo
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_font_family(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error;
 	const css_token *token;
 	bool match;
@@ -127,30 +127,7 @@ css_error css__parse_font_family(css_language *c,
 			(lwc_string_caseless_isequal(
 			token->idata, c->strings[INHERIT],
 			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_inherit(result,
-				CSS_PROP_FONT_FAMILY);
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[INITIAL],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_initial(result,
-				CSS_PROP_FONT_FAMILY);
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[REVERT],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_revert(result,
-				CSS_PROP_FONT_FAMILY);
-
-	} else if ((token->type == CSS_TOKEN_IDENT) &&
-			(lwc_string_caseless_isequal(
-			token->idata, c->strings[UNSET],
-			&match) == lwc_error_ok && match)) {
-		error = css_stylesheet_style_unset(result,
-				CSS_PROP_FONT_FAMILY);
-
+		error = css_stylesheet_style_inherit(result, CSS_PROP_FONT_FAMILY);
 	} else {
 		*ctx = orig_ctx;
 

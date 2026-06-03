@@ -21,7 +21,7 @@ css_error css__cascade_unicode_bidi(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case UNICODE_BIDI_NORMAL:
 			value = CSS_UNICODE_BIDI_NORMAL;
@@ -36,7 +36,7 @@ css_error css__cascade_unicode_bidi(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_unicode_bidi(state->computed, value);
 	}
 
@@ -54,25 +54,16 @@ css_error css__initial_unicode_bidi(css_select_state *state)
 	return set_unicode_bidi(state->computed, CSS_UNICODE_BIDI_NORMAL);
 }
 
-css_error css__copy_unicode_bidi(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_unicode_bidi(to, get_unicode_bidi(from));
-}
-
 css_error css__compose_unicode_bidi(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_unicode_bidi(child);
 
-	return css__copy_unicode_bidi(
-			type == CSS_UNICODE_BIDI_INHERIT ? parent : child,
-			result);
+	if (type == CSS_UNICODE_BIDI_INHERIT) {
+		type = get_unicode_bidi(parent);
+	}
+
+	return set_unicode_bidi(result, type);
 }
 

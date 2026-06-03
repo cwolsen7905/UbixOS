@@ -28,16 +28,15 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_padding(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	css_fixed side_length[4];
 	uint32_t side_unit[4];
 	uint32_t side_count = 0;
-	enum flag_value flag_value;
 	css_error error;
 
 	/* Firstly, handle inherit */
@@ -45,26 +44,20 @@ css_error css__parse_padding(css_language *c,
 	if (token == NULL)
 		return CSS_INVALID;
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_PADDING_TOP);
+	if (is_css_inherit(c, token)) {
+		error = css_stylesheet_style_inherit(result, CSS_PROP_PADDING_TOP);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_PADDING_RIGHT);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_PADDING_RIGHT);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_PADDING_BOTTOM);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_PADDING_BOTTOM);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_PADDING_LEFT);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_PADDING_LEFT);
 		if (error == CSS_OK)
 			parserutils_vector_iterate(vector, ctx);
 

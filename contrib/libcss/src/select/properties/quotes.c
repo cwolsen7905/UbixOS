@@ -21,7 +21,7 @@ css_error css__cascade_quotes(uint32_t opv, css_style *style,
 	lwc_string **quotes = NULL;
 	uint32_t n_quotes = 0;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		uint32_t v = getValue(opv);
 
 		value = CSS_QUOTES_STRING;
@@ -75,7 +75,7 @@ css_error css__cascade_quotes(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		css_error error;
 
 		error = set_quotes(state->computed, value, quotes);
@@ -123,41 +123,43 @@ css_error css__initial_quotes(css_select_state *state)
 	return css__set_quotes_from_hint(&hint, state->computed);
 }
 
-css_error css__copy_quotes(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	css_error error;
-	lwc_string **copy = NULL;
-	lwc_string **quotes = NULL;
-	uint8_t type = get_quotes(from, &quotes);
-
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	error = css__copy_lwc_string_array(false, quotes, &copy);
-	if (error != CSS_OK) {
-		return CSS_NOMEM;
-	}
-
-	error = set_quotes(to, type, copy);
-	if (error != CSS_OK) {
-		free(copy);
-	}
-
-	return error;
-}
-
 css_error css__compose_quotes(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
+	css_error error;
 	lwc_string **quotes = NULL;
 	uint8_t type = get_quotes(child, &quotes);
 
-	return css__copy_quotes(
-			type == CSS_QUOTES_INHERIT ? parent : child,
-			result);
+	if (type == CSS_QUOTES_INHERIT || result != child) {
+		size_t n_quotes = 0;
+		lwc_string **copy = NULL;
+
+		if (type == CSS_QUOTES_INHERIT) {
+			type = get_quotes(parent, &quotes);
+		}
+
+		if (quotes != NULL) {
+			lwc_string **i;
+
+			for (i = quotes; (*i) != NULL; i++)
+				n_quotes++;
+
+			copy = malloc((n_quotes + 1) * sizeof(lwc_string *));
+			if (copy == NULL)
+				return CSS_NOMEM;
+
+			memcpy(copy, quotes, (n_quotes + 1) *
+					sizeof(lwc_string *));
+		}
+
+		error = set_quotes(result, type, copy);
+		if (error != CSS_OK && copy != NULL)
+			free(copy);
+
+		return error;
+	}
+
+	return CSS_OK;
 }
 

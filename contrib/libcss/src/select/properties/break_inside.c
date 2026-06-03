@@ -21,7 +21,7 @@ css_error css__cascade_break_inside(uint32_t opv, css_style *style,
 
 	UNUSED(style);
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case BREAK_INSIDE_AUTO:
 			value = CSS_BREAK_INSIDE_AUTO;
@@ -39,7 +39,7 @@ css_error css__cascade_break_inside(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		return set_break_inside(state->computed, value);
 	}
 
@@ -57,25 +57,16 @@ css_error css__initial_break_inside(css_select_state *state)
 	return set_break_inside(state->computed, CSS_BREAK_INSIDE_AUTO);
 }
 
-css_error css__copy_break_inside(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	if (from == to) {
-		return CSS_OK;
-	}
-
-	return set_break_inside(to, get_break_inside(from));
-}
-
 css_error css__compose_break_inside(const css_computed_style *parent,
 		const css_computed_style *child,
 		css_computed_style *result)
 {
 	uint8_t type = get_break_inside(child);
 
-	return css__copy_break_inside(
-			type == CSS_BREAK_INSIDE_INHERIT ? parent : child,
-			result);
+	if (type == CSS_BREAK_INSIDE_INHERIT) {
+		type = get_break_inside(parent);
+	}
+
+	return set_break_inside(result, type);
 }
 

@@ -28,15 +28,15 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_border_spacing(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	css_error error;
 	const css_token *token;
 	css_fixed length[2] = { 0 };
 	uint32_t unit[2] = { 0 };
-	enum flag_value flag_value;
+	bool match;
 
 	/* length length? | IDENT(inherit) */
 	token = parserutils_vector_peek(vector, *ctx);
@@ -45,13 +45,16 @@ css_error css__parse_border_spacing(css_language *c,
 		return CSS_INVALID;
 	}
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
+	if (token->type == CSS_TOKEN_IDENT &&
+			(lwc_string_caseless_isequal(
+			token->idata, c->strings[INHERIT],
+			&match) == lwc_error_ok && match)) {
 		parserutils_vector_iterate(vector, ctx);
 		/* inherit */
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BORDER_SPACING);
+		error = css__stylesheet_style_appendOPV(result,
+						       CSS_PROP_BORDER_SPACING,
+						       FLAG_INHERIT,
+						       0);
 	} else {
 		int num_lengths = 0;
 

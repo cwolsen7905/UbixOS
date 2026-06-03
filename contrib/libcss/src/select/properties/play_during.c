@@ -19,7 +19,7 @@ css_error css__cascade_play_during(uint32_t opv, css_style *style,
 {
 	lwc_string *uri = NULL;
 
-	if (hasFlagValue(opv) == false) {
+	if (isInherit(opv) == false) {
 		switch (getValue(opv)) {
 		case PLAY_DURING_URI:
 			css__stylesheet_string_get(style->sheet, *((css_code_t *) style->bytecode), &uri);
@@ -35,7 +35,7 @@ css_error css__cascade_play_during(uint32_t opv, css_style *style,
 	}
 
 	if (css__outranks_existing(getOpcode(opv), isImportant(opv), state,
-			getFlagValue(opv))) {
+			isInherit(opv))) {
 		/** \todo play-during */
 	}
 
@@ -54,16 +54,6 @@ css_error css__set_play_during_from_hint(const css_hint *hint,
 css_error css__initial_play_during(css_select_state *state)
 {
 	UNUSED(state);
-
-	return CSS_OK;
-}
-
-css_error css__copy_play_during(
-		const css_computed_style *from,
-		css_computed_style *to)
-{
-	UNUSED(from);
-	UNUSED(to);
 
 	return CSS_OK;
 }

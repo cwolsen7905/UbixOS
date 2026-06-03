@@ -28,10 +28,10 @@
  *		   If the input is invalid, then \a *ctx remains unchanged.
  */
 css_error css__parse_border_width(css_language *c,
-		const parserutils_vector *vector, int32_t *ctx,
+		const parserutils_vector *vector, int *ctx,
 		css_style *result)
 {
-	int32_t orig_ctx = *ctx;
+	int orig_ctx = *ctx;
 	int prev_ctx;
 	const css_token *token;
 	uint16_t side_val[4];
@@ -40,33 +40,26 @@ css_error css__parse_border_width(css_language *c,
 	uint32_t side_count = 0;
 	bool match;
 	css_error error;
-	enum flag_value flag_value;
 
 	/* Firstly, handle inherit */
 	token = parserutils_vector_peek(vector, *ctx);
 	if (token == NULL)
 		return CSS_INVALID;
 
-	flag_value = get_css_flag_value(c, token);
-
-	if (flag_value != FLAG_VALUE__NONE) {
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BORDER_TOP_WIDTH);
+	if (is_css_inherit(c, token)) {
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BORDER_TOP_WIDTH);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BORDER_RIGHT_WIDTH);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BORDER_RIGHT_WIDTH);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BORDER_BOTTOM_WIDTH);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BORDER_BOTTOM_WIDTH);
 		if (error != CSS_OK)
 			return error;
 
-		error = css_stylesheet_style_flag_value(result, flag_value,
-				CSS_PROP_BORDER_LEFT_WIDTH);
+		error = css_stylesheet_style_inherit(result, CSS_PROP_BORDER_LEFT_WIDTH);
 		if (error == CSS_OK)
 			parserutils_vector_iterate(vector, ctx);
 

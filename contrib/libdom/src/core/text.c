@@ -20,7 +20,7 @@
 #include "utils/utils.h"
 
 /* The virtual table for dom_text */
-const struct dom_text_vtable text_vtable = {
+struct dom_text_vtable text_vtable = {
 	{
 		{
 			{
@@ -33,7 +33,7 @@ const struct dom_text_vtable text_vtable = {
 	DOM_TEXT_VTABLE
 };
 
-static const struct dom_node_protect_vtable text_protect_vtable = {
+static struct dom_node_protect_vtable text_protect_vtable = {
 	DOM_TEXT_PROTECT_VTABLE
 };
 

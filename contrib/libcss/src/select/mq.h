@@ -9,15 +9,112 @@
 #ifndef css_select_mq_h_
 #define css_select_mq_h_
 
-#include "select/helpers.h"
-#include "select/strings.h"
-#include "select/unit.h"
+static inline css_fixed css_len2px(
+		css_fixed length,
+		css_unit unit,
+		const css_media *media)
+{
+	css_fixed px_per_unit;
+
+	switch (unit) {
+	case CSS_UNIT_VI:
+		/* TODO: Assumes writing mode. */
+		unit = CSS_UNIT_VW;
+		break;
+	case CSS_UNIT_VB:
+		/* TODO: Assumes writing mode. */
+		unit = CSS_UNIT_VH;
+		break;
+	case CSS_UNIT_VMIN:
+		unit = (media->height < media->width) ?
+				CSS_UNIT_VH : CSS_UNIT_VW;
+		break;
+	case CSS_UNIT_VMAX:
+		unit = (media->width > media->height) ?
+				CSS_UNIT_VH : CSS_UNIT_VW;
+		break;
+	default:
+		break;
+	}
+
+	switch (unit) {
+	case CSS_UNIT_EM:
+	case CSS_UNIT_EX:
+	case CSS_UNIT_CAP:
+	case CSS_UNIT_CH:
+	case CSS_UNIT_IC:
+	{
+		px_per_unit = FDIV(FMUL(media->client_font_size, F_96), F_72);
+
+		/* TODO: Handling these as fixed ratios of CSS_UNIT_EM. */
+		switch (unit) {
+		case CSS_UNIT_EX:
+			px_per_unit = FMUL(px_per_unit, FLTTOFIX(0.6));
+			break;
+		case CSS_UNIT_CAP:
+			px_per_unit = FMUL(px_per_unit, FLTTOFIX(0.9));
+			break;
+		case CSS_UNIT_CH:
+			px_per_unit = FMUL(px_per_unit, FLTTOFIX(0.4));
+			break;
+		case CSS_UNIT_IC:
+			px_per_unit = FMUL(px_per_unit, FLTTOFIX(1.1));
+			break;
+		default:
+			break;
+		}
+	}
+		break;
+	case CSS_UNIT_PX:
+		return length;
+	case CSS_UNIT_IN:
+		px_per_unit = F_96;
+		break;
+	case CSS_UNIT_CM:
+		px_per_unit = FDIV(F_96, FLTTOFIX(2.54));
+		break;
+	case CSS_UNIT_MM:
+		px_per_unit = FDIV(F_96, FLTTOFIX(25.4));
+		break;
+	case CSS_UNIT_Q:
+		px_per_unit = FDIV(F_96, FLTTOFIX(101.6));
+		break;
+	case CSS_UNIT_PT:
+		px_per_unit = FDIV(F_96, F_72);
+		break;
+	case CSS_UNIT_PC:
+		px_per_unit = FDIV(F_96, INTTOFIX(6));
+		break;
+	case CSS_UNIT_REM:
+		px_per_unit = FDIV(FMUL(media->client_font_size, F_96), F_72);
+		break;
+	case CSS_UNIT_RLH:
+		px_per_unit = media->client_line_height;
+		break;
+	case CSS_UNIT_VH:
+		px_per_unit = FDIV(media->height, F_100);
+		break;
+	case CSS_UNIT_VW:
+		px_per_unit = FDIV(media->width, F_100);
+		break;
+	default:
+		px_per_unit = 0;
+		break;
+	}
+
+	/* Ensure we round px_per_unit to the nearest whole number of pixels:
+	 * the use of FIXTOINT() below will truncate. */
+	px_per_unit += F_0_5;
+
+	/* Calculate total number of pixels */
+	return FMUL(length, TRUNCATEFIX(px_per_unit));
+}
 
 static inline bool mq_match_feature_range_length_op1(
 		css_mq_feature_op op,
 		const css_mq_value *value,
 		const css_fixed client_len,
-		const css_unit_ctx *unit_ctx)
+		const css_media *media)
 {
 	css_fixed v;
 
@@ -25,10 +122,9 @@ static inline bool mq_match_feature_range_length_op1(
 		return false;
 	}
 
-	if (value->data.dim.unit != UNIT_PX) {
-		v = css_unit_len2px_mq(unit_ctx,
-				value->data.dim.len,
-				css__to_css_unit(value->data.dim.unit));
+	if (value->data.dim.unit != CSS_UNIT_PX) {
+		v = css_len2px(value->data.dim.len,
+				value->data.dim.unit, media);
 	} else {
 		v = value->data.dim.len;
 	}
@@ -49,7 +145,7 @@ static inline bool mq_match_feature_range_length_op2(
 		css_mq_feature_op op,
 		const css_mq_value *value,
 		const css_fixed client_len,
-		const css_unit_ctx *unit_ctx)
+		const css_media *media)
 {
 	css_fixed v;
 
@@ -60,10 +156,9 @@ static inline bool mq_match_feature_range_length_op2(
 		return false;
 	}
 
-	if (value->data.dim.unit != UNIT_PX) {
-		v = css_unit_len2px_mq(unit_ctx,
-				value->data.dim.len,
-				css__to_css_unit(value->data.dim.unit));
+	if (value->data.dim.unit != CSS_UNIT_PX) {
+		v = css_len2px(value->data.dim.len,
+				value->data.dim.unit, media);
 	} else {
 		v = value->data.dim.len;
 	}
@@ -79,79 +174,34 @@ static inline bool mq_match_feature_range_length_op2(
 	}
 }
 
-static inline bool mq_match_feature_eq_ident_op1(
-		css_mq_feature_op op,
-		const css_mq_value *value,
-		const lwc_string *client_value)
-{
-	bool is_match;
-
-	if (value->type != CSS_MQ_VALUE_TYPE_IDENT) {
-		return false;
-	}
-
-	if (value->data.ident == NULL || client_value == NULL) {
-		return false;
-	}
-
-	switch (op) {
-	case CSS_MQ_FEATURE_OP_EQ:
-		return (lwc_string_isequal(value->data.ident,
-				client_value, &is_match) == lwc_error_ok) &&
-				is_match;
-	default:
-		return false;
-	}
-}
-
 /**
  * Match media query features.
  *
- * \param[in] feat      Condition to match.
- * \param[in] unit_ctx  Current unit conversion context.
- * \param[in] media     Current media spec, to check against feat.
+ * \param[in] feat   Condition to match.
+ * \param[in] media  Current media spec, to check against feat.
  * \return true if condition matches, otherwise false.
  */
 static inline bool mq_match_feature(
 		const css_mq_feature *feat,
-		const css_unit_ctx *unit_ctx,
-		const css_media *media,
-		const css_select_strings *str)
+		const css_media *media)
 {
-	bool match;
-
 	/* TODO: Use interned string for comparison. */
-	if (lwc_string_isequal(feat->name,
-			str->width, &match) == lwc_error_ok &&
-			match == true) {
+	if (strcmp(lwc_string_data(feat->name), "width") == 0) {
 		if (!mq_match_feature_range_length_op1(feat->op, &feat->value,
-					media->width, unit_ctx)) {
+					media->width, media)) {
 			return false;
 		}
 		return mq_match_feature_range_length_op2(feat->op2,
-				&feat->value2, media->width, unit_ctx);
+					&feat->value2, media->width, media);
 
-	} else if (lwc_string_isequal(feat->name,
-			str->height, &match) == lwc_error_ok &&
-			match == true) {
+	} else if (strcmp(lwc_string_data(feat->name), "height") == 0) {
 		if (!mq_match_feature_range_length_op1(feat->op, &feat->value,
-				media->height, unit_ctx)) {
+				media->height, media)) {
 			return false;
 		}
 
 		return mq_match_feature_range_length_op2(feat->op2,
-				&feat->value2, media->height, unit_ctx);
-
-	} else if (lwc_string_isequal(feat->name,
-			str->prefers_color_scheme, &match) == lwc_error_ok &&
-			match == true) {
-		if (mq_match_feature_eq_ident_op1(feat->op, &feat->value,
-				media->prefers_color_scheme) ||
-		    feat->op == CSS_MQ_FEATURE_OP_BOOL) {
-			return true;
-		}
-
-		return false;
+				&feat->value2, media->height, media);
 	}
 
 	/* TODO: Look at other feature names. */
@@ -162,16 +212,13 @@ static inline bool mq_match_feature(
 /**
  * Match media query conditions.
  *
- * \param[in] cond      Condition to match.
- * \param[in] unit_ctx  Current unit conversion context.
- * \param[in] media     Current media spec, to check against cond.
+ * \param[in] cond   Condition to match.
+ * \param[in] media  Current media spec, to check against cond.
  * \return true if condition matches, otherwise false.
  */
 static inline bool mq_match_condition(
 		const css_mq_cond *cond,
-		const css_unit_ctx *unit_ctx,
-		const css_media *media,
-		const css_select_strings *str)
+		const css_media *media)
 {
 	bool matched = !cond->op;
 
@@ -179,13 +226,11 @@ static inline bool mq_match_condition(
 		bool part_matched;
 		if (cond->parts[i]->type == CSS_MQ_FEATURE) {
 			part_matched = mq_match_feature(
-					cond->parts[i]->data.feat,
-					unit_ctx, media, str);
+					cond->parts[i]->data.feat, media);
 		} else {
 			assert(cond->parts[i]->type == CSS_MQ_COND);
 			part_matched = mq_match_condition(
-					cond->parts[i]->data.cond,
-					unit_ctx, media, str);
+					cond->parts[i]->data.cond, media);
 		}
 
 		if (cond->op) {
@@ -212,23 +257,19 @@ static inline bool mq_match_condition(
  * If anything in the list matches, the list matches.  If none match
  * it doesn't match.
  *
- * \param[in] m         Media query list.
- * \param[in] unit_ctx  Current unit conversion context.
- * \param[in] media     Current media spec, to check against m.
+ * \param[in] m      Media query list.
+ * \param[in] media  Current media spec, to check against m.
  * \return true if media query list matches media
  */
 static inline bool mq__list_match(
 		const css_mq_query *m,
-		const css_unit_ctx *unit_ctx,
-		const css_media *media,
-		const css_select_strings *str)
+		const css_media *media)
 {
 	for (; m != NULL; m = m->next) {
 		/* Check type */
 		if (!!(m->type & media->type) != m->negate_type) {
 			if (m->cond == NULL ||
-					mq_match_condition(m->cond,
-							unit_ctx, media, str)) {
+					mq_match_condition(m->cond, media)) {
 				/* We have a match, no need to look further. */
 				return true;
 			}
@@ -241,16 +282,11 @@ static inline bool mq__list_match(
 /**
  * Test whether the rule applies for current media.
  *
- * \param rule      Rule to test
- * \param unit_ctx  Current unit conversion context.
- * \param media     Current media spec
+ * \param rule   Rule to test
+ * \param media  Current media spec
  * \return true iff chain's rule applies for media
  */
-static inline bool mq_rule_good_for_media(
-		const css_rule *rule,
-		const css_unit_ctx *unit_ctx,
-		const css_media *media,
-		const css_select_strings *str)
+static inline bool mq_rule_good_for_media(const css_rule *rule, const css_media *media)
 {
 	bool applies = true;
 	const css_rule *ancestor = rule;
@@ -259,8 +295,7 @@ static inline bool mq_rule_good_for_media(
 		const css_rule_media *m = (const css_rule_media *) ancestor;
 
 		if (ancestor->type == CSS_RULE_MEDIA) {
-			applies = mq__list_match(m->media,
-					unit_ctx, media, str);
+			applies = mq__list_match(m->media, media);
 			if (applies == false) {
 				break;
 			}
