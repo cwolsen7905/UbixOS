@@ -244,8 +244,13 @@ Split `main.c` into `sys/arch/i386/locore.c` (GDT table data) and
 
 ---
 
-### Phase 9 — Add `sys/include/machine/vmm_layout.h`
+### Phase 9 — Add `sys/include/machine/vmm_layout.h` ✅ DONE
 **Boot risk:** Low
+
+> Done: `sys/include/i386/vmm_layout.h` holds the layout constants (VMM_USER_*,
+> VMM_KERN_*, STACK_ADDR, PD_BASE_ADDR, PT_BASE_ADDR, VMM_CHILD_PD_WINDOW, …);
+> `sys/include/machine/vmm_layout.h` includes it; `vmm.h` and `paging.h` include
+> `<machine/vmm_layout.h>` instead of defining the constants inline.
 
 Extract the i386 virtual address space layout constants from `vmm.h` into
 an arch-parameterized header.

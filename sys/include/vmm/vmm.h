@@ -42,54 +42,12 @@ extern "C" {
 #define vmmID       -3
 
 /*
- * i386 virtual address-space layout (per process).  Canonical reference:
- * docs/architecture/i386-page-directory-map.md.  The low 4 MB is identity
- * mapped in every space; the kernel half (>= VMM_KERN_START, PDEs 770-1023) is
- * shared and re-synced across spaces on fork / create / share_region.
- *
- *   0x00000000 .. 0x003FFFFF   identity map (PDE 0): IVT/BIOS/VGA, kernel TSS
- *                              (0x4200), AP GDT (0x20000), v86 stub; kernel
- *                              image loads at 0x300000
- *   ..0x007FEFFF               "kernel code" window (VMM_KERN_CODE_*)
- *   0x007FF000                 per-process LDT (LDT[1] = user TLS, %gs=0x0F)
- *   0x00800000 .. 0xBFFFFFFF   user space (VMM_USER_*); stack top = STACK_ADDR
- *   0xC0000000 / 0xC0400000    recursive page-table / page-directory self-maps
- *   0xC0800000 .. 0xFDFFFFFF   kernel space: kmalloc heap, kernel pages
- *                              (PDEs 770-1015; the heap-allocation range)
- *   0xFE000000 .. 0xFFFFFFFF   reserved kernel high range (PDEs 1016-1023);
- *                              LAPIC MMIO at 0xFEE00000 (PDE 1019) lives here
- *
- * Note: the kernel-PD *sync* covers PDEs 770-1023 (so the LAPIC is reachable
- * from any address space), while kmalloc *allocation* stays within 770-1015.
+ * The virtual address-space layout constants (VMM_USER_*, VMM_KERN_*,
+ * STACK_ADDR, VMM_CHILD_PD_WINDOW, PD_BASE_ADDR, …) are machine-dependent and
+ * now live in <machine/vmm_layout.h> (-> <i386/vmm_layout.h>), so a 64-bit / ARM
+ * port can supply its own.  See docs/architecture/i386-page-directory-map.md.
  */
-
-#define STACK_ADDR 0xBFFFFFFF                /* default user stack top (grows down) */
-
-#define VMM_MMAP_ADDR_PMODE  VMM_KERN_START  /* where the page-frame bitmap is remapped */
-#define VMM_MMAP_ADDR_RMODE  0x101000        /* legacy pre-paging bitmap staging addr   */
-
-#define VMM_KERN_CODE_START 0x00000000
-#define VMM_KERN_CODE_END   0x007FEFFF
-
-#define VMM_USER_LDT   0x007FF000             /* per-process LDT page (user TLS) */
-
-#define VMM_USER_START 0x00800000
-#define VMM_USER_END   0xBFFFFFFF
-
-#define VMM_PAGE_DIRS  0xC0000000             /* recursive page-table self-map  */
-#define VMM_PAGE_DIR   0xC0400000             /* recursive page-directory self-map */
-
-#define VMM_KERN_START 0xC0800000             /* kernel space start (PDE 770), shared */
-#define VMM_KERN_END   0xFDFFFFFF             /* kmalloc-heap top (PDE 1015)          */
-
-#define VMM_KERN_STACK_START 0xFE000000       /* reserved kernel high range (PDE 1016) */
-#define VMM_KERN_STACK_END   0xFFFFFFFF       /* .. PDE 1023; holds LAPIC MMIO @0xFEE00000 */
-
-/* Per-process transient window used to map another task's page directory while
- * forking / sharing a region (then unmapped).  Placed in the USER half on
- * purpose so the temporary mapping stays private to the acting process rather
- * than leaking into the shared kernel half.  Must not overlap a live mapping. */
-#define VMM_CHILD_PD_WINDOW  0x5A00000
+#include <machine/vmm_layout.h>
 
     extern struct spinLock pdSpinLock;
 
