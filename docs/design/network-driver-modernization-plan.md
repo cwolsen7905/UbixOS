@@ -30,9 +30,11 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 0 | Timed sleep (`kTask_t.wake_tick`, `sched_wait_event_timeout`, per-tick expiry scan) | ✅ | O(n) per-tick scan — replace with a callout wheel (Phase 3) |
 | 0 | e1000 RX: IRQ-driven sleep, no poll loop | ✅ | ISR sets flag + `sched_wakeup_chan` |
 | 0 | lwIP sem/cond/mutex (`ubthread`, `sys_arch` `cond_wait`) → sleep/wakeup | ✅ | PI-boost preserved |
-| 0 | Bounded safety re-check on "infinite" waits (~50 ms) | ✅ | hedge against missed wakeup / torn-down sync object; **superseded by Phase 1** |
+| 0 | Bounded safety re-check on "infinite" waits (~50 ms) | ✅ | hedge; **removed in Phase 1** (commit d6e003588) |
 | 0 | Fix latent `cpu_switch` self-switch (`prev==next`) | ✅ | sched skips the switch |
-| 1 | Proper sleepqueue / condvar (wakeup recorded against the queue; no safety re-check) | ⬜ | unifies `ubthread` locks; removes the Phase-0 hedge |
+| 0 | Socket `close()` must tear down the lwIP netconn (`sys_close` fd_type==2) | ✅ | commit 1666f59cd — fixed netconn leak / "connect failed" |
+| 1 | Infinite sem/cond waits block truly indefinitely (no safety re-check) | ✅ | commit d6e003588; a 5 s watchdog never fired under load, proving wakeups reliable |
+| 1 | Proper sleepqueue / condvar API + unify `ubthread` locks (cosmetic; wait_chan already serves) | 🟡 | mechanism done & reliable; formal rename/API deferred (low value) |
 | 1 | Unified lock set on the sleepqueue: mutex (PI), condvar, semaphore, rwlock | ⬜ | replaces ad-hoc `ubthread` + `sys_arch` primitives |
 | 2 | NAPI-style RX: IRQ wakes thread → mask RX IRQ → poll-drain ring → re-arm | ⬜ | removes the e1000 RX safety poll; handles load |
 | 2 | Top-half / bottom-half (ithread) for all non-trivial ISRs | 🟡 | e1000 already "ISR wakes thread"; kbd/mouse still inline |
