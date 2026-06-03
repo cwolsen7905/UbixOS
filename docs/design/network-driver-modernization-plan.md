@@ -38,7 +38,7 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 1 | Unified lock set on the sleepqueue: mutex (PI), condvar, semaphore, rwlock | ⬜ | replaces ad-hoc `ubthread` + `sys_arch` primitives |
 | 2 | NAPI-style RX: IRQ wakes thread → mask RX IRQ → poll-drain ring → re-arm | ⛔ | ATTEMPTED + REVERTED: poll-free NAPI regressed RX under QEMU's e1000 — an armed RX IRQ is dropped, RX stalls, connections never close → netconn leak → `socket: failed`. The 50 ms safety poll is load-bearing for QEMU's emulation. Revisit as **NAPI masking + keep the poll as a backstop**, not poll-free. |
 | 2 | Top-half / bottom-half (ithread) for all non-trivial ISRs | 🟡 | e1000 already "ISR wakes thread"; kbd/mouse are minimal top-halves (ring enqueue) — no inline-heavy ISR left to convert |
-| 3 | Callout / timer-wheel subsystem (O(1)) | ⬜ | lwIP `sys_check_timeouts` rides it; removes per-tick `wake_tick` scan |
+| 3 | Callout / timer subsystem (expiry-sorted, O(1)/tick) | ✅ | commit 5ca1b070c — `sys/kern/callout.c`; timed sleep arms a callout, per-tick `wake_tick` taskList scan removed; lwIP timers ride it via tcpip_thread |
 | 4 | Zero-copy pbuf path (drop the copy-into-kernel-buffer for `tcpip_thread`) | ⬜ | needs the stack to run with proper kernel mappings |
 | 5 | newbus-style driver model: `probe`/`attach`/`detach` + resource manager | 🟡 | have PCI enumeration + `irq_register`; formalize lifecycle |
 
