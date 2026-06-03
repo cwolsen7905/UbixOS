@@ -1,6 +1,6 @@
 # Makefile (C) 2002 The uBixOS Project
 
-all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code #csu-code
+all: crt-code ubix_api-code ubix-code objgfx-code libaudio-code libbearssl-code libpw-code libhttp-code libwapcaplet-code libparserutils-code libcss-code libhubbub-code libdom-code libnsgif-code libnsbmp-code libnsfb-code #csu-code
 # bin tools
 # depend kernel tools
 
@@ -69,6 +69,10 @@ libnsgif-code: libnsgif
 libnsbmp-code: libnsbmp
 	(cd libnsbmp;$(MAKE))
 
+# NetSurf framebuffer abstraction (core+ram+32bpp plotters; objGFX backend TBD).
+libnsfb-code: libnsfb
+	(cd libnsfb;$(MAKE))
+
 clean:
 	(cd crt;${MAKE} clean)
 	(cd ubix_api;${MAKE} clean)
@@ -85,3 +89,4 @@ clean:
 	(cd libdom;${MAKE} clean)
 	(cd libnsgif;${MAKE} clean)
 	(cd libnsbmp;${MAKE} clean)
+	(cd libnsfb;${MAKE} clean)
