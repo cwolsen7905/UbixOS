@@ -36,8 +36,8 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 1 | Infinite sem/cond waits block truly indefinitely (no safety re-check) | ✅ | commit d6e003588; a 5 s watchdog never fired under load, proving wakeups reliable |
 | 1 | Proper sleepqueue / condvar API + unify `ubthread` locks (cosmetic; wait_chan already serves) | 🟡 | mechanism done & reliable; formal rename/API deferred (low value) |
 | 1 | Unified lock set on the sleepqueue: mutex (PI), condvar, semaphore, rwlock | ⬜ | replaces ad-hoc `ubthread` + `sys_arch` primitives |
-| 2 | NAPI-style RX: IRQ wakes thread → mask RX IRQ → poll-drain ring → re-arm | ⬜ | removes the e1000 RX safety poll; handles load |
-| 2 | Top-half / bottom-half (ithread) for all non-trivial ISRs | 🟡 | e1000 already "ISR wakes thread"; kbd/mouse still inline |
+| 2 | NAPI-style RX: IRQ wakes thread → mask RX IRQ → poll-drain ring → re-arm | ⛔ | ATTEMPTED + REVERTED: poll-free NAPI regressed RX under QEMU's e1000 — an armed RX IRQ is dropped, RX stalls, connections never close → netconn leak → `socket: failed`. The 50 ms safety poll is load-bearing for QEMU's emulation. Revisit as **NAPI masking + keep the poll as a backstop**, not poll-free. |
+| 2 | Top-half / bottom-half (ithread) for all non-trivial ISRs | 🟡 | e1000 already "ISR wakes thread"; kbd/mouse are minimal top-halves (ring enqueue) — no inline-heavy ISR left to convert |
 | 3 | Callout / timer-wheel subsystem (O(1)) | ⬜ | lwIP `sys_check_timeouts` rides it; removes per-tick `wake_tick` scan |
 | 4 | Zero-copy pbuf path (drop the copy-into-kernel-buffer for `tcpip_thread`) | ⬜ | needs the stack to run with proper kernel mappings |
 | 5 | newbus-style driver model: `probe`/`attach`/`detach` + resource manager | 🟡 | have PCI enumeration + `irq_register`; formalize lifecycle |
