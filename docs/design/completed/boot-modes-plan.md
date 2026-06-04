@@ -1,5 +1,17 @@
 # UbixOS Boot Modes & Terminal Plan
 
+**Status: COMPLETE (2026-06-03).** Both boot modes work. Two naming/mechanism
+notes where the implementation evolved from this plan:
+
+- **`guilogin` was implemented as `bin/vlogin`** — same role (fullscreen objgfx
+  login → fork taskbar on success), final name `vlogin`. Treat every "guilogin"
+  below as "vlogin".
+- **views forks vlogin itself** (`bin/views/views/views.cc`), *not* via an
+  init.d entry. `etc/init.d/20-views` and `25-vlogin` are intentionally
+  comment-only: launching vlogin from init.d races VESA VM86 init and corrupts
+  its startup context, so the compositor spawns it only after the framebuffer
+  is ready. The graphical/headless mode split still works by which services run.
+
 ## Overview
 
 UbixOS supports two boot modes selected at runtime by which services are
@@ -301,16 +313,16 @@ client                          authd
 
 | Item | Status | Notes |
 |------|--------|-------|
-| `bin/guilogin` — login screen | ⬜ todo | fullscreen objgfx form, userdb auth |
-| views forks guilogin after init | ⬜ todo | `bin/views/` compositor change |
-| Enable `etc/init.d/20-views` | ⬜ todo | uncomment exec line |
+| `bin/vlogin` — login screen (was "guilogin") | ✅ done | fullscreen objgfx form, MPI auth via authd, forks taskbar |
+| views forks vlogin after compositor ready | ✅ done | `bin/views/views/views.cc` execs `/bin/vlogin` (not init.d — avoids VESA VM86 race) |
+| Graphical/headless mode split | ✅ done | views runs vlogin; headless path uses ttyd; `20-views`/`25-vlogin` are comment-only by design |
 
 ### Phase 3 — Taskbar as desktop shell
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Taskbar app launcher | ⬜ todo | right-click menu or dock strip |
-| Compositor keyboard shortcuts | ⬜ todo | views/taskbar layer, not kernel |
+| Taskbar app launcher | ✅ done | taskbar dock launches `/bin/term` (and other apps) via fork+execve |
+| Compositor keyboard shortcuts | ⬜ optional | nice-to-have; not required for boot-modes completion |
 
 ---
 
@@ -322,14 +334,14 @@ client                          authd
 | `sys/isa/rs232.c` — RX ISR + ring buffer | 1 | ✅ done |
 | `bin/ttyd/main.c` | 1 | ✅ done |
 | `etc/init.d/30-ttyd` | 1 | ✅ done |
-| `bin/guilogin/main.c` | 2 | ⬜ todo |
-| `bin/guilogin/Makefile` | 2 | ⬜ todo |
+| `bin/vlogin/vlogin.cc` (was `bin/guilogin/main.c`) | 2 | ✅ done |
+| `bin/vlogin/Makefile` | 2 | ✅ done |
 
 ### Modified files
 | File | Change | Phase | Status |
 |------|--------|-------|--------|
 | `sys/kernel/syscalls.c` | `sys_settty` at slot 48 (serial TTY slot claim) | 1 | ✅ done |
 | `bin/Makefile` | added `ttyd` to SUBDIRS | 1 | ✅ done |
-| `bin/Makefile` | add `guilogin` to SUBDIRS | 2 | ⬜ todo |
-| `bin/views/*.cc` | fork guilogin after init | 2 | ⬜ todo |
-| `etc/init.d/20-views` | uncomment exec line | 2 | ⬜ todo |
+| `bin/Makefile` | added `vlogin` to SUBDIRS | 2 | ✅ done |
+| `bin/views/views/views.cc` | forks `/bin/vlogin` after compositor ready | 2 | ✅ done |
+| `etc/init.d/20-views`/`25-vlogin` | comment-only by design (views self-spawns vlogin; avoids VESA VM86 race) | 2 | ✅ done |
