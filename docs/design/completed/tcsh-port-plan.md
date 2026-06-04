@@ -1,5 +1,9 @@
 # tcsh Port Plan
 
+**Status: COMPLETE (2026-06-03).** tcsh 6.24.16 is the interactive shell;
+prompt, completion, history, `^C`/`^Z`/`fg`, background jobs, `~` expansion, and
+rc-file loading all verified under QEMU.
+
 Port tcsh (6.24.x) to UbixOS as the primary interactive shell, replacing `bin/shell`.
 
 ## Status
@@ -17,11 +21,27 @@ Port tcsh (6.24.x) to UbixOS as the primary interactive shell, replacing `bin/sh
 | 6d | `^C` kills the foreground command | ✅ Done |
 | 6e | `^Z` suspends, `fg` resumes | ✅ Done |
 | 6f | Background jobs (`command &`) work | ✅ Done |
-| 6g | `~` expansion resolves correctly | ⬜ Not verified |
-| 6h | `/etc/csh.cshrc` or `/etc/tcshrc` loads on startup | ⬜ Not started |
+| 6g | `~` expansion resolves correctly | ✅ Done — `echo ~` → `/home/root` |
+| 6h | `/etc/csh.cshrc` or `/etc/tcshrc` loads on startup | ✅ Done — `csh.cshrc` aliases active |
 
-**Notes:** tcsh 6.24.16 is working interactively. Known remaining noise: minor
-cosmetic issues; `~` expansion and rc file loading not yet verified.
+**Notes:** tcsh 6.24.16 is working interactively. Verified 2026-06-03: `~`
+expands to `$HOME` (`/home/root`); `/etc/csh.cshrc` auto-loads in every
+interactive shell (its `ls`/`ll`/`..`/`h` aliases are active).
+
+**Login shells (macOS Terminal.app model):** every interactive tcsh is a *login*
+shell, so it sources the login files (`/etc/csh.login`, `~/.login`) as well as
+the per-shell rc (`/etc/csh.cshrc`, `~/.tcshrc`). Two launch paths set this up:
+- **Console** (serial/VGA): `bin/login` execs the shell with `argv[0]="-tcsh"`.
+- **GUI terminal** (`bin/views/term/term.cc`): execs `argv[0]="-tcsh"` too —
+  built as `"-" + basename(SHELL)`, mirroring `bin/login`. (Changed 2026-06-03
+  from a non-login launch; chosen over the Linux model of sourcing login files
+  once in `vlogin`, for simplicity on a single-user system.)
+
+Verified in a GUI terminal: `$?loginsh` = 1, `$BLOCKSIZE` = K (from `csh.login`),
+`ll` alias active (from `csh.cshrc`), `~` → `/home/root`. Note `$HOST` reflects
+the kernel hostname via `gethostname()`, not `csh.login` — a separate, cosmetic
+hostname-naming inconsistency (kernel says `ubixos`; login/csh say
+`Dev.uBixOS.com`), unrelated to the tcsh port.
 
 **Prerequisite:** Complete the musl libc / libcpp migration and remove the old libc first.
 
@@ -111,8 +131,8 @@ mcopy build/bin/tcsh ::bin/tcsh
 - [x] `^C` kills the foreground command (not tcsh itself)
 - [x] `^Z` suspends, `fg` resumes
 - [x] Background jobs (`command &`) work
-- [ ] `~` expansion resolves correctly
-- [ ] `/etc/csh.cshrc` or `/etc/tcshrc` loads on startup (optional)
+- [x] `~` expansion resolves correctly
+- [x] `/etc/csh.cshrc` loads on startup (+ `/etc/csh.login`, since shells are login shells)
 
 ## Key Files After Port
 

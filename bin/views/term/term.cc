@@ -423,7 +423,17 @@ int main(int argc, char **argv)
 	snprintf(user_env, sizeof(user_env), "USER=%s", user);
 	snprintf(logname_env, sizeof(logname_env), "LOGNAME=%s", user);
 
-	char *shell_argv[] = {(char *)shell_path, nullptr};
+	/* Launch tcsh as a LOGIN shell (macOS Terminal.app model): argv[0] is
+	 * "-<basename>", which tells the shell to source the login files
+	 * (/etc/csh.login, ~/.login) in addition to the per-shell rc
+	 * (/etc/csh.cshrc).  The exec target stays the real shell_path; only
+	 * argv[0] carries the leading '-'.  Mirrors bin/login/main.c. */
+	const char *shell_base = strrchr(shell_path, '/');
+	shell_base = shell_base ? shell_base + 1 : shell_path;
+	char login_argv0[64];
+	snprintf(login_argv0, sizeof(login_argv0), "-%s", shell_base);
+
+	char *shell_argv[] = {login_argv0, nullptr};
 	char *shell_envp[] = {home_env,
 	                      shell_env,
 	                      user_env,
