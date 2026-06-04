@@ -79,6 +79,19 @@ gen_pc libnsfb        nsfb        "$SRCTOP/contrib/libnsfb/include"        ""
 gen_pc libnsutils     nsutils     "$SRCTOP/contrib/libnsutils/include"     ""
 gen_pc libutf8proc    utf8proc    "$SRCTOP/contrib/libutf8proc/include"    ""
 
+# Dummy libpng.pc: NETSURF_USE_PNG=YES hard-errors unless pkg-config finds
+# "libpng", and that switch is what defines -DWITH_PNG (the PNG-handler
+# registration gate).  We decode PNGs with stb_image, not libpng, so this .pc
+# carries empty Cflags/Libs — it satisfies --exists and enables WITH_PNG without
+# pulling in (or linking) a real libpng.
+cat > "$PCDIR/libpng.pc" <<EOF
+Name: libpng
+Description: stub (UbixOS decodes PNG via stb_image)
+Version: 1.6.0
+Cflags:
+Libs:
+EOF
+
 # 2. Environment -------------------------------------------------------------
 # Host tools (convert_font/convert_image) need HOST libpng.  Resolve it via the
 # host pkg-config FIRST — before we isolate PKG_CONFIG_LIBDIR to our cross libs
@@ -91,7 +104,7 @@ HOST_PNG_LIBS="$(pkg-config --libs libpng 2>/dev/null || echo -lpng)"
 MUSL_INC="-I$MUSL/include -I$BUILD/obj/musl/obj/include -I$MUSL/arch/i386 -I$MUSL/arch/generic"
 export PKG_CONFIG_LIBDIR="$PCDIR"
 export PKG_CONFIG_PATH="$PCDIR"
-export CFLAGS="-m32 -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -nostdinc $MUSL_INC -I$SRCTOP/include -I$SRCTOP/contrib/zlib -I$SRCTOP/contrib/bearssl/inc -fcommon"
+export CFLAGS="-m32 -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -nostdinc $MUSL_INC -I$SRCTOP/include -I$SRCTOP/contrib/zlib -I$SRCTOP/contrib/bearssl/inc -I$SRCTOP/contrib/stb -fcommon"
 export LDFLAGS="-L$BUILD/lib -lhttp -lbearssl -lz"
 export BUILD_CFLAGS="$HOST_PNG_CFLAGS"
 export BUILD_LDFLAGS="$HOST_PNG_LIBS"
@@ -109,7 +122,7 @@ echo "==> Compiling NetSurf (log: $LOG)"
 	NSBUILD="$NSBUILD" \
 	CC="${CROSS}gcc" BUILD_CC=cc AR="${CROSS}ar" \
 	NETSURF_USE_CURL=NO NETSURF_USE_OPENSSL=NO \
-	NETSURF_USE_PNG=NO NETSURF_USE_JPEG=NO NETSURF_USE_WEBP=NO \
+	NETSURF_USE_PNG=YES NETSURF_USE_JPEG=YES NETSURF_USE_WEBP=NO \
 	NETSURF_USE_DUKTAPE=YES NETSURF_USE_NSSVG=NO NETSURF_USE_RSVG=NO \
 	NETSURF_USE_ROSPRITE=NO NETSURF_USE_HARU_PDF=NO NETSURF_USE_VIDEO=NO \
 	NETSURF_USE_BMP=YES NETSURF_USE_GIF=YES \

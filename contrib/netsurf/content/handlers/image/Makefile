@@ -1,7 +1,10 @@
 # Image content handlers sources
 
 # S_IMAGE are sources related to image management
-S_IMAGE_YES := image.c image_cache.c
+# nsstb.c instantiates stb_image for the PNG/JPEG handlers (UbixOS: no
+# libpng/libjpeg).  Compiled unconditionally; the linker drops it if neither
+# PNG nor JPEG is enabled.
+S_IMAGE_YES := image.c image_cache.c nsstb.c
 S_IMAGE_NO :=
 S_IMAGE_$(NETSURF_USE_BMP) += bmp.c
 S_IMAGE_$(NETSURF_USE_GIF) += gif.c
