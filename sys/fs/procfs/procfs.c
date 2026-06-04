@@ -67,6 +67,7 @@
 #define PFILE_MAPS     4
 #define PFILE_FD_ENTRY 5   /* individual /proc/N/fd/M */
 #define PFILE_MOUNTS   6   /* /proc/mounts — global mount table */
+#define PFILE_MEMINFO  7   /* /proc/meminfo — global memory stats */
 
 /* procfs_dir_state.type values */
 #define PDIR_ROOT  0
@@ -306,6 +307,31 @@ procfs_build_mounts(char *buf, int bufsz)
 	return len;
 }
 
+/**
+ * Build /proc/meminfo — total and free physical RAM, in a Linux-ish format.
+ * `numPages` is the number of managed physical pages; `systemVitals->freePages`
+ * is the live free count.  Each page is PAGE_SIZE bytes.
+ */
+static int
+procfs_build_meminfo(char *buf, int bufsz)
+{
+	u_int32_t total_pages = numPages;
+	u_int32_t free_pages  = systemVitals ? systemVitals->freePages : 0;
+	u_int32_t kb_per_page = PAGE_SIZE / 1024u;
+
+	return snprintf(buf, bufsz,
+	    "MemTotal: %8u kB\n"
+	    "MemFree:  %8u kB\n"
+	    "MemUsed:  %8u kB\n"
+	    "PageSize: %8u bytes\n"
+	    "Pages:    total %u free %u\n",
+	    total_pages * kb_per_page,
+	    free_pages * kb_per_page,
+	    (total_pages - free_pages) * kb_per_page,
+	    (u_int32_t)PAGE_SIZE,
+	    total_pages, free_pages);
+}
+
 /* -----------------------------------------------------------------------
  * vfsInitFS
  * --------------------------------------------------------------------- */
@@ -371,6 +397,16 @@ procfs_open(char *file, fileDescriptor_t *fd)
 		int  mlen = procfs_build_mounts(tmp2, sizeof(tmp2));
 		fd->ino   = 0;
 		fd->start = PFILE_MOUNTS;
+		fd->size  = (u_int32_t)mlen;
+		return 1;
+	}
+
+	/* Global files: /proc/meminfo */
+	if (strcmp(pidstr, "meminfo") == 0 && *rest == '\0') {
+		char tmp2[256];
+		int  mlen = procfs_build_meminfo(tmp2, sizeof(tmp2));
+		fd->ino   = 0;
+		fd->start = PFILE_MEMINFO;
 		fd->size  = (u_int32_t)mlen;
 		return 1;
 	}
@@ -473,6 +509,19 @@ procfs_read(fileDescriptor_t *fd, char *data, off_t offset, long size)
 	if (fd->start == PFILE_MOUNTS) {
 		char     mtmp[1024];
 		int      mlen = procfs_build_mounts(mtmp, sizeof(mtmp));
+		long     mn;
+		if (offset >= (long)mlen)
+			return 0;
+		mn = (long)mlen - offset;
+		if (mn > size)
+			mn = size;
+		memcpy(data, mtmp + offset, mn);
+		return (int)mn;
+	}
+
+	if (fd->start == PFILE_MEMINFO) {
+		char     mtmp[256];
+		int      mlen = procfs_build_meminfo(mtmp, sizeof(mtmp));
 		long     mn;
 		if (offset >= (long)mlen)
 			return 0;
@@ -620,17 +669,18 @@ procfs_readdir(kDIR_t *dir, struct kdirent *ent)
 
 	/* ── Root: global files first, then live task dirs ── */
 	if (s->type == PDIR_ROOT) {
-		/* Phase 0: emit global synthetic files */
-		if (s->root_phase == 0) {
-			s->root_phase = 1;
-			strncpy(ent->d_name, "mounts", sizeof(ent->d_name) - 1);
+		/* Phases 0..N-1: emit global synthetic files, one per readdir call */
+		static const char *const procfs_root_files[] = { "mounts", "meminfo" };
+		if (s->root_phase < (int)(sizeof(procfs_root_files) / sizeof(procfs_root_files[0]))) {
+			strncpy(ent->d_name, procfs_root_files[s->root_phase], sizeof(ent->d_name) - 1);
 			ent->d_name[sizeof(ent->d_name) - 1] = '\0';
 			ent->d_ino  = 0;
 			ent->d_type = KDT_REG;
+			s->root_phase++;
 			return 0;
 		}
 
-		/* Phase 1: per-pid directories */
+		/* Final phase: per-pid directories */
 		while (s->cursor &&
 		    (s->cursor->state == DEAD ||
 		     s->cursor->state == PLACEHOLDER))
