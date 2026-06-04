@@ -7,6 +7,19 @@ carrying their own 500 KB+ static copy.
 **Memory benefit**: with 10 processes running, dynamic linking saves roughly 10 × 400 KB =
 4 MB of physical RAM — significant on a 256 MB QEMU machine, critical for self-hosting.
 
+> ⚠️ **KNOWN GAP (2026-06-03): the physical-RAM sharing above is NOT yet
+> realized.** File-backed `mmap` (`sys/vmm/vmm_mmap.c`) allocates *fresh private
+> pages per process and `fread`s the file into them* — there is no page cache or
+> shared file-backed mapping, and `MAP_SHARED`/`MAP_PRIVATE` are ignored. So each
+> process linking `libc.so` gets its own physical copy; RAM use is ~the same as
+> static linking. What IS delivered: smaller on-disk binaries (~50 KB vs ~800 KB)
+> and the full rtld/interp/auxv machinery (the self-hosting prerequisite).
+> Realizing the RAM benefit needs a **unified page cache with shared read-only
+> file mappings** (libc text/rodata shared across all mappers; only the data/GOT
+> segment COW-private). Tracked as future VMM work — see `vmm-plan.md`. This plan
+> is archived as "dynamic linking works"; the *memory-sharing* objective is
+> explicitly deferred.
+
 **Prerequisite for self-hosting**: Stage 0 Clang expects a shared libc by default.
 
 ---
