@@ -1,12 +1,27 @@
 # Tech Spec: VESA Framebuffer Console
 
-**Status:** Draft  
-**Branch target:** `feature/macos-build-qemu` (then merge to master)  
-**Goal:** Replace the VGA text-mode console with a single 800×600 VESA linear
-framebuffer console, rendering all kernel and userspace output as pixel-drawn
-text.  Individual graphics card drivers can be added later; this spec uses the
-VESA Linear Framebuffer (LFB) provided by GRUB/multiboot as the universal
-foundation.
+**Status: SUPERSEDED on i386 / DEFERRED — never implemented.**
+
+> This spec was never built (`sys/isa/fbcon.c` / `font8x16.h` do not exist). On
+> i386 it has been superseded: the kernel console stayed VGA text mode + COM1
+> serial (which works fine for diagnostics), and the VESA framebuffer is owned
+> by the userland `views` compositor via `sys_mapfb` — a kernel framebuffer
+> console would now *conflict* with that ownership.
+>
+> **Why it is kept, not deleted:** the idea returns for the **arm64 port**.
+> AArch64 (QEMU `virt`, Raspberry Pi) has *no* VGA text mode (0xB8000 is
+> x86-PC-only), so the kernel's on-screen console there must be either the
+> PL011 UART (serial — the primary early console) or a framebuffer console
+> exactly like this one. When arm64 reaches the framebuffer milestone
+> (`cross-arch-plan.md` Phase 15), revisit this design — generalised over a
+> generic linear-framebuffer descriptor rather than the VESA/multiboot
+> specifics below. Until then this is a reference, not active work.
+
+**Original goal (i386/VESA):** Replace the VGA text-mode console with a single
+800×600 VESA linear framebuffer console, rendering all kernel and userspace
+output as pixel-drawn text.  Individual graphics card drivers can be added
+later; this spec uses the VESA Linear Framebuffer (LFB) provided by
+GRUB/multiboot as the universal foundation.
 
 ---
 

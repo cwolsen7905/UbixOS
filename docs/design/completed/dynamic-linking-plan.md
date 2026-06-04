@@ -26,7 +26,7 @@ carrying their own 500 KB+ static copy.
 | musl `libc.so` build | ✅ Built — 801 KB ELF32 DYN at `build/lib/libc.so` |
 | `sys:/lib/libc.so` on image | ✅ Installed by `mkimage.sh` |
 | `sys:/lib/ld-musl-i386.so.1` on image | ✅ Installed as second copy (FAT32, no symlinks) |
-| Binary Makefiles | **Still `-static`** — Phase 6 not yet done |
+| Binary Makefiles | ✅ Dynamic by default — `clock` and `tcc` intentionally stay `-static` (Phase 6 exceptions) |
 
 ---
 
@@ -84,7 +84,13 @@ automatically. Added an explicit second `mcopy` to install it as `/lib/ld-musl-i
 
 ---
 
-## Phase 6 — Switch Binaries to Dynamic Linking
+## Phase 6 — Switch Binaries to Dynamic Linking ✅ DONE
+
+> Done. World binaries link dynamically against `/lib/ld-musl-i386.so.1`
+> (verified: 71 of 73 are `dynamically linked`). The two exceptions kept
+> `-static` are `bin/clock` and `bin/tcc`. (The original PID-1 safety rationale
+> below is moot — `init`/`login` are dynamic too and boot fine, since `/lib` is
+> on the root FAT mounted before they exec.)
 
 **`mk/ubix.musl.prog.mk`** — the shared Makefile fragment used by all world binaries.
 
@@ -141,7 +147,10 @@ AT_ENTRY (slot 9), AT_PHDR (slot 3), AT_PHNUM (slot 5), AT_PAGESZ (slot 6) — m
 
 ---
 
-## Phase 8 — Verify and Test
+## Phase 8 — Verify and Test ✅ DONE
+
+> Done. The system boots with dynamically-linked `init`/`login`/`ls`/`tcsh`
+> against the shared `libc.so`; `file build/bin/*` reports 71/73 dynamic.
 
 **Incremental test sequence**:
 
@@ -173,7 +182,7 @@ kprintf("ldEnable: resolved %s → 0x%X\n", sym_name, addr);
 | 5 | Install `libc.so` to image | ✅ Done |
 | 6 | Switch world binaries to dynamic linking | ✅ Done |
 | 7 | Fix `ldEnable()` auxv and musl entry | ✅ Done |
-| 8 | Verify and debug | ⬜ Next — boot QEMU, run ls/tcsh |
+| 8 | Verify and debug | ✅ Done — boots; 71/73 world binaries dynamic |
 
 Phase 7 (auxv / musl entry point) is the most likely source of surprises — musl's dynamic
 linker startup is strict about the auxiliary vector and will silently fail or crash if
@@ -194,4 +203,6 @@ are complete.
 
 ---
 
-*Last updated: 2026-05-22 — Phases 1–7 complete. Phase 8 (boot test) is next.*
+*Last updated: 2026-06-03 — COMPLETE. All 8 phases done; world is dynamically
+linked against the shared musl `libc.so` (71/73 binaries; `clock`/`tcc` kept
+static by design). Archived to `completed/`.*
