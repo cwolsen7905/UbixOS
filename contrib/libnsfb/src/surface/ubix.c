@@ -69,6 +69,7 @@ static int ubix_initialise(nsfb_t *nsfb)
 	req->w = nsfb->width;
 	req->h = nsfb->height;
 	req->sender_pid = getpid();
+	req->wants_motion = 1; /* need hover/drag + cursor tracking for correct clicks */
 	strncpy(req->title, "NetSurf", sizeof(req->title) - 1);
 	strncpy(req->reply, UBIX_MBOX, sizeof(req->reply) - 1);
 

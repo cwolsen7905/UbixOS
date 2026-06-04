@@ -86,6 +86,13 @@ struct display_claim_req
 	 * The window is resizable when max_w>min_w or max_h>min_h; a fixed dimension
 	 * sets min==max (e.g. min_w==max_w for the macOS fixed-width style). */
 	int32_t min_w, min_h, max_w, max_h;
+	/* 1 = also deliver pointer-motion DISPLAY_MOUSE events (no button change),
+	 * not just clicks — like macOS acceptsMouseMovedEvents.  Default 0: a
+	 * window only receives clicks, so simple apps (menus) cannot mistake a
+	 * hover for activation.  Set by clients that need hover / drag / cursor
+	 * tracking (e.g. the NetSurf framebuffer frontend).  Trailing field so
+	 * existing claim layouts are unchanged. */
+	uint8_t wants_motion;
 };
 
 /*

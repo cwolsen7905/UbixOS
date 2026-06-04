@@ -58,6 +58,7 @@ class Window
 	bool closing = false;                           /* close button clicked; awaiting DISPLAY_RELEASE */
 	bool minimized = false;                         /* hidden to the taskbar; restored via DISPLAY_RAISE */
 	bool maximized = false;                         /* filling the screen; restore returns to saved_* */
+	bool wants_motion = false;                      /* client opted into pointer-motion events (DISPLAY_CLAIM) */
 	int sender_pid = 0;                             /* client PID — needed to re-share the buffer on resize */
 	int min_w = 0, min_h = 0, max_w = 0, max_h = 0; /* resize constraints (0 = fixed) */
 	int saved_x = 0, saved_y = 0, saved_w = 0, saved_h = 0; /* geometry before maximize/snap */

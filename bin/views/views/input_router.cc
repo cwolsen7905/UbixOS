@@ -123,6 +123,22 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 		comp_.set_resize_preview(true, resize_win_->x, resize_win_->y, nw, nh + resize_win_->decor_h);
 	}
 
+	/*
+	 * Deliver pointer motion only to a focused window that opted in via
+	 * DISPLAY_CLAIM.wants_motion (cf. macOS acceptsMouseMovedEvents).  Apps that
+	 * did not opt in (taskbar, start menu, simple dialogs) never receive motion,
+	 * so a hover can never be mistaken for a click.  Opted-in clients (the
+	 * NetSurf frontend) use motion to track the cursor — needed so clicks land
+	 * on the right widget, the URL box can be focused, and hover/drag work.
+	 */
+	if ((ev.dx || ev.dy) && !dragging_ && !resizing_)
+	{
+		Window *f = reg_.focused();
+		if (f != nullptr && f->wants_motion && !f->minimized &&
+		    (f->hit_test(comp_.cur_x(), comp_.cur_y()) || ev.buttons != 0))
+			send_mouse(f, comp_.cur_x(), comp_.cur_y(), ev.buttons);
+	}
+
 	if (ev.buttons == prev_buttons_)
 		return;
 
