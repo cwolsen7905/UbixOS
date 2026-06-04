@@ -35,6 +35,27 @@ command -v gmake >/dev/null 2>&1 && GMAKE=gmake
 
 echo "==> NetSurf cross-build (nsfb)"
 
+# 0. Build nsgenbind (host tool) — generates the DOM<->JS Duktape bindings -----
+# Needs a modern bison (>= 3, for %code); Apple's /usr/bin/bison is 2.3.  Prefer
+# a keg-only brew bison if present.  Built once into build/netsurf-tools and put
+# on PATH (the NetSurf JS Makefile invokes a bare `nsgenbind`).
+NSGENBIND_SRC="$SRCTOP/contrib/netsurf-nsgenbind"
+NSGENBIND_BIN="$BUILD/netsurf-tools/nsgenbind"
+for b in /opt/homebrew/opt/bison/bin /usr/local/opt/bison/bin; do
+	[ -x "$b/bison" ] && BISON_PATH="$b" && break
+done
+if [ ! -x "$NSGENBIND_BIN" ]; then
+	echo "==> Building nsgenbind (host JS-binding generator)"
+	( cd "$NSGENBIND_SRC"
+	  PATH="${BISON_PATH:+$BISON_PATH:}$PATH" \
+	    "$GMAKE" NSSHARED="$NSBUILD" >"$BUILD/nsgenbind-build.log" 2>&1 )
+	GEN=$(ls -d "$NSGENBIND_SRC"/build-*/nsgenbind 2>/dev/null | head -1)
+	[ -n "$GEN" ] || { echo "ERROR: nsgenbind build failed (see $BUILD/nsgenbind-build.log)" >&2; exit 1; }
+	mkdir -p "$BUILD/netsurf-tools"
+	cp "$GEN" "$NSGENBIND_BIN"
+fi
+export PATH="$BUILD/netsurf-tools:$PATH"
+
 # 1. pkg-config .pc files isolated to our vendored libraries -----------------
 mkdir -p "$PCDIR"
 gen_pc() { # name short includedir requires
@@ -89,7 +110,7 @@ echo "==> Compiling NetSurf (log: $LOG)"
 	CC="${CROSS}gcc" BUILD_CC=cc AR="${CROSS}ar" \
 	NETSURF_USE_CURL=NO NETSURF_USE_OPENSSL=NO \
 	NETSURF_USE_PNG=NO NETSURF_USE_JPEG=NO NETSURF_USE_WEBP=NO \
-	NETSURF_USE_DUKTAPE=NO NETSURF_USE_NSSVG=NO NETSURF_USE_RSVG=NO \
+	NETSURF_USE_DUKTAPE=YES NETSURF_USE_NSSVG=NO NETSURF_USE_RSVG=NO \
 	NETSURF_USE_ROSPRITE=NO NETSURF_USE_HARU_PDF=NO NETSURF_USE_VIDEO=NO \
 	NETSURF_USE_BMP=YES NETSURF_USE_GIF=YES \
 	NETSURF_FB_FONTLIB=internal NETSURF_FB_FRONTEND=ubix \

@@ -344,4 +344,6 @@ clean:
 		${GNU_MAKE} -C ${OBJ_DIR}/obj/musl clean; \
 	fi
 	rm -rf ${OBJ_DIR}/obj/lib
-	rm -rf contrib/netsurf/build ${OBJ_DIR}/netsurf-pc ${OBJ_DIR}/netsurf-build.log ${OBJ_DIR}/bin/nsfb
+	rm -rf contrib/netsurf/build contrib/netsurf-nsgenbind/build-* \
+	    ${OBJ_DIR}/netsurf-pc ${OBJ_DIR}/netsurf-tools ${OBJ_DIR}/netsurf-build.log \
+	    ${OBJ_DIR}/nsgenbind-build.log ${OBJ_DIR}/bin/nsfb

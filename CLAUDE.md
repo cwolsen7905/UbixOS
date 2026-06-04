@@ -58,6 +58,17 @@ The `/usr/src` layout mirrors FreeBSD convention to support eventual self-hosted
 brew install x86_64-elf-binutils x86_64-elf-gcc bmake qemu mtools i686-elf-grub
 ```
 
+The NetSurf browser build (Step 4 of `bmake world`) additionally needs a host
+**`bison` ≥ 3** (Apple's `/usr/bin/bison` 2.3 is too old for nsgenbind's
+parser) and host **`libpng`** (for NetSurf's `convert_image` resource tool):
+
+```sh
+brew install bison libpng
+```
+
+`tools/build-netsurf.sh` auto-detects the keg-only brew bison
+(`/opt/homebrew/opt/bison`) and resolves libpng via `pkg-config`.
+
 The Makefile auto-detects Darwin and sets `CROSS_PREFIX=x86_64-elf-` with `CROSS_M32=-m32` so all compilations target i386. On FreeBSD the prefix is empty and the host toolchain is used directly.
 
 > **Note**: The project uses `x86_64-elf-gcc -m32` (not `i386-elf-gcc`) because the Homebrew `i386-elf-gcc` formula is not maintained. All kernel and world CFLAGS include `-mno-sse -mno-sse2 -mno-mmx -mno-3dnow` because the kernel never sets `CR4.OSFXSR`; executing XMM instructions triggers `#UD`.

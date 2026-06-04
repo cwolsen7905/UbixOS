@@ -119,8 +119,8 @@ NSOPTION_BOOL(background_images, true)
 /** Whether to animate images */
 NSOPTION_BOOL(animate_images, true)
 
-/** Whether to execute javascript */
-NSOPTION_BOOL(enable_javascript, false)
+/** Whether to execute javascript (uBixOS: default on — JS is compiled in) */
+NSOPTION_BOOL(enable_javascript, true)
 
 /** Maximum time (in seconds) to wait for a script to run */
 NSOPTION_INTEGER(script_timeout, 10)
