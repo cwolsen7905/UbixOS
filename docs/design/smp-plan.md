@@ -27,12 +27,12 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 | 1b | INIT-SIPI the APs; trampoline at `0x0` + IVT save/restore | ✅ | |
 | 1b | Enumerate cores (`ap_online`) | ✅ | `-smp N` → N cores |
 | 2.1| `struct pcpu` + `g_pcpu[]` + `curcpu()`/`smp_processor_id()` | ✅ | each core self-registers |
-| 2.2| `_current` → per-CPU macro | ⛔ | REVERTED: caused nondeterministic compositor corruption / triple-fault on 2nd GUI app. _current is a plain global; revisit with %gs-relative per-CPU when SMP scheduling lands |
-| 2.2| Repoint `_int7` FPU asm off `_current` symbol | ⛔ | reverted with 2.2 |
+| 2.2| `_current` → per-CPU (`%gs:8`, SEL_PCPU) | ✅ | DONE via the software-task-switch work (Milestone B — see `completed/software-task-switch-plan.md`). The original *macro* attempt was reverted; the working approach is a bare `%gs`-relative load through `get_current()`/`set_current()` in `sched.h`, with `cpu_switch` (and every kernel entry stub via `PCPU_LOAD_GS`) forcing `%gs = SEL_PCPU` so `%gs:8` is valid in all kernel contexts |
+| 2.2| Repoint `_int7` FPU asm off `_current` symbol | ✅ | superseded by the above — exception stubs reload `%gs = SEL_PCPU`, so the lazy-FPU path reaches per-CPU current via `%gs:8` like everything else |
 | 2.3| APs adopt kernel CR3 + enable paging | ✅ | APs in kernel address space |
 | 2.3| APs run a per-CPU idle loop in parallel | 🟡 | busy `heartbeat++;pause` loop; verified advancing on all cores.  Real `sti/hlt` idle + scheduler-dispatched threads pending Phase 3 |
 | 2.3| Per-CPU idle *threads* (scheduler-dispatched) | ⬜ | needs per-CPU identity + SMP-safe IRQs |
-| 3  | Real per-CPU identity (`%gs`-base / LAPIC lookup) | ⬜ | see Phase 3 prerequisites |
+| 3  | Real per-CPU identity (`%gs`-base / LAPIC lookup) | 🟡 | `%gs`-base half DONE (task-switch work: `g_pcpu[]`, `%gs = SEL_PCPU` with base `&g_pcpu[cpu]`, `pcpu_install_gs()` at boot). LAPIC-id lookup for AP self-identification still pending |
 | 3  | LAPIC remap into shared kernel PD range | ⬜ | prereq for LAPIC-id lookup |
 | 3  | True spinlock type (spin, not yield; IRQs off) | ⬜ | current `spinLock` yields |
 | 3  | Per-CPU LAPIC timer + reschedule IPI | ⬜ | |
@@ -45,6 +45,19 @@ Legend: ✅ done & verified · 🟡 partial · ⬜ not started
 Backstops: tag `smp-scaffold-safe` (pre-`_current` refactor) and the per-phase
 commits.  Phases 0–2.3 landed as independently-bootable commits; Phase 3+ must
 land as a unit (see "Phase 3 prerequisites discovered").
+
+> **Parity note (2026-06-03):** the per-CPU `_current` blocker that Phase 2.2
+> reverted has since been **solved** by the software-task-switch work
+> (`completed/software-task-switch-plan.md`, Milestone B): `_current` is now a
+> per-CPU `%gs:8` access, not a global. This also delivered the `%gs`-base half
+> of Phase 3's per-CPU identity. The remaining SMP work is therefore the
+> *multi-core* pieces — APs entering the scheduler, a true (non-yielding)
+> spinlock, LAPIC timer/EOI/IPI, and SMP run-queue locking (Phase 4) — **not**
+> the per-CPU-current foundation, which is done. The shared run queue Phase 4
+> locks is scheduler-plan's existing `run_queue[32]` + `ready_mask`, so the two
+> plans are complementary, not conflicting. The "Current State (honest
+> inventory)" section below predates Phases 0–2.3 and this work; the status
+> matrix above is authoritative.
 
 ---
 
@@ -81,7 +94,7 @@ never called.
 | INIT-SIPI-SIPI (`smp.c apicMagic()`) | Written. Not built/called. |
 | LAPIC access (`apicRead/apicWrite` @ `0xFEE00000`) | Read for CPU id/ver only. No timer, no EOI, no IPI dispatch wired. |
 | CPU enumeration (ACPI MADT / Intel MP tables) | **Absent.** `cpuinfo[8]` is a static array; APs self-register. |
-| Per-CPU data / `_current` | **Global** (`sys/kern/sched_core.c`: `kTask_t *_current`). A DR3-register hack marks the cpu struct but nothing uses it. |
+| Per-CPU data / `_current` | **DONE — per-CPU** via `%gs:8` (SEL_PCPU base `&g_pcpu[cpu]`), through `get_current()`/`set_current()` in `sched.h`; `cpu_switch` + entry stubs force `%gs = SEL_PCPU`. (Was global with an unused DR3 hack; superseded by the software-task-switch work.) |
 | Spinlocks (`sys/arch/i386/spinlock.c`) | Real atomics (`__sync_*`, `xchg`), **but `spinLock()` calls `sched_yield()`** → deadlocks under true contention. |
 | Run queue (`sched_core.c`) | Single global `run_queue[32]` + `ready_mask`. O(1), good — but one copy. |
 | TLB shootdown | **Absent.** `invlpg` is local-only; cross-CPU staleness would corrupt memory. |

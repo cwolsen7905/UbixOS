@@ -1,5 +1,16 @@
 # UbixOS Scheduler Improvement Plan
 
+**Status: COMPLETE (scheduler) — Phases 1–3 done.** UbixOS has a modern
+priority scheduler: O(1) `ready_mask` dispatch, 32-level priority bands with
+per-band quanta + preemption, QoS floors, I/O-wakeup boosts + CPU decay,
+priority inheritance, and starvation aging — all in the arch-neutral
+`sys/kern/sched_core.c` (the arch-specific context switch lives in
+`sys/arch/<arch>/`, so the policy ports to arm64 unchanged).
+
+**Phase 4 (kernel threads + pthreads) was carved out** into `threading-plan.md`
+— it's a separate, larger initiative (process/thread split, `clone()`, TLS,
+futexes), not a loose end on the scheduler, and not an arm64 prerequisite.
+
 ## Status
 
 | # | Task | Phase | Status |
@@ -7,7 +18,7 @@
 | 1.1 | Fix O(n²) dead-task cleanup — inline splice | 1 | ✅ Done |
 | 1.2 | Remove `FORK` state — insert as `READY` | 1 | ✅ Done |
 | 1.3 | Fix wrap-around double-scan | 1 | ✅ Done |
-| 1.4 | Wire up `need_resched` + quantum decrement | 2 | ⏸ Deferred — needs timer.S to pre-set need_resched |
+| 1.4 | Wire up `need_resched` + quantum decrement | 2 | ✅ Superseded — preemption ships via 2.4 (per-band quanta); the separate `need_resched` flag was not needed |
 | 1.5 | Hash table for `schedFindTask` | 1 | ✅ Done |
 | 2.1 | Per-priority run queues + `ready_mask` data structure | 2 | ✅ Done |
 | 2.2 | O(1) dispatch via `__builtin_clz(ready_mask)` | 2 | ✅ Done |
@@ -18,10 +29,7 @@
 | 3.2 | Temporary priority boosts (I/O wakeup, CPU-bound decay) | 3 | ✅ Done |
 | 3.3 | Priority inheritance for mutexes | 3 | ✅ Done |
 | 3.4 | Starvation aging (background timer, +1 per 50 ms) | 3 | ✅ Done |
-| 4.1 | Split `kTask_t` → `kProc_t` + `kThread_t` | 4 | ⬜ Not started |
-| 4.2 | `clone()` / `rfork()` syscall | 4 | ⬜ Not started |
-| 4.3 | Thread-local storage via GS register | 4 | ⬜ Not started |
-| 4.4 | libc pthreads wired to `clone()` + futex | 4 | ⬜ Not started |
+| 4.x | Kernel threads + pthreads (split, `clone()`, TLS, futex) | 4 | ➡️ Moved to `threading-plan.md` (not started; separate initiative) |
 
 ### Correctness fixes landed 2026-05-23
 
@@ -310,60 +318,9 @@ cannot promote a background task into the interactive band.
 
 ## Phase 4 — Kernel Threads + POSIX Threads Foundation
 
-_Largest change. Deferred until Phase 3 is stable and tested._
-
-### 4.1 Separate process from thread
-
-Current `kTask_t` conflates "process" (address space, fd table, signals) with
-"execution context" (stack, registers, priority). Split into:
-
-```c
-typedef struct kProc {
-    pidType          pid;
-    kTask_t         *threads;       /* list of threads belonging to this process */
-    struct vmspace  *vm;            /* address space */
-    struct fdtable  *fds;           /* file descriptor table */
-    sigset_t         sigmask;
-    /* ... uid, gid, cwd, etc. */
-} kProc_t;
-
-typedef struct kThread {
-    tidType          tid;
-    kProc_t         *proc;          /* owning process */
-    uint8_t          priority;
-    uint8_t          base_priority;
-    uint8_t          quantum;
-    struct md_thread md;            /* arch registers/stack */
-    /* ... per-thread errno, TLS pointer, signal mask */
-} kThread_t;
-```
-
-The scheduler operates on `kThread_t`. `kProc_t` is the unit for `fork()`/`waitpid()`.
-
-### 4.2 `clone()` / `rfork()` syscall
-
-`clone()` (Linux ABI, slot 120) or `rfork()` (FreeBSD ABI) creates a new thread
-sharing the calling process's address space and fd table. The new thread gets its
-own stack (caller-supplied) and starts at a specified entry point.
-
-This is the foundation for `pthread_create()` in libc.
-
-### 4.3 Thread-local storage (TLS)
-
-Each thread gets a TLS block. On i386 the GS segment register points to it.
-`sys_set_thread_area()` (FreeBSD: `sysarch(I386_SET_GSBASE)`) lets libc install
-the TLS pointer at thread creation. `__thread` variables in C are resolved via
-GS-relative addressing by the compiler.
-
-### 4.4 libc pthreads
-
-With `clone()` and TLS in place, musl's pthread implementation works with minimal
-adaptation. Key pieces:
-- `pthread_create` → `clone()`
-- `pthread_mutex_*` → futex or kernel semaphore
-- `pthread_cond_*` → futex wait/wake
-
----
+**Moved to [`threading-plan.md`](threading-plan.md).**  The process/thread
+split, `clone()`/`rfork()`, thread-local storage, and pthreads-on-futex are a
+separate initiative tracked there — not started, and not an arm64 prerequisite.
 
 ## Implementation Order
 
