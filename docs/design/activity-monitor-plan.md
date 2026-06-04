@@ -191,8 +191,8 @@ budget it's free.
   consumes them.  Do Phase 3.5 first (it's tiny) or interleave — the
   activity-monitor v1 can ship with `busy_ticks` always landing on
   `cpu0` while `-smp 1` is the only tested target.
-- **`signal-plan.md` Phase 3** delivers `kill(2)`, which unblocks
-  "Force quit".  Until then, the button is greyed out.
+- **`completed/signal-plan.md` Phase 3** delivers `kill(2)` (done), which
+  unblocks "Force quit".
 - **`solid-refactor`** — model `bin/activity/` after the post-refactor
   `bin/term/` structure (separate view, model, and event-loop classes).
   Don't repeat the monolithic-`main.cc` mistake.

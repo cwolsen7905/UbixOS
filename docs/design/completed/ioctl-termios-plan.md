@@ -25,7 +25,7 @@ correctly — equivalent to what FreeBSD or macOS provide on a serial terminal.
 | Raw mode — immediate pass-through | ✅ | |
 | Stdout/stderr write routing | ✅ | `fd->fd == NULL` path in `sys_write` calls `tty_print(_current->term)` |
 | SIGINT generation (Ctrl-C) | ✅ | In keyboard ISR, delivered to `t_pgrp` |
-| POSIX signal infrastructure (phases 1–5) | ✅ | See `docs/design/signal-plan.md` |
+| POSIX signal infrastructure (phases 1–5) | ✅ | See `docs/design/completed/signal-plan.md` |
 
 ---
 

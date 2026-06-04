@@ -1,5 +1,22 @@
 # POSIX Signal Implementation Plan
 
+**Status: COMPLETE (Phases 1–5).** Verified 2026-06-03: all phase symbols exist
+in code (`signal_post_tty`, `sys_sigsuspend`@179, `sigreturn`@417,
+`signal_post_kill`, `signal_post_fault`, `signal_deliver_frame`,
+`signal_ast_check`, `SA_SIGINFO`/`SA_RESTART`/`SA_RESETHAND`); the page-fault
+handler delivers `SIGSEGV` to user mode instead of panicking; and tcsh job
+control (`^Z`/`fg`, background jobs) exercises process groups + SIGCHLD end to end.
+
+**Deferred future work (non-blocking, edge-case polish):**
+- `ucontext_t` population (SA_SIGINFO 3rd arg is currently `NULL`)
+- `sigaltstack` / `SA_ONSTACK` (alternate signal stack)
+- Interruptible regular-file reads (Ctrl-C during a large FAT `fread` lands only
+  at syscall exit — essentially standard POSIX behavior for disk reads)
+
+**Known open bug (not a plan phase):** intermittent SIGCHLD re-entrancy freeze —
+a SIGCHLD redelivered into its own handler after heavy child churn. Not
+reproducible; root cause unfixed. See memory `feedback_sigchld_recursion`.
+
 ## Background
 
 UbixOS has partial signal infrastructure already in place:
