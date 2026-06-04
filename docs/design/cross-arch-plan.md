@@ -1,13 +1,61 @@
 # Cross-Architecture Portability Plan
 
-## Goal
+> This is the single consolidated cross-arch plan. It absorbs the former
+> `cross-arch-port-plan.md` (the musl arch-shim and per-arch porting notes are
+> now in Track B below); that file has been removed to avoid two conflicting
+> roadmaps.
 
-Prepare UbixOS for a future x86_64 port without breaking the i386 build.
-The immediate goal is NOT to port to 64-bit — it is to restructure the tree,
-harden build-system abstractions, and isolate arch-specific code so that when
-the 64-bit work begins, there is a clean place for it to land.
+## North Star
 
-Each phase ends in a bootable i386 kernel. No phase leaves the tree broken.
+Evolve UbixOS toward a **research mobile-style OS on arm64 (AArch64)**, first
+under emulation (QEMU `virt`) and then on open single-board hardware —
+**Raspberry Pi and Orange Pi**. The long-term inspiration is the Android/iOS
+*user experience* (touch-first GUI on an ARM device), reusing the existing
+`views` compositor and `objGFX` graphics library.
+
+This plan has two tracks:
+
+- **Track A — Architecture isolation** (Phases 1–10). Restructure the tree so
+  arch-specific code is quarantined and generic code is 64-bit-clean. *Mostly
+  done* (see Status) — originally framed for x86_64, but every phase is
+  arch-neutral and is exactly the groundwork arm64 needs.
+- **Track B — arm64 bring-up** (Phases 11+). The actual AArch64 port: boot,
+  MMU, interrupts, timer, context switch, virtio drivers, framebuffer GUI, then
+  real Pi/Orange Pi hardware.
+
+Each Track-A phase ends in a bootable i386 kernel. Track-B phases build a
+*second* kernel (`TARGET_ARCH=aarch64`) and never touch the i386 build.
+
+## Honest scope — reachable vs aspirational
+
+Keep the goal motivating but grounded. These differ by orders of magnitude:
+
+| Target | Reality |
+|--------|---------|
+| arm64 kernel boots in QEMU `virt` | **Reachable.** The cleanest ARM bring-up target — GIC, generic timer, PL011 UART, virtio, a QEMU-provided device tree. |
+| Runs on a **Raspberry Pi / Orange Pi** | **Reachable, harder.** Public docs, mainline support, hackable bootloaders. Pi is among the best-documented bare-metal arm64 targets; Orange Pi (Allwinner/Rockchip) is similar but more per-board. |
+| Runs on a **phone** (Pixel/iPhone) | Out of scope. Locked bootloaders, undocumented SoCs, proprietary modem/GPU. iPhone is effectively impossible. |
+| **Competitor** to Android/iOS (the product) | Not a hobby-OS goal — app ecosystem, GPU/baseband drivers, OEM deals are thousands of person-years. Android/iOS are the *UX model*, not a market. |
+
+The realistic, satisfying destination: **boots on a Pi/Orange Pi and drives a
+touchscreen GUI.** Everything below is the staged path there, each rung bootable.
+
+## Why this is closer than it looks
+
+- The biggest blocker this plan originally identified — *"hardware task
+  switching leaks everywhere"* (Problem #1) — is **solved**. UbixOS now uses a
+  **software context switch** (`cpu_switch`), so the i386-only `ljmp`-to-TSS
+  scheme is gone and the scheduler core is arch-neutral. arm64 (which has no HW
+  task switching) inherits this directly.
+- Track-A Phases 1–6 are **done**: the `machine/` forwarding layer, the
+  `sched_core`/`sched_switch` split, `struct md_proc` hiding the TSS, and
+  arch-parameterized pointer types. Generic code no longer sees i386 internals.
+- The build system already targets by name: `TARGET_ARCH ?= i386` selects the
+  arch dir, linker script, and per-arch ISA flags via
+  `share/mk/ubix.target.${ARCH}.mk`. Adding arm64 is "write
+  `ubix.target.aarch64.mk` + `sys/arch/aarch64/` + a linker script."
+- The **newbus** driver model and an lwIP stack that can ride **virtio-net**
+  are arch-neutral foundations arm64 reuses as-is.
 
 ---
 
@@ -277,22 +325,138 @@ an arch-parameterized header.
 
 ---
 
-### Phase 10 — Add `sys/arch/x86_64/` Skeleton
+### Phase 10 — Add `sys/arch/aarch64/` Skeleton
 **Boot risk:** Zero
 
-Create directory and stub files so the tree communicates intent.
-Nothing compiles from here under `_ARCH=i386`.
+Create the arm64 arch directory and stub headers so the tree communicates
+intent and `TARGET_ARCH=aarch64` has a place to resolve `<machine/*>` to.
+Nothing compiles from here under `TARGET_ARCH=i386`. (An `x86_64/` skeleton can
+be added the same way later if the LP64 rehearsal is ever wanted — but arm64 is
+the active target.)
 
 **Files to create:**
-- `sys/arch/x86_64/Makefile` — empty OBJS, NOT YET IMPLEMENTED comment
-- `sys/include/x86_64/ansi.h` — `__intptr_t = long`, `__uintptr_t = unsigned long`
-- `sys/include/x86_64/cpu.h` — stub, comment: "CR register accessors — TBD"
-- `sys/include/x86_64/proc.h` — stub, comment: "md_proc (software context frame, no TSS) — TBD"
-- `sys/include/x86_64/vmm_layout.h` — stub with x86_64 VA layout comment
+- `share/mk/ubix.target.aarch64.mk` — cross prefix `aarch64-elf-`/`aarch64-linux-gnu-`, `KERN_TARGET_CFLAGS = -march=armv8-a -mgeneral-regs-only` (no FP/NEON in the kernel), `LDSCRIPT_SUFFIX = aarch64`
+- `sys/arch/aarch64/Makefile` — empty OBJS, NOT YET IMPLEMENTED comment
+- `sys/include/aarch64/ansi.h` — `__intptr_t = long`, `__uintptr_t = unsigned long` (LP64)
+- `sys/include/aarch64/cpu.h` — stub: system-register accessors (`mrs`/`msr`) TBD
+- `sys/include/aarch64/proc.h` — stub: `md_proc` = software context frame (x0–x30, sp, pc, pstate); no TSS
+- `sys/include/aarch64/vmm_layout.h` — stub: TTBR0 (user, low) / TTBR1 (kernel, high) VA split
+
+---
+
+# Track B — arm64 (AArch64) bring-up
+
+Track-A leaves a clean, 64-bit-ready generic kernel. Track B writes the AArch64
+arch code and drivers. Each phase targets QEMU `virt` first (fully documented,
+virtio), then real hardware. Build with `TARGET_ARCH=aarch64`; the i386 build is
+never touched.
+
+### Phase 11 — Minimal arm64 boot to UART on QEMU `virt`
+**Boot risk:** N/A (new kernel)
+
+- `sys/arch/aarch64/start.S`: entry at EL2/EL1, drop to EL1, set up a stack,
+  zero BSS, branch to `kmain`. (QEMU loads the kernel per the `virt` load
+  address; no multiboot.)
+- PL011 UART driver → wire `kprintf`. **First milestone: "UbixOS aarch64"
+  prints over `-serial`.**
+- `share/mk/ubix.target.aarch64.mk` + `sys/compile/ldscript.aarch64`.
+
+### Phase 12 — Exceptions, GIC, generic timer
+- AArch64 exception vector table (VBAR_EL1), sync/IRQ/FIQ/SError handlers.
+- GICv2 driver (distributor + CPU interface) — this is what `-machine virt`
+  and the **Pi 4** both expose (GIC-400). Replaces the i386 8259/APIC.
+- ARM generic timer (CNTP) → the scheduler tick + the callout subsystem
+  (already arch-neutral) ride on it.
+
+### Phase 13 — MMU + context switch
+- 4-level (or 3-level, 4 KB granule) page tables; TTBR0_EL1 (user, low half) /
+  TTBR1_EL1 (kernel, high half); MAIR/TCR setup. Map the kernel, enable the MMU.
+- AArch64 `cpu_switch`: save/restore x19–x30, sp, and switch TTBR0. The
+  software-switch scheduler core is reused unchanged — **the i386 work already
+  proved this path.** `md_proc` (Phase 5/10) becomes the AArch64 register frame.
+- Port `fork`/`exec` arch glue and the syscall entry (SVC → exception handler).
+
+### Phase 14 — virtio drivers (storage + net)
+- virtio-mmio transport (what `virt` exposes), then virtio-blk (root fs via the
+  existing VFS/FAT stack) and virtio-net (the existing lwIP stack rides on top).
+- These attach through the **newbus** model, same as the PC NIC drivers.
+
+### Phase 15 — Framebuffer GUI + input
+- virtio-gpu (or the Pi firmware mailbox framebuffer on real hw) → a linear
+  framebuffer for `sys_mapfb`. The `views` compositor + `objGFX` (software
+  rendering — no GPU 3D needed) come up on arm64.
+- virtio-input → keyboard + **touch/pointer**, the first step toward the
+  touch-first mobile UX.
+
+### Phase 16 — Real hardware: Raspberry Pi / Orange Pi
+- Swap QEMU `virt` peripherals for the board's: Pi 4 uses a GIC-400 (matches
+  virt — least surprise), PL011 UART (over the GPIO header + USB-TTL cable),
+  the firmware mailbox framebuffer, BCM GENET gigabit ethernet, and xHCI USB
+  (VL805 over PCIe). Orange Pi (Allwinner/Rockchip) is a parallel board port
+  once the Pi path is solid.
+- Boot path: kernel on the SD card's FAT boot partition (Pi firmware loads it),
+  `config.txt` set to load our image. This reuses the existing FAT tooling.
+
+### Userland — the musl arch shim (runs alongside Track B)
+
+The kernel is the hard part; **userland mostly recompiles untouched.** All
+world C/C++ (libc consumers, libc++, the `views`/`objGFX` apps) is
+arch-neutral once musl has an AArch64 shim. That shim is three files:
+
+| File | Contents |
+|------|----------|
+| `contrib/musl/arch/aarch64/syscall_arch.h` | inline `__syscall0`…`__syscall6` using `svc #0`; args in x0–x5, number in x8, return in x0 |
+| `contrib/musl/arch/aarch64/bits/syscall.h.in` | POSIX name → UbixOS kernel slot map for the AArch64 ABI |
+| `contrib/musl/arch/aarch64/bits/alltypes.h.in` | LP64 primitive types |
+
+musl already ships a reference `arch/aarch64/`; the UbixOS-specific part is the
+syscall-number map (must match our kernel slots) and pointing the `svc` path at
+our exception handler from Phase 12. **Done when** `bmake world TARGET_ARCH=aarch64`
+produces `ELF 64-bit LSB executable, ARM aarch64`. (World/musl still hardcode
+i386 in `lib/Makefile` + the `musl-libc` target — that cleanup, noted in the
+build section, is the prerequisite for this.)
+
+---
+
+# Hardware targets — what to actually buy
+
+Picked for **maximum public documentation and a real bare-metal community**, so
+"fully support the hardware" is achievable by a small team:
+
+**Buy now (bring-up board): Raspberry Pi 4 Model B (4 GB), ~$55.**
+- Cortex-A72 (AArch64), **GIC-400 = standard GICv2**, so interrupt code written
+  for QEMU `virt` ports with minimal change — this is the key reason to prefer
+  Pi 4 over Pi 3 (Pi 3 uses a non-standard BCM interrupt controller).
+- PL011 UART, ARM generic timer, firmware **mailbox framebuffer** (linear FB
+  for the GUI, no closed GPU 3D needed — `objGFX` is CPU rendering).
+- Huge bare-metal community + published BCM2711 peripheral docs.
+
+**Also buy:**
+- **USB-to-TTL serial cable** (3.3 V, CP2102/FTDI), ~$8 — the serial console for
+  `kprintf` during bring-up. *Essential.*
+- microSD (32 GB A1) ~$8, official USB-C PSU ~$8.
+- Later, for the touch milestone: official **Pi 7″ touchscreen** (~$60) or an
+  HDMI monitor + a USB touch panel (USB HID touch is easier than DSI).
+
+≈ **$80 to start.**
+
+**Orange Pi:** a good *second* board (you mentioned both). Allwinner/Rockchip
+SoCs are well-documented (sunxi / Rockchip communities), but boards vary more
+and the bring-up is more per-SoC — tackle after the Pi path is solid.
+
+**The eventual fully-open *phone* (much later, much harder): PinePhone /
+PinePhone Pro.** Unlike a Pixel or iPhone, Pine64 publishes schematics and it
+runs mainline Linux — so it is the *only* phone you could realistically "fully
+support." Still a big lift (DSI display, capacitive touch, PMIC, the modem),
+but it is documented and open. This is the honest bridge from "SBC with a touch
+screen" to "actual handset," and the right north-star device for the mobile
+dream — after the Pi milestones land.
 
 ---
 
 ## Sequencing Summary
+
+### Track A — architecture isolation (mostly done)
 
 | Phase | Key Action | Boot Risk |
 |-------|-----------|-----------|
@@ -305,11 +469,22 @@ Nothing compiles from here under `_ARCH=i386`.
 | 7 | `uint32_t` → `uintptr_t` for address-typed values | Medium |
 | 8 | Move `start.S`, `main.c` to `sys/arch/i386/` | Medium |
 | 9 | `machine/vmm_layout.h` for address-space constants | Low |
-| 10 | `sys/arch/x86_64/` skeleton, no code | None |
+| 10 | `sys/arch/aarch64/` skeleton + target mk, no code | None |
 
 Phases 1–3 and 9–10 are safe warm-ups.
 Phase 4 is the first real surgery.
 Phase 5 is the hardest — do it last among the arch-isolation phases.
+
+### Track B — arm64 bring-up (`TARGET_ARCH=aarch64`, never touches i386)
+
+| Phase | Key Action | Lands on |
+|-------|-----------|----------|
+| 11 | Boot to PL011 UART (`kprintf`) | QEMU `virt` |
+| 12 | Exception vectors, GICv2, generic timer | QEMU `virt` |
+| 13 | MMU (TTBR0/1) + AArch64 `cpu_switch` + syscall entry | QEMU `virt` |
+| 14 | virtio-mmio + virtio-blk + virtio-net (VFS/lwIP ride on top) | QEMU `virt` |
+| 15 | virtio-gpu framebuffer + virtio-input → `views`/`objGFX` + touch | QEMU `virt` |
+| 16 | Board peripherals (GIC-400, mailbox FB, GENET, xHCI) | Raspberry Pi 4 |
 
 ---
 
@@ -350,20 +525,45 @@ sys/
 - **Phase 5 field rename** — `->tss.X` → `->md.md_tss.X` in 25+ places;
   verify with `grep -rn "->tss\." sys/ --include="*.c" | grep -v arch/i386`
   after the change
+- **i386 TLS syscall still in generic code** — `sys_set_thread_area` (LDT[1],
+  the `0x0F` selector) lives in `sys/kernel/gen_calls.c`. Before/with the arm64
+  port, move it to `sys/arch/i386/tls.c` behind `<machine/tls.h>` (arm64 uses
+  `TPIDR_EL0`, a completely different mechanism). Same for any other i386-only
+  syscalls that accreted in `gen_calls.c`.
 
 ---
 
 ## Status
 
+**Track A — architecture isolation**
+
 | Phase | Name | Status |
 |-------|------|--------|
+| 0 | `TARGET_ARCH` knob + `share/mk/ubix.target.${ARCH}.mk` (ISA flags per arch) | **Done** |
 | 1 | `_ARCH?=i386`, linker script parameterized | Done |
 | 2 | `sys/include/machine/` forwarding headers | Done |
 | 3 | Move `idt.c`, `io.c` to `sys/arch/i386/` | Done |
 | 4 | Split `sched.c` → `sched_core.c` + `sched_switch.c` | Done |
 | 5 | `struct md_proc` hides TSS in `kTask_t` | Done |
 | 6 | `machine/ansi.h`, pointer types arch-parameterized | Done |
+| 9 | `machine/vmm_layout.h` for address-space constants | Done |
 | 7 | `uint32_t` → `uintptr_t` for address-typed values | Not started |
 | 8 | Move `start.S`, `main.c` to `sys/arch/i386/` | Not started |
-| 9 | `machine/vmm_layout.h` for address-space constants | Not started |
-| 10 | `sys/arch/x86_64/` skeleton, no code | Not started |
+| 10 | `sys/arch/aarch64/` skeleton + `ubix.target.aarch64.mk` | Not started |
+
+Remaining Track-A work before arm64: **Phase 7** (address-typed values must be
+`uintptr_t`, not `uint32_t`, or they truncate on 64-bit), **Phase 8** (quarantine
+the i386 boot entry), then **Phase 10** (arm64 skeleton). Phase 7 is the real
+prerequisite — it is where a 64-bit build would otherwise silently corrupt
+addresses.
+
+**Track B — arm64 bring-up**
+
+| Phase | Name | Status |
+|-------|------|--------|
+| 11 | Boot to PL011 UART on QEMU `virt` | Not started |
+| 12 | Exceptions + GICv2 + generic timer | Not started |
+| 13 | MMU + `cpu_switch` + syscall entry | Not started |
+| 14 | virtio-blk + virtio-net | Not started |
+| 15 | virtio-gpu framebuffer + virtio-input (touch) | Not started |
+| 16 | Raspberry Pi 4 hardware | Not started |

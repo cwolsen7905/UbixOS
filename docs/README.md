@@ -13,8 +13,9 @@
 
 ## Design Specs
 
-Forward-looking plans live in [design/](design/) (e.g. `software-task-switch-plan.md`,
-`smp-plan.md`, `cross-arch-plan.md`, `scheduler-plan.md`).
+Forward-looking plans live in [design/](design/) (e.g. `cross-arch-plan.md`,
+`smp-plan.md`, `scheduler-plan.md`); finished plans are archived in
+[design/completed/](design/completed/).
 
 | Document | Description |
 |----------|-------------|

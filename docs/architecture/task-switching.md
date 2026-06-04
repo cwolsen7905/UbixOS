@@ -9,7 +9,7 @@ FreeBSD. (Prior to 2026 the kernel used i386 *hardware* task switching — a
 single `ljmp` to a per-task TSS — but that was replaced because hardware task
 switching makes the segment registers per-task TSS state, which is fundamentally
 incompatible with `%gs`-based per-CPU data and therefore with SMP. See
-[../design/software-task-switch-plan.md](../design/software-task-switch-plan.md).)
+[../design/completed/software-task-switch-plan.md](../design/completed/software-task-switch-plan.md).)
 
 The switch lives in [sys/arch/i386/context_switch.c](../../sys/arch/i386/context_switch.c)
 (`switch_to`, `cpu_switch`, `md_setup_initial_frame`, `ret_from_fork`) and is
