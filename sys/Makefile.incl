@@ -23,5 +23,8 @@ INCLUDES = -I${INCLUDE}
 # -fno-pie / -fno-pic: prevent the compiler from generating position-independent
 # code, which would break the bare-metal fixed-address link.
 # -fno-stack-protector: no SSP; the kernel manages its own stack.
-CFLAGS = ${KFLAGS} ${CROSS_M32} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector -mno-sse -mno-sse2 -mno-mmx -mno-3dnow -MMD -MP
+# Per-target ISA/ABI flags (-m32, -mno-sse…) come from KERN_TARGET_CFLAGS, set
+# in share/mk/ubix.target.${_ARCH}.mk (see Makefile.incl).  Everything else
+# here is architecture-neutral.
+CFLAGS = ${KFLAGS} ${KERN_TARGET_CFLAGS} -DDEBUG_SYSCTL -O -Wall -Wno-incompatible-pointer-types -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding -fno-pie -fno-pic -fno-stack-protector -MMD -MP
 
