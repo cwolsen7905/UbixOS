@@ -14,7 +14,7 @@
 ## Design Specs
 
 Forward-looking plans live in [design/](design/) (e.g. `cross-arch-plan.md`,
-`smp-plan.md`, `scheduler-plan.md`); finished plans are archived in
+`smp-plan.md`, `threading-plan.md`); finished plans are archived in
 [design/completed/](design/completed/).
 
 | Document | Description |
