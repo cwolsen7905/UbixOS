@@ -126,7 +126,7 @@ echo "==> Compiling NetSurf (log: $LOG)"
 	NETSURF_USE_DUKTAPE=YES NETSURF_USE_NSSVG=NO NETSURF_USE_RSVG=NO \
 	NETSURF_USE_ROSPRITE=NO NETSURF_USE_HARU_PDF=NO NETSURF_USE_VIDEO=NO \
 	NETSURF_USE_BMP=YES NETSURF_USE_GIF=YES \
-	NETSURF_FB_FONTLIB=internal NETSURF_FB_FRONTEND=ubix \
+	NETSURF_FB_FONTLIB=stbtt NETSURF_FB_FRONTEND=ubix \
 	>"$LOG" 2>&1 || true
 # Surface only genuine compile errors (a "file.c:line: error" or fatal error),
 # not the expected self-link failure (collect2/ld/crt0.o/incompatible .so).

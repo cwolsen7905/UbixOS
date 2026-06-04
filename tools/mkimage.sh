@@ -180,6 +180,10 @@ if [ -d contrib/netsurf-res ]; then
   mmd -i "$IMG"@@1M ::/usr/local/share 2>/dev/null || true
   mmd -i "$IMG"@@1M ::/usr/local/share/netsurf 2>/dev/null || true
   mcopy -s -i "$IMG"@@1M contrib/netsurf-res/* ::/usr/local/share/netsurf/
+  # TrueType faces for the stb_truetype font backend (font_stbtt.c).
+  for ttf in DejaVuSans.ttf DejaVuSansMono.ttf; do
+    [ -f "tools/$ttf" ] && mcopy -o -i "$IMG"@@1M "tools/$ttf" ::/usr/local/share/netsurf/
+  done
 fi
 
 echo "==> Installing system headers (include/)"

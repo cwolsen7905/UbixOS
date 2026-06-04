@@ -461,6 +461,59 @@ framebuffer_plot_text(const struct redraw_context *ctx,
 
 }
 
+#elif defined(FB_USE_STBTT)
+/**
+ * Text plotting (stb_truetype backend): proportional, antialiased glyphs.
+ *
+ * \param ctx The current redraw context.
+ * \param fstyle plot style for this text
+ * \param x x coordinate (pen origin)
+ * \param y y coordinate (text baseline)
+ * \param text UTF-8 string to plot
+ * \param length length of string, in bytes
+ * \return NSERROR_OK on success else error code.
+ */
+static nserror
+framebuffer_plot_text(const struct redraw_context *ctx,
+		const struct plot_font_style *fstyle,
+		int x,
+		int y,
+		const char *text,
+		size_t length)
+{
+	uint32_t ucs4;
+	size_t nxtchr = 0;
+	nsfb_bbox_t loc;
+	const struct fb_glyph *g;
+
+	while (nxtchr < length) {
+		ucs4 = utf8_to_ucs4(text + nxtchr, length - nxtchr);
+		nxtchr = utf8_next(text, length, nxtchr);
+
+		if (!codepoint_displayable(ucs4))
+			continue;
+
+		g = fb_get_glyph(fstyle, ucs4);
+		if (g == NULL)
+			continue;
+
+		/* g->bitmap is NULL for blank glyphs (e.g. space) — advance only. */
+		if (g->bitmap != NULL && g->width > 0 && g->height > 0) {
+			loc.x0 = x + g->left;
+			loc.y0 = y + g->top; /* top is offset from baseline (<=0 above) */
+			loc.x1 = loc.x0 + g->width;
+			loc.y1 = loc.y0 + g->height;
+
+			/* 8bpp alpha coverage, pitch == width */
+			nsfb_plot_glyph8(nsfb, &loc, g->bitmap, g->width,
+					 fstyle->foreground);
+		}
+
+		x += g->advance;
+	}
+	return NSERROR_OK;
+}
+
 #else
 
 /**

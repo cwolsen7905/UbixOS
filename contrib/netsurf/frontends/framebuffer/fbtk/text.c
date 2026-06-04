@@ -62,7 +62,7 @@ fb_text_font_style(fbtk_widget_t *widget, int *font_height, int *padding,
 	else
 		*padding = 0;
 
-#ifdef FB_USE_FREETYPE
+#if defined(FB_USE_FREETYPE) || defined(FB_USE_STBTT)
 	*padding += widget->height / 6;
 	*font_height = widget->height - *padding - *padding;
 #else
@@ -136,7 +136,7 @@ fb_redraw_text(fbtk_widget_t *widget, fbtk_callback_info *cbi )
 		int x = bbox.x0 + padding;
 		int y = bbox.y0 + ((fh * 3 + 2) / 4) + padding;
 
-#ifdef FB_USE_FREETYPE
+#if defined(FB_USE_FREETYPE) || defined(FB_USE_STBTT)
 		/* Freetype renders text higher */
 		y += 1;
 #endif
