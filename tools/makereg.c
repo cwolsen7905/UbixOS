@@ -52,6 +52,8 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/0/label", "\"Applications\""},
     {"/views/startmenu/0/items/0/label", "\"Terminal\""},
     {"/views/startmenu/0/items/0/exec", "\"/bin/term\""},
+    {"/views/startmenu/0/items/1/label", "\"NetSurf\""},
+    {"/views/startmenu/0/items/1/exec", "\"/bin/nsfb\""},
 
     {"/views/startmenu/1/label", "\"Games\""},
     {"/views/startmenu/1/items/0/label", "\"vDoom\""},
