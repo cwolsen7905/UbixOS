@@ -26,22 +26,37 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ubixos/smp.h>
+#include <i386/smp.h>
+#include <i386/pcpu.h>
+#include <sys/gdt.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
-#include <lib/string.h>
+#include <lib/kmalloc.h>
+#include <vmm/paging.h>
+#include <string.h>
 #include <sys/io.h>
 
-static struct spinLock initSpinLock = SPIN_LOCK_INITIALIZER;
 static struct spinLock cpuInfoLock = SPIN_LOCK_INITIALIZER;
 static u_int32_t cpus = 0;
 struct cpuinfo_t cpuinfo[8];
 
-u_int8_t kernel_function(void);
-u_int8_t *vram = (u_int8_t *)0xB8000;
+/* Count of application processors that have reached C code and checked in.
+ * Written by APs (paging off) with a locked add, polled by the BSP. */
+volatile u_int32_t ap_online = 0;
 
-static inline unsigned int apicRead(address)
+/* The BSP's CR3 (kernel page directory, physical), captured before the APs
+ * start so each AP can load it and run in the kernel's virtual address space. */
+volatile u_int32_t g_kernel_cr3 = 0;
+
+/* Physical address the AP trampoline is copied to and started at.  It MUST be
+ * 0x0: the trampoline's 32-bit jump uses flat, base-0 offsets, so the code only
+ * lands correctly when its physical address equals those offsets.  This clobbers
+ * the real-mode IVT, which V86 BIOS calls (VESA) still need, so apicMagic saves
+ * and restores the overwritten bytes around AP startup. */
+#define AP_TRAMPOLINE_PHYS 0x0
+
+static inline unsigned int apicRead(unsigned int address)
 {
 	return *(volatile unsigned int *)(0xFEE00000 + address);
 }
@@ -51,17 +66,74 @@ static inline void apicWrite(unsigned int address, unsigned int data)
 	*(volatile unsigned int *)(0xFEE00000 + address) = data;
 }
 
-static __inline__ void setDr3(void *dr3)
+/* ------------------------------------------------------------------ */
+/* Per-CPU state (Phase 2 scaffolding)                                 */
+/* ------------------------------------------------------------------ */
+
+struct pcpu g_pcpu[MAXCPU];
+
+/* Set to 1 once per-CPU scheduling is live.  Until then smp_processor_id()
+ * shortcuts to the BSP (cpu 0) so no MI caller has to touch the LAPIC. */
+static volatile int g_smp_active = 0;
+
+u_int32_t smp_processor_id(void)
 {
-	register u_int32_t value = (u_int32_t)dr3;
-	__asm__ __volatile__("mov %0, %%dr3" ::"r"(value));
+	u_int8_t apicid;
+	u_int32_t i;
+
+	if (!g_smp_active)
+		return (0); /* single-CPU / pre-SMP: always the boot processor */
+
+	apicid = apicRead(0x20) >> 24;
+	for (i = 0; i < MAXCPU; i++)
+		if (g_pcpu[i].online && g_pcpu[i].apicid == apicid)
+			return (i);
+	return (0);
 }
 
-static __inline__ u_int32_t getDr3(void)
+struct pcpu *curcpu(void)
 {
-	register u_int32_t value;
-	__asm__ __volatile__("mov %%dr3, %0" : "=r"(value));
-	return value;
+	return (&g_pcpu[smp_processor_id()]);
+}
+
+/* Record a CPU's identity in its per-CPU slot.  Safe to call from an AP running
+ * paging-off: g_pcpu lives in low (<4 MB, identity-mapped) kernel memory and the
+ * LAPIC id register is reachable at its physical MMIO address. */
+static void pcpu_register(u_int32_t id, u_int8_t apicid)
+{
+	if (id >= MAXCPU)
+		return;
+	g_pcpu[id].cpuid = id;
+	g_pcpu[id].apicid = apicid;
+	/* Do NOT touch current/idle here — on the BSP, current already points at
+	 * the running thread by the time smpInit runs.  They are zero from BSS for
+	 * the APs, which have run nothing yet. */
+	g_pcpu[id].online = 1;
+}
+
+/**
+ * Point this CPU's %gs at its per-CPU area.
+ *
+ * Patches GDT index GDT_PCPU_INDEX so its base is &g_pcpu[id], then loads
+ * SEL_PCPU into %gs.  Thereafter %gs:offsetof(struct pcpu, field) reads this
+ * CPU's slot — e.g. %gs:8 is the running task.  On a uniprocessor only id 0 is
+ * ever used; each AP calls this with its own id against its own GDT copy.
+ *
+ * The descriptor base must be written before %gs is loaded: loading a segment
+ * register re-reads the descriptor from the GDT in memory, so no relgdt is
+ * needed.  Loading %gs is purely additive until kernel entry paths reload it
+ * and _current is switched to %gs:8.
+ */
+void pcpu_install_gs(u_int32_t id)
+{
+	u_int32_t base = (u_int32_t)&g_pcpu[id];
+	u_int16_t sel = SEL_PCPU;
+
+	ubixGDT[GDT_PCPU_INDEX].descriptor.baseLow = (base & 0xFFFF);
+	ubixGDT[GDT_PCPU_INDEX].descriptor.baseMed = ((base >> 16) & 0xFF);
+	ubixGDT[GDT_PCPU_INDEX].descriptor.baseHigh = ((base >> 24) & 0xFF);
+
+	__asm__ __volatile__("movw %0, %%gs" : : "rm"(sel) : "memory");
 }
 
 struct gdt_descr
@@ -88,6 +160,7 @@ static void GDT_fixer()
 
 	gdt_descr.limit = 32 * 4;
 	gdt_descr.base = gdt;
+	(void)gdt_descr; /* lgdt is commented out below; silence unused warning */
 
 	/*
 	 asm("lgdt %0;" : : "m" (gdt_descr));
@@ -98,90 +171,120 @@ static void GDT_fixer()
 	 */
 }
 
-void cpu0_thread(void)
-{
-	for (;;)
-	{
-		vram[40 + 640] = kernel_function();
-		vram[42 + 640]++;
-	}
-}
-void cpu1_thread(void)
-{
-	for (;;)
-	{
-		vram[60 + 640] = kernel_function();
-		vram[62 + 640]++;
-	}
-}
-void cpu2_thread(void)
-{
-	for (;;)
-	{
-		vram[80 + 640] = kernel_function();
-		vram[82 + 640]++;
-	}
-}
-void cpu3_thread(void)
-{
-	for (;;)
-	{
-		vram[100 + 640] = kernel_function();
-		vram[102 + 640]++;
-	}
-}
-
-static struct spinLock bkl = SPIN_LOCK_INITIALIZER;
-u_int8_t kernel_function(void)
-{
-	struct cpuinfo_t *cpu;
-
-	spinLock(&bkl);
-
-	cpu = (struct cpuinfo_t *)getDr3();
-
-	spinUnlock(&bkl);
-
-	return ('0' + cpu->id);
-}
-
+/*
+ * c_ap_boot — C entry point for an application processor, reached from the
+ * real-mode trampoline (ap-boot.S) after it switches to 32-bit protected mode.
+ *
+ * The AP runs with PAGING OFF, so it may touch only identity-addressable low
+ * physical memory (the kernel is loaded below 4 MB) and I/O ports.  It must NOT
+ * call kprintf() or the yielding spinLock() — there is no scheduler context on
+ * this CPU yet.  Phase 1b therefore does the absolute minimum: record that this
+ * core reached C with a locked increment, then park forever with interrupts
+ * masked.  The BSP polls ap_online to report how many cores came up.
+ */
 void c_ap_boot(void)
 {
+	u_int32_t id = __sync_add_and_fetch(&ap_online, 1); /* 1, 2, 3, ... */
 
-	while (spinLockLocked(&initSpinLock))
-		;
+	/* Join the kernel's virtual address space: load the BSP's page directory
+	 * (captured in g_kernel_cr3) and turn on paging.  The kernel identity-maps
+	 * the low 4 MB — covering this code, our trampoline stack and the AP GDT —
+	 * so execution continues seamlessly across the CR0.PG write, and the LAPIC
+	 * MMIO the BSP mapped becomes reachable through the shared page tables. */
+	__asm__ __volatile__("movl %0, %%cr3      \n"
+	                     "movl %%cr0, %%eax   \n"
+	                     "orl  $0x80000000, %%eax \n"
+	                     "movl %%eax, %%cr0   \n"
+	                     :
+	                     : "r"(g_kernel_cr3)
+	                     : "eax", "memory");
 
-	switch (cpuInfo())
-	{
-	case 1:
-		cpu1_thread();
-		break;
-	case 2:
-		cpu2_thread();
-		break;
-	case 3:
-		cpu3_thread();
-		break;
-	}
+	pcpu_register(id, apicRead(0x20) >> 24);
 
-	outportByte(0xe9, '5');
+	/* Per-CPU idle/liveness loop: bump our own heartbeat and pause.  This is the
+	 * first code an AP runs continuously in the kernel address space, in
+	 * parallel with the BSP — the seed of the real per-CPU idle thread.  We stay
+	 * cli (no scheduler/IRQs are SMP-safe yet) and touch only our own pcpu slot,
+	 * so there is no contention with any other CPU. */
+	/* Per-CPU idle loop: bump our own heartbeat (liveness the BSP can observe)
+	 * and pause.  This is the first code an AP runs continuously in the kernel
+	 * address space, in parallel with the BSP, and is the seed of the real
+	 * per-CPU idle thread.  We stay cli — no scheduler/IRQ path is SMP-safe yet
+	 * — and touch only our own pcpu slot, so there is no cross-CPU contention.
+	 * The pause also yields the vCPU under single-threaded TCG so the BSP is not
+	 * starved.  A proper sti/hlt idle replaces this once interrupts are
+	 * per-CPU-safe. */
+	if (id < MAXCPU)
+		for (;;)
+		{
+			g_pcpu[id].heartbeat++;
+			__asm__ __volatile__("pause");
+		}
 
 	for (;;)
-	{
-		asm("nop");
-	}
+		__asm__ __volatile__("cli; hlt");
 }
 
-void smpInit()
+/*
+ * smpInit (SMP phase 1b) — bring up the application processors far enough to
+ * prove the bootstrap path works.  Map the Local APIC, register the BSP, then
+ * INIT-SIPI the other cores.  Each AP lands in c_ap_boot(), records itself in
+ * ap_online and parks in hlt; nothing runs on them yet (no per-CPU scheduler).
+ * The BSP polls ap_online and reports the core count.  @return 0 always.
+ */
+int smpInit(void)
 {
-	spinLock(&initSpinLock);
-	GDT_fixer();
-	cpuidDetect();
-	cpuInfo();
-	apicMagic();
-	spinUnlock(&initSpinLock);
+	/* The LAPIC lives at a fixed high MMIO address with no mapping yet; map it
+	 * identity into the kernel space before any apicRead/apicWrite. */
+	vmm_remap_io_page(LAPIC_PHYS, KERNEL_PAGE_DEFAULT, sysID);
 
-	// cpu0_thread();
+	GDT_fixer();                          /* build the flat GDT at 0x20000 that the APs load */
+	cpuInfo();                            /* BSP self-registers as cpuinfo[0] */
+	pcpu_register(0, cpuinfo[0].apic_id); /* BSP per-CPU slot */
+	pcpu_install_gs(0);                   /* BSP %gs -> g_pcpu[0] (unused yet) */
+
+	kprintf("smp: BSP online cpu%u apic_id=%d ver=0x%x \"%s\"\n",
+	        curcpu()->cpuid,
+	        cpuinfo[0].apic_id,
+	        cpuinfo[0].apic_ver,
+	        cpuinfo[0].brand);
+
+	/* Capture the kernel page directory so each AP can adopt it and run in the
+	 * kernel address space. */
+	__asm__ __volatile__("movl %%cr3, %0" : "=r"(g_kernel_cr3));
+
+	/* Start the application processors (apicMagic waits for them to check in). */
+	apicMagic();
+
+	kprintf("smp: %u application processor(s) online (+ BSP) = %u core(s)\n", ap_online, ap_online + 1);
+
+	/* Report the per-CPU table the cores filled in (proves curcpu/pcpu work). */
+	for (u_int32_t i = 0; i < MAXCPU; i++)
+		if (g_pcpu[i].online)
+			kprintf("smp:   pcpu[%u] apicid=%d\n", g_pcpu[i].cpuid, g_pcpu[i].apicid);
+
+	/* Prove the APs are executing C in parallel: snapshot each core's heartbeat,
+	 * wait, then show it advanced.  The BSP (cpu0) does not run the idle loop, so
+	 * its heartbeat stays 0. */
+	{
+		u_int32_t hb[MAXCPU];
+		u_int32_t i, d;
+		for (i = 0; i < MAXCPU; i++)
+			hb[i] = g_pcpu[i].heartbeat;
+		for (d = 0; d < 20000000; d++)
+			asm("nop");
+		for (i = 0; i < MAXCPU; i++)
+			if (g_pcpu[i].online)
+				kprintf("smp:   cpu%u heartbeat %u -> %u (%s)\n",
+				        i,
+				        hb[i],
+				        g_pcpu[i].heartbeat,
+				        (i == 0)                         ? "BSP"
+				        : (g_pcpu[i].heartbeat != hb[i]) ? "running"
+				                                         : "STALLED");
+	}
+
+	return (0);
 }
 
 void cpuidDetect()
@@ -200,14 +303,10 @@ u_int8_t cpuInfo()
 {
 	u_int32_t data[4], i;
 
-	if (!(getEflags() & (1 << 21)))
-	{                                           // If the cpuid bit in eflags not set..
-		setEflags(getEflags() | (1 << 21)); // ..try and set it to see if it comes on..
-		if (!(getEflags() & (1 << 21)))
-		{ // It didn't.. This CPU suck
-			kpanic("CPU doesn't support CPUID, get a newer machine\n");
-		}
-	}
+	/* CPUID is unconditionally present on every CPU UbixOS boots on (GRUB
+	 * multiboot i386, Pentium and later), so we call it directly.  The legacy
+	 * EFLAGS.ID toggle test that used to gate this was both unnecessary and
+	 * unreliable. */
 
 	spinLock(&cpuInfoLock);
 	cpuinfo[cpus].ok = 1;
@@ -244,7 +343,6 @@ u_int8_t cpuInfo()
 		cpuinfo[cpus].brand[0] = 0;
 	}
 
-	setDr3(&cpuinfo[cpus]); // DR3 always points to the cpu-struct for that CPU (should be thread-struct of current thread)
 	cpuinfo[cpus].id = cpus;
 
 	cpus++;
@@ -259,23 +357,33 @@ void apicMagic(void)
 {
 	u_int32_t tmp;
 
-	kprintf("Copying %u bytes from 0x%x to 0x00\n", ap_trampoline_end - ap_trampoline_start, ap_trampoline_start);
-	memcpy(0x0, (char *)ap_trampoline_start, ap_trampoline_end - ap_trampoline_start);
-	apicWrite(0x280, 0);
+	static u_int8_t lowmem_save[512];
+	u_int32_t tramp_len = (u_int32_t)((char *)ap_trampoline_end - (char *)ap_trampoline_start);
+	/* SIPI start vector = trampoline page number (phys >> 12). */
+	u_int32_t sipi = 0x000C4600 | (AP_TRAMPOLINE_PHYS >> 12);
+
+	kprintf("smp: copying %u-byte AP trampoline to 0x%x\n", tramp_len, AP_TRAMPOLINE_PHYS);
+	/* Save the low memory (real-mode IVT) we are about to overwrite. */
+	memcpy(lowmem_save, (void *)AP_TRAMPOLINE_PHYS, tramp_len);
+	memcpy((void *)AP_TRAMPOLINE_PHYS, (char *)ap_trampoline_start, tramp_len);
+
+	apicWrite(0x280, 0); // clear APIC errors
 	apicRead(0x280);
 
-	apicWrite(0x300, 0x000C4500); // INIT IPI to all CPUs
+	apicWrite(0x300, 0x000C4500); // INIT IPI, all-excluding-self
+	for (tmp = 0; tmp < 800000; tmp++)
+		asm("nop");     // ~10 ms settle
+	apicWrite(0x300, sipi); // STARTUP IPI
 	for (tmp = 0; tmp < 800000; tmp++)
 		asm("nop");
-	// Sleep a little (should be 10ms)
-	apicWrite(0x300, 0x000C4600); // INIT SIPI to all CPUs
-	for (tmp = 0; tmp < 800000; tmp++)
+	apicWrite(0x300, sipi); // second STARTUP IPI (per Intel MP spec)
+
+	/* Let every AP run through the real-mode trampoline into c_ap_boot before
+	 * we restore the low memory it is executing from. */
+	for (tmp = 0; tmp < 20000000; tmp++)
 		asm("nop");
-	// Sleep a little (should be 200ms)
-	apicWrite(0x300, 0x000C4600); // Second INIT SIPI
-	for (tmp = 0; tmp < 800000; tmp++)
-		asm("nop");
-	// Sleep a little (should be 200ms)
+
+	memcpy((void *)AP_TRAMPOLINE_PHYS, lowmem_save, tramp_len); // restore IVT
 }
 
 u_int32_t getEflags()

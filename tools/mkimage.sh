@@ -172,6 +172,16 @@ mmd -i "$IMG"@@1M ::/usr 2>/dev/null || true
 mmd -i "$IMG"@@1M ::/usr/bin 2>/dev/null || true
 [ -f "$BUILD/bin/tcc" ] && mcopy -i "$IMG"@@1M "$BUILD/bin/tcc" ::/usr/bin/tcc
 
+# NetSurf browser runtime resources (Messages, CSS, icons) at a path baked into
+# nsfb's resource search list (/usr/local/share/netsurf).
+if [ -d contrib/netsurf-res ]; then
+  echo "==> Installing NetSurf resources (/usr/local/share/netsurf)"
+  mmd -i "$IMG"@@1M ::/usr/local 2>/dev/null || true
+  mmd -i "$IMG"@@1M ::/usr/local/share 2>/dev/null || true
+  mmd -i "$IMG"@@1M ::/usr/local/share/netsurf 2>/dev/null || true
+  mcopy -s -i "$IMG"@@1M contrib/netsurf-res/* ::/usr/local/share/netsurf/
+fi
+
 echo "==> Installing system headers (include/)"
 mmd -i "$IMG"@@1M ::/include 2>/dev/null || true
 for f in include/*.h; do [ -f "$f" ] && mcopy -i "$IMG"@@1M "$f" ::/include/; done
@@ -253,6 +263,7 @@ mmd -i "$IMG"@@1M ::/var/background 2>/dev/null || true
 for f in tools/backgrounds/*.bmp tools/backgrounds/*.png; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/background/; done
 mmd -i "$IMG"@@1M ::/var/fonts 2>/dev/null || true
 for f in tools/*.DPF; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
+for f in tools/*.ttf; do [ -f "$f" ] && mcopy -o -i "$IMG"@@1M "$f" ::/var/fonts/; done
 mmd -i "$IMG"@@1M ::/var/db 2>/dev/null || true
 [ -f tools/ubistry.db ] && mcopy -o -i "$IMG"@@1M tools/ubistry.db ::/var/db/ubistry.db
 

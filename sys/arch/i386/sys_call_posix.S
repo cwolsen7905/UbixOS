@@ -28,6 +28,8 @@
 
 #define FAKE_MCOUNT(caller)     pushl caller ; call __mcount ; popl %ecx
 
+#include <i386/pcpu_asm.h>
+
 .globl _sys_call_posix
 .text
 .code32
@@ -44,6 +46,7 @@ mov $0x10,%eax
 mov %eax, %ds
 mov %eax, %es
 mov %eax, %fs
+PCPU_LOAD_GS         /* %gs = SEL_PCPU so %gs:off reaches per-CPU data */
 cld
 sti                  /* re-enable interrupts so ISRs (AC97, PIT) can fire */
 push %esp

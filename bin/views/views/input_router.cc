@@ -26,19 +26,34 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <cstdlib>
 #include <cstring>
+#include <sys/time.h>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
 #include "input_router.hh"
+
+/* Monotonic-ish millisecond clock for double-click timing. */
+static long now_ms(void)
+{
+	struct timeval tv;
+	if (::gettimeofday(&tv, nullptr) != 0)
+		return 0;
+	return (long)tv.tv_sec * 1000 + (long)tv.tv_usec / 1000;
+}
+
+#define DBLCLICK_MS 400 /* max gap between the two clicks */
+#define DBLCLICK_PX 6   /* max cursor drift between the two clicks */
 
 InputRouter::InputRouter(WindowRegistry &reg,
                          Compositor &comp,
                          void *close_ctx,
                          void (*close_fn)(void *, Window *),
                          void (*min_fn)(void *, Window *),
-                         void (*resize_fn)(void *, Window *, int, int))
+                         void (*resize_fn)(void *, Window *, int, int),
+                         void (*place_fn)(void *, Window *, int))
     : reg_(reg), comp_(comp), dragging_(false), drag_win_(nullptr), drag_off_x_(0), drag_off_y_(0), prev_buttons_(0),
-      close_ctx_(close_ctx), close_fn_(close_fn), min_fn_(min_fn), resize_fn_(resize_fn)
+      close_ctx_(close_ctx), close_fn_(close_fn), min_fn_(min_fn), resize_fn_(resize_fn), place_fn_(place_fn)
 {
 }
 
@@ -108,6 +123,22 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 		comp_.set_resize_preview(true, resize_win_->x, resize_win_->y, nw, nh + resize_win_->decor_h);
 	}
 
+	/*
+	 * Deliver pointer motion only to a focused window that opted in via
+	 * DISPLAY_CLAIM.wants_motion (cf. macOS acceptsMouseMovedEvents).  Apps that
+	 * did not opt in (taskbar, start menu, simple dialogs) never receive motion,
+	 * so a hover can never be mistaken for a click.  Opted-in clients (the
+	 * NetSurf frontend) use motion to track the cursor — needed so clicks land
+	 * on the right widget, the URL box can be focused, and hover/drag work.
+	 */
+	if ((ev.dx || ev.dy) && !dragging_ && !resizing_)
+	{
+		Window *f = reg_.focused();
+		if (f != nullptr && f->wants_motion && !f->minimized &&
+		    (f->hit_test(comp_.cur_x(), comp_.cur_y()) || ev.buttons != 0))
+			send_mouse(f, comp_.cur_x(), comp_.cur_y(), ev.buttons);
+	}
+
 	if (ev.buttons == prev_buttons_)
 		return;
 
@@ -115,6 +146,19 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 
 	if (!pressed && dragging_)
 	{
+		/* Snap if the cursor was dragged to a screen edge (resizable only). */
+		if (drag_win_->resizable())
+		{
+			const int M = 6;
+			int rcx = comp_.cur_x(), rcy = comp_.cur_y();
+			int sw = (int)comp_.screen_w();
+			if (rcy <= M)
+				place_fn_(close_ctx_, drag_win_, 0); /* top → maximize */
+			else if (rcx <= M)
+				place_fn_(close_ctx_, drag_win_, 1); /* left → left half */
+			else if (rcx >= sw - M)
+				place_fn_(close_ctx_, drag_win_, 2); /* right → right half */
+		}
 		dragging_ = false;
 		drag_win_ = nullptr;
 	}
@@ -167,12 +211,34 @@ void InputRouter::handle_mouse(mouse_event_t &ev)
 			{
 				min_fn_(close_ctx_, hit);
 			}
+			else if (hit->in_max_btn(cx, cy))
+			{
+				place_fn_(close_ctx_, hit, 0); /* toggle maximize */
+			}
 			else if (hit->in_decor(cx, cy))
 			{
-				dragging_ = true;
-				drag_win_ = hit;
-				drag_off_x_ = cx - hit->x;
-				drag_off_y_ = cy - hit->y;
+				/* A second title-bar click on the same window within the
+				 * double-click window toggles maximize (macOS-style). */
+				long t = now_ms();
+				if (hit == last_click_win_ && (t - last_click_ms_) <= DBLCLICK_MS &&
+				    std::abs(cx - last_click_x_) <= DBLCLICK_PX &&
+				    std::abs(cy - last_click_y_) <= DBLCLICK_PX)
+				{
+					last_click_win_ = nullptr; /* consume; a third click is fresh */
+					if (hit->resizable())
+						place_fn_(close_ctx_, hit, 0);
+				}
+				else
+				{
+					last_click_win_ = hit;
+					last_click_ms_ = t;
+					last_click_x_ = cx;
+					last_click_y_ = cy;
+					dragging_ = true;
+					drag_win_ = hit;
+					drag_off_x_ = cx - hit->x;
+					drag_off_y_ = cy - hit->y;
+				}
 			}
 			else
 			{

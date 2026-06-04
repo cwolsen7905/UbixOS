@@ -54,7 +54,14 @@ void spinLock(spinLock_t);
 
 void spinLock_scheduler(spinLock_t *); /* Only use this spinlock in the sched. */
 
-int spinLockLocked(spinLock_t *);
+int spinLockLocked(spinLock_t); /* nonzero if the lock is currently held */
+
+/* True spinlock for SMP: busy-wait acquire with interrupts disabled while held.
+ * For short cross-CPU critical sections (scheduler/run queue) where the holder
+ * must never sleep.  Returns saved EFLAGS; pass it back to spinUnlockIrq.  Do
+ * NOT mix this discipline with the yielding spinLock() on the same lock. */
+u_int32_t spinLockIrq(spinLock_t);
+void      spinUnlockIrq(spinLock_t, u_int32_t flags);
 
 /* Atomic exchange (of various sizes) */
 static inline u_long xchg_64(volatile u_int32_t *ptr, u_long x) {

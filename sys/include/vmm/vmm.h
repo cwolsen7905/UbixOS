@@ -37,40 +37,17 @@
 extern "C" {
 #endif
 
-#define STACK_ADDR 0xBFFFFFFF//0xC800000 // Default App Stack Address
-
 #define memAvail     1
 #define memNotavail  2
 #define vmmID       -3
 
-    /*
-     #define vmmMemoryMapAddr 0xE6667000
-     #define VMM_MMAP_ADDR_PMODE2 0xE6667000
-     */
-
-#define VMM_MMAP_ADDR_PMODE  VMM_KERN_START /* (PD_BASE_ADDR + PAGE_SIZE) */
-#define VMM_MMAP_ADDR_RMODE  0x101000
-
-#define VMM_KERN_CODE_START 0x00000000
-#define VMM_KERN_CODE_END   0x007FEFFF
-
-#define VMM_USER_LDT   0x007FF000
-
-#define VMM_USER_START 0x00800000
-#define VMM_USER_END   0xBFFFFFFF
-
-#define VMM_PAGE_DIRS  0xC0000000
-#define VMM_PAGE_DIR   0xC0400000
-
-#define VMM_KERN_START 0xC0800000 //TMP ADDED 1000
-#define VMM_KERN_END   0xFDFFFFFF
-
-#define VMM_KERN_STACK_START 0xFE000000
-#define VMM_KERN_STACK_END   0xFFFFFFFF
-
-/* Temporary virtual window used by vmm_map_from_task to inspect another
- * process's page directory. Must not overlap any permanent kernel mapping. */
-#define VMM_CHILD_PD_WINDOW  0x5A00000
+/*
+ * The virtual address-space layout constants (VMM_USER_*, VMM_KERN_*,
+ * STACK_ADDR, VMM_CHILD_PD_WINDOW, PD_BASE_ADDR, …) are machine-dependent and
+ * now live in <machine/vmm_layout.h> (-> <i386/vmm_layout.h>), so a 64-bit / ARM
+ * port can supply its own.  See docs/architecture/i386-page-directory-map.md.
+ */
+#include <machine/vmm_layout.h>
 
     extern struct spinLock pdSpinLock;
 

@@ -42,15 +42,16 @@
 #include <sched.h>
 #include <sys/mpi.h>
 #include <authd.h>
+#include <pw/pw.h>
 
 #define USERDB_PATH "/etc/userdb"
 #define USERDB_MAX 64
 
-/* Must match the binary layout written by tools/userdb */
+/* Must match the binary layout written by tools/makeuser.c byte-for-byte. */
 struct userdb_entry
 {
 	char username[32];
-	char password[32];
+	char password[PW_HASH_STRLEN]; /* $pbkdf2-sha256$... hash, not plaintext */
 	int uid;
 	int gid;
 	char shell[128];
@@ -118,7 +119,8 @@ int main(void)
 
 		for (i = 0; i < nusers; i++)
 		{
-			if (strcmp(req->username, users[i].username) == 0 && strcmp(req->password, users[i].password) == 0)
+			if (strcmp(req->username, users[i].username) == 0 &&
+			    pw_verify(req->password, users[i].password) == 1)
 			{
 				resp.ok = 1;
 				resp.uid = users[i].uid;

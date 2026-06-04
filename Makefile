@@ -132,19 +132,38 @@ world:
 	cd ${WORLD_BIN_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
+	@echo "Step 4: Build NetSurf browser (nsfb)"
+	@echo "***************************************************************"
+	${MAKE} netsurf
+	@echo
+	@echo "***************************************************************"
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
+
+# Build the NetSurf framebuffer browser (build/bin/nsfb).  Separate target so it
+# can be rebuilt on its own; depends on the world libraries (Step 1) being built.
+# Driven by a shell script because NetSurf uses its own GNU-make buildsystem.
+netsurf:
+	SRCTOP=${.CURDIR} ${.CURDIR}/tools/build-netsurf.sh
 
 # ── Disk image ───────────────────────────────────────────────────────────────
 
 # Build a fresh bootable FAT32 disk image from scratch (GRUB + kernel + world).
 # Always authoritative — use this for releases or a clean initial image.
 makeuser:
-	@echo "==> Compiling and running tools/makeuser.c"
-	cc -o tools/makeuser tools/makeuser.c
+	@echo "==> Compiling and running tools/makeuser.c (PBKDF2-hashes passwords via libpw)"
+	cc -O2 -idirafter ${CURDIR}/include \
+		-I${CURDIR}/contrib/bearssl/inc -I${CURDIR}/contrib/bearssl/src \
+		${CURDIR}/tools/makeuser.c \
+		${CURDIR}/lib/libpw/pbkdf2.c ${CURDIR}/lib/libpw/pwhash.c \
+		${CURDIR}/contrib/bearssl/src/mac/hmac.c \
+		${CURDIR}/contrib/bearssl/src/hash/sha2small.c \
+		${CURDIR}/contrib/bearssl/src/codec/dec32be.c \
+		${CURDIR}/contrib/bearssl/src/codec/enc32be.c \
+		-o ${CURDIR}/tools/makeuser
 	cd tools && ./makeuser
 	cp tools/userdb etc/userdb
-	@echo "==> etc/userdb updated"
+	@echo "==> etc/userdb updated (PBKDF2-hashed)"
 
 image: makeuser
 	@sh tools/mkimage.sh ${DISK_IMAGE}
@@ -275,6 +294,19 @@ run-debug:
 	  -device e1000,netdev=net0 -netdev user,id=net0 \
 	  -object filter-dump,id=f1,netdev=net0,file=/tmp/e1000dump.pcap
 
+# Headless run with a NE2000 (RTL8029) NIC instead of the e1000, to exercise the
+# ne2k driver.  net_init falls back to ne2k when no e1000 is present.  Frames are
+# dumped to /tmp/ne2kdump.pcap (decode with: tcpdump -nr /tmp/ne2kdump.pcap).
+run-ne2k:
+	qemu-system-i386 -m 256 -drive file=${DISK_IMAGE},format=raw,if=ide,index=0 \
+	  -machine pc \
+	  -device piix3-usb-uhci,id=uhci-bus \
+	  -device usb-kbd,bus=uhci-bus.0,port=1 \
+	  ${_USB_FLAGS} \
+	  -nographic \
+	  -device ne2k_pci,netdev=net0 -netdev user,id=net0 \
+	  -object filter-dump,id=f1,netdev=net0,file=/tmp/ne2kdump.pcap
+
 # Bridge NIC to en0 (requires sudo on macOS — vmnet-bridged needs entitlements).
 # The VM appears on your LAN and gets a real IP from your router's DHCP server.
 # Use this to bypass QEMU SLIRP and verify the e1000 driver against a real DHCP.
@@ -312,3 +344,6 @@ clean:
 		${GNU_MAKE} -C ${OBJ_DIR}/obj/musl clean; \
 	fi
 	rm -rf ${OBJ_DIR}/obj/lib
+	rm -rf contrib/netsurf/build contrib/netsurf-nsgenbind/build-* \
+	    ${OBJ_DIR}/netsurf-pc ${OBJ_DIR}/netsurf-tools ${OBJ_DIR}/netsurf-build.log \
+	    ${OBJ_DIR}/nsgenbind-build.log ${OBJ_DIR}/bin/nsfb

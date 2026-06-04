@@ -36,6 +36,7 @@ extern "C" {
 #include <sys/types.h>
 #include <fs/vfs/file.h>
 #include <ubixos/tty.h>
+#include <ubixos/callout.h>
 
 #include <machine/proc.h>
 #include <sys/thread.h>
@@ -104,6 +105,8 @@ typedef struct taskStruct {
     struct taskStruct *rq_next;  /* per-priority run queue forward link */
     struct taskStruct *rq_prev;  /* per-priority run queue backward link */
     int       t_stopped_sig;     /* signal that caused STOPPED state (0 if not stopped) */
+    void      *wait_chan;        /* sleep/wakeup channel: address slept on, NULL if not blocked */
+    struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
 } kTask_t;
@@ -113,6 +116,7 @@ typedef struct taskStruct {
  * below its QoS floor.  Inspired by macOS DISPATCH_QOS_CLASS_*.
  */
 typedef enum {
+    QOS_IDLE             =  0,  /* per-system idle thread — runs only when nothing else is ready */
     QOS_BACKGROUND       =  4,  /* maintenance work, automountd */
     QOS_UTILITY          =  8,  /* compilation, long-running tools */
     QOS_DEFAULT          = 12,  /* default — inherited from parent */
@@ -141,13 +145,75 @@ void sched_stop(kTask_t *t, int sig);   /* STOPPED — suspended by signal     *
 void sched_zombie(kTask_t *t);          /* ZOMBIE  — exited, awaiting wait() */
 void sched_io_wakeup(kTask_t *t);       /* I/O done: boost +4, re-enqueue    */
 void sched_pi_boost(kTask_t *t, u_int8_t pri);  /* PI: raise t to pri if higher      */
+
+/*
+ * Wait-channel sleep/wakeup (replaces sched_yield() busy-wait loops).
+ *
+ * sched_wait_event(chan, cond, arg): block _current on the address `chan` until
+ * cond(arg) returns nonzero, truly leaving the run queue (CPU goes idle instead
+ * of spinning).  cond is re-checked with interrupts disabled before each sleep,
+ * so it is race-free against a waker that sets the condition then calls
+ * sched_wakeup_chan(chan) — including a waker in interrupt context.
+ *
+ * sched_wakeup_chan(chan): make every task sleeping on `chan` runnable again
+ * (I/O-boosted).  Safe to call from an ISR: it never yields (schedulerSpinLock
+ * is only ever held with interrupts disabled, so it is free when an IRQ fires).
+ */
+void sched_wait_event(void *chan, int (*cond)(void *arg), void *arg);
+void sched_wakeup_chan(void *chan);
+
+/*
+ * Like sched_wait_event() but also returns after `ticks` scheduler ticks even
+ * if cond never holds (the timer's per-tick scan wakes timed sleepers).  Needed
+ * for lwIP's tcpip_thread, which waits with a deadline to drive protocol timers.
+ * @return 0 if cond was satisfied, 1 if the timeout expired first.
+ */
+int sched_wait_event_timeout(void *chan, int (*cond)(void *arg), void *arg, u_int32_t ticks);
+
+/* Permanently set a task's QoS floor + current priority (re-homing it in the
+ * run queue if enqueued).  Used to drop the idle thread to QOS_IDLE. */
+void sched_set_priority(kTask_t *t, u_int8_t pri);
 void sched_pi_restore(kTask_t *t);             /* PI: drop t back to base_priority  */
 
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
 kTask_t *schedFindTask(u_int32_t id);
 
+/*
+ * _current — the thread running on the calling CPU.
+ *
+ * On i386 this is per-CPU state living in g_pcpu[cpu].current and reached
+ * through %gs (SEL_PCPU): %gs:8 == &g_pcpu[cpu].current (offset 8 — see
+ * <i386/pcpu.h>).  Every kernel entry stub loads %gs = SEL_PCPU and
+ * cpu_switch() re-establishes it on each switch, so %gs:8 is valid in every
+ * kernel context.  Reads go through get_current(); the single write site
+ * (sched()) uses set_current().  This is a bare %gs-relative load/store, NOT a
+ * macro that injects a function call into asm paths — an earlier curcpu()->current
+ * attempt was reverted for exactly that reason.
+ *
+ * Bootstrap: pcpu_install_gs(0) patches the SEL_PCPU GDT base to &g_pcpu[0] at
+ * the very top of kmain, before any _current access, and g_pcpu is zeroed BSS so
+ * current starts NULL.
+ */
+#ifdef __i386__
+static inline kTask_t *get_current(void)
+{
+	kTask_t *p;
+	__asm__ __volatile__("movl %%gs:8, %0" : "=r"(p));
+	return p;
+}
+
+static inline void set_current(kTask_t *t)
+{
+	__asm__ __volatile__("movl %0, %%gs:8" : : "r"(t) : "memory");
+}
+
+#define _current (get_current())
+#else
 extern kTask_t *_current;
+#define set_current(t) (_current = (t))
+#endif
+
 extern kTask_t *_usedMath;
 
 #ifdef __cplusplus

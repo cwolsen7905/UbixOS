@@ -17,6 +17,9 @@ const char bb_msg_standard_input[] = "standard input";
 const char bb_msg_read_error[]     = "read error";
 const char bb_msg_invalid_arg_to[] = "invalid argument '%s' to '%s'";
 const char bb_msg_requires_arg[]   = "%s requires an argument";
+const char bb_msg_invalid_date[]   = "invalid date '%s'";
+const char bb_default_root_path[]  = "/usr/bin:/bin:/usr/sbin:/sbin";
+const char bb_msg_write_error[]    = "write error";
 long bb_arg_max                    = 131072;
 
 char bb_common_bufsiz1[COMMON_BUFSIZE];
@@ -80,6 +83,48 @@ unsigned xatou_sfx(const char *numstr, const struct suffix_mult *suffixes)
 	if (v > UINT_MAX)
 		bb_simple_error_msg_and_die(numstr);
 	return (unsigned)v;
+}
+
+unsigned xatou(const char *numstr)
+{
+	return xatou_sfx(numstr, NULL);
+}
+
+unsigned xatou_range_sfx(const char *numstr, unsigned lo, unsigned hi,
+                         const struct suffix_mult *suffixes)
+{
+	unsigned v = xatou_sfx(numstr, suffixes);
+	if (v < lo || v > hi)
+		bb_error_msg_and_die("number %s outside [%u..%u]", numstr, lo, hi);
+	return v;
+}
+
+long bb_strtol(const char *arg, char **endp, int base)
+{
+	errno = 0;
+	long v = strtol(arg, endp, base);
+	if (errno || (endp && *endp == arg)) {
+		errno = EINVAL;
+		return 0;
+	}
+	return v;
+}
+
+long long bb_strtoll(const char *arg, char **endp, int base)
+{
+	errno = 0;
+	long long v = strtoll(arg, endp, base);
+	if (errno || (endp && *endp == arg)) {
+		errno = EINVAL;
+		return 0;
+	}
+	return v;
+}
+
+void xgettimeofday(struct timeval *tv)
+{
+	if (gettimeofday(tv, NULL) < 0)
+		bb_perror_msg_and_die("gettimeofday");
 }
 
 int xatoi(const char *numstr)
@@ -255,6 +300,194 @@ void llist_add_to(llist_t **old_head, void *data)
 	node->data = data;
 	node->link = *old_head;
 	*old_head = node;
+}
+
+void llist_add_to_end(llist_t **list_head, void *data)
+{
+	llist_t *node = xmalloc(sizeof(*node));
+	node->data = data;
+	node->link = NULL;
+	if (!*list_head) {
+		*list_head = node;
+		return;
+	}
+	llist_t *p = *list_head;
+	while (p->link)
+		p = p->link;
+	p->link = node;
+}
+
+FILE *xfopen_for_write(const char *path)
+{
+	FILE *fp = fopen(path, "w");
+	if (!fp)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return fp;
+}
+
+FILE *xfdopen_for_write(int fd)
+{
+	FILE *fp = fdopen(fd, "w");
+	if (!fp)
+		bb_perror_msg_and_die("fdopen");
+	return fp;
+}
+
+/*
+ * Weak fallback: binaries that also compile the real busybox
+ * libbb/safe_strncpy.c (e.g. cp) provide a strong overlapping_strcpy that
+ * overrides this one; binaries that only link the stubs use this definition.
+ */
+__attribute__((weak)) void overlapping_strcpy(char *dst, const char *src)
+{
+	memmove(dst, src, strlen(src) + 1);
+}
+
+void (*die_func)(void);
+
+unsigned bb_getpagesize(void)
+{
+	long ps = sysconf(_SC_PAGESIZE);
+	return ps > 0 ? (unsigned)ps : 4096;
+}
+
+/* fast_strtoul_10 / fast_strtoull_10 are static in procps.c upstream;
+ * we don't redefine them here. */
+
+char *is_prefixed_with(const char *string, const char *key)
+{
+	while (*key) {
+		if (*string++ != *key++)
+			return NULL;
+	}
+	return (char *)string;
+}
+
+void *xmemdup(const void *s, int n)
+{
+	void *out = xmalloc((size_t)n);
+	memcpy(out, s, (size_t)n);
+	return out;
+}
+
+DIR *xopendir(const char *path)
+{
+	DIR *d = opendir(path);
+	if (!d)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return d;
+}
+
+/* TOPMEM is disabled, so we won't actually be asked to populate smaps —
+ * provide a "return 0" stub so the linker is happy if something stale
+ * references it.  Signature matches upstream. */
+int procps_read_smaps(pid_t pid, struct smaprec *total,
+                      void (*cb)(struct smaprec *, void *), void *data)
+{
+	(void)pid; (void)total; (void)cb; (void)data;
+	return 0;
+}
+
+unsigned terminal_width = 80;
+
+/* Read whole file into buf — POSIX-y: -1 on open failure, otherwise bytes
+ * actually read (capped to count - 1, NUL-terminated). */
+ssize_t open_read_close(const char *path, void *buf, size_t count)
+{
+	int fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return -1;
+	ssize_t n = full_read(fd, buf, count);
+	close(fd);
+	return n;
+}
+
+FILE *xfopen_for_read(const char *path)
+{
+	FILE *fp = fopen(path, "r");
+	if (!fp)
+		bb_perror_msg_and_die("can't open '%s'", path);
+	return fp;
+}
+
+/* Format unsigned long long into 5 chars with optional " kMGT" scale.
+ * Used by top/ps to render memory/size columns. */
+char *smart_ulltoa5(unsigned long long ul, char buf[5], const char *scale)
+{
+	const char *fmt = "%4llu%c";
+	int idx = 0;
+	while (ul >= 100000) {
+		ul = (ul + 512) / 1024;
+		idx++;
+		if (idx >= (int)strlen(scale))
+			break;
+	}
+	snprintf(buf, 6, fmt, ul, scale ? scale[idx] : ' ');
+	buf[5] = '\0';
+	return buf + 5;
+}
+
+/* get_cached_username / get_cached_groupname / clear_username_cache are
+ * provided by contrib/busybox/libbb/procps.c via its own LRU cache.  The
+ * three helpers below feed into that cache. */
+static char x2x_buf[USERNAME_MAX_SIZE];
+
+char *x2x_utoa(uid_t id)
+{
+	snprintf(x2x_buf, sizeof(x2x_buf), "%u", (unsigned)id);
+	return x2x_buf;
+}
+
+char *uid2uname_utoa(uid_t uid)
+{
+	struct passwd *pw = getpwuid(uid);
+	if (pw && pw->pw_name)
+		return pw->pw_name;
+	return x2x_utoa(uid);
+}
+
+char *gid2group_utoa(gid_t gid)
+{
+	struct group *gr = getgrgid(gid);
+	if (gr && gr->gr_name)
+		return gr->gr_name;
+	return x2x_utoa((uid_t)gid);
+}
+
+/* make_all_argv_opts: busybox rewrites argv[1:] so options can be in
+ * either ps/top's positional or flag form.  For us, just return — our
+ * minimal getopt doesn't need this rewriting. */
+void make_all_argv_opts(char **argv)
+{
+	(void)argv;
+}
+
+/* utoa: format unsigned into a static buffer.  Used by ps. */
+char *utoa(unsigned n)
+{
+	static char buf[12];
+	snprintf(buf, sizeof(buf), "%u", n);
+	return buf;
+}
+
+void xchdir(const char *path)
+{
+	if (chdir(path) < 0)
+		bb_perror_msg_and_die("can't change to '%s'", path);
+}
+
+int xmkstemp(char *template)
+{
+	int fd = mkstemp(template);
+	if (fd < 0)
+		bb_perror_msg_and_die("can't create temp file '%s'", template);
+	return fd;
+}
+
+void xrename(const char *oldpath, const char *newpath)
+{
+	if (rename(oldpath, newpath) < 0)
+		bb_perror_msg_and_die("can't rename '%s' to '%s'", oldpath, newpath);
 }
 
 void llist_free(llist_t *elm, void (*freeit)(void *data))
@@ -868,9 +1101,9 @@ int get_terminal_width_height(int fd, unsigned *width, unsigned *height)
 	return 0;
 }
 
-void fflush_all(void)
+int fflush_all(void)
 {
-	fflush(NULL);
+	return fflush(NULL);
 }
 
 void bb_show_usage(void)
@@ -1270,6 +1503,24 @@ int index_in_strings(const char *strings, const char *key)
 	return -1;
 }
 
+/* index_in_substrings: like index_in_strings, but matches if the entry
+ * is a prefix of key (or vice-versa).  busybox date uses it to accept
+ * abbreviated keyword arguments. */
+int index_in_substrings(const char *strings, const char *key)
+{
+	int i = 0;
+	size_t keylen = strlen(key);
+	if (keylen == 0)
+		return -1;
+	while (*strings) {
+		if (strncmp(strings, key, keylen) == 0)
+			return i;
+		strings += strlen(strings) + 1;
+		i++;
+	}
+	return -1;
+}
+
 /* ---------------------------- termios helpers ---------------------------- */
 
 void tcsetattr_stdin_TCSANOW(const struct termios *tio)
@@ -1292,7 +1543,9 @@ void set_termios_to_raw(int fd, struct termios *orig_out, int flags)
 	else
 		t.c_iflag &= (tcflag_t)~ICRNL;
 	t.c_oflag &= (tcflag_t)~OPOST;
-	t.c_lflag &= (tcflag_t)~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	t.c_lflag &= (tcflag_t)~(ECHO | ECHONL | ICANON | IEXTEN);
+	if (flags & TERMIOS_CLEAR_ISIG)
+		t.c_lflag &= (tcflag_t)~ISIG;
 	t.c_cflag &= (tcflag_t)~(CSIZE | PARENB);
 	t.c_cflag |= CS8;
 	t.c_cc[VMIN] = 1;

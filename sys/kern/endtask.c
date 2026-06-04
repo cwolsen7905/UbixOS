@@ -30,13 +30,14 @@
 
 #include <sys/types.h>
 #include <ubixos/sched.h>
+#include <sys/gdt.h>
 #include <ubixos/tty.h>
 #include <ubixos/vitals.h>
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>
-
+#include <mpi/mpi.h>
 
 /************************************************************************
 
@@ -51,16 +52,17 @@ void endTask(pidType pid)
 {
 
 	/*
-	 * GS = 0xF is an LDT-based selector (LDT entry 1) and the LDT lives at
-	 * VMM_USER_LDT (0x7FF000, PD[1]).  vmm_clean_virtual_space frees that page
-	 * below, so we must clear GS now while the LDT is still mapped.  If the
-	 * scheduler later switches away and back while interrupts are disabled
-	 * (or races via a DEAD-child wakeup), the hardware task switch will try
-	 * to validate GS from GDT[3].base+8 = 0x7FF008 and fault on a
-	 * not-present page.  GS = 0 has no descriptor and requires no LDT read.
+	 * Force GS = SEL_PCPU (the per-CPU GDT selector) before freeing the address
+	 * space.  A user task can reach here with GS still holding the LDT-based TLS
+	 * selector (0xF, LDT entry 1 at VMM_USER_LDT 0x7FF000, PD[1]); since
+	 * vmm_clean_virtual_space below frees that page, any later GS validation
+	 * would fault reading the freed LDT.  SEL_PCPU is a GDT descriptor with no
+	 * LDT dependency, so it is safe across the free — and, critically, it keeps
+	 * _current (read as %gs:8) valid for the rest of this function.  (Clearing
+	 * GS to 0, as the hardware-task-switch era did, now poisons every _current
+	 * access in the remainder of endTask.)
 	 */
-	asm volatile("xorl %%eax, %%eax\n\t"
-	             "movw %%ax, %%gs" : : : "eax", "memory");
+	asm volatile("movw %0, %%gs" : : "r"((u_int16_t)SEL_PCPU) : "memory");
 
 	/*
 	 * Release the full per-process address space while we are still _current
@@ -72,6 +74,11 @@ void endTask(pidType pid)
 	 * the private PT/PD physical pages after this runs.
 	 */
 	vmm_clean_virtual_space(0x400000U);
+
+	/* Free any MPI mailboxes this task owned so their names/pids do not leak
+	 * (a leaked mailbox blocks a relaunched owner — e.g. a views app — from
+	 * recreating it or fetching its replies). */
+	mpi_destroyProcessMboxes(_current->id);
 
 	/* Return TTY ownership to parent so the shell gets its prompt back. */
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)

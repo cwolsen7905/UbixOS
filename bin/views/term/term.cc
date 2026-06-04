@@ -43,7 +43,7 @@
 #include <ubix/process.hh>
 #include <views/display.hh>
 #include <objgfx/objgfx.h>
-#include <objgfx/ogFont.h>
+#include <objgfx/ogScalableFont.h>
 #include <objgfx/ogPixelFmt.h>
 #include <sys/kbd.h>
 
@@ -57,7 +57,7 @@
 #define TERM_W (DEF_COLS * TERM_FW) /* 640 */
 #define TERM_H (DEF_ROWS * TERM_FH) /* 350 */
 #define TERM_BG 0x00000000u
-#define FONT_PATH "/var/fonts/ROM8X14.DPF"
+#define FONT_PATH "/var/fonts/DejaVuSansMono.ttf"
 
 /* Current grid dimensions (cells); change on a live window resize. */
 static int g_cols = DEF_COLS;
@@ -85,21 +85,88 @@ static const uint32_t g_vga_palette[16] = {0x00000000,
 /* TerminalView — draws a snapshotted 80x25 char+attribute cell grid    */
 /* ------------------------------------------------------------------ */
 
+/* Damaged region of the surface, in inclusive pixel bounds. */
+struct DirtyRect
+{
+	int x0, y0, x1, y1;
+	bool any;
+};
+
 class TerminalView
 {
 	ogSurface surf_;
-	ogBitFont font_;
-	int fw_ = 8;
-	int fh_ = 14;
+	ogScalableFont font_;
+	int fw_ = TERM_FW;
+	int fh_ = TERM_FH;
 	int sw_ = 0; /* attached surface dimensions */
 	int sh_ = 0;
+	uint32_t cur_bg_ = 0; /* current cell background (filled per cell) */
 
+	unsigned char prev_[MAX_CELL_BYTES]; /* last rendered grid, for cell diffing */
+	int prev_cx_ = -1, prev_cy_ = -1;    /* last cursor cell */
+	bool force_full_ = true;             /* clear + redraw everything next render */
+	bool prev_exited_ = false;           /* exit banner already drawn */
+	DirtyRect dirty_ = {0, 0, 0, 0, false};
+
+	/* Grow the accumulated damage rect to include a cell-sized box. */
+	void mark(int px, int py, int pw, int ph)
+	{
+		int x1 = px + pw - 1, y1 = py + ph - 1;
+		if (!dirty_.any)
+		{
+			dirty_ = {px, py, x1, y1, true};
+			return;
+		}
+		if (px < dirty_.x0)
+			dirty_.x0 = px;
+		if (py < dirty_.y0)
+			dirty_.y0 = py;
+		if (x1 > dirty_.x1)
+			dirty_.x1 = x1;
+		if (y1 > dirty_.y1)
+			dirty_.y1 = y1;
+	}
+
+	/* Select the VT100 attribute: the glyph foreground is set on the font; the
+	 * cell background is remembered so the cell can be filled.  The font
+	 * background is kept transparent so the antialiased glyph blends over it. */
 	void set_attr(unsigned char attr)
 	{
 		uint32_t fg = g_vga_palette[attr & 0x0F];
-		uint32_t bg = g_vga_palette[(attr >> 4) & 0x07];
+		cur_bg_ = g_vga_palette[(attr >> 4) & 0x07];
 		font_.SetFGColor((fg >> 16) & 0xFF, (fg >> 8) & 0xFF, fg & 0xFF, 255);
-		font_.SetBGColor((bg >> 16) & 0xFF, (bg >> 8) & 0xFF, bg & 0xFF, 255);
+		font_.SetBGColor(0, 0, 0, 0);
+	}
+
+	/* Draw one cell with its normal VT100 colours (no cursor) and damage it. */
+	void draw_cell(const unsigned char *cells, int row, int col)
+	{
+		int idx = (row * g_cols + col) * 2;
+		unsigned char ch = cells[idx];
+		unsigned char attr = cells[idx + 1];
+		if (ch == 0)
+			ch = ' ';
+		set_attr(attr);
+		int px = col * fw_, py = row * fh_;
+		surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, cur_bg_);
+		if (ch != ' ')
+			font_.PutChar(surf_, px, py, (char)ch);
+		mark(px, py, fw_, fh_);
+	}
+
+	/* Draw the block cursor (inverted glyph on a light cell) and damage it. */
+	void draw_cursor(const unsigned char *cells, int row, int col)
+	{
+		int px = col * fw_, py = row * fh_;
+		surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, 0x00AAAAAAu);
+		unsigned char ch = cells[(row * g_cols + col) * 2];
+		if (ch != 0 && ch != ' ')
+		{
+			font_.SetFGColor(0, 0, 0, 255);
+			font_.SetBGColor(0, 0, 0, 0);
+			font_.PutChar(surf_, px, py, (char)ch);
+		}
+		mark(px, py, fw_, fh_);
 	}
 
       public:
@@ -107,16 +174,18 @@ class TerminalView
 	{
 		sw_ = w;
 		sh_ = h;
+		std::memset(prev_, 0xFF, sizeof(prev_)); /* force a full redraw */
+		prev_cx_ = prev_cy_ = -1;
+		force_full_ = true;
 		return surf_.ogAttach(shm, (uint32_t)w, (uint32_t)h, OG_PIXFMT_32BPP);
 	}
 
 	bool load_font(const char *path)
 	{
-		if (!font_.Load(path, 0))
-			return false;
-		fw_ = (int)font_.GetWidth();
-		fh_ = (int)font_.GetHeight();
-		return true;
+		/* The cell grid is pinned to a fixed TERM_FW x TERM_FH so the resize
+		 * math and the kernel pty geometry stay consistent; the monospace glyph
+		 * is rendered within that cell (its natural advance is <= TERM_FW). */
+		return font_.Load(path, TERM_FH);
 	}
 
 	int fw() const
@@ -129,59 +198,83 @@ class TerminalView
 	}
 
 	/*
-	 * Render the cell grid with a block cursor at (cx,cy).  When exited is
-	 * set, the cursor is hidden and a status banner overlays the bottom row.
+	 * Render the cell grid with a block cursor at (cx,cy), redrawing only the
+	 * cells that changed since the previous frame.  Returns the damaged pixel
+	 * rect (any == false when nothing changed, so the caller can skip the flip).
+	 * When exited is set the cursor is hidden and a banner overlays the bottom
+	 * row; the final screen is drawn once and then stays quiet.
 	 */
-	void render(const unsigned char *cells, int cx, int cy, bool exited)
+	DirtyRect render(const unsigned char *cells, int cx, int cy, bool exited)
 	{
-		/* Clear the whole surface (covers the few-pixel margin when the window
-		 * size isn't an exact multiple of the cell size). */
-		surf_.ogFillRect(0, 0, sw_ - 1, sh_ - 1, TERM_BG);
+		dirty_ = {0, 0, 0, 0, false};
+		int cell_bytes = g_cols * g_rows * 2;
 
-		int last_attr = -1;
+		if (exited)
+		{
+			if (prev_exited_ && !force_full_)
+				return dirty_; /* banner already up, nothing to do */
+			for (int row = 0; row < g_rows; row++)
+				for (int col = 0; col < g_cols; col++)
+					draw_cell(cells, row, col);
+			static const char msg[] = " [process exited - press any key to close]";
+			int by = (g_rows - 1) * fh_;
+			surf_.ogFillRect(0, by, g_cols * fw_ - 1, by + fh_ - 1, 0x00701010u);
+			font_.SetFGColor(0xFF, 0xFF, 0xFF, 255);
+			font_.SetBGColor(0, 0, 0, 0);
+			font_.PutString(surf_, 0, by, msg);
+			mark(0, 0, sw_, sh_);
+			prev_exited_ = true;
+			force_full_ = false;
+			std::memcpy(prev_, cells, (size_t)cell_bytes);
+			return dirty_;
+		}
+
+		if (force_full_)
+		{
+			/* Clear the whole surface (covers the margin when the window size is
+			 * not an exact multiple of the cell size) and redraw every cell. */
+			surf_.ogFillRect(0, 0, sw_ - 1, sh_ - 1, TERM_BG);
+			for (int row = 0; row < g_rows; row++)
+				for (int col = 0; col < g_cols; col++)
+					draw_cell(cells, row, col);
+			if (cx >= 0 && cx < g_cols && cy >= 0 && cy < g_rows)
+				draw_cursor(cells, cy, cx);
+			mark(0, 0, sw_, sh_);
+			force_full_ = false;
+			std::memcpy(prev_, cells, (size_t)cell_bytes);
+			prev_cx_ = cx;
+			prev_cy_ = cy;
+			return dirty_;
+		}
+
+		/* Incremental: redraw only cells whose char or attribute changed. */
+		bool cursor_cell_redrawn = false;
 		for (int row = 0; row < g_rows; row++)
 		{
 			for (int col = 0; col < g_cols; col++)
 			{
 				int idx = (row * g_cols + col) * 2;
-				unsigned char ch = cells[idx];
-				unsigned char attr = cells[idx + 1];
-				if (ch == 0)
-					ch = ' ';
-				if ((int)attr != last_attr)
-				{
-					set_attr(attr);
-					last_attr = (int)attr;
-				}
-				font_.PutChar(surf_, col * fw_, row * fh_, (char)ch);
+				if (cells[idx] == prev_[idx] && cells[idx + 1] == prev_[idx + 1])
+					continue;
+				draw_cell(cells, row, col);
+				if (row == cy && col == cx)
+					cursor_cell_redrawn = true;
 			}
 		}
 
-		if (exited)
-		{
-			/* Status banner over the bottom row — the shell is gone. */
-			static const char msg[] = " [process exited - press any key to close]";
-			int by = (g_rows - 1) * fh_;
-			surf_.ogFillRect(0, by, g_cols * fw_ - 1, by + fh_ - 1, 0x00701010u);
-			font_.SetFGColor(0xFF, 0xFF, 0xFF, 255);
-			font_.SetBGColor(0x70, 0x10, 0x10, 255);
-			font_.PutString(surf_, 0, by, msg);
-			return;
-		}
+		/* Cursor: restore the vacated cell, then (re)draw the block where the
+		 * cursor now is — but only when it moved or its cell was repainted, so an
+		 * idle terminal produces no damage and no flip. */
+		bool cursor_moved = (cx != prev_cx_ || cy != prev_cy_);
+		if (cursor_moved && prev_cx_ >= 0 && prev_cx_ < g_cols && prev_cy_ >= 0 && prev_cy_ < g_rows)
+			draw_cell(cells, prev_cy_, prev_cx_);
+		if (cx >= 0 && cx < g_cols && cy >= 0 && cy < g_rows && (cursor_moved || cursor_cell_redrawn))
+			draw_cursor(cells, cy, cx);
 
-		/* Block cursor: filled cell with the underlying glyph inverted. */
-		if (cx >= 0 && cx < g_cols && cy >= 0 && cy < g_rows)
-		{
-			int px = cx * fw_;
-			int py = cy * fh_;
-			surf_.ogFillRect(px, py, px + fw_ - 1, py + fh_ - 1, 0x00AAAAAAu);
-			unsigned char ch = cells[(cy * g_cols + cx) * 2];
-			if (ch == 0)
-				ch = ' ';
-			font_.SetFGColor(0, 0, 0, 255);
-			font_.SetBGColor(0xAA, 0xAA, 0xAA, 255);
-			font_.PutChar(surf_, px, py, (char)ch);
-		}
+		std::memcpy(prev_, cells, (size_t)cell_bytes);
+		prev_cx_ = cx;
+		prev_cy_ = cy;
+		return dirty_;
 	}
 };
 
@@ -330,7 +423,17 @@ int main(int argc, char **argv)
 	snprintf(user_env, sizeof(user_env), "USER=%s", user);
 	snprintf(logname_env, sizeof(logname_env), "LOGNAME=%s", user);
 
-	char *shell_argv[] = {(char *)shell_path, nullptr};
+	/* Launch tcsh as a LOGIN shell (macOS Terminal.app model): argv[0] is
+	 * "-<basename>", which tells the shell to source the login files
+	 * (/etc/csh.login, ~/.login) in addition to the per-shell rc
+	 * (/etc/csh.cshrc).  The exec target stays the real shell_path; only
+	 * argv[0] carries the leading '-'.  Mirrors bin/login/main.c. */
+	const char *shell_base = strrchr(shell_path, '/');
+	shell_base = shell_base ? shell_base + 1 : shell_path;
+	char login_argv0[64];
+	snprintf(login_argv0, sizeof(login_argv0), "-%s", shell_base);
+
+	char *shell_argv[] = {login_argv0, nullptr};
 	char *shell_envp[] = {home_env,
 	                      shell_env,
 	                      user_env,
@@ -395,16 +498,23 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	auto send_flip = [&]()
+	auto send_flip = [&](const DirtyRect &d)
 	{
+		/* Flip only the damaged rectangle, clamped to the surface. */
+		int x0 = d.x0 < 0 ? 0 : d.x0;
+		int y0 = d.y0 < 0 ? 0 : d.y0;
+		int x1 = d.x1 >= act_w ? act_w - 1 : d.x1;
+		int y1 = d.y1 >= act_h ? act_h - 1 : d.y1;
+		if (x1 < x0 || y1 < y0)
+			return;
 		mpi_message_t m = {};
 		struct display_flip *fl = (struct display_flip *)m.data;
 		m.header = DISPLAY_FLIP;
 		fl->window_id = win_id;
-		fl->dirty_x = 0;
-		fl->dirty_y = 0;
-		fl->dirty_w = act_w;
-		fl->dirty_h = act_h;
+		fl->dirty_x = x0;
+		fl->dirty_y = y0;
+		fl->dirty_w = x1 - x0 + 1;
+		fl->dirty_h = y1 - y0 + 1;
 		ubix::post_message("views", DISPLAY_FLIP, m);
 	};
 
@@ -431,32 +541,20 @@ int main(int argc, char **argv)
 	};
 
 	unsigned char grid[MAX_CELL_BYTES];
-	unsigned char prev[MAX_CELL_BYTES];
-	std::memset(prev, 0xFF, sizeof(prev)); /* force first draw */
+	unsigned short cx16 = 0, cy16 = 0;
 	bool shell_exited = false;
 
 	for (;;)
 	{
-		unsigned short cx16 = 0, cy16 = 0;
-		bool dirty = false;
-		int cell_bytes = g_cols * g_rows * 2;
-
-		/* Pull the latest rendered screen; redraw only when it changed. */
-		if (pty.snapshot(grid, &cx16, &cy16) == 0)
-		{
-			if (std::memcmp(grid, prev, (size_t)cell_bytes) != 0)
-			{
-				std::memcpy(prev, grid, (size_t)cell_bytes);
-				dirty = true;
-			}
-		}
+		/* Pull the latest rendered screen.  render() diffs it internally and
+		 * redraws only the cells that changed. */
+		bool got = (pty.snapshot(grid, &cx16, &cy16) == 0);
 
 		/* Detect the shell exiting: mark the window and draw the banner once. */
 		if (!shell_exited && pty.exited())
 		{
 			shell_exited = true;
 			set_title("Terminal (exited)");
-			dirty = true;
 		}
 
 		while (mbox.try_fetch(reply))
@@ -484,8 +582,7 @@ int main(int argc, char **argv)
 				g_rows = nr;
 				act_w = wr->w;
 				act_h = wr->h;
-				tv.attach(wr->shm_base, wr->w, wr->h);
-				std::memset(prev, 0xFF, sizeof(prev)); /* force a full redraw */
+				tv.attach(wr->shm_base, wr->w, wr->h); /* resets diff state, forces full redraw */
 				continue;
 			}
 			if (reply.header != DISPLAY_KEY)
@@ -515,10 +612,11 @@ int main(int argc, char **argv)
 		int cx = linear % g_cols;
 		int cy = linear / g_cols;
 
-		if (dirty)
+		if (got || shell_exited)
 		{
-			tv.render(grid, cx, cy, shell_exited);
-			send_flip();
+			DirtyRect d = tv.render(grid, cx, cy, shell_exited);
+			if (d.any)
+				send_flip(d);
 		}
 
 		ubix::yield();

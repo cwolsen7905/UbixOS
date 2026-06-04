@@ -52,6 +52,8 @@ static const struct reg_entry g_defaults[] = {
     {"/views/startmenu/0/label", "\"Applications\""},
     {"/views/startmenu/0/items/0/label", "\"Terminal\""},
     {"/views/startmenu/0/items/0/exec", "\"/bin/term\""},
+    {"/views/startmenu/0/items/1/label", "\"NetSurf\""},
+    {"/views/startmenu/0/items/1/exec", "\"/bin/nsfb\""},
 
     {"/views/startmenu/1/label", "\"Games\""},
     {"/views/startmenu/1/items/0/label", "\"vDoom\""},
@@ -69,9 +71,15 @@ static const struct reg_entry g_defaults[] = {
      * own params.  Colours are packed 0xRRGGBB stored as integers.  The system
      * default is jailbars; a user's choice persists and overrides it. */
     {"/views/desktop/mode", "\"image\""},
-    {"/views/desktop/image", "\"/var/background/tropical-miami.png\""},
-    {"/views/desktop/color", "2900136"},    /* 0x2C60A8 solid blue        */
-    {"/views/desktop/barcolor", "1710638"}, /* 0x1A1A2E jailbar base shade */
+    {"/views/desktop/image", "\"/var/background/ubix.bmp\""}, /* system default wallpaper */
+    {"/views/desktop/color", "2900136"},                      /* 0x2C60A8 solid blue        */
+    {"/views/desktop/barcolor", "1710638"},                   /* 0x1A1A2E jailbar base shade */
+
+    /* Per-user wallpaper overrides: root and reddawg get the tropical-miami
+     * wallpaper; everyone else (and the login screen, which is user-agnostic)
+     * uses the ubix.bmp system default above. */
+    {"/users/root/views/desktop/image", "\"/var/background/tropical-miami.png\""},
+    {"/users/reddawg/views/desktop/image", "\"/var/background/tropical-miami.png\""},
 
     /* Theme: accent colour for focused window title bars (0xRRGGBB as int).
      * Retro magenta/purple to match the default synthwave (miami) wallpaper. */
@@ -90,6 +98,11 @@ static const struct reg_entry g_defaults[] = {
 
     /* Base desktop settings. */
     {"/views/taskbar/height", "32"},
+
+    /* Audio: master volume (0..100) and mute, applied to the codec at boot by
+     * bin/sndcfg and managed by the Settings Sound pane. */
+    {"/aural/volume", "100"},
+    {"/aural/mute", "false"},
 
     /* Display: the VBE mode number views sets at startup (0x118 = 1024x768x24,
      * the kernel default).  Settings writes the user's chosen mode here. */

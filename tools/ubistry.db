@@ -4,6 +4,8 @@
 /views/startmenu/0/label = "Applications"
 /views/startmenu/0/items/0/label = "Terminal"
 /views/startmenu/0/items/0/exec = "/bin/term"
+/views/startmenu/0/items/1/label = "NetSurf"
+/views/startmenu/0/items/1/exec = "/bin/nsfb"
 /views/startmenu/1/label = "Games"
 /views/startmenu/1/items/0/label = "vDoom"
 /views/startmenu/1/items/0/exec = "/bin/vdoom"
@@ -14,9 +16,11 @@
 /views/startmenu/3/label = "About"
 /views/startmenu/3/exec = "@about"
 /views/desktop/mode = "image"
-/views/desktop/image = "/var/background/tropical-miami.png"
+/views/desktop/image = "/var/background/ubix.bmp"
 /views/desktop/color = 2900136
 /views/desktop/barcolor = 1710638
+/users/root/views/desktop/image = "/var/background/tropical-miami.png"
+/users/reddawg/views/desktop/image = "/var/background/tropical-miami.png"
 /views/theme/accent = 12595340
 /settings/wallpapers/0 = "/var/background/ubix.bmp"
 /settings/wallpapers/1 = "/var/background/tropical-sunset.png"
@@ -28,6 +32,8 @@
 /settings/wallpapers/7 = "/var/background/synthwave-road.png"
 /settings/wallpapers/8 = "/var/background/synthwave-vapor.png"
 /views/taskbar/height = 32
+/aural/volume = 100
+/aural/mute = false
 /display/mode = "0x118"
 /net/mode = "dhcp"
 /net/ip = "10.0.2.50"

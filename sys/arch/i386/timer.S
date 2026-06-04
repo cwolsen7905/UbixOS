@@ -26,11 +26,22 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <i386/pcpu_asm.h>
+
 .globl timerInt
 .text
 .code32
-timerInt:                 
+timerInt:
   pusha                    /* Save all of the registers                */
+  push %ds                 /* Milestone B: save the interrupted segment */
+  push %es                 /* registers so we can run sched() with %gs  */
+  push %fs                 /* = SEL_PCPU (per-CPU base) and still restore*/
+  push %gs                 /* the task's real %gs (user TLS) on iret.    */
+  mov $0x10,%eax
+  mov %eax,%ds
+  mov %eax,%es
+  mov %eax,%fs
+  PCPU_LOAD_GS             /* %gs = SEL_PCPU so %gs:off reaches per-CPU data */
   mov $0x20,%dx            /* The Following Sends Our EOI To The MPIC  */
   mov $0x20,%ax           
   outb %al,%dx
@@ -67,11 +78,16 @@ cld
   call sched
 /* add $0x4,%esp */ /* Remove Stack Pointer From Stack */
   /* AST: if we interrupted ring-3 code, check for pending signals.
-   * After pusha the CPU-pushed CS is at [ESP+36]; RPL bits 0-1 == 3 for
-   * user mode (CS=0x1B).  Kernel interrupts (CS=0x08) have RPL=0 → skip. */
-  testb $3, 36(%esp)
+   * pusha put the CPU-pushed CS at [ESP+36]; the four segment pushes above
+   * add 16, so CS is now at [ESP+52].  RPL bits 0-1 == 3 for user mode
+   * (CS=0x1B).  Kernel interrupts (CS=0x08) have RPL=0 → skip. */
+  testb $3, 52(%esp)
   jz done
   call signal_ast_check
 done:
+  pop %gs                   /* Restore the task's real segment registers */
+  pop %fs
+  pop %es
+  pop %ds
   popa                      /* Restore Registers                        */
   iret

@@ -57,8 +57,11 @@ class Window
 	int decor_h;
 	bool closing = false;                           /* close button clicked; awaiting DISPLAY_RELEASE */
 	bool minimized = false;                         /* hidden to the taskbar; restored via DISPLAY_RAISE */
+	bool maximized = false;                         /* filling the screen; restore returns to saved_* */
+	bool wants_motion = false;                      /* client opted into pointer-motion events (DISPLAY_CLAIM) */
 	int sender_pid = 0;                             /* client PID — needed to re-share the buffer on resize */
 	int min_w = 0, min_h = 0, max_w = 0, max_h = 0; /* resize constraints (0 = fixed) */
+	int saved_x = 0, saved_y = 0, saved_w = 0, saved_h = 0; /* geometry before maximize/snap */
 	std::string title;
 	std::string mbox;
 
@@ -88,6 +91,12 @@ class Window
 		return in_decor(cx, cy) && cx >= x + w - 2 * decor_h && cx < x + w - decor_h;
 	}
 
+	/* Maximize button: left of minimize; only resizable windows show it. */
+	bool in_max_btn(int cx, int cy) const
+	{
+		return resizable() && in_decor(cx, cy) && cx >= x + w - 3 * decor_h && cx < x + w - 2 * decor_h;
+	}
+
 	/* Resize grip: a small square at the bottom-right corner of the content. */
 	static const int GRIP = 14;
 	bool in_resize_grip(int cx, int cy) const
@@ -104,6 +113,17 @@ class Window
 		canvas.rect(x, y, w, 1, hi);
 		canvas.rect(x, y + decor_h - 1, w, 1, DECOR_SEP);
 		canvas.text(x + 6, y + (decor_h - FB_FONT_H) / 2, title.c_str(), FB_WHITE, bg);
+
+		if (resizable())
+		{
+			int xbx = x + w - 3 * decor_h;
+			canvas.rect(xbx, y + 1, decor_h - 1, decor_h - 2, DECOR_MIN_BG);
+			int ix = xbx + (decor_h - 8) / 2, iy = y + (decor_h - 8) / 2;
+			canvas.rect(ix, iy, 8, 1, FB_WHITE); /* a small square = maximize */
+			canvas.rect(ix, iy + 7, 8, 1, FB_WHITE);
+			canvas.rect(ix, iy, 1, 8, FB_WHITE);
+			canvas.rect(ix + 7, iy, 1, 8, FB_WHITE);
+		}
 
 		int mbx = x + w - 2 * decor_h;
 		canvas.rect(mbx, y + 1, decor_h - 1, decor_h - 2, DECOR_MIN_BG);

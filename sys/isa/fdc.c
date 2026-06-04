@@ -30,6 +30,7 @@
 #include <isa/8259.h>
 #include <sys/video.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <sys/idt.h>
 #include <ubixos/spinlock.h>
 #include <sys/io.h>
@@ -90,7 +91,7 @@ asm(".globl floppyIsr      \n"
     "  push %ds            \n"
     "  push %es            \n"
     "  push %fs            \n"
-    "  push %gs            \n"
+    "  push %gs            \n" ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU */
     "  call floppyIsrhndlr \n"
     "  pop %gs             \n"
     "  pop %fs             \n"

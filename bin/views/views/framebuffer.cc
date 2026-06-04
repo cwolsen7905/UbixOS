@@ -29,6 +29,55 @@
 #include <cstdlib>
 #include <cstring>
 #include "framebuffer.hh"
+#include "objgfx/ogScalableFont.h"
+
+/* ------------------------------------------------------------------ */
+/* Scalable antialiased UI font (DejaVuSans) for window decorations.   */
+/* Loaded once on first use; falls back to the 8x8 bitmap below if the  */
+/* TTF is missing from the image.                                       */
+/* ------------------------------------------------------------------ */
+
+static ogScalableFont g_ui_font;
+static bool g_ui_font_tried = false;
+
+static ogScalableFont *ui_font(void)
+{
+	if (!g_ui_font_tried)
+	{
+		g_ui_font_tried = true;
+		g_ui_font.Load("/var/fonts/DejaVuSans.ttf", FB_FONT_H);
+	}
+	return g_ui_font.IsValid() ? &g_ui_font : nullptr;
+}
+
+/* Alpha-blend one glyph's coverage (fg over whatever is on the surface) at the
+ * given pen x and text baseline.  The compositor always paints the title bar /
+ * button background before the text, so blending over the destination yields
+ * clean antialiasing against the accent colour. */
+static void blit_glyph_aa(Framebuffer &fb, const ogScalableFont::Glyph *g, int penx, int baseline, uint32_t fg)
+{
+	if (!g || !g->cov)
+		return;
+	uint32_t fr = (fg >> 16) & 0xFF, fg8 = (fg >> 8) & 0xFF, fb8 = fg & 0xFF;
+	for (int gy = 0; gy < g->h; gy++)
+	{
+		const uint8_t *crow = g->cov + (size_t)gy * g->w;
+		int py = baseline + g->yoff + gy;
+		for (int gx = 0; gx < g->w; gx++)
+		{
+			uint8_t cov = crow[gx];
+			if (!cov)
+				continue;
+			int px = penx + g->xoff + gx;
+			uint32_t base = fb.read(px, py);
+			uint32_t br = (base >> 16) & 0xFF, bg = (base >> 8) & 0xFF, bb = base & 0xFF;
+			uint32_t r = br + ((fr - br) * cov) / 255;
+			uint32_t gg = bg + ((fg8 - bg) * cov) / 255;
+			uint32_t b = bb + ((fb8 - bb) * cov) / 255;
+			fb.pixel(px, py, FB_RGB(r, gg, b));
+		}
+	}
+}
 
 /* ------------------------------------------------------------------ */
 /* 8×8 bitmap font (printable ASCII 0x20–0x7F)                        */
@@ -316,39 +365,72 @@ void Framebuffer::blit(int dx, int dy, int w, int h, const uint32_t *src, int sr
 	}
 }
 
-void Framebuffer::ch(int x, int y, char c, uint32_t fg, uint32_t bg)
+/* Fallback: render one glyph from the built-in 8x8 bitmap (used only when the
+ * scalable UI font is unavailable). */
+static void ch_bitmap(Framebuffer &fb, int x, int y, char c, uint32_t fg, uint32_t bg)
 {
 	uint8_t idx = (uint8_t)c;
 	if (idx < 0x20 || idx > 0x7F)
 		idx = 0x20;
 	const uint8_t *glyph = g_font8x8[idx - 0x20];
-	for (int row = 0; row < FB_FONT_H; row++)
+	for (int row = 0; row < 8; row++)
 	{
 		uint8_t bits = glyph[row];
 		for (int col = 0; col < FB_FONT_W; col++)
-		{
-			uint32_t color = (bits & (0x80 >> col)) ? fg : bg;
-			pixel(x + col, y + row, color);
-		}
+			fb.pixel(x + col, y + row, (bits & (0x80 >> col)) ? fg : bg);
 	}
+}
+
+void Framebuffer::ch(int x, int y, char c, uint32_t fg, uint32_t bg)
+{
+	ogScalableFont *f = ui_font();
+	if (!f)
+	{
+		ch_bitmap(*this, x, y, c, fg, bg);
+		return;
+	}
+	const ogScalableFont::Glyph *g = f->GetGlyph((unsigned char)c);
+	blit_glyph_aa(*this, g, x, y + f->Ascent(), fg);
 }
 
 void Framebuffer::text(int x, int y, const char *s, uint32_t fg, uint32_t bg)
 {
-	int cx = x;
-	while (*s)
+	ogScalableFont *f = ui_font();
+	if (!f)
+	{
+		int cx = x;
+		for (; *s; s++)
+		{
+			if (*s == '\n')
+			{
+				cx = x;
+				y += 8;
+			}
+			else
+			{
+				ch_bitmap(*this, cx, y, *s, fg, bg);
+				cx += FB_FONT_W;
+			}
+		}
+		return;
+	}
+
+	int baseline = y + f->Ascent();
+	float pen = (float)x;
+	for (; *s; s++)
 	{
 		if (*s == '\n')
 		{
-			cx = x;
-			y += FB_FONT_H;
+			pen = (float)x;
+			baseline += f->LineHeight();
+			continue;
 		}
-		else
+		const ogScalableFont::Glyph *g = f->GetGlyph((unsigned char)*s);
+		if (g)
 		{
-			ch(cx, y, *s, fg, bg);
-			cx += FB_FONT_W;
+			blit_glyph_aa(*this, g, (int)(pen + 0.5f), baseline, fg);
+			pen += (float)g->advance;
 		}
-		s++;
 	}
 }
 

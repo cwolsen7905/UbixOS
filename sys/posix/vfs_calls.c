@@ -53,6 +53,7 @@
 /* Forward-declare lwIP read/write so we can call them for socket fds. */
 int lwip_send(int s, const void *dataptr, size_t size, int flags);
 int lwip_recv(int s, void *mem, size_t len, int flags);
+int lwip_close(int s);
 
 /* True when an unblocked signal is pending — used to make blocking I/O
  * loops interruptible.  td must be struct thread *. */
@@ -130,6 +131,17 @@ int sys_close(struct thread *td, struct sys_close_args *args)
 					kfree(p_fd);
 				}
 
+				td->td_retval[0] = 0;
+				break;
+			case 2:
+				/* Socket fd: tear down the lwIP netconn before freeing the
+				 * descriptor.  Without this, every closed socket leaks its
+				 * netconn (and lwIP socket slot) — the small MEMP_NUM_NETCONN
+				 * pool is exhausted after a few connections and socket()
+				 * starts failing. */
+				lwip_close(fd->socket);
+				if (fdestroy(td, fd, args->fd) != 0)
+					klog(KLOG_ERR, "sys_close: fdestroy failed for socket fd %d", args->fd);
 				td->td_retval[0] = 0;
 				break;
 			case FD_TYPE_TTY:
@@ -764,7 +776,7 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 			fp = (struct file *)thr->o_files[fdno];
 		if (fp == NULL)
 		{
-			thr->td_retval[0] = EBADF;
+			thr->td_retval[0] = -EBADF;
 			return (EBADF);
 		}
 		/* Synthesize a stable name: fd objects don't have a stored path,
@@ -786,8 +798,37 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args)
 		return (0);
 	}
 
-	thr->td_retval[0] = ENOENT;
-	return (ENOENT);
+	/*
+	 * uBixOS filesystems (FAT/devfs) have no symbolic links, so no existing
+	 * path is ever a symlink.  POSIX requires readlink() on an existing
+	 * non-symlink to fail with EINVAL ("not a symbolic link"), and on a
+	 * missing path to fail with ENOENT.  Distinguishing the two matters for
+	 * musl's realpath(), which aborts on any errno other than EINVAL but
+	 * treats EINVAL as "use the literal component and continue": returning
+	 * ENOENT for an existing directory broke resource discovery in ported
+	 * apps (e.g. NetSurf's Messages/CSS/font lookup), while returning EINVAL
+	 * for a missing path would let realpath() wrongly succeed on it.  Probe
+	 * existence (fopen rejects directories, so fall back to vfs_opendir) to
+	 * return the POSIX-correct errno.
+	 */
+	fileDescriptor_t *fd = fopen(path, "rb");
+	if (fd != 0x0)
+	{
+		fclose(fd);
+	}
+	else
+	{
+		kDIR_t *dir = vfs_opendir(path);
+		if (dir == 0x0)
+		{
+			thr->td_retval[0] = -ENOENT;
+			return (ENOENT);
+		}
+		vfs_closedir(dir);
+	}
+
+	thr->td_retval[0] = -EINVAL;
+	return (EINVAL);
 }
 
 int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode)

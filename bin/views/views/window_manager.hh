@@ -48,6 +48,7 @@ class WindowManager
 	void close_window(Window *w);
 	void minimize_window(Window *w);
 	void resize_window(Window *w, int new_w, int new_h);
+	void place_window(Window *w, int mode); /* 0=toggle maximize, 1=snap left, 2=snap right */
 
       public:
 	WindowManager();

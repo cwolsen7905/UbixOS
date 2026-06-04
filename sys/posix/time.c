@@ -118,18 +118,17 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp)
 	u_int32_t ticks = systemVitals->sysTicks;
 
 	/*
-	 * Return elapsed-since-boot time.  timeStart holds the wall-clock
-	 * second at boot but does not advance with sysTicks, so adding it
-	 * here without the elapsed offset would give a frozen timestamp.
-	 * Elapsed time is sufficient for all current callers (select timeouts,
-	 * profiling, etc.).  Full wall-clock requires adding timeStart once
-	 * the PIT tick accounting is verified against the RTC.
+	 * Wall clock = boot wall-clock second (timeStart, set from the CMOS RTC
+	 * in time_init) + seconds elapsed since boot (sysTicks runs at 200 Hz).
+	 * Without timeStart the clock reads ~1970, which breaks anything that
+	 * needs real time — e.g. TLS X.509 certificate-validity checks.
 	 */
-	tp->tv_sec  = ticks / 200u;
-	tp->tv_usec = (ticks % 200u) * 5000u;   /* 0..995000 µs in 5 ms steps */
+	tp->tv_sec = systemVitals->timeStart + ticks / 200u;
+	tp->tv_usec = (ticks % 200u) * 5000u; /* 0..995000 µs in 5 ms steps */
 
-	if (tzp != NULL) {
-		tzp->tz_minuteswest = 0;   /* UTC; no timezone database available */
+	if (tzp != NULL)
+	{
+		tzp->tz_minuteswest = 0; /* UTC; no timezone database available */
 		tzp->tz_dsttime = 0;
 	}
 

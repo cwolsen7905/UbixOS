@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>uBixOS NetSurf JS test</title></head>
+<body>
+<h1>JavaScript self-test</h1>
+<p>If JS runs you'll see a status line and three list items below.</p>
+<div id="status"></div>
+<ul id="list"></ul>
+<script>
+  /* Use createTextNode/appendChild — NetSurf 3.9 stubs the innerHTML setter,
+     so this avoids a false negative. */
+  var s = document.createElement('p');
+  s.appendChild(document.createTextNode('JS RAN — 1 + 2 = ' + (1 + 2)));
+  document.getElementById('status').appendChild(s);
+
+  var ul = document.getElementById('list');
+  for (var i = 1; i <= 3; i++) {
+    var li = document.createElement('li');
+    li.appendChild(document.createTextNode('dynamically created item ' + i));
+    ul.appendChild(li);
+  }
+  document.title = 'JS OK';
+</script>
+</body>
+</html>

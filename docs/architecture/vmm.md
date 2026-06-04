@@ -6,29 +6,12 @@
 
 ## Memory Layout
 
-Each process has a private 4 GB virtual address space divided into three regions:
-
-| Range | Description |
-|-------|-------------|
-| `0x00000000 – 0x003FFFFF` | Shared identity-mapped (PD[0], all 1024 PT entries = 4 MB). Contains ISA/BIOS/VGA in the first 1 MB; kernel code+data+BSS starts at `0x300000`. |
-| `0x00400000 – 0xBFFFFFFF` | Per-process region. Private page tables; available for code, data, heap, and stack. |
-| `0xC0000000 – 0xFFFFFFFF` | Kernel-only region. Shared across all processes but only accessible at ring 0. User-space access triggers a GPF. |
-
-### Page Directory Layout (PDE indices)
-
-| PDE index | Virtual range | Mapped to |
-|-----------|--------------|-----------|
-| 0 | `0x00000000 – 0x003FFFFF` | Kernel code |
-| 1 | `0x00400000 – 0x007FEFFF` | Kernel code (continued); `0x007FF000–0x007FFFFF` = `USER_LDT` |
-| 2–767 | `0x00800000 – 0xBFFFFFFF` | Per-process user space |
-| 768 | `0xC0000000 – 0xC03FFFFF` | Page directories |
-| 769 | `0xC0400000 – 0xC07FFFFF` | Page tables |
-| 770 | `0xC0800000 – 0xC0BFFFFF` | Kernel space start |
-| 1015 | `0xFDC00000 – 0xFDFFFFFF` | Kernel space end |
-| 1016 | `0xFE000000 – 0xFE3FFFFF` | Kernel stack start |
-| 1023 | `0xFFC00000 – 0xFFFFFFFF` | Kernel stack end |
-
-PDE entry 0x300 (page 0x768) is the self-referencing slot that maps the top 1 GB kernel region.
+Each process has a private 4 GB virtual address space: a shared identity-mapped
+low 4 MB, per-process user space (4 MB – 3 GB), and a shared kernel-only top
+1 GB. The full per-PDE breakdown, physical low-memory layout, and GDT selectors
+live in the canonical map — see
+**[i386-page-directory-map.md](i386-page-directory-map.md)**. This document
+covers VMM *behaviour* (functions, COW, MMIO guards, fork PD re-sync).
 
 ---
 

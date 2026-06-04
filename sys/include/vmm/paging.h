@@ -32,6 +32,7 @@
 #include <sys/types.h>
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
+#include <machine/vmm_layout.h>   /* PD_BASE_ADDR / PT_BASE_ADDR / VMM_KERN_START (arch layout) */
 
 #define PAGE_SHIFT      12              // Page Shift
 #define PAGE_SIZE       0x1000          // Page Size
@@ -42,8 +43,8 @@
 #define PT_INDEX(v_addr)  ((v_addr >> 12) & 0x03FF)             // Calc Page Table Offset
 #define PD_BASE_ADDR2     ((PAGE_SIZE << 0xA) + VMM_KERN_START) // Find Out What This Was For
 
-#define PD_BASE_ADDR      0xC0400000 // Page Directory Addressable Base Address
-#define PT_BASE_ADDR      0xC0000000 // Page Table Addressable Base Address
+/* PD_BASE_ADDR (0xC0400000) and PT_BASE_ADDR (0xC0000000) now live in
+ * <machine/vmm_layout.h> (included above) so they can be arch-parameterized. */
 
 #define PD_ENTRIES        (PAGE_SIZE/4) //Return Page Directory Entries
 #define PT_ENTRIES        (PAGE_SIZE/4) //Return Page Table Entries

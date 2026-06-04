@@ -35,19 +35,20 @@
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 
-#define PING_DATA_LEN	56
-#define PING_PKT_LEN	(8 + PING_DATA_LEN)   /* ICMP header + data */
-#define RECV_BUF_LEN	1024
-#define PING_COUNT	4
+#define PING_DATA_LEN 56
+#define PING_PKT_LEN (8 + PING_DATA_LEN) /* ICMP header + data */
+#define RECV_BUF_LEN 1024
+#define PING_COUNT 4
 
-static uint16_t
-icmp_cksum(const void *buf, int len)
+static uint16_t icmp_cksum(const void *buf, int len)
 {
 	const uint16_t *p = buf;
 	uint32_t sum = 0;
 
-	while (len > 1) {
+	while (len > 1)
+	{
 		sum += *p++;
 		len -= 2;
 	}
@@ -59,8 +60,7 @@ icmp_cksum(const void *buf, int len)
 	return (uint16_t)~sum;
 }
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	struct sockaddr_in dst;
 	uint8_t pkt_buf[PING_PKT_LEN];
@@ -68,29 +68,39 @@ main(int argc, char *argv[])
 	int sock, i;
 	uint16_t pid;
 
-	if (argc < 2) {
+	if (argc < 2)
+	{
 		fprintf(stderr, "usage: ping <address>\n");
 		return 1;
 	}
 
 	sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
-	if (sock < 0) {
+	if (sock < 0)
+	{
 		fprintf(stderr, "ping: socket: failed\n");
 		return 1;
 	}
 
 	memset(&dst, 0, sizeof(dst));
 	dst.sin_family = AF_INET;
-	if (inet_aton(argv[1], &dst.sin_addr) == 0) {
-		fprintf(stderr, "ping: bad address: %s\n", argv[1]);
-		return 1;
+	/* Accept a dotted-quad IP, or resolve a hostname via DNS. */
+	if (inet_aton(argv[1], &dst.sin_addr) == 0)
+	{
+		struct hostent *he = gethostbyname(argv[1]);
+		if (he == NULL || he->h_addr_list[0] == NULL)
+		{
+			fprintf(stderr, "ping: cannot resolve %s\n", argv[1]);
+			return 1;
+		}
+		memcpy(&dst.sin_addr, he->h_addr_list[0], sizeof(dst.sin_addr));
 	}
 
 	pid = (uint16_t)(getpid() & 0xffff);
 
 	printf("PING %s: %d data bytes\n", argv[1], PING_DATA_LEN);
 
-	for (i = 0; i < PING_COUNT; i++) {
+	for (i = 0; i < PING_COUNT; i++)
+	{
 		struct sockaddr_in from;
 		struct ip *iph;
 		struct icmp *reply;
@@ -99,51 +109,52 @@ main(int argc, char *argv[])
 
 		struct icmp *pkt = (struct icmp *)pkt_buf;
 		memset(pkt_buf, 0, PING_PKT_LEN);
-		pkt->icmp_type  = ICMP_ECHO;
-		pkt->icmp_code  = 0;
-		pkt->icmp_id    = pid;
-		pkt->icmp_seq   = (uint16_t)i;
+		pkt->icmp_type = ICMP_ECHO;
+		pkt->icmp_code = 0;
+		pkt->icmp_id = pid;
+		pkt->icmp_seq = (uint16_t)i;
 		memset(pkt_buf + 8, 0x42, PING_DATA_LEN);
 		pkt->icmp_cksum = icmp_cksum(pkt_buf, PING_PKT_LEN);
 
-		if (sendto(sock, pkt_buf, PING_PKT_LEN, 0,
-		    (struct sockaddr *)&dst, sizeof(dst)) < 0) {
+		if (sendto(sock, pkt_buf, PING_PKT_LEN, 0, (struct sockaddr *)&dst, sizeof(dst)) < 0)
+		{
 			fprintf(stderr, "ping: sendto failed\n");
 			continue;
 		}
 
 		fromlen = sizeof(from);
-		recvlen = recvfrom(sock, recvbuf, sizeof(recvbuf), 0,
-		    (struct sockaddr *)&from, &fromlen);
-		if (recvlen < 0) {
+		recvlen = recvfrom(sock, recvbuf, sizeof(recvbuf), 0, (struct sockaddr *)&from, &fromlen);
+		if (recvlen < 0)
+		{
 			printf("Request timeout for icmp_seq %d\n", i);
 			continue;
 		}
 
-		iph    = (struct ip *)recvbuf;
+		iph = (struct ip *)recvbuf;
 		iphlen = (iph->ip_hl & 0x0f) << 2;
-		reply  = (struct icmp *)(recvbuf + iphlen);
+		reply = (struct icmp *)(recvbuf + iphlen);
 
-		if (reply->icmp_type != ICMP_ECHOREPLY ||
-		    reply->icmp_id   != pid) {
+		if (reply->icmp_type != ICMP_ECHOREPLY || reply->icmp_id != pid)
+		{
 			/* Not our reply — try to recv again once */
-			recvlen = recvfrom(sock, recvbuf, sizeof(recvbuf), 0,
-			    (struct sockaddr *)&from, &fromlen);
-			if (recvlen < 0) {
+			recvlen = recvfrom(sock, recvbuf, sizeof(recvbuf), 0, (struct sockaddr *)&from, &fromlen);
+			if (recvlen < 0)
+			{
 				printf("Request timeout for icmp_seq %d\n", i);
 				continue;
 			}
-			iph    = (struct ip *)recvbuf;
+			iph = (struct ip *)recvbuf;
 			iphlen = (iph->ip_hl & 0x0f) << 2;
-			reply  = (struct icmp *)(recvbuf + iphlen);
+			reply = (struct icmp *)(recvbuf + iphlen);
 		}
 
-		if (reply->icmp_type == ICMP_ECHOREPLY) {
+		if (reply->icmp_type == ICMP_ECHOREPLY)
+		{
 			printf("%d bytes from %s: icmp_seq=%d ttl=%d\n",
-			    recvlen - iphlen,
-			    inet_ntoa(from.sin_addr),
-			    reply->icmp_seq,
-			    iph->ip_ttl);
+			       recvlen - iphlen,
+			       inet_ntoa(from.sin_addr),
+			       reply->icmp_seq,
+			       iph->ip_ttl);
 		}
 
 		sleep(1);

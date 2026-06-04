@@ -109,7 +109,7 @@ sys/
 | 14 | `ufs_init()`, `fat_init()` | Filesystem drivers |
 | 15 | `net_init()` | lwIP TCP/IP stack + e1000 netif |
 
-5. After init, `kmain` mounts the FAT32 boot partition as `sys:/` using the multiboot `boot_device` field, then `execFile("sys:/bin/init")` launches PID 1.
+5. After init, `kmain` mounts the FAT32 boot partition at `/` using the multiboot `boot_device` field, then `execFile("/bin/init")` launches PID 1.
 
 ### SMP Application Processor Startup
 
@@ -185,7 +185,7 @@ The VFS provides a uniform interface over multiple concrete filesystems:
 
 ### VFS Path Convention
 
-All VFS paths use standard POSIX form (`/bin/init`, `/etc/userdb`, `/dev/tty0`). The historical `sys:` mountpoint prefix is no longer used in userland or kernel code. `sys_getcwd` strips the internal mountpoint prefix before returning to userland; `sys_getvfscwd` (native syscall 41) returns the full internal path for debugging.
+All VFS paths use standard POSIX form (`/bin/init`, `/etc/userdb`, `/dev/tty0`). The historical `sys:` mountpoint prefix is no longer used in userland or kernel code. `cwd` (`_current->oInfo.cwd`) is a plain POSIX path; `sys_getcwd` and `sys_getvfscwd` (native syscall 41) now both return it verbatim (the old strip-vs-full distinction is vestigial).
 
 ### Supported Filesystems
 
@@ -357,7 +357,7 @@ Two-layer graphical system modelled after WindowServer + Core Graphics:
 ┌────────────────────────────────────────┐
 │  Application (bin/term, bin/muffin…)   │
 │  Renders into shared-memory buffer     │
-│  via lib/objgfx (ogSurface/ogBitFont)  │
+│  via lib/objgfx (ogSurface/ogScalableFont) │
 └──────────────┬─────────────────────────┘
                │  MPI: DISPLAY_FLIP / DISPLAY_KEY / DISPLAY_CLOSE
                │  vmm_share_region: shared framebuffer window buffer
@@ -374,7 +374,7 @@ Two-layer graphical system modelled after WindowServer + Core Graphics:
 
 **Rules:**
 - `views` is the only process that calls `sys_mapfb()`. All other processes receive a `vmm_share_region` buffer.
-- Apps render with `objGFX` (`ogSurface`/`ogBitFont`). No app writes to the framebuffer directly.
+- Apps render with `objGFX` (`ogSurface`/`ogScalableFont`; `ogBitFont` is legacy). No app writes to the framebuffer directly.
 - MPI carries only signals (`DISPLAY_CLAIM`, `DISPLAY_FLIP`, `DISPLAY_KEY`, `DISPLAY_CLOSE`), never drawing commands.
 - The compositor uses deferred damage tracking — only dirty regions are recomposited each frame.
 
@@ -460,7 +460,7 @@ Userland is built separately from the kernel. All binaries link against **musl l
 | Library | Description |
 |---------|-------------|
 | `msun/` | Math library |
-| `objgfx/` | C++ surface rendering API (`ogSurface`, `ogBitFont`) — headers in `include/objgfx/` |
+| `objgfx/` | C++ surface rendering API (`ogSurface`, `ogScalableFont` (TrueType); `ogBitFont` legacy) — headers in `include/objgfx/` |
 | `ubix_api/` | UbixOS-specific API (`ubix_getcwd`, MPI helpers, `gettime`) |
 | `ubix/` | Core startup library — `crt1` (`_start.S`) and static initializers |
 | `libedit/` | Line editing library |
@@ -469,7 +469,7 @@ Userland is built separately from the kernel. All binaries link against **musl l
 
 ### Runtime Linker (`libexec/`)
 
-The dynamic linker (`ld.so`) resolves shared library references at runtime. Libraries must be present at `sys:/lib/` on the mounted UbixOS volume.
+The runtime dynamic linker is musl's (`/lib/ld-musl-i386.so.1`, the `PT_INTERP` of userland binaries). Shared libraries are installed at `/lib/` on the UbixOS volume. (The older native `libexec/ld` — which used `sys:/lib/` — is superseded.)
 
 ---
 

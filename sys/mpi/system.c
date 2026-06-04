@@ -209,7 +209,8 @@ int mpi_postMessage(char *name, u_int32_t type, mpi_message_t *msg)
 		 * Using the stale 'mbox' pointer after the unlock is a UAF:
 		 * mpi_destroyMbox holds mpiSpinLock when it kfree()s the mbox,
 		 * so re-finding by name is safe and handles the destroy case. */
-		for (;;) {
+		for (;;)
+		{
 			sched_yield();
 			spinLock(&mpiSpinLock);
 			mpi_mbox_t *m = mpi_findMbox(name);
@@ -306,7 +307,8 @@ int mpi_destroyMbox(char *name)
 				mbox->next->prev = mbox->prev;
 			{
 				mpi_message_t *msg = mbox->msg;
-				while (msg != 0x0) {
+				while (msg != 0x0)
+				{
 					mpi_message_t *next = msg->next;
 					kfree(msg);
 					msg = next;
@@ -320,6 +322,50 @@ int mpi_destroyMbox(char *name)
 
 	spinUnlock(&mpiSpinLock);
 	return (-1);
+}
+
+/**
+ * Destroy every mailbox owned by a process.
+ *
+ * Called from endTask() so a process's mailboxes do not leak when it exits
+ * (whether cleanly or via a crash).  A leaked mailbox keeps its dead owner's
+ * pid, so mpi_createMbox() refuses to recreate the same name and
+ * mpi_fetchMessage() (which is owner-pid gated) rejects the new owner — e.g.
+ * relaunching a views app like nsfb would hang waiting for a DISPLAY_ACK it
+ * can never fetch.  Unlike mpi_destroyMbox(), this does not gate on
+ * _current->id: the owner is already gone.
+ *
+ * @param pid  Owner whose mailboxes are to be freed.
+ */
+void mpi_destroyProcessMboxes(pidType pid)
+{
+	mpi_mbox_t *mbox;
+	mpi_mbox_t *next;
+
+	spinLock(&mpiSpinLock);
+	for (mbox = mboxList; mbox != 0x0; mbox = next)
+	{
+		next = mbox->next;
+		if (mbox->pid != pid)
+			continue;
+
+		if (mbox->prev != 0x0)
+			mbox->prev->next = mbox->next;
+		else
+			mboxList = mbox->next;
+		if (mbox->next != 0x0)
+			mbox->next->prev = mbox->prev;
+
+		mpi_message_t *msg = mbox->msg;
+		while (msg != 0x0)
+		{
+			mpi_message_t *m = msg->next;
+			kfree(msg);
+			msg = m;
+		}
+		kfree(mbox);
+	}
+	spinUnlock(&mpiSpinLock);
 }
 
 /***

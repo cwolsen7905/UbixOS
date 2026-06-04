@@ -30,6 +30,7 @@
 #include <ubixos/syscall_posix.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <sys/io.h>
 #include <ubixos/sched.h>
 #include <isa/8259.h>
@@ -43,7 +44,6 @@
 
 #define FP_TO_LINEAR(seg, off) ((void*) ((((u_int16_t) (seg)) << 4) + ((u_int16_t) (off))))
 
-static u_int32_t gpfStack = 0x0;
 
 void intNull();
 
@@ -108,8 +108,19 @@ static struct {
 
  ************************************************************************/
 int idt_init() {
-  struct tssStruct *sfTSS = (struct tssStruct *) 0x6200;
-  struct tssStruct *gpfTSS = (struct tssStruct *) 0x5200;
+  struct tssStruct *kernelTSS = (struct tssStruct *) 0x4200;
+
+  /*
+   * Initialize the single kernel TSS (GDT selector 0x20, TR loaded once at
+   * boot).  Under software task switching this is the live TSS: the CPU reads
+   * ss0/esp0 from it on every ring3->ring0 entry (esp0 is updated per switch by
+   * switch_to).  Previously the ljmp scheduler repointed GDT[4] away from 0x4200
+   * immediately, so it was never initialized.
+   */
+  kernelTSS->ss0 = 0x10;
+  kernelTSS->cr3 = (unsigned int) kernelPageDirectory;
+  kernelTSS->ldt = 0x0;
+  kernelTSS->io_map = 0x8000;
 
   /* Load the IDT into the system */
   asm volatile(
@@ -141,8 +152,12 @@ int idt_init() {
   setVector(_int10, 10, dPresent + dInt + dDpl0);
   setVector(_int11, 11, dPresent + dInt + dDpl0);
   setVector(_int12, 12, dPresent + dInt + dDpl0);
-  //setVector(_gpf, 13, dPresent + dInt + dDpl0);
-  setTaskVector(13, dPresent + dTask + dDpl0, 0x38);
+  /* GPF (#13) is an INTERRUPT GATE, not a hardware task gate: the v86 BIOS-INT
+   * virtualizer __gpf reads/writes the faulting state from the trapframe and
+   * irets back to VM86.  This is what makes v86 compatible with software task
+   * switching (a task gate would do a hardware switch through the shared TSS). */
+  setVector(_gpf, 13, dPresent + dInt + dDpl0);
+  // setTaskVector(13, dPresent + dTask + dDpl0, 0x38);
   setVector(_vmm_page_fault, 14, dPresent + dInt + dDpl0);
   setVector(_floatingPoint, 16, dPresent + dInt + dDpl0);
   setVector(_alignmentCheck, 17, dPresent + dInt + dDpl0);
@@ -154,49 +169,13 @@ int idt_init() {
   setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
 
-  memset(gpfTSS, 0x0, sizeof(struct tssStruct));
-
-  gpfStack = 0x1D000;//(u_int32_t)vmm_get_free_kernel_page(sysID, 1) + (PAGE_SIZE - 0x4);
-
-  gpfTSS->back_link = 0x0;
-  gpfTSS->esp0 = 0x0;
-  gpfTSS->ss0 = 0x0;
-  gpfTSS->esp1 = 0x0;
-  gpfTSS->ss1 = 0x0;
-  gpfTSS->esp2 = 0x0;
-  gpfTSS->ss2 = 0x0;
-  gpfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  gpfTSS->eip = (unsigned int) &_gpf;
-  gpfTSS->eflags = 0x206;
-  gpfTSS->esp = gpfStack; //0x1D000;
-  gpfTSS->ebp = 0x0; // 0x1D000;
-  gpfTSS->esi = 0x0;
-  gpfTSS->edi = 0x0;
-  gpfTSS->es = 0x10;
-  gpfTSS->cs = 0x08;
-  gpfTSS->ss = 0x10;
-  gpfTSS->ds = 0x10;
-  gpfTSS->fs = 0x10;
-  gpfTSS->gs = 0x10;
-  gpfTSS->ldt = 0x0;
-  gpfTSS->trace_bitmap = 0x0000;
-  gpfTSS->io_map = 0x8000;
-
   /*
-  memset(sfTSS, 0x0, sizeof(struct tssStruct));
-  sfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  sfTSS->eip = (unsigned int) &__int8;
-  sfTSS->eflags = 0x206;
-  sfTSS->esp = 0x1C000;
-  sfTSS->ebp = 0x1C000;
-  sfTSS->es = 0x10;
-  sfTSS->cs = 0x08;
-  sfTSS->ss = 0x10;
-  sfTSS->ds = 0x10;
-  sfTSS->fs = 0x10;
-  sfTSS->gs = 0x10;
-  sfTSS->io_map = 0x8000;
-  */
+   * Note: the GPF (#13), double-fault (#8) and v86 BIOS-INT paths used to be
+   * hardware task gates with their own TSSes at 0x5200/0x6200.  Those are now
+   * ordinary interrupt gates (software task switching), so no per-handler TSS
+   * is built here.  The only TSS that matters is the kernel TSS above (0x4200),
+   * used solely for ss0/esp0 on ring3->ring0 entry.
+   */
 
   /* Print out information for the IDT */
   kprintf("idt0: addr=0x%X\n", &ubixIDT);
@@ -248,6 +227,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _intNull \n"
   "  pop %gs      \n"
@@ -274,6 +254,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _divideError  \n"
   "  pop %gs      \n"
@@ -300,6 +281,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _debug  \n"
   "  pop %gs      \n"
@@ -326,6 +308,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call _nmi  \n"
   "  pop %gs      \n"
@@ -374,6 +357,7 @@ asm(
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp            \n"
   "  call __int6          \n"
   "  pop %gs              \n"
@@ -399,6 +383,7 @@ asm(
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp            \n"
   "  call __doubleFault   \n"
   "  pop %gs              \n"
@@ -449,12 +434,48 @@ void __gpf(struct trapframe *frame) {
   u_int32_t *stack32 = 0x0;
   bool isOperand32 = FALSE, isAddress32 = FALSE;
 
-  struct tssStruct *gpfTSS = (struct tssStruct *) 0x5200;
-
   static pidType gpfLastPid = -1;
   static u_int32_t gpfIterCount = 0;
 
-  gpfEnter:
+  /*
+   * Only VM86 (BIOS) faults are virtualized here.  A #GP from a normal task
+   * (eflags.VM clear) is a real fault — a user bug or a kernel bug — not a BIOS
+   * instruction to emulate; the VM86 segment slots above tf_ss are not present
+   * for it either.  Route it to the generic fault path.
+   */
+  if (!(frame->tf_eflags & EFLAG_VM)) {
+    die_if_kernel("general protection", frame, frame->tf_err);
+    endTask(_current->id);
+    sched_yield();
+    return;
+  }
+
+  /*
+   * Interrupt-gate v86 handler (was a hardware task gate).  The CPU delivered
+   * this GPF from VM86 mode, so the faulting state is in the trapframe — and the
+   * VM86 segment registers es/ds/fs/gs sit just above tf_ss (the CPU pushes them
+   * on a VM86 fault).  Sync the trapframe into md_tss so the existing
+   * virtualization logic (which operates on md_tss) works unchanged; sync back
+   * before the iret in _gpf.  Results land in md_tss for bioscall to read.
+   */
+  u_int32_t *vsegs = (u_int32_t *)&frame->tf_ss; /* [0]=ss [1]=es [2]=ds [3]=fs [4]=gs */
+  _current->md.md_tss.eip    = frame->tf_eip;
+  _current->md.md_tss.cs     = frame->tf_cs;
+  _current->md.md_tss.eflags = frame->tf_eflags;
+  _current->md.md_tss.esp    = frame->tf_esp;
+  _current->md.md_tss.ss     = frame->tf_ss;
+  _current->md.md_tss.es     = vsegs[1];
+  _current->md.md_tss.ds     = vsegs[2];
+  _current->md.md_tss.fs     = vsegs[3];
+  _current->md.md_tss.gs     = vsegs[4];
+  _current->md.md_tss.eax    = frame->tf_eax;
+  _current->md.md_tss.ecx    = frame->tf_ecx;
+  _current->md.md_tss.edx    = frame->tf_edx;
+  _current->md.md_tss.ebx    = frame->tf_ebx;
+  _current->md.md_tss.esi    = frame->tf_esi;
+  _current->md.md_tss.edi    = frame->tf_edi;
+  _current->md.md_tss.ebp    = frame->tf_ebp;
+
   asm("cli");
   isOperand32 = FALSE;
   isAddress32 = FALSE;
@@ -472,9 +493,7 @@ void __gpf(struct trapframe *frame) {
     sched_dead(_current);
     gpfLastPid = -1;
     gpfIterCount = 0;
-    irqEnable(0);
-    sched_yield();
-    goto gpfEnter;
+    goto gpfDone;
   }
 
   ip = FP_TO_LINEAR(_current->md.md_tss.cs, _current->md.md_tss.eip);
@@ -740,32 +759,69 @@ void __gpf(struct trapframe *frame) {
       sched_dead(_current);
     break;
   }
-  irqEnable(0);
-  sched_yield();
-  goto gpfEnter;
+
+gpfDone:
+  if (_current->state == DEAD) {
+    /* v86 task finished (INT 0x69), timed out, or hit an unhandled op: restore
+     * the timer (masked by sched on the v86 switch) and switch away.  The dead
+     * task never resumes, so this does not return. */
+    irqEnable(0);
+    sched_yield();
+    return;
+  }
+
+  /* Sync the virtualized (advanced) state back to the trapframe so the iret in
+   * _gpf resumes VM86 at the new cs:eip with the updated registers. */
+  frame->tf_eip    = _current->md.md_tss.eip;
+  frame->tf_cs     = (u_int16_t)_current->md.md_tss.cs;
+  frame->tf_eflags = _current->md.md_tss.eflags;
+  frame->tf_esp    = _current->md.md_tss.esp;
+  frame->tf_ss     = (u_int16_t)_current->md.md_tss.ss;
+  vsegs[1]         = (u_int16_t)_current->md.md_tss.es;
+  vsegs[2]         = (u_int16_t)_current->md.md_tss.ds;
+  vsegs[3]         = (u_int16_t)_current->md.md_tss.fs;
+  vsegs[4]         = (u_int16_t)_current->md.md_tss.gs;
+  frame->tf_eax    = _current->md.md_tss.eax;
+  frame->tf_ecx    = _current->md.md_tss.ecx;
+  frame->tf_edx    = _current->md.md_tss.edx;
+  frame->tf_ebx    = _current->md.md_tss.ebx;
+  frame->tf_esi    = _current->md.md_tss.esi;
+  frame->tf_edi    = _current->md.md_tss.edi;
+  frame->tf_ebp    = _current->md.md_tss.ebp;
 }
 
+/*
+ * _gpf — #GP (vector 13) interrupt-gate entry (no longer a hardware task gate).
+ * The CPU pushed an error code; we add a trapno and build a struct trapframe,
+ * load kernel data segments (the faulting VM86 context's segments are real-mode
+ * and unusable for kernel memory access), call __gpf to virtualize the BIOS
+ * instruction, then iret back to VM86.
+ */
 asm(
-  ".globl _gpf     \n"
-  "_gpf:           \n"
-  "  cli           \n"
-  "  pushl $0x13   \n"
-  "  pushal        \n" /* Save all registers           */
-  "  push %ds      \n"
-  "  push %es      \n"
-  "  push %fs      \n"
-  "  push %gs      \n"
-  "  push %esp     \n"
-  "  call __gpf    \n"
-  "  add $0x4,%esp \n"
-  "  mov %esp,%eax \n"
-  "  pop %gs       \n"
-  "  pop %fs       \n"
-  "  pop %es       \n"
-  "  pop %ds       \n"
-  "  popal         \n"
-  "  sti           \n"
-  "  iret          \n" /* Exit interrupt                           */
+  ".globl _gpf       \n"
+  "_gpf:             \n"
+  "  cli             \n"
+  "  pushl $0x13     \n" /* tf_trapno (CPU already pushed tf_err) */
+  "  pushal          \n"
+  "  push %ds        \n"
+  "  push %es        \n"
+  "  push %fs        \n"
+  "  push %gs        \n"
+  "  mov $0x10,%eax  \n" /* kernel data segs for the C handler */
+  "  mov %eax,%ds    \n"
+  "  mov %eax,%es    \n"
+  "  mov %eax,%fs    \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
+  "  push %esp       \n"
+  "  call __gpf      \n"
+  "  add $0x4,%esp   \n"
+  "  pop %gs         \n"
+  "  pop %fs         \n"
+  "  pop %es         \n"
+  "  pop %ds         \n"
+  "  popal           \n"
+  "  add $8,%esp     \n" /* discard tf_trapno + tf_err */
+  "  iret            \n"
 );
 
 
@@ -785,6 +841,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __floatingPoint  \n"
   "  pop %gs      \n"
@@ -810,6 +867,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __alignmentCheck  \n"
   "  pop %gs      \n"
@@ -836,6 +894,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __machineCheck  \n"
   "  pop %gs      \n"
@@ -863,6 +922,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __simd  \n"
   "  pop %gs      \n"
@@ -889,6 +949,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __virtualization  \n"
   "  pop %gs      \n"
@@ -926,6 +987,7 @@ asm(
   "  push %es   \n"
   "  push %fs   \n"
   "  push %gs   \n"
+  ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU data access */
   "  push %esp  \n"
   "  call __security\n"
   "  pop %gs      \n"
@@ -936,6 +998,7 @@ asm(
   "  iret         \n"
 );
 
+/* Removed static however this is the only place it's called from */
 /* Removed static however this is the only place it's called from */
 void mathStateRestore() {
   if (_usedMath != 0x0) {
@@ -963,16 +1026,21 @@ void mathStateRestore() {
 }
 
 
+/* _int7 (device-not-available) — lazy FPU state restore. */
 asm(
   ".globl _int7              \n"
   "_int7:                    \n"
   "  pushl %eax              \n"
+  "  pushl %gs               \n" /* save interrupted %gs (may be user TLS)      */
+  ASM_PCPU_LOAD_GS              /* %gs = SEL_PCPU: %gs:8 == _current for the    */
+                               /* read below and for mathStateRestore          */
   "  clts                    \n"
-  "  movl _current,%eax      \n"
+  "  movl %gs:8, %eax        \n" /* _current */
   "  cmpl _usedMath,%eax     \n"
   "  je mathDone             \n"
   "  call mathStateRestore   \n"
   "mathDone:                 \n"
+  "  popl %gs                \n" /* restore interrupted %gs */
   "  popl %eax               \n"
   "  iret                    \n"
 );

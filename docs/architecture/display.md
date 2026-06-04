@@ -15,32 +15,32 @@ GPU-accelerated compositing open without changing the protocol.
 ## Component map
 
 ```
-  ┌─────────────────────────────────────────────────────────┐
-  │  Kernel                                                 │
-  │  sys/kernel/fb.c                                        │
-  │    sys_mapfb      – maps VESA framebuffer into views    │
-  │    sys_shareregion– shares a vmm region into a client   │
+  ┌──────────────────────────────────────────────────────────┐
+  │  Kernel                                                  │
+  │  sys/kernel/fb.c                                         │
+  │    sys_mapfb      – maps VESA framebuffer into views     │
+  │    sys_shareregion– shares a vmm region into a client    │
   │    sys_getmouse   – drains mouse ring buffer (syscall 44)│
   │    sys_getkbd     – drains kbd ring buffer  (syscall 46) │
-  │  sys/isa/atkbd.c  – ISR fills kbd_ring[]                │
-  │  sys/isa/mouse.c  – ISR fills mouse ring               │
-  └───────────────────────────┬─────────────────────────────┘
+  │  sys/isa/atkbd.c  – ISR fills kbd_ring[]                 │
+  │  sys/isa/mouse.c  – ISR fills mouse ring                 │
+  └───────────────────────────┬──────────────────────────────┘
                               │ syscalls / shared memory
-  ┌───────────────────────────▼─────────────────────────────┐
-  │  bin/views  (compositor — C++)                          │
-  │                                                         │
-  │  • Owns the physical framebuffer (via sys_mapfb)        │
-  │  • Maintains Window list: id, x/y/w/h, shm, mbox       │
-  │  • Polls mouse and kbd via inline syscall stubs         │
-  │  • Dispatches DISPLAY_MOUSE / DISPLAY_KEY to focused win│
-  │  • On DISPLAY_CLAIM: vmm_share_region → client gets shm │
-  │  • On DISPLAY_FLIP: composites client buffer onto screen│
-  │  • On DISPLAY_RELEASE: repaints desktop, reblit others  │
-  │  • Server-side decorations: draws title bar + close btn │
-  │  • focus-follows-click: left click sets focused window  │
-  └──────┬────────────────────────────────┬─────────────────┘
+  ┌───────────────────────────▼──────────────────────────────┐
+  │  bin/views  (compositor — C++)                           │
+  │                                                          │
+  │  • Owns the physical framebuffer (via sys_mapfb)         │
+  │  • Maintains Window list: id, x/y/w/h, shm, mbox         │
+  │  • Polls mouse and kbd via inline syscall stubs          │
+  │  • Dispatches DISPLAY_MOUSE / DISPLAY_KEY to focused win │
+  │  • On DISPLAY_CLAIM: vmm_share_region → client gets shm  │
+  │  • On DISPLAY_FLIP: composites client buffer onto screen │
+  │  • On DISPLAY_RELEASE: repaints desktop, reblit others   │
+  │  • Server-side decorations: draws title bar + close btn  │
+  │  • focus-follows-click: left click sets focused window   │
+  └──────┬────────────────────────────────┬──────────────────┘
          │ MPI                            │ MPI
-  ┌──────▼──────────┐           ┌─────────▼───────────────┐
+  ┌──────▼──────────┐           ┌─────────▼────────────────┐
   │  bin/taskbar    │           │  bin/term  (and others)  │
   │  (C++)          │           │  (C++)                   │
   │                 │           │                          │
@@ -52,7 +52,7 @@ GPU-accelerated compositing open without changing the protocol.
   │                 │           │                          │
   │  objgfx:        │           │  objgfx:                 │
   │    ogSurface    │           │    ogSurface             │
-  │    ogBitFont    │           │    ogBitFont             │
+  │ ogScalableFont  │           │ ogScalableFont           │
   └─────────────────┘           └──────────────────────────┘
 ```
 
@@ -152,21 +152,29 @@ surf.ogLine(0, 0, w-1, h-1, 0x00FF0000);       // line
 surf.ogSetPixel(x, y, color);                  // single pixel
 ```
 
-Load and render a bitmap font (`.DPF` files live at `sys:/var/fonts/`):
+Load and render text. The current UI uses **scalable, antialiased TrueType
+fonts** via `ogScalableFont` (stb_truetype); `.ttf` files live at `/var/fonts/`
+(`DejaVuSans.ttf`, `DejaVuSansMono.ttf`). The compositor, taskbar, terminal,
+settings, login and tessera all use this:
 
 ```cpp
-ogBitFont font;
-font.Load("sys:/var/fonts/ROM8X8.DPF", 0);
-font.SetFGColor(192, 192, 192, 255);  // R, G, B, A
+ogScalableFont font;
+font.Load("/var/fonts/DejaVuSans.ttf", 16);  // path, pixel height
+font.SetFGColor(192, 192, 192, 255);          // R, G, B, A
 font.SetBGColor(0, 0, 0, 255);
-font.PutString(surf, x, y, "Hello");
+font.PutString(surf, x, y, "Hello");          // baseline at y + Ascent()
 font.PutChar(surf, x, y, 'A');
+int w = font.TextWidth("Hello");              // pixel width (exact)
 ```
+
+> The older fixed-size bitmap font (`ogBitFont`, `.DPF` files) still exists for
+> legacy callers and uses the same `PutChar`/`PutString`/`SetFGColor` API, but
+> new code should use `ogScalableFont`.
 
 Color helpers when packing `uint32_t` colors from separate R/G/B components:
 
 ```cpp
-static void font_fg(ogBitFont &f, uint32_t c) {
+static void font_fg(ogScalableFont &f, uint32_t c) {
     f.SetFGColor((c>>16)&0xFF, (c>>8)&0xFF, c&0xFF, 255);
 }
 ```

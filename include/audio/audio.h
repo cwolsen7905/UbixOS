@@ -30,41 +30,56 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /*
  * ioctl commands for /dev/audio.
  * arg points to a uint32_t for GET/SET rate.
  */
-#define AUDIO_SET_RATE  0x4101
-#define AUDIO_GET_RATE  0x4102
+#define AUDIO_SET_RATE 0x4101
+#define AUDIO_GET_RATE 0x4102
+#define AUDIO_SET_VOLUME 0x4103 /* arg: uint32_t* master volume 0..100 */
+#define AUDIO_GET_VOLUME 0x4104 /* arg: uint32_t* -> 0..100 */
+#define AUDIO_SET_MUTE 0x4105   /* arg: uint32_t* 0 = unmute, 1 = mute */
+#define AUDIO_GET_MUTE 0x4106   /* arg: uint32_t* -> 0/1 */
 
-/*
- * Open /dev/audio (or any audio device path) for writing.
- * Returns a file descriptor >= 0 on success, -1 on error.
- */
-int  audio_open(const char *dev);
+	/*
+	 * Open /dev/audio (or any audio device path) for writing.
+	 * Returns a file descriptor >= 0 on success, -1 on error.
+	 */
+	int audio_open(const char *dev);
 
-/*
- * Set the PCM sample rate (Hz).  Must be called before the first write.
- * The AC'97 codec defaults to 48000 Hz after reset; this ioctl lets
- * applications request a different rate if the codec supports VRA.
- * Returns 0 on success, -1 on error.
- */
-int  audio_set_rate(int fd, uint32_t rate);
+	/*
+	 * Set the PCM sample rate (Hz).  Must be called before the first write.
+	 * The AC'97 codec defaults to 48000 Hz after reset; this ioctl lets
+	 * applications request a different rate if the codec supports VRA.
+	 * Returns 0 on success, -1 on error.
+	 */
+	int audio_set_rate(int fd, uint32_t rate);
 
-/*
- * Write raw signed 16-bit stereo little-endian PCM samples.
- * Returns the number of bytes accepted (may be less than n if the
- * kernel ring buffer is full), or -1 on error.
- */
-int  audio_write(int fd, const void *buf, int n);
+	/*
+	 * Master mixer controls.  Volume is 0..100; mute is 0/1.  The fd may be opened
+	 * read/write or write-only.  Each returns 0 on success, -1 on error; the GET
+	 * variants store the current value through the pointer.
+	 */
+	int audio_set_volume(int fd, uint32_t pct);
+	int audio_get_volume(int fd, uint32_t *pct);
+	int audio_set_mute(int fd, uint32_t mute);
+	int audio_get_mute(int fd, uint32_t *mute);
 
-/*
- * Close the audio device.
- */
-void audio_close(int fd);
+	/*
+	 * Write raw signed 16-bit stereo little-endian PCM samples.
+	 * Returns the number of bytes accepted (may be less than n if the
+	 * kernel ring buffer is full), or -1 on error.
+	 */
+	int audio_write(int fd, const void *buf, int n);
+
+	/*
+	 * Close the audio device.
+	 */
+	void audio_close(int fd);
 
 #ifdef __cplusplus
 } /* extern "C" */

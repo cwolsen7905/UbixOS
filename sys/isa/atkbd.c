@@ -35,6 +35,7 @@
 #include <isa/8259.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <sys/io.h>
 #include <sys/shutdown.h>
 #include <lib/kmalloc.h>
@@ -237,7 +238,7 @@ asm(".globl atkbd_isr       \n"
     "  push %ds             \n"
     "  push %es             \n"
     "  push %fs             \n"
-    "  push %gs             \n"
+    "  push %gs             \n" ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU for per-CPU */
     "  push %esp            \n"
     "  call keyboardHandler \n"
     "  add $0x4,%esp\n"

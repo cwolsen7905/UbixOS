@@ -40,6 +40,7 @@
 #include <sys/io.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
+#include <i386/pcpu_asm.h>
 #include <isa/8259.h>
 #include <isa/irq.h>
 #include <pci/pci.h>
@@ -143,7 +144,7 @@ asm(".globl uhci_isr_trampoline   \n"
     "  push %ds                   \n"
     "  push %es                   \n"
     "  push %fs                   \n"
-    "  push %gs                   \n"
+    "  push %gs                   \n" ASM_PCPU_LOAD_GS /* %gs = SEL_PCPU */
     "  call uhci_isr_handler      \n"
     "  pop  %gs                   \n"
     "  pop  %fs                   \n"

@@ -38,10 +38,13 @@
 #include <ubixos/exec.h>
 #include <vmm/pageout.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/random.h>
 #include <ubixos/systemtask.h>
 #include <fs/vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <i386/pcpu.h>
+#include <ubixos/sched.h>
 
 #define B_ADAPTORSHIFT 24
 #define B_ADAPTORMASK 0x0f
@@ -87,13 +90,14 @@
  8 - 0x40 - Stack Fault TSS
  9 - 0x48 - SMP Private Data
  10 - 0x50 - USER %GS (Stack!)
+ 11 - 0x58 - SMP per-CPU data (%gs base = &g_pcpu[cpuid]); see pcpu_install_gs
 
  Notes:
 
  MrOlsen: test
 
  *****************************************************************************************/
-ubixDescriptorTable(ubixGDT, 11){
+ubixDescriptorTable(ubixGDT, 12){
     {.dummy = 0},
     ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
     ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
@@ -105,13 +109,21 @@ ubixDescriptorTable(ubixGDT, 11){
     ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
     ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
     ubixStandardDescriptor(0xBFC00000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+    /*
+     * Index 11 (selector SEL_PCPU = 0x58): per-CPU data segment for SMP.  Base
+     * is patched at runtime to &g_pcpu[cpuid] by pcpu_install_gs() (the macro
+     * cannot take a pointer as a constant), so %gs:offset reaches this CPU's
+     * struct pcpu — e.g. %gs:8 is the running task (_current).  Placeholder
+     * base 0 here; on the BSP it is set in smpInit().
+     */
+    ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
 };
 
 struct
 {
 	unsigned short limit __attribute__((packed));
 	union descriptorTableUnion *gdt __attribute__((packed));
-} loadGDT = {(11 * sizeof(union descriptorTableUnion) - 1), ubixGDT};
+} loadGDT = {(12 * sizeof(union descriptorTableUnion) - 1), ubixGDT};
 
 static char *argv_init[2] = {
     "init",
@@ -119,13 +131,29 @@ static char *argv_init[2] = {
 }; /* ARGV For Initial Process */
 
 static char *envp_init[6] = {
-    "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", 0x0,
+    "HOME=/",
+    "PWD=/",
+    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
+    "USER=root",
+    "GROUP=admin",
+    0x0,
 }; /* ENVP For Initial Process */
 
 struct bootinfo _bootinfo;
 char _kernelname[512];
 u_long _bootdev;
 u_long _boothowto;
+
+/**
+ * Idle thread entry — the lowest-priority task, dispatched only when nothing
+ * else is runnable.  Halts the CPU until the next interrupt (sti before hlt so
+ * an IRQ can wake it), then loops.  Never blocks, so it is always runnable.
+ */
+static void idle_task(void)
+{
+	for (;;)
+		__asm__ __volatile__("sti; hlt");
+}
 
 /**
  * \brief This is the entry point into the os where all of the kernels sub
@@ -137,6 +165,14 @@ int kmain(u_int32_t rootdev)
 {
 	/* Set up counter for startup routine */
 	int i = 0x0;
+
+	/*
+	 * Point the BSP's %gs at g_pcpu[0] before anything touches _current.
+	 * _current is now per-CPU state at %gs:8 (g_pcpu[0].current); this patches
+	 * the SEL_PCPU GDT descriptor's base to &g_pcpu[0] and loads %gs = SEL_PCPU.
+	 * Must be the first thing in kmain — every later kernel path reads _current.
+	 */
+	pcpu_install_gs(0);
 
 	/* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
 	clearScreen();
@@ -174,7 +210,9 @@ int kmain(u_int32_t rootdev)
 				sys_minor = mb_partition_to_minor(mbi->boot_device);
 				kprintf("multiboot: boot_device=0x%X -> "
 				        "major=%i minor=%i\n",
-				        mbi->boot_device, sys_major, sys_minor);
+				        mbi->boot_device,
+				        sys_major,
+				        sys_minor);
 			}
 		}
 
@@ -182,10 +220,14 @@ int kmain(u_int32_t rootdev)
 		if (vfs_mount(sys_major, sys_minor, 0x0, 0xFA, "/", "rw") != 0x0)
 			kprintf("Problem Mounting root (FAT) from major=%i "
 			        "minor=%i\n",
-			        sys_major, sys_minor);
+			        sys_major,
+			        sys_minor);
 		else
 			kprintf("Mounted root (FAT) from major=%i minor=%i\n", sys_major, sys_minor);
 	}
+
+	/* Seed the kernel CSPRNG now that systemVitals is live. */
+	krandom_init();
 
 	/* Initialize the system */
 	kprintf("Free Pages: [%i]\n", systemVitals->freePages);
@@ -193,13 +235,27 @@ int kmain(u_int32_t rootdev)
 	kprintf("Starting OS\n");
 
 	kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
-	kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));
+	kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n",
+	        B_TYPE(_bootdev),
+	        B_SLICE(_bootdev),
+	        B_UNIT(_bootdev),
+	        B_PARTITION(_bootdev));
 	kprintf("_bootinfo.bi_version: 0x%X\n", _bootinfo.bi_version);
 	kprintf("_bootinfo.bi_size: 0x%X\n", _bootinfo.bi_size);
 	kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
 	execThread(systemTask, 0x2000, 0x0, "systemTask");
 	execThread(pageout_daemon, 0x2000, 0x0, "pageout");
+
+	/*
+	 * Idle thread: lowest priority, runs only when every other task is blocked.
+	 * It halts the CPU until the next interrupt, so tasks that sleep on a wait
+	 * channel (sched_wait_event) truly give up the CPU instead of spinning, and
+	 * the host isn't pegged at 100%.  Re-homed to QOS_IDLE since execThread
+	 * starts threads at QOS_DEFAULT.  (Safe to set priority here: the timer IRQ
+	 * is still masked until irqEnable() below, so the scheduler isn't running.)
+	 */
+	sched_set_priority((kTask_t *)execThread(idle_task, 0x2000, 0x0, "idle"), QOS_IDLE);
 
 	execFile("/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 

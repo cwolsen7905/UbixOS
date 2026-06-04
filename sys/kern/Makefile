@@ -7,11 +7,13 @@ include ../Makefile.incl
 
 OBJS = \
 	access.o \
+	callout.o \
 	descrip.o \
 	endtask.o \
 	fb.o \
 	kern_sysctl.o \
 	klog.o \
+	random.o \
 	sched_core.o \
 	shutdown.o \
 	syscall.o \

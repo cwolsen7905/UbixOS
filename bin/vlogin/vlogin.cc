@@ -26,9 +26,12 @@
 #include <ubix/process.hh>
 #include <views/display.hh>
 #include <objgfx/objgfx.h>
-#include <objgfx/ogFont.h>
+#include <objgfx/ogScalableFont.h>
+#include <objgfx/ogImage.h>
 #include <objgfx/ogPixelFmt.h>
+#include <ubistry/ubistry.h>
 #include <authd.h>
+#include <vector>
 
 /* ------------------------------------------------------------------ */
 /* Colours                                                              */
@@ -42,7 +45,8 @@
 /* Constants                                                            */
 /* ------------------------------------------------------------------ */
 
-#define FONT_PATH "/var/fonts/ROM8X8.DPF"
+#define FONT_PATH "/var/fonts/DejaVuSansMono.ttf"
+#define FONT_SIZE 14
 #define VIEWS_MBOX "views"
 #define TASKBAR_PATH "/bin/taskbar"
 #define MAX_FIELD 31 /* max username / password length */
@@ -56,8 +60,11 @@ extern "C" int pidStatus(int pid);
 class LoginUI
 {
 	ogSurface &surf_;
-	ogBitFont font_;
+	ogScalableFont font_;
 	int sw_, sh_; /* screen width / height */
+
+	std::vector<uint32_t> bg_; /* wallpaper stretched to the screen (32bpp) */
+	bool have_bg_ = false;
 
 	/* panel geometry (computed in layout()) */
 	int px_, py_, pw_, ph_;       /* panel rect */
@@ -69,8 +76,66 @@ class LoginUI
 
 	explicit LoginUI(ogSurface &s, int sw, int sh) : surf_(s), sw_(sw), sh_(sh)
 	{
-		loaded = font_.Load(FONT_PATH, 0);
+		loaded = font_.Load(FONT_PATH, FONT_SIZE);
 		layout();
+		load_background();
+	}
+
+	/* Decode the desktop wallpaper (ubix.bmp) and nearest-neighbour stretch it
+	 * into a screen-sized 32bpp cache once, so each redraw is a fast blit.  If
+	 * the image is missing, have_bg_ stays false and draw() falls back to the
+	 * solid BG_COLOR. */
+	void load_background()
+	{
+		/* Use the *system-default* desktop wallpaper (no user — login does not
+		 * know who is logging in yet).  Honour the desktop mode: only show an
+		 * image when the system desktop is in image mode; otherwise fall back to
+		 * the solid login background. */
+		char mode[32] = {0};
+		char path[256] = {0};
+		if (ubistry_get_str("views/desktop/mode", mode, sizeof(mode)) == 0 && std::strcmp(mode, "image") != 0)
+			return;
+		if (ubistry_get_str("views/desktop/image", path, sizeof(path)) != 0 || path[0] == '\0')
+			std::strncpy(path, "/var/background/ubix.bmp", sizeof(path) - 1);
+
+		ogImage img;
+		ogSurface src;
+		if (!img.Load(path, src))
+			return;
+		int iw = (int)src.ogGetMaxX() + 1;
+		int ih = (int)src.ogGetMaxY() + 1;
+		if (iw <= 0 || ih <= 0 || sw_ <= 0 || sh_ <= 0)
+			return;
+
+		bg_.resize((size_t)sw_ * (size_t)sh_);
+		for (int dy = 0; dy < sh_; dy++)
+		{
+			int sy = dy * ih / sh_;
+			for (int dx = 0; dx < sw_; dx++)
+			{
+				int sx = dx * iw / sw_;
+				uInt8 r, g, b;
+				src.ogUnpack(src.ogGetPixel(sx, sy), r, g, b);
+				bg_[(size_t)dy * sw_ + dx] = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
+			}
+		}
+		have_bg_ = true;
+	}
+
+	/* Paint the cached wallpaper (or the solid fallback) as the full background. */
+	void draw_background()
+	{
+		if (!have_bg_)
+		{
+			surf_.ogFillRect(0, 0, sw_ - 1, sh_ - 1, BG_COLOR);
+			return;
+		}
+		for (int y = 0; y < sh_; y++)
+		{
+			uint32_t *row = (uint32_t *)surf_.ogGetPtr(0, (uInt32)y);
+			if (row)
+				std::memcpy(row, &bg_[(size_t)y * sw_], (size_t)sw_ * sizeof(uint32_t));
+		}
 	}
 
 	void layout()
@@ -94,8 +159,8 @@ class LoginUI
 		int fw = (int)font_.GetWidth();
 		int fh = (int)font_.GetHeight();
 
-		/* Background */
-		surf_.ogFillRect(0, 0, sw_ - 1, sh_ - 1, BG_COLOR);
+		/* Background (desktop wallpaper, or solid fallback) */
+		draw_background();
 
 		/* Panel */
 		surf_.ogFillRect(px_ - 4, py_ - 4, px_ + pw_ + 4, py_ + ph_ + 4, BOX_COLOR);

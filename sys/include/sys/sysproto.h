@@ -247,4 +247,12 @@ struct sys_vesa_modes_args
 };
 int sys_vesa_modes(struct thread *, struct sys_vesa_modes_args *);
 
+struct sys_sysinfo_args
+{
+	char out_l_[PADL_(void *)];
+	void *out; /* user pointer to struct ubix_sysinfo (4 x u_int32_t) */
+	char out_r_[PADR_(void *)];
+};
+int sys_sysinfo(struct thread *, struct sys_sysinfo_args *);
+
 #endif

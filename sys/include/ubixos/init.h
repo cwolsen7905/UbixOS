@@ -47,7 +47,6 @@ extern u_int32_t _multiboot_info;
 #include <isa/atkbd.h>
 #include <ubixos/time.h>
 #include <net/net.h>
-#include <isa/ne2k.h>
 #include <fs/devfs/devfs.h>
 #include <fs/procfs/procfs.h>
 #include <pci/pci.h>
@@ -65,15 +64,14 @@ extern u_int32_t _multiboot_info;
 #include <isa/mouse.h>
 #include <isa/rs232.h>
 #include <sys/isa_bus.h>
+#include <i386/smp.h>
 
 typedef int (*intFunctionPTR)(void);
 
 /* devfs_init must precede pci_init: ide_ubx_attach calls initHardDisk which calls devfs_makeNode */
 /* ufs_init/fat_init must precede pci_init: ums_bot_attach calls vfs_mount during USB enumeration */
 /* isa_bus_init replaces atkbd_init + mouseInit; runs after pit_init so ISRs find a valid IDT */
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, isa_bus_init, time_init, devfs_init, procfs_init, ufs_init, fat_init, pci_init, tty_init, rs232Init, net_init };
-
-//ne2k_init,
+intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, isa_bus_init, time_init, devfs_init, procfs_init, ufs_init, fat_init, pci_init, tty_init, rs232Init, net_init, smpInit };
 //ubixfs_init,
 //fdc_init,
 

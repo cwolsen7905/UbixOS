@@ -32,6 +32,7 @@
 #include <ubixos/exec.h>
 #include <ubixos/sched.h>
 #include <ubixos/time.h>
+#include <isa/pit.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/vitals.h>
 #include <ubixos/errno.h>
@@ -98,6 +99,18 @@ int ubthread_create(kTask_t **thread, const u_int32_t *attr, void (*tproc)(void)
 	return (0x0);
 }
 
+/* Wait predicates for sched_wait_event(): a contended mutex becomes acquirable
+ * when its lock clears; a condition variable is "signaled" when its lock clears. */
+static int ubmutex_is_free(void *arg)
+{
+	return ((ubthread_mutex_t)arg)->lock == FALSE;
+}
+
+static int ubcond_is_signaled(void *arg)
+{
+	return ((ubthread_cond_t)arg)->lock == FALSE;
+}
+
 int ubthread_mutex_lock(ubthread_mutex_t *mutex)
 {
 	ubthread_mutex_t ubmutex = *mutex;
@@ -109,17 +122,14 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex)
 		return (0x0);
 	}
 
-	while (1)
+	while (xchg_32(&ubmutex->lock, TRUE) != FALSE)
 	{
-		if (xchg_32(&ubmutex->lock, TRUE) == FALSE)
-			break;
-
 		/*
-		 * Priority inheritance: if the holder is lower-priority than us,
-		 * temporarily raise it to our priority so it can release the lock
-		 * sooner.  Multiple waiters naturally produce the correct max-
-		 * priority boost: each waiter independently compares and boosts
-		 * only if it is higher than the holder's current priority.
+		 * Contended.  Priority inheritance: if the holder is lower-priority
+		 * than us, temporarily raise it to our priority so it can release the
+		 * lock sooner.  Multiple waiters naturally produce the correct max-
+		 * priority boost: each waiter independently compares and boosts only
+		 * if it is higher than the holder's current priority.
 		 */
 		kTask_t *holder = ubmutex->owner;
 		if (holder != NULL && _current->priority > holder->priority) {
@@ -127,8 +137,9 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex)
 			sched_pi_boost(holder, _current->priority);
 		}
 
-		while (ubmutex->lock == TRUE)
-			sched_yield();
+		/* Sleep (off the run queue) until the holder's unlock clears the lock
+		 * and wakes us, instead of spinning on sched_yield(). */
+		sched_wait_event(ubmutex, ubmutex_is_free, ubmutex);
 	}
 
 	ubmutex->pid    = _current->id;
@@ -155,6 +166,9 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex)
 	if (xchg_32(&ubmutex->lock, FALSE) != TRUE)
 		kpanic("ubthread_mutex_unlock: lock was not held");
 
+	/* Wake any task sleeping in ubthread_mutex_lock() on this mutex. */
+	sched_wakeup_chan(ubmutex);
+
 	/*
 	 * Drop inherited priority after releasing the lock.  The lock is
 	 * already gone so the high-priority waiter can acquire immediately;
@@ -170,17 +184,11 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex)
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime)
 {
 	ubthread_cond_t ubcond = *cond;
-	u_int32_t enterTime = systemVitals->sysUptime + 20;
 
+	/* Bounded wait: sleep until signaled (lock clears) or the timeout fires,
+	 * instead of spinning.  Preserves the original ~20 s cap. */
 	ubthread_mutex_unlock(mutex);
-
-	while (enterTime > systemVitals->sysUptime)
-	{
-		if (ubcond->lock == FALSE)
-			break;
-		sched_yield();
-	}
-
+	sched_wait_event_timeout(ubcond, ubcond_is_signaled, ubcond, 20 * PIT_TIMER);
 	ubthread_mutex_lock(mutex);
 
 	if (ubcond->lock == TRUE)
@@ -191,10 +199,10 @@ int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, cons
 int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex)
 {
 	ubthread_cond_t ubcond = *cond;
-	ubcond->lock = TRUE;  /* arm before releasing mutex to prevent lost wakeup */
+	ubcond->lock = TRUE; /* arm before releasing mutex to prevent lost wakeup */
 	ubthread_mutex_unlock(mutex);
-	while (ubcond->lock == TRUE)
-		sched_yield();
+	/* Sleep until a signal/broadcast clears the lock and wakes us. */
+	sched_wait_event(ubcond, ubcond_is_signaled, ubcond);
 	ubthread_mutex_lock(mutex);
 	return (0x0);
 }
@@ -202,15 +210,15 @@ int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex)
 int ubthread_cond_signal(ubthread_cond_t *cond)
 {
 	ubthread_cond_t ubcond = *cond;
-	while (xchg_32(&ubcond->lock, FALSE))
-		sched_yield();
+	ubcond->lock = FALSE;
+	sched_wakeup_chan(ubcond);
 	return (0x0);
 }
 
 int ubthread_cond_broadcast(ubthread_cond_t *cond)
 {
 	ubthread_cond_t ubcond = *cond;
-	while (xchg_32(&ubcond->lock, FALSE))
-		sched_yield();
+	ubcond->lock = FALSE;
+	sched_wakeup_chan(ubcond);
 	return (0x0);
 }

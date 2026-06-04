@@ -37,13 +37,14 @@
 #include <ubix/process.hh>
 #include <views/display.hh>
 #include <objgfx/objgfx.h>
-#include <objgfx/ogFont.h>
+#include <objgfx/ogScalableFont.h>
 #include <objgfx/ogPixelFmt.h>
 #include <ubistry/ubistry.h>
 
 extern char **environ; /* inherited session env, forwarded to launched apps */
 
-#define FONT_PATH "/var/fonts/ROM8X8.DPF"
+#define FONT_PATH "/var/fonts/DejaVuSans.ttf"
+#define FONT_SIZE 14
 
 /* Taskbar geometry */
 #define TB_H 32
@@ -108,12 +109,12 @@ static void apply_theme(void)
 /* Helpers                                                              */
 /* ------------------------------------------------------------------ */
 
-static void font_fg(ogBitFont &f, uint32_t c)
+static void font_fg(ogScalableFont &f, uint32_t c)
 {
 	f.SetFGColor((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF, 255);
 }
 
-static void font_bg(ogBitFont &f, uint32_t c)
+static void font_bg(ogScalableFont &f, uint32_t c)
 {
 	f.SetBGColor((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF, 255);
 }
@@ -299,7 +300,7 @@ class Menu
 	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
 	std::vector<MenuItem> items_;
 
-	void draw(ogBitFont &font)
+	void draw(ogScalableFont &font)
 	{
 		surf_.ogFillRect(0, 0, w_ - 1, h_ - 1, FLY_BG_C);
 		for (int i = 0; i < (int)items_.size(); i++)
@@ -404,7 +405,7 @@ class Menu
 			load_fallback();
 	}
 
-	void show(int x, int y, ubix::Mailbox &mbox, ogBitFont &font)
+	void show(int x, int y, ubix::Mailbox &mbox, ogScalableFont &font)
 	{
 		if (open_ || items_.empty())
 			return;
@@ -467,7 +468,7 @@ class Menu
 class Taskbar
 {
 	ogSurface surf_;
-	ogBitFont font_;
+	ogScalableFont font_;
 	uint32_t win_id_ = 0;
 	uint32_t sw_ = 0;
 	uint32_t sh_ = 0;
@@ -602,7 +603,7 @@ class Taskbar
 
 		surf_.ogAttach(shm, sw_, TB_H, OG_PIXFMT_32BPP);
 
-		if (!font_.Load(font_path, 0))
+		if (!font_.Load(font_path, FONT_SIZE))
 		{
 			std::printf("taskbar: font load failed\n");
 			return false;

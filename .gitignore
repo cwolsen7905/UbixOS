@@ -15,3 +15,7 @@ t.c
 tools/makeuser
 tools/doom1.wad
 tools/userdb
+etc/userdb
+.netsurf-stage/
+contrib/netsurf/build/
+contrib/netsurf-nsgenbind/build-*/

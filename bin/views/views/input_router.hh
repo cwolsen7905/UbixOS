@@ -53,6 +53,11 @@ class InputRouter
 	int resize_start_w_ = 0, resize_start_h_ = 0;
 	int resize_start_cx_ = 0, resize_start_cy_ = 0;
 
+	/* Double-click-on-title detection (toggles maximize). */
+	long last_click_ms_ = 0;
+	Window *last_click_win_ = nullptr;
+	int last_click_x_ = 0, last_click_y_ = 0;
+
 	/* on_close_ is called when the user clicks the close button.
 	 * WindowManager sets this to its own close_window method via a
 	 * captureless lambda + context pointer, avoiding a circular dep. */
@@ -60,6 +65,7 @@ class InputRouter
 	void (*close_fn_)(void *, Window *);
 	void (*min_fn_)(void *, Window *);              /* minimize callback (same ctx) */
 	void (*resize_fn_)(void *, Window *, int, int); /* resize-commit callback (same ctx) */
+	void (*place_fn_)(void *, Window *, int);       /* maximize/snap (mode: 0=max,1=left,2=right) */
 
 	void send_mouse(Window *w, int cx, int cy, uint8_t buttons);
 	void close_window(Window *w);
@@ -70,7 +76,8 @@ class InputRouter
 	            void *close_ctx,
 	            void (*close_fn)(void *, Window *),
 	            void (*min_fn)(void *, Window *),
-	            void (*resize_fn)(void *, Window *, int, int));
+	            void (*resize_fn)(void *, Window *, int, int),
+	            void (*place_fn)(void *, Window *, int));
 
 	void handle_mouse(mouse_event_t &ev);
 	void handle_kbd(kbd_event_t &ev);

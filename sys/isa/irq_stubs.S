@@ -7,6 +7,8 @@
  * then restores and returns.  EOI is sent inside irq_dispatch().
  */
 
+#include <i386/pcpu_asm.h>
+
 .code32
 .text
 
@@ -14,9 +16,12 @@
 .globl irq_entry_\num
 irq_entry_\num:
 	pusha
+	pushl	%gs			/* save the interrupted %gs (e.g. user TLS) */
+	PCPU_LOAD_GS			/* %gs = SEL_PCPU for per-CPU data access   */
 	pushl	$\num
 	call	irq_dispatch
 	addl	$4, %esp
+	popl	%gs			/* restore the interrupted %gs */
 	popa
 	iret
 .endm

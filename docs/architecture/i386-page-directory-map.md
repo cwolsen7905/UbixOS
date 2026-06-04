@@ -64,8 +64,72 @@ separate virtual mapping for the page tables.
 
 ---
 
+## Physical Low Memory (< 1 MB, identity-mapped via PDE 0)
+
+| Phys | Contents |
+|------|----------|
+| `0x00000`–`0x003FF` | Real-mode IVT (needed by v86 BIOS calls; saved/restored around AP startup, which reuses `0x0`) |
+| `0x00000` | AP boot trampoline destination (`AP_TRAMPOLINE_PHYS`, copied at SMP bring-up) |
+| `0x00600` | v86 BIOS-call stub (`cs=0x60`) |
+| `0x01000` | v86 stack (`ss=0x1000`) |
+| `0x04200` | **Kernel TSS** (GDT selector `0x20`, TR) — the *only* live TSS; used solely for `ss0`/`esp0` on ring3→ring0 entry |
+| `0x05200`, `0x06200` | **dead** — former GPF / stack-fault hardware-task-gate TSSes (removed after the software-switch conversion; GDT descriptors 7/8 still present) |
+| `0x20000` | AP boot GDT (built by `GDT_fixer`) |
+| `0xA0000`–`0xFFFFF` | VGA / BIOS ROM |
+| `0x300000` | **Kernel image load address** (`sys/compile/ldscript.i386`) |
+| `page_align(_end)` | Physical-page bitmap (`vmm_memMapInit`; RAM-size-independent placement) |
+
+## GDT Selectors
+
+[sys/init/main.c](../../sys/init/main.c) `ubixGDT`:
+`0x08` kcode · `0x10` kdata · `0x18` LDT · `0x20` kernel TSS · `0x28/0x2B` ucode ·
+`0x30/0x33` udata · `0x38`/`0x40` (now-dead TSS descriptors) · `0x48` SMP private ·
+`0x50` user-gs/stack · `0x58` **`SEL_PCPU`** (per-CPU `%gs` base = `&g_pcpu[cpuid]`,
+[gdt.h](../../sys/include/sys/gdt.h)). User TLS uses LDT[1] via `%gs = 0x0F`.
+
+> Since the move to **software task switching**, no per-task / per-handler TSS is
+> loaded by hardware; segment registers are saved/restored by `cpu_switch`, and
+> GDT[4] stays pointed at the single kernel TSS (`0x4200`). See
+> [task-switching.md](task-switching.md).
+
+---
+
+## Cleanup / Multi-Architecture Notes
+
+Known layout issues and the portability split (x86-64 / ARM). Each region's
+*intent* is machine-independent; the *addresses* are not — the port should hoist
+them into a per-arch `machine/vmm_layout.h`
+([../design/cross-arch-plan.md](../design/cross-arch-plan.md) Phase 9).
+
+1. **`//TMP` / "Find Out What This Was For" comments** in `vmm.h`/`paging.h`
+   (`VMM_KERN_START //TMP ADDED 1000`, `PD_BASE_ADDR2`) — resolve and document.
+2. **LDT placement** (`VMM_USER_LDT = 0x7FF000`, PDE 1) sits in the gap *below*
+   `VMM_USER_START`; its per-process reachability has caused real bugs. Consider
+   relocating, or eliminating the LDT entirely (x86-64 uses an `%fs`-base MSR for
+   TLS, no LDT).
+3. **`VMM_CHILD_PD_WINDOW = 0x5A00000`** — a transient window in the user VA
+   range (PDE 22). This is *intentional*: keeping it in the user half makes the
+   temporary mapping private to the acting process rather than leaking into the
+   shared kernel half. Documented in `vmm.h`; left as-is.
+4. **LAPIC / `VMM_KERN_STACK` reachability — verified OK.** `VMM_KERN_END` is
+   PDE 1015, but the kernel-PD *sync* actually covers PDEs **770–1023**
+   (`vmm_create_virtual_space` syncs to `PD_ENTRIES`; fork syncs 770–1015 plus a
+   separate `VMM_KERN_STACK` 1016–1023 loop), so the LAPIC (PDE 1019) is
+   reachable from any address space. kmalloc *allocation* stays within 770–1015.
+   The two ranges (sync vs allocation) could be named more clearly, but there is
+   no reachability bug.
+5. **Dead TSS GDT descriptors** (entries 7/8, bases `0x5200`/`0x6200`) — reclaim.
+6. **i386-only mechanisms to retire for portability**: hardware task switching
+   (done), LDT-based TLS, and VM86/BIOS (no real mode in long mode — VESA must
+   move to a different mechanism on 64-bit).
+7. **Per-CPU area**: give `g_pcpu[]` / per-CPU data a dedicated, documented
+   kernel region so the `%gs`-per-CPU work has a clean home.
+
+---
+
 ## Source Files
 
 - `sys/vmm/` — VMM implementation
-- `sys/include/ubixos/vmm.h` — VMM constants (`VMM_USER_LDT`, etc.)
-- See also: [vmm.md](vmm.md) for function-level documentation
+- `sys/include/vmm/vmm.h`, `sys/include/vmm/paging.h` — layout constants
+- See also: [vmm.md](vmm.md) (VMM behaviour), [task-switching.md](task-switching.md),
+  and [../audit/vmm-audit.md](../audit/vmm-audit.md) (dated technical audit)
