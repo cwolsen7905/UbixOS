@@ -27,6 +27,7 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/vm_filecache.h>
 #include <vmm/paging.h>
 #include <sys/kern_sysctl.h>
 #include <ubixos/spinlock.h>
@@ -100,6 +101,16 @@ void *vmm_copy_virtual_space(pidType pid)
 				if ((phys >> 12) >= numPages)
 				{
 					new_page_table[x] = parent_page_table[x];
+				}
+				else if ((parent_page_table[x] & PAGE_SHARED) == PAGE_SHARED)
+				{
+					/* Shared file-cache (or share_region) page: share as-is into
+					 * the child — never COW it (it is read-only and not tracked
+					 * by the COW counter).  Bump the file-cache refcount for the
+					 * child's mapping; a share_region page isn't in the cache, so
+					 * the ref is a no-op. */
+					new_page_table[x] = parent_page_table[x];
+					vm_filecache_ref_phys(phys);
 				}
 				else
 				{

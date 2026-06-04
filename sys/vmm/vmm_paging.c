@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/errno.h>
 #include <vmm/vmm.h>
+#include <vmm/vm_filecache.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/kpanic.h>
@@ -874,7 +875,11 @@ int vmm_clean_virtual_space(u_int32_t addr)
 					}
 					else if ((page_table_src[y] & PAGE_SHARED) == PAGE_SHARED)
 					{
-						/* Borrowed via vmm_share_region — owner frees it */
+						/* Shared page: file-page cache or vmm_share_region.  Drop
+						 * a file-cache reference (frees on the last one); a
+						 * share_region page isn't in the cache → no-op, its owner
+						 * frees it. */
+						vm_filecache_unref_phys(phys);
 					}
 					else if ((phys >> 12) < numPages)
 					{

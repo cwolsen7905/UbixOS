@@ -55,6 +55,7 @@
 #include <sys/thread.h>
 #include <vmm/paging.h>
 #include <vmm/vmm.h>
+#include <vmm/vm_filecache.h>
 #include <string.h>
 
 #define PROCFS_TYPE  VFS_TYPE_PROCFS
@@ -324,12 +325,14 @@ procfs_build_meminfo(char *buf, int bufsz)
 	    "MemFree:  %8u kB\n"
 	    "MemUsed:  %8u kB\n"
 	    "PageSize: %8u bytes\n"
-	    "Pages:    total %u free %u\n",
+	    "Pages:    total %u free %u\n"
+	    "FileCache: %u pages\n",
 	    total_pages * kb_per_page,
 	    free_pages * kb_per_page,
 	    (total_pages - free_pages) * kb_per_page,
 	    (u_int32_t)PAGE_SIZE,
-	    total_pages, free_pages);
+	    total_pages, free_pages,
+	    vm_filecache_page_count());
 }
 
 /* -----------------------------------------------------------------------
