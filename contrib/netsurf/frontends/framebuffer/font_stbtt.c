@@ -38,19 +38,32 @@
 /* Font files, installed by mkimage alongside the other NetSurf resources. */
 #define FONT_DIR "/usr/local/share/netsurf/"
 
+/* Three CSS generic families, each in four styles.  A face index is
+ * (family_base) + (bold?1:0) + (italic?2:0); see face_for_style(). */
 enum fb_face_id {
-	FB_FACE_SANS = 0, /* sans-serif and serif both map here for v1 */
-	FB_FACE_MONO,
-	FB_FACE_COUNT
+	FB_FACE_SANS = 0,  /* +1 bold, +2 italic, +3 bold-italic */
+	FB_FACE_SERIF = 4,
+	FB_FACE_MONO = 8,
+	FB_FACE_COUNT = 12
 };
 
 struct fb_face {
-	unsigned char *data; /* mmap-free: whole TTF read into memory */
+	unsigned char *data; /* whole TTF in memory; NULL until lazily loaded */
 	stbtt_fontinfo info;
 	bool loaded;
+	bool tried; /* a load was attempted (success or failure) — do not retry */
 };
 
 static struct fb_face g_faces[FB_FACE_COUNT];
+
+/* 8.3 file names (see mkimage.sh), indexed by face id.  Faces are loaded
+ * lazily on first use: most pages touch only 2-3 of these, so eagerly reading
+ * ~5MB of TTFs at startup is both slow and needless memory pressure. */
+static const char *const g_face_path[FB_FACE_COUNT] = {
+	FONT_DIR "SANS.TTF",  FONT_DIR "SANSB.TTF",  FONT_DIR "SANSI.TTF",  FONT_DIR "SANSBI.TTF",
+	FONT_DIR "SERIF.TTF", FONT_DIR "SERIFB.TTF", FONT_DIR "SERIFI.TTF", FONT_DIR "SERIFBI.TTF",
+	FONT_DIR "MONO.TTF",  FONT_DIR "MONOB.TTF",  FONT_DIR "MONOI.TTF",  FONT_DIR "MONOBI.TTF",
+};
 
 /* 96 DPI is NetSurf's nominal screen density; pt -> px is size * dpi/72. */
 #define FB_DPI 96
@@ -69,12 +82,14 @@ struct glyph_cache_entry {
 
 static struct glyph_cache_entry g_cache[GLYPH_CACHE_SIZE];
 
+static int face_for_style(const plot_font_style_t *fstyle);
+
 /**
  * Read a whole font file into a face slot.
  *
  * @return true if the face loaded and parsed.
  */
-static bool load_face(enum fb_face_id id, const char *path)
+static bool load_face(int id, const char *path)
 {
 	FILE *f;
 	long len;
@@ -104,7 +119,10 @@ static bool load_face(enum fb_face_id id, const char *path)
 	}
 	fclose(f);
 
-	if (stbtt_InitFont(&g_faces[id].info, buf, stbtt_GetFontOffsetForIndex(buf, 0)) == 0) {
+	/* Reject anything that is not a recognised font before InitFont walks it
+	 * (a bad offset would otherwise deref out of bounds). */
+	int off = stbtt_GetFontOffsetForIndex(buf, 0);
+	if (off < 0 || stbtt_InitFont(&g_faces[id].info, buf, off) == 0) {
 		NSLOG(netsurf, INFO, "stbtt: failed to parse font %s", path);
 		free(buf);
 		return false;
@@ -116,14 +134,61 @@ static bool load_face(enum fb_face_id id, const char *path)
 }
 
 /**
- * Pick the face for a style.  v1 has no bold/italic faces: sans and serif
- * share DejaVuSans, monospace uses DejaVuSansMono.
+ * Ensure a face is loaded, attempting its file at most once.
+ *
+ * @return true if the face is usable.
  */
-static enum fb_face_id face_for_style(const plot_font_style_t *fstyle)
+static bool ensure_face(int id)
 {
+	if (g_faces[id].loaded)
+		return true;
+	if (g_faces[id].tried)
+		return false;
+	g_faces[id].tried = true;
+	return load_face(id, g_face_path[id]);
+}
+
+/**
+ * Resolve the best available face for a style, falling back the family's
+ * regular weight and finally to sans-serif regular.
+ *
+ * @return a loaded face id, or -1 if even sans-serif regular is unavailable.
+ */
+static int resolve_face(const plot_font_style_t *fstyle)
+{
+	int face = face_for_style(fstyle);
+
+	if (ensure_face(face))
+		return face;
+	face &= ~3; /* family regular */
+	if (ensure_face(face))
+		return face;
+	if (ensure_face(FB_FACE_SANS))
+		return FB_FACE_SANS;
+	return -1;
+}
+
+/**
+ * Pick the face index for a style: family base + bold + italic offsets.
+ * Bold is CSS weight >= 700; italic covers both italic and oblique.
+ */
+static int face_for_style(const plot_font_style_t *fstyle)
+{
+	int base;
+
 	if (fstyle->family == PLOT_FONT_FAMILY_MONOSPACE)
-		return FB_FACE_MONO;
-	return FB_FACE_SANS;
+		base = FB_FACE_MONO;
+	else if (fstyle->family == PLOT_FONT_FAMILY_SERIF)
+		base = FB_FACE_SERIF;
+	else
+		base = FB_FACE_SANS;
+
+	if (fstyle->weight >= 700)
+		base += 1;
+	if (fstyle->flags & (FONTF_ITALIC | FONTF_OBLIQUE))
+		base += 2;
+
+	return base;
 }
 
 /** Convert a NetSurf plot font size (pt * PLOT_STYLE_SCALE) to pixels. */
@@ -140,17 +205,18 @@ static int px_for_style(const plot_font_style_t *fstyle)
  */
 const struct fb_glyph *fb_get_glyph(const plot_font_style_t *fstyle, uint32_t ucs4)
 {
-	enum fb_face_id face = face_for_style(fstyle);
+	int face = resolve_face(fstyle);
 	int px = px_for_style(fstyle);
-	struct fb_face *fc = &g_faces[face];
+	struct fb_face *fc;
 	struct glyph_cache_entry *e;
 	unsigned int h;
 	float scale;
 	int adv, lsb, w = 0, ht = 0, xoff = 0, yoff = 0;
 	unsigned char *bm;
 
-	if (!fc->loaded)
-		return NULL;
+	if (face < 0)
+		return NULL; /* no usable face — caller skips the glyph */
+	fc = &g_faces[face];
 
 	h = (ucs4 * 2654435761u + (unsigned)px * 97u + (unsigned)face) % GLYPH_CACHE_SIZE;
 	e = &g_cache[h];
@@ -309,11 +375,24 @@ struct gui_utf8_table *framebuffer_utf8_table = &utf8_table;
 
 bool fb_font_init(void)
 {
-	bool sans = load_face(FB_FACE_SANS, FONT_DIR "DejaVuSans.ttf");
-	/* Monospace is optional; fall back to sans if absent. */
-	if (!load_face(FB_FACE_MONO, FONT_DIR "DejaVuSansMono.ttf"))
-		g_faces[FB_FACE_MONO] = g_faces[FB_FACE_SANS];
-	return sans;
+	/* stderr is fully buffered when redirected to a file, so any diagnostic
+	 * printed just before a crash is lost.  Make it unbuffered so font
+	 * problems are actually visible in the log. */
+	setvbuf(stderr, NULL, _IONBF, 0);
+
+	/* Eagerly load only the mandatory default (sans-serif regular) so a
+	 * missing or corrupt default fails cleanly HERE — with a clear message
+	 * and a false return — rather than later mid-render.  The other 11 faces
+	 * load lazily on first use (ensure_face), keeping startup light. */
+	if (!ensure_face(FB_FACE_SANS)) {
+		fprintf(stderr,
+			"font_stbtt: FATAL: cannot load default font '%s'.\n"
+			"  Install the DejaVu faces under /usr/local/share/netsurf.\n",
+			g_face_path[FB_FACE_SANS]);
+		fflush(stderr);
+		return false;
+	}
+	return true;
 }
 
 bool fb_font_finalise(void)
@@ -324,10 +403,11 @@ bool fb_font_finalise(void)
 			free(g_cache[i].owned_bitmap);
 		memset(&g_cache[i], 0, sizeof(g_cache[i]));
 	}
-	if (g_faces[FB_FACE_SANS].data != NULL)
-		free(g_faces[FB_FACE_SANS].data);
-	if (g_faces[FB_FACE_MONO].data != NULL &&
-	    g_faces[FB_FACE_MONO].data != g_faces[FB_FACE_SANS].data)
-		free(g_faces[FB_FACE_MONO].data);
+	/* Each loaded face owns its own buffer (lazy loading never aliases). */
+	for (i = 0; i < FB_FACE_COUNT; i++) {
+		if (g_faces[i].data != NULL)
+			free(g_faces[i].data);
+		memset(&g_faces[i], 0, sizeof(g_faces[i]));
+	}
 	return true;
 }

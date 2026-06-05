@@ -181,9 +181,23 @@ if [ -d contrib/netsurf-res ]; then
   mmd -i "$IMG"@@1M ::/usr/local/share/netsurf 2>/dev/null || true
   mcopy -s -i "$IMG"@@1M contrib/netsurf-res/* ::/usr/local/share/netsurf/
   # TrueType faces for the stb_truetype font backend (font_stbtt.c).
-  for ttf in DejaVuSans.ttf DejaVuSansMono.ttf; do
-    [ -f "tools/$ttf" ] && mcopy -o -i "$IMG"@@1M "tools/$ttf" ::/usr/local/share/netsurf/
-  done
+  # Install under unique 8.3 names so the FAT driver never has to disambiguate
+  # colliding "DejaVu..." long-name aliases (which corrupted reads -> crash).
+  install_face() { # src 8.3-name
+    [ -f "tools/$1" ] && mcopy -o -i "$IMG"@@1M "tools/$1" "::/usr/local/share/netsurf/$2"
+  }
+  install_face DejaVuSans.ttf               SANS.TTF
+  install_face DejaVuSans-Bold.ttf          SANSB.TTF
+  install_face DejaVuSans-Oblique.ttf       SANSI.TTF
+  install_face DejaVuSans-BoldOblique.ttf   SANSBI.TTF
+  install_face DejaVuSerif.ttf              SERIF.TTF
+  install_face DejaVuSerif-Bold.ttf         SERIFB.TTF
+  install_face DejaVuSerif-Italic.ttf       SERIFI.TTF
+  install_face DejaVuSerif-BoldItalic.ttf   SERIFBI.TTF
+  install_face DejaVuSansMono.ttf           MONO.TTF
+  install_face DejaVuSansMono-Bold.ttf      MONOB.TTF
+  install_face DejaVuSansMono-Oblique.ttf   MONOI.TTF
+  install_face DejaVuSansMono-BoldOblique.ttf MONOBI.TTF
 fi
 
 echo "==> Installing system headers (include/)"
