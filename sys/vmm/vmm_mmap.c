@@ -86,6 +86,9 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			{
 				vmm_unmap_page(map_base + x, VMM_FREE);
 			}
+			/* Trim/replace any overlapping VMAs (e.g. the file segment this anon
+			 * BSS is mapped over) so the demand-zero lookup resolves here. */
+			vm_map_remove(&_current->vm_map, map_base, map_end);
 			vm_map_insert(&_current->vm_map, map_base, map_end, VM_PROT_RW, VM_MAP_ANON | VM_MAP_FIXED);
 			td->td_retval[0] = (int)(u_int32_t)uap->addr;
 			return 0;
@@ -214,18 +217,29 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		}
 
 		/*
-		 * Deliberately do NOT record a vm_map VMA for file mappings.
+		 * Record a file-backed VMA (VM_MAP_FILE).  First TRIM any overlapping
+		 * VMAs in this range — proper mmap-replace semantics — so that when
+		 * rtld later maps a library's anon BSS with MAP_FIXED over the tail of
+		 * this file segment, the anon mapping (which also trims) wins the
+		 * overlap and demand-zero lookups resolve to the anon VMA, not this
+		 * file VMA (the bug fixed in d63d9a8ee, done properly here).
 		 *
-		 * File pages are mapped eagerly above (always present), so the fault
-		 * handler never needs a VMA to demand-back them, and teardown frees
-		 * them by walking the page tables.  Worse, rtld maps a library's
-		 * anonymous BSS with MAP_FIXED *overlapping* the file segment it just
-		 * mapped; a non-anon file VMA in that overlap makes vm_map_lookup
-		 * return the file VMA instead of the anon BSS one, so the demand-zero
-		 * is skipped and the first write to the BSS faults as "not mapped".
-		 * Keeping file mappings out of the VMA tree leaves only the anon VMAs,
-		 * which is exactly what the demand-zero path needs.
+		 * The VMA owns a private backing fd (re-opened by path) so it survives
+		 * the caller closing its fd; the page-fault handler will use it to
+		 * demand-read pages once Stage B drops the eager read above.  (Stage A:
+		 * pages are still eager, so the VMA is metadata + the trim fix.)
 		 */
+		vm_map_remove(&_current->vm_map, base, base + npages * PAGE_SIZE);
+		{
+			fileDescriptor_t *backing = fopen(kfd->fileName, "r");
+			vm_map_insert_file(&_current->vm_map,
+			                   base,
+			                   base + npages * PAGE_SIZE,
+			                   uap->prot,
+			                   (uap->flags & 0x0001 /* MAP_SHARED */) ? VM_MAP_SHARED : 0,
+			                   backing,
+			                   uap->pos);
+		}
 
 		/* Flush the TLB for the newly mapped range. */
 		asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
