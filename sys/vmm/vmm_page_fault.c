@@ -29,6 +29,9 @@
 #include <vmm/vmm.h>
 #include <vmm/swap.h>
 #include <vmm/vm_map.h>
+#include <vmm/vm_filecache.h>
+#include <fs/vfs/file.h>
+#include <fs/vfs/vfs.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
@@ -105,6 +108,64 @@ static void vmm_report_segfault(const char *reason, struct trapframe *frame, u_i
 			kprintf("    (no VMA contains the fault — wild/corrupted pointer, not a "
 			        "lazy-mapping miss)\n");
 	}
+}
+
+/**
+ * Demand-fault one page of a file-backed (VM_MAP_FILE) VMA: read the page from
+ * the VMA's private backing fd and map it.  Read-only pages go through the
+ * shared file-page cache (one physical copy across processes, PAGE_SHARED);
+ * writable pages get a private copy.  Called from the page-fault handler with
+ * g_page_fault_spin_lock held, in the faulting process's address space.  Safe
+ * to read here because the IDE driver polls (never sleeps).
+ *
+ * @return 1 if the page was mapped, 0 on failure (caller delivers SIGSEGV).
+ */
+static int vmm_demand_file_page(vm_map_entry_t *vma, u_int32_t mem_addr)
+{
+	fileDescriptor_t *bfd = (fileDescriptor_t *)vma->vm_vnode;
+	u_int32_t pg = mem_addr & 0xFFFFF000;
+	off_t foff = vma->vm_offset + (off_t)(pg - vma->vm_start);
+	int ro = ((vma->vm_prot & VM_PROT_WRITE) == 0);
+	u_int32_t phys, new_page, winner = 0;
+
+	if (bfd == NULL)
+		return (0);
+
+	/* Read-only and already cached: map the one shared physical copy. */
+	if (ro)
+	{
+		phys = vm_filecache_lookup_ref(bfd->mp, bfd->ino, foff);
+		if (phys != 0)
+			return (vmm_remap_page(phys, pg, PAGE_PRESENT | PAGE_USER | PAGE_SHARED, _current->id, 0) != 0);
+	}
+
+	/* Miss (or writable): allocate a page, map it writable, read the file in. */
+	new_page = vmm_find_free_page(_current->id);
+	if (new_page == 0)
+		return (0);
+	if (vmm_remap_page(new_page, pg, PAGE_DEFAULT, _current->id, 0) == 0)
+		return (0);
+	asm volatile("invlpg (%0)" : : "r"(pg) : "memory");
+	memset((void *)pg, 0, PAGE_SIZE);
+	if (bfd->mp != NULL && bfd->mp->fs != NULL && bfd->mp->fs->vfsRead != NULL)
+		bfd->mp->fs->vfsRead(bfd, (void *)pg, foff, PAGE_SIZE);
+
+	if (ro)
+	{
+		/* Publish into the cache and downgrade the live mapping to shared RO. */
+		phys = vmm_get_physical_addr(pg);
+		if (vm_filecache_insert(bfd->mp, bfd->ino, foff, phys, &winner) == 0)
+		{
+			vmm_set_page_attributes(pg, PAGE_PRESENT | PAGE_USER | PAGE_SHARED);
+		}
+		else if (winner != 0)
+		{
+			vmm_unmap_page(pg, VMM_FREE);
+			if (vmm_remap_page(winner, pg, PAGE_PRESENT | PAGE_USER | PAGE_SHARED, _current->id, 0) == 0)
+				return (0);
+		}
+	}
+	return (1);
 }
 
 /*****************************************************************************************
@@ -192,6 +253,31 @@ void vmm_page_fault(struct trapframe *frame, u_int32_t cr2)
 				memset((void *)(mem_addr & 0xFFFFF000), 0, PAGE_SIZE);
 				asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
 				spinUnlock(&g_page_fault_spin_lock);
+				return;
+			}
+		}
+
+		/* Demand-fault a file-backed VMA (PT not yet allocated — vmm_remap_page
+		 * creates it).  Handles user- and kernel-mode faults alike. */
+		{
+			vm_map_entry_t *fvma = vm_map_lookup(&_current->vm_map, mem_addr);
+			if (fvma != NULL && (fvma->vm_flags & VM_MAP_FILE))
+			{
+				if (vmm_demand_file_page(fvma, mem_addr))
+				{
+					asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+					spinUnlock(&g_page_fault_spin_lock);
+					return;
+				}
+				vmm_report_segfault("file demand-page failed (no PT)", frame, mem_addr);
+				spinUnlock(&g_page_fault_spin_lock);
+				if ((frame->tf_cs & 3) == 3)
+				{
+					signal_post_fault(SIGSEGV, (void *)mem_addr, SEGV_MAPERR);
+					signal_check(frame);
+					return;
+				}
+				endTask(_current->id);
 				return;
 			}
 		}
@@ -342,6 +428,15 @@ void vmm_page_fault(struct trapframe *frame, u_int32_t cr2)
 		 * touched it, causing a ring-0 fault that also needs demand-zero. */
 		{
 			vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, mem_addr);
+
+			/* File-backed VMA: demand-read the page from its backing fd. */
+			if (vma != NULL && (vma->vm_flags & VM_MAP_FILE) && vmm_demand_file_page(vma, mem_addr))
+			{
+				asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+				spinUnlock(&g_page_fault_spin_lock);
+				return;
+			}
+
 			if (vma != NULL && (vma->vm_flags & VM_MAP_ANON))
 			{
 				u_int32_t new_page = vmm_find_free_page(_current->id);

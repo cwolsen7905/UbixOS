@@ -113,22 +113,22 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 	else
 	{
 		/*
-		 * File-backed mmap (VMM plan Phase 2.2).
+		 * File-backed mmap (VMM plan Phase 2.2) — DEMAND-PAGED.
 		 *
-		 * Allocate + read the mapping exactly as the historical path did (one
-		 * sequential read into freshly allocated pages — proven correct), then
-		 * de-duplicate read-only pages into the shared file-page cache: the
-		 * first mapper of a given (file, offset) page publishes its page; later
-		 * mappers discard their just-read copy and map the shared physical page
-		 * read-only with PAGE_SHARED.  A shared library's text/rodata therefore
-		 * ends up as one physical copy across all processes, not one per process.
+		 * Open a private backing fd (re-opened by path so it survives the caller
+		 * closing its own fd) and record a VM_MAP_FILE VMA covering the range;
+		 * map NO pages now.  The page-fault handler reads each page from the
+		 * backing fd on first touch — read-only pages shared through the
+		 * file-page cache (one physical copy across processes), writable pages
+		 * private.  Trimming overlapping VMAs first gives proper MAP_FIXED
+		 * replace semantics (rtld maps a library's anon BSS over the file
+		 * segment's tail).
 		 *
-		 * Writable pages stay private (historical behaviour); MAP_SHARED
-		 * writable is private for now (no write-back — that is msync, future).
-		 * File identity is kfd->ino (the FAT start cluster, unique per file —
-		 * fd->start is not populated by the FAT driver).
+		 * If a backing fd cannot be opened, fall back to the historical EAGER
+		 * read + de-dup so the mapping still works.  File identity for the cache
+		 * is kfd->ino (the FAT start cluster — fd->start is not populated).
 		 */
-		fileDescriptor_t *kfd;
+		fileDescriptor_t *kfd, *backing;
 		char *tmp;
 		u_int32_t npages, base, va, phys, winner, i;
 		off_t foff;
@@ -142,8 +142,42 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 		}
 		kfd = fd->fd;
 		npages = round_page(uap->len) / PAGE_SIZE;
+		backing = fopen(kfd->fileName, "r");
 
-		/* --- Allocate the VA range and read the file (historical path). --- */
+		/* --- DEMAND mode: reserve VA, map nothing, record the VMA. --- */
+		if (backing != NULL)
+		{
+			if (uap->addr == NULL)
+			{
+				void *r = vmm_reserve_anon_range(_current->id, (int)npages);
+				if (r == NULL)
+				{
+					fclose(backing);
+					td->td_retval[0] = -1;
+					return (ENOMEM);
+				}
+				base = (u_int32_t)r;
+			}
+			else
+			{
+				base = (u_int32_t)uap->addr & 0xFFFFF000;
+				for (i = 0; i < npages; i++)
+					vmm_unmap_page(base + i * PAGE_SIZE, VMM_FREE);
+			}
+			vm_map_remove(&_current->vm_map, base, base + npages * PAGE_SIZE);
+			vm_map_insert_file(&_current->vm_map,
+			                   base,
+			                   base + npages * PAGE_SIZE,
+			                   uap->prot,
+			                   (uap->flags & 0x0001 /* MAP_SHARED */) ? VM_MAP_SHARED : 0,
+			                   backing,
+			                   uap->pos);
+			asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
+			td->td_retval[0] = (int)base;
+			return 0;
+		}
+
+		/* --- Eager fallback (no backing fd): allocate + read + de-dup. --- */
 		if (uap->addr == NULL)
 		{
 			tmp = (char *)vmm_get_free_virtual_page(_current->id, npages, VM_TASK);
@@ -216,30 +250,16 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			}
 		}
 
-		/*
-		 * Record a file-backed VMA (VM_MAP_FILE).  First TRIM any overlapping
-		 * VMAs in this range — proper mmap-replace semantics — so that when
-		 * rtld later maps a library's anon BSS with MAP_FIXED over the tail of
-		 * this file segment, the anon mapping (which also trims) wins the
-		 * overlap and demand-zero lookups resolve to the anon VMA, not this
-		 * file VMA (the bug fixed in d63d9a8ee, done properly here).
-		 *
-		 * The VMA owns a private backing fd (re-opened by path) so it survives
-		 * the caller closing its fd; the page-fault handler will use it to
-		 * demand-read pages once Stage B drops the eager read above.  (Stage A:
-		 * pages are still eager, so the VMA is metadata + the trim fix.)
-		 */
+		/* Pages are present (eager), so they never fault — record a backing-less
+		 * file VMA after trimming overlaps so MAP_FIXED replace semantics hold. */
 		vm_map_remove(&_current->vm_map, base, base + npages * PAGE_SIZE);
-		{
-			fileDescriptor_t *backing = fopen(kfd->fileName, "r");
-			vm_map_insert_file(&_current->vm_map,
-			                   base,
-			                   base + npages * PAGE_SIZE,
-			                   uap->prot,
-			                   (uap->flags & 0x0001 /* MAP_SHARED */) ? VM_MAP_SHARED : 0,
-			                   backing,
-			                   uap->pos);
-		}
+		vm_map_insert_file(&_current->vm_map,
+		                   base,
+		                   base + npages * PAGE_SIZE,
+		                   uap->prot,
+		                   (uap->flags & 0x0001 /* MAP_SHARED */) ? VM_MAP_SHARED : 0,
+		                   NULL,
+		                   uap->pos);
 
 		/* Flush the TLB for the newly mapped range. */
 		asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
