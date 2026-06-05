@@ -41,15 +41,13 @@
 /* Helpers                                                             */
 /* ------------------------------------------------------------------ */
 
-static void
-put_le16(u_int8_t *p, u_int16_t v)
+static void put_le16(u_int8_t *p, u_int16_t v)
 {
 	p[0] = (u_int8_t)(v);
 	p[1] = (u_int8_t)(v >> 8);
 }
 
-static void
-put_le32(u_int8_t *p, u_int32_t v)
+static void put_le32(u_int8_t *p, u_int32_t v)
 {
 	p[0] = (u_int8_t)(v);
 	p[1] = (u_int8_t)(v >> 8);
@@ -58,10 +56,9 @@ put_le32(u_int8_t *p, u_int32_t v)
 }
 
 /* Extract the basename (last component) of path into out[]. */
-static void
-path_basename(const char *path, char *out, int maxlen)
+static void path_basename(const char *path, char *out, int maxlen)
 {
-	const char	*base = path;
+	const char *base = path;
 
 	for (const char *p = path; *p; p++)
 		if (*p == '/')
@@ -73,11 +70,9 @@ path_basename(const char *path, char *out, int maxlen)
 /*
  * Write cluster and size fields of a directory entry in one sector read/write.
  */
-static int
-dirent_set_clus_size(struct fat_fs *fs, u_int32_t sec, u_int16_t off,
-    u_int32_t clus, u_int32_t size)
+static int dirent_set_clus_size(struct fat_fs *fs, u_int32_t sec, u_int16_t off, u_int32_t clus, u_int32_t size)
 {
-	u_int8_t	 buf[512];
+	u_int8_t buf[512];
 
 	if (fat_sector_read(fs, sec, buf) != 0)
 		return (-1);
@@ -98,16 +93,15 @@ dirent_set_clus_size(struct fat_fs *fs, u_int32_t sec, u_int16_t off,
  *
  * Returns 0 on success, -1 if the chain is too short for pos.
  */
-static int
-seek_to_cluster(struct fat_file *f, u_int32_t pos)
+static int seek_to_cluster(struct fat_file *f, u_int32_t pos)
 {
-	struct fat_fs	*fs = f->fs;
-	u_int32_t	 cluster_bytes =
-	    (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
-	u_int32_t	 target_idx = pos / cluster_bytes;
-	u_int32_t	 c = f->start_cluster;
+	struct fat_fs *fs = f->fs;
+	u_int32_t cluster_bytes = (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
+	u_int32_t target_idx = pos / cluster_bytes;
+	u_int32_t c = f->start_cluster;
 
-	for (u_int32_t i = 0; i < target_idx; i++) {
+	for (u_int32_t i = 0; i < target_idx; i++)
+	{
 		c = fat_cluster_next(fs, c);
 		if (c == FAT_CLUSTER_EOC || c < 2)
 			return (-1);
@@ -120,19 +114,17 @@ seek_to_cluster(struct fat_file *f, u_int32_t pos)
 /* Public API                                                          */
 /* ------------------------------------------------------------------ */
 
-struct fat_file *
-fat_file_open(struct fat_fs *fs, const char *path, u_int8_t mode)
+struct fat_file *fat_file_open(struct fat_fs *fs, const char *path, u_int8_t mode)
 {
-	struct fat_raw_dirent	 ent;
-	u_int32_t		 dir_cluster, start_cluster;
-	u_int32_t		 entry_sec;
-	u_int16_t		 entry_off;
-	int			 found;
-	char			 basename[256];
-	struct fat_file		*f;
+	struct fat_raw_dirent ent;
+	u_int32_t dir_cluster, start_cluster;
+	u_int32_t entry_sec;
+	u_int16_t entry_off;
+	int found;
+	char basename[256];
+	struct fat_file *f;
 
-	found = (fat_path_resolve(fs, path, &dir_cluster, &ent,
-	    &entry_sec, &entry_off) == 0);
+	found = (fat_path_resolve(fs, path, &dir_cluster, &ent, &entry_sec, &entry_off) == 0);
 
 	/* Reject directories */
 	if (found && (ent.attr & FAT_ATTR_DIR))
@@ -140,16 +132,18 @@ fat_file_open(struct fat_fs *fs, const char *path, u_int8_t mode)
 
 	path_basename(path, basename, 256);
 
-	if (mode == FAT_MODE_R) {
+	if (mode == FAT_MODE_R)
+	{
 		if (!found)
 			return (NULL);
 		start_cluster = ((u_int32_t)ent.clus_hi << 16) | ent.clus_lo;
-
-	} else if (mode == FAT_MODE_W) {
-		if (found) {
+	}
+	else if (mode == FAT_MODE_W)
+	{
+		if (found)
+		{
 			/* Truncate: free the existing cluster chain. */
-			start_cluster = ((u_int32_t)ent.clus_hi << 16) |
-			    ent.clus_lo;
+			start_cluster = ((u_int32_t)ent.clus_hi << 16) | ent.clus_lo;
 			if (start_cluster >= 2)
 				fat_cluster_free_chain(fs, start_cluster);
 		}
@@ -158,44 +152,52 @@ fat_file_open(struct fat_fs *fs, const char *path, u_int8_t mode)
 		if (start_cluster == 0)
 			return (NULL);
 
-		if (found) {
-			if (dirent_set_clus_size(fs, entry_sec, entry_off,
-			    start_cluster, 0) != 0) {
-				fat_cluster_free_chain(fs, start_cluster);
-				return (NULL);
-			}
-		} else {
-			if (fat_dir_create_entry(fs, dir_cluster, basename,
-			    FAT_ATTR_ARCH, start_cluster,
-			    &entry_sec, &entry_off) != 0) {
+		if (found)
+		{
+			if (dirent_set_clus_size(fs, entry_sec, entry_off, start_cluster, 0) != 0)
+			{
 				fat_cluster_free_chain(fs, start_cluster);
 				return (NULL);
 			}
 		}
-
-	} else if (mode == FAT_MODE_A) {
-		if (found) {
-			start_cluster = ((u_int32_t)ent.clus_hi << 16) |
-			    ent.clus_lo;
-			if (start_cluster < 2) {
+		else
+		{
+			if (fat_dir_create_entry(
+			        fs, dir_cluster, basename, FAT_ATTR_ARCH, start_cluster, &entry_sec, &entry_off) != 0)
+			{
+				fat_cluster_free_chain(fs, start_cluster);
+				return (NULL);
+			}
+		}
+	}
+	else if (mode == FAT_MODE_A)
+	{
+		if (found)
+		{
+			start_cluster = ((u_int32_t)ent.clus_hi << 16) | ent.clus_lo;
+			if (start_cluster < 2)
+			{
 				start_cluster = fat_cluster_alloc(fs, 0);
 				if (start_cluster == 0)
 					return (NULL);
-				dirent_set_clus_size(fs, entry_sec, entry_off,
-				    start_cluster, ent.file_size);
+				dirent_set_clus_size(fs, entry_sec, entry_off, start_cluster, ent.file_size);
 			}
-		} else {
+		}
+		else
+		{
 			start_cluster = fat_cluster_alloc(fs, 0);
 			if (start_cluster == 0)
 				return (NULL);
-			if (fat_dir_create_entry(fs, dir_cluster, basename,
-			    FAT_ATTR_ARCH, start_cluster,
-			    &entry_sec, &entry_off) != 0) {
+			if (fat_dir_create_entry(
+			        fs, dir_cluster, basename, FAT_ATTR_ARCH, start_cluster, &entry_sec, &entry_off) != 0)
+			{
 				fat_cluster_free_chain(fs, start_cluster);
 				return (NULL);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		return (NULL);
 	}
 
@@ -203,23 +205,24 @@ fat_file_open(struct fat_fs *fs, const char *path, u_int8_t mode)
 	if (f == NULL)
 		return (NULL);
 
-	f->fs		= fs;
-	f->start_cluster= start_cluster;
-	f->cur_cluster	= start_cluster;
-	f->file_size	= (mode == FAT_MODE_W) ? 0 :
-	    (found ? ent.file_size : 0);
-	f->position	= 0;
-	f->dir_sector	= entry_sec;
-	f->dir_offset	= entry_off;
-	f->mode		= mode;
-	f->size_dirty	= 0;
-	f->buf_dirty	= 0;
-	f->buf_lba	= (u_int32_t)-1;
+	f->fs = fs;
+	f->start_cluster = start_cluster;
+	f->cur_cluster = start_cluster;
+	f->file_size = (mode == FAT_MODE_W) ? 0 : (found ? ent.file_size : 0);
+	f->position = 0;
+	f->dir_sector = entry_sec;
+	f->dir_offset = entry_off;
+	f->mode = mode;
+	f->size_dirty = 0;
+	f->buf_dirty = 0;
+	f->buf_lba = (u_int32_t)-1;
 	memset(f->buf, 0, 512);
 
 	/* Append: seek to end of file. */
-	if (mode == FAT_MODE_A && f->file_size > 0) {
-		if (fat_file_seek(f, f->file_size) != 0) {
+	if (mode == FAT_MODE_A && f->file_size > 0)
+	{
+		if (fat_file_seek(f, f->file_size) != 0)
+		{
 			kfree(f);
 			return (NULL);
 		}
@@ -228,19 +231,18 @@ fat_file_open(struct fat_fs *fs, const char *path, u_int8_t mode)
 	return (f);
 }
 
-int
-fat_file_seek(struct fat_file *f, u_int32_t pos)
+int fat_file_seek(struct fat_file *f, u_int32_t pos)
 {
-	struct fat_fs	*fs = f->fs;
-	u_int32_t	 cluster_bytes =
-	    (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
+	struct fat_fs *fs = f->fs;
+	u_int32_t cluster_bytes = (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
 
 	if (pos == f->position)
 		return (0);
 
-	if (pos == 0) {
+	if (pos == 0)
+	{
 		f->cur_cluster = f->start_cluster;
-		f->position    = 0;
+		f->position = 0;
 		return (0);
 	}
 
@@ -249,18 +251,22 @@ fat_file_seek(struct fat_file *f, u_int32_t pos)
 	 * target cluster index is >= the current cluster index.  This avoids
 	 * restarting the chain walk on sequential reads.
 	 */
-	u_int32_t cur_idx    = f->position / cluster_bytes;
+	u_int32_t cur_idx = f->position / cluster_bytes;
 	u_int32_t target_idx = pos / cluster_bytes;
 
-	if (target_idx >= cur_idx) {
+	if (target_idx >= cur_idx)
+	{
 		u_int32_t c = f->cur_cluster;
-		for (u_int32_t i = cur_idx; i < target_idx; i++) {
+		for (u_int32_t i = cur_idx; i < target_idx; i++)
+		{
 			c = fat_cluster_next(fs, c);
 			if (c == FAT_CLUSTER_EOC || c < 2)
 				return (-1);
 		}
 		f->cur_cluster = c;
-	} else {
+	}
+	else
+	{
 		/* Backward seek — must restart from start_cluster. */
 		if (seek_to_cluster(f, pos) != 0)
 			return (-1);
@@ -270,18 +276,17 @@ fat_file_seek(struct fat_file *f, u_int32_t pos)
 	return (0);
 }
 
-int
-fat_file_read(struct fat_file *f, void *buf, u_int32_t size, u_int32_t *got)
+int fat_file_read(struct fat_file *f, void *buf, u_int32_t size, u_int32_t *got)
 {
-	struct fat_fs	*fs = f->fs;
-	u_int32_t	 cluster_bytes =
-	    (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
-	u_int8_t		*dst = (u_int8_t *)buf;
-	u_int32_t	 remaining, bytes_read;
-	u_int8_t		 sector_buf[512];
+	struct fat_fs *fs = f->fs;
+	u_int32_t cluster_bytes = (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
+	u_int8_t *dst = (u_int8_t *)buf;
+	u_int32_t remaining, bytes_read;
+	u_int8_t sector_buf[512];
 
 	/* Clamp to available data. */
-	if (f->position >= f->file_size) {
+	if (f->position >= f->file_size)
+	{
 		if (got)
 			*got = 0;
 		return (0);
@@ -291,12 +296,12 @@ fat_file_read(struct fat_file *f, void *buf, u_int32_t size, u_int32_t *got)
 		remaining = size;
 	bytes_read = 0;
 
-	while (remaining > 0) {
+	while (remaining > 0)
+	{
 		u_int32_t offset_in_cluster = f->position % cluster_bytes;
-		u_int32_t sec_in_clust      = offset_in_cluster / 512;
-		u_int32_t byte_off          = offset_in_cluster % 512;
-		u_int32_t lba = fat_cluster_to_lba(fs, f->cur_cluster) +
-		    sec_in_clust;
+		u_int32_t sec_in_clust = offset_in_cluster / 512;
+		u_int32_t byte_off = offset_in_cluster % 512;
+		u_int32_t lba = fat_cluster_to_lba(fs, f->cur_cluster) + sec_in_clust;
 
 		/*
 		 * Fast path: sector-aligned read directly into caller's buffer,
@@ -304,26 +309,36 @@ fat_file_read(struct fat_file *f, void *buf, u_int32_t size, u_int32_t *got)
 		 * Avoids the intermediate sector_buf[] copy and issues one
 		 * block-layer call per cluster instead of one per sector.
 		 */
-		if (byte_off == 0 && remaining >= 512) {
-			u_int32_t secs_left_clust = fs->sectors_per_cluster -
-			    sec_in_clust;
-			u_int32_t secs_want       = remaining / 512;
-			u_int32_t secs_to_read    = secs_left_clust < secs_want ?
-			    secs_left_clust : secs_want;
-			u_int32_t nbytes          = secs_to_read * 512;
+		if (byte_off == 0 && remaining >= 512)
+		{
+			u_int32_t secs_left_clust = fs->sectors_per_cluster - sec_in_clust;
+			u_int32_t secs_want = remaining / 512;
+			u_int32_t secs_to_read = secs_left_clust < secs_want ? secs_left_clust : secs_want;
+			u_int32_t nbytes = secs_to_read * 512;
 
-			if (fs->mp->device->dev_blk_ops->read(
-			    fs->mp->device, lba, secs_to_read,
-			    dst + bytes_read) != 0)
+			if (fs->mp->device->dev_blk_ops->read(fs->mp->device, lba, secs_to_read, dst + bytes_read) != 0)
 				break;
-			bytes_read  += nbytes;
-			remaining   -= nbytes;
+			bytes_read += nbytes;
+			remaining -= nbytes;
 			f->position += nbytes;
-			if (remaining > 0 && f->position % cluster_bytes == 0) {
+			/* Keep cur_cluster consistent with position even when the read ends
+			 * exactly on a cluster boundary (remaining == 0): a later seek to
+			 * this position sees pos == f->position and trusts cur_cluster, so
+			 * it must already point at position's cluster — otherwise the next
+			 * read returns the previous cluster's data (corrupts demand-paged
+			 * file pages, which always read up to a page/cluster boundary). */
+			if (f->position % cluster_bytes == 0 && f->position < f->file_size)
+			{
 				u_int32_t next = fat_cluster_next(fs, f->cur_cluster);
 				if (next == FAT_CLUSTER_EOC || next < 2)
-					break;
-				f->cur_cluster = next;
+				{
+					if (remaining > 0)
+						break;
+				}
+				else
+				{
+					f->cur_cluster = next;
+				}
 			}
 			continue;
 		}
@@ -338,16 +353,25 @@ fat_file_read(struct fat_file *f, void *buf, u_int32_t size, u_int32_t *got)
 				break;
 
 			memcpy(dst + bytes_read, sector_buf + byte_off, can_copy);
-			bytes_read  += can_copy;
-			remaining   -= can_copy;
+			bytes_read += can_copy;
+			remaining -= can_copy;
 			f->position += can_copy;
 
-			/* Advance cluster if we just crossed a boundary. */
-			if (remaining > 0 && f->position % cluster_bytes == 0) {
+			/* Advance cluster if we landed on a boundary (see the fast-path
+			 * note): keep cur_cluster consistent with position even at
+			 * remaining == 0 so the next read/seek isn't off by one cluster. */
+			if (f->position % cluster_bytes == 0 && f->position < f->file_size)
+			{
 				u_int32_t next = fat_cluster_next(fs, f->cur_cluster);
 				if (next == FAT_CLUSTER_EOC || next < 2)
-					break;
-				f->cur_cluster = next;
+				{
+					if (remaining > 0)
+						break;
+				}
+				else
+				{
+					f->cur_cluster = next;
+				}
 			}
 		}
 	}
@@ -357,27 +381,26 @@ fat_file_read(struct fat_file *f, void *buf, u_int32_t size, u_int32_t *got)
 	return (0);
 }
 
-int
-fat_file_write(struct fat_file *f, const void *buf, u_int32_t size)
+int fat_file_write(struct fat_file *f, const void *buf, u_int32_t size)
 {
-	struct fat_fs		*fs = f->fs;
-	u_int32_t		 cluster_bytes =
-	    (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
-	const u_int8_t		*src = (const u_int8_t *)buf;
-	u_int32_t		 written = 0;
+	struct fat_fs *fs = f->fs;
+	u_int32_t cluster_bytes = (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
+	const u_int8_t *src = (const u_int8_t *)buf;
+	u_int32_t written = 0;
 
-	while (written < size) {
+	while (written < size)
+	{
 		u_int32_t offset_in_cluster = f->position % cluster_bytes;
-		u_int32_t sec_in_clust      = offset_in_cluster / 512;
-		u_int32_t byte_off          = offset_in_cluster % 512;
-		u_int32_t lba = fat_cluster_to_lba(fs, f->cur_cluster) +
-		    sec_in_clust;
+		u_int32_t sec_in_clust = offset_in_cluster / 512;
+		u_int32_t byte_off = offset_in_cluster % 512;
+		u_int32_t lba = fat_cluster_to_lba(fs, f->cur_cluster) + sec_in_clust;
 		u_int32_t can_write = 512 - byte_off;
 
 		if (can_write > size - written)
 			can_write = size - written;
 
-		if (byte_off == 0 && can_write == 512) {
+		if (byte_off == 0 && can_write == 512)
+		{
 			/*
 			 * Full-sector write: bypass the file buffer.
 			 * If our buffer happens to hold this sector,
@@ -387,13 +410,16 @@ fat_file_write(struct fat_file *f, const void *buf, u_int32_t size)
 				f->buf_dirty = 0;
 			if (fat_sector_write(fs, lba, src + written) != 0)
 				return (-1);
-		} else {
+		}
+		else
+		{
 			/* Partial write: use the per-file write buffer. */
-			if (f->buf_lba != lba) {
+			if (f->buf_lba != lba)
+			{
 				/* Evict old buffer slot. */
-				if (f->buf_dirty) {
-					if (fat_sector_write(fs, f->buf_lba,
-					    f->buf) != 0)
+				if (f->buf_dirty)
+				{
+					if (fat_sector_write(fs, f->buf_lba, f->buf) != 0)
 						return (-1);
 					f->buf_dirty = 0;
 				}
@@ -406,17 +432,20 @@ fat_file_write(struct fat_file *f, const void *buf, u_int32_t size)
 		}
 
 		f->position += can_write;
-		written     += can_write;
+		written += can_write;
 
-		if (f->position > f->file_size) {
-			f->file_size  = f->position;
+		if (f->position > f->file_size)
+		{
+			f->file_size = f->position;
 			f->size_dirty = 1;
 		}
 
 		/* Cross cluster boundary: follow or allocate. */
-		if (written < size && f->position % cluster_bytes == 0) {
+		if (written < size && f->position % cluster_bytes == 0)
+		{
 			u_int32_t next = fat_cluster_next(fs, f->cur_cluster);
-			if (next == FAT_CLUSTER_EOC || next < 2) {
+			if (next == FAT_CLUSTER_EOC || next < 2)
+			{
 				next = fat_cluster_alloc(fs, f->cur_cluster);
 				if (next == 0)
 					return (-1);
@@ -428,34 +457,33 @@ fat_file_write(struct fat_file *f, const void *buf, u_int32_t size)
 	return (0);
 }
 
-int
-fat_file_flush(struct fat_file *f)
+int fat_file_flush(struct fat_file *f)
 {
-	if (f->buf_dirty) {
+	if (f->buf_dirty)
+	{
 		if (fat_sector_write(f->fs, f->buf_lba, f->buf) != 0)
 			return (-1);
 		f->buf_dirty = 0;
 	}
-	if (f->size_dirty) {
-		if (fat_dir_update_size(f->fs, f->dir_sector, f->dir_offset,
-		    f->file_size) != 0)
+	if (f->size_dirty)
+	{
+		if (fat_dir_update_size(f->fs, f->dir_sector, f->dir_offset, f->file_size) != 0)
 			return (-1);
 		f->size_dirty = 0;
 	}
 	return (0);
 }
 
-int
-fat_file_truncate(struct fat_file *f, u_int32_t new_size)
+int fat_file_truncate(struct fat_file *f, u_int32_t new_size)
 {
-	struct fat_fs	*fs = f->fs;
-	u_int32_t	 cluster_bytes =
-	    (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
-	u_int32_t	 c, next;
+	struct fat_fs *fs = f->fs;
+	u_int32_t cluster_bytes = (u_int32_t)fs->sectors_per_cluster * fs->bytes_per_sector;
+	u_int32_t c, next;
 
 	/* Make sure any dirty data is on disk before we mutate the chain — we
 	 * don't want a buffered sector for a cluster we are about to free. */
-	if (f->buf_dirty) {
+	if (f->buf_dirty)
+	{
 		if (fat_sector_write(fs, f->buf_lba, f->buf) != 0)
 			return (-1);
 		f->buf_dirty = 0;
@@ -463,26 +491,27 @@ fat_file_truncate(struct fat_file *f, u_int32_t new_size)
 	f->buf_lba = (u_int32_t)-1;
 
 	/* Growing: just bump the tracked size; subsequent writes fill the gap. */
-	if (new_size >= f->file_size) {
-		f->file_size  = new_size;
+	if (new_size >= f->file_size)
+	{
+		f->file_size = new_size;
 		f->size_dirty = 1;
 		return (fat_file_flush(f));
 	}
 
 	/* Shrinking to zero: free everything and allocate one fresh cluster
 	 * so the file still has a valid start_cluster for future writes. */
-	if (new_size == 0) {
+	if (new_size == 0)
+	{
 		if (f->start_cluster >= 2)
 			fat_cluster_free_chain(fs, f->start_cluster);
 		f->start_cluster = fat_cluster_alloc(fs, 0);
 		if (f->start_cluster == 0)
 			return (-1);
-		f->cur_cluster   = f->start_cluster;
-		f->position      = 0;
-		f->file_size     = 0;
-		f->size_dirty    = 0;
-		return (dirent_set_clus_size(fs, f->dir_sector, f->dir_offset,
-		    f->start_cluster, 0));
+		f->cur_cluster = f->start_cluster;
+		f->position = 0;
+		f->file_size = 0;
+		f->size_dirty = 0;
+		return (dirent_set_clus_size(fs, f->dir_sector, f->dir_offset, f->start_cluster, 0));
 	}
 
 	/* Shrinking but keeping data: walk to the cluster that holds the
@@ -491,7 +520,8 @@ fat_file_truncate(struct fat_file *f, u_int32_t new_size)
 	{
 		u_int32_t target_idx = (new_size - 1) / cluster_bytes;
 		c = f->start_cluster;
-		for (u_int32_t i = 0; i < target_idx; i++) {
+		for (u_int32_t i = 0; i < target_idx; i++)
+		{
 			next = fat_cluster_next(fs, c);
 			if (next == FAT_CLUSTER_EOC || next < 2)
 				return (-1);
@@ -501,14 +531,16 @@ fat_file_truncate(struct fat_file *f, u_int32_t new_size)
 	next = fat_cluster_next(fs, c);
 	if (fat_cluster_write_entry(fs, c, FAT_CLUSTER_EOC) != 0)
 		return (-1);
-	if (next != FAT_CLUSTER_EOC && next >= 2) {
+	if (next != FAT_CLUSTER_EOC && next >= 2)
+	{
 		if (fat_cluster_free_chain(fs, next) != 0)
 			return (-1);
 	}
 
-	f->file_size  = new_size;
+	f->file_size = new_size;
 	f->size_dirty = 1;
-	if (f->position > new_size) {
+	if (f->position > new_size)
+	{
 		f->position = new_size;
 		/* Force seek_to_cluster on next read/write by resetting the
 		 * tracked current cluster. */
@@ -517,8 +549,7 @@ fat_file_truncate(struct fat_file *f, u_int32_t new_size)
 	return (fat_file_flush(f));
 }
 
-void
-fat_file_close(struct fat_file *f)
+void fat_file_close(struct fat_file *f)
 {
 	fat_file_flush(f);
 	kfree(f);
