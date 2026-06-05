@@ -8,7 +8,7 @@
 | 1.2 | `vm_map_entry` struct — replace linear VMA list | 1 | ✅ Done — `sys/include/vmm/vm_map.h` + `sys/vmm/vm_map.c`; `vm_map_t vm_map` embedded in `kTask_t`; fork copies, exec frees |
 | 1.3 | O(log n) `mmap`/`munmap`/page-fault VMA lookup | 1 | ✅ Done — `vm_map_insert` in `sys_mmap` (anon paths); `vm_map_remove` in `sys_munmap`; `vm_map_lookup` in page fault handler for demand-zero of anon VMAs |
 | 2.1 | Lazy page allocation (demand-zero pages) | 2 | ✅ Done — `sys_mmap(MAP_ANON)` now records VMA only (no physical pages); `vmm_reserve_anon_range` finds free VA without mapping; page fault handler backs pages on first touch; covers both MAP_FIXED and non-fixed anon; PT-missing case handled in `pageDir == 0` fault branch |
-| 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | 🟡 Eager sharing DONE (`63ec7852a`) — read-only library pages de-duplicated via a shared file-page cache (`sys/vmm/vm_filecache.c`, keyed by mount/`fd->ino`/offset; PTE `PAGE_SHARED` + per-page refcount), so a lib's text is one physical copy across all processes. Pages are read **eagerly** (whole file at `mmap`), not demand-paged. File mmaps deliberately insert **no** VMA (`d63d9a8ee` — a file VMA overlapping rtld's `MAP_FIXED` anon BSS broke demand-zero lookup → SIGSEGV). **Remaining:** demand-paged (lazy) file mmap — the modern design; needs file VMAs + `MAP_FIXED` VMA-overlap trimming + a safe fault-time read (drop the fault lock / sleep) + COW for writable file pages. |
+| 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | ✅ **Demand-paged DONE** (`89652e853`). `mmap(fd)` maps no pages: it opens a private backing fd (by path, survives caller `close`), reserves the VA, trims overlapping VMAs (proper `MAP_FIXED` replace), and records a `VM_MAP_FILE` VMA. The fault handler (`vmm_demand_file_page`) reads each page on first touch — RO pages de-duplicated via the shared file-page cache (`sys/vmm/vm_filecache.c`, keyed by mount/`fd->ino`/offset; `PAGE_SHARED` + per-page refcount, one physical copy across processes), writable pages private. Backing fds `fclose`d on teardown, re-`fopen`d on fork. Eager read + de-dup retained as a fallback when no backing fd opens. Fault-time read is safe because the IDE driver polls (never sleeps). Stage A (`70e8df341`) added the file VMAs + overlap trimming; depended on the FAT random-access fix (`c975ef93f`) since per-page cluster-boundary reads exposed a latent stale-`cur_cluster` bug. **Optional remaining:** COW/writeback for `MAP_SHARED` writable file pages. |
 | 2.3 | `msync` — flush dirty file-backed pages | 2 | ⬜ Not started (depends on demand-paged/COW file mmap) |
 | — | `/proc/meminfo` — total/free pages + `FileCache` count | 2 | ✅ Done (`2dad05bdc`) — userland memory readout; used to measure sharing/leaks |
 | — | Labeled segfault report (pid/name, fault/eip/esp/cs/err, pde/pte, bracketing VMAs) | 2 | ✅ Done (`d63d9a8ee`) — `vmm_report_segfault`; distinguishes a VMM demand bug from a wild pointer |
@@ -163,22 +163,31 @@ anon BSS VMA, so demand-zero was skipped and the first BSS write faulted
 "not mapped" (deterministic SIGSEGV). File pages are eager (always present,
 never demand-faulted) so they need no VMA — leaving the tree anon-only fixes it.
 
-**Remaining — demand-paged (lazy) file mmap (the modern design):**
-The eager read does not scale (it reads the whole file even if a few pages are
-touched). The lazy version faults pages in from `vm_vnode`/`vm_offset` on first
-access. It is now feasible (sleep/wakeup exists), but requires, in order:
-1. **`MAP_FIXED` VMA-overlap trimming** — a new mapping must remove/trim
-   overlapping VMAs (the thing eager sidestepped by not inserting file VMAs).
-2. **File-backed VMAs** with a backing-fd lifetime that survives `close()`.
-3. **A safe fault-time read** — drop `g_page_fault_spin_lock` / let the faulting
-   thread sleep across the FAT read (never do heavy I/O holding the fault lock).
-4. **COW** for writable (`MAP_PRIVATE`) file pages.
+**Demand-paged (lazy) file mmap — DONE 2026-06-05 (`89652e853`).**
+`sys_mmap(fd)` now maps **no** pages: it opens a private backing fd (re-opened by
+path so it survives the caller closing its own fd), reserves the VA range, trims
+overlapping VMAs (`vm_map_remove` — proper `MAP_FIXED` replace, e.g. rtld's anon
+BSS over a file segment's tail), and records a `VM_MAP_FILE` VMA. The page-fault
+handler's `vmm_demand_file_page()` reads each page on first touch:
+- **Read-only** pages go through the shared file-page cache — a hit maps the one
+  shared physical copy `PAGE_SHARED`; a miss reads the page, publishes it, and
+  downgrades the live mapping to shared RO.
+- **Writable** pages get a private copy (read in, mapped RW).
 
-### 2.3 `msync`
+Backing fds are `fclose`d on VMA teardown (`vm_map_free`/`vm_map_remove`) and
+re-`fopen`d per-VMA on fork (`vm_map_copy`). If a backing fd can't be opened,
+`sys_mmap` falls back to the historical eager read + cache de-dup so the mapping
+still works.
 
-Flush dirty file-backed pages back to the vnode. Walk the VMA's PTEs, find
-dirty bits, write back via VFS, clear dirty. Depends on the demand-paged/COW
-file-mmap work above (there are no writable file-backed VMAs until then).
+The fault-time read is safe **without** dropping `g_page_fault_spin_lock`: the
+IDE driver (`sys/pci/hd.c`) is pure polling (never sleeps), and `fat_acquire`
+only yields on contention — no hard deadlock in this yielding-lock kernel. This
+also exposed and fixed a latent FAT random-access bug (`c975ef93f`): per-page
+cluster-boundary reads left `cur_cluster` stale, which eager whole-file reads
+never tripped.
+
+**Optional remaining:** COW / writeback for `MAP_SHARED` writable file pages
+(`MAP_PRIVATE` writable is already correct — private copy on fault).
 
 ### 2.3 `msync`
 
