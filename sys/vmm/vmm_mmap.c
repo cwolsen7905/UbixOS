@@ -213,12 +213,19 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap)
 			}
 		}
 
-		/* Record the file-backed VMA. */
-		vm_map_insert(&_current->vm_map,
-		              base,
-		              base + npages * PAGE_SIZE,
-		              uap->prot,
-		              (uap->flags & 0x0001 /* MAP_SHARED */) ? VM_MAP_SHARED : 0);
+		/*
+		 * Deliberately do NOT record a vm_map VMA for file mappings.
+		 *
+		 * File pages are mapped eagerly above (always present), so the fault
+		 * handler never needs a VMA to demand-back them, and teardown frees
+		 * them by walking the page tables.  Worse, rtld maps a library's
+		 * anonymous BSS with MAP_FIXED *overlapping* the file segment it just
+		 * mapped; a non-anon file VMA in that overlap makes vm_map_lookup
+		 * return the file VMA instead of the anon BSS one, so the demand-zero
+		 * is skipped and the first write to the BSS faults as "not mapped".
+		 * Keeping file mappings out of the VMA tree leaves only the anon VMAs,
+		 * which is exactly what the demand-zero path needs.
+		 */
 
 		/* Flush the TLB for the newly mapped range. */
 		asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
