@@ -8,8 +8,10 @@
 | 1.2 | `vm_map_entry` struct — replace linear VMA list | 1 | ✅ Done — `sys/include/vmm/vm_map.h` + `sys/vmm/vm_map.c`; `vm_map_t vm_map` embedded in `kTask_t`; fork copies, exec frees |
 | 1.3 | O(log n) `mmap`/`munmap`/page-fault VMA lookup | 1 | ✅ Done — `vm_map_insert` in `sys_mmap` (anon paths); `vm_map_remove` in `sys_munmap`; `vm_map_lookup` in page fault handler for demand-zero of anon VMAs |
 | 2.1 | Lazy page allocation (demand-zero pages) | 2 | ✅ Done — `sys_mmap(MAP_ANON)` now records VMA only (no physical pages); `vmm_reserve_anon_range` finds free VA without mapping; page fault handler backs pages on first touch; covers both MAP_FIXED and non-fixed anon; PT-missing case handled in `pageDir == 0` fault branch |
-| 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | ⬜ Not started — current mmap(fd) reads file into pre-allocated pages, no VMA backing |
-| 2.3 | `msync` — flush dirty file-backed pages | 2 | ⬜ Not started |
+| 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | 🟡 Eager sharing DONE (`63ec7852a`) — read-only library pages de-duplicated via a shared file-page cache (`sys/vmm/vm_filecache.c`, keyed by mount/`fd->ino`/offset; PTE `PAGE_SHARED` + per-page refcount), so a lib's text is one physical copy across all processes. Pages are read **eagerly** (whole file at `mmap`), not demand-paged. File mmaps deliberately insert **no** VMA (`d63d9a8ee` — a file VMA overlapping rtld's `MAP_FIXED` anon BSS broke demand-zero lookup → SIGSEGV). **Remaining:** demand-paged (lazy) file mmap — the modern design; needs file VMAs + `MAP_FIXED` VMA-overlap trimming + a safe fault-time read (drop the fault lock / sleep) + COW for writable file pages. |
+| 2.3 | `msync` — flush dirty file-backed pages | 2 | ⬜ Not started (depends on demand-paged/COW file mmap) |
+| — | `/proc/meminfo` — total/free pages + `FileCache` count | 2 | ✅ Done (`2dad05bdc`) — userland memory readout; used to measure sharing/leaks |
+| — | Labeled segfault report (pid/name, fault/eip/esp/cs/err, pde/pte, bracketing VMAs) | 2 | ✅ Done (`d63d9a8ee`) — `vmm_report_segfault`; distinguishes a VMM demand bug from a wild pointer |
 | 3.1 | Swap device integration — page out to swap partition | 3 | ✅ Done — `sys/vmm/swap.c`: slot bitmap, `swap_write/read_page`, `swap_evict_page` (clock); page fault handler handles `PAGE_SWAPPED` PTEs |
 | 3.2 | Pageout daemon — proactive page reclaim | 3 | ✅ Done — `sys/vmm/pageout.c`; polls every 100 ticks, iterates task list with CR3 switching, calls `swap_evict_page` per task until high watermark; launched from `kmain` at `QOS_BACKGROUND` |
 | 3.3 | `madvise` hints (MADV_SEQUENTIAL, MADV_DONTNEED) | 3 | ⬜ Not started |
@@ -18,6 +20,13 @@
 
 **Prerequisites:** Dynamic linking plan complete (mmap2/munmap/mprotect done ✅).
 Phase 2 (file-backed mmap) needs the dynamic linker working end-to-end first.
+
+**Known open issue (surfaced 2026-06-04 via `/proc/meminfo`):** a ~51-page leak
+per process lifecycle in the **private/anon teardown** path (free pages ratchet
+down across open/close cycles while `FileCache` stays flat — so it is *not* the
+file-page cache). A clean `malloc`+touch×2 repro did not reproduce it, so it is a
+more specific pattern (e.g. `fread` into a lazy-anon page, or many VMAs). Not yet
+localized; chase with `/proc/meminfo` before/after controlled process cycles.
 
 ---
 
@@ -131,15 +140,45 @@ Currently `mmap(ANON)` pre-allocates and maps a physical page. Change to:
 
 ### 2.2 File-backed mmap
 
-`vm_map_entry` already has `vm_vnode` + `vm_offset`. When a page fault hits
-a file-backed VMA:
-1. Allocate a physical page.
-2. Read `PAGE_SIZE` bytes from `vm_vnode` at `vm_offset + (fault_addr - vm_start)`.
-3. Map the page into the faulting process's address space.
+**Shipped (eager + shared), 2026-06-04 — `63ec7852a`, fix `d63d9a8ee`.**
 
-This is the foundation for executing shared libraries without copying them
-into anonymous memory — the dynamic linker's `PT_LOAD` segments map directly
-from the ELF file.
+`sys_mmap(fd)` keeps the historical path — allocate the VA range and read the
+whole file in one `fread` (syscall context, proven correct) — then
+**de-duplicates read-only pages** through a shared file-page cache
+(`sys/vmm/vm_filecache.c`):
+- First mapper of a `(mount, fd->ino, offset)` page publishes it: its PTE is
+  downgraded in place (`vmm_set_page_attributes`) to `PAGE_PRESENT|PAGE_USER|
+  PAGE_SHARED` and the page is inserted into the cache (refcount 1).
+- Later mappers `lookup_ref` the cache, drop their just-read copy, and map the
+  shared physical page read-only — so a library's text/rodata is **one physical
+  copy across all processes**.
+- Writable pages stay private. Teardown (`vmm_unmap_page`,
+  `vmm_clean_virtual_space`) and fork (`vmm_copy_virtual_space`) ref/unref the
+  cache by physical page; the last release frees it.
+
+**Critical caveat:** file mmaps insert **no** `vm_map` VMA. rtld maps a
+library's anonymous BSS with `MAP_FIXED` *overlapping* the file segment; a
+non-anon file VMA in the tree made `vm_map_lookup` return it instead of the
+anon BSS VMA, so demand-zero was skipped and the first BSS write faulted
+"not mapped" (deterministic SIGSEGV). File pages are eager (always present,
+never demand-faulted) so they need no VMA — leaving the tree anon-only fixes it.
+
+**Remaining — demand-paged (lazy) file mmap (the modern design):**
+The eager read does not scale (it reads the whole file even if a few pages are
+touched). The lazy version faults pages in from `vm_vnode`/`vm_offset` on first
+access. It is now feasible (sleep/wakeup exists), but requires, in order:
+1. **`MAP_FIXED` VMA-overlap trimming** — a new mapping must remove/trim
+   overlapping VMAs (the thing eager sidestepped by not inserting file VMAs).
+2. **File-backed VMAs** with a backing-fd lifetime that survives `close()`.
+3. **A safe fault-time read** — drop `g_page_fault_spin_lock` / let the faulting
+   thread sleep across the FAT read (never do heavy I/O holding the fault lock).
+4. **COW** for writable (`MAP_PRIVATE`) file pages.
+
+### 2.3 `msync`
+
+Flush dirty file-backed pages back to the vnode. Walk the VMA's PTEs, find
+dirty bits, write back via VFS, clear dirty. Depends on the demand-paged/COW
+file-mmap work above (there are no writable file-backed VMAs until then).
 
 ### 2.3 `msync`
 
