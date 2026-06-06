@@ -31,6 +31,7 @@
 #include <cstring>
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
+#include <ubix/process.hh>
 #include "window_manager.hh"
 
 #define PAGE_SIZE 4096
@@ -379,6 +380,40 @@ void WindowManager::handle_release(struct display_release *rel)
 	/* closing==true: already removed from z-stack by close_window(); just free */
 	std::free(w->buf);
 	reg_.destroy(w); /* w is dangling after this point */
+}
+
+void WindowManager::reap_window(Window *w)
+{
+	/* The client is gone, so there is no DISPLAY_RELEASE handshake to wait for
+	 * and no mailbox to message: drop the window from the visible stack, hand
+	 * focus to whatever is left, free the shared buffer (its last reference, so
+	 * the physical pages are reclaimed), and destroy the record. */
+	if (w->decor_h > 0)
+		notify_taskbar(w, 0);
+	reg_.z_remove(w);
+	if (reg_.focused() == w)
+		reg_.set_focused(reg_.z_stack().empty() ? nullptr : reg_.z_stack().back());
+	std::free(w->buf);
+	reg_.destroy(w); /* w is dangling after this point */
+}
+
+void WindowManager::reap_dead_clients()
+{
+	/* Collect first, then free: reap_window() mutates the registry, so we must
+	 * not free while iterating the snapshot. */
+	bool reaped = false;
+	for (Window *w : reg_.all())
+	{
+		if (w->sender_pid <= 0)
+			continue;
+		if (::kill(w->sender_pid, 0) == 0)
+			continue; /* client still alive */
+		std::printf("views: reaping window %u (dead client pid %d)\n", w->id, w->sender_pid);
+		reap_window(w);
+		reaped = true;
+	}
+	if (reaped)
+		comp_.invalidate_all();
 }
 
 void WindowManager::handle_raise(struct display_raise *dr)

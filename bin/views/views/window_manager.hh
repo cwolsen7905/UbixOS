@@ -45,6 +45,7 @@ class WindowManager
 	bool mode_pending_ = false; /* awaiting the 0x82 reply for a live mode switch */
 
 	void notify_taskbar(Window *w, uint8_t added);
+	void reap_window(Window *w);
 	void close_window(Window *w);
 	void minimize_window(Window *w);
 	void resize_window(Window *w, int new_w, int new_h);
@@ -62,6 +63,11 @@ class WindowManager
 	 * table in window_manager.cc — views.cc is never touched. */
 	void dispatch(uint32_t id, void *data);
 	void flush();
+
+	/* Free any window whose owning client process has died (logout-killed or
+	 * crashed) so its shared buffer is reclaimed and no ghost frame lingers.
+	 * Cheap liveness probe (kill(pid, 0)); call periodically, not every frame. */
+	void reap_dead_clients();
 
 	void handle_query(struct display_query *dq);
 	void handle_claim(struct display_claim_req *creq);
