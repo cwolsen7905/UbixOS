@@ -77,7 +77,11 @@ public:
 	void         ogFillGouraudPolygon(uInt32, ogPoint2d*, ogRGBA8 *);
 	void         ogFillPolygon(uInt32, ogPoint2d*, uInt32);
 	void         ogFillRect(int32, int32, int32, int32, uInt32);
+	void         ogFillRoundRect(int32, int32, int32, int32, uInt32 radius, uInt32 colour);
 	void         ogFillTriangle(int32, int32, int32, int32, int32, int32, uInt32);
+	void         ogRoundRect(int32, int32, int32, int32, uInt32 radius, uInt32 colour);
+	void         ogDropShadow(int32, int32, int32, int32, uInt32 reach, int32 yOffset, uInt32 alphaMax);
+	static uInt32 ogBlendColor(uInt32 a, uInt32 b, uInt32 t); /* lerp a->b, t in [0,256], packed 0x00RRGGBB */
 	uInt32       ogGetAlpha(void);
 	uInt32       ogGetAlphaMasker(void) const { return alphaMasker; }
 	uInt32       ogGetBPP(void) const { return BPP; }

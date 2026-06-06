@@ -2007,6 +2007,182 @@ void ogSurface::ogFillRect(int32 x1, int32 y1, int32 x2, int32 y2, uint32_t colo
 		ogHLine(x1, x2, yy, colour);
 } // ogSurface::ogFillRect
 
+/* Integer square root (floor) — small radii only, no libm (world is -mno-sse). */
+static int32 og_isqrt(int32 v)
+{
+	int32 x = 0;
+	while ((x + 1) * (x + 1) <= v)
+		x++;
+	return x;
+}
+
+/**
+ * Linearly blend two packed 0x00RRGGBB colours: t=0 -> a, t=256 -> b.
+ *
+ * Pure colour math (no surface state); shared by the modern UI chrome for focus
+ * dimming, anti-aliased edges, and shadows.  @param t blend factor in [0,256].
+ */
+uInt32 ogSurface::ogBlendColor(uInt32 a, uInt32 b, uInt32 t)
+{
+	if (t > 256)
+		t = 256;
+	int32 ar = (a >> 16) & 0xFF, ag = (a >> 8) & 0xFF, ab = a & 0xFF;
+	int32 br = (b >> 16) & 0xFF, bg = (b >> 8) & 0xFF, bb = b & 0xFF;
+	int32 r = ar + (((br - ar) * (int32)t) >> 8);
+	int32 g = ag + (((bg - ag) * (int32)t) >> 8);
+	int32 bl = ab + (((bb - ab) * (int32)t) >> 8);
+	return ((uInt32)r << 16) | ((uInt32)g << 8) | (uInt32)bl;
+} // ogSurface::ogBlendColor
+
+/**
+ * Fill a rounded rectangle by scanlines, insetting the first/last @radius rows
+ * along a quarter-circle so the four corners are clipped to whatever was drawn
+ * underneath.  objGFX's filled counterpart to a rounded panel/card.
+ */
+void ogSurface::ogFillRoundRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 radius, uInt32 colour)
+{
+	int32 tmp;
+	if (x2 < x1)
+	{
+		tmp = x2;
+		x2 = x1;
+		x1 = tmp;
+	}
+	if (y2 < y1)
+	{
+		tmp = y2;
+		y2 = y1;
+		y1 = tmp;
+	}
+
+	int32 r = (int32)radius;
+	if (r * 2 > (x2 - x1))
+		r = (x2 - x1) / 2;
+	if (r * 2 > (y2 - y1))
+		r = (y2 - y1) / 2;
+	if (r < 0)
+		r = 0;
+
+	for (int32 y = y1; y <= y2; y++)
+	{
+		int32 dx = 0;
+		if (y < y1 + r)
+		{
+			int32 dy = (y1 + r) - y;
+			dx = r - og_isqrt(r * r - dy * dy);
+		}
+		else if (y > y2 - r)
+		{
+			int32 dy = y - (y2 - r);
+			dx = r - og_isqrt(r * r - dy * dy);
+		}
+		ogHLine(x1 + dx, x2 - dx, y, colour);
+	}
+} // ogSurface::ogFillRoundRect
+
+/**
+ * Stroke a 1px rounded-rectangle outline: straight edges plus four quarter-arcs.
+ * Each arc plots both x- and y-driven points so the curve stays gap-free.
+ */
+void ogSurface::ogRoundRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 radius, uInt32 colour)
+{
+	int32 tmp;
+	if (x2 < x1)
+	{
+		tmp = x2;
+		x2 = x1;
+		x1 = tmp;
+	}
+	if (y2 < y1)
+	{
+		tmp = y2;
+		y2 = y1;
+		y1 = tmp;
+	}
+
+	int32 r = (int32)radius;
+	if (r * 2 > (x2 - x1))
+		r = (x2 - x1) / 2;
+	if (r * 2 > (y2 - y1))
+		r = (y2 - y1) / 2;
+	if (r < 0)
+		r = 0;
+
+	ogHLine(x1 + r, x2 - r, y1, colour);
+	ogHLine(x1 + r, x2 - r, y2, colour);
+	ogVLine(x1, y1 + r, y2 - r, colour);
+	ogVLine(x2, y1 + r, y2 - r, colour);
+
+	int32 cxl = x1 + r, cxr = x2 - r, cyt = y1 + r, cyb = y2 - r;
+	for (int32 i = 0; i <= r; i++)
+	{
+		int32 d = og_isqrt(r * r - i * i);
+		ogSetPixel(cxl - d, cyt - i, colour);
+		ogSetPixel(cxl - i, cyt - d, colour);
+		ogSetPixel(cxr + d, cyt - i, colour);
+		ogSetPixel(cxr + i, cyt - d, colour);
+		ogSetPixel(cxl - d, cyb + i, colour);
+		ogSetPixel(cxl - i, cyb + d, colour);
+		ogSetPixel(cxr + d, cyb + i, colour);
+		ogSetPixel(cxr + i, cyb + d, colour);
+	}
+} // ogSurface::ogRoundRect
+
+/**
+ * Cast a soft drop shadow around the rectangle [x1,y1,x2,y2] by darkening the
+ * surface's existing pixels in a @reach-wide band, offset down by @yOffset
+ * (light from above), with a quadratic distance falloff peaking at @alphaMax
+ * (/256).  Pixels under the rectangle itself are left untouched (it is opaque).
+ * Read-then-darken, so it is idempotent within one repaint pass.
+ */
+void ogSurface::ogDropShadow(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 reach, int32 yOffset, uInt32 alphaMax)
+{
+	int32 tmp;
+	if (x2 < x1)
+	{
+		tmp = x2;
+		x2 = x1;
+		x1 = tmp;
+	}
+	if (y2 < y1)
+	{
+		tmp = y2;
+		y2 = y1;
+		y1 = tmp;
+	}
+
+	int32 rr = (int32)reach;
+	int32 rx0 = x1, ry0 = y1 + yOffset, rx1 = x2, ry1 = y2 + yOffset;
+	int32 bx0 = x1 - rr, by0 = y1 - rr + yOffset, bx1 = x2 + rr, by1 = y2 + rr + yOffset;
+
+	if (bx0 < 0)
+		bx0 = 0;
+	if (by0 < 0)
+		by0 = 0;
+	if (bx1 > (int32)maxX)
+		bx1 = maxX;
+	if (by1 > (int32)maxY)
+		by1 = maxY;
+
+	for (int32 py = by0; py <= by1; py++)
+	{
+		for (int32 px = bx0; px <= bx1; px++)
+		{
+			if (px >= x1 && px <= x2 && py >= y1 && py <= y2)
+				continue; /* under the opaque rectangle */
+			int32 dx = (px < rx0) ? (rx0 - px) : ((px > rx1) ? (px - rx1) : 0);
+			int32 dy = (py < ry0) ? (ry0 - py) : ((py > ry1) ? (py - ry1) : 0);
+			int32 d2 = dx * dx + dy * dy;
+			if (d2 >= rr * rr)
+				continue;
+			int32 a = (int32)alphaMax * (rr * rr - d2) / (rr * rr);
+			if (a <= 0)
+				continue;
+			ogSetPixel(px, py, ogBlendColor(ogGetPixel(px, py), 0, (uInt32)a));
+		}
+	}
+} // ogSurface::ogDropShadow
+
 void ogSurface::ogFillTriangle(int32 x1, int32 y1, int32 x2, int32 y2,
 							   int32 x3, int32 y3, uint32_t colour) 
 {
