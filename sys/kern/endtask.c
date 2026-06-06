@@ -97,6 +97,12 @@ void endTask(pidType pid)
 	if (_current->term != NULL && _current->term->owner == _current->id && _current->parent != NULL)
 		_current->term->owner = _current->parent->id;
 
+	/* Hang up any pseudo-terminal this task owned (it was the graphical terminal
+	 * app).  A shell that ran setsid() for the pty is in its own session and
+	 * escapes process-group/session teardown on logout; SIGHUP'ing the slave
+	 * session here makes it exit instead of leaking across the next login. */
+	tty_hangup_by_owner(_current->id);
+
 	sched_zombie(_current);
 	sched_yield();
 	while (1)

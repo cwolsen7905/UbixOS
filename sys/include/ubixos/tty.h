@@ -104,6 +104,7 @@ void tty_inject(tty_term *tty, char ch); /* push one char through line disciplin
  */
 int pty_alloc(void);
 void pty_free(int slot);
+void tty_hangup_by_owner(pidType pid); /* SIGHUP + release ptys owned by a dying process */
 int tty_inject_user(int slot, const char *buf, int n);
 int tty_snapshot(int slot, void *dst, u_int16_t *x, u_int16_t *y);
 int tty_resize(int slot, int cols, int rows); /* set a pty's grid size + winsize */

@@ -318,6 +318,13 @@ int sys_read(struct thread *td, struct sys_read_args *args)
 				t->t_eof = 0;
 				break; /* return x bytes (0 if line was empty = EOF) */
 			}
+			else if (!t->t_inuse)
+			{
+				/* The pty was released out from under us (its master owner died
+				 * — see tty_hangup_by_owner): report EOF so an orphaned shell
+				 * reading here unwinds and exits instead of yielding forever. */
+				break;
+			}
 			else
 			{
 				sched_yield();
