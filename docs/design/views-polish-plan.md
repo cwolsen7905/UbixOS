@@ -71,7 +71,28 @@ data source the taskbar can read. None exists yet — add a procfs entry
 (e.g. `/proc/net` or a `net` status file) or a small syscall, then a glyph in
 the tray next to the volume speaker.
 
-### 4. Nice-to-haves (unscheduled)
+### 4. Modernize the login screen (vlogin)
+The login UI (`bin/vlogin/vlogin.cc`, `LoginUI`) still wears the old look: a
+saturated navy palette (`BG_COLOR 0x162033`, `BOX_COLOR 0x1A2840`,
+`ACCENT_COLOR 0x2060A0`), inline `Login:` / `Password:` text rows with a block
+cursor in a flat rectangle, and a plain "UbixOS" title bar on the panel. Bring
+it in line with the new chrome:
+- **Palette** — adopt the calm slate (`0x333C4C` accent, dark slate bg) so the
+  login matches the desktop instead of clashing with it.
+- **Centered card** — a properly centered panel with rounded corners + a soft
+  drop shadow (reuse the compositor's corner/shadow math, or draw into the
+  surface), generous padding, vertically centred.
+- **Real input fields** — boxed username/password fields with a subtle border,
+  a focus ring/accent on the active field (replacing the "Tab to switch"
+  block-cursor model), and a blinking caret.
+- **Branding** — "uBixOS" wordmark (stylised lowercase-u/capital-B) and/or a
+  logo glyph, larger and centred above the fields.
+- **Affordances** — a clock/date, and optionally a power/restart control on the
+  login screen; clear error styling (red text/again animation) on auth failure.
+- Keep it a single screen-sized `wants_motion` window so it can later get hover
+  states on the fields/buttons (same mechanism the taskbar now uses).
+
+### 5. Nice-to-haves (unscheduled)
 - Hover-to-open submenus (currently click-to-open; hover only highlights).
 - Volume tray: scroll-to-adjust / click-to-mute instead of opening Settings.
 - Taskbar translucency (compositor blend) once shadows/corners are proven.
