@@ -40,7 +40,7 @@
 extern uint32_t g_theme_decor_bg;                /* focused title bar fill (accent) */
 extern uint32_t g_theme_decor_hi;                /* (legacy) kept for the Compositor's setter */
 #define DECOR_BG_INACT FB_RGB(0x2A, 0x2A, 0x30)  /* unfocused title bar fill */
-#define DECOR_CLOSE_RED FB_RGB(0xE0, 0x50, 0x50) /* close-glyph accent */
+#define DECOR_CLOSE_RED FB_RGB(0xFF, 0x6E, 0x6E) /* close-glyph accent (bright for contrast) */
 
 /**
  * Linearly blend two packed 0x00RRGGBB colours: t=0 → a, t=256 → b.
@@ -161,25 +161,25 @@ class Window
 			if (maximized)
 			{
 				/* Restore: two overlapped squares. */
-				glyph_square(canvas, mcx + 1, cy - 1, 7, glyph);
-				canvas.rect(mcx - 3, cy + 1, 7, 1, glyph);
-				canvas.rect(mcx - 3, cy + 1, 1, 5, glyph);
-				canvas.rect(mcx - 3, cy + 5, 7, 1, glyph);
-				canvas.rect(mcx + 3, cy + 1, 1, 5, glyph);
+				glyph_square(canvas, mcx + 2, cy - 2, 8, glyph);
+				canvas.rect(mcx - 4, cy + 1, 8, 1, glyph);
+				canvas.rect(mcx - 4, cy + 1, 1, 6, glyph);
+				canvas.rect(mcx - 4, cy + 6, 8, 1, glyph);
+				canvas.rect(mcx + 3, cy + 1, 1, 6, glyph);
 			}
 			else
 			{
-				glyph_square(canvas, mcx, cy, 9, glyph);
+				glyph_square(canvas, mcx, cy, 11, glyph);
 			}
 		}
 
 		/* Minimize — a centred horizontal line. */
 		int icx = x + w - 2 * decor_h + decor_h / 2;
-		canvas.rect(icx - 4, cy, 9, 1, glyph);
+		canvas.rect(icx - 5, cy, 11, 2, glyph);
 
-		/* Close — red-tinted X, far right. */
+		/* Close — bright red X, far right. */
 		int ccx = x + w - decor_h + decor_h / 2;
-		glyph_close(canvas, ccx, cy, 4, is_focused ? DECOR_CLOSE_RED : glyph);
+		glyph_close(canvas, ccx, cy, 5, is_focused ? DECOR_CLOSE_RED : glyph);
 	}
 
 	void blit_to(ICanvas &canvas) const
