@@ -52,18 +52,17 @@ The fix above is a *bounded leak*: shared frames are now freed only when the
   either order. Verify with the logout cycle + `/proc/meminfo` free-page count
   staying flat across many cycles.
 
-### 2. Active-window highlight (dormant feature)
-The taskbar **receiver** is already in place (`set_focused_id` + a
-`DISPLAY_FOCUS` handler + the active-tab highlight branch in `draw_strip`), but
-the **compositor-side sender is intentionally not wired**. The earlier attempt
-destabilized views and had a protocol bug: `DISPLAY_FOCUS` was posted to the
-taskbar mailbox *before* the claim ACK during the taskbar's own claim, racing
-its handshake; it also fired for `no_decor` windows during startup. Re-introduce:
-- A `WindowManager::set_focus()` wrapper that routes **all** focus changes
-  (including `input_router.cc`'s click-to-focus, which the first attempt missed)
-  and posts `DISPLAY_FOCUS` **only** for decorated windows, **after** the ACK.
-- Add serial tracing (now easy via the eip/VMA report style) and verify across
-  window open/close/raise/minimize before committing.
+### 2. Active-window highlight — ✅ DONE
+Shipped: the compositor now sends `DISPLAY_FOCUS` (the taskbar receiver already
+existed), so the active window's taskbar tab is highlighted.
+- All focus changes route through `WindowManager::set_focus()` — claim, release,
+  reap, close, minimize, raise, and `input_router`'s click-to-focus (via a new
+  focus callback, the path the first attempt missed).
+- Posts the focused window id (0 for no-decor/none), deduped so redundant updates
+  don't spam the taskbar mailbox.
+- Avoids the earlier handshake race: in `handle_claim` the focus is sent **after**
+  the client ACK + tab NOTIFY, and the dedupe makes the taskbar's own no-decor
+  claim a no-op, so `DISPLAY_FOCUS` never lands mid-claim.
 
 ### 3. Network tray indicator
 Volume tray is done; a network status glyph (link up/down, maybe IP) needs a

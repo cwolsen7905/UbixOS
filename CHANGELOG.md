@@ -39,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **views** — the compositor + window chrome now use `ogSurface::ogBlendColor`
   instead of a local `decor_blend`, so the focus-dim / shadow / corner-AA blend has
   a single shared implementation (output unchanged).
+- **Active-window highlight** — the compositor sends `DISPLAY_FOCUS` (via a single
+  `WindowManager::set_focus()` routing all focus changes incl. click-to-focus), so
+  the taskbar highlights the active window's tab; deduped and sent after the claim
+  ACK to avoid the handshake race.
 
 ### Fixed
 - `fork` no longer COW-marks the per-process LDT page (userland TLS descriptors):
