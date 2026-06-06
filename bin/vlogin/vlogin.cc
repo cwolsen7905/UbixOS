@@ -20,6 +20,7 @@
 
 #include <unistd.h>
 #include <sched.h>
+#include <sys/mman.h>
 
 #include <ubix/mailbox.hh>
 #include <ubix/sched.hh>
@@ -420,6 +421,15 @@ int main(int argc, char **argv)
 		m.header = DISPLAY_RELEASE;
 		dr->window_id = win_id;
 		ubix::post_message(VIEWS_MBOX, DISPLAY_RELEASE, m);
+
+		/* Unmap our view of the shared window buffer.  views frees its own copy
+		 * on DISPLAY_RELEASE, but the shared frames are only reclaimed once every
+		 * mapper unmaps — and vlogin loops (it does not exit between logins), so
+		 * without this each login would strand a full-screen (~scr_w*scr_h*4)
+		 * mapping.  munmap drops vlogin's reference; the frame frees when views
+		 * has also released it. */
+		if (shm != nullptr && act_w > 0 && act_h > 0)
+			munmap(shm, (size_t)act_w * (size_t)act_h * 4u);
 		win_id = 0;
 		shm = nullptr;
 	};
