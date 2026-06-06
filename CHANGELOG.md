@@ -14,6 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   threads in an address space share that one LDT slot, so each resume must restore
   the running thread's own base. `bin/tlstest` verifies two threads keep independent
   TLS across switches.
+- **objGFX UI primitives** — `ogFillRoundRect` / `ogRoundRect` (filled + outline
+  rounded rectangles), `ogDropShadow` (soft quadratic-falloff shadow around a
+  rect), and `ogBlendColor` (packed-RGB lerp).  Non-virtual additions, so existing
+  app binaries stay ABI-compatible.
+
+### Changed
+- **Modern login screen (vlogin)** — calm-slate rounded card with a soft drop
+  shadow (drawn with the new objGFX primitives), `uBixOS`/`Sign in` header, and
+  boxed username/password fields that light up with an accent underline + caret on
+  focus, replacing the old navy panel and block-cursor rows.
+- **views** — the compositor + window chrome now use `ogSurface::ogBlendColor`
+  instead of a local `decor_blend`, so the focus-dim / shadow / corner-AA blend has
+  a single shared implementation (output unchanged).
 
 ### Fixed
 - `fork` no longer COW-marks the per-process LDT page (userland TLS descriptors):
