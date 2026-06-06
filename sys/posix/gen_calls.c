@@ -150,9 +150,10 @@ int read(struct thread *td, struct read_args *uap)
 
 	error = getfd(td, &fd, uap->fd);
 
-	if (error) {
+	if (error)
+	{
 		return (error);
-}
+	}
 
 	count = fread(uap->buf, uap->nbyte, 0x1, fd->fd);
 	kprintf("count: %i\n", count);
@@ -184,13 +185,15 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 	u_int32_t end = base + round_page(uap->len);
 	u_int16_t flags = PAGE_PRESENT | PAGE_USER;
 
-	if (uap->prot & PROT_WRITE) {
+	if (uap->prot & PROT_WRITE)
+	{
 		flags |= PAGE_WRITE;
-}
+	}
 
-	for (u_int32_t va = base; va < end; va += PAGE_SIZE) {
+	for (u_int32_t va = base; va < end; va += PAGE_SIZE)
+	{
 		vmm_set_page_attributes(va, flags);
-}
+	}
 
 	td->td_retval[0] = 0;
 	return (0);
@@ -198,6 +201,32 @@ int mprotect(struct thread *td, struct mprotect_args *uap)
 
 int sys_kill(struct thread *td, struct sys_kill_args *uap)
 {
+	/*
+	 * Process-group signalling (POSIX):
+	 *   pid == 0  -> every process in the caller's process group.
+	 *   pid <  0  -> every process in the group |pid|.
+	 * Used for session teardown: vlogin kills the session's group on logout.
+	 * The kernel is cooperative (no preemption without an explicit yield), so
+	 * walking taskList here without yielding is atomic and safe.
+	 */
+	if (uap->pid <= 0)
+	{
+		u_int32_t pgrp = (uap->pid == 0) ? _current->pgrp : (u_int32_t)(-uap->pid);
+		kTask_t *t;
+		int found = 0;
+
+		for (t = taskList; t != NULL; t = t->next)
+		{
+			if (t->pgrp != pgrp || t->id <= 1)
+				continue; /* never signal init (pid 1) */
+			found = 1;
+			if (uap->signum != 0)
+				signal_post_kill(_current->id, (int)t->id, uap->signum);
+		}
+		td->td_retval[0] = found ? 0 : -1;
+		return (td->td_retval[0]);
+	}
+
 	if (uap->signum == 0)
 	{
 		/* Signal 0: existence check only. */
@@ -328,9 +357,10 @@ int sys_writev(struct thread *td, struct sys_writev_args *uap)
 	{
 		wa.buf = uap->iov[i].iov_base;
 		wa.nbyte = uap->iov[i].iov_len;
-		if (wa.nbyte == 0) {
+		if (wa.nbyte == 0)
+		{
 			continue;
-}
+		}
 		sys_write(td, &wa);
 		if (td->td_retval[0] < 0)
 		{
@@ -354,9 +384,10 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 	{
 		ra.buf = uap->iov[i].iov_base;
 		ra.nbyte = uap->iov[i].iov_len;
-		if (ra.nbyte == 0) {
+		if (ra.nbyte == 0)
+		{
 			continue;
-}
+		}
 		sys_read(td, &ra);
 		if (td->td_retval[0] < 0)
 		{
@@ -364,9 +395,10 @@ int sys_readv(struct thread *td, struct sys_readv_args *uap)
 			return (-1);
 		}
 		total += td->td_retval[0];
-		if ((size_t)td->td_retval[0] < ra.nbyte) {
+		if ((size_t)td->td_retval[0] < ra.nbyte)
+		{
 			break;
-}
+		}
 	}
 	td->td_retval[0] = total;
 	return (0);
@@ -390,19 +422,22 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
 {
 	kTask_t *task = schedFindTask(args->pid);
 
-	if (task != NULL && task->state != DEAD) {
+	if (task != NULL && task->state != DEAD)
+	{
 		td->td_retval[0] = 1;
-	} else {
+	}
+	else
+	{
 		td->td_retval[0] = 0;
-}
+	}
 	return (0);
 }
 
-#define WNOHANG     0x0001  /* don't block if no child ready */
-#define WUNTRACED   0x0002  /* report stopped children */
+#define WNOHANG 0x0001   /* don't block if no child ready */
+#define WUNTRACED 0x0002 /* report stopped children */
 
-#define W_STOPPED(sig)  (((sig) << 8) | 0x7f)
-#define W_EXITED(code)  ((code) << 8)
+#define W_STOPPED(sig) (((sig) << 8) | 0x7f)
+#define W_EXITED(code) ((code) << 8)
 #define W_SIGNALED(sig) ((sig) & 0x7f)
 
 /*
@@ -410,13 +445,13 @@ int sys_pidStatus(struct thread *td, struct sys_pidStatus_args *args)
  * When a DEAD child is found it is spliced from taskList and queued for
  * freeing — the caller reads child->id before the system task reclaims it.
  */
-static kTask_t *
-wait_find_child(int want_pid, int options, int *wstatus)
+static kTask_t *wait_find_child(int want_pid, int options, int *wstatus)
 {
 	kTask_t *t;
-	int      untraced = options & WUNTRACED;
+	int untraced = options & WUNTRACED;
 
-	for (t = taskList; t != NULL; t = t->next) {
+	for (t = taskList; t != NULL; t = t->next)
+	{
 		if (t->parent != _current)
 			continue;
 		if (want_pid != -1 && (int)t->id != want_pid)
@@ -428,19 +463,24 @@ wait_find_child(int want_pid, int options, int *wstatus)
 		 * ZOMBIE.  Collecting it here is correct — the parent is the one
 		 * doing the reaping, not sched().
 		 */
-		if (t->state == DEAD || t->state == ZOMBIE) {
+		if (t->state == DEAD || t->state == ZOMBIE)
+		{
 			if (wstatus)
 				*wstatus = W_EXITED(0);
-			if (t->prev != NULL) t->prev->next = t->next;
-			else                 taskList       = t->next;
-			if (t->next != NULL) t->next->prev  = t->prev;
+			if (t->prev != NULL)
+				t->prev->next = t->next;
+			else
+				taskList = t->next;
+			if (t->next != NULL)
+				t->next->prev = t->prev;
 			pid_hash_remove(t);
 			sched_addDelTask(t);
 			if (_current->children > 0)
 				_current->children--;
 			return (t);
 		}
-		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0) {
+		if (untraced && t->state == STOPPED && t->t_stopped_sig != 0)
+		{
 			if (wstatus)
 				*wstatus = W_STOPPED(t->t_stopped_sig);
 			t->t_stopped_sig = 0;
@@ -454,7 +494,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 {
 #define SIG_PENDING_UNBLOCKED_W(td) ((td)->sig_pending & ~(td)->sigmask.__bits[0])
 	kTask_t *child;
-	int      wstatus = 0;
+	int wstatus = 0;
 
 	/*
 	 * ECHILD check.  For wait-any (pid == -1) we trust children counter
@@ -462,29 +502,42 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	 * counter decrement may have raced.  For a specific pid we verify the
 	 * target exists and is our direct child.
 	 */
-	if (args->pid == -1) {
-		if (_current->children <= 0) {
+	if (args->pid == -1)
+	{
+		if (_current->children <= 0)
+		{
 			kTask_t *t;
 			int found = 0;
-			for (t = taskList; t != NULL; t = t->next) {
-				if (t->parent == _current) { found = 1; break; }
+			for (t = taskList; t != NULL; t = t->next)
+			{
+				if (t->parent == _current)
+				{
+					found = 1;
+					break;
+				}
 			}
-			if (!found) {
+			if (!found)
+			{
 				td->td_retval[0] = -ECHILD;
 				return (ECHILD);
 			}
 		}
-	} else {
+	}
+	else
+	{
 		kTask_t *t = schedFindTask((u_int32_t)args->pid);
-		if (t == NULL || t->parent != _current) {
+		if (t == NULL || t->parent != _current)
+		{
 			td->td_retval[0] = -ECHILD;
 			return (ECHILD);
 		}
 	}
 
-	if (args->options & WNOHANG) {
+	if (args->options & WNOHANG)
+	{
 		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child == NULL) {
+		if (child == NULL)
+		{
 			td->td_retval[0] = 0;
 			if (args->status)
 				*args->status = 0;
@@ -505,12 +558,14 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 	 * we were still RUNNING (no-op), then sched_sleep dequeued us.  The
 	 * re-check sees the now-DEAD/ZOMBIE child and avoids sleeping forever.
 	 */
-	for (;;) {
+	for (;;)
+	{
 		child = wait_find_child(args->pid, args->options, &wstatus);
 		if (child != NULL)
 			break;
 
-		if (SIG_PENDING_UNBLOCKED_W(td)) {
+		if (SIG_PENDING_UNBLOCKED_W(td))
+		{
 			td->td_retval[0] = -EINTR;
 			return (EINTR);
 		}
@@ -519,7 +574,8 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args)
 
 		/* Re-check to catch lost-wakeup. */
 		child = wait_find_child(args->pid, args->options, &wstatus);
-		if (child != NULL) {
+		if (child != NULL)
+		{
 			sched_wakeup(_current);
 			break;
 		}
@@ -670,9 +726,10 @@ int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args)
 	int error = 0;
 	size_t len = args->namelen;
 
-	if (len > sizeof(_current->username)) {
+	if (len > sizeof(_current->username))
+	{
 		len = sizeof(_current->username);
-}
+	}
 
 	memcpy(args->namebuf, _current->username, len);
 
@@ -696,69 +753,69 @@ int sys_getrlimit(struct thread *thr, struct sys_getrlimit_args *args)
 
 	switch (args->which)
 	{
-	case 0:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 1:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 2:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 3:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 4:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 5:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 6:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 7:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 8:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 9:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 10:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 11:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 12:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 13:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	case 14:
-		args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
-		args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
-		break;
-	default:
-		error = -1;
-		kprintf("[getrlimit: %i]", args->which);
+		case 0:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 1:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 2:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 3:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 4:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 5:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 6:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 7:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 8:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 9:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 10:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 11:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 12:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 13:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		case 14:
+			args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+			args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+			break;
+		default:
+			error = -1;
+			kprintf("[getrlimit: %i]", args->which);
 	}
 
 	return (error);
@@ -770,69 +827,69 @@ int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args)
 
 	switch (args->which)
 	{
-	case 0:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 1:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 2:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 3:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 4:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 5:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 6:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 7:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 8:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 9:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 10:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 11:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 12:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 13:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	case 14:
-		thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
-		thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
-		break;
-	default:
-		error = -1;
-		kprintf("[setrlimit: %i]", args->which);
+		case 0:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 1:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 2:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 3:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 4:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 5:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 6:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 7:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 8:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 9:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 10:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 11:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 12:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 13:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		case 14:
+			thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+			thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+			break;
+		default:
+			error = -1;
+			kprintf("[setrlimit: %i]", args->which);
 	}
 
 	return (error);

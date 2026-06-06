@@ -299,6 +299,11 @@ static void run_session(const struct auth_response &resp, const std::string &use
 	int pid = ::fork();
 	if (pid == 0)
 	{
+		/* Put the session in its own process group (== the taskbar's pid) so
+		 * everything it launches (apps, their children) inherits the group and
+		 * vlogin can tear the whole session down on logout.  Set it in the child
+		 * too, race-free against the parent's setpgid. */
+		::setpgid(0, 0);
 		::setuid(resp.uid);
 		::setgid(resp.gid);
 		::execve(TASKBAR_PATH, (char *const *)taskbar_argv, (char *const *)taskbar_envp);
@@ -307,12 +312,21 @@ static void run_session(const struct auth_response &resp, const std::string &use
 	if (pid < 0)
 		return;
 
+	/* Session group = taskbar pid (also set here to win the fork/exec race). */
+	::setpgid(pid, pid);
+
 	/* Apply this user's desktop for the lifetime of the session. */
 	set_display_user(username);
 
-	/* Wait for the session to end */
+	/* Wait for the session leader (taskbar) to exit (logout). */
 	while (pidStatus(pid) == pid)
 		ubix::yield();
+
+	/* Tear down the rest of the session: kill every process still in the
+	 * group — the apps the user launched, which would otherwise keep running
+	 * (and holding memory + windows) across the next login.  vlogin itself is in
+	 * a different group, so it survives to show the login screen again. */
+	::kill(-pid, SIGKILL);
 
 	/* Revert to the system-default desktop at logout. */
 	set_display_user("");
