@@ -35,12 +35,12 @@ localized; chase with `/proc/meminfo` before/after controlled process cycles.
   exits — a bounded leak (~3 MB per logout cycle). Proper fix: refcount via
   `cowCounter` (+1 on share; each side's unmap decrements; free at 0; teardown
   must distinguish file-cache `PAGE_SHARED` from share_region `PAGE_SHARED`).
-- **`open(O_RDWR)` truncates on FAT.** `sys_open` maps `O_RDWR` → `fopen("rwb")`
-  → FAT write mode, which frees the cluster chain on open regardless of
-  `O_TRUNC`. Breaks mmap-editing an existing file the POSIX way (open `O_RDWR`,
-  mmap `PROT_WRITE`). Workaround: open `O_RDONLY` + mmap `PROT_WRITE` (the kernel
-  uses an internal read backing fd for writeback). Fix: honour `O_TRUNC` — map
-  `O_RDWR` without `O_TRUNC` to a non-truncating in-place mode.
+- **`open(O_RDWR)` truncates on FAT** — ✅ FIXED (`21c055ed2`). Truncation is now
+  driven by a `fileTrunc` flag (`O_TRUNC`/`"w"`), separate from write access;
+  `O_RDWR` without `O_TRUNC` opens in place (`FAT_MODE_R`). mmap-editing an
+  existing file the POSIX way now works. *Remaining minor deviation:* `O_WRONLY`
+  without `O_TRUNC` still truncates (the `O_WRONLY|O_CREAT|O_TRUNC` callers rely
+  on it) — left as-is to avoid changing write-from-scratch behaviour.
 - **3.3 `madvise`** still not started (MADV_DONTNEED / MADV_SEQUENTIAL).
 - **Cross-process `MAP_SHARED` coherence.** msync is write-back only; two
   processes mapping the same file do not see each other's writes live (each gets
