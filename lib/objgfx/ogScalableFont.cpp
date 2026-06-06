@@ -172,6 +172,14 @@ void ogScalableFont::PutChar(ogSurface &dest, int32 x, int32 y, char ch)
 	if (!g || !dest.ogAvail())
 		return;
 
+	/* Defensive: a cached glyph whose metrics are implausible (corrupted cache
+	 * entry) must never drive the blit loop below into a wild read.  Real glyphs
+	 * at UI sizes are a few tens of pixels; anything far larger, a negative
+	 * dimension, or a non-empty glyph with a NULL coverage bitmap is rejected. */
+	if (g->advance < 0 || g->advance > 4096 || g->w < 0 || g->w > 4096 || g->h < 0 || g->h > 4096 ||
+	    (g->h > 0 && g->cov == nullptr))
+		return;
+
 	int baseline = y + ascent_;
 	bool opaque_bg = bg_.alpha != 0;
 
