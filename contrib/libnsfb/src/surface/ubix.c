@@ -12,6 +12,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -29,10 +30,13 @@
 #include <sys/mouse.h>
 #include <views/display_proto.h>
 
-#define UBIX_MBOX "netsurf"
-
 static uint32_t g_win_id;
 static uint8_t g_btn_state; /* last mouse button mask, for press/release edges */
+
+/* Per-process reply/event mailbox name ("netsurf<pid>"), set in initialise.
+ * Must be unique per instance so concurrent browsers don't share a mailbox
+ * (the second would never receive its own DISPLAY_ACK and stay black). */
+static char g_mbox[32];
 
 /**
  * Default geometry/format before the window is claimed.
@@ -59,7 +63,8 @@ static int ubix_initialise(nsfb_t *nsfb)
 	if (nsfb->ptr != NULL)
 		return 0; /* already claimed */
 
-	mpi_createMbox(UBIX_MBOX);
+	snprintf(g_mbox, sizeof(g_mbox), "netsurf%d", (int)getpid());
+	mpi_createMbox(g_mbox);
 
 	memset(&msg, 0, sizeof(msg));
 	msg.header = DISPLAY_CLAIM;
@@ -71,11 +76,11 @@ static int ubix_initialise(nsfb_t *nsfb)
 	req->sender_pid = getpid();
 	req->wants_motion = 1; /* need hover/drag + cursor tracking for correct clicks */
 	strncpy(req->title, "NetSurf", sizeof(req->title) - 1);
-	strncpy(req->reply, UBIX_MBOX, sizeof(req->reply) - 1);
+	strncpy(req->reply, g_mbox, sizeof(req->reply) - 1);
 
 	while (mpi_postMessage("views", DISPLAY_CLAIM, &msg) != 0)
 		usleep(5000);
-	while (mpi_fetchMessage(UBIX_MBOX, &reply) != 0)
+	while (mpi_fetchMessage(g_mbox, &reply) != 0)
 		usleep(1000);
 	if (reply.header != DISPLAY_ACK)
 		return -1;
@@ -184,7 +189,7 @@ static bool ubix_input(nsfb_t *nsfb, nsfb_event_t *event, int timeout)
 
 	for (;;)
 	{
-		if (mpi_fetchMessage(UBIX_MBOX, &msg) == 0)
+		if (mpi_fetchMessage(g_mbox, &msg) == 0)
 		{
 			switch (msg.header)
 			{
