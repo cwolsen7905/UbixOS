@@ -440,17 +440,34 @@ int fat_file_write(struct fat_file *f, const void *buf, u_int32_t size)
 			f->size_dirty = 1;
 		}
 
-		/* Cross cluster boundary: follow or allocate. */
-		if (written < size && f->position % cluster_bytes == 0)
+		/* Keep cur_cluster consistent with position whenever we land on a
+		 * cluster boundary — including when this write ends exactly there.
+		 * Otherwise a later fat_file_seek to that position no-ops (pos ==
+		 * position) and trusts a stale cur_cluster, so the next write lands in
+		 * the previous cluster (e.g. per-page msync writeback writing page 1 at
+		 * page 0's offset).  Mirrors the fat_file_read boundary fix. */
+		if (f->position % cluster_bytes == 0)
 		{
-			u_int32_t next = fat_cluster_next(fs, f->cur_cluster);
-			if (next == FAT_CLUSTER_EOC || next < 2)
+			if (written < size)
 			{
-				next = fat_cluster_alloc(fs, f->cur_cluster);
-				if (next == 0)
-					return (-1);
+				/* More to write across the boundary: follow or allocate. */
+				u_int32_t next = fat_cluster_next(fs, f->cur_cluster);
+				if (next == FAT_CLUSTER_EOC || next < 2)
+				{
+					next = fat_cluster_alloc(fs, f->cur_cluster);
+					if (next == 0)
+						return (-1);
+				}
+				f->cur_cluster = next;
 			}
-			f->cur_cluster = next;
+			else if (f->position < f->file_size)
+			{
+				/* Ended on a boundary but the file continues — advance to the
+				 * next existing cluster so a following seek/write is correct. */
+				u_int32_t next = fat_cluster_next(fs, f->cur_cluster);
+				if (next != FAT_CLUSTER_EOC && next >= 2)
+					f->cur_cluster = next;
+			}
 		}
 	}
 
