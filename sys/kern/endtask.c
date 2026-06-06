@@ -72,8 +72,21 @@ void endTask(pidType pid)
 	 * PD[0] (0–4 MB identity map) is shared by all processes and must not
 	 * be touched.  systemTask's vmm_free_process_pages only needs to reclaim
 	 * the private PT/PD physical pages after this runs.
+	 *
+	 * Threads (rfork(RFMEM)) SHARE one address space (cr3) across a tgid.
+	 * Only the LAST task of the group may free it — an earlier thread exiting
+	 * must leave the shared pages mapped for its still-running siblings.  The
+	 * reaper frees the page tables/dir only for the task flagged here.
 	 */
-	vmm_clean_virtual_space(0x400000U);
+	if (sched_tgid_others_alive(_current->tgid, _current->id) == 0)
+	{
+		_current->reap_free_as = 1;
+		vmm_clean_virtual_space(0x400000U);
+	}
+	else
+	{
+		_current->reap_free_as = 0; /* siblings still use the shared AS */
+	}
 
 	/* Free any MPI mailboxes this task owned so their names/pids do not leak
 	 * (a leaked mailbox blocks a relaunched owner — e.g. a views app — from

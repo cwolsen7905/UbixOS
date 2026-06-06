@@ -225,7 +225,12 @@ void systemTask() {
       if (tmpTask->files[0] != 0x0)
         fclose(tmpTask->files[0]);
       vm_map_free(&tmpTask->vm_map);
-      vmm_free_process_pages(tmpTask->id);
+      /* Reclaim the page tables/dir only for the task that owns the address
+       * space (a normal process, or the last thread of a tgid).  A non-last
+       * thread shared its siblings' cr3 and must not free it (reap_free_as=0,
+       * set in endTask). */
+      if (tmpTask->reap_free_as)
+        vmm_free_process_pages(tmpTask->id);
       if (tmpTask->kernelStack != 0x0)
         kfree(tmpTask->kernelStack);
       else

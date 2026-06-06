@@ -288,7 +288,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "ntp_gettime", sys_invalid, SYSCALL_NOTIMP},                                                            /* 248 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /* 249 - Invalid */
     {0, "minherit", sys_invalid, SYSCALL_NOTIMP},                                                               /* 250 - Invalid */
-    {0, "rfork", sys_invalid, SYSCALL_NOTIMP},                                                                  /* 251 - Invalid */
+    {ARG_COUNT(sys_rfork_args), "rfork", (sys_call_t *)sys_rfork, SYSCALL_VALID},                               /* 251 - rfork (thread create) */
     {0, "openbsd_poll", sys_invalid, SYSCALL_NOTIMP},                                                           /* 252 - Invalid */
     {ARG_COUNT(sys_issetugid_args), "issetugid", (sys_call_t *)sys_issetugid, SYSCALL_VALID},                   /* 253 - Invalid */
     {0, "lchown", sys_invalid, SYSCALL_NOTIMP},                                                                 /* 254 - Invalid */

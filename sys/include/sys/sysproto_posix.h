@@ -67,6 +67,22 @@ struct sys_fork_args
 	char status_r_[PADR_(int)];
 };
 
+/* rfork(RFMEM)-style thread creation (FreeBSD slot 251) — kernel side of
+ * pthread_create.  flags: rfork flags; stack: new thread's user stack top;
+ * tls: thread-local-storage base. */
+struct sys_rfork_args
+{
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+	char stack_l_[PADL_(caddr_t)];
+	caddr_t stack;
+	char stack_r_[PADR_(caddr_t)];
+	char tls_l_[PADL_(caddr_t)];
+	caddr_t tls;
+	char tls_r_[PADR_(caddr_t)];
+};
+
 struct sys_read_args
 {
 	char fd_l_[PADL_(int)];
@@ -1209,6 +1225,7 @@ int sys_unlink(struct thread *, struct sys_unlink_args *);
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
 int sys_fork(struct thread *, struct sys_fork_args *);
+int sys_rfork(struct thread *, struct sys_rfork_args *);
 int sys_read(struct thread *, struct sys_read_args *);
 int sys_write(struct thread *td, struct sys_write_args *);
 int sys_open(struct thread *td, struct sys_open_args *);

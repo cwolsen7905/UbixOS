@@ -109,6 +109,13 @@ typedef struct taskStruct {
     struct callout sleep_callout; /* timed-sleep timeout (armed by sched_wait_event_timeout) */
     u_int32_t  last_run_tick;     /* sysTicks when last dispatched (starvation aging) */
     vm_map_t  vm_map;            /* VMA red-black tree — O(log n) mmap/fault lookup */
+    pidType    tgid;             /* thread-group id (leader's pid); == id for a normal process.
+                                  * Threads created via rfork(RFMEM) share the leader's tgid and
+                                  * its address space (cr3); endTask tears the address space down
+                                  * only when the last task of a tgid exits. */
+    u_int8_t   reap_free_as;     /* 1 = this task's reap frees the (shared) page tables/dir.
+                                  * Set by endTask: 1 for a normal process or the last thread of a
+                                  * tgid, 0 for a non-last thread (whose siblings still use the AS). */
 } kTask_t;
 
 /*
@@ -132,6 +139,7 @@ void sched_killTree(pidType);
 int sched_deleteTask(pidType);
 int sched_addDelTask(kTask_t *);
 kTask_t *sched_getDelTask();
+int sched_tgid_others_alive(pidType tgid, pidType self); /* other live threads sharing the AS */
 void sched_yield();
 void sched();
 
