@@ -254,6 +254,15 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   vm_map_copy(&newProcess->vm_map, &_current->vm_map);
 
   /*
+   * Inherit the userland TLS base: the child got a private copy of the LDT page
+   * (vmm_copy_virtual_space) with the parent's TLS descriptor, and the same %gs.
+   * Copying tls_base too keeps cpu_switch re-installing the right base if this
+   * child later becomes multithreaded (a sibling thread would otherwise clobber
+   * the shared LDT[1] base with no record to restore it).
+   */
+  newProcess->tls_base = _current->tls_base;
+
+  /*
    * Signal state must be cleared AFTER vmm_copy_virtual_space.
    * vmm_get_free_kernel_page and the parent's kernel heap share the same VA
    * range (VMM_KERN_START..VMM_KERN_END).  A temporary double-mapping of

@@ -315,6 +315,13 @@ int sys_set_thread_area(struct thread *td, struct sys_set_thread_area_args *uap)
 		return (-1);
 	}
 
+	/*
+	 * Remember this thread's TLS base.  Every thread in an address space shares
+	 * the single LDT[1] descriptor written below, so cpu_switch() re-installs the
+	 * resuming thread's own base on each context switch (see context_switch.c).
+	 */
+	_current->tls_base = base_addr;
+
 	/* Write LDT[1] — second entry in the per-process LDT page */
 	tls_desc = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
 

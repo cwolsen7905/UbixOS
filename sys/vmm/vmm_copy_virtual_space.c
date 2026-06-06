@@ -102,6 +102,24 @@ void *vmm_copy_virtual_space(pidType pid)
 				{
 					new_page_table[x] = parent_page_table[x];
 				}
+				else if (x == PT_INDEX(VMM_USER_LDT))
+				{
+					/* Per-process LDT page (userland TLS descriptors) is CPU
+					 * state, never shared memory: give the child its own writable
+					 * copy and leave the parent's mapping writable too.  COW would
+					 * make it read-only, and the kernel's LDT[1] updates
+					 * (set_thread_area, and the per-thread base re-install in
+					 * cpu_switch) would then fault with interrupts off. */
+					new_stack_page = vmm_get_free_kernel_page(pid, 1);
+					if (new_stack_page == NULL)
+						kpanic("Error: new_stack_page (LDT) == NULL, File: %s, Line: %i\n",
+						       __FILE__,
+						       __LINE__);
+					memcpy(new_stack_page, (void *)VMM_USER_LDT, PAGE_SIZE);
+					new_page_table[x] =
+					    (vmm_get_physical_addr((u_int32_t)new_stack_page) | PAGE_DEFAULT);
+					vmm_unmap_page((u_int32_t)new_stack_page, VMM_KEEP);
+				}
 				else if ((parent_page_table[x] & PAGE_SHARED) == PAGE_SHARED)
 				{
 					/* Shared file-cache (or share_region) page: share as-is into

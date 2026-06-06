@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Kernel threads — per-thread TLS (Task C)** — `set_thread_area` now records each
+  thread's `%gs` base in `kTask_t.tls_base`, and `cpu_switch` re-installs it into the
+  shared LDT[1] descriptor on every context switch (right after the CR3 swap). All
+  threads in an address space share that one LDT slot, so each resume must restore
+  the running thread's own base. `bin/tlstest` verifies two threads keep independent
+  TLS across switches.
+
+### Fixed
+- `fork` no longer COW-marks the per-process LDT page (userland TLS descriptors):
+  it is CPU state, never shared, so the child gets a private writable copy and the
+  parent stays writable. COW left it read-only, so the kernel's LDT[1] update in
+  `cpu_switch` faulted with interrupts off.
+
 ---
 
 ## [2.3.0-BETA] - 2026-06-06

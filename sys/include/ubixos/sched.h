@@ -116,6 +116,12 @@ typedef struct taskStruct {
     u_int8_t   reap_free_as;     /* 1 = this task's reap frees the (shared) page tables/dir.
                                   * Set by endTask: 1 for a normal process or the last thread of a
                                   * tgid, 0 for a non-last thread (whose siblings still use the AS). */
+    u_int32_t  tls_base;         /* per-thread userland TLS base (the %gs:0 self-pointer).
+                                  * Installed into the shared LDT[1] descriptor by set_thread_area
+                                  * and re-installed by cpu_switch on every resume: all threads in
+                                  * an address space share one LDT[1] slot, so each switch must
+                                  * restore the resuming thread's own base.  0 = no TLS (kernel
+                                  * threads, or a process before its first set_thread_area). */
 } kTask_t;
 
 /*
