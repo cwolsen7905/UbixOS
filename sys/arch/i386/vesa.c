@@ -164,7 +164,7 @@ int vesa_enum_modes(struct vesa_mode *out, int max) {
       continue;
     if (!(mi->ModeAttributes & 0x80))      /* needs a linear framebuffer */
       continue;
-    if (mi->BitsPerPixel != 24)            /* compositor is 24bpp BGR */
+    if (mi->BitsPerPixel != 24 && mi->BitsPerPixel != 32) /* compositor handles 24 or 32bpp */
       continue;
     if (mi->XResolution < 640 || mi->YResolution < 480)
       continue;
@@ -176,7 +176,7 @@ int vesa_enum_modes(struct vesa_mode *out, int max) {
     n++;
   }
 
-  kprintf("vesa: enumerated %d usable LFB 24bpp modes\n", n);
+  kprintf("vesa: enumerated %d usable LFB modes (24/32bpp)\n", n);
   return n;
 }
 
