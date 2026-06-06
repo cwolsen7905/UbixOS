@@ -19,6 +19,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #define STBI_NO_SIMD
@@ -136,6 +139,80 @@ int main(void)
 		printf(" w=%d h=%d  OK\n", w, h);
 		free(bm);
 		free(buf);
+	}
+
+	/* Phase: msync / writeback (VMM 2.3).  Create a file with known content,
+	 * mmap it MAP_SHARED read-write, verify the demand-read returns the file
+	 * bytes, modify two separate pages, msync, munmap, then re-read from disk to
+	 * confirm the writes persisted (and an untouched byte did not change). */
+	printf("\nvmtest: msync writeback test\n");
+	{
+		const char *path = "/tmp/msync.dat";
+		const int sz = 8192; /* two pages */
+		char init[8192];
+		char chk[8192];
+		int fd;
+		char *m;
+
+		/* Create the file with known content (O_WRONLY|O_TRUNC), then reopen
+		 * O_RDONLY for the mapping.  We deliberately avoid O_RDWR: on this FAT
+		 * it maps to write mode and TRUNCATES the file on open.  mmap PROT_WRITE
+		 * works through the kernel's internal read backing fd, so an O_RDONLY fd
+		 * is sufficient for a writable MAP_SHARED mapping here. */
+		memset(init, 'A', sizeof(init));
+		fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd < 0) {
+			printf("  open(create %s) FAILED\n", path);
+		} else if (write(fd, init, sz) != sz) {
+			printf("  write(init) FAILED\n");
+			close(fd);
+		} else {
+			close(fd);
+			fd = open(path, O_RDONLY, 0);
+			if (fd < 0) {
+				printf("  msync test: FAIL (reopen O_RDONLY failed)\n");
+				goto msync_done;
+			}
+			m = mmap(0, sz, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+			if (m == NULL || m == (char *)-1) {
+				printf("  msync test: FAIL (mmap returned %p)\n", (void *)m);
+				close(fd);
+			} else {
+				int dr_ok, wb_ok, n;
+				char dr0, dr1;
+
+				/* (1) demand-read must return the file's bytes (capture before
+				 * unmap — m is invalid afterwards). */
+				dr0 = m[0];
+				dr1 = m[4096];
+				dr_ok = (dr0 == 'A' && dr1 == 'A');
+
+				/* (2) modify two pages, flush, unmap. */
+				m[0] = 'Z';    /* page 0 */
+				m[4096] = 'Y'; /* page 1 */
+				msync(m, sz, MS_SYNC);
+				munmap(m, sz);
+				close(fd);
+
+				/* (3) re-read from disk: writes persisted, neighbour untouched. */
+				fd = open(path, O_RDONLY, 0);
+				n = (fd >= 0) ? (int)read(fd, chk, sz) : -1;
+				if (fd >= 0)
+					close(fd);
+				wb_ok = (n == sz && chk[0] == 'Z' && chk[4096] == 'Y' && chk[1] == 'A');
+
+				if (dr_ok && wb_ok) {
+					printf("  msync test: PASS (demand-read + writeback verified)\n");
+				} else {
+					printf("  msync test: FAIL —%s%s\n",
+					       dr_ok ? "" : " demand-read returned wrong bytes;",
+					       wb_ok ? "" : " writeback did not persist to disk;");
+					printf("    detail: demand [0]=%c [4096]=%c  reread n=%d [0]=%c [4096]=%c [1]=%c\n",
+					       dr0, dr1, n, chk[0], chk[4096], chk[1]);
+				}
+			}
+		}
+	msync_done:;
 	}
 
 	printf("vmtest: done\n");
