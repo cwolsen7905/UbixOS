@@ -102,7 +102,7 @@ struct syscall_entry systemCalls_posix[] = {
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  62
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  63
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               //  64
-    {0, "msync", sys_invalid, SYSCALL_NOTIMP},                                                                  //  65 - msync
+    {ARG_COUNT(sys_msync_args), "msync", (sys_call_t *)sys_msync, SYSCALL_VALID},                               //  65 - msync
     {0, "vfork", sys_invalid, SYSCALL_NOTIMP},                                                                  //  66 - vfork
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /*  67 - Invalid */
     {0, "No Call", sys_invalid, SYSCALL_INVALID},                                                               /*  68 - Invalid */

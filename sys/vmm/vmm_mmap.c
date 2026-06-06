@@ -44,8 +44,65 @@
 
 int sys_mmap2(struct thread *td, struct sys_mmap_args *uap)
 {
-	uap->pos = (off_t)uap->pos * PAGE_SIZE;
+	/* mmap2's offset is a 32-bit page count; mask to the low 32 bits before
+	 * scaling so a garbage high half (the ABI only passes 32 bits) does not
+	 * leave junk in the byte offset / the VMA's vm_offset. */
+	uap->pos = (off_t)(u_int32_t)uap->pos * PAGE_SIZE;
 	return sys_mmap(td, uap);
+}
+
+/**
+ * Write back dirty pages of MAP_SHARED writable file mappings in [base, end) to
+ * their backing file, then clear each page's dirty bit.  Pages in anonymous or
+ * MAP_PRIVATE mappings are skipped (their changes never reach the file).  The
+ * last page is clamped to the backing file's size so a page-rounded mapping
+ * never extends the file with zero padding.  Shared by msync and munmap.
+ */
+static void vmm_writeback_range(u_int32_t base, u_int32_t end)
+{
+	u_int32_t *pd = (u_int32_t *)PD_BASE_ADDR;
+	u_int32_t va;
+
+	for (va = base; va < end; va += PAGE_SIZE)
+	{
+		vm_map_entry_t *vma = vm_map_lookup(&_current->vm_map, va);
+		fileDescriptor_t *bfd;
+		u_int32_t pdi, *pt, pte, n, off32;
+
+		if (vma == NULL)
+			continue;
+		if (!(vma->vm_flags & VM_MAP_FILE) || !(vma->vm_flags & VM_MAP_SHARED) ||
+		    !(vma->vm_prot & VM_PROT_WRITE) || vma->vm_vnode == NULL)
+			continue;
+
+		pdi = PD_INDEX(va);
+		if (!(pd[pdi] & PAGE_PRESENT))
+			continue;
+		pt = (u_int32_t *)(PT_BASE_ADDR + (PAGE_SIZE * pdi));
+		pte = pt[PT_INDEX(va)];
+		if (!(pte & PAGE_PRESENT) || !(pte & PAGE_DIRTY))
+			continue;
+
+		bfd = (fileDescriptor_t *)vma->vm_vnode;
+		/* The FS read/write paths truncate the offset to 32 bits, and FAT files
+		 * are < 4 GB, so do the clamp in 32 bits — using the full off_t here is
+		 * wrong if vm_offset carries garbage high bits from a 32-bit mmap2 pos. */
+		off32 = (u_int32_t)(vma->vm_offset + (off_t)(va - vma->vm_start));
+
+		/* Clamp to the backing file's size — never grow it past EOF. */
+		if (bfd->size <= off32)
+			n = 0;
+		else if (bfd->size - off32 >= PAGE_SIZE)
+			n = PAGE_SIZE;
+		else
+			n = bfd->size - off32;
+
+		if (n > 0 && bfd->mp != NULL && bfd->mp->fs != NULL && bfd->mp->fs->vfsWrite != NULL)
+			bfd->mp->fs->vfsWrite(bfd, (void *)va, (off_t)off32, n);
+
+		pt[PT_INDEX(va)] = pte & ~PAGE_DIRTY;
+		asm volatile("invlpg (%0)" : : "r"(va) : "memory");
+	}
 }
 
 int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
@@ -53,12 +110,35 @@ int sys_munmap(struct thread *td, struct sys_munmap_args *uap)
 	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
 	u_int32_t end = base + round_page(uap->len);
 
+	/* Flush MAP_SHARED writable file pages before tearing the mapping down,
+	 * while the VMA and its backing fd still exist. */
+	vmm_writeback_range(base, end);
+
 	vm_map_remove(&_current->vm_map, base, end);
 
 	for (u_int32_t va = base; va < end; va += PAGE_SIZE)
 	{
 		vmm_unmap_page(va, VMM_FREE);
 	}
+
+	td->td_retval[0] = 0;
+	return (0);
+}
+
+/**
+ * msync(addr, len, flags) — flush dirty MAP_SHARED writable file pages in the
+ * range back to their backing file.  flags (MS_ASYNC/MS_SYNC/MS_INVALIDATE) are
+ * accepted but the write is always synchronous (vfsWrite); MS_INVALIDATE is a
+ * no-op because there is no separate page cache to discard.
+ *
+ * @return 0 always (an unmapped range simply writes back nothing).
+ */
+int sys_msync(struct thread *td, struct sys_msync_args *uap)
+{
+	u_int32_t base = (u_int32_t)uap->addr & ~0xFFFU;
+	u_int32_t end = base + round_page(uap->len);
+
+	vmm_writeback_range(base, end);
 
 	td->td_retval[0] = 0;
 	return (0);

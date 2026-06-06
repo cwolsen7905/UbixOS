@@ -188,6 +188,14 @@ static int vmm_demand_file_page(vm_map_entry_t *vma, u_int32_t mem_addr)
 				return (0);
 		}
 	}
+	else
+	{
+		/* Writable file page: the memset + vfsRead above dirtied the PTE (the
+		 * CPU set D on those kernel writes through the user mapping).  Reset to
+		 * a clean PAGE_DEFAULT so msync only writes back pages the *application*
+		 * subsequently modifies, not freshly demand-read ones. */
+		vmm_set_page_attributes(pg, PAGE_DEFAULT);
+	}
 	return (1);
 }
 

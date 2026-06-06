@@ -589,6 +589,21 @@ struct sys_munmap_args
 	char len_r_[PADR_(size_t)];
 };
 
+struct sys_msync_args
+{
+	char addr_l_[PADL_(void *)];
+	void *addr;
+	char addr_r_[PADR_(void *)];
+
+	char len_l_[PADL_(size_t)];
+	size_t len;
+	char len_r_[PADR_(size_t)];
+
+	char flags_l_[PADL_(int)];
+	int flags;
+	char flags_r_[PADR_(int)];
+};
+
 struct sigprocmask_args
 {
 	char how_l_[PADL_(int)];
@@ -1214,6 +1229,7 @@ int sys_getcwd(struct thread *td, struct sys_getcwd_args *);
 int sys_mmap(struct thread *td, struct sys_mmap_args *);
 int sys_mmap2(struct thread *td, struct sys_mmap_args *);
 int sys_munmap(struct thread *td, struct sys_munmap_args *);
+int sys_msync(struct thread *td, struct sys_msync_args *);
 int sys_sysctl(struct thread *td, struct sys_sysctl_args *);
 
 int sys_issetugid(struct thread *td, struct sys_issetugid_args *);
