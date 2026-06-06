@@ -425,6 +425,33 @@ int adjust_cow_counter(u_int32_t base_addr, int adjustment)
 
 /************************************************************************
 
+ Function: void vmm_share_ref(u_int32_t phys);
+
+ Description: Account for one new mapping of a shared (non-COW, non-file-cache)
+ frame in the COW counter, which holds the total number of mappers.  A fresh
+ frame has counter 0 meaning "one owner"; the first additional mapper must bring
+ it to 2 (two mappers => two free_page calls before release), mirroring COW's
+ first-time +2.  Used by vmm_share_region and by fork when a share_region page
+ is shared into a child.
+
+ ************************************************************************/
+void vmm_share_ref(u_int32_t phys)
+{
+	u_int32_t idx = phys / PAGE_SIZE;
+
+	if (idx >= numPages)
+		return;
+
+	spinLock(&g_vmm_spin_lock);
+	if (vmmMemoryMap[idx].cowCounter == 0)
+		vmmMemoryMap[idx].cowCounter = 2;
+	else
+		vmmMemoryMap[idx].cowCounter += 1;
+	spinUnlock(&g_vmm_spin_lock);
+}
+
+/************************************************************************
+
  Function: void vmm_free_process_pages(pid_t pid);
 
  Description: This Function Will Free Up Memory For The Exiting Process

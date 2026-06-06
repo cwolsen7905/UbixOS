@@ -166,15 +166,18 @@ int vm_filecache_insert(void *mp, u_int32_t fileid, off_t offset, u_int32_t phys
 	return (0);
 }
 
-void vm_filecache_ref_phys(u_int32_t phys)
+int vm_filecache_ref_phys(u_int32_t phys)
 {
 	struct vm_filecache_entry *e;
+	int found;
 
 	spinLock(&g_filecache_lock);
 	e = find_phys(phys);
+	found = (e != NULL);
 	if (e != NULL)
 		e->refcnt++;
 	spinUnlock(&g_filecache_lock);
+	return (found);
 }
 
 int vm_filecache_unref_phys(u_int32_t phys)

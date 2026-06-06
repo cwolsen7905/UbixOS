@@ -105,12 +105,14 @@ void *vmm_copy_virtual_space(pidType pid)
 				else if ((parent_page_table[x] & PAGE_SHARED) == PAGE_SHARED)
 				{
 					/* Shared file-cache (or share_region) page: share as-is into
-					 * the child — never COW it (it is read-only and not tracked
-					 * by the COW counter).  Bump the file-cache refcount for the
-					 * child's mapping; a share_region page isn't in the cache, so
-					 * the ref is a no-op. */
+					 * the child — never COW it.  Account for the child's new
+					 * mapping: bump the file-cache refcount if it's a cache page,
+					 * otherwise it's a share_region page tracked by the COW counter
+					 * (so bump that instead — without it the child's later unmap
+					 * would over-free the frame while the parent still maps it). */
 					new_page_table[x] = parent_page_table[x];
-					vm_filecache_ref_phys(phys);
+					if (!vm_filecache_ref_phys(phys))
+						vmm_share_ref(phys);
 				}
 				else
 				{
@@ -325,8 +327,7 @@ void *vmm_copy_virtual_space(pidType pid)
 	 */
 	new_page_table = vmm_get_free_kernel_page(pid, 1);
 
-	new_page_directory[PD_INDEX(PD_BASE_ADDR)] =
-	    vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
+	new_page_directory[PD_INDEX(PD_BASE_ADDR)] = vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
 
 	new_page_table[0] = (u_int32_t)new_page_directory_address | PAGE_DEFAULT;
 
@@ -341,8 +342,7 @@ void *vmm_copy_virtual_space(pidType pid)
 
 	new_page_table = vmm_get_free_kernel_page(pid, 1);
 
-	new_page_directory[PD_INDEX(PT_BASE_ADDR)] =
-	    vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
+	new_page_directory[PD_INDEX(PT_BASE_ADDR)] = vmm_get_physical_addr((u_int32_t)new_page_table) | PAGE_DEFAULT;
 
 	/* Flush The Page From Garbage In Memory */
 	memset(new_page_table, 0, PAGE_SIZE);

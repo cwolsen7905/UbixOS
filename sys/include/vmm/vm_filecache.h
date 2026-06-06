@@ -73,8 +73,11 @@ int vm_filecache_insert(void *mp, u_int32_t fileid, off_t offset, u_int32_t phys
  * Add one reference to the cache entry that owns physical page @phys.
  * No-op if @phys is not a cached page (e.g. a vmm_share_region page).
  * Used by fork when a PAGE_SHARED page is shared into the child.
+ *
+ * @return 1 if @phys was a cached page (the cache refcount was bumped),
+ *         0 if @phys was not in the cache (caller handles its own refcount).
  */
-void vm_filecache_ref_phys(u_int32_t phys);
+int vm_filecache_ref_phys(u_int32_t phys);
 
 /**
  * Drop one reference from the cache entry that owns @phys; frees the page and

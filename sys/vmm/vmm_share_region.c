@@ -69,15 +69,12 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		return 0;
 	}
 
-	/* Collect physical addresses from current (src) address space.  Also mark
-	 * each SOURCE page PAGE_SHARED: once a page is mapped into another address
-	 * space, the owner (e.g. views) must not let its own free()/munmap release
-	 * the physical page while the recipient still maps it.  vmm_unmap_page skips
-	 * free_page for PAGE_SHARED pages, so this turns a physical use-after-free
-	 * (owner frees a page the client still references — heap corruption) into a
-	 * bounded leak of the shared region's pages.  The recipient side is already
-	 * PAGE_SHARED (set below), so neither side frees the shared frames; they are
-	 * reclaimed when the owning process exits. */
+	/* Collect physical addresses from current (src) address space and mark each
+	 * SOURCE PTE PAGE_SHARED.  The per-frame COW counter is bumped for the
+	 * recipient's reference only once the mapping fully succeeds (below), so a
+	 * failure partway does not leak counts.  Marking the source PAGE_SHARED is
+	 * harmless on failure: with the count unbumped, free_page still releases the
+	 * frame normally on unmap. */
 	for (i = 0; i < n; i++)
 	{
 		u_int32_t va = vaddr + i * PAGE_SIZE;
@@ -172,6 +169,14 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 
 	asm volatile("movl %0, %%cr3" ::"r"(old_cr3));
 	asm volatile("sti");
+
+	/* All recipient pages are now mapped — count the recipient's reference on
+	 * each frame (vmm_share_ref: 0 -> 2 for the source+recipient pair, +1 for an
+	 * already-shared frame) so it is freed only when the last of the source,
+	 * recipient, and any forked children unmaps it.  Done here (success path
+	 * only) so a partial failure above leaks no counts. */
+	for (i = 0; i < n; i++)
+		vmm_share_ref(phys[i]);
 
 	kprintf("vmm_share_region: src vaddr 0x%X -> pid %d vaddr 0x%X (%u pages) phys[0]=0x%X\n",
 	        vaddr,
