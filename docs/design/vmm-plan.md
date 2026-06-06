@@ -9,7 +9,7 @@
 | 1.3 | O(log n) `mmap`/`munmap`/page-fault VMA lookup | 1 | ✅ Done — `vm_map_insert` in `sys_mmap` (anon paths); `vm_map_remove` in `sys_munmap`; `vm_map_lookup` in page fault handler for demand-zero of anon VMAs |
 | 2.1 | Lazy page allocation (demand-zero pages) | 2 | ✅ Done — `sys_mmap(MAP_ANON)` now records VMA only (no physical pages); `vmm_reserve_anon_range` finds free VA without mapping; page fault handler backs pages on first touch; covers both MAP_FIXED and non-fixed anon; PT-missing case handled in `pageDir == 0` fault branch |
 | 2.2 | File-backed `mmap` (shared libraries, executables) | 2 | ✅ **Demand-paged DONE** (`89652e853`). `mmap(fd)` maps no pages: it opens a private backing fd (by path, survives caller `close`), reserves the VA, trims overlapping VMAs (proper `MAP_FIXED` replace), and records a `VM_MAP_FILE` VMA. The fault handler (`vmm_demand_file_page`) reads each page on first touch — RO pages de-duplicated via the shared file-page cache (`sys/vmm/vm_filecache.c`, keyed by mount/`fd->ino`/offset; `PAGE_SHARED` + per-page refcount, one physical copy across processes), writable pages private. Backing fds `fclose`d on teardown, re-`fopen`d on fork. Eager read + de-dup retained as a fallback when no backing fd opens. Fault-time read is safe because the IDE driver polls (never sleeps). Stage A (`70e8df341`) added the file VMAs + overlap trimming; depended on the FAT random-access fix (`c975ef93f`) since per-page cluster-boundary reads exposed a latent stale-`cur_cluster` bug. **Optional remaining:** COW/writeback for `MAP_SHARED` writable file pages. |
-| 2.3 | `msync` — flush dirty file-backed pages | 2 | ⬜ Not started (depends on demand-paged/COW file mmap) |
+| 2.3 | `msync` — flush dirty file-backed pages | 2 | ✅ Done (`fd4a9a5c1`). `msync`/`munmap` flush dirty `MAP_SHARED` writable file pages to the backing file via `vfsWrite` and clear the PTE dirty bit; the demand handler clears dirty after the read so only app-modified pages write back; last page clamped to file size; `sys_mmap2` page-offset masked to 32 bits. Write-back semantics (private writable copy flushed to disk), not cross-process live-shared pages. Verified by `bin/vmtest`. Exposed + fixed a write-side FAT cluster-boundary bug (`fee1c67b5`). |
 | — | `/proc/meminfo` — total/free pages + `FileCache` count | 2 | ✅ Done (`2dad05bdc`) — userland memory readout; used to measure sharing/leaks |
 | — | Labeled segfault report (pid/name, fault/eip/esp/cs/err, pde/pte, bracketing VMAs) | 2 | ✅ Done (`d63d9a8ee`) — `vmm_report_segfault`; distinguishes a VMM demand bug from a wild pointer |
 | 3.1 | Swap device integration — page out to swap partition | 3 | ✅ Done — `sys/vmm/swap.c`: slot bitmap, `swap_write/read_page`, `swap_evict_page` (clock); page fault handler handles `PAGE_SWAPPED` PTEs |
@@ -27,6 +27,24 @@ down across open/close cycles while `FileCache` stays flat — so it is *not* th
 file-page cache). A clean `malloc`+touch×2 repro did not reproduce it, so it is a
 more specific pattern (e.g. `fread` into a lazy-anon page, or many VMAs). Not yet
 localized; chase with `/proc/meminfo` before/after controlled process cycles.
+
+**Other open items (2026-06-06):**
+- **Shared-region leak.** `vmm_share_region` now marks the *source* pages
+  `PAGE_SHARED` (fix for a physical use-after-free that rebooted the OS on
+  logout, `0e695e4d3`), so shared frames are freed only when the owning process
+  exits — a bounded leak (~3 MB per logout cycle). Proper fix: refcount via
+  `cowCounter` (+1 on share; each side's unmap decrements; free at 0; teardown
+  must distinguish file-cache `PAGE_SHARED` from share_region `PAGE_SHARED`).
+- **`open(O_RDWR)` truncates on FAT.** `sys_open` maps `O_RDWR` → `fopen("rwb")`
+  → FAT write mode, which frees the cluster chain on open regardless of
+  `O_TRUNC`. Breaks mmap-editing an existing file the POSIX way (open `O_RDWR`,
+  mmap `PROT_WRITE`). Workaround: open `O_RDONLY` + mmap `PROT_WRITE` (the kernel
+  uses an internal read backing fd for writeback). Fix: honour `O_TRUNC` — map
+  `O_RDWR` without `O_TRUNC` to a non-truncating in-place mode.
+- **3.3 `madvise`** still not started (MADV_DONTNEED / MADV_SEQUENTIAL).
+- **Cross-process `MAP_SHARED` coherence.** msync is write-back only; two
+  processes mapping the same file do not see each other's writes live (each gets
+  a private writable copy). A shared writable page cache is the larger follow-up.
 
 ---
 
