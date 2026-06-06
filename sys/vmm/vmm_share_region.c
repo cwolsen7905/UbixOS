@@ -69,17 +69,31 @@ uintptr_t vmm_share_region(uintptr_t vaddr, size_t size, pidType dst_pid)
 		return 0;
 	}
 
-	/* Collect physical addresses from current (src) address space */
+	/* Collect physical addresses from current (src) address space.  Also mark
+	 * each SOURCE page PAGE_SHARED: once a page is mapped into another address
+	 * space, the owner (e.g. views) must not let its own free()/munmap release
+	 * the physical page while the recipient still maps it.  vmm_unmap_page skips
+	 * free_page for PAGE_SHARED pages, so this turns a physical use-after-free
+	 * (owner frees a page the client still references — heap corruption) into a
+	 * bounded leak of the shared region's pages.  The recipient side is already
+	 * PAGE_SHARED (set below), so neither side frees the shared frames; they are
+	 * reclaimed when the owning process exits. */
 	for (i = 0; i < n; i++)
 	{
-		phys[i] = vmm_get_physical_addr(vaddr + i * PAGE_SIZE);
+		u_int32_t va = vaddr + i * PAGE_SIZE;
+		u_int32_t *src_pt;
+
+		phys[i] = vmm_get_physical_addr(va);
 		if (phys[i] == 0)
 		{
-			kprintf("vmm_share_region: page %u at 0x%X not mapped\n", i, vaddr + i * PAGE_SIZE);
+			kprintf("vmm_share_region: page %u at 0x%X not mapped\n", i, va);
 			kfree(phys);
 			return 0;
 		}
+		src_pt = (u_int32_t *)(PT_BASE_ADDR + 0x1000 * (va >> 22));
+		src_pt[(va >> 12) & 0x3FF] |= PAGE_SHARED;
 	}
+	asm volatile("movl %cr3,%eax\n movl %eax,%cr3\n");
 
 	dst = schedFindTask(dst_pid);
 	if (dst == NULL)
