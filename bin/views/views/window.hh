@@ -29,6 +29,7 @@
 #pragma once
 
 #include <string>
+#include <objgfx/objgfx.h>
 #include "icanvas.hh"
 #include "framebuffer.hh"
 
@@ -41,19 +42,6 @@ extern uint32_t g_theme_decor_bg;                /* focused title bar fill (acce
 extern uint32_t g_theme_decor_hi;                /* (legacy) kept for the Compositor's setter */
 #define DECOR_BG_INACT FB_RGB(0x2A, 0x2A, 0x30)  /* unfocused title bar fill */
 #define DECOR_CLOSE_RED FB_RGB(0xFF, 0x6E, 0x6E) /* close-glyph accent (bright for contrast) */
-
-/**
- * Linearly blend two packed 0x00RRGGBB colours: t=0 → a, t=256 → b.
- */
-static inline uint32_t decor_blend(uint32_t a, uint32_t b, int t)
-{
-	int ar = (a >> 16) & 0xFF, ag = (a >> 8) & 0xFF, ab = a & 0xFF;
-	int br = (b >> 16) & 0xFF, bg = (b >> 8) & 0xFF, bb = b & 0xFF;
-	int r = ar + ((br - ar) * t >> 8);
-	int g = ag + ((bg - ag) * t >> 8);
-	int bl = ab + ((bb - ab) * t >> 8);
-	return FB_RGB(r, g, bl);
-}
 
 /* ------------------------------------------------------------------ */
 /* Window — client window state and rendering helpers                  */
@@ -148,7 +136,7 @@ class Window
 
 		canvas.rect(x, y, w, decor_h, bg);
 		/* Hairline at the content boundary — subtle, just darker than the bar. */
-		canvas.rect(x, y + decor_h - 1, w, 1, decor_blend(bg, 0, 70));
+		canvas.rect(x, y + decor_h - 1, w, 1, ogSurface::ogBlendColor(bg, 0, 70));
 
 		canvas.text(x + 10, y + (decor_h - FB_FONT_H) / 2, title.c_str(), txt, bg);
 

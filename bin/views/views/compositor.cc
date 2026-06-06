@@ -439,7 +439,7 @@ void Compositor::draw_window_shadow(const Window *w, int clipx, int clipy, int c
 			int a = alpha_max * (reach * reach - d2) / (reach * reach);
 			if (a <= 0)
 				continue;
-			fb_.pixel(px, py, decor_blend(fb_.read(px, py), 0, a));
+			fb_.pixel(px, py, ogSurface::ogBlendColor(fb_.read(px, py), 0, (uInt32)a));
 		}
 	}
 }
@@ -479,7 +479,7 @@ void Compositor::round_window_corners(const Window *w, int clipx, int clipy, int
 				if (d2 >= radius * radius)
 					fb_.pixel(px, py, bg); /* outside — background */
 				else
-					fb_.pixel(px, py, decor_blend(bg, fb_.read(px, py), 128)); /* AA edge */
+					fb_.pixel(px, py, ogSurface::ogBlendColor(bg, fb_.read(px, py), 128)); /* AA edge */
 			}
 		}
 	}
