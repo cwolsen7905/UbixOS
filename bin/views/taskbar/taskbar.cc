@@ -48,14 +48,15 @@ extern char **environ; /* inherited session env, forwarded to launched apps */
 
 /* Taskbar geometry */
 #define TB_H 32
-#define BTN_W 80
-#define CLOCK_W 80
+#define BTN_W 104   /* start button: hamburger icon + "uBixOS" */
+#define CLOCK_W 160 /* fits "MM/DD  HH:MM:SS" */
 #define WIN_BTN_W 96
 
 /* Start-menu geometry (a Menu sizes its height to its item count). */
 #define MENU_W 180
 #define MENU_ITEM_H 28
 #define MENU_MAX_ITEMS 16
+#define MENU_FOOTER_H 32 /* user + power row at the bottom of the start menu */
 
 /* Colours: (r<<16)|(g<<8)|b.  All but white are derived from the per-user accent
  * colour (views/theme/accent) by apply_theme(); defaults are slate-derived to
@@ -146,7 +147,8 @@ static const int month_secs[12] = {
     DAY * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30),
 };
 
-static void get_time_str(char *buf)
+/* Format "MM/DD  HH:MM:SS" into buf (needs >= 16 bytes). */
+static void get_datetime_str(char *buf)
 {
 	int t = gettime();
 	int year = (t / YEAR) + 1970;
@@ -166,22 +168,31 @@ static void get_time_str(char *buf)
 	if (month > 1 && (((year - 1970) + 2) % 4) == 0)
 		t += DAY;
 
+	int day = (t / DAY) + 1;
 	t -= (t / DAY) * DAY;
 	int hour = t / HOUR;
 	t -= hour * HOUR;
 	int min = t / MINUTE;
 	t -= min * MINUTE;
 	int sec = t;
+	int mon = month + 1;
 
-	buf[0] = '0' + (hour / 10);
-	buf[1] = '0' + (hour % 10);
-	buf[2] = ':';
-	buf[3] = '0' + (min / 10);
-	buf[4] = '0' + (min % 10);
-	buf[5] = ':';
-	buf[6] = '0' + (sec / 10);
-	buf[7] = '0' + (sec % 10);
-	buf[8] = '\0';
+	buf[0] = '0' + (mon / 10);
+	buf[1] = '0' + (mon % 10);
+	buf[2] = '/';
+	buf[3] = '0' + (day / 10);
+	buf[4] = '0' + (day % 10);
+	buf[5] = ' ';
+	buf[6] = ' ';
+	buf[7] = '0' + (hour / 10);
+	buf[8] = '0' + (hour % 10);
+	buf[9] = ':';
+	buf[10] = '0' + (min / 10);
+	buf[11] = '0' + (min % 10);
+	buf[12] = ':';
+	buf[13] = '0' + (sec / 10);
+	buf[14] = '0' + (sec % 10);
+	buf[15] = '\0';
 }
 
 /* ------------------------------------------------------------------ */
@@ -300,6 +311,7 @@ class Menu
 	ogSurface surf_;
 	uint32_t win_id_ = 0;
 	bool open_ = false;
+	bool footer_ = false; /* show the user + power row (start menu only) */
 	int x_ = 0, y_ = 0, w_ = 0, h_ = 0;
 	std::vector<MenuItem> items_;
 
@@ -320,6 +332,28 @@ class Menu
 			if (items_[i].submenu)
 				font.PutString(surf_, w_ - 16, ty, ">");
 		}
+		if (footer_)
+			draw_footer(font);
+	}
+
+	/* Bottom row: the logged-in user on the left, a power button on the right. */
+	void draw_footer(ogScalableFont &font)
+	{
+		int ftop = (int)items_.size() * MENU_ITEM_H;
+		int fcy = ftop + MENU_FOOTER_H / 2;
+
+		surf_.ogFillRect(8, ftop, w_ - 9, ftop, FLY_ITEM_C); /* separator */
+
+		const char *user = getenv("USER");
+		font_fg(font, 0x00C8C8D2u);
+		font_bg(font, FLY_BG_C);
+		font.PutString(surf_, 14, fcy - FONT_SIZE / 2, (user && user[0]) ? user : "user");
+
+		/* Power glyph: a ring with a vertical line breaking its top. */
+		int pcx = w_ - 18, pcy = fcy;
+		surf_.ogCircle(pcx, pcy, 7, 0x00FF6E6Eu);
+		surf_.ogFillRect(pcx - 1, pcy - 10, pcx + 1, pcy - 4, FLY_BG_C);
+		surf_.ogVLine(pcx, pcy - 9, pcy - 1, 0x00FF6E6Eu);
 	}
 
 	void load_fallback()
@@ -366,6 +400,27 @@ class Menu
 			return -1;
 		int i = y / MENU_ITEM_H;
 		return (i >= 0 && i < (int)items_.size()) ? i : -1;
+	}
+
+	/* Show the user + power footer row (start menu only). */
+	void set_footer(bool on)
+	{
+		footer_ = on;
+	}
+
+	/* Total height including the footer when enabled. */
+	int height() const
+	{
+		return (int)items_.size() * MENU_ITEM_H + (footer_ ? MENU_FOOTER_H : 0);
+	}
+
+	/* True if (x,y) hits the footer's power button. */
+	bool footer_power_hit(int x, int y) const
+	{
+		if (!open_ || !footer_)
+			return false;
+		int ftop = (int)items_.size() * MENU_ITEM_H;
+		return (y >= ftop && y < ftop + MENU_FOOTER_H && x >= w_ - 32);
 	}
 
 	/* Populate from a registry container; fall back to a built-in menu if the
@@ -418,7 +473,7 @@ class Menu
 			return;
 
 		w_ = MENU_W;
-		h_ = (int)items_.size() * MENU_ITEM_H;
+		h_ = height();
 		x_ = x < 0 ? 0 : x;
 		y_ = y < 0 ? 0 : y;
 
@@ -484,6 +539,14 @@ class Taskbar
 	Menu submenu_;
 	Launcher launcher_;
 	bool btn_pressed_ = false;
+	uint32_t focused_id_ = 0; /* active window (DISPLAY_FOCUS); highlights its tab */
+
+	/* Draw the hamburger "menu" glyph for the start button. */
+	void draw_start_icon(int cx, int cy)
+	{
+		for (int i = -1; i <= 1; i++)
+			surf_.ogFillRect(cx - 7, cy + i * 5 - 1, cx + 7, cy + i * 5, COL_WHITE);
+	}
 
 	void draw_strip()
 	{
@@ -492,32 +555,37 @@ class Taskbar
 		surf_.ogFillRect(0, 0, sw - 1, TB_H - 1, TB_BG);
 		surf_.ogFillRect(0, 0, sw - 1, 0, TB_SEP); /* 1px top hairline */
 
-		/* Launcher button — flat; only fills on press (no hard outline). */
+		/* Launcher button — flat; hamburger icon + brand, fills only on press. */
 		uint32_t start_bg = btn_pressed_ ? TB_BTN_P : TB_BG;
 		if (btn_pressed_)
 			surf_.ogFillRect(2, 1, 2 + BTN_W - 1, TB_H - 1, TB_BTN_P);
+		draw_start_icon(16, TB_H / 2);
 		font_fg(font_, COL_WHITE);
 		font_bg(font_, start_bg);
-		font_.PutString(surf_, 12, 12, "UbixOS");
+		font_.PutString(surf_, 30, 12, "uBixOS");
 
-		/* Window list — flat tabs with a 2px accent underline (no outline). */
+		/* Window list — flat tabs; the focused window gets a brighter fill and a
+		 * full-accent underline, the rest a flat fill with no underline. */
 		int wx = 2 + BTN_W + 4;
 		int clock_x = sw - CLOCK_W - 2;
 		for (const auto &tw : tracked_)
 		{
 			if (wx + WIN_BTN_W > clock_x - 4)
 				break;
-			surf_.ogFillRect(wx, 4, wx + WIN_BTN_W - 1, TB_H - 1, TB_BTN_N);
-			surf_.ogFillRect(wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, TB_BTN_P);
-			font_fg(font_, COL_WHITE);
-			font_bg(font_, TB_BTN_N);
+			bool active = (tw.id == focused_id_);
+			uint32_t fill = active ? TB_BTN_P : TB_BTN_N;
+			surf_.ogFillRect(wx, 4, wx + WIN_BTN_W - 1, TB_H - 1, fill);
+			if (active)
+				surf_.ogFillRect(wx, TB_H - 3, wx + WIN_BTN_W - 1, TB_H - 1, COL_WHITE);
+			font_fg(font_, active ? COL_WHITE : 0x00C8C8D2u);
+			font_bg(font_, fill);
 			font_.PutString(surf_, wx + 8, 12, tw.title.c_str());
 			wx += WIN_BTN_W + 2;
 		}
 
-		/* Clock — boxless, just right-aligned text on the bar. */
-		char tstr[12];
-		get_time_str(tstr);
+		/* Clock — boxless date + time, right-aligned text on the bar. */
+		char tstr[20];
+		get_datetime_str(tstr);
 		font_fg(font_, COL_WHITE);
 		font_bg(font_, TB_BG);
 		font_.PutString(surf_, clock_x + 8, 12, tstr);
@@ -705,6 +773,12 @@ class Taskbar
 			tracked_.erase(it);
 	}
 
+	/* Record the focused window (DISPLAY_FOCUS) so its tab is highlighted. */
+	void set_focused_id(uint32_t id)
+	{
+		focused_id_ = id;
+	}
+
 	void close_menus()
 	{
 		submenu_.hide();
@@ -759,11 +833,16 @@ class Taskbar
 			return;
 		}
 
-		/* Top-level menu click: cascade a submenu or dispatch a leaf. */
+		/* Top-level menu click: power button, cascade a submenu, or dispatch. */
 		if (me->window_id == start_menu_.win_id() && start_menu_.is_open())
 		{
 			if (!(me->buttons & 1))
 			{
+				if (start_menu_.footer_power_hit(me->x, me->y))
+				{
+					close_menus();
+					::exit(0); /* log out — vlogin resumes the session */
+				}
 				int row = start_menu_.hit_item(me->y);
 				const MenuItem *it = start_menu_.item(row);
 				if (it && it->submenu)
@@ -807,8 +886,8 @@ class Taskbar
 				else
 				{
 					start_menu_.load("/views/startmenu");
-					int mh = start_menu_.count() * MENU_ITEM_H;
-					start_menu_.show(2, (int)sh_ - TB_H - mh, mbox, font_);
+					start_menu_.set_footer(true); /* user + power row */
+					start_menu_.show(2, (int)sh_ - TB_H - start_menu_.height(), mbox, font_);
 				}
 			}
 			else
@@ -888,6 +967,15 @@ int main(int argc, char **argv)
 					tb.win_add(dn->window_id, dn->title);
 				else
 					tb.win_remove(dn->window_id);
+				tb.draw();
+				tb.send_flip();
+				continue;
+			}
+
+			if (reply.header == DISPLAY_FOCUS)
+			{
+				struct display_focus *df = (struct display_focus *)reply.data;
+				tb.set_focused_id(df->window_id);
 				tb.draw();
 				tb.send_flip();
 				continue;
