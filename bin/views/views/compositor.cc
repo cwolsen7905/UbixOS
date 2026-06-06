@@ -56,9 +56,9 @@ static const uint32_t g_jailbar_colors[4] = {
 };
 
 /* Focused title-bar colours; driven by the per-user accent (views/theme/accent),
- * resolved in set_desktop_from_registry().  Default to the historical blue. */
-uint32_t g_theme_decor_bg = FB_RGB(0x28, 0x48, 0x70);
-uint32_t g_theme_decor_hi = FB_RGB(0x40, 0x70, 0xA8);
+ * resolved in set_desktop_from_registry().  Default to a calm desaturated slate. */
+uint32_t g_theme_decor_bg = FB_RGB(0x33, 0x3C, 0x4C);
+uint32_t g_theme_decor_hi = FB_RGB(0x4A, 0x55, 0x68);
 
 Compositor::Compositor(WindowRegistry &reg)
     : reg_(reg), cur_x_(0), cur_y_(0), cur_drawn_(false), damage_{0, 0, 0, 0, false}
@@ -247,9 +247,10 @@ void Compositor::set_desktop_from_registry()
 	if (ubistry_get_for_int(u, "views/desktop/barcolor", &ival) == 0)
 		bar_base_ = (uint32_t)ival & 0x00FFFFFFu;
 
-	/* Accent colour for the focused window title bar (defaults to the blue). */
-	g_theme_decor_bg = FB_RGB(0x28, 0x48, 0x70);
-	g_theme_decor_hi = FB_RGB(0x40, 0x70, 0xA8);
+	/* Accent colour for the focused window title bar — a calm, desaturated
+	 * slate-blue (modern) rather than the old saturated primary blue. */
+	g_theme_decor_bg = FB_RGB(0x33, 0x3C, 0x4C);
+	g_theme_decor_hi = FB_RGB(0x4A, 0x55, 0x68);
 	if (ubistry_get_for_int(u, "views/theme/accent", &ival) == 0)
 	{
 		uint32_t a = (uint32_t)ival & 0x00FFFFFFu;
@@ -325,6 +326,8 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 			continue;
 		int cy = w->y + w->decor_h;
 
+		draw_window_shadow(w, rx, ry, rw, rh);
+
 		int x1 = (rx > w->x) ? rx : w->x;
 		int y1 = (ry > cy) ? ry : cy;
 		int x2 = (rx + rw < w->x + w->w) ? rx + rw : w->x + w->w;
@@ -345,6 +348,7 @@ void Compositor::reblit_rect(int rx, int ry, int rw, int rh)
 		if (w->decor_h > 0 && rx < w->x + w->w && rx + rw > w->x && ry < w->y + w->decor_h && ry + rh > w->y)
 			w->draw_decor(fb_, w == reg_.focused());
 		w->draw_grip(fb_);
+		round_window_corners(w, rx, ry, rw, rh);
 	}
 }
 
@@ -381,6 +385,106 @@ void Compositor::cursor_draw(int x, int y)
 	}
 }
 
+uint32_t Compositor::desk_pixel(int x, int y) const
+{
+	if (x >= 0 && y >= 0 && x < dc_w_ && y < dc_h_ && (int)desk_cache_.size() >= dc_w_ * dc_h_ &&
+	    dc_w_ == (int)fb_.width)
+		return desk_cache_[(size_t)y * dc_w_ + x];
+	return fb_.read(x, y);
+}
+
+/* Soft drop shadow: darken the framebuffer in a band around the window, offset
+ * downward, with a quadratic distance falloff (no sqrt — world is -mno-sse).
+ * Reads-then-darkens so it is idempotent within a single repaint pass. */
+void Compositor::draw_window_shadow(const Window *w, int clipx, int clipy, int clipw, int cliph)
+{
+	const int reach = 10;      /* shadow reach in px */
+	const int y_off = 4;       /* downward offset (light from above) */
+	const int alpha_max = 120; /* peak darkening alpha (/256) */
+
+	int wx0 = w->x, wy0 = w->y;
+	int wx1 = w->x + w->w, wy1 = w->y + w->decor_h + w->h;
+	int rx0 = wx0, ry0 = wy0 + y_off, rx1 = wx1, ry1 = wy1 + y_off;
+
+	int bx0 = wx0 - reach, by0 = wy0 - reach + y_off, bx1 = wx1 + reach, by1 = wy1 + reach + y_off;
+	if (bx0 < clipx)
+		bx0 = clipx;
+	if (by0 < clipy)
+		by0 = clipy;
+	if (bx1 > clipx + clipw)
+		bx1 = clipx + clipw;
+	if (by1 > clipy + cliph)
+		by1 = clipy + cliph;
+	if (bx0 < 0)
+		bx0 = 0;
+	if (by0 < 0)
+		by0 = 0;
+	if (bx1 > (int)fb_.width)
+		bx1 = (int)fb_.width;
+	if (by1 > (int)fb_.height)
+		by1 = (int)fb_.height;
+
+	for (int py = by0; py < by1; py++)
+	{
+		for (int px = bx0; px < bx1; px++)
+		{
+			/* The window itself is opaque — never shadow under it. */
+			if (px >= wx0 && px < wx1 && py >= wy0 && py < wy1)
+				continue;
+			int dx = (px < rx0) ? (rx0 - px) : ((px >= rx1) ? (px - rx1 + 1) : 0);
+			int dy = (py < ry0) ? (ry0 - py) : ((py >= ry1) ? (py - ry1 + 1) : 0);
+			int d2 = dx * dx + dy * dy;
+			if (d2 >= reach * reach)
+				continue;
+			int a = alpha_max * (reach * reach - d2) / (reach * reach);
+			if (a <= 0)
+				continue;
+			fb_.pixel(px, py, decor_blend(fb_.read(px, py), 0, a));
+		}
+	}
+}
+
+/* Round the four outer window corners with a 1px anti-aliased ring, revealing
+ * the cached desktop background outside the arc. */
+void Compositor::round_window_corners(const Window *w, int clipx, int clipy, int clipw, int cliph)
+{
+	const int radius = 6;
+	int wx0 = w->x, wy0 = w->y;
+	int wx1 = w->x + w->w, wy1 = w->y + w->decor_h + w->h;
+
+	/* (region-x0, region-y0, arc-center-x, arc-center-y) for each corner. */
+	int corners[4][4] = {
+	    {wx0, wy0, wx0 + radius, wy0 + radius},                           /* top-left */
+	    {wx1 - radius, wy0, wx1 - 1 - radius, wy0 + radius},              /* top-right */
+	    {wx0, wy1 - radius, wx0 + radius, wy1 - 1 - radius},              /* bottom-left */
+	    {wx1 - radius, wy1 - radius, wx1 - 1 - radius, wy1 - 1 - radius}, /* bottom-right */
+	};
+
+	for (auto &c : corners)
+	{
+		int rx = c[0], ry = c[1], cxc = c[2], cyc = c[3];
+		for (int py = ry; py < ry + radius; py++)
+		{
+			if (py < clipy || py >= clipy + cliph || py < 0 || py >= (int)fb_.height)
+				continue;
+			for (int px = rx; px < rx + radius; px++)
+			{
+				if (px < clipx || px >= clipx + clipw || px < 0 || px >= (int)fb_.width)
+					continue;
+				int dx = px - cxc, dy = py - cyc;
+				int d2 = dx * dx + dy * dy;
+				if (d2 <= (radius - 1) * (radius - 1))
+					continue; /* inside — leave the window pixel */
+				uint32_t bg = desk_pixel(px, py);
+				if (d2 >= radius * radius)
+					fb_.pixel(px, py, bg); /* outside — background */
+				else
+					fb_.pixel(px, py, decor_blend(bg, fb_.read(px, py), 128)); /* AA edge */
+			}
+		}
+	}
+}
+
 void Compositor::composite_all()
 {
 	draw_desktop();
@@ -388,10 +492,12 @@ void Compositor::composite_all()
 	{
 		if (w->minimized)
 			continue;
+		draw_window_shadow(w, 0, 0, (int)fb_.width, (int)fb_.height);
 		w->blit_to(fb_);
 		if (w->decor_h > 0)
 			w->draw_decor(fb_, w == reg_.focused());
 		w->draw_grip(fb_);
+		round_window_corners(w, 0, 0, (int)fb_.width, (int)fb_.height);
 	}
 	if (resize_preview_)
 	{
@@ -447,6 +553,14 @@ void Compositor::flush()
 	int x = damage_.x, y = damage_.y;
 	int w = damage_.w, h = damage_.h;
 	damage_.valid = false;
+
+	/* Inflate by the shadow reach so a moved/closed window's old soft shadow
+	 * (which falls outside its rect) is repainted — otherwise it leaves trails. */
+	const int shadow_pad = 14;
+	x -= shadow_pad;
+	y -= shadow_pad;
+	w += 2 * shadow_pad;
+	h += 2 * shadow_pad;
 
 	/* Clamp to screen bounds */
 	if (x < 0)

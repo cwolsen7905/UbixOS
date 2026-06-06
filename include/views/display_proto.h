@@ -67,7 +67,7 @@
 #define DISPLAY_NOTIFY 12 /* window added or removed (sent to taskbar) */
 
 /* Height of the server-drawn title bar (0 for no_decor windows) */
-#define DECOR_H 18
+#define DECOR_H 28
 
 /*
  * DISPLAY_CLAIM payload (client → display).
